@@ -84,13 +84,7 @@ export default function Navbar() {
                     <a href="#testimonials">Vélemények</a>
                 </li>
                 <li>
-                    <Link href="/booking" className="booking-link">📅 Időpontfoglalás</Link>
-                </li>
-                <li>
                     <a href="#contact">Kapcsolat</a>
-                </li>
-                <li>
-                    <a href="#auth">Bejelentkezés</a>
                 </li>
             </ul>
             <button className="nav-toggle" aria-label="Menü megnyitása">

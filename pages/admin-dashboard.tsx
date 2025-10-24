@@ -197,16 +197,6 @@ export default function AdminDashboard() {
         }
     };
 
-    const signOut = async () => {
-        try {
-            if (window.firebase) {
-                await window.firebase.auth().signOut();
-                router.replace("/");
-            }
-        } catch (error) {
-            console.error("Kijelentkezési hiba:", error);
-        }
-    };
 
     if (loading) {
         return (
@@ -249,10 +239,6 @@ export default function AdminDashboard() {
                     <button className="nav-tab active">
                         <i className="nav-icon">⚙️</i>
                         Admin
-                    </button>
-                    <button className="nav-tab" onClick={signOut}>
-                        <i className="nav-icon">🚪</i>
-                        Kilépés
                     </button>
                 </nav>
             </div>

@@ -288,7 +288,8 @@ export default function ExamPrep() {
                 const auth = (window as any).firebase.auth();
                 const unsub = auth.onAuthStateChanged(async (user: any) => {
                     if (!user) {
-                        router.replace("/");
+                        // Ha nincs bejelentkezett felhasználó, folytatjuk bejelentkezés nélkül
+                        setLoading(false);
                         return;
                     }
 

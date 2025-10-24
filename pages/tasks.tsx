@@ -292,17 +292,6 @@ export default function Tasks() {
         return true;
     });
 
-    const signOut = async () => {
-        try {
-            if (window.firebase) {
-                await window.firebase.auth().signOut();
-            }
-            router.push("/");
-        } catch (err: unknown) {
-            console.warn("Kijelentkezési hiba:", err);
-            router.push("/");
-        }
-    };
 
     if (loading) {
         return (
@@ -370,12 +359,6 @@ export default function Tasks() {
                             )}
                         </div>
 
-                        <div className="nav-actions">
-                            <button className="logout-btn" onClick={signOut}>
-                                <span className="logout-icon">🚪</span>
-                                <span className="logout-text">Kijelentkezés</span>
-                            </button>
-                        </div>
                     </div>
                 </nav>
 

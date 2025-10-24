@@ -28,8 +28,6 @@ export default function Dashboard() {
     const [educationLevel, setEducationLevel] = useState<'elementary' | 'highschool' | 'university'>('university');
     const [isAdmin, setIsAdmin] = useState(false);
     const [publicTasks, setPublicTasks] = useState<any[]>([]);
-    const [pendingBookings, setPendingBookings] = useState<any[]>([]);
-    const [bookings, setBookings] = useState<{ [key: string]: number }>({});
     const [showNewTopicForm, setShowNewTopicForm] = useState(false);
     const [newTopic, setNewTopic] = useState({
         title: '',
@@ -105,7 +103,8 @@ export default function Dashboard() {
                 const auth = (window as any).firebase.auth();
                 const unsub = auth.onAuthStateChanged(async (user: any) => {
                     if (!user) {
-                        router.replace("/");
+                        // Ha nincs bejelentkezett felhasználó, folytatjuk bejelentkezés nélkül
+                        setLoading(false);
                         return;
                     }
 
@@ -162,44 +161,6 @@ export default function Dashboard() {
         loadPublicTasks();
     }, [educationLevel]);
 
-    useEffect(() => {
-        // Load pending bookings and approved bookings for admin
-        console.log('🔵 Dashboard useEffect - isAdmin:', isAdmin);
-        if (isAdmin && typeof window !== 'undefined') {
-            const savedPendingBookings = localStorage.getItem('pendingBookings');
-            console.log('🔵 Dashboard - savedPendingBookings:', savedPendingBookings);
-            if (savedPendingBookings) {
-                const parsedBookings = JSON.parse(savedPendingBookings);
-                console.log('🔵 Dashboard - parsed pending bookings:', parsedBookings);
-                setPendingBookings(parsedBookings);
-            }
-
-            const savedBookings = localStorage.getItem('bookings');
-            console.log('🔵 Dashboard - savedBookings:', savedBookings);
-            if (savedBookings) {
-                setBookings(JSON.parse(savedBookings));
-            }
-        }
-
-        // Offline tesztelés - manuális admin gomb
-        if (!isAdmin && typeof window !== 'undefined') {
-            console.log('🔵 Offline tesztelés - manuális admin gomb hozzáadva');
-            const testAdminBtn = document.createElement('button');
-            testAdminBtn.textContent = '🔧 Offline Admin Test';
-            testAdminBtn.style.cssText = 'position:fixed;top:10px;right:10px;z-index:9999;background:red;color:white;padding:10px;border:none;border-radius:5px;';
-            testAdminBtn.onclick = () => {
-                console.log('🔵 Offline admin aktiválva');
-                setIsAdmin(true);
-                setMe({
-                    uid: 'offline_admin',
-                    name: 'Admin (Offline)',
-                    email: 'usezsolti@gmail.com'
-                });
-                testAdminBtn.remove();
-            };
-            document.body.appendChild(testAdminBtn);
-        }
-    }, [isAdmin]);
 
     // EmailJS initialization for automatic email sending
     useEffect(() => {
@@ -394,187 +355,7 @@ export default function Dashboard() {
     };
 
     // Email küldő funkciók
-    const sendApprovalEmail = async (booking: any) => {
-        try {
-            // 1. Próbáljuk meg a Gmail API-t
-            if (await tryGmailAPI(booking, 'approval')) {
-                console.log('✅ Email elküldve Gmail API-val');
-                return;
-            }
 
-            // 2. Próbáljuk meg az EmailJS-t
-            if (await tryEmailJS(booking, 'approval')) {
-                console.log('✅ Email elküldve EmailJS-szel');
-                return;
-            }
-
-            // 3. Fallback: SMTP vagy más szolgáltatás
-            await trySMTP(booking, 'approval');
-
-        } catch (error) {
-            console.error('❌ Email küldés sikertelen:', error);
-            // Utolsó fallback: copy-to-clipboard
-            copyToClipboard(booking, 'approval');
-        }
-    };
-
-    const sendRejectionEmail = async (booking: any) => {
-        try {
-            // 1. Próbáljuk meg a Gmail API-t
-            if (await tryGmailAPI(booking, 'rejection')) {
-                console.log('✅ Email elküldve Gmail API-val');
-                return;
-            }
-
-            // 2. Próbáljuk meg az EmailJS-t
-            if (await tryEmailJS(booking, 'rejection')) {
-                console.log('✅ Email elküldve EmailJS-szel');
-                return;
-            }
-
-            // 3. Fallback: SMTP vagy más szolgáltatás
-            await trySMTP(booking, 'rejection');
-
-        } catch (error) {
-            console.error('❌ Email küldés sikertelen:', error);
-            // Utolsó fallback: copy-to-clipboard
-            copyToClipboard(booking, 'rejection');
-        }
-    };
-
-    const tryGmailAPI = async (booking: any, type: string) => {
-        // Gmail API implementáció
-        return false; // Most nem implementált
-    };
-
-    const tryEmailJS = async (booking: any, type: string) => {
-        // EmailJS implementáció
-        if (typeof window !== 'undefined' && window.emailjs) {
-            try {
-                const templateParams = {
-                    to_email: booking.customerEmail,
-                    user_name: booking.customerName,
-                    message: type === 'approval'
-                        ? `✅ Foglalásod jóváhagyva!\n\n📅 Dátum: ${booking.date}\n⏰ Időpontok: ${booking.times.join(', ')}\n💰 Ár: ${booking.totalPrice} Ft`
-                        : `❌ Foglalásod elutasítva.\n\n📅 Dátum: ${booking.date}\n⏰ Időpontok: ${booking.times.join(', ')}`,
-                    reply_to: 'usezsolti@gmail.com'
-                };
-
-                await window.emailjs.send('service_fnoxi68', 'template_rt2i7ou', templateParams);
-                return true;
-            } catch (error) {
-                console.error('EmailJS hiba:', error);
-                return false;
-            }
-        }
-        return false;
-    };
-
-    const trySMTP = async (booking: any, type: string) => {
-        // SMTP vagy más email szolgáltatás
-        console.log('📧 SMTP email küldés:', { booking, type });
-        return false; // Most nem implementált
-    };
-
-    const copyToClipboard = (booking: any, type: string) => {
-        const emailContent = type === 'approval'
-            ? `Tárgy: ✅ Foglalásod jóváhagyva - Mihaszna Matek\n\nKedves ${booking.customerName}!\n\n✅ Foglalásod jóváhagyva!\n\n📅 Dátum: ${booking.date}\n⏰ Időpontok: ${booking.times.join(', ')}\n💰 Ár: ${booking.totalPrice} Ft\n\nÜdvözlettel,\nMihaszna Matek\n\n---\nCímzett: ${booking.customerEmail}`
-            : `Tárgy: ❌ Foglalásod elutasítva - Mihaszna Matek\n\nKedves ${booking.customerName}!\n\n❌ Sajnáljuk, de a foglalásodat nem tudtuk elfogadni.\n\n📅 Dátum: ${booking.date}\n⏰ Időpontok: ${booking.times.join(', ')}\n\nKérjük, próbálj más időpontot.\n\nÜdvözlettel,\nMihaszna Matek\n\n---\nCímzett: ${booking.customerEmail}`;
-
-        navigator.clipboard.writeText(emailContent).then(() => {
-            console.log('📋 Email tartalom a vágólapra másolva');
-        });
-    };
-
-    const approveBooking = (bookingId: string) => {
-        const booking = pendingBookings.find(b => b.id === bookingId);
-        if (!booking) return;
-
-        // Hozzáadás a jóváhagyott foglalásokhoz
-        const newBookings = { ...bookings };
-        booking.times.forEach((time: string) => {
-            const bookingKey = `${booking.date}_${time}`;
-            newBookings[bookingKey] = (newBookings[bookingKey] || 0) + 1;
-        });
-        setBookings(newBookings);
-        localStorage.setItem('bookings', JSON.stringify(newBookings));
-
-        // Eltávolítás a függőben lévő foglalások közül
-        const updatedPendingBookings = pendingBookings.filter(b => b.id !== bookingId);
-        setPendingBookings(updatedPendingBookings);
-        localStorage.setItem('pendingBookings', JSON.stringify(updatedPendingBookings));
-
-        // Email küldése a foglalónak a jóváhagyásról
-        const emailSubject = encodeURIComponent('✅ Foglalásod jóváhagyva - Mihaszna Matek');
-        const emailBody = encodeURIComponent(`Kedves ${booking.customerName}!
-
-✅ Foglalásod jóváhagyva!
-
-📅 Dátum: ${new Date(booking.date).toLocaleDateString('hu-HU')}
-⏰ Időpontok: ${booking.times.join(', ')}
-📍 Óra típusa: ${booking.lessonType === 'online' ? 'Online óra' : 'Személyes óra'}
-💰 Összes ár: ${booking.totalPrice} Ft
-
-A foglalás most már bekerült a naptárba.
-
-Üdvözlettel,
-Mihaszna Matek`);
-
-        // Automatikus email küldés
-        sendApprovalEmail(booking);
-
-        // Sikeres jóváhagyás visszajelzés
-        alert(`✅ Foglalás jóváhagyva!\n\n${booking.customerName} foglalása (${booking.date} ${booking.times.join(', ')}) most már a naptárban van.\n\nEmail küldése: ${booking.customerEmail}\n\n📋 Ha nem nyílt meg email kliens, az email tartalom a vágólapra került!`);
-
-        console.log('🔵 Foglalás jóváhagyva:', booking);
-        console.log('🔵 Jóváhagyott foglalások:', newBookings);
-        console.log('🔵 Frissített pending bookings:', updatedPendingBookings);
-    };
-
-    const rejectBooking = (bookingId: string) => {
-        const booking = pendingBookings.find(b => b.id === bookingId);
-        if (!booking) return;
-
-        // Eltávolítás a függőben lévő foglalások közül
-        const updatedPendingBookings = pendingBookings.filter(b => b.id !== bookingId);
-        setPendingBookings(updatedPendingBookings);
-        localStorage.setItem('pendingBookings', JSON.stringify(updatedPendingBookings));
-
-        // Email küldése a foglalónak az elutasításról
-        const emailSubject = encodeURIComponent('❌ Foglalásod elutasítva - Mihaszna Matek');
-        const emailBody = encodeURIComponent(`Kedves ${booking.customerName}!
-
-❌ Sajnáljuk, de a foglalásodat nem tudtuk elfogadni.
-
-📅 Dátum: ${new Date(booking.date).toLocaleDateString('hu-HU')}
-⏰ Időpontok: ${booking.times.join(', ')}
-
-Kérjük, próbálj más időpontot választani vagy vedd fel velünk a kapcsolatot.
-
-Üdvözlettel,
-Mihaszna Matek`);
-
-        // Automatikus email küldés
-        sendRejectionEmail(booking);
-
-        // Sikeres elutasítás visszajelzés
-        alert(`❌ Foglalás elutasítva!\n\n${booking.customerName} foglalása (${booking.date} ${booking.times.join(', ')}) eltávolítva.\n\nEmail küldése: ${booking.customerEmail}\n\n📋 Ha nem nyílt meg email kliens, az email tartalom a vágólapra került!`);
-
-        console.log('🔵 Foglalás elutasítva:', bookingId);
-        console.log('🔵 Frissített pending bookings:', updatedPendingBookings);
-    };
-
-
-    const signOut = async () => {
-        try {
-            if ((window as any).firebase) {
-                await (window as any).firebase.auth().signOut();
-                router.replace("/");
-            }
-        } catch (error) {
-            console.error("Kijelentkezési hiba:", error);
-        }
-    };
 
     if (loading) {
         return (
@@ -607,9 +388,9 @@ Mihaszna Matek`);
                         <i className="nav-icon">🏠</i>
                         Kezdőlap
                     </button>
-                    <button className="nav-tab" onClick={() => router.push('/booking')}>
-                        <i className="nav-icon">📅</i>
-                        Időpontfoglalás
+                    <button className="nav-tab" onClick={() => router.push('/#contact')}>
+                        <i className="nav-icon">📞</i>
+                        Kapcsolat
                     </button>
                     <button className="nav-tab" onClick={() => router.push('/profile')}>
                         <i className="nav-icon">👤</i>
@@ -629,10 +410,6 @@ Mihaszna Matek`);
                             )}
                         </>
                     )}
-                    <button className="nav-tab" onClick={signOut}>
-                        <i className="nav-icon">🚪</i>
-                        Kilépés
-                    </button>
                 </nav>
             </div>
 
@@ -1120,49 +897,122 @@ Címzett: ${booking.customerEmail}`;
                     </section>
                 )}
 
-                {/* Public Tasks Section */}
-                {publicTasks.length > 0 && (
-                    <section className="public-tasks-section">
-                        <h2 className="section-title">📚 Aktuális Feladatok</h2>
-                        <p className="section-subtitle">Az adminisztrátor által kiadott feladatok</p>
+                 {/* Public Tasks Section */}
+                 {publicTasks.length > 0 && (
+                     <section className="public-tasks-section">
+                         <h2 className="section-title">📚 Aktuális Feladatok</h2>
+                         <p className="section-subtitle">Az adminisztrátor által kiadott feladatok</p>
 
-                        <div className="public-tasks-grid">
-                            {publicTasks.map(task => (
-                                <div key={task.id} className="public-task-card">
-                                    <div className="task-header">
-                                        <h3>{task.topicTitle || task.topicId}</h3>
-                                        <span className="task-badge">Új Feladat</span>
-                                    </div>
-                                    <div className="task-content">
-                                        <p><strong>Feladat:</strong> {task.taskDescription}</p>
-                                        <div className="task-input-section">
-                                            <input
-                                                type="text"
-                                                placeholder="Add meg a válaszodat..."
-                                                className="task-answer-input"
-                                                onKeyPress={(e) => {
-                                                    if (e.key === 'Enter') {
-                                                        const userAnswer = (e.target as HTMLInputElement).value;
-                                                        if (userAnswer.trim() === task.correctAnswer.trim()) {
-                                                            alert('🎉 Helyes válasz! Szuper munka!');
-                                                            updateTopicProgress(task.topicId);
-                                                        } else {
-                                                            alert('❌ Hibás válasz. Próbáld újra!');
-                                                        }
-                                                        (e.target as HTMLInputElement).value = '';
-                                                    }
-                                                }}
-                                            />
-                                            <div className="task-hint">
-                                                Nyomj Enter-t a válasz elküldéséhez
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-                    </section>
-                )}
+                         <div className="public-tasks-grid">
+                             {publicTasks.map(task => (
+                                 <div key={task.id} className="public-task-card">
+                                     <div className="task-header">
+                                         <h3>{task.topicTitle || task.topicId}</h3>
+                                         <span className="task-badge">Új Feladat</span>
+                                     </div>
+                                     <div className="task-content">
+                                         <p><strong>Feladat:</strong> {task.taskDescription}</p>
+                                         <div className="task-input-section">
+                                             <input
+                                                 type="text"
+                                                 placeholder="Add meg a válaszodat..."
+                                                 className="task-answer-input"
+                                                 onKeyPress={(e) => {
+                                                     if (e.key === 'Enter') {
+                                                         const userAnswer = (e.target as HTMLInputElement).value;
+                                                         if (userAnswer.trim() === task.correctAnswer.trim()) {
+                                                             alert('🎉 Helyes válasz! Szuper munka!');
+                                                             updateTopicProgress(task.topicId);
+                                                         } else {
+                                                             alert('❌ Hibás válasz. Próbáld újra!');
+                                                         }
+                                                         (e.target as HTMLInputElement).value = '';
+                                                     }
+                                                 }}
+                                             />
+                                             <div className="task-hint">
+                                                 Nyomj Enter-t a válasz elküldéséhez
+                                             </div>
+                                         </div>
+                                     </div>
+                                 </div>
+                             ))}
+                         </div>
+                     </section>
+                 )}
+
+                 {/* Contact Section */}
+                 <section className="contact-section">
+                     <h2 className="section-title">📞 Kapcsolat</h2>
+                     <p className="section-subtitle">Vedd fel velem a kapcsolatot bármikor</p>
+
+                     <div className="contact-grid">
+                         <div className="contact-info-card">
+                             <div className="contact-header">
+                                 <h3>📞 Telefon</h3>
+                             </div>
+                             <div className="contact-content">
+                                 <a href="tel:+36308935495" className="contact-link">
+                                     <span className="contact-icon">📞</span>
+                                     <span className="contact-text">+36 30 893 5495</span>
+                                 </a>
+                                 <p className="contact-description">Hívj bármikor, szívesen segítek!</p>
+                             </div>
+                         </div>
+
+                         <div className="contact-info-card">
+                             <div className="contact-header">
+                                 <h3>📧 Email</h3>
+                             </div>
+                             <div className="contact-content">
+                                 <a href="mailto:mihaszna.math@gmail.com" className="contact-link">
+                                     <span className="contact-icon">📧</span>
+                                     <span className="contact-text">mihaszna.math@gmail.com</span>
+                                 </a>
+                                 <p className="contact-description">Írj emailt, hamarosan válaszolok!</p>
+                             </div>
+                         </div>
+
+                         <div className="contact-info-card">
+                             <div className="contact-header">
+                                 <h3>📍 Cím</h3>
+                             </div>
+                             <div className="contact-content">
+                                 <div className="contact-address">
+                                     <span className="contact-icon">📍</span>
+                                     <div className="address-text">
+                                         <p>2151 Fót</p>
+                                         <p>Szent Imre utca 18</p>
+                                     </div>
+                                 </div>
+                                 <p className="contact-description">Személyes órák is lehetségesek!</p>
+                             </div>
+                         </div>
+
+                         <div className="contact-info-card">
+                             <div className="contact-header">
+                                 <h3>🌐 Social Media</h3>
+                             </div>
+                             <div className="contact-content">
+                                 <div className="social-links">
+                                     <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="social-link">
+                                         <span className="social-icon">📘</span>
+                                         <span>Facebook</span>
+                                     </a>
+                                     <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="social-link">
+                                         <span className="social-icon">📷</span>
+                                         <span>Instagram</span>
+                                     </a>
+                                     <a href="https://tiktok.com" target="_blank" rel="noopener noreferrer" className="social-link">
+                                         <span className="social-icon">🎵</span>
+                                         <span>TikTok</span>
+                                     </a>
+                                 </div>
+                                 <p className="contact-description">Kövess be a social médián!</p>
+                             </div>
+                         </div>
+                     </div>
+                 </section>
             </main>
         </div>
     );
