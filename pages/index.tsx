@@ -868,8 +868,8 @@ export default function Home() {
                             <div className="contact-card">
                                 <div className="contact-icon">✉️</div>
                                 <h3>Email</h3>
-                                <p>mihasznamatek@gmail.com</p>
-                                <a href="#email" className="contact-link">
+                                <p>usezsolti@gmail.com</p>
+                                <a href="mailto:usezsolti@gmail.com" className="contact-link">
                                     Email írása
                                 </a>
                             </div>

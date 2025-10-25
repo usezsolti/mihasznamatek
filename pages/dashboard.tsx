@@ -965,10 +965,10 @@ Címzett: ${booking.customerEmail}`;
                                  <h3>📧 Email</h3>
                              </div>
                              <div className="contact-content">
-                                 <a href="mailto:mihaszna.math@gmail.com" className="contact-link">
-                                     <span className="contact-icon">📧</span>
-                                     <span className="contact-text">mihaszna.math@gmail.com</span>
-                                 </a>
+                                <a href="mailto:usezsolti@gmail.com" className="contact-link">
+                                    <span className="contact-icon">📧</span>
+                                    <span className="contact-text">usezsolti@gmail.com</span>
+                                </a>
                                  <p className="contact-description">Írj emailt, hamarosan válaszolok!</p>
                              </div>
                          </div>
