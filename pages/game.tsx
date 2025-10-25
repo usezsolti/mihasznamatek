@@ -313,6 +313,15 @@ export default function Game() {
 
     // Általános iskola feladatok (központi felvételi szint)
     const elementaryQuestions: Question[] = [
+        // Alapvető műveletek
+        { question: 'Mennyi 15 + 27?', answer: 42, type: 'addition', expression: '15 + 27 = 42' },
+        { question: 'Mennyi 50 - 23?', answer: 27, type: 'subtraction', expression: '50 - 23 = 27' },
+        { question: 'Mennyi 6 × 8?', answer: 48, type: 'multiplication', expression: '6 × 8 = 48' },
+        { question: 'Mennyi 72 ÷ 9?', answer: 8, type: 'division', expression: '72 ÷ 9 = 8' },
+        { question: 'Mennyi 3²?', answer: 9, type: 'multiplication', expression: '3² = 3 × 3 = 9' },
+        { question: 'Mennyi √16?', answer: 4, type: 'multiplication', expression: '√16 = 4, mert 4² = 16' },
+        
+        // Geometria feladatok
         { question: 'Egy téglalap oldalai 8 cm és 12 cm. Mekkora a kerülete?', answer: 40, type: 'multiplication', expression: 'K = 2(a+b) = 2(8+12) = 2×20 = 40 cm' },
         { question: 'Számítsd ki a 15² értékét!', answer: 225, type: 'multiplication', expression: '15² = 15×15 = 225' },
         { question: 'Egy kör sugara 7 cm. Mekkora a területe? (π ≈ 3.14)', answer: 153.86, type: 'multiplication', expression: 'T = πr² = 3.14×7² = 3.14×49 = 153.86 cm²' },
@@ -358,7 +367,23 @@ export default function Game() {
 
     // Középiskola feladatok (érettségi szint)
     const highschoolQuestions: Question[] = [
+        // Másodfokú egyenletek
         { question: 'Számítsd ki a 2x² - 5x + 3 = 0 másodfokú egyenlet gyökeit! (Add meg a nagyobb gyököt)', answer: 1.5, type: 'multiplication', expression: 'x = (5 ± √(25-24))/4 = (5 ± 1)/4, x₁ = 1, x₂ = 1.5' },
+        { question: 'Oldd meg az x² - 4x + 3 = 0 egyenletet! (Add meg a kisebb gyököt)', answer: 1, type: 'multiplication', expression: 'x² - 4x + 3 = (x-1)(x-3) = 0, x₁ = 1, x₂ = 3' },
+        { question: 'Számítsd ki a 3x² + 2x - 1 = 0 egyenlet diszkriminánsát!', answer: 16, type: 'multiplication', expression: 'D = b² - 4ac = 2² - 4×3×(-1) = 4 + 12 = 16' },
+        
+        // Trigonometria
+        { question: 'Számítsd ki a sin(30°) értékét!', answer: 0.5, type: 'multiplication', expression: 'sin(30°) = 1/2 = 0.5' },
+        { question: 'Számítsd ki a cos(60°) értékét!', answer: 0.5, type: 'multiplication', expression: 'cos(60°) = 1/2 = 0.5' },
+        { question: 'Számítsd ki a tan(45°) értékét!', answer: 1, type: 'multiplication', expression: 'tan(45°) = sin(45°)/cos(45°) = (√2/2)/(√2/2) = 1' },
+        
+        // Logaritmus
+        { question: 'Számítsd ki a log₂(8) értékét!', answer: 3, type: 'multiplication', expression: 'log₂(8) = log₂(2³) = 3·log₂(2) = 3·1 = 3' },
+        { question: 'Számítsd ki a log₃(27) értékét!', answer: 3, type: 'multiplication', expression: 'log₃(27) = log₃(3³) = 3·log₃(3) = 3·1 = 3' },
+        { question: 'Számítsd ki a log₁₀(1000) értékét!', answer: 3, type: 'multiplication', expression: 'log₁₀(1000) = log₁₀(10³) = 3·log₁₀(10) = 3·1 = 3' },
+        
+        // Geometria
+        { question: 'Egy derékszögű háromszög befogói 3 és 4. Mekkora az átfogó?', answer: 5, type: 'multiplication', expression: 'Pitagorasz-tétel: c² = a² + b² = 3² + 4² = 9 + 16 = 25, c = 5' },
         { question: 'Egy derékszögű háromszög befogói 3 és 4. Mekkora az átfogó?', answer: 5, type: 'multiplication', expression: 'Pitagorasz-tétel: c² = a² + b² = 3² + 4² = 9 + 16 = 25, c = 5' },
         { question: 'Számítsd ki a log₂(8) értékét!', answer: 3, type: 'multiplication', expression: 'log₂(8) = log₂(2³) = 3·log₂(2) = 3·1 = 3' },
         { question: 'Egy kör sugara 5 cm. Mekkora a kerülete? (π ≈ 3.14)', answer: 31.4, type: 'multiplication', expression: 'K = 2πr = 2·3.14·5 = 31.4 cm' },
@@ -412,7 +437,21 @@ export default function Game() {
 
     // Fallback egyetemi feladatok (ha az API nem elérhető)
     const fallbackUniversityQuestions: Question[] = [
+        // Deriválás
         { question: 'Számítsd ki az f(x) = x² + 3x + 2 függvény deriváltját az x = 2 pontban!', answer: 7, type: 'multiplication', expression: 'f\'(x) = 2x + 3, f\'(2) = 2·2 + 3 = 7' },
+        { question: 'Számítsd ki az f(x) = 3x² + 2x függvény deriváltját az x = 1 pontban!', answer: 8, type: 'multiplication', expression: 'f\'(x) = 6x + 2, f\'(1) = 6·1 + 2 = 8' },
+        { question: 'Számítsd ki az f(x) = x³ - 2x függvény deriváltját az x = 2 pontban!', answer: 10, type: 'multiplication', expression: 'f\'(x) = 3x² - 2, f\'(2) = 3·4 - 2 = 10' },
+        { question: 'Számítsd ki az f(x) = e^x függvény deriváltját az x = 0 pontban!', answer: 1, type: 'multiplication', expression: 'f\'(x) = e^x, f\'(0) = e^0 = 1' },
+        
+        // Integrálás
+        { question: 'Számítsd ki a ∫(2x + 1)dx integrált 0-tól 2-ig!', answer: 6, type: 'multiplication', expression: '∫(2x + 1)dx = x² + x, [x² + x]₀² = (4 + 2) - (0 + 0) = 6' },
+        { question: 'Számítsd ki a ∫(x² + 2x)dx integrált 0-tól 1-ig!', answer: 1.33, type: 'multiplication', expression: '∫(x² + 2x)dx = x³/3 + x², [x³/3 + x²]₀¹ = 1/3 + 1 = 4/3 ≈ 1.33' },
+        { question: 'Számítsd ki a ∫(3x²)dx integrált 0-tól 2-ig!', answer: 8, type: 'multiplication', expression: '∫(3x²)dx = x³, [x³]₀² = 8 - 0 = 8' },
+        
+        // Határértékek
+        { question: 'Számítsd ki a lim(x→0) (sin x)/x határértéket!', answer: 1, type: 'multiplication', expression: 'L\'Hôpital szabály alapján: lim(x→0) (sin x)/x = lim(x→0) cos x/1 = 1' },
+        { question: 'Számítsd ki a lim(x→1) (x²-1)/(x-1) határértéket!', answer: 2, type: 'multiplication', expression: 'lim(x→1) (x²-1)/(x-1) = lim(x→1) (x+1)(x-1)/(x-1) = lim(x→1) (x+1) = 2' },
+        { question: 'Számítsd ki a lim(x→0) (1-cos x)/x² határértéket!', answer: 0.5, type: 'multiplication', expression: 'L\'Hôpital szabály: lim(x→0) (1-cos x)/x² = lim(x→0) sin x/(2x) = 1/2' },
         { question: 'Számítsd ki a ∫(2x + 1)dx integrált 0-tól 2-ig!', answer: 6, type: 'multiplication', expression: '∫(2x + 1)dx = x² + x, [x² + x]₀² = (4 + 2) - (0 + 0) = 6' },
         { question: 'Számítsd ki a lim(x→0) (sin x)/x határértéket!', answer: 1, type: 'multiplication', expression: 'L\'Hôpital szabály alapján: lim(x→0) (sin x)/x = lim(x→0) cos x/1 = 1' },
         { question: 'Oldd meg a dy/dx = 2x differenciál egyenletet y(0) = 1 kezdeti feltétellel!', answer: 1, type: 'multiplication', expression: 'y = x² + C, y(0) = 1 = 0 + C, tehát C = 1, y = x² + 1' },
@@ -525,21 +564,21 @@ export default function Game() {
             case 'highschool':
                 return highschoolQuestions;
             case 'university':
-                return universityQuestions.length > 0 ? universityQuestions : fallbackUniversityQuestions;
+                return fallbackUniversityQuestions; // Mindig használjuk a fallback feladatokat
             default:
                 return elementaryQuestions;
         }
     };
 
-    // Csak a kiválasztott témakör egyedi feladatait használjuk
-    const questions: Question[] = taskQuestions.length > 0 ? taskQuestions : [];
+    // Feladatok betöltése a kiválasztott szint alapján
+    const questions: Question[] = taskQuestions.length > 0 ? taskQuestions : getQuestionsForLevel(educationLevel || 'elementary');
 
     const startGame = async () => {
         if (!educationLevel) return;
 
         // Ellenőrizzük, hogy vannak-e feladatok
         if (questions.length === 0) {
-            alert('Ehhez a témakörhöz még nincsenek feladatok hozzáadva. Kérjük, előbb adjon hozzá feladatokat a feladatkiosztásban!');
+            alert('Nincsenek elérhető feladatok ezen a szinten. Kérjük, válasszon másik szintet!');
             return;
         }
 
@@ -718,8 +757,8 @@ export default function Game() {
                             </p>
                             {questions.length === 0 && (
                                 <div className="no-questions-warning">
-                                    <p>⚠️ Ehhez a témakörhöz még nincsenek feladatok hozzáadva!</p>
-                                    <p>Kérjük, előbb adjon hozzá feladatokat a feladatkiosztásban.</p>
+                                    <p>⚠️ Nincsenek elérhető feladatok ezen a szinten!</p>
+                                    <p>Kérjük, válasszon másik oktatási szintet.</p>
                                 </div>
                             )}
                             {isAdmin && (

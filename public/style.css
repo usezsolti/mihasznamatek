@@ -108,6 +108,63 @@ nav {
   background: rgba(57, 255, 20, 0.1);
 }
 
+/* Játék gomb a navbar-ban */
+.nav-game-button {
+  margin-left: 1rem;
+}
+
+.game-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  background: linear-gradient(135deg, var(--neon-green), var(--neon-pink));
+  color: #000;
+  text-decoration: none;
+  border-radius: 25px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(57, 255, 20, 0.3);
+}
+
+.game-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(57, 255, 20, 0.5);
+  background: linear-gradient(135deg, #4ddb1a, #ff6be8);
+}
+
+/* Mobilnézeti játék gomb */
+.nav-game-mobile {
+  margin-top: 1rem;
+  padding: 0 1.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: 1rem;
+}
+
+.game-btn-mobile {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  background: linear-gradient(135deg, var(--neon-green), var(--neon-pink));
+  color: #000;
+  text-decoration: none;
+  border-radius: 25px;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(57, 255, 20, 0.3);
+  width: 100%;
+  justify-content: center;
+}
+
+.game-btn-mobile:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(57, 255, 20, 0.5);
+  background: linear-gradient(135deg, #4ddb1a, #ff6be8);
+}
+
 .booking-link {
   background: linear-gradient(135deg, #4CAF50, #45a049);
   padding: 8px 16px;
@@ -1759,6 +1816,17 @@ h1 {
   .nav-social-link {
     width: 32px;
     height: 32px;
+  }
+
+  /* Játék gomb mobilnézetben */
+  .nav-game-button {
+    margin-left: 0;
+    margin-top: 0.5rem;
+  }
+
+  .game-btn {
+    padding: 0.6rem 1.2rem;
+    font-size: 0.85rem;
   }
   
   .nav-social-link svg {

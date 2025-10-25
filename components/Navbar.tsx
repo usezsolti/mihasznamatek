@@ -96,6 +96,11 @@ export default function Navbar() {
                     <li>
                         <a href="#contact" onClick={toggleMenu}>Kapcsolat</a>
                     </li>
+                    <li className="nav-game-mobile">
+                        <Link href="/game" className="game-btn-mobile" onClick={toggleMenu}>
+                            🎮 Játék
+                        </Link>
+                    </li>
                 </ul>
                 <div className="nav-social-links">
                     <a href="https://www.facebook.com/profile.php?id=100075272401924" target="_blank" rel="noopener noreferrer" className="nav-social-link facebook" title="Facebook">
@@ -110,6 +115,11 @@ export default function Navbar() {
                     <a href="https://tiktok.com/@mihasznamatek" target="_blank" rel="noopener noreferrer" className="nav-social-link tiktok" title="TikTok">
                         <FaTiktok size={16} />
                     </a>
+                </div>
+                <div className="nav-game-button">
+                    <Link href="/game" className="game-btn">
+                        🎮 Játék
+                    </Link>
                 </div>
             </div>
             <button className="nav-toggle" aria-label="Menü megnyitása" onClick={toggleMenu}>
