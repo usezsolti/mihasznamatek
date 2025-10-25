@@ -7,6 +7,7 @@ export default function Navbar() {
     const router = useRouter();
     const [currentUser, setCurrentUser] = useState<{ uid: string; name: string; email: string } | null>(null);
     const [isClient, setIsClient] = useState(false);
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     useEffect(() => {
         setIsClient(true);
@@ -24,6 +25,10 @@ export default function Navbar() {
         }
         setCurrentUser(null);
         router.push('/');
+    };
+
+    const toggleMenu = () => {
+        setIsMenuOpen(!isMenuOpen);
     };
 
     return (
@@ -75,18 +80,21 @@ export default function Navbar() {
                 </svg>
             </div>
             <div className="nav-center">
-                <ul className="nav-links">
-                    <li>
-                        <a href="#about">Rólam</a>
+                <ul className={`nav-links ${isMenuOpen ? 'open' : 'closed'}`}>
+                    <li className="nav-close">
+                        <button onClick={toggleMenu} className="close-btn">✕</button>
                     </li>
                     <li>
-                        <a href="#courses">Kiket vállalok?</a>
+                        <a href="#about" onClick={toggleMenu}>Rólam</a>
                     </li>
                     <li>
-                        <a href="#testimonials">Vélemények</a>
+                        <a href="#courses" onClick={toggleMenu}>Kiket vállalok?</a>
                     </li>
                     <li>
-                        <a href="#contact">Kapcsolat</a>
+                        <a href="#testimonials" onClick={toggleMenu}>Vélemények</a>
+                    </li>
+                    <li>
+                        <a href="#contact" onClick={toggleMenu}>Kapcsolat</a>
                     </li>
                 </ul>
                 <div className="nav-social-links">
@@ -104,7 +112,7 @@ export default function Navbar() {
                     </a>
                 </div>
             </div>
-            <button className="nav-toggle" aria-label="Menü megnyitása">
+            <button className="nav-toggle" aria-label="Menü megnyitása" onClick={toggleMenu}>
                 <span></span>
                 <span></span>
                 <span></span>
