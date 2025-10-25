@@ -888,7 +888,7 @@ export default function Home() {
                                         <span className="social-icon">📘</span>
                                         Facebook
                                     </a>
-                                    <a href="https://instagram.com/mihasznamatek"
+                                    <a href="https://www.instagram.com/mihaszna__/"
                                         target="_blank"
                                         rel="noopener noreferrer"
                                         className="social-link instagram">

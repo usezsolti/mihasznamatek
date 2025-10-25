@@ -93,7 +93,7 @@ export default function Navbar() {
                     <a href="https://www.facebook.com/profile.php?id=100075272401924" target="_blank" rel="noopener noreferrer" className="nav-social-link facebook" title="Facebook">
                         <FaFacebook size={16} />
                     </a>
-                    <a href="https://instagram.com/mihasznamatek" target="_blank" rel="noopener noreferrer" className="nav-social-link instagram" title="Instagram">
+                    <a href="https://www.instagram.com/mihaszna__/" target="_blank" rel="noopener noreferrer" className="nav-social-link instagram" title="Instagram">
                         <FaInstagram size={16} />
                     </a>
                     <a href="https://www.youtube.com/@mihasznamatek" target="_blank" rel="noopener noreferrer" className="nav-social-link youtube" title="YouTube">

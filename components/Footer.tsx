@@ -13,7 +13,7 @@ export default function Footer() {
       color: "blue-500" 
     },
     { 
-      href: "https://instagram.com/mihasznamatek", 
+      href: "https://www.instagram.com/mihaszna__/", 
       Icon: FaInstagram, 
       color: "pink-500" 
     },
