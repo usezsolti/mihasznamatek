@@ -74,33 +74,35 @@ export default function Navbar() {
                     </text>
                 </svg>
             </div>
-            <ul className="nav-links">
-                <li>
-                    <a href="#about">Rólam</a>
-                </li>
-                <li>
-                    <a href="#courses">Kiket vállalok?</a>
-                </li>
-                <li>
-                    <a href="#testimonials">Vélemények</a>
-                </li>
-                <li>
-                    <a href="#contact">Kapcsolat</a>
-                </li>
-            </ul>
-            <div className="nav-social-links">
-                <a href="https://www.facebook.com/profile.php?id=100075272401924" target="_blank" rel="noopener noreferrer" className="nav-social-link facebook" title="Facebook">
-                    <FaFacebook size={20} />
-                </a>
-                <a href="https://instagram.com/mihasznamatek" target="_blank" rel="noopener noreferrer" className="nav-social-link instagram" title="Instagram">
-                    <FaInstagram size={20} />
-                </a>
-                <a href="https://www.youtube.com/@mihasznamatek" target="_blank" rel="noopener noreferrer" className="nav-social-link youtube" title="YouTube">
-                    <FaYoutube size={20} />
-                </a>
-                <a href="https://tiktok.com/@mihasznamatek" target="_blank" rel="noopener noreferrer" className="nav-social-link tiktok" title="TikTok">
-                    <FaTiktok size={20} />
-                </a>
+            <div className="nav-center">
+                <ul className="nav-links">
+                    <li>
+                        <a href="#about">Rólam</a>
+                    </li>
+                    <li>
+                        <a href="#courses">Kiket vállalok?</a>
+                    </li>
+                    <li>
+                        <a href="#testimonials">Vélemények</a>
+                    </li>
+                    <li>
+                        <a href="#contact">Kapcsolat</a>
+                    </li>
+                </ul>
+                <div className="nav-social-links">
+                    <a href="https://www.facebook.com/profile.php?id=100075272401924" target="_blank" rel="noopener noreferrer" className="nav-social-link facebook" title="Facebook">
+                        <FaFacebook size={16} />
+                    </a>
+                    <a href="https://instagram.com/mihasznamatek" target="_blank" rel="noopener noreferrer" className="nav-social-link instagram" title="Instagram">
+                        <FaInstagram size={16} />
+                    </a>
+                    <a href="https://www.youtube.com/@mihasznamatek" target="_blank" rel="noopener noreferrer" className="nav-social-link youtube" title="YouTube">
+                        <FaYoutube size={16} />
+                    </a>
+                    <a href="https://tiktok.com/@mihasznamatek" target="_blank" rel="noopener noreferrer" className="nav-social-link tiktok" title="TikTok">
+                        <FaTiktok size={16} />
+                    </a>
+                </div>
             </div>
             <button className="nav-toggle" aria-label="Menü megnyitása">
                 <span></span>
