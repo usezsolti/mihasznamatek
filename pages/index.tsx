@@ -895,7 +895,7 @@ export default function Home() {
                                         <span className="social-icon">📷</span>
                                         Instagram
                                     </a>
-                                    <a href="https://www.youtube.com/@mihasznamatek"
+                                    <a href="https://www.youtube.com/@Mihasznamatek"
                                         target="_blank"
                                         rel="noopener noreferrer"
                                         className="social-link youtube">

@@ -3,7 +3,7 @@ import { FaYoutube, FaFacebook, FaInstagram, FaTiktok } from "react-icons/fa";
 export default function Footer() {
   const socialLinks = [
     { 
-      href: "https://www.youtube.com/@mihasznamatek", 
+      href: "https://www.youtube.com/@Mihasznamatek", 
       Icon: FaYoutube, 
       color: "red-500" 
     },

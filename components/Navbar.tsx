@@ -96,7 +96,7 @@ export default function Navbar() {
                     <a href="https://www.instagram.com/mihaszna__/" target="_blank" rel="noopener noreferrer" className="nav-social-link instagram" title="Instagram">
                         <FaInstagram size={16} />
                     </a>
-                    <a href="https://www.youtube.com/@mihasznamatek" target="_blank" rel="noopener noreferrer" className="nav-social-link youtube" title="YouTube">
+                    <a href="https://www.youtube.com/@Mihasznamatek" target="_blank" rel="noopener noreferrer" className="nav-social-link youtube" title="YouTube">
                         <FaYoutube size={16} />
                     </a>
                     <a href="https://tiktok.com/@mihasznamatek" target="_blank" rel="noopener noreferrer" className="nav-social-link tiktok" title="TikTok">

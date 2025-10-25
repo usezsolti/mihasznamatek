@@ -1003,7 +1003,7 @@ Címzett: ${booking.customerEmail}`;
                                         <span className="social-icon">📷</span>
                                         <span>Instagram</span>
                                     </a>
-                                    <a href="https://www.youtube.com/@mihasznamatek" target="_blank" rel="noopener noreferrer" className="social-link youtube">
+                                    <a href="https://www.youtube.com/@Mihasznamatek" target="_blank" rel="noopener noreferrer" className="social-link youtube">
                                         <span className="social-icon">📺</span>
                                         <span>YouTube</span>
                                     </a>
