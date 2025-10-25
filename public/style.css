@@ -595,12 +595,12 @@ blockquote {
 .testimonials-track {
   display: flex;
   gap: 2rem;
-  animation: scrollLeft 120s linear infinite;
+  animation: scrollLeft 10s linear infinite;
   width: max-content;
 }
 
 .infinite-row.reverse .testimonials-track {
-  animation: scrollRight 120s linear infinite;
+  animation: scrollRight 10s linear infinite;
 }
 
 .testimonials-section:hover .testimonials-track {
