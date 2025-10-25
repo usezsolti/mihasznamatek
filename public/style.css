@@ -544,6 +544,8 @@ header p {
 .interactive-header {
   position: relative;
   width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
   height: 100vh;
   display: flex;
   align-items: center;
@@ -551,7 +553,6 @@ header p {
   overflow: hidden;
   padding: 2rem 1rem;
   box-sizing: border-box;
-  max-width: 100vw;
 }
 
 .interactive-canvas {
@@ -642,6 +643,22 @@ header p {
     max-width: 150px;
     max-height: 150px;
   }
+
+/* Desktop view - limit width */
+@media (min-width: 769px) {
+  .interactive-header {
+    max-width: 1000px;
+    padding: 2rem 2rem;
+  }
+  
+  .header-content {
+    max-width: 800px;
+  }
+  
+  .profile-section {
+    max-width: 600px;
+  }
+}
 
   /* Mobile responsive profile section */
   .interactive-header {
