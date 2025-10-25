@@ -57,9 +57,21 @@ nav {
   backdrop-filter: blur(8px);
   transform: translateX(100%);
   transition: transform 0.3s ease-in-out;
-  padding-top: 60px;
   list-style: none;
+  margin: 0;
+  padding: 0;
   flex-direction: column;
+  gap: 1rem;
+  padding-top: 60px;
+  z-index: 1001;
+}
+
+.nav-links.open {
+  transform: translateX(0);
+}
+
+.nav-links.closed {
+  transform: translateX(100%);
 }
 
 /* Menü nyitott állapot */
@@ -108,62 +120,7 @@ nav {
   background: rgba(57, 255, 20, 0.1);
 }
 
-/* Játék gomb a navbar-ban */
-.nav-game-button {
-  margin-left: 1rem;
-}
 
-.game-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.75rem 1.5rem;
-  background: linear-gradient(135deg, var(--neon-green), var(--neon-pink));
-  color: #000;
-  text-decoration: none;
-  border-radius: 25px;
-  font-weight: 600;
-  font-size: 0.9rem;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(57, 255, 20, 0.3);
-}
-
-.game-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(57, 255, 20, 0.5);
-  background: linear-gradient(135deg, #4ddb1a, #ff6be8);
-}
-
-/* Mobilnézeti játék gomb */
-.nav-game-mobile {
-  margin-top: 1rem;
-  padding: 0 1.5rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-  padding-top: 1rem;
-}
-
-.game-btn-mobile {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.75rem 1.5rem;
-  background: linear-gradient(135deg, var(--neon-green), var(--neon-pink));
-  color: #000;
-  text-decoration: none;
-  border-radius: 25px;
-  font-weight: 600;
-  font-size: 1rem;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(57, 255, 20, 0.3);
-  width: 100%;
-  justify-content: center;
-}
-
-.game-btn-mobile:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(57, 255, 20, 0.5);
-  background: linear-gradient(135deg, #4ddb1a, #ff6be8);
-}
 
 .booking-link {
   background: linear-gradient(135deg, #4CAF50, #45a049);
@@ -204,13 +161,21 @@ nav {
 @media (min-width: 768px) {
   .nav-links {
     display: flex !important;
-    position: static;
-    transform: none;
-    flex-direction: row;
-    background: transparent;
-    height: auto;
-    width: auto;
-    padding: 0;
+    position: static !important;
+    transform: none !important;
+    flex-direction: row !important;
+    background: transparent !important;
+    height: auto !important;
+    width: auto !important;
+    padding: 0 !important;
+    gap: 2rem !important;
+    justify-content: center !important;
+    flex: 1 !important;
+    list-style: none !important;
+    margin: 0 !important;
+    backdrop-filter: none !important;
+    top: auto !important;
+    right: auto !important;
   }
 
   .nav-links li a {
@@ -544,8 +509,6 @@ header p {
 .interactive-header {
   position: relative;
   width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
   height: 100vh;
   display: flex;
   align-items: center;
@@ -553,6 +516,7 @@ header p {
   overflow: hidden;
   padding: 2rem 1rem;
   box-sizing: border-box;
+  max-width: 100vw;
 }
 
 .interactive-canvas {
@@ -643,22 +607,6 @@ header p {
     max-width: 150px;
     max-height: 150px;
   }
-
-/* Desktop view - limit width */
-@media (min-width: 769px) {
-  .interactive-header {
-    max-width: 1000px;
-    padding: 2rem 2rem;
-  }
-  
-  .header-content {
-    max-width: 800px;
-  }
-  
-  .profile-section {
-    max-width: 600px;
-  }
-}
 
   /* Mobile responsive profile section */
   .interactive-header {
@@ -1733,30 +1681,121 @@ h1 {
   align-items: center;
   gap: 2rem;
   flex: 1;
+  justify-content: space-between;
+  max-width: 100%;
+}
+
+/* Navigációs linkek */
+.nav-links {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  gap: 2rem;
+  align-items: center;
+  flex: 1;
   justify-content: center;
+}
+
+.nav-links li a {
+  color: #ffffff !important;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+  padding: 0.5rem 1rem;
+  display: block;
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Mobilnézeti linkek */
+@media (max-width: 767px) {
+  .nav-links li a {
+    color: #ffffff;
+    padding: 1rem 1.5rem;
+    font-size: 1.1rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  
+  .nav-links li a:hover {
+    color: var(--neon-green);
+    background: rgba(57, 255, 20, 0.1);
+  }
+}
+
+.nav-links li a:hover {
+  color: var(--neon-green) !important;
+}
+
+.nav-links li {
+  display: block;
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Hamburger Menu */
+.hamburger-menu {
+  display: none;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 2rem;
+  height: 2rem;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  z-index: 10;
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  outline: none;
+  box-shadow: none;
+}
+
+.hamburger-menu:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.hamburger-menu:active {
+  outline: none;
+  box-shadow: none;
+}
+
+.hamburger-line {
+  width: 2rem;
+  height: 0.25rem;
+  background: #ffffff;
+  border-radius: 10px;
+  transition: all 0.3s linear;
+  position: relative;
+  transform-origin: 1px;
 }
 
 /* Navbar Social Media Links */
 .nav-social-links {
   display: flex;
-  gap: 1rem;
+  gap: 0.8rem;
   align-items: center;
   flex-wrap: nowrap;
+  margin-left: 1rem;
+  margin-right: 2rem;
 }
 
 .nav-social-link {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 35px;
-  height: 35px;
+  width: 28px;
+  height: 28px;
   border-radius: 50%;
   transition: all 0.3s ease;
   text-decoration: none;
   color: #ffffff;
   position: relative;
-  overflow: hidden;
   flex-shrink: 0;
+  overflow: hidden;
 }
 
 .nav-social-link.facebook {
@@ -1808,6 +1847,29 @@ h1 {
   color: #ffffff;
 }
 
+.nav-social-link.game {
+  background: linear-gradient(135deg, var(--neon-green), var(--neon-pink));
+  border: 2px solid var(--neon-green);
+  color: #000;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.nav-social-link.game:hover {
+  background: linear-gradient(135deg, #4ddb1a, #ff6be8);
+  border-color: #4ddb1a;
+  transform: scale(1.1);
+  box-shadow: 0 0 20px rgba(57, 255, 20, 0.5);
+}
+
+/* Játék ikon mérete */
+.nav-social-link.game {
+  font-size: 12px;
+  line-height: 1;
+  width: 28px;
+  height: 28px;
+}
+
 @keyframes navPulse {
   0%, 100% {
     opacity: 1;
@@ -1819,8 +1881,126 @@ h1 {
   }
 }
 
+/* Desktop view - nagyobb távolság */
+@media (min-width: 769px) {
+  .nav-social-links {
+    gap: 1rem;
+    margin-right: 3rem;
+  }
+  
+  .nav-social-link {
+    width: 32px;
+    height: 32px;
+  }
+  
+  .nav-links {
+    display: flex !important;
+    position: static;
+    transform: none;
+    flex-direction: row;
+    background: transparent;
+    height: auto;
+    width: auto;
+    padding: 0;
+    gap: 2rem;
+    justify-content: center;
+    flex: 1;
+    list-style: none;
+    margin: 0;
+  }
+}
+
 /* Responsive design for navbar social links */
 @media (max-width: 768px) {
+  .hamburger-menu {
+    display: flex;
+  }
+
+  .nav-links {
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100vh;
+    width: 70%;
+    background: rgba(0, 0, 0, 0.95);
+    backdrop-filter: blur(10px);
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    transform: translateX(100%);
+    transition: transform 0.3s ease-in-out;
+    z-index: 1000;
+    padding: 2rem;
+    gap: 1.5rem;
+    list-style: none;
+    margin: 0;
+  }
+
+  .nav-close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: none;
+    border: none;
+    color: #ffffff;
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+  }
+
+  .close-btn {
+    background: none;
+    border: none;
+    color: #ffffff;
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+  }
+
+  .close-btn:hover {
+    color: var(--neon-green);
+    background: none;
+  }
+
+  .nav-links li a {
+    color: #ffffff !important;
+    text-decoration: none;
+    font-size: 1.2rem;
+    display: block;
+    padding: 0.5rem 0;
+    outline: none !important;
+    box-shadow: none !important;
+    transition: none !important;
+    background: none !important;
+    border: none !important;
+  }
+
+  .nav-links li a:hover {
+    color: #ffffff !important;
+    background: none !important;
+  }
+
+  .nav-links li a:focus,
+  .nav-links li a:active,
+  .nav-links li a:visited {
+    outline: none !important;
+    box-shadow: none !important;
+    color: #ffffff !important;
+    background: none !important;
+  }
+
+  .nav-links.open {
+    transform: translateX(0);
+  }
+
+  .nav-links.closed {
+    transform: translateX(100%);
+  }
+
   .nav-center {
     flex-direction: column;
     gap: 1rem;
@@ -1956,7 +2136,21 @@ html, body {
 body {
   max-width: 100vw;
   overflow-x: hidden;
+  background-color: #0a0a0a;
 }
+
+/* Fehér sávok kijavítása */
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  background: #0a0a0a;
+}
+
+* {
+  box-sizing: border-box;
+}
+
 
 /* Mobile specific fixes */
 @media (max-width: 768px) {
