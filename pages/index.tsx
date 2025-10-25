@@ -9,6 +9,7 @@ import ChatButton from "../components/ChatButton";
 import Testimonials from "../components/Testimonials";
 import InteractiveHeader from "../components/InteractiveHeader";
 import CookieBanner from "../components/CookieBanner";
+import Footer from "../components/Footer";
 
 // Firebase típus definíciók
 // Window interface már definiálva van a types/global.d.ts fájlban
@@ -884,18 +885,28 @@ export default function Home() {
                                         target="_blank"
                                         rel="noopener noreferrer"
                                         className="social-link facebook">
+                                        <span className="social-icon">📘</span>
                                         Facebook
                                     </a>
                                     <a href="https://instagram.com/mihasznamatek"
                                         target="_blank"
                                         rel="noopener noreferrer"
                                         className="social-link instagram">
+                                        <span className="social-icon">📷</span>
                                         Instagram
+                                    </a>
+                                    <a href="https://www.youtube.com/@mihasznamatek"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="social-link youtube">
+                                        <span className="social-icon">📺</span>
+                                        YouTube
                                     </a>
                                     <a href="https://tiktok.com/@mihasznamatek"
                                         target="_blank"
                                         rel="noopener noreferrer"
                                         className="social-link tiktok">
+                                        <span className="social-icon">🎵</span>
                                         TikTok
                                     </a>
                                 </div>
@@ -964,6 +975,9 @@ export default function Home() {
 
             {/* Cookie Banner */}
             <CookieBanner />
+
+            {/* Footer */}
+            <Footer />
 
             {/* Your main.js (map init, emailjs hooks, etc.) */}
             <Script src="/main.js" strategy="afterInteractive" />

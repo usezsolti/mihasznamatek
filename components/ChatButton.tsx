@@ -6,20 +6,20 @@ const ChatButton = () => {
     const [isMinimized, setIsMinimized] = useState(false);
     const [showButton, setShowButton] = useState(true);
 
-    // Automatikusan megnyitjuk a chat-et amikor az oldal betöltődik
-    useEffect(() => {
-        const timer = setTimeout(() => {
-            setIsChatOpen(true);
-        }, 3000); // 3 másodperc után megnyitjuk
+    // Automatikusan megnyitjuk a chat-et amikor az oldal betöltődik - ELTÁVOLÍTVA
+    // useEffect(() => {
+    //     const timer = setTimeout(() => {
+    //         setIsChatOpen(true);
+    //     }, 3000); // 3 másodperc után megnyitjuk
 
-        return () => clearTimeout(timer);
-    }, []);
+    //     return () => clearTimeout(timer);
+    // }, []);
 
-    // Automatikusan elrejtjük a chat gombot és megjelenítjük a szövegbuborékot
+    // Automatikusan elrejtjük a chat gombot és megjelenítjük a szövegbuborékot - MÓDOSÍTVA
     useEffect(() => {
         const timer = setTimeout(() => {
             setShowButton(false);
-        }, 5000); // 5 másodperc után
+        }, 10000); // 10 másodperc után (hosszabb várakozás)
 
         return () => clearTimeout(timer);
     }, []);
@@ -91,7 +91,7 @@ const ChatButton = () => {
                         <div className="chat-bubble-icon">🤖</div>
                         <div className="chat-bubble-text">
                             <strong>MihaAI</strong>
-                            <span>Kérdése van? Kattintson ide!</span>
+                            <span className="chat-bubble-short">Kérdés?</span>
                         </div>
                     </div>
                 </div>

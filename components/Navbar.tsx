@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import { FaYoutube, FaFacebook, FaInstagram, FaTiktok } from "react-icons/fa";
 
 export default function Navbar() {
     const router = useRouter();
@@ -87,6 +88,20 @@ export default function Navbar() {
                     <a href="#contact">Kapcsolat</a>
                 </li>
             </ul>
+            <div className="nav-social-links">
+                <a href="https://www.facebook.com/profile.php?id=100075272401924" target="_blank" rel="noopener noreferrer" className="nav-social-link facebook" title="Facebook">
+                    <FaFacebook size={20} />
+                </a>
+                <a href="https://instagram.com/mihasznamatek" target="_blank" rel="noopener noreferrer" className="nav-social-link instagram" title="Instagram">
+                    <FaInstagram size={20} />
+                </a>
+                <a href="https://www.youtube.com/@mihasznamatek" target="_blank" rel="noopener noreferrer" className="nav-social-link youtube" title="YouTube">
+                    <FaYoutube size={20} />
+                </a>
+                <a href="https://tiktok.com/@mihasznamatek" target="_blank" rel="noopener noreferrer" className="nav-social-link tiktok" title="TikTok">
+                    <FaTiktok size={20} />
+                </a>
+            </div>
             <button className="nav-toggle" aria-label="Menü megnyitása">
                 <span></span>
                 <span></span>

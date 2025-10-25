@@ -22,9 +22,10 @@ export default function App({ Component, pageProps }: AppProps) {
                     <meta charSet="UTF-8" />
                     <meta
                         name="viewport"
-                        content="width=device-width, initial-scale=1"
+                        content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
                     />
                     <title>Mihaszna Matek</title>
+                    <link rel="icon" href="/favicon.ico" />
                     <link rel="stylesheet" href="/style.css" />
                 </Head>
 

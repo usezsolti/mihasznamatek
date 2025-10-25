@@ -994,20 +994,24 @@ Címzett: ${booking.customerEmail}`;
                                  <h3>🌐 Social Media</h3>
                              </div>
                              <div className="contact-content">
-                                 <div className="social-links">
-                                     <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="social-link">
-                                         <span className="social-icon">📘</span>
-                                         <span>Facebook</span>
-                                     </a>
-                                     <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="social-link">
-                                         <span className="social-icon">📷</span>
-                                         <span>Instagram</span>
-                                     </a>
-                                     <a href="https://tiktok.com" target="_blank" rel="noopener noreferrer" className="social-link">
-                                         <span className="social-icon">🎵</span>
-                                         <span>TikTok</span>
-                                     </a>
-                                 </div>
+                                <div className="social-links">
+                                    <a href="https://www.facebook.com/profile.php?id=100075272401924" target="_blank" rel="noopener noreferrer" className="social-link facebook">
+                                        <span className="social-icon">📘</span>
+                                        <span>Facebook</span>
+                                    </a>
+                                    <a href="https://instagram.com/mihasznamatek" target="_blank" rel="noopener noreferrer" className="social-link instagram">
+                                        <span className="social-icon">📷</span>
+                                        <span>Instagram</span>
+                                    </a>
+                                    <a href="https://www.youtube.com/@mihasznamatek" target="_blank" rel="noopener noreferrer" className="social-link youtube">
+                                        <span className="social-icon">📺</span>
+                                        <span>YouTube</span>
+                                    </a>
+                                    <a href="https://tiktok.com/@mihasznamatek" target="_blank" rel="noopener noreferrer" className="social-link tiktok">
+                                        <span className="social-icon">🎵</span>
+                                        <span>TikTok</span>
+                                    </a>
+                                </div>
                                  <p className="contact-description">Kövess be a social médián!</p>
                              </div>
                          </div>
