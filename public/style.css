@@ -905,12 +905,12 @@ blockquote {
 .testimonials-track {
   display: flex;
   gap: 2rem;
-  animation: scrollLeft 10s linear infinite;
+  animation: scrollLeft 30s linear infinite;
   width: max-content;
 }
 
 .infinite-row.reverse .testimonials-track {
-  animation: scrollRight 10s linear infinite;
+  animation: scrollRight 30s linear infinite;
 }
 
 .testimonials-section:hover .testimonials-track {
