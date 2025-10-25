@@ -760,11 +760,83 @@ blockquote {
   color: #ffd700;
 }
 
+/* Swipe functionality for testimonials */
+.testimonials-swipe-container {
+  display: none;
+  overflow: hidden;
+  position: relative;
+  margin: 2rem 0;
+}
+
+.testimonials-swipe-track {
+  display: flex;
+  width: 100%;
+  height: auto;
+}
+
+.testimonial-swipe-card {
+  min-width: 100%;
+  flex-shrink: 0;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 16px;
+  padding: 2rem;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  margin: 0 1rem;
+  cursor: grab;
+}
+
+.testimonial-swipe-card:active {
+  cursor: grabbing;
+}
+
+.swipe-indicators {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.swipe-indicator {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255, 255, 255, 0.3);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.swipe-indicator.active {
+  background: var(--neon-green);
+  box-shadow: 0 0 10px var(--neon-green);
+}
+
+.swipe-indicator:hover {
+  background: rgba(255, 255, 255, 0.5);
+}
+
 /* Responsive design for testimonials */
 @media (max-width: 768px) {
   .testimonials-grid {
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .testimonials-swipe-container {
+    display: block;
+  }
+
+  .testimonials-row {
+    display: none;
+  }
+
+  .testimonial-swipe-card {
+    margin: 0;
+    padding: 1.5rem;
   }
 
   .testimonial-card {

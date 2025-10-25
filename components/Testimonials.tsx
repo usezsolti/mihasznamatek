@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import Image from 'next/image';
 
 interface Testimonial {
@@ -154,10 +154,75 @@ const testimonials: Testimonial[] = [
 
 const Testimonials: React.FC = () => {
     const [isClient, setIsClient] = useState(false);
+    const [currentIndex, setCurrentIndex] = useState(0);
+    const [isDragging, setIsDragging] = useState(false);
+    const [startX, setStartX] = useState(0);
+    const [currentX, setCurrentX] = useState(0);
+    const trackRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         setIsClient(true);
     }, []);
+
+    const handleTouchStart = (e: React.TouchEvent) => {
+        setIsDragging(true);
+        setStartX(e.touches[0].clientX);
+        setCurrentX(e.touches[0].clientX);
+    };
+
+    const handleTouchMove = (e: React.TouchEvent) => {
+        if (!isDragging) return;
+        setCurrentX(e.touches[0].clientX);
+    };
+
+    const handleTouchEnd = () => {
+        if (!isDragging) return;
+        
+        const diff = startX - currentX;
+        const threshold = 50;
+
+        if (Math.abs(diff) > threshold) {
+            if (diff > 0) {
+                // Swipe left - next testimonial
+                setCurrentIndex((prev) => (prev + 1) % testimonials.length);
+            } else {
+                // Swipe right - previous testimonial
+                setCurrentIndex((prev) => (prev - 1 + testimonials.length) % testimonials.length);
+            }
+        }
+
+        setIsDragging(false);
+    };
+
+    const handleMouseDown = (e: React.MouseEvent) => {
+        setIsDragging(true);
+        setStartX(e.clientX);
+        setCurrentX(e.clientX);
+    };
+
+    const handleMouseMove = (e: React.MouseEvent) => {
+        if (!isDragging) return;
+        setCurrentX(e.clientX);
+    };
+
+    const handleMouseUp = () => {
+        if (!isDragging) return;
+        
+        const diff = startX - currentX;
+        const threshold = 50;
+
+        if (Math.abs(diff) > threshold) {
+            if (diff > 0) {
+                // Swipe left - next testimonial
+                setCurrentIndex((prev) => (prev + 1) % testimonials.length);
+            } else {
+                // Swipe right - previous testimonial
+                setCurrentIndex((prev) => (prev - 1 + testimonials.length) % testimonials.length);
+            }
+        }
+
+        setIsDragging(false);
+    };
 
     return (
         <section id="testimonials" className="testimonials-section">
@@ -166,6 +231,65 @@ const Testimonials: React.FC = () => {
                 <p className="section-subtitle">Miért vagyok igazi MIHASZNA matektanár?</p>
 
                 <div className="testimonials-grid">
+                    {/* Swipe-able testimonials for mobile */}
+                    <div className="testimonials-swipe-container">
+                        <div 
+                            className="testimonials-swipe-track"
+                            ref={trackRef}
+                            onTouchStart={handleTouchStart}
+                            onTouchMove={handleTouchMove}
+                            onTouchEnd={handleTouchEnd}
+                            onMouseDown={handleMouseDown}
+                            onMouseMove={handleMouseMove}
+                            onMouseUp={handleMouseUp}
+                            onMouseLeave={handleMouseUp}
+                            style={{
+                                transform: `translateX(${-currentIndex * 100}%)`,
+                                transition: isDragging ? 'none' : 'transform 0.3s ease'
+                            }}
+                        >
+                            {testimonials.map((testimonial, index) => (
+                                <div key={testimonial.id} className="testimonial-swipe-card">
+                                    <div className="testimonial-content">
+                                        <p className="testimonial-text" suppressHydrationWarning>&ldquo;{testimonial.text}&rdquo;</p>
+                                        <div className="testimonial-footer">
+                                            <div className="testimonial-avatar">
+                                                <Image
+                                                    src={testimonial.avatar}
+                                                    alt={testimonial.name}
+                                                    width={48}
+                                                    height={48}
+                                                    className="avatar-image"
+                                                />
+                                            </div>
+                                            <div className="testimonial-info">
+                                                <h4 className="testimonial-name">{testimonial.name}</h4>
+                                                {testimonial.rating && (
+                                                    <div className="testimonial-rating">
+                                                        {[...Array(testimonial.rating)].map((_, i) => (
+                                                            <span key={i} className="star">⭐</span>
+                                                        ))}
+                                                    </div>
+                                                )}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                        
+                        {/* Swipe indicators */}
+                        <div className="swipe-indicators">
+                            {testimonials.map((_, index) => (
+                                <button
+                                    key={index}
+                                    className={`swipe-indicator ${index === currentIndex ? 'active' : ''}`}
+                                    onClick={() => setCurrentIndex(index)}
+                                />
+                            ))}
+                        </div>
+                    </div>
+
                     {/* Első sor - végtelen loop */}
                     <div className="testimonials-row infinite-row">
                         <div className="testimonials-track">
