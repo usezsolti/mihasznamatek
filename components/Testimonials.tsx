@@ -149,6 +149,27 @@ const testimonials: Testimonial[] = [
         avatar: "/Vélemények2.png",
         text: "Zsolttal nagyon gyorsan és rugalmasan sikerült időpontokat egyeztetni. Rendkívül sokat segített egy sürgős felkészülés során, és hetente több intenzív korrepetálást is tartott. Az órák légköre barátságos volt, ugyanakkor gyakran hozott az egyetemi anyaghoz képest azonos, sőt néha még nehezebb feladatokat is. Zsolt segítségével gond nélkül sikerült átmenni Matek 1-en (sos pót zh), és Matek 2-n is. Szívből ajánlom mindenkinek.",
         rating: 5
+    },
+    {
+        id: 21,
+        name: "Anna",
+        avatar: "/Vélemények10.png",
+        text: "Zsolt segítségével sikerült megértenem a matematika alapjait. Türelmesen magyarázza el az anyagot, és mindig talál kreatív megoldásokat a nehézségekre. Az órák jó hangulatban telnek, és észrevehetően javult a matek tudásom.",
+        rating: 5
+    },
+    {
+        id: 22,
+        name: "Péter",
+        avatar: "/Vélemények11.png",
+        text: "Kiváló tanár! Zsolt segítségével sikerült felkészülnöm az emelt matek érettségire. Az órák szórakoztatóak és érthetőek voltak. Mindenkinek ajánlom, aki matekban szeretne fejlődni.",
+        rating: 5
+    },
+    {
+        id: 23,
+        name: "Kata",
+        avatar: "/Vélemények12.png",
+        text: "Zsolt egy fantasztikus tanár! Rugalmas az időpontokkal, és mindig segítőkész. Az órák alatt sok mindent megtanultam, és végre megértettem a matekot. Csak ajánlani tudom!",
+        rating: 5
     }
 ];
 
