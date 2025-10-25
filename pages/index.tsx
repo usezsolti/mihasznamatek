@@ -5,7 +5,6 @@ import Script from 'next/script';
 import Link from "next/link";
 import { useState, FormEvent } from "react";
 import { useRouter } from "next/router";
-import ChatButton from "../components/ChatButton";
 import Testimonials from "../components/Testimonials";
 import InteractiveHeader from "../components/InteractiveHeader";
 import CookieBanner from "../components/CookieBanner";
@@ -968,9 +967,6 @@ export default function Home() {
 
 
 
-
-            {/* Chat Button */}
-            <ChatButton />
 
             {/* Cookie Banner */}
             <CookieBanner />
