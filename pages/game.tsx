@@ -761,23 +761,6 @@ export default function Game() {
                                     <p>Kérjük, válasszon másik oktatási szintet.</p>
                                 </div>
                             )}
-                            {isAdmin && (
-                                <div style={{
-                                    background: 'linear-gradient(45deg, #39FF14, #FF49DB)',
-                                    color: '#000',
-                                    padding: '0.5rem 1rem',
-                                    borderRadius: '15px',
-                                    fontSize: '0.9rem',
-                                    fontWeight: '600',
-                                    textAlign: 'center',
-                                    marginTop: '1rem',
-                                    boxShadow: '0 0 20px rgba(57, 255, 20, 0.5)',
-                                    maxWidth: '300px',
-                                    margin: '1rem auto 0'
-                                }}>
-                                    👑 ADMIN MODE - {currentUser?.email}
-                                </div>
-                            )}
 
                             {!educationLevel ? (
                                 <div className="level-selector">
