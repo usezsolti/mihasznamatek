@@ -9,7 +9,6 @@ import ChatButton from "../components/ChatButton";
 import Testimonials from "../components/Testimonials";
 import InteractiveHeader from "../components/InteractiveHeader";
 import CookieBanner from "../components/CookieBanner";
-import Footer from "../components/Footer";
 
 // Firebase típus definíciók
 // Window interface már definiálva van a types/global.d.ts fájlban
@@ -975,9 +974,6 @@ export default function Home() {
 
             {/* Cookie Banner */}
             <CookieBanner />
-
-            {/* Footer */}
-            <Footer />
 
             {/* Your main.js (map init, emailjs hooks, etc.) */}
             <Script src="/main.js" strategy="afterInteractive" />
