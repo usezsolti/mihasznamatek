@@ -24,7 +24,30 @@ export default function App({ Component, pageProps }: AppProps) {
                         name="viewport"
                         content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
                     />
-                    <title>Mihaszna Matek</title>
+                    <title>Mihaszna Matek - Magán Matektanár | Matek Tanár | Magán Oktatás</title>
+                    <meta name="description" content="Mihaszna Matek - Professzionális magán matektanár. Matek tanár, magán oktatás, egyetemi matematika, középiskolai matek. Online és személyes oktatás Budapesten." />
+                    <meta name="keywords" content="matektanár, magán matektanár, matek tanár, magán oktatás, magán matek, mihasznamatek, matematika tanár, egyetemi matek, középiskolai matek, matek oktatás, Budapest matektanár, online matek, személyes matek oktatás" />
+                    <meta name="author" content="Mihaszna Matek" />
+                    <meta name="robots" content="index, follow" />
+                    <meta name="googlebot" content="index, follow" />
+                    
+                    {/* Open Graph / Facebook */}
+                    <meta property="og:type" content="website" />
+                    <meta property="og:url" content="https://mihasznamatek.hu/" />
+                    <meta property="og:title" content="Mihaszna Matek - Magán Matektanár | Matek Tanár" />
+                    <meta property="og:description" content="Professzionális magán matektanár. Matek tanár, magán oktatás, egyetemi matematika, középiskolai matek. Online és személyes oktatás Budapesten." />
+                    <meta property="og:image" content="https://mihasznamatek.hu/profile.png" />
+                    
+                    {/* Twitter */}
+                    <meta property="twitter:card" content="summary_large_image" />
+                    <meta property="twitter:url" content="https://mihasznamatek.hu/" />
+                    <meta property="twitter:title" content="Mihaszna Matek - Magán Matektanár | Matek Tanár" />
+                    <meta property="twitter:description" content="Professzionális magán matektanár. Matek tanár, magán oktatás, egyetemi matematika, középiskolai matek. Online és személyes oktatás Budapesten." />
+                    <meta property="twitter:image" content="https://mihasznamatek.hu/profile.png" />
+                    
+                    {/* Canonical URL */}
+                    <link rel="canonical" href="https://mihasznamatek.hu/" />
+                    
                     <link rel="icon" href="/favicon.ico" />
                     <link rel="stylesheet" href="/style.css" />
                 </Head>

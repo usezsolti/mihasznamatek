@@ -1,0 +1,35 @@
+{
+  "@context": "https://schema.org",
+  "@type": "EducationalOrganization",
+  "name": "Mihaszna Matek",
+  "description": "Professzionális magán matektanár. Matek tanár, magán oktatás, egyetemi matematika, középiskolai matek. Online és személyes oktatás Budapesten.",
+  "url": "https://mihasznamatek.hu",
+  "logo": "https://mihasznamatek.hu/profile.png",
+  "image": "https://mihasznamatek.hu/profile.png",
+  "telephone": "+36-XX-XXX-XXXX",
+  "email": "usezsolti@gmail.com",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Budapest",
+    "addressCountry": "HU"
+  },
+  "founder": {
+    "@type": "Person",
+    "name": "Mihaszna Matek",
+    "jobTitle": "Magán Matektanár"
+  },
+  "offers": {
+    "@type": "Offer",
+    "name": "Magán Matek Oktatás",
+    "description": "Egyetemi matematika, középiskolai matek, magán oktatás",
+    "category": "Oktatás",
+    "serviceType": "Magán Matektanár"
+  },
+  "keywords": "matektanár, magán matektanár, matek tanár, magán oktatás, magán matek, mihasznamatek, matematika tanár, egyetemi matek, középiskolai matek, matek oktatás, Budapest matektanár, online matek, személyes matek oktatás",
+  "sameAs": [
+    "https://www.facebook.com/mihasznamatek",
+    "https://www.instagram.com/mihaszna__/",
+    "https://www.youtube.com/@Mihasznamatek",
+    "https://tiktok.com/@mihasznamatek"
+  ]
+}
