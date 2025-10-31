@@ -753,7 +753,7 @@ export default function Game() {
                         <div className="start-screen">
                             <h1 className="game-title">🚀 UniBoost</h1>
                             <p className="game-subtitle">
-                                {selectedTask ? selectedTask.title : 'Egyetemi matematikai kihívás!'}
+                                {selectedTask ? selectedTask.title : 'Együtt teremtjük a tanítás jövőjét'}
                             </p>
                             {questions.length === 0 && (
                                 <div className="no-questions-warning">

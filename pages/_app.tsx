@@ -52,6 +52,20 @@ export default function App({ Component, pageProps }: AppProps) {
                     <link rel="stylesheet" href="/style.css" />
                 </Head>
 
+                {/* Google Ads (gtag.js) */}
+                <Script
+                    src="https://www.googletagmanager.com/gtag/js?id=AW-17680696688"
+                    strategy="afterInteractive"
+                />
+                <Script id="google-ads" strategy="afterInteractive">
+                    {`
+                        window.dataLayer = window.dataLayer || [];
+                        function gtag(){dataLayer.push(arguments);}
+                        gtag('js', new Date());
+                        gtag('config', 'AW-17680696688');
+                    `}
+                </Script>
+
                 <Script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js" strategy="beforeInteractive" />
                 <Script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-auth-compat.js" strategy="beforeInteractive" />
                 <Script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js" strategy="beforeInteractive" />

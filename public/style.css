@@ -99,25 +99,37 @@ nav {
 
 /* Záró gomb a menüben */
 .nav-close {
-  text-align: right;
-  padding: 1rem 1.5rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  display: none;
 }
 
 .close-btn {
-  background: none;
-  border: none;
-  color: var(--text-color);
-  font-size: 1.5rem;
-  cursor: pointer;
-  padding: 0.5rem;
-  border-radius: 50%;
-  transition: all 0.3s ease;
+  display: none;
 }
 
-.close-btn:hover {
-  color: var(--neon-green);
-  background: rgba(57, 255, 20, 0.1);
+@media (max-width: 768px) {
+  .nav-close {
+    display: block;
+    text-align: right;
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .close-btn {
+    display: block;
+    background: none;
+    border: none;
+    color: var(--text-color);
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+  }
+
+  .close-btn:hover {
+    color: var(--neon-green);
+    background: rgba(57, 255, 20, 0.1);
+  }
 }
 
 
@@ -1937,20 +1949,14 @@ h1 {
   }
 
   .nav-close {
+    display: block;
     position: absolute;
     top: 1rem;
     right: 1rem;
-    background: none;
-    border: none;
-    color: #ffffff;
-    font-size: 1.5rem;
-    cursor: pointer;
-    padding: 0.5rem;
-    border-radius: 50%;
-    transition: all 0.3s ease;
   }
 
   .close-btn {
+    display: block;
     background: none;
     border: none;
     color: #ffffff;
@@ -1963,7 +1969,7 @@ h1 {
 
   .close-btn:hover {
     color: var(--neon-green);
-    background: none;
+    background: rgba(57, 255, 20, 0.1);
   }
 
   .nav-links li a {
