@@ -94,6 +94,9 @@ export default function Navbar() {
                         <a href="#testimonials" onClick={toggleMenu}>Vélemények</a>
                     </li>
                     <li>
+                        <a href="#pricing" onClick={toggleMenu}>Ár</a>
+                    </li>
+                    <li>
                         <a href="#contact" onClick={toggleMenu}>Kapcsolat</a>
                     </li>
                 </ul>

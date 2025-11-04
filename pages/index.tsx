@@ -144,6 +144,13 @@ export default function Home() {
             observer.observe(skill);
         });
 
+        // Observe pricing card - balról jelenik meg
+        const pricingCard = document.querySelector('.pricing-card');
+        if (pricingCard) {
+            pricingCard.classList.add('slide-from-left');
+            observer.observe(pricingCard);
+        }
+
         // Observe auth section - bal oldal balról, jobb oldal jobbról
         const authInfo = document.querySelector('#auth .contact-info');
         if (authInfo) {
@@ -841,6 +848,78 @@ export default function Home() {
 
             {/* TESTIMONIALS */}
             <Testimonials />
+
+            {/* PRICING SECTION */}
+            <section id="pricing" className="section">
+                <div className="section-content">
+                    <h2 className="section-title">💰 Ár &amp; Foglalási információk</h2>
+                    <p className="section-subtitle">Déutáni és délelötti időpontokban is elérhetőek az órák</p>
+
+                    <div className="pricing-container">
+                        <div className="pricing-card glass-card">
+                            <div className="pricing-header">
+                                <span className="calendar-icon">📅</span>
+                                <h3>Foglalási információk</h3>
+                            </div>
+                            
+                            <div className="pricing-info">
+                                <div className="info-group">
+                                    <h4>Munkaidő (Hétfő - Szombat)</h4>
+                                    <ul className="working-hours">
+                                        <li><span className="info-key">Hétfő:</span> <span className="info-value">11:00 - 20:00</span></li>
+                                        <li><span className="info-key">Kedd:</span> <span className="info-value">16:00 - 22:00</span></li>
+                                        <li><span className="info-key">Szerda:</span> <span className="info-value">08:00 - 20:00</span></li>
+                                        <li><span className="info-key">Csütörtök:</span> <span className="info-value">11:00 - 20:00</span></li>
+                                        <li><span className="info-key">Péntek:</span> <span className="info-value">11:00 - 18:00</span></li>
+                                        <li><span className="info-key">Szombat:</span> <span className="info-value">09:00 - 15:00</span></li>
+                                    </ul>
+                                </div>
+
+                                <div className="info-divider"></div>
+
+                                <div className="info-group">
+                                    <h4>Ár</h4>
+                                    <p className="price-value">11.000 Ft/60 perc</p>
+                                </div>
+
+                                <div className="info-divider"></div>
+
+                                <div className="info-group">
+                                    <h4>Helyszín</h4>
+                                    <p className="info-value">Online Teams-en keresztül vagy élőben Fóton</p>
+                                </div>
+
+                                <div className="info-divider"></div>
+
+                                <div className="info-group">
+                                    <h4>Fizetés</h4>
+                                    <p className="info-value">Készpénzzel vagy utalással</p>
+                                </div>
+
+                                <div className="info-divider"></div>
+
+                                <div className="info-group">
+                                    <h4>Banki adatok</h4>
+                                    <div className="bank-details">
+                                        <p><span className="info-key">Utalás:</span> <span className="info-value">Lieszkofszki Zsolt</span></p>
+                                        <p><span className="info-key">Számlaszám:</span> <span className="info-value">10401000-86765086-50861000</span></p>
+                                        <p><span className="info-key">Közlemény:</span> <span className="info-value">Számla sorszáma</span></p>
+                                    </div>
+                                </div>
+
+                                <div className="info-divider"></div>
+
+                                <div className="info-group cancellation-policy">
+                                    <h4>Lemondási szabály</h4>
+                                    <p className="cancellation-text">
+                                        <span className="info-key">24 órával előtte lemondható, különben</span> <span className="info-value highlight">teljes díj</span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
 
             {/* CONTACT SECTION */}
             <section id="contact" className="section contact-section">

@@ -4296,3 +4296,190 @@ textarea::placeholder {
     font-size: 1rem;
   }
 }
+
+/* Pricing Section Styles */
+#pricing {
+  background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
+}
+
+.pricing-container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem 0;
+}
+
+.pricing-card {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 20px;
+  padding: 2.5rem;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.pricing-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--neon-green), var(--neon-pink));
+  animation: shimmer 3s ease-in-out infinite;
+}
+
+.pricing-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 40px rgba(57, 255, 20, 0.2);
+  border-color: var(--neon-green);
+}
+
+.pricing-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.calendar-icon {
+  font-size: 2rem;
+}
+
+.pricing-header h3 {
+  color: var(--neon-green);
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.pricing-info {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.info-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.info-group h4 {
+  color: #ffffff;
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.info-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  margin: 0.5rem 0;
+}
+
+.working-hours {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.working-hours li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0;
+}
+
+.info-key {
+  color: #a0a0a0;
+  font-weight: 400;
+}
+
+.info-value {
+  color: #ff49db;
+  font-weight: 600;
+}
+
+.price-value {
+  color: var(--neon-green);
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0;
+  text-shadow: 0 0 10px var(--neon-green);
+}
+
+.bank-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.bank-details p {
+  margin: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0;
+}
+
+.cancellation-policy {
+  background: rgba(57, 255, 20, 0.1);
+  padding: 1rem;
+  border-radius: 10px;
+  border-left: 4px solid var(--neon-green);
+}
+
+.cancellation-text {
+  margin: 0;
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
+.cancellation-text .highlight {
+  color: var(--neon-green);
+  font-weight: 700;
+  text-shadow: 0 0 10px var(--neon-green);
+}
+
+@keyframes shimmer {
+  0%, 100% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+/* Responsive Pricing Section */
+@media (max-width: 768px) {
+  .pricing-card {
+    padding: 1.5rem;
+  }
+
+  .pricing-header h3 {
+    font-size: 1.5rem;
+  }
+
+  .working-hours li {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
+  }
+
+  .bank-details p {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
+  }
+
+  .price-value {
+    font-size: 1.3rem;
+  }
+}
