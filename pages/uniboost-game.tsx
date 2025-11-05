@@ -408,7 +408,7 @@ export default function UniBoostGame() {
     return (
         <div className="game-container">
             <Head>
-                <title>UniBoost - Egyetemi Matematikai Játék</title>
+                <title>Mihaszna Matek - Játék</title>
             </Head>
 
             <div className="background-effects">
@@ -423,7 +423,6 @@ export default function UniBoostGame() {
                 {!gameActive && (
                     <>
                         <h1 className="game-title">🚀 UniBoost</h1>
-                        <p className="game-subtitle">Egyetemi Matematikai Játék</p>
                         {studentName && <p className="student-info">Tanuló: {studentName}</p>}
                     </>
                 )}

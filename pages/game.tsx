@@ -743,8 +743,8 @@ export default function Game() {
     return (
         <>
             <Head>
-                <title>🚀 UniBoost - Mihaszna Matek</title>
-                <meta name="description" content="Egyetemi matematikai kihívás" />
+                <title>Mihaszna Matek - Játék</title>
+                <meta name="description" content="Matematikai kihívás" />
             </Head>
 
             <div className="game-container">
@@ -794,9 +794,7 @@ export default function Game() {
                                 </div>
                             ) : (
                                 <div className="game-info-section">
-                                    <div className="selected-level">
-                                        <h3>🎓 UniBoost - Egyetemi Matematikai Játék</h3>
-                                    </div>
+                                    <div className="selected-level"></div>
                                     <div className="stats-display">
                                         <div className="stat-item">
                                             <span className="stat-icon">🏆</span>

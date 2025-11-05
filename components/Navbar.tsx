@@ -99,6 +99,9 @@ export default function Navbar() {
                     <li>
                         <a href="#contact" onClick={toggleMenu}>Kapcsolat</a>
                     </li>
+                    <li>
+                        <Link href="/workout" onClick={toggleMenu}>Személyi edzés</Link>
+                    </li>
                 </ul>
                 <div className="nav-social-links">
                     <a href="https://www.facebook.com/profile.php?id=100075272401924" target="_blank" rel="noopener noreferrer" className="nav-social-link facebook" title="Facebook">
