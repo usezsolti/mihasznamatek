@@ -17,7 +17,7 @@ export default function PersonalTrainer() {
                             💪 MIHASZNA WORKOUT
                         </h1>
                         <p className="workout-subtitle">
-                            Professzionális személyi edző szolgáltatások
+                            So useful workout for your body
                         </p>
                     </div>
 
@@ -493,7 +493,7 @@ export default function PersonalTrainer() {
                 }
 
                 .workout-back-link {
-                    color: #ff6b6b;
+                    color: #ffffff;
                     text-decoration: none;
                     font-size: 1.1rem;
                     font-weight: 600;

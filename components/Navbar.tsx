@@ -14,21 +14,24 @@ export default function Navbar() {
     };
 
     const handleAnchorClick = (hash: string) => (e: React.MouseEvent<HTMLAnchorElement | HTMLSpanElement>) => {
-        // Megakadályozzuk az alap viselkedést mobilon, hogy megbízhatóan görgessünk
         e.preventDefault();
         setIsMenuOpen(false);
-        // Várunk egy kicsit, hogy a menü bezáródjon, majd görgetünk
-        const scrollToTarget = () => {
+        const go = () => {
+            if (router.pathname !== '/') {
+                // Másik oldalon vagyunk: navigáljunk az indexre a megfelelő hash-sel
+                router.push(`/${hash}`);
+                return;
+            }
+            // Főoldalon vagyunk: smooth scroll a szekcióra
             const target = document.querySelector(hash);
             if (target) {
                 target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                // Frissítjük a hash-t a címsorban anélkül, hogy újratöltenénk az oldalt
                 if (typeof window !== 'undefined') {
                     history.replaceState(null, '', hash);
                 }
             }
         };
-        setTimeout(scrollToTarget, 250);
+        setTimeout(go, 150);
     };
     useEffect(() => {
         setIsClient(true);
@@ -103,19 +106,19 @@ export default function Navbar() {
                         <button onClick={toggleMenu} className="close-btn">✕</button>
                     </li>
                     <li>
-                        <a href="#about" onClick={handleAnchorClick('#about')}>Rólam</a>
+                        <a href="/#about" onClick={handleAnchorClick('#about')}>Rólam</a>
                     </li>
                     <li>
-                        <a href="#courses" onClick={handleAnchorClick('#courses')}>Kiket vállalok?</a>
+                        <a href="/#courses" onClick={handleAnchorClick('#courses')}>Kiket vállalok?</a>
                     </li>
                     <li>
-                        <a href="#testimonials" onClick={handleAnchorClick('#testimonials')}>Vélemények</a>
+                        <a href="/#testimonials" onClick={handleAnchorClick('#testimonials')}>Vélemények</a>
                     </li>
                     <li>
-                        <a href="#pricing" onClick={handleAnchorClick('#pricing')}>Ár</a>
+                        <a href="/#pricing" onClick={handleAnchorClick('#pricing')}>Ár</a>
                     </li>
                     <li>
-                        <a href="#contact" onClick={handleAnchorClick('#contact')}>Kapcsolat</a>
+                        <a href="/#contact" onClick={handleAnchorClick('#contact')}>Kapcsolat</a>
                     </li>
                     <li>
                         <Link href="/workout" onClick={toggleMenu}>Személyi edzés</Link>
