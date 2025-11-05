@@ -853,7 +853,7 @@ export default function Home() {
             <section id="pricing" className="section">
                 <div className="section-content">
                     <h2 className="section-title">💰 Ár &amp; Foglalási információk</h2>
-                    <p className="section-subtitle">Déutáni és délelötti időpontokban is elérhetőek az órák</p>
+                    <p className="section-subtitle">Délutáni és délelőtti időpontokban is elérhetőek az órák</p>
 
                     <div className="pricing-container">
                         <div className="pricing-card glass-card">
