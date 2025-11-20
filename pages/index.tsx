@@ -932,14 +932,23 @@ export default function Home() {
                         <div className="contact-info">
                             <div className="contact-card">
                                 <div className="contact-icon">📍</div>
-                                <h3>Cím</h3>
+                                <h3>Címek</h3>
                                 <p>2151 Fót, Szent Imre utca 18</p>
-                                <a href="https://maps.google.com/?q=2151+Fót,+Szent+Imre+utca+18"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="contact-link">
-                                    Megnyitás Google Maps-en
-                                </a>
+                                <p>1047 Budapest, Attila u. 4</p>
+                                <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', marginTop: '0.5rem' }}>
+                                    <a href="https://maps.google.com/?q=2151+Fót,+Szent+Imre+utca+18"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="contact-link">
+                                        Fót - Google Maps
+                                    </a>
+                                    <a href="https://maps.google.com/?q=1047+Budapest,+Attila+u.+4"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="contact-link">
+                                        Budapest - Google Maps
+                                    </a>
+                                </div>
                             </div>
 
 
@@ -997,16 +1006,27 @@ export default function Home() {
                                 <div className="map-placeholder">
                                     <div className="map-content">
                                         <div className="map-icon">📍</div>
-                                        <h4>2151 Fót, Szent Imre utca 18</h4>
-                                        <p>MIHASZNA matek tanítási helyszín</p>
-                                        <a
-                                            href="https://maps.google.com/?q=2151+Fót,+Szent+Imre+utca+18"
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            className="map-link"
-                                        >
-                                            Megnyitás Google Maps-en
-                                        </a>
+                                        <h4>Tanítási helyszínek</h4>
+                                        <p><strong>2151 Fót, Szent Imre utca 18</strong></p>
+                                        <p><strong>1047 Budapest, Attila u. 4</strong></p>
+                                        <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', marginTop: '0.5rem' }}>
+                                            <a
+                                                href="https://maps.google.com/?q=2151+Fót,+Szent+Imre+utca+18"
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="map-link"
+                                            >
+                                                Fót - Google Maps
+                                            </a>
+                                            <a
+                                                href="https://maps.google.com/?q=1047+Budapest,+Attila+u.+4"
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="map-link"
+                                            >
+                                                Budapest - Google Maps
+                                            </a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
