@@ -123,7 +123,7 @@ export default function PersonalTrainer() {
                                 <div className="pricing-card">
                                     <div className="pricing-badge">Standard</div>
                                     <h3>1 alkalom</h3>
-                                    <p className="price">5500 Ft / 60 perc</p>
+                                    <p className="price">5000 Ft / 60 perc</p>
                                     <ul className="pricing-features">
                                         <li>Egyéni edzés</li>
                                         <li>Technika javítás</li>
@@ -134,8 +134,8 @@ export default function PersonalTrainer() {
                                 <div className="pricing-card highlight">
                                     <div className="pricing-badge best">StandardPlus</div>
                                     <h3>5 alkalmas bérlet</h3>
-                                    <p className="price">25 000 Ft</p>
-                                    <p className="sub">5 000 Ft / alkalom</p>
+                                    <p className="price">22 500 Ft</p>
+                                    <p className="sub">4 500 Ft / alkalom</p>
                                     <ul className="pricing-features">
                                         <li>5× 60 perces edzés</li>
                                         <li>Személyre szabott terv</li>
@@ -147,14 +147,15 @@ export default function PersonalTrainer() {
                                 <div className="pricing-card">
                                     <div className="pricing-badge">Legnépszerűbb</div>
                                     <h3>10 alkalmas bérlet</h3>
-                                    <p className="price">50 000 Ft</p>
-                                    <p className="sub">5 000 Ft / alkalom</p>
+                                    <p className="price">40 000 Ft</p>
+                                    <p className="sub">4 000 Ft / alkalom</p>
                                     <ul className="pricing-features">
                                         <li>10× 60 perces edzés</li>
                                         <li>Részletes edzésterv</li>
                                         <li>Fejlődéskövetés</li>
                                         <li>Technikai javítás</li>
-                                        <li>Táplálkozási tanácsok</li>
+                                        <li>Táplálkozási terv készítése és követése</li>
+
                                     </ul>
                                 </div>
 
