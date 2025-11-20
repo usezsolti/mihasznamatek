@@ -121,9 +121,9 @@ export default function PersonalTrainer() {
                             <h2 className="section-title-workout">💰 Csomagok és árak</h2>
                             <div className="pricing-grid">
                                 <div className="pricing-card">
-                                    <div className="pricing-badge">Alap</div>
+                                    <div className="pricing-badge">Standard</div>
                                     <h3>1 alkalom</h3>
-                                    <p className="price">9 500 Ft / 60 perc</p>
+                                    <p className="price">6000 Ft / 60 perc</p>
                                     <ul className="pricing-features">
                                         <li>Egyéni edzés</li>
                                         <li>Technika javítás</li>
@@ -132,28 +132,30 @@ export default function PersonalTrainer() {
                                 </div>
 
                                 <div className="pricing-card highlight">
-                                    <div className="pricing-badge best">Legnépszerűbb</div>
+                                    <div className="pricing-badge best">StandardPlus</div>
                                     <h3>5 alkalmas bérlet</h3>
-                                    <p className="price">40 000 Ft</p>
-                                    <p className="sub">8 000 Ft / alkalom</p>
+                                    <p className="price">30 000 Ft</p>
+                                    <p className="sub">6 000 Ft / alkalom</p>
                                     <ul className="pricing-features">
                                         <li>5× 60 perces edzés</li>
                                         <li>Személyre szabott terv</li>
                                         <li>Fejlődéskövetés</li>
                                         <li>Technikai javítás</li>
+                                        <li>Táplálkozási tanácsok</li>
                                     </ul>
                                 </div>
 
                                 <div className="pricing-card">
-                                    <div className="pricing-badge">Pro</div>
+                                    <div className="pricing-badge">Legnépszerűbb</div>
                                     <h3>10 alkalmas bérlet</h3>
-                                    <p className="price">75 000 Ft</p>
-                                    <p className="sub">7 500 Ft / alkalom</p>
+                                    <p className="price">55 000 Ft</p>
+                                    <p className="sub">5 500 Ft / alkalom</p>
                                     <ul className="pricing-features">
                                         <li>10× 60 perces edzés</li>
                                         <li>Részletes edzésterv</li>
                                         <li>Fejlődéskövetés</li>
                                         <li>Technikai javítás</li>
+                                        <li>Táplálkozási tanácsok</li>
                                     </ul>
                                 </div>
 
