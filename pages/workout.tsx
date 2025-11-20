@@ -162,7 +162,7 @@ export default function PersonalTrainer() {
                                 <div className="pricing-card">
                                     <div className="pricing-badge">Páros</div>
                                     <h3>Couple / Friend Workout</h3>
-                                    <p className="price">15 000 Ft / 60 perc / 2 fő</p>
+                                    <p className="price">8 000 Ft / 60 perc / 2 fő</p>
                                     <ul className="pricing-features">
                                         <li>Közös motiváció</li>
                                         <li>Partner gyakorlatok</li>
