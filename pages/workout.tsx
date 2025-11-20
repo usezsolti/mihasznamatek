@@ -123,7 +123,7 @@ export default function PersonalTrainer() {
                                 <div className="pricing-card">
                                     <div className="pricing-badge">Standard</div>
                                     <h3>1 alkalom</h3>
-                                    <p className="price">6000 Ft / 60 perc</p>
+                                    <p className="price">5500 Ft / 60 perc</p>
                                     <ul className="pricing-features">
                                         <li>Egyéni edzés</li>
                                         <li>Technika javítás</li>
@@ -134,14 +134,13 @@ export default function PersonalTrainer() {
                                 <div className="pricing-card highlight">
                                     <div className="pricing-badge best">StandardPlus</div>
                                     <h3>5 alkalmas bérlet</h3>
-                                    <p className="price">27 500 Ft</p>
-                                    <p className="sub">5 500 Ft / alkalom</p>
+                                    <p className="price">25 000 Ft</p>
+                                    <p className="sub">5 000 Ft / alkalom</p>
                                     <ul className="pricing-features">
                                         <li>5× 60 perces edzés</li>
                                         <li>Személyre szabott terv</li>
                                         <li>Fejlődéskövetés</li>
                                         <li>Technikai javítás</li>
-                                        <li>Táplálkozási tanácsok</li>
                                     </ul>
                                 </div>
 
