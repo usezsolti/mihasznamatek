@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
+import { trackContactConversion } from '../utils/gtag';
 
 export default function PersonalTrainer() {
     useEffect(() => {
@@ -192,17 +193,17 @@ export default function PersonalTrainer() {
                                 <div className="contact-pt-info">
                                     <p className="contact-line"><span className="contact-key">Helyszín:</span> <span className="contact-val">X1 Gym — 2151 Fót, Keleti Márton utca 7.</span></p>
                                     <p className="contact-line"><span className="contact-key">Edzések:</span> <span className="contact-val">egyéni és páros alkalmak előre egyeztetett időpontban</span></p>
-                                    <p className="contact-line"><span className="contact-key">Telefon:</span> <a className="contact-val link" href="tel:+36308935495">+36 30 893 5495</a></p>
-                                    <p className="contact-line"><span className="contact-key">E‑mail:</span> <a className="contact-val link" href="mailto:usezsolti@gmail.com">usezsolti@gmail.com</a></p>
+                                    <p className="contact-line"><span className="contact-key">Telefon:</span> <a className="contact-val link" href="tel:+36308935495" onClick={trackContactConversion}>+36 30 893 5495</a></p>
+                                    <p className="contact-line"><span className="contact-key">E‑mail:</span> <a className="contact-val link" href="mailto:usezsolti@gmail.com" onClick={trackContactConversion}>usezsolti@gmail.com</a></p>
                                     <div className="contact-actions">
                                         <a className="contact-btn" href="https://www.google.com/maps?q=2151+F%C3%B3t,+Keleti+M%C3%A1rton+utca+7&hl=hu" target="_blank" rel="noopener noreferrer">Megnyitás Google Térképen</a>
                                     </div>
 
                                     <div className="contact-socials">
-                                        <a className="social-btn facebook" href="https://www.facebook.com/profile.php?id=100075272401924" target="_blank" rel="noopener noreferrer">Facebook</a>
-                                        <a className="social-btn instagram" href="https://www.instagram.com/mihaszna__/" target="_blank" rel="noopener noreferrer">Instagram</a>
-                                        <a className="social-btn youtube" href="https://www.youtube.com/@Mihasznamatek" target="_blank" rel="noopener noreferrer">YouTube</a>
-                                        <a className="social-btn tiktok" href="https://tiktok.com/@mihasznamatek" target="_blank" rel="noopener noreferrer">TikTok</a>
+                                        <a className="social-btn facebook" href="https://www.facebook.com/profile.php?id=100075272401924" target="_blank" rel="noopener noreferrer" onClick={trackContactConversion}>Facebook</a>
+                                        <a className="social-btn instagram" href="https://www.instagram.com/mihaszna__/" target="_blank" rel="noopener noreferrer" onClick={trackContactConversion}>Instagram</a>
+                                        <a className="social-btn youtube" href="https://www.youtube.com/@Mihasznamatek" target="_blank" rel="noopener noreferrer" onClick={trackContactConversion}>YouTube</a>
+                                        <a className="social-btn tiktok" href="https://tiktok.com/@mihasznamatek" target="_blank" rel="noopener noreferrer" onClick={trackContactConversion}>TikTok</a>
                                     </div>
                                 </div>
                                 <div className="contact-pt-map">

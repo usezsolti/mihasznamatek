@@ -8,6 +8,7 @@ import { useRouter } from "next/router";
 import Testimonials from "../components/Testimonials";
 import InteractiveHeader from "../components/InteractiveHeader";
 import CookieBanner from "../components/CookieBanner";
+import { trackContactConversion } from "../utils/gtag";
 
 // Firebase típus definíciók
 // Window interface már definiálva van a types/global.d.ts fájlban
@@ -957,7 +958,7 @@ export default function Home() {
                                 <div className="contact-icon">✉️</div>
                                 <h3>Email</h3>
                                 <p>usezsolti@gmail.com</p>
-                                <a href="mailto:usezsolti@gmail.com" className="contact-link">
+                                <a href="mailto:usezsolti@gmail.com" className="contact-link" onClick={trackContactConversion}>
                                     Email írása
                                 </a>
                             </div>
@@ -970,28 +971,32 @@ export default function Home() {
                                     <a href="https://www.facebook.com/profile.php?id=100075272401924"
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className="social-link facebook">
+                                        className="social-link facebook"
+                                        onClick={trackContactConversion}>
                                         <span className="social-icon">📘</span>
                                         Facebook
                                     </a>
                                     <a href="https://www.instagram.com/mihaszna__/"
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className="social-link instagram">
+                                        className="social-link instagram"
+                                        onClick={trackContactConversion}>
                                         <span className="social-icon">📷</span>
                                         Instagram
                                     </a>
                                     <a href="https://www.youtube.com/@Mihasznamatek"
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className="social-link youtube">
+                                        className="social-link youtube"
+                                        onClick={trackContactConversion}>
                                         <span className="social-icon">📺</span>
                                         YouTube
                                     </a>
                                     <a href="https://tiktok.com/@mihasznamatek"
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className="social-link tiktok">
+                                        className="social-link tiktok"
+                                        onClick={trackContactConversion}>
                                         <span className="social-icon">🎵</span>
                                         TikTok
                                     </a>
@@ -1053,7 +1058,7 @@ export default function Home() {
                             <div className="phone-info">
                                 <h4>📞 Hívj bátran!</h4>
                                 <p>Professzionális matek tanítás, személyre szabott módszerekkel</p>
-                                <a href="tel:+36308935495" className="call-button">
+                                <a href="tel:+36308935495" className="call-button" onClick={trackContactConversion}>
                                     <span>+36 30 893 5495</span>
                                     <span className="call-icon">📞</span>
                                 </a>
