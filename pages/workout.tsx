@@ -114,6 +114,12 @@ export default function PersonalTrainer() {
                                     <h3>Couple / Friend Workout</h3>
                                     <p>Páros vagy barátos edzések közös motivációval, egymást húzva a célok felé.</p>
                                 </div>
+
+                                <div className="workout-card">
+                                    <div className="workout-card-icon">🏥</div>
+                                    <h3>Rehabilitáció</h3>
+                                    <p>Sérülések utáni helyreállítás, mozgásszervi problémák kezelése és funkcionális helyreállítás személyre szabott programmal.</p>
+                                </div>
                             </div>
                         </section>
 
@@ -124,7 +130,7 @@ export default function PersonalTrainer() {
                                 <div className="pricing-card">
                                     <div className="pricing-badge">Standard</div>
                                     <h3>1 alkalom</h3>
-                                    <p className="price">5000 Ft / 60 perc</p>
+                                    <p className="price">12 000 Ft / 60 perc</p>
                                     <ul className="pricing-features">
                                         <li>Egyéni edzés</li>
                                         <li>Technika javítás</li>
@@ -135,50 +141,36 @@ export default function PersonalTrainer() {
                                 <div className="pricing-card highlight">
                                     <div className="pricing-badge best">StandardPlus</div>
                                     <h3>5 alkalmas bérlet</h3>
-                                    <p className="price">25 000 Ft</p>
-                                    <p className="sub">5 000 Ft / alkalom</p>
+                                    <p className="price">55 000 Ft</p>
+                                    <p className="sub">11 000 Ft / alkalom</p>
                                     <ul className="pricing-features">
                                         <li>5× 60 perces edzés</li>
                                         <li>Személyre szabott terv</li>
                                         <li>Fejlődéskövetés</li>
                                         <li>Technikai javítás</li>
-                                        <li>Táplálkozási tippek</li>
                                     </ul>
                                 </div>
 
                                 <div className="pricing-card">
                                     <div className="pricing-badge">Legnépszerűbb</div>
-                                    <h3>10 alkalmas bérlet + Táplálkozási terv készítése és követése</h3>
-                                    <p className="price">69 000 Ft</p>
+                                    <h3>10 alkalmas bérlet</h3>
+                                    <p className="price">100 000 Ft</p>
                                     <ul className="pricing-features">
                                         <li>10 × 60 perces edzés</li>
                                         <li>Részletes edzésterv</li>
                                         <li>Fejlődéskövetés</li>
                                         <li>Technikai javítás</li>
-                                        <li>Táplálkozási terv készítése és követése</li>
-
                                     </ul>
                                 </div>
 
                                 <div className="pricing-card">
                                     <div className="pricing-badge">Páros</div>
                                     <h3>Couple / Friend Workout</h3>
-                                    <p className="price">8 000 Ft / 60 perc / 2 fő</p>
+                                    <p className="price">20 000 Ft / 60 perc / 2 fő</p>
                                     <ul className="pricing-features">
                                         <li>Közös motiváció</li>
                                         <li>Partner gyakorlatok</li>
                                         <li>Rugalmas időpontok</li>
-                                    </ul>
-                                </div>
-
-                                <div className="pricing-card">
-                                    <div className="pricing-badge">Online</div>
-                                    <h3>Online Coaching (havi)</h3>
-                                    <p className="price">29 000 Ft / hónap</p>
-                                    <ul className="pricing-features">
-                                        <li>Heti edzésterv</li>
-                                        <li>Chat támogatás</li>
-                                        <li>Havi konzultáció</li>
                                     </ul>
                                 </div>
                             </div>
@@ -191,12 +183,12 @@ export default function PersonalTrainer() {
                             <h2 className="section-title-workout">📍 Kapcsolat és helyszín</h2>
                             <div className="contact-pt-grid">
                                 <div className="contact-pt-info">
-                                    <p className="contact-line"><span className="contact-key">Helyszín:</span> <span className="contact-val">X1 Gym — 2151 Fót, Keleti Márton utca 7.</span></p>
+                                    <p className="contact-line"><span className="contact-key">Helyszín:</span> <span className="contact-val">Struve Fitness Prime — 1133 Budapest, Bessenyei utca 1-3.</span></p>
                                     <p className="contact-line"><span className="contact-key">Edzések:</span> <span className="contact-val">egyéni és páros alkalmak előre egyeztetett időpontban</span></p>
                                     <p className="contact-line"><span className="contact-key">Telefon:</span> <a className="contact-val link" href="tel:+36308935495" onClick={trackContactConversion}>+36 30 893 5495</a></p>
                                     <p className="contact-line"><span className="contact-key">E‑mail:</span> <a className="contact-val link" href="mailto:usezsolti@gmail.com" onClick={trackContactConversion}>usezsolti@gmail.com</a></p>
                                     <div className="contact-actions">
-                                        <a className="contact-btn" href="https://www.google.com/maps?q=2151+F%C3%B3t,+Keleti+M%C3%A1rton+utca+7&hl=hu" target="_blank" rel="noopener noreferrer">Megnyitás Google Térképen</a>
+                                        <a className="contact-btn" href="https://www.google.com/maps?q=1133+Budapest,+Bessenyei+utca+1-3&hl=hu" target="_blank" rel="noopener noreferrer">Megnyitás Google Térképen</a>
                                     </div>
 
                                     <div className="contact-socials">
@@ -209,8 +201,8 @@ export default function PersonalTrainer() {
                                 <div className="contact-pt-map">
                                     <div className="map-wrapper">
                                         <iframe
-                                            title="X1 Gym - Fót, Keleti Márton utca 7"
-                                            src="https://www.google.com/maps?q=2151+F%C3%B3t,+Keleti+M%C3%A1rton+utca+7&output=embed"
+                                            title="Struve Fitness Prime - 1133 Budapest, Bessenyei utca 1-3"
+                                            src="https://www.google.com/maps?q=1133+Budapest,+Bessenyei+utca+1-3&output=embed"
                                             loading="lazy"
                                             referrerPolicy="no-referrer-when-downgrade"
                                         />
@@ -272,13 +264,15 @@ export default function PersonalTrainer() {
             <style jsx>{`
                 .workout-page {
                     min-height: 100vh;
-                    /* Red overlay + workout bck.png image */
+                    /* Natural green/black gradient with nature-inspired overlay */
                     background-image:
-                        linear-gradient(135deg, rgba(26,10,10,0.85) 0%, rgba(45,27,27,0.85) 30%, rgba(61,42,42,0.85) 60%, rgba(26,10,10,0.85) 100%),
+                        linear-gradient(135deg, rgba(10,26,10,0.92) 0%, rgba(15,35,15,0.90) 25%, rgba(20,45,20,0.88) 50%, rgba(15,35,15,0.90) 75%, rgba(5,15,5,0.95) 100%),
+                        radial-gradient(circle at 20% 50%, rgba(34,197,94,0.15) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 80%, rgba(22,163,74,0.12) 0%, transparent 50%),
                         url('/workout%20bck.png');
-                    background-size: cover, cover;
-                    background-position: center center, center center;
-                    background-repeat: no-repeat, no-repeat;
+                    background-size: cover, cover, cover, cover;
+                    background-position: center center, center center, center center, center center;
+                    background-repeat: no-repeat, no-repeat, no-repeat, no-repeat;
                     color: #ffffff;
                     font-family: 'Montserrat', 'Open Sans', sans-serif;
                     padding: 2rem;
@@ -304,16 +298,17 @@ export default function PersonalTrainer() {
                 }
 
                 .workout-title {
-                    color: #ff6b6b;
+                    color: #4ade80;
                     font-size: 3.5rem;
                     font-weight: 700;
                     margin-bottom: 1rem;
-                    text-shadow: 0 0 20px rgba(255, 107, 107, 0.5),
-                                0 0 40px rgba(255, 107, 107, 0.3);
+                    text-shadow: 0 0 20px rgba(74, 222, 128, 0.6),
+                                0 0 40px rgba(34, 197, 94, 0.4),
+                                0 0 60px rgba(22, 163, 74, 0.2);
                 }
 
                 .workout-subtitle {
-                    color: #ffcccc;
+                    color: #86efac;
                     font-size: 1.3rem;
                     font-weight: 400;
                 }
@@ -325,12 +320,13 @@ export default function PersonalTrainer() {
                 }
 
                 .workout-section {
-                    background: rgba(255, 255, 255, 0.05);
+                    background: rgba(0, 0, 0, 0.4);
                     backdrop-filter: blur(10px);
                     border-radius: 20px;
                     padding: 2.5rem;
-                    border: 1px solid rgba(255, 107, 107, 0.2);
-                    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+                    border: 1px solid rgba(74, 222, 128, 0.25);
+                    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5),
+                                0 0 0 1px rgba(34, 197, 94, 0.1) inset;
                 }
 
                 .profile-section-trainer {
@@ -353,8 +349,9 @@ export default function PersonalTrainer() {
                     height: 250px;
                     border-radius: 50%;
                     object-fit: cover;
-                    border: 4px solid #ff6b6b;
-                    box-shadow: 0 0 30px rgba(255, 107, 107, 0.4);
+                    border: 4px solid #4ade80;
+                    box-shadow: 0 0 30px rgba(74, 222, 128, 0.5),
+                                0 0 60px rgba(34, 197, 94, 0.3);
                 }
 
                 .trainer-info {
@@ -371,11 +368,12 @@ export default function PersonalTrainer() {
                 }
 
                 .section-title-workout {
-                    color: #ff6b6b;
+                    color: #4ade80;
                     font-size: 2rem;
                     font-weight: 700;
                     margin-bottom: 2rem;
-                    text-shadow: 0 0 10px rgba(255, 107, 107, 0.3);
+                    text-shadow: 0 0 10px rgba(74, 222, 128, 0.4),
+                                0 0 20px rgba(34, 197, 94, 0.2);
                 }
 
                 .workout-grid {
@@ -385,20 +383,23 @@ export default function PersonalTrainer() {
                 }
 
                 .workout-card {
-                    background: rgba(255, 255, 255, 0.08);
+                    background: rgba(0, 0, 0, 0.35);
                     backdrop-filter: blur(10px);
                     border-radius: 15px;
                     padding: 2rem;
-                    border: 1px solid rgba(255, 107, 107, 0.3);
+                    border: 1px solid rgba(74, 222, 128, 0.3);
                     text-align: center;
                     transition: all 0.3s ease;
-                    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+                    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4),
+                                0 0 0 1px rgba(34, 197, 94, 0.1) inset;
                 }
 
                 .workout-card:hover {
                     transform: translateY(-5px);
-                    border-color: #ff6b6b;
-                    box-shadow: 0 8px 30px rgba(255, 107, 107, 0.3);
+                    border-color: #4ade80;
+                    box-shadow: 0 8px 30px rgba(74, 222, 128, 0.4),
+                                0 0 40px rgba(34, 197, 94, 0.2);
+                    background: rgba(0, 0, 0, 0.45);
                 }
 
                 .workout-card-icon {
@@ -407,7 +408,7 @@ export default function PersonalTrainer() {
                 }
 
                 .workout-card h3 {
-                    color: #ffcccc;
+                    color: #86efac;
                     font-size: 1.5rem;
                     font-weight: 600;
                     margin-bottom: 1rem;
@@ -429,16 +430,18 @@ export default function PersonalTrainer() {
                     display: flex;
                     align-items: flex-start;
                     gap: 2rem;
-                    background: rgba(255, 255, 255, 0.05);
+                    background: rgba(0, 0, 0, 0.3);
                     padding: 2rem;
                     border-radius: 15px;
-                    border-left: 4px solid #ff6b6b;
+                    border-left: 4px solid #4ade80;
                     transition: all 0.3s ease;
                 }
 
                 .method-item:hover {
-                    background: rgba(255, 255, 255, 0.08);
+                    background: rgba(0, 0, 0, 0.45);
                     transform: translateX(5px);
+                    border-left-color: #86efac;
+                    box-shadow: 0 4px 20px rgba(74, 222, 128, 0.2);
                 }
 
                 .method-icon {
@@ -447,7 +450,7 @@ export default function PersonalTrainer() {
                 }
 
                 .method-content h3 {
-                    color: #ffcccc;
+                    color: #86efac;
                     font-size: 1.3rem;
                     font-weight: 600;
                     margin-bottom: 0.5rem;
@@ -480,16 +483,16 @@ export default function PersonalTrainer() {
                     display: flex;
                     align-items: center;
                     gap: 1rem;
-                    background: rgba(255, 255, 255, 0.05);
+                    background: rgba(0, 0, 0, 0.3);
                     padding: 1rem 1.5rem;
                     border-radius: 10px;
-                    border-left: 3px solid #ff6b6b;
+                    border-left: 3px solid #4ade80;
                     color: #ffffff;
                     font-size: 1.1rem;
                 }
 
                 .goal-icon {
-                    color: #ff6b6b;
+                    color: #4ade80;
                     font-weight: 700;
                     font-size: 1.3rem;
                 }
@@ -497,7 +500,7 @@ export default function PersonalTrainer() {
                 .workout-footer {
                     margin-top: 4rem;
                     padding-top: 2rem;
-                    border-top: 1px solid rgba(255, 107, 107, 0.3);
+                    border-top: 1px solid rgba(74, 222, 128, 0.3);
                     text-align: center;
                 }
 
@@ -510,8 +513,8 @@ export default function PersonalTrainer() {
                 }
 
                 .workout-back-link:hover {
-                    color: #ffcccc;
-                    text-shadow: 0 0 10px rgba(255, 107, 107, 0.5);
+                    color: #86efac;
+                    text-shadow: 0 0 10px rgba(74, 222, 128, 0.6);
                 }
 
                 /* Pricing */
@@ -526,46 +529,48 @@ export default function PersonalTrainer() {
                 }
 
                 .pricing-card {
-                    background: rgba(255, 255, 255, 0.06);
-                    border: 1px solid rgba(255, 107, 107, 0.25);
+                    background: rgba(0, 0, 0, 0.4);
+                    border: 1px solid rgba(74, 222, 128, 0.25);
                     border-radius: 18px;
                     padding: 2.25rem 1.75rem 1.75rem;
-                    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.25);
+                    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.4),
+                                0 0 0 1px rgba(34, 197, 94, 0.1) inset;
                     position: relative;
                     transition: all 0.3s ease;
                 }
 
                 .pricing-card:hover {
                     transform: translateY(-4px);
-                    box-shadow: 0 12px 36px rgba(255, 107, 107, 0.25);
-                    border-color: #ff6b6b;
+                    box-shadow: 0 12px 36px rgba(74, 222, 128, 0.3),
+                                0 0 50px rgba(34, 197, 94, 0.15);
+                    border-color: #4ade80;
                 }
 
                 .pricing-card.highlight {
-                    background: rgba(255, 255, 255, 0.08);
-                    border-color: #ff6b6b;
+                    background: rgba(0, 0, 0, 0.5);
+                    border-color: #4ade80;
                 }
 
                 .pricing-badge {
                     position: absolute;
                     top: 12px;
                     left: 16px;
-                    background: rgba(255, 107, 107, 0.9);
+                    background: rgba(34, 197, 94, 0.9);
                     color: #fff;
                     padding: 4px 10px;
                     border-radius: 999px;
                     font-size: 0.8rem;
                     font-weight: 700;
                     letter-spacing: 0.3px;
-                    box-shadow: 0 8px 18px rgba(255, 107, 107, 0.35);
+                    box-shadow: 0 8px 18px rgba(74, 222, 128, 0.4);
                 }
 
                 .pricing-badge.best {
-                    background: linear-gradient(45deg, #ff6b6b, #ff9a9a);
+                    background: linear-gradient(45deg, #4ade80, #22c55e);
                 }
 
                 .pricing-card h3 {
-                    color: #ffcccc;
+                    color: #86efac;
                     margin: 0 0 0.5rem;
                     font-size: 1.3rem;
                 }
@@ -575,11 +580,11 @@ export default function PersonalTrainer() {
                     font-size: 1.6rem;
                     font-weight: 800;
                     margin: 0.25rem 0 0.5rem;
-                    text-shadow: 0 0 14px rgba(255, 107, 107, 0.35);
+                    text-shadow: 0 0 14px rgba(74, 222, 128, 0.4);
                 }
 
                 .sub {
-                    color: #ffcccc;
+                    color: #86efac;
                     opacity: 0.9;
                     margin: 0 0 0.75rem;
                 }
@@ -595,16 +600,16 @@ export default function PersonalTrainer() {
 
                 .pricing-features li {
                     padding: 0.5rem 0.65rem;
-                    background: rgba(255, 255, 255, 0.12);
+                    background: rgba(0, 0, 0, 0.3);
                     border-radius: 10px;
-                    border-left: 3px solid #ff8080;
+                    border-left: 3px solid #4ade80;
                     color: #ffffff;
                     text-shadow: 0 0 6px rgba(0, 0, 0, 0.35);
                 }
 
                 .pricing-note {
                     margin-top: 1.25rem;
-                    color: #ffcccc;
+                    color: #86efac;
                     font-size: 0.95rem;
                     opacity: 0.9;
                     text-align: center;
@@ -630,7 +635,7 @@ export default function PersonalTrainer() {
                 }
 
                 .contact-key {
-                    color: #ffcccc;
+                    color: #86efac;
                     margin-right: 0.25rem;
                 }
 
@@ -648,15 +653,16 @@ export default function PersonalTrainer() {
                     color: #fff;
                     text-decoration: none;
                     padding: 0.6rem 1rem;
-                    border: 1px solid rgba(255, 107, 107, 0.6);
+                    border: 1px solid rgba(74, 222, 128, 0.6);
                     border-radius: 999px;
-                    background: rgba(255, 255, 255, 0.06);
+                    background: rgba(0, 0, 0, 0.3);
                     transition: all 0.25s ease;
                 }
 
                 .contact-btn:hover {
-                    background: rgba(255, 107, 107, 0.2);
-                    border-color: #ff6b6b;
+                    background: rgba(74, 222, 128, 0.2);
+                    border-color: #4ade80;
+                    box-shadow: 0 0 20px rgba(74, 222, 128, 0.3);
                 }
 
                 .map-wrapper {
@@ -664,8 +670,8 @@ export default function PersonalTrainer() {
                     overflow: hidden;
                     width: 100%;
                     border-radius: 14px;
-                    border: 1px solid rgba(255, 107, 107, 0.25);
-                    box-shadow: 0 8px 28px rgba(0, 0, 0, 0.25);
+                    border: 1px solid rgba(74, 222, 128, 0.25);
+                    box-shadow: 0 8px 28px rgba(0, 0, 0, 0.4);
                     background: rgba(0,0,0,0.3);
                 }
 
@@ -683,8 +689,8 @@ export default function PersonalTrainer() {
                 }
 
                 .contact-val.link:hover {
-                    color: #ffcccc;
-                    border-bottom-color: #ff6b6b;
+                    color: #86efac;
+                    border-bottom-color: #4ade80;
                 }
 
                 .contact-socials {
@@ -700,15 +706,16 @@ export default function PersonalTrainer() {
                     border-radius: 999px;
                     text-decoration: none;
                     color: #fff;
-                    border: 1px solid rgba(255, 107, 107, 0.5);
-                    background: rgba(255, 255, 255, 0.06);
+                    border: 1px solid rgba(74, 222, 128, 0.5);
+                    background: rgba(0, 0, 0, 0.3);
                     transition: all 0.2s ease;
                 }
 
                 .social-btn:hover {
                     transform: translateY(-2px);
-                    border-color: #ff6b6b;
-                    background: rgba(255, 107, 107, 0.18);
+                    border-color: #4ade80;
+                    background: rgba(74, 222, 128, 0.2);
+                    box-shadow: 0 4px 15px rgba(74, 222, 128, 0.3);
                 }
 
                 @media (max-width: 900px) {

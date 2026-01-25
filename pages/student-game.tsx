@@ -470,9 +470,6 @@ export default function StudentGame() {
                 {!gameActive && !gameCompleted && (
                     <div className="task-selection">
                         <div className="game-header">
-                            <button className="back-btn" onClick={() => router.push('/dashboard')}>
-                                ← Vissza a Dashboard-ra
-                            </button>
                             <h1 className="game-title">🎮 Kiosztott Feladatok</h1>
                             <p className="game-subtitle">Válaszd ki a megoldandó feladatot!</p>
                             {isAdmin && (

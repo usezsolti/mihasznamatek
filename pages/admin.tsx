@@ -213,21 +213,6 @@ export default function Admin() {
                         Csak adminisztrátorok férhetnek hozzá.<br />
                         Jelenlegi felhasználó: {currentUser?.email || 'Ismeretlen'}
                     </p>
-                    <button
-                        onClick={() => router.push('/dashboard')}
-                        style={{
-                            background: '#39FF14',
-                            color: '#000',
-                            border: 'none',
-                            padding: '1rem 2rem',
-                            borderRadius: '15px',
-                            fontWeight: '600',
-                            cursor: 'pointer',
-                            marginTop: '1rem'
-                        }}
-                    >
-                        🏠 Vissza a Dashboard-ra
-                    </button>
                 </div>
             </div>
         );
