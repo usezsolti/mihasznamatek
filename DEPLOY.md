@@ -63,15 +63,20 @@ Authentication → Authorized domains:
 
 ## 5) Production csak ezután
 
-Ha a staging preview OK:
+A `vercel.json` most **kikapcsolja a `main` deployt** (`git.deploymentEnabled.main: false`),
+hogy véletlenül se menjen élesre. Ha a staging preview OK:
+
+1. A `vercel.json`-ból vedd ki a `git.deploymentEnabled` részt (vagy állítsd `main: true`-ra).
+2. Majd:
 
 ```bash
-git checkout main
+git checkout -b main
 git merge staging
 git push origin main
+git push origin staging
 ```
 
-Utána Vercel production frissül a `main`-ről. Domain: `mihasznamatek.hu`.
+Utána Vercel production a `main`-ről mehet. Domain: `mihasznamatek.hu`.
 
 ## 6) Lokális build
 
