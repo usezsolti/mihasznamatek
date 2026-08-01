@@ -1,0 +1,105 @@
+/**
+ * Másold be a Firebase Console → Firestore → Rules szerkesztőbe.
+ * Ez a legfontosabb védelem: a kliens SDK-t szabályokkal kell korlátozni.
+ *
+ * Admin = Auth e-mail == usezsolti@gmail.com
+ * (később: custom claims admin == true)
+ */
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() {
+      return request.auth != null;
+    }
+    function isAdmin() {
+      return signedIn()
+        && request.auth.token.email == 'usezsolti@gmail.com'
+        && request.auth.token.email_verified == true;
+    }
+    function isOwner(uid) {
+      return signedIn() && request.auth.uid == uid;
+    }
+    function emailLower() {
+      return signedIn() ? request.auth.token.email.lower() : '';
+    }
+
+    match /users/{userId} {
+      allow read: if isOwner(userId) || isAdmin();
+      allow create: if isOwner(userId);
+      allow update: if isOwner(userId)
+        || (isAdmin() && request.resource.data.diff(resource.data).affectedKeys()
+              .hasOnly(['assignedTasks', 'updatedAt']));
+      allow delete: if isAdmin();
+    }
+
+    match /bookings/{id} {
+      allow read: if isAdmin()
+        || (signedIn() && resource.data.customerEmail.lower() == emailLower());
+      // Foglalás: bejelentkezve, saját e-mail címmel, pending státusszal
+      allow create: if signedIn()
+        && request.resource.data.status == 'pending'
+        && request.resource.data.keys().hasAll(['id', 'date', 'times', 'customerName', 'customerEmail'])
+        && request.resource.data.customerEmail is string
+        && request.resource.data.customerName is string
+        && request.resource.data.date is string
+        && request.resource.data.customerEmail.lower() == emailLower();
+      allow update: if isAdmin()
+        || (signedIn()
+            && resource.data.customerEmail.lower() == emailLower()
+            && request.resource.data.status == 'cancelled'
+            && resource.data.status in ['pending', 'approved']);
+      allow delete: if isAdmin();
+    }
+
+    match /pendingBookings/{id} {
+      allow read, write: if isAdmin();
+    }
+
+    match /approvedBookings/{id} {
+      allow read: if isAdmin()
+        || (signedIn() && resource.data.customerEmail.lower() == emailLower());
+      allow write: if isAdmin();
+    }
+
+    match /blockedSlots/{id} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /settings/{id} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /assignedTasks/{id} {
+      allow read: if isAdmin()
+        || (signedIn() && (
+              resource.data.studentId == request.auth.uid
+              || resource.data.studentEmail.lower() == emailLower()
+           ));
+      allow create, update, delete: if isAdmin();
+    }
+
+    match /customTasks/{id} {
+      allow read: if signedIn();
+      allow write: if isAdmin();
+    }
+
+    match /publicTasks/{id} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /gameResults/{id} {
+      allow read: if isAdmin()
+        || (signedIn() && resource.data.uid == request.auth.uid);
+      allow create: if signedIn() && request.resource.data.uid == request.auth.uid;
+      allow update, delete: if isAdmin();
+    }
+
+    // Minden más: alapból tiltva
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

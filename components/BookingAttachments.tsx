@@ -5,8 +5,29 @@ type Props = {
     label?: string;
 };
 
+/** Csak https (és localhost http) URL-ek — védelem javascript:/data: XSS ellen. */
+function safeHref(url?: string): string | null {
+    const u = (url || "").trim();
+    if (!u) return null;
+    try {
+        const parsed = new URL(u);
+        if (parsed.protocol === "https:") return parsed.href;
+        if (
+            parsed.protocol === "http:" &&
+            (parsed.hostname === "localhost" || parsed.hostname === "127.0.0.1")
+        ) {
+            return parsed.href;
+        }
+    } catch {
+        return null;
+    }
+    return null;
+}
+
 export default function BookingAttachments({ files, label = "📎 Csatolmányok" }: Props) {
-    const list = normalizeAttachments(files).filter((f) => f.url || f.name);
+    const list = normalizeAttachments(files)
+        .map((f) => ({ ...f, safeUrl: safeHref(f.url) }))
+        .filter((f) => f.safeUrl || f.name);
     if (!list.length) return null;
 
     return (
@@ -15,9 +36,9 @@ export default function BookingAttachments({ files, label = "📎 Csatolmányok"
             <ul style={{ margin: 0, paddingLeft: "1.1rem", color: "#ddd" }}>
                 {list.map((f, i) => (
                     <li key={`${f.name}-${i}`} style={{ marginBottom: "0.2rem" }}>
-                        {f.url ? (
+                        {f.safeUrl ? (
                             <a
-                                href={f.url}
+                                href={f.safeUrl}
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 style={{ color: "#39ff14", wordBreak: "break-all" }}

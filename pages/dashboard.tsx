@@ -139,6 +139,23 @@ export default function Dashboard() {
                         return;
                     }
 
+                    // E-mail/jelszó fiókoknál kötelező a megerősített e-mail
+                    const isPasswordUser = (user.providerData || []).some(
+                        (p: any) => p?.providerId === 'password'
+                    );
+                    if (isPasswordUser && !user.emailVerified) {
+                        setMe(null);
+                        setIsAdmin(false);
+                        setLoading(false);
+                        try {
+                            await auth.signOut();
+                        } catch {
+                            /* ignore */
+                        }
+                        router.replace('/?auth=1&verify=1');
+                        return;
+                    }
+
                     const userData = {
                         uid: user.uid,
                         name: user.displayName || '',
@@ -326,10 +343,18 @@ export default function Dashboard() {
 
     useEffect(() => {
         if (!isAdmin) return;
-        fetch('/api/email-status')
-            .then((r) => r.json())
-            .then((data) => setEmailStatus(data))
-            .catch(() => setEmailStatus({ ready: false, hint: 'Nem sikerült lekérni az e-mail állapotot.' }));
+        (async () => {
+            try {
+                const token = await (window as any).firebase?.auth()?.currentUser?.getIdToken?.();
+                const res = await fetch('/api/email-status', {
+                    headers: token ? { Authorization: `Bearer ${token}` } : {},
+                });
+                const data = await res.json();
+                setEmailStatus(data);
+            } catch {
+                setEmailStatus({ ready: false, hint: 'Nem sikerült lekérni az e-mail állapotot.' });
+            }
+        })();
     }, [isAdmin]);
 
     const sendTestBookingEmail = async () => {
@@ -354,7 +379,10 @@ export default function Dashboard() {
             } else {
                 alert(`Teszt e-mail nem ment el:\n\n${result.error || 'Ismeretlen hiba'}`);
             }
-            const status = await fetch('/api/email-status').then((r) => r.json());
+            const token = await (window as any).firebase?.auth()?.currentUser?.getIdToken?.();
+            const status = await fetch('/api/email-status', {
+                headers: token ? { Authorization: `Bearer ${token}` } : {},
+            }).then((r) => r.json());
             setEmailStatus(status);
         } catch (err: any) {
             alert(err?.message || 'Tesztküldés sikertelen');

@@ -46,11 +46,25 @@ git push -u origin staging
 
 Helyi sablon: `.env.local.example`
 
-## 3) Firebase (preview domain)
+## 3) Firebase (preview domain + biztonsági szabályok)
 
 Authentication → Authorized domains:
 - a Vercel preview host (pl. `mihasznamatek-xxx.vercel.app`)
 - később: `mihasznamatek.hu`
+
+### Kötelező: Rules közzététele
+
+A kliens Firebase SDK-t **csak** a Console szabályok védik. Másold be és Publish:
+
+1. **Firestore** → Rules ← tartalom: `firestore.rules`
+2. **Storage** → Rules ← tartalom: `storage.rules`
+
+Ezek nélkül bárki olvashatja/írhatja az adatokat, ha a régi szabályok nyitottak.
+
+### Titkok
+
+- Ha valaha valódi `GMAIL_APP_PASSWORD` került `env.example`-be / gitbe: **forgatasd** (Google Account → App passwords → töröld, újat generálj, frissítsd Vercel env-t).
+- `.env.local` soha ne menjen commitba.
 
 ## 4) Teszt a staging / Preview URL-en
 

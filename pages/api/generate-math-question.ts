@@ -1,11 +1,33 @@
 import { NextApiRequest, NextApiResponse } from 'next';
+import {
+    getClientIp,
+    isAllowedOrigin,
+    rateLimit,
+    requireAuth,
+    sanitizeText,
+} from '../../utils/apiSecurity';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     if (req.method !== 'POST') {
         return res.status(405).json({ error: 'Method not allowed' });
     }
 
-    const { topic, difficulty = 'közepes' } = req.body;
+    if (!isAllowedOrigin(req)) {
+        return res.status(403).json({ error: 'Nem engedélyezett origin.' });
+    }
+
+    const user = await requireAuth(req, res);
+    if (!user) return;
+
+    const ip = getClientIp(req);
+    const rlIp = rateLimit(`math-q:${ip}`, 40, 60 * 60 * 1000);
+    const rlUser = rateLimit(`math-q:uid:${user.uid}`, 25, 60 * 60 * 1000);
+    if (!rlIp.ok || !rlUser.ok) {
+        return res.status(429).json({ error: 'Túl sok generálási kérés. Próbáld később.' });
+    }
+
+    const topic = sanitizeText(req.body?.topic, 80);
+    const difficulty = sanitizeText(req.body?.difficulty || 'közepes', 20) || 'közepes';
 
     if (!topic) {
         return res.status(400).json({ error: 'Topic is required' });

@@ -1,0 +1,45 @@
+/**
+ * Firebase Console → Storage → Rules
+ */
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    function signedIn() {
+      return request.auth != null;
+    }
+    function isAdmin() {
+      return signedIn()
+        && request.auth.token.email == 'usezsolti@gmail.com';
+    }
+    function isImage() {
+      return request.resource.contentType.matches('image/(jpeg|png|webp)');
+    }
+    function isBookingFile() {
+      return request.resource.contentType.matches('image/(jpeg|png|webp)')
+        || request.resource.contentType == 'application/pdf'
+        || request.resource.contentType.matches('application/msword')
+        || request.resource.contentType.matches('application/vnd.openxmlformats-officedocument.wordprocessingml.document');
+    }
+
+    match /avatars/{userId}.jpg {
+      allow read: if true;
+      allow write: if signedIn()
+        && request.auth.uid == userId
+        && isImage()
+        && request.resource.size < 8 * 1024 * 1024;
+    }
+
+    match /booking-files/{bookingId}/{fileName} {
+      allow read: if isAdmin() || signedIn();
+      allow write: if signedIn()
+        && isBookingFile()
+        && request.resource.size < 8 * 1024 * 1024
+        && fileName.matches('[A-Za-z0-9._()\\- ]{1,140}');
+      allow delete: if isAdmin();
+    }
+
+    match /{allPaths=**} {
+      allow read, write: if false;
+    }
+  }
+}

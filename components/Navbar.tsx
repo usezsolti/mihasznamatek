@@ -141,8 +141,9 @@ export default function Navbar() {
 
         const stripAuthQuery = () => {
             const params = new URLSearchParams(window.location.search);
-            if (!params.has("auth")) return;
+            if (!params.has("auth") && !params.has("verify")) return;
             params.delete("auth");
+            params.delete("verify");
             const qs = params.toString();
             const next = `${window.location.pathname}${qs ? `?${qs}` : ""}${window.location.hash || ""}`;
             window.history.replaceState(null, "", next);
@@ -152,8 +153,16 @@ export default function Navbar() {
             if (typeof window === "undefined") return;
             const params = new URLSearchParams(window.location.search);
             const auth = params.get("auth");
+            const needsVerify = params.get("verify") === "1";
             if (auth === "1" || auth === "login") {
                 openAuthModal("login");
+                if (needsVerify) {
+                    window.setTimeout(() => {
+                        alert(
+                            "Az e-mail címed még nincs megerősítve. Nézd meg a postaládádat (Spam is), majd jelentkezz be újra."
+                        );
+                    }, 300);
+                }
                 stripAuthQuery();
                 return;
             }

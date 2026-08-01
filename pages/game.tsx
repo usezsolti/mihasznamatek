@@ -4457,11 +4457,16 @@ Teljes megoldás:
     const generateUniversityQuestion = async (topic: string, difficulty: 'könnyű' | 'közepes' | 'nehéz' = 'közepes'): Promise<Question | null> => {
         try {
             setIsGeneratingQuestion(true);
+            let authHeader: Record<string, string> = { 'Content-Type': 'application/json' };
+            try {
+                const token = await (window as any).firebase?.auth()?.currentUser?.getIdToken?.();
+                if (token) authHeader = { ...authHeader, Authorization: `Bearer ${token}` };
+            } catch {
+                /* ignore */
+            }
             const response = await fetch('/api/generate-math-question', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
+                headers: authHeader,
                 body: JSON.stringify({
                     topic: topic,
                     difficulty: difficulty

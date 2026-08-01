@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import Head from "next/head";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import {
     blockedTimesMap,
     loadActiveBookingsFromFirestore,
@@ -20,6 +21,7 @@ import {
     makeSlotsForDateKeyFn,
     toDateKey,
 } from "../utils/bookingSlots";
+import { openAuthModal } from "../utils/authModal";
 
 type LessonType = "online" | "personal";
 
@@ -53,6 +55,7 @@ function loadBookingsLocal(): BookingRequest[] {
 }
 
 export default function BookingPage() {
+    const router = useRouter();
     const today = useMemo(() => {
         const d = new Date();
         d.setHours(0, 0, 0, 0);
@@ -75,6 +78,8 @@ export default function BookingPage() {
     const [submitting, setSubmitting] = useState(false);
     const [success, setSuccess] = useState(false);
     const [error, setError] = useState("");
+    const [authReady, setAuthReady] = useState(false);
+    const [authUser, setAuthUser] = useState<{ email: string; name: string } | null>(null);
 
     const [customerName, setCustomerName] = useState("");
     const [customerEmail, setCustomerEmail] = useState("");
@@ -88,6 +93,35 @@ export default function BookingPage() {
 
     useEffect(() => {
         window.scrollTo({ top: 0, behavior: "auto" });
+
+        let unsub: (() => void) | undefined;
+        let cancelled = false;
+        (async () => {
+            let attempts = 0;
+            while (!(window as any).firebase && attempts < 50) {
+                await new Promise((r) => setTimeout(r, 100));
+                attempts++;
+            }
+            if (cancelled || !(window as any).firebase) {
+                setAuthReady(true);
+                return;
+            }
+            const auth = (window as any).firebase.auth();
+            unsub = auth.onAuthStateChanged((user: any) => {
+                if (!user) {
+                    setAuthUser(null);
+                    setAuthReady(true);
+                    openAuthModal();
+                    return;
+                }
+                const email = String(user.email || "").toLowerCase();
+                const name = String(user.displayName || "");
+                setAuthUser({ email, name });
+                setCustomerEmail(email);
+                if (name) setCustomerName((prev) => prev || name);
+                setAuthReady(true);
+            });
+        })();
 
         const refresh = async () => {
             const [remote, blocked, hours] = await Promise.all([
@@ -106,8 +140,12 @@ export default function BookingPage() {
 
         refresh();
         const t = setInterval(refresh, 15000);
-        return () => clearInterval(t);
-    }, []);
+        return () => {
+            cancelled = true;
+            clearInterval(t);
+            if (unsub) unsub();
+        };
+    }, [router]);
 
     const monthLabel = currentMonth.toLocaleDateString("hu-HU", {
         year: "numeric",
@@ -191,12 +229,21 @@ export default function BookingPage() {
         setError("");
         setSuccess(false);
 
+        if (!authUser?.email) {
+            setError("A foglaláshoz be kell jelentkezned.");
+            openAuthModal();
+            return;
+        }
         if (!selectedDate || selectedTimes.length === 0) {
             setError("Válassz dátumot és legalább egy időpontot!");
             return;
         }
         if (!customerName.trim() || !customerEmail.trim()) {
             setError("A név és az e-mail megadása kötelező.");
+            return;
+        }
+        if (customerEmail.trim().toLowerCase() !== authUser.email) {
+            setError("A foglalási e-mailnek egyeznie kell a bejelentkezett fiókkal.");
             return;
         }
         if (!postalCode.trim() || !street.trim() || !houseNumber.trim()) {
@@ -440,6 +487,27 @@ export default function BookingPage() {
 
                         <section className="booking-form-card">
                             <h2>Foglalási adatok</h2>
+                            {authReady && !authUser && (
+                                <p className="booking-muted" style={{ marginBottom: "1rem" }}>
+                                    A foglaláshoz{" "}
+                                    <button
+                                        type="button"
+                                        onClick={() => openAuthModal()}
+                                        style={{
+                                            background: "none",
+                                            border: "none",
+                                            color: "#39ff14",
+                                            textDecoration: "underline",
+                                            cursor: "pointer",
+                                            padding: 0,
+                                            font: "inherit",
+                                        }}
+                                    >
+                                        jelentkezz be
+                                    </button>
+                                    .
+                                </p>
+                            )}
                             <form onSubmit={handleSubmit} className="booking-form-fields">
                                 <div className="booking-field">
                                     <label htmlFor="booking-name">Név *</label>
@@ -452,7 +520,7 @@ export default function BookingPage() {
                                     />
                                 </div>
                                 <div className="booking-field">
-                                    <label htmlFor="booking-email">E-mail *</label>
+                                    <label htmlFor="booking-email">E-mail * (fiókod)</label>
                                     <input
                                         id="booking-email"
                                         type="email"
@@ -460,6 +528,12 @@ export default function BookingPage() {
                                         onChange={(e) => setCustomerEmail(e.target.value)}
                                         placeholder="pelda@email.hu"
                                         required
+                                        readOnly={Boolean(authUser)}
+                                        title={
+                                            authUser
+                                                ? "A fiókod e-mail címe — nem módosítható"
+                                                : undefined
+                                        }
                                     />
                                 </div>
 
