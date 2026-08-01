@@ -1,0 +1,78 @@
+{
+    "gameName": "MIHASZNA Road Game",
+    "version": "1.0.0",
+    "description": "3D autós játék az életpálya bemutatására",
+    "buildFiles": {
+        "loader": "Build.loader.js",
+        "data": "Build.data",
+        "framework": "Build.framework.js",
+        "wasm": "Build.wasm"
+    },
+    "gameSettings": {
+        "resolution": "1920x1080",
+        "quality": "high",
+        "targetFPS": 60,
+        "webGLVersion": "2.0"
+    },
+    "billboards": [
+        {
+            "id": 0,
+            "year": "2015",
+            "title": "Mechatronikai Mérnök",
+            "description": "BME - Gépészmérnöki Kar",
+            "position": [
+                -8,
+                2,
+                -20
+            ]
+        },
+        {
+            "id": 1,
+            "year": "2017",
+            "title": "Mérnökinformatikus",
+            "description": "BME - Villamosmérnöki és Informatikai Kar",
+            "position": [
+                8,
+                2,
+                -40
+            ]
+        },
+        {
+            "id": 2,
+            "year": "2019",
+            "title": "Matematika Tanár",
+            "description": "ELTE - Természettudományi Kar",
+            "position": [
+                -6,
+                2,
+                -60
+            ]
+        },
+        {
+            "id": 3,
+            "year": "2021",
+            "title": "Sportoktató",
+            "description": "Testnevelési és Sporttudományi Kar",
+            "position": [
+                10,
+                2,
+                -80
+            ]
+        },
+        {
+            "id": 4,
+            "year": "2023",
+            "title": "MIHASZNA Matek",
+            "description": "Saját matek tanítási vállalkozás",
+            "position": [
+                -4,
+                2,
+                -100
+            ]
+        }
+    ],
+    "controls": {
+        "mouse": "Autó mozgatása X tengely mentén",
+        "click": "Interakció aktiválása"
+    }
+}
