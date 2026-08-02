@@ -1,6 +1,3 @@
-/**
- * Firebase Console → Storage → Rules
- */
 rules_version = '2';
 service firebase.storage {
   match /b/{bucket}/o {
@@ -12,13 +9,13 @@ service firebase.storage {
         && request.auth.token.email == 'usezsolti@gmail.com';
     }
     function isImage() {
-      return request.resource.contentType.matches('image/(jpeg|png|webp)');
+      return request.resource.contentType.matches('image/.*');
     }
     function isBookingFile() {
-      return request.resource.contentType.matches('image/(jpeg|png|webp)')
+      return request.resource.contentType.matches('image/.*')
         || request.resource.contentType == 'application/pdf'
-        || request.resource.contentType.matches('application/msword')
-        || request.resource.contentType.matches('application/vnd.openxmlformats-officedocument.wordprocessingml.document');
+        || request.resource.contentType == 'application/msword'
+        || request.resource.contentType == 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
     }
 
     match /avatars/{userId}.jpg {
@@ -33,8 +30,7 @@ service firebase.storage {
       allow read: if isAdmin() || signedIn();
       allow write: if signedIn()
         && isBookingFile()
-        && request.resource.size < 8 * 1024 * 1024
-        && fileName.matches('[A-Za-z0-9._()\\- ]{1,140}');
+        && request.resource.size < 8 * 1024 * 1024;
       allow delete: if isAdmin();
     }
 
