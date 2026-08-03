@@ -15,6 +15,8 @@ import {
     rateLimit,
     requireAdmin,
     requireAuth,
+    extractBearerToken,
+    verifyFirebaseIdToken,
     sanitizeText,
     secureSiteOrigin,
 } from "../../utils/apiSecurity";
@@ -206,15 +208,20 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         if (!admin) return;
     }
 
-    // Új foglalás e-mail: bejelentkezés + saját e-mail (spam / hamisítás ellen)
+    // Új foglalás e-mail: vendég OK (rate limit), bejelentkezve e-mail egyezés
     if (type === "admin_new") {
-        const user = await requireAuth(req, res);
-        if (!user) return;
-        if (user.email !== booking.customerEmail.toLowerCase()) {
-            return res.status(403).json({
-                ok: false,
-                error: "A foglalási e-mailnek egyeznie kell a bejelentkezett fiókkal.",
-            });
+        const token = extractBearerToken(req);
+        if (token) {
+            const user = await verifyFirebaseIdToken(token);
+            if (!user) {
+                return res.status(401).json({ ok: false, error: "Érvénytelen vagy lejárt munkamenet." });
+            }
+            if (user.email !== booking.customerEmail.toLowerCase()) {
+                return res.status(403).json({
+                    ok: false,
+                    error: "A foglalási e-mailnek egyeznie kell a bejelentkezett fiókkal.",
+                });
+            }
         }
     }
 

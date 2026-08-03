@@ -28,8 +28,8 @@ service firebase.storage {
 
     match /booking-files/{bookingId}/{fileName} {
       allow read: if isAdmin() || signedIn();
-      allow write: if signedIn()
-        && isBookingFile()
+      // Vendég foglaláshoz is kellhet csatolmány — típus + méret korlát
+      allow write: if isBookingFile()
         && request.resource.size < 8 * 1024 * 1024;
       allow delete: if isAdmin();
     }

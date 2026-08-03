@@ -93,6 +93,8 @@ export default function BookingPage() {
     const [gdprAccepted, setGdprAccepted] = useState(false);
     const [authLoading, setAuthLoading] = useState(false);
     const [gateGdpr, setGateGdpr] = useState(false);
+    /** null = választó; account = belépés/regisztráció; guest = regisztráció nélkül */
+    const [bookingPath, setBookingPath] = useState<null | "account" | "guest">(null);
 
     useEffect(() => {
         window.scrollTo({ top: 0, behavior: "auto" });
@@ -121,6 +123,7 @@ export default function BookingPage() {
                 setAuthUser({ email, name });
                 setCustomerEmail(email);
                 if (name) setCustomerName((prev) => prev || name);
+                setBookingPath("account");
                 setError("");
                 setAuthReady(true);
             });
@@ -292,11 +295,6 @@ export default function BookingPage() {
         setError("");
         setSuccess(false);
 
-        if (!authUser?.email) {
-            setError("A foglaláshoz be kell jelentkezned.");
-            openAuthModal({ mode: "login", redirectTo: false });
-            return;
-        }
         if (!selectedDate || selectedTimes.length === 0) {
             setError("Válassz dátumot és legalább egy időpontot!");
             return;
@@ -305,8 +303,12 @@ export default function BookingPage() {
             setError("A név és az e-mail megadása kötelező.");
             return;
         }
-        if (customerEmail.trim().toLowerCase() !== authUser.email) {
+        if (authUser?.email && customerEmail.trim().toLowerCase() !== authUser.email) {
             setError("A foglalási e-mailnek egyeznie kell a bejelentkezett fiókkal.");
+            return;
+        }
+        if (!authUser && bookingPath !== "guest") {
+            setError("Válaszd a belépést vagy a regisztráció nélküli foglalást.");
             return;
         }
         if (!gdprAccepted) {
@@ -443,12 +445,55 @@ export default function BookingPage() {
                         <p className="booking-muted" style={{ textAlign: "center", padding: "2rem" }}>
                             Betöltés…
                         </p>
-                    ) : !authUser ? (
+                    ) : !authUser && bookingPath === null ? (
                         <section className="booking-auth-gate">
-                            <h2>Belépés szükséges</h2>
+                            <h2>Hogyan szeretnél foglalni?</h2>
                             <p>
-                                Az időpontfoglaláshoz jelentkezz be vagy regisztrálj{" "}
-                                <strong>Google-fiókkal</strong>.
+                                Mindkét esetben ugyanazokat az adatokat kell megadnod (név, e-mail,
+                                cím, időpont). A különbség: fiókkal később is látod a foglalásaidat.
+                            </p>
+
+                            <div className="booking-path-options">
+                                <button
+                                    type="button"
+                                    className="booking-path-btn is-primary"
+                                    onClick={() => {
+                                        setError("");
+                                        setBookingPath("account");
+                                    }}
+                                >
+                                    Regisztrálok / bejelentkezem
+                                    <small>Google vagy e-mail — ajánlott, ha visszajársz</small>
+                                </button>
+                                <button
+                                    type="button"
+                                    className="booking-path-btn"
+                                    onClick={() => {
+                                        setError("");
+                                        setBookingPath("guest");
+                                    }}
+                                >
+                                    Nem regisztrálok — foglalok így
+                                    <small>Csak a foglalási adatok megadása</small>
+                                </button>
+                            </div>
+                        </section>
+                    ) : !authUser && bookingPath === "account" ? (
+                        <section className="booking-auth-gate">
+                            <button
+                                type="button"
+                                className="booking-text-btn"
+                                style={{ marginBottom: "1rem" }}
+                                onClick={() => {
+                                    setBookingPath(null);
+                                    setError("");
+                                }}
+                            >
+                                ← Vissza a választáshoz
+                            </button>
+                            <h2>Belépés / regisztráció</h2>
+                            <p>
+                                Jelentkezz be vagy regisztrálj, majd add meg a foglalási adatokat.
                             </p>
 
                             <label className="gdpr-consent booking-gdpr">
@@ -500,7 +545,6 @@ export default function BookingPage() {
                             </button>
 
                             <p className="booking-muted" style={{ marginTop: "1.25rem" }}>
-                                Van már e-mailes fiókod?{" "}
                                 <button
                                     type="button"
                                     className="booking-text-btn"
@@ -524,6 +568,21 @@ export default function BookingPage() {
                         </section>
                     ) : (
                     <div className="booking-layout">
+                        {!authUser && bookingPath === "guest" && (
+                            <p className="booking-muted" style={{ gridColumn: "1 / -1", marginBottom: "0.5rem" }}>
+                                Regisztráció nélküli foglalás.{" "}
+                                <button
+                                    type="button"
+                                    className="booking-text-btn"
+                                    onClick={() => {
+                                        setBookingPath(null);
+                                        setError("");
+                                    }}
+                                >
+                                    Vissza a választáshoz
+                                </button>
+                            </p>
+                        )}
                         <section className="booking-calendar-card">
                             <div className="booking-cal-header">
                                 <button type="button" className="booking-nav-btn" onClick={() => changeMonth(-1)}>
@@ -653,7 +712,9 @@ export default function BookingPage() {
                                     />
                                 </div>
                                 <div className="booking-field">
-                                    <label htmlFor="booking-email">E-mail * (fiókod)</label>
+                                    <label htmlFor="booking-email">
+                                        E-mail *{authUser ? " (fiókod)" : ""}
+                                    </label>
                                     <input
                                         id="booking-email"
                                         type="email"
