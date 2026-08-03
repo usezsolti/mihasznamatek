@@ -354,34 +354,34 @@ export default function Navbar() {
                         <a href="/game" className="nav-social-link game" title="Játék">
                             🎮
                         </a>
+                    </div>
 
-                        {isClient && (
-                            <div className="nav-auth">
-                                {currentUser ? (
-                                    <div className="nav-user">
-                                        <Link href="/dashboard" className="nav-user-link" title={displayLabel}>
-                                            {displayLabel}
-                                        </Link>
-                                        <button
-                                            type="button"
-                                            className="auth-btn nav-logout-btn"
-                                            onClick={handleLogout}
-                                        >
-                                            Kijelentkezés
-                                        </button>
-                                    </div>
-                                ) : (
+                    {isClient && (
+                        <div className="nav-auth">
+                            {currentUser ? (
+                                <div className="nav-user">
+                                    <Link href="/dashboard" className="nav-user-link" title={displayLabel}>
+                                        {displayLabel}
+                                    </Link>
                                     <button
                                         type="button"
-                                        className="auth-btn nav-login-btn"
-                                        onClick={() => openLocalAuthModal("login")}
+                                        className="auth-btn nav-logout-btn"
+                                        onClick={handleLogout}
                                     >
-                                        Bejelentkezés
+                                        Kijelentkezés
                                     </button>
-                                )}
-                            </div>
-                        )}
-                    </div>
+                                </div>
+                            ) : (
+                                <button
+                                    type="button"
+                                    className="auth-btn nav-login-btn"
+                                    onClick={() => openLocalAuthModal("login")}
+                                >
+                                    Bejelentkezés
+                                </button>
+                            )}
+                        </div>
+                    )}
                 </div>
                 <button className="hamburger-menu" onClick={toggleMenu} aria-label="Menu">
                     <span className={`hamburger-line ${isMenuOpen ? "open" : ""}`}></span>

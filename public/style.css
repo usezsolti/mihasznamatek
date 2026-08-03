@@ -1938,6 +1938,13 @@ h1 {
   padding-left: 0;
 }
 
+/* Asztali: a menüben lévő Bejelentkezés rejtve — csak jobb oldalon legyen */
+@media (min-width: 769px) {
+  .nav-auth-mobile {
+    display: none !important;
+  }
+}
+
 @media (max-width: 768px) {
   .nav-auth {
     display: none;
