@@ -1,5 +1,11 @@
-import { useEffect, useState } from "react";
+﻿import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import {
+    LESSON_SUBJECTS,
+    type PreferredLessonType,
+    type RegistrationProfile,
+    validateRegistrationProfile,
+} from "../utils/registrationProfile";
 
 type AuthMode = "login" | "register";
 
@@ -7,7 +13,6 @@ interface AuthModalProps {
     isOpen: boolean;
     onClose: () => void;
     initialMode?: "login" | "register";
-    /** Sikeres belépés után: útvonal, vagy `false` = csak bezárás (pl. foglaló oldal). */
     redirectTo?: string | false;
 }
 
@@ -61,7 +66,11 @@ async function waitForFirebaseReady(maxAttempts = 50): Promise<any | null> {
 async function ensureUserDoc(
     firebase: any,
     user: any,
-    options?: { name?: string; gdprAccepted?: boolean }
+    options?: {
+        name?: string;
+        gdprAccepted?: boolean;
+        profile?: RegistrationProfile;
+    }
 ) {
     if (!user) return;
     const db = firebase.firestore();
@@ -74,15 +83,35 @@ async function ensureUserDoc(
               gdprVersion: "2026-08-03",
           }
         : {};
+    const profileFields = options?.profile
+        ? {
+              name: options.profile.name,
+              preferredLessonType: options.profile.preferredLessonType,
+              preferredSubject: options.profile.preferredSubject,
+              hobby: options.profile.hobby || "",
+              postalCode: options.profile.postalCode,
+              street: options.profile.street,
+              houseNumber: options.profile.houseNumber,
+              profileCompletedAt: firebase.firestore.FieldValue.serverTimestamp(),
+          }
+        : { name: options?.name || user.displayName || "" };
+
     if (!snap.exists) {
         await ref.set({
-            name: options?.name || user.displayName || "",
             email: user.email || "",
             createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+            ...profileFields,
             ...gdprFields,
         });
-    } else if (options?.gdprAccepted) {
-        await ref.set(gdprFields, { merge: true });
+    } else {
+        await ref.set(
+            {
+                ...profileFields,
+                ...gdprFields,
+                email: user.email || snap.data()?.email || "",
+            },
+            { merge: true }
+        );
     }
 }
 
@@ -90,6 +119,15 @@ function isEmailPasswordUser(user: any): boolean {
     const providers = user?.providerData || [];
     return providers.some((p: any) => p?.providerId === "password");
 }
+
+const emptyProfile = () => ({
+    lessonType: "online" as PreferredLessonType,
+    subject: LESSON_SUBJECTS[0] as string,
+    hobby: "",
+    postalCode: "",
+    street: "",
+    houseNumber: "",
+});
 
 export default function AuthModal({
     isOpen,
@@ -102,11 +140,27 @@ export default function AuthModal({
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [lessonType, setLessonType] = useState<PreferredLessonType>("online");
+    const [subject, setSubject] = useState<string>(LESSON_SUBJECTS[0]);
+    const [hobby, setHobby] = useState("");
+    const [postalCode, setPostalCode] = useState("");
+    const [street, setStreet] = useState("");
+    const [houseNumber, setHouseNumber] = useState("");
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
     const [infoMessage, setInfoMessage] = useState("");
     const [awaitingVerification, setAwaitingVerification] = useState(false);
     const [gdprAccepted, setGdprAccepted] = useState(false);
+
+    const buildProfile = (): RegistrationProfile => ({
+        name: name.trim(),
+        preferredLessonType: lessonType,
+        preferredSubject: subject,
+        hobby: hobby.trim(),
+        postalCode: postalCode.trim(),
+        street: street.trim(),
+        houseNumber: houseNumber.trim(),
+    });
 
     const finishAuthSuccess = () => {
         onClose();
@@ -118,13 +172,27 @@ export default function AuthModal({
         router.push("/dashboard");
     };
 
+    const resetForm = () => {
+        setName("");
+        setEmail("");
+        setPassword("");
+        const p = emptyProfile();
+        setLessonType(p.lessonType);
+        setSubject(p.subject);
+        setHobby(p.hobby);
+        setPostalCode(p.postalCode);
+        setStreet(p.street);
+        setHouseNumber(p.houseNumber);
+        setGdprAccepted(false);
+        setError("");
+        setInfoMessage("");
+        setAwaitingVerification(false);
+    };
+
     useEffect(() => {
         if (!isOpen) {
-            setError("");
-            setInfoMessage("");
             setLoading(false);
-            setAwaitingVerification(false);
-            setGdprAccepted(false);
+            resetForm();
             return;
         }
         setMode(initialMode);
@@ -134,6 +202,7 @@ export default function AuthModal({
         };
         window.addEventListener("keydown", onKey);
         return () => window.removeEventListener("keydown", onKey);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isOpen, onClose, initialMode]);
 
     const switchMode = (next: AuthMode) => {
@@ -159,13 +228,17 @@ export default function AuthModal({
                 const user = cred.user;
                 if (user && isEmailPasswordUser(user) && !user.emailVerified) {
                     setAwaitingVerification(true);
-                    setInfoMessage("Erősítsd meg az e-mail címed a belépéshez. Nézd a postaládát (és a Spam mappát).");
+                    setInfoMessage(
+                        "Erősítsd meg az e-mail címed a belépéshez. Nézd a postaládát (és a Spam mappát)."
+                    );
                     setPassword("");
                     return;
                 }
             } else {
-                if (!name.trim()) {
-                    setError("Add meg a neved a regisztrációhoz.");
+                const profile = buildProfile();
+                const profileErr = validateRegistrationProfile(profile);
+                if (profileErr) {
+                    setError(profileErr);
                     return;
                 }
                 if (!gdprAccepted) {
@@ -178,10 +251,11 @@ export default function AuthModal({
                 );
                 const user = credential.user;
                 if (user) {
-                    await user.updateProfile({ displayName: name.trim() });
+                    await user.updateProfile({ displayName: profile.name });
                     await ensureUserDoc(firebase, user, {
-                        name: name.trim(),
+                        name: profile.name,
                         gdprAccepted: true,
+                        profile,
                     });
                     try {
                         await user.sendEmailVerification();
@@ -208,9 +282,16 @@ export default function AuthModal({
 
     const handleGoogle = async () => {
         setError("");
-        if (mode === "register" && !gdprAccepted) {
-            setError("A regisztrációhoz el kell fogadnod az adatkezelési tájékoztatót.");
-            return;
+        if (mode === "register") {
+            const profile = buildProfile();
+            if (!profile.postalCode.trim() || !profile.street.trim() || !profile.houseNumber.trim()) {
+                setError("Google regisztráció előtt add meg a számlázási címet is.");
+                return;
+            }
+            if (!gdprAccepted) {
+                setError("A regisztrációhoz el kell fogadnod az adatkezelési tájékoztatót.");
+                return;
+            }
         }
         setLoading(true);
         try {
@@ -224,6 +305,18 @@ export default function AuthModal({
             provider.addScope("profile");
             const result = await firebase.auth().signInWithPopup(provider);
             const isNewUser = result.additionalUserInfo?.isNewUser;
+            if (isNewUser && mode !== "register") {
+                try {
+                    await firebase.auth().signOut();
+                } catch {
+                    /* ignore */
+                }
+                setMode("register");
+                setError(
+                    "Új fiókhoz előbb töltsd ki a regisztrációs adatokat (cím, témakör, GDPR), majd kattints újra a Google gombra."
+                );
+                return;
+            }
             if (isNewUser && !gdprAccepted) {
                 try {
                     await firebase.auth().signOut();
@@ -237,8 +330,35 @@ export default function AuthModal({
                 return;
             }
             if (result.user) {
+                const profile = buildProfile();
+                const displayName = profile.name || result.user.displayName || "";
+                const fullProfile: RegistrationProfile = {
+                    ...profile,
+                    name: displayName,
+                };
+                if (isNewUser) {
+                    const err = validateRegistrationProfile(fullProfile);
+                    if (err) {
+                        try {
+                            await firebase.auth().signOut();
+                        } catch {
+                            /* ignore */
+                        }
+                        setError(err);
+                        return;
+                    }
+                    if (displayName && displayName !== result.user.displayName) {
+                        try {
+                            await result.user.updateProfile({ displayName });
+                        } catch {
+                            /* ignore */
+                        }
+                    }
+                }
                 await ensureUserDoc(firebase, result.user, {
                     gdprAccepted: Boolean(isNewUser && gdprAccepted),
+                    profile: isNewUser ? fullProfile : undefined,
+                    name: displayName || undefined,
                 });
             }
             setPassword("");
@@ -305,7 +425,9 @@ export default function AuthModal({
                                             return;
                                         }
                                     }
-                                    setError("Még nincs megerősítve. Kattints a levélben a linkre, majd ide.");
+                                    setError(
+                                        "Még nincs megerősítve. Kattints a levélben a linkre, majd ide."
+                                    );
                                 } catch (err: any) {
                                     setError(mapFirebaseError(err?.code));
                                 } finally {
@@ -358,133 +480,212 @@ export default function AuthModal({
                         </button>
                     </div>
                 ) : (
-                <>
-                <div className="auth-tabs">
-                    <button
-                        type="button"
-                        className={`auth-tab ${mode === "login" ? "active" : ""}`}
-                        onClick={() => switchMode("login")}
-                    >
-                        Bejelentkezés
-                    </button>
-                    <button
-                        type="button"
-                        className={`auth-tab ${mode === "register" ? "active" : ""}`}
-                        onClick={() => switchMode("register")}
-                    >
-                        Regisztráció
-                    </button>
-                </div>
+                    <>
+                        <div className="auth-tabs">
+                            <button
+                                type="button"
+                                className={"auth-tab " + (mode === "login" ? "active" : "")}
+                                onClick={() => switchMode("login")}
+                            >
+                                Bejelentkezés
+                            </button>
+                            <button
+                                type="button"
+                                className={"auth-tab " + (mode === "register" ? "active" : "")}
+                                onClick={() => switchMode("register")}
+                            >
+                                Regisztráció
+                            </button>
+                        </div>
 
-                <div className={`auth-tab-content active`}>
-                    <form className="email-form" onSubmit={handleEmailSubmit}>
-                        {mode === "register" && (
-                            <div className="form-group">
-                                <label htmlFor="auth-modal-name">Név</label>
-                                <input
-                                    id="auth-modal-name"
-                                    type="text"
-                                    value={name}
-                                    onChange={(e) => setName(e.target.value)}
-                                    placeholder="Teljes neved"
-                                    autoComplete="name"
-                                    required
-                                />
+                        <div className="auth-tab-content active">
+                            <form className="email-form" onSubmit={handleEmailSubmit}>
+                                {mode === "register" && (
+                                    <div className="form-group">
+                                        <label htmlFor="auth-modal-name">Név *</label>
+                                        <input
+                                            id="auth-modal-name"
+                                            type="text"
+                                            value={name}
+                                            onChange={(e) => setName(e.target.value)}
+                                            placeholder="Teljes neved"
+                                            autoComplete="name"
+                                            required
+                                        />
+                                    </div>
+                                )}
+                                <div className="form-group">
+                                    <label htmlFor="auth-modal-email">E-mail *</label>
+                                    <input
+                                        id="auth-modal-email"
+                                        type="email"
+                                        value={email}
+                                        onChange={(e) => setEmail(e.target.value)}
+                                        placeholder="pelda@email.hu"
+                                        autoComplete="email"
+                                        required
+                                    />
+                                </div>
+                                <div className="form-group">
+                                    <label htmlFor="auth-modal-password">Jelszó *</label>
+                                    <input
+                                        id="auth-modal-password"
+                                        type="password"
+                                        value={password}
+                                        onChange={(e) => setPassword(e.target.value)}
+                                        placeholder="Legalább 6 karakter"
+                                        autoComplete={
+                                            mode === "login" ? "current-password" : "new-password"
+                                        }
+                                        minLength={6}
+                                        required
+                                    />
+                                </div>
+
+                                {mode === "register" && (
+                                    <div className="auth-register-extra">
+                                        <div className="form-group">
+                                            <label>Óra típusa *</label>
+                                            <div className="auth-lesson-toggle">
+                                                <button
+                                                    type="button"
+                                                    className={lessonType === "online" ? "active" : ""}
+                                                    onClick={() => setLessonType("online")}
+                                                >
+                                                    Online
+                                                </button>
+                                                <button
+                                                    type="button"
+                                                    className={lessonType === "personal" ? "active" : ""}
+                                                    onClick={() => setLessonType("personal")}
+                                                >
+                                                    Személyes (Fót)
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div className="form-group">
+                                            <label htmlFor="auth-modal-subject">Témakör / szint *</label>
+                                            <select
+                                                id="auth-modal-subject"
+                                                value={subject}
+                                                onChange={(e) => setSubject(e.target.value)}
+                                                required
+                                            >
+                                                {LESSON_SUBJECTS.map((s) => (
+                                                    <option key={s} value={s}>
+                                                        {s}
+                                                    </option>
+                                                ))}
+                                            </select>
+                                        </div>
+                                        <div className="form-group">
+                                            <label htmlFor="auth-modal-hobby">Hobby / megjegyzés</label>
+                                            <input
+                                                id="auth-modal-hobby"
+                                                type="text"
+                                                value={hobby}
+                                                onChange={(e) => setHobby(e.target.value)}
+                                                placeholder="Pl. sport, érdeklődés, cél"
+                                            />
+                                        </div>
+                                        <div className="form-group">
+                                            <label>Számlázási cím *</label>
+                                            <p
+                                                style={{
+                                                    color: "#bbb",
+                                                    fontSize: "0.8rem",
+                                                    margin: "0 0 0.5rem",
+                                                    textAlign: "left",
+                                                }}
+                                            >
+                                                Online és személyes óránál is kötelező.
+                                            </p>
+                                            <div className="auth-address-row">
+                                                <input
+                                                    type="text"
+                                                    value={postalCode}
+                                                    onChange={(e) => setPostalCode(e.target.value)}
+                                                    placeholder="Irányítószám *"
+                                                    required
+                                                    autoComplete="postal-code"
+                                                />
+                                                <input
+                                                    type="text"
+                                                    value={street}
+                                                    onChange={(e) => setStreet(e.target.value)}
+                                                    placeholder="Utca *"
+                                                    required
+                                                    autoComplete="street-address"
+                                                />
+                                                <input
+                                                    type="text"
+                                                    value={houseNumber}
+                                                    onChange={(e) => setHouseNumber(e.target.value)}
+                                                    placeholder="Házszám *"
+                                                    required
+                                                />
+                                            </div>
+                                        </div>
+                                        <label className="gdpr-consent">
+                                            <input
+                                                type="checkbox"
+                                                checked={gdprAccepted}
+                                                onChange={(e) => setGdprAccepted(e.target.checked)}
+                                                required
+                                            />
+                                            <span>
+                                                Elolvastam és elfogadom az{" "}
+                                                <a
+                                                    href="/adatkezelesi-tajekoztato"
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                >
+                                                    adatkezelési tájékoztatót
+                                                </a>{" "}
+                                                (GDPR). *
+                                            </span>
+                                        </label>
+                                    </div>
+                                )}
+
+                                {error && <p className="form-msg">{error}</p>}
+
+                                <button type="submit" className="submit-btn" disabled={loading}>
+                                    {loading
+                                        ? "Folyamatban..."
+                                        : mode === "login"
+                                          ? "Bejelentkezés"
+                                          : "Regisztráció"}
+                                </button>
+                            </form>
+
+                            <div className="auth-divider">
+                                <span>vagy</span>
                             </div>
-                        )}
-                        <div className="form-group">
-                            <label htmlFor="auth-modal-email">E-mail</label>
-                            <input
-                                id="auth-modal-email"
-                                type="email"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                                placeholder="pelda@email.hu"
-                                autoComplete="email"
-                                required
-                            />
+
+                            <button
+                                type="button"
+                                className="google-login-btn"
+                                onClick={handleGoogle}
+                                disabled={loading}
+                            >
+                                Folytatás Google-lal
+                            </button>
+                            {mode === "register" && (
+                                <p
+                                    style={{
+                                        color: "#aaa",
+                                        fontSize: "0.8rem",
+                                        marginTop: "0.75rem",
+                                        textAlign: "center",
+                                    }}
+                                >
+                                    Google regisztrációnál is töltsd ki előbb a fenti adatokat
+                                    (cím, témakör, GDPR).
+                                </p>
+                            )}
                         </div>
-                        <div className="form-group">
-                            <label htmlFor="auth-modal-password">Jelszó</label>
-                            <input
-                                id="auth-modal-password"
-                                type="password"
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                                placeholder="Legalább 6 karakter"
-                                autoComplete={
-                                    mode === "login" ? "current-password" : "new-password"
-                                }
-                                minLength={6}
-                                required
-                            />
-                        </div>
-
-                        {mode === "register" && (
-                            <label className="gdpr-consent">
-                                <input
-                                    type="checkbox"
-                                    checked={gdprAccepted}
-                                    onChange={(e) => setGdprAccepted(e.target.checked)}
-                                    required
-                                />
-                                <span>
-                                    Elolvastam és elfogadom az{" "}
-                                    <a
-                                        href="/adatkezelesi-tajekoztato"
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                    >
-                                        adatkezelési tájékoztatót
-                                    </a>{" "}
-                                    (GDPR). *
-                                </span>
-                            </label>
-                        )}
-
-                        {error && <p className="form-msg">{error}</p>}
-
-                        <button type="submit" className="submit-btn" disabled={loading}>
-                            {loading
-                                ? "Folyamatban..."
-                                : mode === "login"
-                                  ? "Bejelentkezés"
-                                  : "Regisztráció"}
-                        </button>
-                    </form>
-
-                    <div className="auth-divider">
-                        <span>vagy</span>
-                    </div>
-
-                    <button
-                        type="button"
-                        className="google-login-btn"
-                        onClick={handleGoogle}
-                        disabled={loading}
-                    >
-                        <svg width="18" height="18" viewBox="0 0 48 48" aria-hidden="true">
-                            <path
-                                fill="#EA4335"
-                                d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"
-                            />
-                            <path
-                                fill="#4285F4"
-                                d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"
-                            />
-                            <path
-                                fill="#FBBC05"
-                                d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"
-                            />
-                            <path
-                                fill="#34A853"
-                                d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"
-                            />
-                        </svg>
-                        Folytatás Google-lal
-                    </button>
-                </div>
-                </>
+                    </>
                 )}
             </div>
         </div>
