@@ -1,4 +1,4 @@
-﻿import { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import {
     LESSON_SUBJECTS,
@@ -197,6 +197,7 @@ export default function AuthModal({
         }
         setMode(initialMode);
         setGdprAccepted(false);
+        setError("");
         const onKey = (e: KeyboardEvent) => {
             if (e.key === "Escape") onClose();
         };
@@ -204,6 +205,11 @@ export default function AuthModal({
         return () => window.removeEventListener("keydown", onKey);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isOpen, onClose, initialMode]);
+
+    // Ha a Navbar átállítja az initialMode-ot nyitva tartás közben is
+    useEffect(() => {
+        if (isOpen) setMode(initialMode);
+    }, [initialMode, isOpen]);
 
     const switchMode = (next: AuthMode) => {
         setMode(next);
@@ -543,8 +549,29 @@ export default function AuthModal({
                                 </div>
 
                                 {mode === "register" && (
-                                    <div className="auth-register-extra">
-                                        <p className="auth-extra-title">Foglaláshoz szükséges adatok</p>
+                                    <div
+                                        className="auth-register-extra"
+                                        style={{
+                                            display: "block",
+                                            visibility: "visible",
+                                            opacity: 1,
+                                            width: "100%",
+                                            marginTop: "0.5rem",
+                                            paddingTop: "0.75rem",
+                                            borderTop: "1px solid rgba(57,255,20,0.4)",
+                                        }}
+                                    >
+                                        <p
+                                            className="auth-extra-title"
+                                            style={{
+                                                color: "#39ff14",
+                                                fontWeight: 700,
+                                                textAlign: "left",
+                                                margin: "0 0 0.85rem",
+                                            }}
+                                        >
+                                            Foglaláshoz szükséges adatok
+                                        </p>
                                         <div className="form-group">
                                             <label>Óra típusa *</label>
                                             <div className="auth-lesson-toggle">
@@ -571,6 +598,14 @@ export default function AuthModal({
                                                 value={subject}
                                                 onChange={(e) => setSubject(e.target.value)}
                                                 required
+                                                style={{
+                                                    width: "100%",
+                                                    padding: "1rem",
+                                                    background: "#000",
+                                                    color: "#fff",
+                                                    border: "2px solid rgba(255,255,255,0.15)",
+                                                    borderRadius: 10,
+                                                }}
                                             >
                                                 {LESSON_SUBJECTS.map((s) => (
                                                     <option key={s} value={s}>
@@ -593,7 +628,7 @@ export default function AuthModal({
                                             <label>Számlázási cím *</label>
                                             <p
                                                 style={{
-                                                    color: "#bbb",
+                                                    color: "#ddd",
                                                     fontSize: "0.8rem",
                                                     margin: "0 0 0.5rem",
                                                     textAlign: "left",
@@ -634,7 +669,7 @@ export default function AuthModal({
                                                 onChange={(e) => setGdprAccepted(e.target.checked)}
                                                 required
                                             />
-                                            <span>
+                                            <span style={{ color: "#fff" }}>
                                                 Elolvastam és elfogadom az{" "}
                                                 <a
                                                     href="/adatkezelesi-tajekoztato"
