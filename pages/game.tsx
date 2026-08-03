@@ -1254,8 +1254,13 @@ export default function Game() {
                 expression: `${a} + ${b} = ${answer}`
             };
         }
-        // Térgeometria
-        else if (topicIdLower.includes('tergeometria') || topicIdLower.includes('ter')) {
+        // Paraméter — ELŐBB, mert a "parameter" id tartalmazza a "ter" szócskát
+        else if (topicIdLower.includes('parameter') || topicIdLower.includes('paramet')) {
+            const list = getParameterPracticeQuestions();
+            return list[Math.floor(Math.random() * list.length)];
+        }
+        // Térgeometria (ne használj includes('ter') — elkapná a parameter témát is!)
+        else if (topicIdLower.includes('tergeometria')) {
             const levelLower = level.toLowerCase();
             if (levelLower.includes('emelt')) {
                 // Emelt szint: gömb térfogata
@@ -1289,11 +1294,6 @@ export default function Game() {
                 type: 'multiplication',
                 expression: 'Kedvező: 4,5,6 (3 db), Összes: 6, P = 3/6 = 0.5'
             };
-        }
-        // Paraméter — a gyakorló feladatok a paraméteres egyenletek munkalapról
-        else if (topicIdLower.includes('parameter')) {
-            const list = getParameterPracticeQuestions();
-            return list[Math.floor(Math.random() * list.length)];
         }
         // Bizonyítások
         else if (topicIdLower.includes('bizonyitas')) {
@@ -4027,7 +4027,7 @@ Teljes megoldás:
         setIsErettsegiMode(true);
         
         // Paraméter témakör: fix 12 gyakorló feladat a munkalapról
-        if (topicId.toLowerCase().includes('parameter')) {
+        if (topicId.toLowerCase().includes('parameter') || topicId.toLowerCase().includes('paramet')) {
             const questions = getParameterPracticeQuestions().map((q, i) => ({
                 ...q,
                 id: `erettsegi_parameter_${i + 1}`,

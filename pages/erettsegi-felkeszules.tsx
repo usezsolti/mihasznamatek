@@ -239,10 +239,10 @@ export default function ErettsegiFelkeszules() {
         },
         {
             id: 'parameter',
-            title: 'Paraméter',
+            title: 'Paraméteres egyenletek',
             icon: 'α',
             color: '#ffd700',
-            description: 'Paraméteres egyenletek, egyenlőtlenségek, függvények'
+            description: 'Paraméteres másodfokú, abszolútértékes és szöveges feladatok'
         },
         {
             id: 'koordinatageometria-emelt',
