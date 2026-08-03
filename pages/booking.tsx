@@ -22,6 +22,7 @@ import {
     toDateKey,
 } from "../utils/bookingSlots";
 import { openAuthModal } from "../utils/authModal";
+import { LESSON_SUBJECTS } from "../utils/registrationProfile";
 
 type LessonType = "online" | "personal";
 
@@ -35,13 +36,7 @@ interface BookingRequest extends BookingPayload {
 
 const PRICE_PER_HOUR = 11000;
 
-const SUBJECTS = [
-    "Általános iskola matek",
-    "Középiskola / gimnázium",
-    "Érettségi felkészítés",
-    "Egyetem",
-    "Egyéb",
-];
+const SUBJECTS = [...LESSON_SUBJECTS];
 
 function loadBookingsLocal(): BookingRequest[] {
     if (typeof window === "undefined") return [];
