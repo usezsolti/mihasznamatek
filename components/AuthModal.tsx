@@ -7,6 +7,8 @@ interface AuthModalProps {
     isOpen: boolean;
     onClose: () => void;
     initialMode?: "login" | "register";
+    /** Sikeres belépés után: útvonal, vagy `false` = csak bezárás (pl. foglaló oldal). */
+    redirectTo?: string | false;
 }
 
 function mapFirebaseError(code?: string): string {
@@ -89,7 +91,12 @@ function isEmailPasswordUser(user: any): boolean {
     return providers.some((p: any) => p?.providerId === "password");
 }
 
-export default function AuthModal({ isOpen, onClose, initialMode = "login" }: AuthModalProps) {
+export default function AuthModal({
+    isOpen,
+    onClose,
+    initialMode = "login",
+    redirectTo,
+}: AuthModalProps) {
     const router = useRouter();
     const [mode, setMode] = useState<AuthMode>(initialMode);
     const [name, setName] = useState("");
@@ -101,8 +108,13 @@ export default function AuthModal({ isOpen, onClose, initialMode = "login" }: Au
     const [awaitingVerification, setAwaitingVerification] = useState(false);
     const [gdprAccepted, setGdprAccepted] = useState(false);
 
-    const goToDashboard = () => {
+    const finishAuthSuccess = () => {
         onClose();
+        if (redirectTo === false) return;
+        if (typeof redirectTo === "string" && redirectTo) {
+            router.push(redirectTo);
+            return;
+        }
         router.push("/dashboard");
     };
 
@@ -185,7 +197,7 @@ export default function AuthModal({ isOpen, onClose, initialMode = "login" }: Au
                 }
             }
             setPassword("");
-            goToDashboard();
+            finishAuthSuccess();
         } catch (err: any) {
             console.error(err);
             setError(mapFirebaseError(err?.code));
@@ -230,7 +242,7 @@ export default function AuthModal({ isOpen, onClose, initialMode = "login" }: Au
                 });
             }
             setPassword("");
-            goToDashboard();
+            finishAuthSuccess();
         } catch (err: any) {
             console.error(err);
             setError(mapFirebaseError(err?.code));
@@ -289,7 +301,7 @@ export default function AuthModal({ isOpen, onClose, initialMode = "login" }: Au
                                     if (user) {
                                         await user.reload();
                                         if (user.emailVerified) {
-                                            goToDashboard();
+                                            finishAuthSuccess();
                                             return;
                                         }
                                     }

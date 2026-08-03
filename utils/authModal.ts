@@ -4,6 +4,8 @@ export const OPEN_AUTH_MODAL_EVENT = "mihaszna:open-auth-modal";
 
 export type OpenAuthModalDetail = {
     mode?: "login" | "register";
+    /** Sikeres auth után: útvonal, vagy `false` = maradj az oldalon (csak zárd a modalt). */
+    redirectTo?: string | false;
 };
 
 export function openAuthModal(detail?: OpenAuthModalDetail) {

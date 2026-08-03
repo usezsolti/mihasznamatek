@@ -19,6 +19,7 @@ export default function Navbar() {
     const [currentUser, setCurrentUser] = useState<NavUser | null>(null);
     const [authModalOpen, setAuthModalOpen] = useState(false);
     const [authModalMode, setAuthModalMode] = useState<"login" | "register">("login");
+    const [authRedirectTo, setAuthRedirectTo] = useState<string | false | undefined>(undefined);
 
     useEffect(() => {
         setIsClient(true);
@@ -123,9 +124,13 @@ export default function Navbar() {
         }
     };
 
-    const openAuthModal = (mode: "login" | "register" = "login") => {
+    const openLocalAuthModal = (
+        mode: "login" | "register" = "login",
+        redirectTo?: string | false
+    ) => {
         setIsMenuOpen(false);
         setAuthModalMode(mode);
+        setAuthRedirectTo(redirectTo);
         setAuthModalOpen(true);
     };
 
@@ -135,7 +140,10 @@ export default function Navbar() {
 
         const onOpen = (e: Event) => {
             const detail = (e as CustomEvent<OpenAuthModalDetail>).detail;
-            openAuthModal(detail?.mode === "register" ? "register" : "login");
+            openLocalAuthModal(
+                detail?.mode === "register" ? "register" : "login",
+                detail?.redirectTo
+            );
         };
         window.addEventListener(OPEN_AUTH_MODAL_EVENT, onOpen);
 
@@ -155,7 +163,7 @@ export default function Navbar() {
             const auth = params.get("auth");
             const needsVerify = params.get("verify") === "1";
             if (auth === "1" || auth === "login") {
-                openAuthModal("login");
+                openLocalAuthModal("login");
                 if (needsVerify) {
                     window.setTimeout(() => {
                         alert(
@@ -167,12 +175,12 @@ export default function Navbar() {
                 return;
             }
             if (auth === "register") {
-                openAuthModal("register");
+                openLocalAuthModal("register");
                 stripAuthQuery();
                 return;
             }
             if (window.location.hash === "#auth") {
-                openAuthModal("login");
+                openLocalAuthModal("login");
             }
         };
 
@@ -300,7 +308,7 @@ export default function Navbar() {
                         )}
                         {isClient && !currentUser && (
                             <li className="nav-auth-mobile">
-                                <button type="button" className="auth-btn" onClick={openAuthModal}>
+                                <button type="button" className="auth-btn" onClick={() => openLocalAuthModal("login")}>
                                     Bejelentkezés
                                 </button>
                             </li>
@@ -366,7 +374,7 @@ export default function Navbar() {
                                     <button
                                         type="button"
                                         className="auth-btn nav-login-btn"
-                                        onClick={openAuthModal}
+                                        onClick={() => openLocalAuthModal("login")}
                                     >
                                         Bejelentkezés
                                     </button>
@@ -385,7 +393,11 @@ export default function Navbar() {
             <AuthModal
                 isOpen={authModalOpen}
                 initialMode={authModalMode}
-                onClose={() => setAuthModalOpen(false)}
+                redirectTo={authRedirectTo}
+                onClose={() => {
+                    setAuthModalOpen(false);
+                    setAuthRedirectTo(undefined);
+                }}
             />
         </>
     );

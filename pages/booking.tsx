@@ -91,6 +91,8 @@ export default function BookingPage() {
     const [houseNumber, setHouseNumber] = useState("");
     const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
     const [gdprAccepted, setGdprAccepted] = useState(false);
+    const [authLoading, setAuthLoading] = useState(false);
+    const [gateGdpr, setGateGdpr] = useState(false);
 
     useEffect(() => {
         window.scrollTo({ top: 0, behavior: "auto" });
@@ -112,7 +114,6 @@ export default function BookingPage() {
                 if (!user) {
                     setAuthUser(null);
                     setAuthReady(true);
-                    openAuthModal();
                     return;
                 }
                 const email = String(user.email || "").toLowerCase();
@@ -120,6 +121,7 @@ export default function BookingPage() {
                 setAuthUser({ email, name });
                 setCustomerEmail(email);
                 if (name) setCustomerName((prev) => prev || name);
+                setError("");
                 setAuthReady(true);
             });
         })();
@@ -147,6 +149,66 @@ export default function BookingPage() {
             if (unsub) unsub();
         };
     }, [router]);
+
+    const handleGoogleForBooking = async () => {
+        setError("");
+        if (!gateGdpr) {
+            setError("Fogadd el az adatkezelési tájékoztatót a belépéshez / regisztrációhoz.");
+            return;
+        }
+        setAuthLoading(true);
+        try {
+            let attempts = 0;
+            while (!(window as any).firebase?.apps?.length && attempts < 40) {
+                await new Promise((r) => setTimeout(r, 100));
+                attempts++;
+            }
+            const firebase = (window as any).firebase;
+            if (!firebase?.apps?.length) {
+                setError("A Firebase nem töltődött be. Frissítsd az oldalt.");
+                return;
+            }
+            const provider = new firebase.auth.GoogleAuthProvider();
+            provider.addScope("email");
+            provider.addScope("profile");
+            const result = await firebase.auth().signInWithPopup(provider);
+            const user = result.user;
+            const isNewUser = result.additionalUserInfo?.isNewUser;
+            if (user) {
+                const db = firebase.firestore();
+                const ref = db.collection("users").doc(user.uid);
+                const snap = await ref.get();
+                const gdprFields = {
+                    gdprAccepted: true,
+                    gdprAcceptedAt: firebase.firestore.FieldValue.serverTimestamp(),
+                    gdprVersion: "2026-08-03",
+                };
+                if (!snap.exists) {
+                    await ref.set({
+                        name: user.displayName || "",
+                        email: user.email || "",
+                        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                        ...gdprFields,
+                    });
+                } else if (isNewUser) {
+                    await ref.set(gdprFields, { merge: true });
+                }
+            }
+            setGateGdpr(false);
+        } catch (err: any) {
+            console.error(err);
+            const code = err?.code || "";
+            if (code === "auth/popup-closed-by-user") {
+                setError("A Google ablak bezáródott. Próbáld újra.");
+            } else if (code === "auth/unauthorized-domain") {
+                setError("Ez a domain nincs engedélyezve a Firebase-ben (Authorized domains).");
+            } else {
+                setError("Google belépés sikertelen. Próbáld újra.");
+            }
+        } finally {
+            setAuthLoading(false);
+        }
+    };
 
     const monthLabel = currentMonth.toLocaleDateString("hu-HU", {
         year: "numeric",
@@ -232,7 +294,7 @@ export default function BookingPage() {
 
         if (!authUser?.email) {
             setError("A foglaláshoz be kell jelentkezned.");
-            openAuthModal();
+            openAuthModal({ mode: "login", redirectTo: false });
             return;
         }
         if (!selectedDate || selectedTimes.length === 0) {
@@ -377,6 +439,90 @@ export default function BookingPage() {
                         </p>
                     </div>
 
+                    {!authReady ? (
+                        <p className="booking-muted" style={{ textAlign: "center", padding: "2rem" }}>
+                            Betöltés…
+                        </p>
+                    ) : !authUser ? (
+                        <section className="booking-auth-gate">
+                            <h2>Belépés szükséges</h2>
+                            <p>
+                                Az időpontfoglaláshoz jelentkezz be vagy regisztrálj{" "}
+                                <strong>Google-fiókkal</strong>.
+                            </p>
+
+                            <label className="gdpr-consent booking-gdpr">
+                                <input
+                                    type="checkbox"
+                                    checked={gateGdpr}
+                                    onChange={(e) => setGateGdpr(e.target.checked)}
+                                />
+                                <span>
+                                    Elolvastam és elfogadom az{" "}
+                                    <a
+                                        href="/adatkezelesi-tajekoztato"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                    >
+                                        adatkezelési tájékoztatót
+                                    </a>{" "}
+                                    (GDPR). *
+                                </span>
+                            </label>
+
+                            {error && <p className="booking-error">{error}</p>}
+
+                            <button
+                                type="button"
+                                className="google-login-btn booking-google-btn"
+                                onClick={handleGoogleForBooking}
+                                disabled={authLoading}
+                            >
+                                <svg width="18" height="18" viewBox="0 0 48 48" aria-hidden="true">
+                                    <path
+                                        fill="#EA4335"
+                                        d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"
+                                    />
+                                    <path
+                                        fill="#4285F4"
+                                        d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"
+                                    />
+                                    <path
+                                        fill="#FBBC05"
+                                        d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"
+                                    />
+                                    <path
+                                        fill="#34A853"
+                                        d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"
+                                    />
+                                </svg>
+                                {authLoading ? "Belépés…" : "Folytatás Google-lal"}
+                            </button>
+
+                            <p className="booking-muted" style={{ marginTop: "1.25rem" }}>
+                                Van már e-mailes fiókod?{" "}
+                                <button
+                                    type="button"
+                                    className="booking-text-btn"
+                                    onClick={() =>
+                                        openAuthModal({ mode: "login", redirectTo: false })
+                                    }
+                                >
+                                    Bejelentkezés e-maillel
+                                </button>
+                                {" · "}
+                                <button
+                                    type="button"
+                                    className="booking-text-btn"
+                                    onClick={() =>
+                                        openAuthModal({ mode: "register", redirectTo: false })
+                                    }
+                                >
+                                    Regisztráció e-maillel
+                                </button>
+                            </p>
+                        </section>
+                    ) : (
                     <div className="booking-layout">
                         <section className="booking-calendar-card">
                             <div className="booking-cal-header">
@@ -495,27 +641,6 @@ export default function BookingPage() {
 
                         <section className="booking-form-card">
                             <h2>Foglalási adatok</h2>
-                            {authReady && !authUser && (
-                                <p className="booking-muted" style={{ marginBottom: "1rem" }}>
-                                    A foglaláshoz{" "}
-                                    <button
-                                        type="button"
-                                        onClick={() => openAuthModal()}
-                                        style={{
-                                            background: "none",
-                                            border: "none",
-                                            color: "#39ff14",
-                                            textDecoration: "underline",
-                                            cursor: "pointer",
-                                            padding: 0,
-                                            font: "inherit",
-                                        }}
-                                    >
-                                        jelentkezz be
-                                    </button>
-                                    .
-                                </p>
-                            )}
                             <form onSubmit={handleSubmit} className="booking-form-fields">
                                 <div className="booking-field">
                                     <label htmlFor="booking-name">Név *</label>
@@ -716,6 +841,7 @@ export default function BookingPage() {
                             </form>
                         </section>
                     </div>
+                    )}
                 </div>
             </div>
         </>
