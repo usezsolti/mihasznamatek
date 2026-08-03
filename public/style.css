@@ -3629,7 +3629,8 @@ textarea::placeholder {
 }
 
 .email-form .form-group input,
-.email-form .form-group textarea {
+.email-form .form-group textarea,
+.email-form .form-group select {
   width: 100%;
   padding: 1rem 1.2rem;
   border: 2px solid rgba(255, 255, 255, 0.1);
@@ -3641,11 +3642,39 @@ textarea::placeholder {
 }
 
 .email-form .form-group input:focus,
-.email-form .form-group textarea:focus {
+.email-form .form-group textarea:focus,
+.email-form .form-group select:focus {
   outline: none;
   border-color: var(--neon-green);
   box-shadow: 0 0 20px rgba(57, 255, 20, 0.3);
   background: #000000;
+}
+
+.email-form .auth-address-row input {
+  width: 100%;
+  padding: 0.85rem 0.9rem;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  background: #000000;
+  color: #ffffff !important;
+  font-size: 0.95rem;
+}
+
+.auth-register-extra {
+  margin-top: 0.25rem;
+  padding: 1rem 0.85rem 0.25rem;
+  border-top: 1px solid rgba(57, 255, 20, 0.35);
+  border-radius: 0;
+}
+
+.auth-register-extra > .auth-extra-title {
+  color: #39ff14;
+  font-size: 0.95rem;
+  font-weight: 700;
+  text-align: left;
+  margin: 0 0 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
 }
 
 .email-form .form-group textarea {

@@ -544,6 +544,7 @@ export default function AuthModal({
 
                                 {mode === "register" && (
                                     <div className="auth-register-extra">
+                                        <p className="auth-extra-title">Foglaláshoz szükséges adatok</p>
                                         <div className="form-group">
                                             <label>Óra típusa *</label>
                                             <div className="auth-lesson-toggle">
