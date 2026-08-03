@@ -121,8 +121,7 @@ export default function BookingPage() {
                 const email = String(user.email || "").toLowerCase();
                 const name = String(user.displayName || "");
                 setAuthUser({ email, name });
-                setCustomerEmail(email);
-                if (name) setCustomerName((prev) => prev || name);
+                // Foglalási mezőket NEM töltjük ki automatikusan — mindig meg kell adni
                 setBookingPath("account");
                 setError("");
                 setAuthReady(true);
@@ -700,6 +699,13 @@ export default function BookingPage() {
 
                         <section className="booking-form-card">
                             <h2>Foglalási adatok</h2>
+                            {authUser && (
+                                <p className="booking-muted" style={{ marginBottom: "1rem" }}>
+                                    Bejelentkezve: <strong style={{ color: "#39ff14" }}>{authUser.email}</strong>.
+                                    A foglaláshoz add meg az alábbi adatokat (az e-mailnek a fiókoddal
+                                    egyeznie kell).
+                                </p>
+                            )}
                             <form onSubmit={handleSubmit} className="booking-form-fields">
                                 <div className="booking-field">
                                     <label htmlFor="booking-name">Név *</label>
@@ -709,12 +715,11 @@ export default function BookingPage() {
                                         onChange={(e) => setCustomerName(e.target.value)}
                                         placeholder="Teljes neved"
                                         required
+                                        autoComplete="name"
                                     />
                                 </div>
                                 <div className="booking-field">
-                                    <label htmlFor="booking-email">
-                                        E-mail *{authUser ? " (fiókod)" : ""}
-                                    </label>
+                                    <label htmlFor="booking-email">E-mail *</label>
                                     <input
                                         id="booking-email"
                                         type="email"
@@ -722,12 +727,7 @@ export default function BookingPage() {
                                         onChange={(e) => setCustomerEmail(e.target.value)}
                                         placeholder="pelda@email.hu"
                                         required
-                                        readOnly={Boolean(authUser)}
-                                        title={
-                                            authUser
-                                                ? "A fiókod e-mail címe — nem módosítható"
-                                                : undefined
-                                        }
+                                        autoComplete="email"
                                     />
                                 </div>
 
