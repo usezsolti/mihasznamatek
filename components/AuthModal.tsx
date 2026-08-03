@@ -56,17 +56,31 @@ async function waitForFirebaseReady(maxAttempts = 50): Promise<any | null> {
     return (window as any).firebase?.apps?.length ? (window as any).firebase : null;
 }
 
-async function ensureUserDoc(firebase: any, user: any, name?: string) {
+async function ensureUserDoc(
+    firebase: any,
+    user: any,
+    options?: { name?: string; gdprAccepted?: boolean }
+) {
     if (!user) return;
     const db = firebase.firestore();
     const ref = db.collection("users").doc(user.uid);
     const snap = await ref.get();
+    const gdprFields = options?.gdprAccepted
+        ? {
+              gdprAccepted: true,
+              gdprAcceptedAt: firebase.firestore.FieldValue.serverTimestamp(),
+              gdprVersion: "2026-08-03",
+          }
+        : {};
     if (!snap.exists) {
         await ref.set({
-            name: name || user.displayName || "",
+            name: options?.name || user.displayName || "",
             email: user.email || "",
             createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+            ...gdprFields,
         });
+    } else if (options?.gdprAccepted) {
+        await ref.set(gdprFields, { merge: true });
     }
 }
 
@@ -85,6 +99,7 @@ export default function AuthModal({ isOpen, onClose, initialMode = "login" }: Au
     const [error, setError] = useState("");
     const [infoMessage, setInfoMessage] = useState("");
     const [awaitingVerification, setAwaitingVerification] = useState(false);
+    const [gdprAccepted, setGdprAccepted] = useState(false);
 
     const goToDashboard = () => {
         onClose();
@@ -97,9 +112,11 @@ export default function AuthModal({ isOpen, onClose, initialMode = "login" }: Au
             setInfoMessage("");
             setLoading(false);
             setAwaitingVerification(false);
+            setGdprAccepted(false);
             return;
         }
         setMode(initialMode);
+        setGdprAccepted(false);
         const onKey = (e: KeyboardEvent) => {
             if (e.key === "Escape") onClose();
         };
@@ -110,6 +127,7 @@ export default function AuthModal({ isOpen, onClose, initialMode = "login" }: Au
     const switchMode = (next: AuthMode) => {
         setMode(next);
         setError("");
+        setGdprAccepted(false);
     };
 
     const handleEmailSubmit = async (e: React.FormEvent) => {
@@ -138,6 +156,10 @@ export default function AuthModal({ isOpen, onClose, initialMode = "login" }: Au
                     setError("Add meg a neved a regisztrációhoz.");
                     return;
                 }
+                if (!gdprAccepted) {
+                    setError("A regisztrációhoz el kell fogadnod az adatkezelési tájékoztatót.");
+                    return;
+                }
                 const credential = await auth.createUserWithEmailAndPassword(
                     email.trim(),
                     password
@@ -145,7 +167,10 @@ export default function AuthModal({ isOpen, onClose, initialMode = "login" }: Au
                 const user = credential.user;
                 if (user) {
                     await user.updateProfile({ displayName: name.trim() });
-                    await ensureUserDoc(firebase, user, name.trim());
+                    await ensureUserDoc(firebase, user, {
+                        name: name.trim(),
+                        gdprAccepted: true,
+                    });
                     try {
                         await user.sendEmailVerification();
                     } catch (verErr) {
@@ -171,6 +196,10 @@ export default function AuthModal({ isOpen, onClose, initialMode = "login" }: Au
 
     const handleGoogle = async () => {
         setError("");
+        if (mode === "register" && !gdprAccepted) {
+            setError("A regisztrációhoz el kell fogadnod az adatkezelési tájékoztatót.");
+            return;
+        }
         setLoading(true);
         try {
             const firebase = await waitForFirebaseReady();
@@ -183,11 +212,22 @@ export default function AuthModal({ isOpen, onClose, initialMode = "login" }: Au
             provider.addScope("profile");
             const result = await firebase.auth().signInWithPopup(provider);
             const isNewUser = result.additionalUserInfo?.isNewUser;
-            if (isNewUser && result.user) {
-                await ensureUserDoc(firebase, result.user);
-            } else if (result.user) {
-                // meglévő user: csak ha hiányzik a doc, létrehozzuk
-                await ensureUserDoc(firebase, result.user);
+            if (isNewUser && !gdprAccepted) {
+                try {
+                    await firebase.auth().signOut();
+                } catch {
+                    /* ignore */
+                }
+                setMode("register");
+                setError(
+                    "Új fiók létrehozásához fogadd el az adatkezelési tájékoztatót, majd próbáld újra a Google belépést."
+                );
+                return;
+            }
+            if (result.user) {
+                await ensureUserDoc(firebase, result.user, {
+                    gdprAccepted: Boolean(isNewUser && gdprAccepted),
+                });
             }
             setPassword("");
             goToDashboard();
@@ -367,6 +407,28 @@ export default function AuthModal({ isOpen, onClose, initialMode = "login" }: Au
                                 required
                             />
                         </div>
+
+                        {mode === "register" && (
+                            <label className="gdpr-consent">
+                                <input
+                                    type="checkbox"
+                                    checked={gdprAccepted}
+                                    onChange={(e) => setGdprAccepted(e.target.checked)}
+                                    required
+                                />
+                                <span>
+                                    Elolvastam és elfogadom az{" "}
+                                    <a
+                                        href="/adatkezelesi-tajekoztato"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                    >
+                                        adatkezelési tájékoztatót
+                                    </a>{" "}
+                                    (GDPR). *
+                                </span>
+                            </label>
+                        )}
 
                         {error && <p className="form-msg">{error}</p>}
 

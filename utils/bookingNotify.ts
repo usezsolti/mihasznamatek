@@ -31,6 +31,9 @@ export type BookingPayload = {
     paymentStatus?: PaymentStatus;
     paidAt?: string;
     reminderSentAt?: string;
+    gdprAccepted?: boolean;
+    gdprAcceptedAt?: string;
+    gdprVersion?: string;
 };
 
 export function normalizeAttachments(

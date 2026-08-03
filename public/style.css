@@ -5100,3 +5100,42 @@ textarea::placeholder {
     grid-template-columns: repeat(auto-fill, minmax(5.5rem, 1fr));
   }
 }
+
+/* GDPR consent checkbox (auth + booking) */
+.gdpr-consent {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.65rem;
+  margin: 0.35rem 0 0.75rem;
+  color: #ccc;
+  font-size: 0.88rem;
+  line-height: 1.45;
+  cursor: pointer;
+  text-align: left;
+}
+
+.gdpr-consent input[type="checkbox"] {
+  margin-top: 0.2rem;
+  width: 1.05rem;
+  height: 1.05rem;
+  flex-shrink: 0;
+  accent-color: #39ff14;
+  cursor: pointer;
+}
+
+.gdpr-consent a {
+  color: #39ff14;
+  text-decoration: underline;
+}
+
+.gdpr-consent a:hover {
+  color: #7dff5a;
+}
+
+.booking-gdpr {
+  padding: 0.85rem 1rem;
+  border-radius: 10px;
+  border: 1px solid rgba(57, 255, 20, 0.25);
+  background: rgba(57, 255, 20, 0.05);
+}
+

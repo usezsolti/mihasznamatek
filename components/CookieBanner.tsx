@@ -63,18 +63,17 @@ export default function CookieBanner() {
                         lineHeight: '1.5'
                     }}>
                         Ez a weboldal cookie-kat használ a felhasználói élmény javítása érdekében.
-                        A weboldal használatával elfogadja a cookie-k használatát.
+                        A weboldal használatával elfogadja a szükséges cookie-k használatát.{" "}
                         <a
-                            href="/privacy"
+                            href="/adatkezelesi-tajekoztato"
                             target="_blank"
                             rel="noopener noreferrer"
                             style={{
                                 color: '#39FF14',
                                 textDecoration: 'none',
-                                marginLeft: '5px'
                             }}
                         >
-                            Részletek
+                            Adatkezelési tájékoztató
                         </a>
                     </p>
                 </div>

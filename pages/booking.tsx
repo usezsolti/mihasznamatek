@@ -90,6 +90,7 @@ export default function BookingPage() {
     const [street, setStreet] = useState("");
     const [houseNumber, setHouseNumber] = useState("");
     const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
+    const [gdprAccepted, setGdprAccepted] = useState(false);
 
     useEffect(() => {
         window.scrollTo({ top: 0, behavior: "auto" });
@@ -246,6 +247,10 @@ export default function BookingPage() {
             setError("A foglalási e-mailnek egyeznie kell a bejelentkezett fiókkal.");
             return;
         }
+        if (!gdprAccepted) {
+            setError("A foglaláshoz el kell fogadnod az adatkezelési tájékoztatót.");
+            return;
+        }
         if (!postalCode.trim() || !street.trim() || !houseNumber.trim()) {
             setError("A számlázási cím megadása kötelező (irányítószám, utca, házszám).");
             return;
@@ -306,6 +311,9 @@ export default function BookingPage() {
                 submittedAt: new Date().toISOString(),
                 status: "pending",
                 paymentStatus: "unpaid",
+                gdprAccepted: true,
+                gdprAcceptedAt: new Date().toISOString(),
+                gdprVersion: "2026-08-03",
             };
 
             const saved = await saveBookingToFirestore(booking);
@@ -663,6 +671,27 @@ export default function BookingPage() {
                                         </strong>
                                     </div>
                                 </div>
+
+                                <label className="gdpr-consent booking-gdpr">
+                                    <input
+                                        type="checkbox"
+                                        checked={gdprAccepted}
+                                        onChange={(e) => setGdprAccepted(e.target.checked)}
+                                        required
+                                    />
+                                    <span>
+                                        Elolvastam és elfogadom az{" "}
+                                        <a
+                                            href="/adatkezelesi-tajekoztato"
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                        >
+                                            adatkezelési tájékoztatót
+                                        </a>{" "}
+                                        (GDPR), és hozzájárulok a foglaláshoz szükséges
+                                        személyes adatok kezeléséhez. *
+                                    </span>
+                                </label>
 
                                 {error && <p className="booking-error">{error}</p>}
                                 {success && (

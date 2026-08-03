@@ -1088,6 +1088,12 @@ export default function Home() {
                 </div>
             </section>
 
+            <p style={{ textAlign: "center", padding: "1.5rem 1rem 2.5rem", color: "#888", fontSize: "0.9rem" }}>
+                <Link href="/adatkezelesi-tajekoztato" style={{ color: "#39ff14" }}>
+                    Adatkezelési tájékoztató (GDPR)
+                </Link>
+            </p>
+
             <section id="auth" className="section home-auth-section">
                 <div className="section-content">
                     <h2 className="section-title">Fiókom</h2>
