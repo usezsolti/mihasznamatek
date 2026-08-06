@@ -53,24 +53,16 @@ export default function TopicPathMap({
     const reload = useCallback(async () => {
         try {
             let attempts = 0;
-            while (!(window as any).firebase?.auth && attempts < 40) {
+            while (!(window as any).firebase?.auth && attempts < 20) {
                 await new Promise((r) => setTimeout(r, 100));
                 attempts++;
             }
-            const user = (window as any).firebase?.auth?.()?.currentUser;
-            if (!user) {
-                setProgress({
-                    xp: 0,
-                    rank: 'BEGINNER',
-                    rankLevel: 1,
-                    badges: [],
-                    topics: {},
-                });
-                return;
-            }
-            setProgress(await loadUserPracticeProgress(user.uid));
+            const uid = (window as any).firebase?.auth?.()?.currentUser?.uid || null;
+            // localStorage is működik vendégként — a következő lecke így is feloldódik
+            setProgress(await loadUserPracticeProgress(uid));
         } catch (e) {
             console.error('Path progress load:', e);
+            setProgress(await loadUserPracticeProgress(null));
         }
     }, []);
 
@@ -100,14 +92,10 @@ export default function TopicPathMap({
             showToast('Ezt a kincset már begyűjtötted.');
             return;
         }
-        const user = (window as any).firebase?.auth?.()?.currentUser;
-        if (!user) {
-            showToast('A kincshez jelentkezz be!');
-            return;
-        }
+        const uid = (window as any).firebase?.auth?.()?.currentUser?.uid || null;
         setClaiming(true);
         try {
-            const result = await claimPathChest(user.uid, topicId, chest);
+            const result = await claimPathChest(uid, topicId, chest);
             setProgress(result.next);
             if (result.alreadyClaimed) {
                 showToast('Ezt a kincset már begyűjtötted.');
@@ -169,6 +157,11 @@ export default function TopicPathMap({
                             {done ? '✓' : unlocked ? node.lesson : '🔒'}
                         </span>
                         <span className="path-node-label">{node.label}</span>
+                        {!unlocked && (
+                            <span className="path-cta locked-hint">
+                                Előbb Lecke {node.lesson - 1}
+                            </span>
+                        )}
                         {current && <span className="path-cta">Folytatás</span>}
                         {done && <span className="path-stars">★★★</span>}
                     </button>
@@ -408,6 +401,11 @@ export default function TopicPathMap({
                     color: #39ff14;
                     text-transform: uppercase;
                     letter-spacing: 0.04em;
+                }
+                .path-cta.locked-hint {
+                    color: #aaa;
+                    text-transform: none;
+                    font-weight: 600;
                 }
                 .path-stars {
                     color: #ffd700;

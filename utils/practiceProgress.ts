@@ -188,6 +188,8 @@ export function emptyProgress(): UserPracticeProgress {
     return { xp: 0, rank: 'BEGINNER', rankLevel: 1, badges: [], topics: {} };
 }
 
+const LOCAL_PROGRESS_KEY = 'mihaszna_practice_progress_v1';
+
 function normalizeLoadedTopic(raw: any): TopicProgress {
     const base = emptyPathTopicProgress(Number(raw?.totalQuestions) || PATH_TOTAL_QUESTIONS);
     const lessonsCompleted = Array.isArray(raw?.lessonsCompleted) ? raw.lessonsCompleted.map(Number) : [];
@@ -208,28 +210,134 @@ function normalizeLoadedTopic(raw: any): TopicProgress {
     };
 }
 
-export async function loadUserPracticeProgress(uid: string): Promise<UserPracticeProgress> {
-    const firebase = (window as any).firebase;
-    if (!firebase?.firestore) return emptyProgress();
-    const db = firebase.firestore();
-    const snap = await db.collection('users').doc(uid).collection('progress').doc('summary').get();
-    if (!snap.exists) return emptyProgress();
-    const data = snap.data() || {};
-    const xp = Number(data.xp) || 0;
-    const rankLevel = Number(data.rankLevel) || xpToRankLevel(xp);
-    const rawTopics = data.topics || {};
-    const topics: Record<string, TopicProgress> = {};
-    Object.keys(rawTopics).forEach((k) => {
-        topics[k] = normalizeLoadedTopic(rawTopics[k]);
+function loadLocalProgress(): UserPracticeProgress {
+    if (typeof window === 'undefined') return emptyProgress();
+    try {
+        const raw = window.localStorage.getItem(LOCAL_PROGRESS_KEY);
+        if (!raw) return emptyProgress();
+        const data = JSON.parse(raw);
+        const xp = Number(data.xp) || 0;
+        const rankLevel = Number(data.rankLevel) || xpToRankLevel(xp);
+        const topics: Record<string, TopicProgress> = {};
+        Object.keys(data.topics || {}).forEach((k) => {
+            topics[k] = normalizeLoadedTopic(data.topics[k]);
+        });
+        return {
+            xp,
+            rank: data.rank || getRankTitle(rankLevel),
+            rankLevel,
+            badges: Array.isArray(data.badges) ? data.badges : [],
+            topics,
+            updatedAt: data.updatedAt,
+        };
+    } catch {
+        return emptyProgress();
+    }
+}
+
+function saveLocalProgress(progress: UserPracticeProgress) {
+    if (typeof window === 'undefined') return;
+    try {
+        window.localStorage.setItem(
+            LOCAL_PROGRESS_KEY,
+            JSON.stringify({ ...progress, updatedAt: Date.now() })
+        );
+    } catch {
+        /* ignore quota */
+    }
+}
+
+function mergeTopicProgress(a: TopicProgress, b: TopicProgress): TopicProgress {
+    const lessons = Array.from(
+        new Set([...(a.lessonsCompleted || []), ...(b.lessonsCompleted || [])])
+    ).sort((x, y) => x - y);
+    const stages = Array.from(
+        new Set([...(a.stagesCompleted || []), ...(b.stagesCompleted || [])])
+    ).sort((x, y) => x - y);
+    const chests = Array.from(
+        new Set([...(a.chestsClaimed || []), ...(b.chestsClaimed || [])])
+    ).sort((x, y) => x - y);
+    return {
+        bestCorrect: Math.max(a.bestCorrect || 0, b.bestCorrect || 0),
+        totalQuestions: Math.max(a.totalQuestions || 0, b.totalQuestions || 0, PATH_TOTAL_QUESTIONS),
+        stagesCompleted: stages,
+        completed: Boolean(a.completed || b.completed),
+        perfect: Boolean(a.perfect || b.perfect),
+        lessonsCompleted: lessons,
+        highestUnlocked: Math.max(
+            a.highestUnlocked || 1,
+            b.highestUnlocked || 1,
+            computeHighestUnlocked(lessons)
+        ),
+        chestsClaimed: chests,
+    };
+}
+
+function mergeProgress(local: UserPracticeProgress, remote: UserPracticeProgress): UserPracticeProgress {
+    const xp = Math.max(local.xp || 0, remote.xp || 0);
+    const rankLevel = Math.max(local.rankLevel || 1, remote.rankLevel || 1, xpToRankLevel(xp));
+    const badges = Array.from(new Set([...(local.badges || []), ...(remote.badges || [])]));
+    const topics: Record<string, TopicProgress> = { ...local.topics };
+    Object.keys(remote.topics || {}).forEach((k) => {
+        topics[k] = topics[k]
+            ? mergeTopicProgress(topics[k], remote.topics[k])
+            : normalizeLoadedTopic(remote.topics[k]);
     });
     return {
         xp,
-        rank: data.rank || getRankTitle(rankLevel),
+        rank: getRankTitle(rankLevel),
         rankLevel,
-        badges: Array.isArray(data.badges) ? data.badges : [],
+        badges: badges as BadgeId[],
         topics,
-        updatedAt: data.updatedAt,
     };
+}
+
+async function persistProgress(uid: string | null | undefined, next: UserPracticeProgress) {
+    saveLocalProgress(next);
+    const firebase = (window as any).firebase;
+    if (uid && firebase?.firestore) {
+        const db = firebase.firestore();
+        await db.collection('users').doc(uid).collection('progress').doc('summary').set(
+            {
+                ...next,
+                updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+            },
+            { merge: true }
+        );
+    }
+}
+
+export async function loadUserPracticeProgress(uid?: string | null): Promise<UserPracticeProgress> {
+    const local = loadLocalProgress();
+    const firebase = (window as any).firebase;
+    if (!uid || !firebase?.firestore) return local;
+
+    try {
+        const db = firebase.firestore();
+        const snap = await db.collection('users').doc(uid).collection('progress').doc('summary').get();
+        if (!snap.exists) return local;
+        const data = snap.data() || {};
+        const xp = Number(data.xp) || 0;
+        const rankLevel = Number(data.rankLevel) || xpToRankLevel(xp);
+        const rawTopics = data.topics || {};
+        const topics: Record<string, TopicProgress> = {};
+        Object.keys(rawTopics).forEach((k) => {
+            topics[k] = normalizeLoadedTopic(rawTopics[k]);
+        });
+        const remote: UserPracticeProgress = {
+            xp,
+            rank: data.rank || getRankTitle(rankLevel),
+            rankLevel,
+            badges: Array.isArray(data.badges) ? data.badges : [],
+            topics,
+            updatedAt: data.updatedAt,
+        };
+        const merged = mergeProgress(local, remote);
+        saveLocalProgress(merged);
+        return merged;
+    } catch {
+        return local;
+    }
 }
 
 export type ProgressUpdateInput = {
@@ -253,10 +361,9 @@ export type ProgressUpdateResult = {
 };
 
 export async function applyAndSaveProgress(
-    uid: string,
+    uid: string | null | undefined,
     input: ProgressUpdateInput
 ): Promise<ProgressUpdateResult> {
-    const firebase = (window as any).firebase;
     const previous = await loadUserPracticeProgress(uid);
     let xpGained = input.sessionXpFromAnswers;
     const badges = new Set<BadgeId>(previous.badges);
@@ -365,27 +472,17 @@ export async function applyAndSaveProgress(
         topics,
     };
 
-    if (firebase?.firestore) {
-        const db = firebase.firestore();
-        await db.collection('users').doc(uid).collection('progress').doc('summary').set(
-            {
-                ...next,
-                updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
-            },
-            { merge: true }
-        );
-    }
+    await persistProgress(uid, next);
 
     return { previous, next, xpGained, newBadges };
 }
 
 /** Kincs claim az útvonalról */
 export async function claimPathChest(
-    uid: string,
+    uid: string | null | undefined,
     topicId: string,
     chest: 1 | 2 | 3
 ): Promise<ProgressUpdateResult & { alreadyClaimed: boolean }> {
-    const firebase = (window as any).firebase;
     const previous = await loadUserPracticeProgress(uid);
     const storageKey = resolveProgressStorageKey(topicId);
     const prevTopic = previous.topics[storageKey]
@@ -445,16 +542,7 @@ export async function claimPathChest(
         topics,
     };
 
-    if (firebase?.firestore) {
-        const db = firebase.firestore();
-        await db.collection('users').doc(uid).collection('progress').doc('summary').set(
-            {
-                ...next,
-                updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
-            },
-            { merge: true }
-        );
-    }
+    await persistProgress(uid, next);
 
     return { previous, next, xpGained, newBadges, alreadyClaimed: false };
 }

@@ -20,6 +20,7 @@ import {
     PATH_LESSON_XP,
     buildPathQuestionBank,
     getLessonQuestions,
+    isLessonUnlocked,
     isWorksheetTopicId,
     lessonToStage,
 } from '../utils/topicPath';
@@ -59,6 +60,9 @@ export default function Game() {
     const [pathLesson, setPathLesson] = useState<number | null>(null);
     const worksheetTopicKeyRef = useRef<string | null>(null);
     const pathLessonRef = useRef<number | null>(null);
+    const correctQuestionIdsRef = useRef<string[]>([]);
+    const wrongFirstIdsRef = useRef<string[]>([]);
+    const erettsegiQuestionsRef = useRef<Question[]>([]);
     const [educationLevel, setEducationLevel] = useState<'elementary' | 'highschool' | 'university' | null>(null);
     const [universityQuestions, setUniversityQuestions] = useState<Question[]>([]);
     const [isGeneratingQuestion, setIsGeneratingQuestion] = useState(false);
@@ -187,11 +191,40 @@ export default function Game() {
             }
         }
 
-        // Érettségi mód kezelése
+        // Érettségi mód kezelése — path lecke: csak ha az előző kész
         if (router.query.erettsegi === 'true' && router.query.topic) {
             const topicId = router.query.topic as string;
-            const level = router.query.level as string;
-            generateErettsegiQuestionsByTopic(topicId, level);
+            const level = (router.query.level as string) || 'emelt';
+            const nodeParsed = router.query.node != null
+                ? parseInt(String(router.query.node), 10)
+                : NaN;
+            const run = async () => {
+                if (Number.isFinite(nodeParsed) && nodeParsed > 1) {
+                    try {
+                        let attempts = 0;
+                        while (!(window as any).firebase?.auth && attempts < 30) {
+                            await new Promise((r) => setTimeout(r, 100));
+                            attempts++;
+                        }
+                        const uid = (window as any).firebase?.auth?.()?.currentUser?.uid || null;
+                        const prog = await loadUserPracticeProgress(uid);
+                        const key = resolveProgressStorageKey(topicId);
+                        const tp = prog.topics[key];
+                        const lessons = tp?.lessonsCompleted || [];
+                        const unlocked = tp?.highestUnlocked || 1;
+                        if (!isLessonUnlocked(nodeParsed, unlocked, lessons)) {
+                            router.replace(
+                                `/erettsegi-felkeszules?mode=topics&level=${level}&topic=${encodeURIComponent(topicId)}`
+                            );
+                            return;
+                        }
+                    } catch (e) {
+                        console.error('Path unlock check:', e);
+                    }
+                }
+                generateErettsegiQuestionsByTopic(topicId, level);
+            };
+            void run();
         }
 
         // Érettségi feladatsor kezelése - közép vagy emelt szintű feladatokkal vegyes témakörökből
@@ -3952,6 +3985,9 @@ Teljes megoldás:
         setCorrectStreak(0);
         setMaxStreak(0);
         setFailedQuestions([]);
+        correctQuestionIdsRef.current = [];
+        wrongFirstIdsRef.current = [];
+        erettsegiQuestionsRef.current = questions;
         setErettsegiQuestions(questions);
 
         if (questions.length > 0) {
@@ -4800,6 +4836,7 @@ Teljes megoldás:
                 let msgExtra = '';
                 if (!alreadyCorrect) {
                     const nextCorrect = [...correctQuestionIds, qid];
+                    correctQuestionIdsRef.current = nextCorrect;
                     setCorrectQuestionIds(nextCorrect);
                     setSessionXp((x) => x + 10);
                     setTotalXp((x) => x + 10);
@@ -4851,8 +4888,10 @@ Teljes megoldás:
                     setFailedQuestions([...failedQuestions, { ...currentQ }]);
                 }
                 const qid = currentQ.id || `idx_${currentQuestion}`;
-                if (!wrongFirstIds.includes(qid)) {
-                    setWrongFirstIds((w) => [...w, qid]);
+                if (!wrongFirstIdsRef.current.includes(qid) && !wrongFirstIds.includes(qid)) {
+                    const nextWrong = [...wrongFirstIdsRef.current, qid];
+                    wrongFirstIdsRef.current = nextWrong;
+                    setWrongFirstIds(nextWrong);
                 }
             }
             
@@ -4955,20 +4994,82 @@ Teljes megoldás:
 
 
     const saveGameResults = async () => {
-        if (!currentUser || !(window as any).firebase) return;
-        
             try {
-                const db = (window as any).firebase.firestore();
-                const baseList = isWorksheetMode && erettsegiQuestions.length > 0
-                    ? erettsegiQuestions
-                    : questions;
+                const baseList = isWorksheetMode && erettsegiQuestionsRef.current.length > 0
+                    ? erettsegiQuestionsRef.current
+                    : (isWorksheetMode && erettsegiQuestions.length > 0 ? erettsegiQuestions : questions);
                 const totalQuestions = baseList.length;
+                const correctIds = correctQuestionIdsRef.current.length
+                    ? correctQuestionIdsRef.current
+                    : correctQuestionIds;
+                const wrongIds = wrongFirstIdsRef.current.length
+                    ? wrongFirstIdsRef.current
+                    : wrongFirstIds;
                 const correctAnswerCount = isWorksheetMode
-                    ? correctQuestionIds.length
+                    ? correctIds.length
                     : Math.round(score / 10);
 
             // Készítünk egy eredmény objektumot
             const topicFromQuery = (router.query.topic as string) || currentTopic || '';
+            const uid = currentUser?.uid
+                || (window as any).firebase?.auth?.()?.currentUser?.uid
+                || null;
+
+            // Path / munkalap progress — localStorage + Firestore (ha van user)
+            if (isWorksheetMode) {
+                const topicKey = worksheetTopicKeyRef.current
+                    || resolveProgressStorageKey(topicFromQuery);
+                const lessonJustCompleted =
+                    isPathMode && pathLessonRef.current
+                    && baseList.every((q) => correctIds.includes(q.id || ''))
+                        ? pathLessonRef.current
+                        : undefined;
+                const perfectRun = wrongIds.length === 0 && correctAnswerCount >= totalQuestions;
+                const answerXpOnly = correctIds.length * 10;
+                const allStages: PracticeStage[] = [1, 2, 3];
+                const cleared = [...stagesCleared];
+                for (const st of allStages) {
+                    const stageQs = baseList.filter((q) => q.stage === st);
+                    if (stageQs.length > 0 && stageQs.every((q) => correctIds.includes(q.id || ''))) {
+                        if (!cleared.includes(st)) cleared.push(st);
+                    }
+                }
+                const result = await applyAndSaveProgress(uid, {
+                    topicKey,
+                    topicId: topicFromQuery,
+                    correctCount: correctAnswerCount,
+                    totalQuestions,
+                    stagesClearedThisRun: isPathMode ? [] : cleared,
+                    perfectRun,
+                    maxStreak,
+                    sessionXpFromAnswers: answerXpOnly,
+                    lessonJustCompleted,
+                });
+                setTotalXp(result.next.xp);
+                setAvatarLevel(result.next.rankLevel);
+                if (result.newBadges.length > 0) {
+                    const titles = result.newBadges
+                        .map((id) => getBadgeDef(id as BadgeId)?.title || id)
+                        .join(', ');
+                    setBadgeToast(`🏅 Új badge: ${titles}`);
+                    setTimeout(() => setBadgeToast(null), 5000);
+                } else if (lessonJustCompleted) {
+                    setBadgeToast(`🎉 Lecke ${lessonJustCompleted} kész — következhet a következő!`);
+                    setTimeout(() => setBadgeToast(null), 4000);
+                }
+                if (isPathMode && lessonJustCompleted) {
+                    const lvl = (router.query.level as string) || 'emelt';
+                    setTimeout(() => {
+                        router.push(
+                            `/erettsegi-felkeszules?mode=topics&level=${lvl}&topic=${encodeURIComponent(topicFromQuery)}`
+                        );
+                    }, 2200);
+                }
+            }
+
+            if (!currentUser || !(window as any).firebase?.firestore) return;
+
+                const db = (window as any).firebase.firestore();
             const resultData: any = {
                     userId: currentUser.uid,
                     correct: correctAnswerCount,
@@ -5026,51 +5127,6 @@ Teljes megoldás:
             }
 
             await db.collection('gameResults').add(resultData);
-
-            // Globális XP + badge mentés (munkalap / path lecke)
-            if (isWorksheetMode) {
-                const topicKey = worksheetTopicKeyRef.current
-                    || resolveProgressStorageKey(topicFromQuery);
-                const allStages: PracticeStage[] = [1, 2, 3];
-                const cleared = [...stagesCleared];
-                for (const st of allStages) {
-                    const stageQs = baseList.filter((q) => q.stage === st);
-                    if (stageQs.length > 0 && stageQs.every((q) => correctQuestionIds.includes(q.id || ''))) {
-                        if (!cleared.includes(st)) cleared.push(st);
-                    }
-                }
-                const perfectRun = wrongFirstIds.length === 0 && correctAnswerCount >= totalQuestions;
-                const lessonJustCompleted =
-                    isPathMode && pathLessonRef.current
-                    && baseList.every((q) => correctQuestionIds.includes(q.id || ''))
-                        ? pathLessonRef.current
-                        : undefined;
-                // Válasz XP; lecke +30-at az applyAndSaveProgress adja (ne duplázzuk)
-                const answerXpOnly = correctQuestionIds.length * 10;
-                const result = await applyAndSaveProgress(currentUser.uid, {
-                    topicKey,
-                    topicId: topicFromQuery,
-                    correctCount: correctAnswerCount,
-                    totalQuestions,
-                    stagesClearedThisRun: isPathMode ? [] : cleared,
-                    perfectRun,
-                    maxStreak,
-                    sessionXpFromAnswers: answerXpOnly,
-                    lessonJustCompleted,
-                });
-                setTotalXp(result.next.xp);
-                setAvatarLevel(result.next.rankLevel);
-                if (result.newBadges.length > 0) {
-                    const titles = result.newBadges
-                        .map((id) => getBadgeDef(id as BadgeId)?.title || id)
-                        .join(', ');
-                    setBadgeToast(`🏅 Új badge: ${titles}`);
-                    setTimeout(() => setBadgeToast(null), 5000);
-                } else if (lessonJustCompleted) {
-                    setBadgeToast(`🎉 Lecke ${lessonJustCompleted} mentve · +${PATH_LESSON_XP} XP`);
-                    setTimeout(() => setBadgeToast(null), 4000);
-                }
-            }
             } catch (error) {
                 console.error('Error saving game results:', error);
         }

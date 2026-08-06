@@ -67,9 +67,8 @@ export default function ErettsegiFelkeszules() {
                     await new Promise((r) => setTimeout(r, 100));
                     attempts++;
                 }
-                const user = (window as any).firebase?.auth?.()?.currentUser;
-                if (!user) return;
-                const prog: UserPracticeProgress = await loadUserPracticeProgress(user.uid);
+                const uid = (window as any).firebase?.auth?.()?.currentUser?.uid || null;
+                const prog: UserPracticeProgress = await loadUserPracticeProgress(uid);
                 if (!cancelled) setTopicProgressMap(prog.topics || {});
             } catch (e) {
                 console.error('Erettsegi progress load:', e);
