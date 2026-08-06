@@ -18,6 +18,7 @@ import {
     isLessonUnlocked,
     type PathNode,
 } from '../utils/topicPath';
+import { signInAsTestUser, TEST_LOGIN_EMAIL } from '../utils/testLogin';
 
 interface Props {
     topicId: string;
@@ -40,6 +41,8 @@ export default function TopicPathMap({
     const [progress, setProgress] = useState<UserPracticeProgress | null>(null);
     const [toast, setToast] = useState<string | null>(null);
     const [claiming, setClaiming] = useState(false);
+    const [loggedInEmail, setLoggedInEmail] = useState<string | null>(null);
+    const [testLoading, setTestLoading] = useState(false);
     const nodes = useMemo(() => buildPathNodes(), []);
 
     const storageKey = resolveProgressStorageKey(topicId);
@@ -57,18 +60,40 @@ export default function TopicPathMap({
                 await new Promise((r) => setTimeout(r, 100));
                 attempts++;
             }
-            const uid = (window as any).firebase?.auth?.()?.currentUser?.uid || null;
-            // localStorage is működik vendégként — a következő lecke így is feloldódik
-            setProgress(await loadUserPracticeProgress(uid));
+            const user = (window as any).firebase?.auth?.()?.currentUser || null;
+            setLoggedInEmail(user?.email || null);
+            setProgress(await loadUserPracticeProgress(user?.uid || null));
         } catch (e) {
             console.error('Path progress load:', e);
+            setLoggedInEmail(null);
             setProgress(await loadUserPracticeProgress(null));
         }
     }, []);
 
     useEffect(() => {
         reload();
+        const auth = (window as any).firebase?.auth?.();
+        if (!auth) return;
+        const unsub = auth.onAuthStateChanged((user: any) => {
+            setLoggedInEmail(user?.email || null);
+            void reload();
+        });
+        return () => unsub?.();
     }, [reload, topicId]);
+
+    const handleTestLogin = async () => {
+        setTestLoading(true);
+        try {
+            await signInAsTestUser();
+            showToast(`Bejelentkezve: ${TEST_LOGIN_EMAIL}`);
+            await reload();
+        } catch (e: any) {
+            console.error(e);
+            showToast(e?.message || 'Teszt belépés sikertelen');
+        } finally {
+            setTestLoading(false);
+        }
+    };
 
     const showToast = (msg: string) => {
         setToast(msg);
@@ -231,6 +256,38 @@ export default function TopicPathMap({
                 >
                     {doneCount >= PATH_LESSON_COUNT ? 'Újra a mester lecke' : `Folytatás · Lecke ${continueLesson}`}
                 </button>
+
+                {!loggedInEmail ? (
+                    <div className="path-test-login">
+                        <p>
+                            Haladás mentéséhez: egy kattintásos teszt fiók ({TEST_LOGIN_EMAIL})
+                        </p>
+                        <div className="path-test-actions">
+                            <button type="button" disabled={testLoading} onClick={handleTestLogin}>
+                                {testLoading ? 'Belépés…' : 'Teszt belépés'}
+                            </button>
+                            <button
+                                type="button"
+                                className="secondary"
+                                onClick={() => {
+                                    try {
+                                        window.dispatchEvent(
+                                            new CustomEvent('mihaszna:open-auth-modal', {
+                                                detail: { mode: 'login', redirectTo: false },
+                                            })
+                                        );
+                                    } catch {
+                                        /* ignore */
+                                    }
+                                }}
+                            >
+                                Normál belépés
+                            </button>
+                        </div>
+                    </div>
+                ) : (
+                    <p className="path-logged-in">Bejelentkezve: {loggedInEmail}</p>
+                )}
             </div>
 
             <div className="path-track">
@@ -311,6 +368,49 @@ export default function TopicPathMap({
                     border-radius: 16px;
                     cursor: pointer;
                     margin-top: 0.25rem;
+                }
+                .path-test-login {
+                    margin-top: 1rem;
+                    padding: 0.85rem 1rem;
+                    border-radius: 14px;
+                    border: 1px dashed rgba(255, 215, 0, 0.55);
+                    background: rgba(255, 215, 0, 0.08);
+                }
+                .path-test-login p {
+                    margin: 0 0 0.65rem;
+                    color: #eee;
+                    font-size: 0.88rem;
+                }
+                .path-test-actions {
+                    display: flex;
+                    gap: 0.5rem;
+                    flex-wrap: wrap;
+                }
+                .path-test-login button {
+                    flex: 1;
+                    min-width: 120px;
+                    border: none;
+                    border-radius: 12px;
+                    padding: 0.65rem 0.75rem;
+                    font-weight: 700;
+                    cursor: pointer;
+                    background: #ffd700;
+                    color: #111;
+                }
+                .path-test-login button.secondary {
+                    background: transparent;
+                    border: 1px solid rgba(255, 255, 255, 0.35);
+                    color: #fff;
+                }
+                .path-test-login button:disabled {
+                    opacity: 0.6;
+                    cursor: wait;
+                }
+                .path-logged-in {
+                    margin: 0.75rem 0 0;
+                    color: #9f9;
+                    font-size: 0.85rem;
+                    text-align: center;
                 }
                 .path-track {
                     position: relative;

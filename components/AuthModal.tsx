@@ -6,6 +6,7 @@ import {
     type RegistrationProfile,
     validateRegistrationProfile,
 } from "../utils/registrationProfile";
+import { signInAsTestUser, TEST_LOGIN_EMAIL, TEST_LOGIN_PASSWORD } from "../utils/testLogin";
 
 type AuthMode = "login" | "register";
 
@@ -281,6 +282,31 @@ export default function AuthModal({
         } catch (err: any) {
             console.error(err);
             setError(mapFirebaseError(err?.code));
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const handleTestLogin = async () => {
+        setError("");
+        setLoading(true);
+        try {
+            await signInAsTestUser();
+            setPassword("");
+            setEmail(TEST_LOGIN_EMAIL);
+            onClose();
+            if (redirectTo === false) return;
+            if (typeof redirectTo === "string" && redirectTo) {
+                router.push(redirectTo);
+                return;
+            }
+            router.push("/erettsegi-felkeszules?mode=topics");
+        } catch (err: any) {
+            console.error(err);
+            setError(
+                mapFirebaseError(err?.code) +
+                    (err?.message && !err?.code ? ` ${err.message}` : "")
+            );
         } finally {
             setLoading(false);
         }
@@ -707,6 +733,36 @@ export default function AuthModal({
                             >
                                 Folytatás Google-lal
                             </button>
+
+                            {mode === "login" && (
+                                <>
+                                    <button
+                                        type="button"
+                                        className="google-login-btn"
+                                        onClick={handleTestLogin}
+                                        disabled={loading}
+                                        style={{
+                                            marginTop: "0.75rem",
+                                            background: "rgba(255, 215, 0, 0.15)",
+                                            border: "2px solid #ffd700",
+                                            color: "#ffd700",
+                                        }}
+                                    >
+                                        Teszt belépés
+                                    </button>
+                                    <p
+                                        style={{
+                                            color: "#888",
+                                            fontSize: "0.75rem",
+                                            marginTop: "0.5rem",
+                                            textAlign: "center",
+                                        }}
+                                    >
+                                        {TEST_LOGIN_EMAIL} / {TEST_LOGIN_PASSWORD}
+                                    </p>
+                                </>
+                            )}
+
                             {mode === "register" && (
                                 <p
                                     style={{
