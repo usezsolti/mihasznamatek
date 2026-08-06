@@ -3,6 +3,20 @@ import Head from 'next/head';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import MathInputToolbar from '../components/MathInputToolbar';
+import {
+    assignStagesToQuestions,
+    applyAndSaveProgress,
+    getBadgeDef,
+    getRankEmoji,
+    getRankTitle,
+    loadUserPracticeProgress,
+    resolveTopicProgressKey,
+    STAGE_LABELS,
+    xpForNextRank,
+    type BadgeId,
+    type PracticeStage,
+    type TopicProgressKey,
+} from '../utils/practiceProgress';
 
 export default function Game() {
     const router = useRouter();
@@ -26,6 +40,16 @@ export default function Game() {
     const [showExpression, setShowExpression] = useState(false);
     const [avatarLevel, setAvatarLevel] = useState(1);
     const [avatarProgress, setAvatarProgress] = useState(0);
+    const [totalXp, setTotalXp] = useState(0);
+    const [correctStreak, setCorrectStreak] = useState(0);
+    const [maxStreak, setMaxStreak] = useState(0);
+    const [sessionXp, setSessionXp] = useState(0);
+    const [correctQuestionIds, setCorrectQuestionIds] = useState<string[]>([]);
+    const [wrongFirstIds, setWrongFirstIds] = useState<string[]>([]);
+    const [stagesCleared, setStagesCleared] = useState<PracticeStage[]>([]);
+    const [badgeToast, setBadgeToast] = useState<string | null>(null);
+    const [isWorksheetMode, setIsWorksheetMode] = useState(false);
+    const worksheetTopicKeyRef = useRef<TopicProgressKey | null>(null);
     const [educationLevel, setEducationLevel] = useState<'elementary' | 'highschool' | 'university' | null>(null);
     const [universityQuestions, setUniversityQuestions] = useState<Question[]>([]);
     const [isGeneratingQuestion, setIsGeneratingQuestion] = useState(false);
@@ -88,6 +112,13 @@ export default function Game() {
                     } else {
                         console.log('Felhasználó játékban:', user.email);
                         setIsAdmin(false);
+                    }
+                    try {
+                        const prog = await loadUserPracticeProgress(user.uid);
+                        setTotalXp(prog.xp);
+                        setAvatarLevel(prog.rankLevel);
+                    } catch (e) {
+                        console.error('Progress load error:', e);
                     }
                     setLoading(false);
                 });
@@ -3751,11 +3782,21 @@ Teljes megoldás:
                 list = getExponentialLogPracticeQuestions();
                 prefix = 'erettsegi_explog';
             }
-            const questions = list.map((q, i) => ({
+            const staged = assignStagesToQuestions(list);
+            const questions = staged.map((q, i) => ({
                 ...q,
                 id: `${prefix}_${i + 1}`,
                 level: level === 'kozep' ? 'highschool' : 'university'
             }));
+            worksheetTopicKeyRef.current = resolveTopicProgressKey(topicId);
+            setIsWorksheetMode(true);
+            setCurrentTopic(topicId);
+            setCorrectQuestionIds([]);
+            setWrongFirstIds([]);
+            setStagesCleared([]);
+            setSessionXp(0);
+            setCorrectStreak(0);
+            setMaxStreak(0);
             setErettsegiQuestions(questions);
             if (questions.length > 0) {
                 setGameActive(true);
@@ -3774,6 +3815,8 @@ Teljes megoldás:
             return;
         }
 
+        setIsWorksheetMode(false);
+        worksheetTopicKeyRef.current = null;
         const questions: Question[] = [];
         
         // Minden témakörnél 50 feladatot generálunk nehézségi szintek szerint
@@ -4032,6 +4075,7 @@ Teljes megoldás:
         longDivision?: string;
         id?: string; // Opcionális ID a feladatok azonosításához
         level?: string; // Opcionális szint információ
+        stage?: PracticeStage; // Munkalap nehézségi szakasz
         subQuestions?: Array<{ // Részfeladatok külön válaszmezőkkel
             question: string;
             rubric: string;
@@ -4635,7 +4679,44 @@ Teljes megoldás:
                 setAvatarLevel(avatarLevel + 1);
                 setAvatarProgress(0);
             }
+
+            // Munkalap XP / streak / szakasz
+            if (isWorksheetMode) {
+                const qid = currentQ.id || `idx_${currentQuestion}`;
+                const alreadyCorrect = correctQuestionIds.includes(qid);
+                const newStreak = correctStreak + 1;
+                setCorrectStreak(newStreak);
+                setMaxStreak((m) => Math.max(m, newStreak));
+                let msgExtra = '';
+                if (!alreadyCorrect) {
+                    const nextCorrect = [...correctQuestionIds, qid];
+                    setCorrectQuestionIds(nextCorrect);
+                    setSessionXp((x) => x + 10);
+                    setTotalXp((x) => x + 10);
+
+                    const stage = currentQ.stage;
+                    if (stage) {
+                        const baseQs = erettsegiQuestions.length > 0 ? erettsegiQuestions : questions;
+                        const stageBase = baseQs.filter((q) => q.stage === stage);
+                        const allStageDone = stageBase.every((q) => nextCorrect.includes(q.id || ''));
+                        if (allStageDone && !stagesCleared.includes(stage)) {
+                            setStagesCleared((s) => [...s, stage]);
+                            setSessionXp((x) => x + 50);
+                            setTotalXp((x) => x + 50);
+                            msgExtra = `\n\n🔓 Szakasz kész: ${STAGE_LABELS[stage]} (+50 XP)`;
+                        }
+                    }
+                }
+                if (msgExtra) {
+                    setMessage((prev) => `${prev}${msgExtra}`);
+                }
+                if (newStreak >= 5) {
+                    setBadgeToast((prev) => prev || '🔥 Badge: 5 hibátlan');
+                    setTimeout(() => setBadgeToast(null), 4000);
+                }
+            }
         } else {
+            setCorrectStreak(0);
             // Hibás válasz: hozzáadjuk a hibás feladatok listájához (ha még nincs benne)
             const baseQuestionsCount = questions.length - failedQuestions.length;
             const isFailedQuestion = currentQuestion >= baseQuestionsCount;
@@ -4648,6 +4729,10 @@ Teljes megoldás:
                 );
                 if (questionIndex === -1) {
                     setFailedQuestions([...failedQuestions, { ...currentQ }]);
+                }
+                const qid = currentQ.id || `idx_${currentQuestion}`;
+                if (!wrongFirstIds.includes(qid)) {
+                    setWrongFirstIds((w) => [...w, qid]);
                 }
             }
             
@@ -4754,15 +4839,22 @@ Teljes megoldás:
         
             try {
                 const db = (window as any).firebase.firestore();
-                const totalQuestions = questions.length;
-            const correctAnswers = score;
+                const baseList = isWorksheetMode && erettsegiQuestions.length > 0
+                    ? erettsegiQuestions
+                    : questions;
+                const totalQuestions = baseList.length;
+                const correctAnswerCount = isWorksheetMode
+                    ? correctQuestionIds.length
+                    : Math.round(score / 10);
 
             // Készítünk egy eredmény objektumot
+            const topicFromQuery = (router.query.topic as string) || currentTopic || '';
             const resultData: any = {
                     userId: currentUser.uid,
-                    correct: correctAnswers,
+                    correct: correctAnswerCount,
                     total: totalQuestions,
                     score: score,
+                    xpEarned: sessionXp,
                     completedAt: (window as any).firebase.firestore.FieldValue.serverTimestamp(),
             };
 
@@ -4778,25 +4870,34 @@ Teljes megoldás:
                 // Érettségi mód
                 if (isErettsegiMode) {
                     resultData.gameMode = 'erettsegi';
-                    resultData.topic = currentTopic;
+                    resultData.topic = topicFromQuery || currentTopic;
+                    resultData.topicId = topicFromQuery || currentTopic;
                     if (router.query.level) {
                         resultData.level = router.query.level;
+                    }
+                    if (isWorksheetMode) {
+                        resultData.worksheet = true;
+                        resultData.stagesCleared = stagesCleared;
+                        resultData.perfect = wrongFirstIds.length === 0 && correctAnswerCount >= totalQuestions;
                     }
                 }
                 // Általános iskola
                 else if (educationLevel === 'elementary' && selectedGrade && selectedElementaryTopic) {
                     resultData.grade = selectedGrade;
                     resultData.topic = selectedElementaryTopic;
+                    resultData.topicId = selectedElementaryTopic;
                 }
                 // Középiskola
                 else if (educationLevel === 'highschool' && selectedHighschoolGrade && selectedHighschoolTopic) {
                     resultData.grade = selectedHighschoolGrade;
                     resultData.topic = selectedHighschoolTopic;
+                    resultData.topicId = selectedHighschoolTopic;
                 }
                 // Egyetem
                 else if (educationLevel === 'university' && selectedUniversitySubject && selectedUniversityTopic) {
                     resultData.subject = selectedUniversitySubject;
                     resultData.topic = selectedUniversityTopic;
+                    resultData.topicId = selectedUniversityTopic;
                 }
                 // Alapértelmezett
                 else {
@@ -4805,26 +4906,51 @@ Teljes megoldás:
             }
 
             await db.collection('gameResults').add(resultData);
+
+            // Globális XP + badge mentés (munkalap)
+            if (isWorksheetMode) {
+                const topicKey = worksheetTopicKeyRef.current
+                    || resolveTopicProgressKey(topicFromQuery);
+                // Utolsó szakaszok: ha minden stage kérdés kész, biztosítsuk a stagesCleared listát
+                const allStages: PracticeStage[] = [1, 2, 3];
+                const cleared = [...stagesCleared];
+                for (const st of allStages) {
+                    const stageQs = baseList.filter((q) => q.stage === st);
+                    if (stageQs.length > 0 && stageQs.every((q) => correctQuestionIds.includes(q.id || ''))) {
+                        if (!cleared.includes(st)) cleared.push(st);
+                    }
+                }
+                const perfectRun = wrongFirstIds.length === 0 && correctAnswerCount >= totalQuestions;
+                // sessionXp már tartalmazza a válasz + szakasz XP-t; a completion/perfect bónuszt a saver adja
+                const answerXpOnly = correctQuestionIds.length * 10;
+                const result = await applyAndSaveProgress(currentUser.uid, {
+                    topicKey,
+                    topicId: topicFromQuery,
+                    correctCount: correctAnswerCount,
+                    totalQuestions,
+                    stagesClearedThisRun: cleared,
+                    perfectRun,
+                    maxStreak,
+                    sessionXpFromAnswers: answerXpOnly,
+                });
+                setTotalXp(result.next.xp);
+                setAvatarLevel(result.next.rankLevel);
+                if (result.newBadges.length > 0) {
+                    const titles = result.newBadges
+                        .map((id) => getBadgeDef(id as BadgeId)?.title || id)
+                        .join(', ');
+                    setBadgeToast(`🏅 Új badge: ${titles}`);
+                    setTimeout(() => setBadgeToast(null), 5000);
+                }
+            }
             } catch (error) {
                 console.error('Error saving game results:', error);
         }
     };
 
-    const getAvatarImage = (level: number) => {
-        if (level >= 20) return '🏆'; // Master
-        if (level >= 15) return '👑'; // Expert
-        if (level >= 10) return '⭐'; // Advanced
-        if (level >= 5) return '🔥'; // Intermediate
-        return '🌟'; // Beginner
-    };
+    const getAvatarImage = (level: number) => getRankEmoji(level);
 
-    const getAvatarTitle = (level: number) => {
-        if (level >= 20) return 'MASTER';
-        if (level >= 15) return 'EXPERT';
-        if (level >= 10) return 'ADVANCED';
-        if (level >= 5) return 'INTERMEDIATE';
-        return 'BEGINNER';
-    };
+    const getAvatarTitle = (level: number) => getRankTitle(level);
 
     const getAvatarColor = (level: number) => {
         if (level >= 20) return 'linear-gradient(45deg, #FFD700, #FFA500)'; // Gold
@@ -5258,14 +5384,42 @@ Teljes megoldás:
                                     <span className="hud-value">{score}</span>
                                 </div>
                                 <div className="hud-item">
-                                    <span className="hud-label">Életek:</span>
-                                    <span className="hud-value">{"❤️".repeat(Math.max(0, lives))}</span>
+                                    <span className="hud-label">XP:</span>
+                                    <span className="hud-value">{totalXp}</span>
                                 </div>
                                 <div className="hud-item">
                                     <span className="hud-label">Feladat:</span>
                                     <span className="hud-value">{currentQuestion + 1}/{questions.length}</span>
                                 </div>
                             </div>
+
+                            {isWorksheetMode && questions[currentQuestion]?.stage && (
+                                <div style={{
+                                    textAlign: 'center',
+                                    marginBottom: '0.75rem',
+                                    color: '#ffd700',
+                                    fontSize: '1rem',
+                                    fontWeight: 600
+                                }}>
+                                    Szakasz {questions[currentQuestion].stage}/3 · {STAGE_LABELS[questions[currentQuestion].stage!]}
+                                    {sessionXp > 0 ? ` · +${sessionXp} XP ebben a futásban` : ''}
+                                </div>
+                            )}
+
+                            {badgeToast && (
+                                <div style={{
+                                    textAlign: 'center',
+                                    marginBottom: '0.75rem',
+                                    padding: '0.6rem 1rem',
+                                    background: 'rgba(255, 215, 0, 0.15)',
+                                    border: '1px solid #ffd700',
+                                    borderRadius: '12px',
+                                    color: '#ffd700',
+                                    fontWeight: 700
+                                }}>
+                                    {badgeToast}
+                                </div>
+                            )}
 
                             <div className="avatar-container">
                                 <div
@@ -5276,7 +5430,14 @@ Teljes megoldás:
                                 </div>
                                 <div className="avatar-info">
                                     <div className="legend-text">{getAvatarTitle(avatarLevel)}</div>
-                                    <div className="legend-badge">Szint {avatarLevel}</div>
+                                    <div className="legend-badge">
+                                        {(() => {
+                                            const r = xpForNextRank(totalXp);
+                                            const span = Math.max(1, r.next - r.current);
+                                            const pct = Math.min(100, Math.round(((totalXp - r.current) / span) * 100));
+                                            return `${getAvatarTitle(avatarLevel)} · ${totalXp} XP (${pct}%)`;
+                                        })()}
+                                    </div>
                                 </div>
                             </div>
 

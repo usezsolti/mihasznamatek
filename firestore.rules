@@ -30,6 +30,11 @@ service cloud.firestore {
         || (isAdmin() && request.resource.data.diff(resource.data).affectedKeys()
               .hasOnly(['assignedTasks', 'updatedAt']));
       allow delete: if isAdmin();
+
+      // XP / badge / munkalap progress
+      match /progress/{docId} {
+        allow read, write: if isOwner(userId) || isAdmin();
+      }
     }
 
     match /bookings/{id} {
@@ -94,8 +99,14 @@ service cloud.firestore {
 
     match /gameResults/{id} {
       allow read: if isAdmin()
-        || (signedIn() && resource.data.uid == request.auth.uid);
-      allow create: if signedIn() && request.resource.data.uid == request.auth.uid;
+        || (signedIn() && (
+          resource.data.uid == request.auth.uid
+          || resource.data.userId == request.auth.uid
+        ));
+      allow create: if signedIn() && (
+        request.resource.data.uid == request.auth.uid
+        || request.resource.data.userId == request.auth.uid
+      );
       allow update, delete: if isAdmin();
     }
 

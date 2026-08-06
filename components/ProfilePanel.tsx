@@ -10,6 +10,14 @@ import {
     paymentStatusLabel,
     type BookingPayload,
 } from '../utils/bookingNotify';
+import {
+    BADGE_DEFS,
+    emptyProgress,
+    getRankEmoji,
+    loadUserPracticeProgress,
+    xpForNextRank,
+    type UserPracticeProgress,
+} from '../utils/practiceProgress';
 
 interface GameResult {
     id: string;
@@ -112,6 +120,7 @@ export default function ProfilePanel({ embedded = false }: { embedded?: boolean 
     const [myBookings, setMyBookings] = useState<BookingPayload[]>([]);
     const [bookingsLoading, setBookingsLoading] = useState(false);
     const [cancellingId, setCancellingId] = useState<string | null>(null);
+    const [practiceProgress, setPracticeProgress] = useState<UserPracticeProgress>(emptyProgress());
 
     useEffect(() => {
         const checkAuth = async () => {
@@ -154,6 +163,12 @@ export default function ProfilePanel({ embedded = false }: { embedded?: boolean 
                     }
 
                     await loadGameResults(user.uid);
+                    try {
+                        const prog = await loadUserPracticeProgress(user.uid);
+                        setPracticeProgress(prog);
+                    } catch (e) {
+                        console.error('Practice progress load error:', e);
+                    }
                     setBookingsLoading(true);
                     try {
                         if (user.email) {
@@ -571,6 +586,87 @@ export default function ProfilePanel({ embedded = false }: { embedded?: boolean 
                                     </p>
                                 )}
                             </div>
+                        </div>
+                    </div>
+
+                    {/* XP / Rang / Badge-ek */}
+                    <div style={{
+                        background: 'rgba(255, 255, 255, 0.08)',
+                        border: '2px solid rgba(255, 215, 0, 0.45)',
+                        borderRadius: '25px',
+                        padding: '1.75rem',
+                        marginBottom: '2rem',
+                        backdropFilter: 'blur(20px)'
+                    }}>
+                        <h2 style={{
+                            margin: '0 0 1rem 0',
+                            fontSize: '1.5rem',
+                            background: 'linear-gradient(90deg, #ffd700 0%, #39ff14 100%)',
+                            WebkitBackgroundClip: 'text',
+                            WebkitTextFillColor: 'transparent',
+                            backgroundClip: 'text',
+                        }}>
+                            {getRankEmoji(practiceProgress.rankLevel)} Haladás
+                        </h2>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.5rem', flexWrap: 'wrap', gap: '0.5rem' }}>
+                            <span style={{ color: '#ffd700', fontWeight: 700 }}>
+                                {practiceProgress.rank} · {practiceProgress.xp} XP
+                            </span>
+                            <span style={{ color: '#aaa', fontSize: '0.9rem' }}>
+                                Következő rang: {xpForNextRank(practiceProgress.xp).next} XP
+                            </span>
+                        </div>
+                        <div style={{
+                            height: '12px',
+                            background: 'rgba(255,255,255,0.1)',
+                            borderRadius: '999px',
+                            overflow: 'hidden',
+                            marginBottom: '1.25rem'
+                        }}>
+                            <div style={{
+                                height: '100%',
+                                width: `${(() => {
+                                    const r = xpForNextRank(practiceProgress.xp);
+                                    const span = Math.max(1, r.next - r.current);
+                                    return Math.min(100, Math.round(((practiceProgress.xp - r.current) / span) * 100));
+                                })()}%`,
+                                background: 'linear-gradient(90deg, #39ff14, #ffd700)',
+                                borderRadius: '999px',
+                                transition: 'width 0.3s ease'
+                            }} />
+                        </div>
+                        <h3 style={{ margin: '0 0 0.75rem 0', color: '#fff', fontSize: '1.1rem' }}>Badge-ek</h3>
+                        <div style={{
+                            display: 'grid',
+                            gridTemplateColumns: 'repeat(auto-fill, minmax(140px, 1fr))',
+                            gap: '0.75rem'
+                        }}>
+                            {BADGE_DEFS.map((badge) => {
+                                const unlocked = practiceProgress.badges.includes(badge.id);
+                                return (
+                                    <div
+                                        key={badge.id}
+                                        title={badge.description}
+                                        style={{
+                                            padding: '0.75rem',
+                                            borderRadius: '14px',
+                                            border: unlocked
+                                                ? '1px solid rgba(255, 215, 0, 0.7)'
+                                                : '1px solid rgba(255,255,255,0.15)',
+                                            background: unlocked
+                                                ? 'rgba(255, 215, 0, 0.12)'
+                                                : 'rgba(0,0,0,0.25)',
+                                            opacity: unlocked ? 1 : 0.45,
+                                            textAlign: 'center'
+                                        }}
+                                    >
+                                        <div style={{ fontSize: '1.4rem', marginBottom: '0.25rem' }}>{badge.icon}</div>
+                                        <div style={{ fontSize: '0.85rem', fontWeight: 700, color: unlocked ? '#ffd700' : '#ccc' }}>
+                                            {badge.title}
+                                        </div>
+                                    </div>
+                                );
+                            })}
                         </div>
                     </div>
 

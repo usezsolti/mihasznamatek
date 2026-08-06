@@ -523,24 +523,33 @@ export default function Dashboard() {
 
             gameResultsSnapshot.forEach((doc: any) => {
                 const data = doc.data();
-                if (data.topicId && data.correct !== undefined && data.total !== undefined) {
-                    gameResults[data.topicId] = {
-                        correct: data.correct,
-                        total: data.total
-                    };
+                const key = data.topicId || data.topic;
+                if (key && data.correct !== undefined && data.total !== undefined) {
+                    const prev = gameResults[key];
+                    // Legjobb / legújabb: tartsuk a nagyobb correct arányút
+                    if (!prev || data.correct >= prev.correct) {
+                        gameResults[key] = {
+                            correct: data.correct,
+                            total: data.total
+                        };
+                    }
                 }
             });
 
             // Frissítjük a témaköröket a játék eredményekkel
             const topicsWithResults = baseTopics.map(topic => {
-                const result = gameResults[topic.id];
+                const result = gameResults[topic.id]
+                    || Object.entries(gameResults).find(([k]) =>
+                        k.toLowerCase().includes(topic.id.toLowerCase())
+                        || topic.id.toLowerCase().includes(k.toLowerCase())
+                    )?.[1];
                 if (result) {
                     return {
                         ...topic,
-                        completed: result.total,
+                        completed: Math.min(result.correct, result.total),
                         total: result.total,
                         correctAnswers: result.correct,
-                        wrongAnswers: result.total - result.correct,
+                        wrongAnswers: Math.max(0, result.total - result.correct),
                         totalAnswers: result.total
                     };
                 } else {

@@ -1,6 +1,13 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
+import {
+    loadUserPracticeProgress,
+    resolveTopicProgressKey,
+    STAGE_LABELS,
+    type TopicProgress,
+    type UserPracticeProgress,
+} from '../utils/practiceProgress';
 
 interface ExamTopic {
     id: string;
@@ -27,6 +34,7 @@ export default function ErettsegiFelkeszules() {
     const [selectedPaper, setSelectedPaper] = useState<ExamPaper | null>(null);
     const [viewMode, setViewMode] = useState<'topics' | 'papers'>('topics');
     const [selectedLevel, setSelectedLevel] = useState<'kozep' | 'emelt' | null>(null);
+    const [topicProgressMap, setTopicProgressMap] = useState<Partial<Record<string, TopicProgress>>>({});
 
     useEffect(() => {
         // URL paraméter alapján beállítjuk a módot
@@ -41,6 +49,27 @@ export default function ErettsegiFelkeszules() {
             setSelectedLevel(router.query.level as 'kozep' | 'emelt');
         }
     }, [router.query.mode, router.query.level]);
+
+    useEffect(() => {
+        let cancelled = false;
+        const load = async () => {
+            try {
+                let attempts = 0;
+                while (!(window as any).firebase?.auth && attempts < 40) {
+                    await new Promise((r) => setTimeout(r, 100));
+                    attempts++;
+                }
+                const user = (window as any).firebase?.auth?.()?.currentUser;
+                if (!user) return;
+                const prog: UserPracticeProgress = await loadUserPracticeProgress(user.uid);
+                if (!cancelled) setTopicProgressMap(prog.topics || {});
+            } catch (e) {
+                console.error('Erettsegi progress load:', e);
+            }
+        };
+        load();
+        return () => { cancelled = true; };
+    }, []);
 
     // Érettségi témakörök - középszint
     const kozepTopics: ExamTopic[] = [
@@ -450,7 +479,16 @@ export default function ErettsegiFelkeszules() {
                                     </p>
                                     {examTopics.length > 0 ? (
                                         <div className="topics-grid">
-                                            {examTopics.map(topic => (
+                                            {examTopics.map(topic => {
+                                                const key = resolveTopicProgressKey(topic.id);
+                                                const tp = key ? topicProgressMap[key] : undefined;
+                                                const pct = tp && tp.totalQuestions > 0
+                                                    ? Math.round((tp.bestCorrect / tp.totalQuestions) * 100)
+                                                    : 0;
+                                                const stageInfo = tp?.stagesCompleted?.length
+                                                    ? `Szakasz ${Math.max(...tp.stagesCompleted)}/3 · ${STAGE_LABELS[Math.max(...tp.stagesCompleted) as 1|2|3]}`
+                                                    : null;
+                                                return (
                                                 <div
                                                     key={topic.id}
                                                     className="topic-card"
@@ -461,9 +499,41 @@ export default function ErettsegiFelkeszules() {
                                                     </div>
                                                     <h3 className="topic-title">{topic.title}</h3>
                                                     <p className="topic-description">{topic.description}</p>
+                                                    {tp && tp.totalQuestions > 0 && (
+                                                        <div style={{ marginTop: '0.75rem', width: '100%' }}>
+                                                            <div style={{
+                                                                display: 'flex',
+                                                                justifyContent: 'space-between',
+                                                                fontSize: '0.8rem',
+                                                                color: tp.completed ? '#ffd700' : '#9f9',
+                                                                marginBottom: '0.35rem'
+                                                            }}>
+                                                                <span>
+                                                                    {tp.completed ? '✓ Kész' : `${tp.bestCorrect}/${tp.totalQuestions}`}
+                                                                </span>
+                                                                <span>{stageInfo || `${pct}%`}</span>
+                                                            </div>
+                                                            <div style={{
+                                                                height: '6px',
+                                                                background: 'rgba(255,255,255,0.12)',
+                                                                borderRadius: '999px',
+                                                                overflow: 'hidden'
+                                                            }}>
+                                                                <div style={{
+                                                                    height: '100%',
+                                                                    width: `${Math.min(100, pct)}%`,
+                                                                    background: tp.completed
+                                                                        ? 'linear-gradient(90deg,#ffd700,#39ff14)'
+                                                                        : '#39ff14',
+                                                                    borderRadius: '999px'
+                                                                }} />
+                                                            </div>
+                                                        </div>
+                                                    )}
                                                     <div className="topic-arrow">→</div>
                                                 </div>
-                                            ))}
+                                                );
+                                            })}
                                         </div>
                                     ) : (
                                         <p style={{ color: '#ffffff', textAlign: 'center', marginTop: '2rem' }}>
