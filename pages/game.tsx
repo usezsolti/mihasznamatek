@@ -10,13 +10,19 @@ import {
     getRankEmoji,
     getRankTitle,
     loadUserPracticeProgress,
-    resolveTopicProgressKey,
+    resolveProgressStorageKey,
     STAGE_LABELS,
     xpForNextRank,
     type BadgeId,
     type PracticeStage,
-    type TopicProgressKey,
 } from '../utils/practiceProgress';
+import {
+    PATH_LESSON_XP,
+    buildPathQuestionBank,
+    getLessonQuestions,
+    isWorksheetTopicId,
+    lessonToStage,
+} from '../utils/topicPath';
 
 export default function Game() {
     const router = useRouter();
@@ -49,7 +55,10 @@ export default function Game() {
     const [stagesCleared, setStagesCleared] = useState<PracticeStage[]>([]);
     const [badgeToast, setBadgeToast] = useState<string | null>(null);
     const [isWorksheetMode, setIsWorksheetMode] = useState(false);
-    const worksheetTopicKeyRef = useRef<TopicProgressKey | null>(null);
+    const [isPathMode, setIsPathMode] = useState(false);
+    const [pathLesson, setPathLesson] = useState<number | null>(null);
+    const worksheetTopicKeyRef = useRef<string | null>(null);
+    const pathLessonRef = useRef<number | null>(null);
     const [educationLevel, setEducationLevel] = useState<'elementary' | 'highschool' | 'university' | null>(null);
     const [universityQuestions, setUniversityQuestions] = useState<Question[]>([]);
     const [isGeneratingQuestion, setIsGeneratingQuestion] = useState(false);
@@ -3844,99 +3853,108 @@ Teljes megoldás:
         }
     };
 
+    const getWorksheetListForTopic = (topicId: string): { list: Question[]; prefix: string } | null => {
+        const topicLower = topicId.toLowerCase();
+        if (!isWorksheetTopicId(topicId)) return null;
+        if (topicLower.includes('parameter') || topicLower.includes('paramet')) {
+            return { list: getParameterPracticeQuestions(), prefix: 'erettsegi_parameter' };
+        }
+        if (topicLower.includes('abszolutertek') || topicLower.includes('gyok')) {
+            return { list: getAbsoluteRootPracticeQuestions(), prefix: 'erettsegi_absroot' };
+        }
+        if (topicLower.includes('bizonyitas')
+            || topicLower.includes('egyenletek') || topicLower.includes('egyenlotlenseg')) {
+            return {
+                list: getProofPracticeQuestions(),
+                prefix: topicLower.includes('bizonyitas') ? 'erettsegi_proof' : 'erettsegi_egyenletek',
+            };
+        }
+        if (topicLower.includes('fuggveny') || topicLower.includes('analizis')) {
+            return { list: getFunctionsPracticeQuestions(), prefix: 'erettsegi_fuggvenyek' };
+        }
+        if (topicLower.includes('exponencialis') || topicLower.includes('logaritmus')) {
+            return { list: getExponentialLogPracticeQuestions(), prefix: 'erettsegi_explog' };
+        }
+        return null;
+    };
+
     const generateErettsegiQuestionsByTopic = (topicId: string, level: string) => {
         setIsErettsegiMode(true);
-        
-        // Fix munkalap feladatok
-        const topicLower = topicId.toLowerCase();
-        if (topicLower.includes('parameter') || topicLower.includes('paramet')
-            || topicLower.includes('exponencialis') || topicLower.includes('logaritmus')
-            || topicLower.includes('abszolutertek') || topicLower.includes('gyok')
-            || topicLower.includes('bizonyitas')
-            || topicLower.includes('egyenletek') || topicLower.includes('egyenlotlenseg')
-            || topicLower.includes('fuggveny') || topicLower.includes('analizis')) {
-            let list: Question[];
-            let prefix: string;
-            if (topicLower.includes('parameter') || topicLower.includes('paramet')) {
-                list = getParameterPracticeQuestions();
-                prefix = 'erettsegi_parameter';
-            } else if (topicLower.includes('abszolutertek') || topicLower.includes('gyok')) {
-                list = getAbsoluteRootPracticeQuestions();
-                prefix = 'erettsegi_absroot';
-            } else if (topicLower.includes('bizonyitas')
-                || topicLower.includes('egyenletek') || topicLower.includes('egyenlotlenseg')) {
-                list = getProofPracticeQuestions();
-                prefix = topicLower.includes('bizonyitas') ? 'erettsegi_proof' : 'erettsegi_egyenletek';
-            } else if (topicLower.includes('fuggveny') || topicLower.includes('analizis')) {
-                list = getFunctionsPracticeQuestions();
-                prefix = 'erettsegi_fuggvenyek';
-            } else {
-                list = getExponentialLogPracticeQuestions();
-                prefix = 'erettsegi_explog';
-            }
-            const staged = assignStagesToQuestions(list);
-            const questions = staged.map((q, i) => ({
-                ...q,
-                id: `${prefix}_${i + 1}`,
-                level: level === 'kozep' ? 'highschool' : 'university'
-            }));
-            worksheetTopicKeyRef.current = resolveTopicProgressKey(topicId);
-            setIsWorksheetMode(true);
-            setCurrentTopic(topicId);
-            setCorrectQuestionIds([]);
-            setWrongFirstIds([]);
-            setStagesCleared([]);
-            setSessionXp(0);
-            setCorrectStreak(0);
-            setMaxStreak(0);
-            setErettsegiQuestions(questions);
-            if (questions.length > 0) {
-                setGameActive(true);
-                setScore(0);
-                setLevel(1);
-                setLives(3);
-                setCurrentQuestion(0);
-                setUserAnswer('');
-                setUserAnswer2('');
-                setUserAnswer3('');
-                setUserAnswer4('');
-                setMessage('');
-                setIsCorrect(false);
-                setShowExpression(false);
-            }
-            return;
-        }
 
-        setIsWorksheetMode(false);
-        worksheetTopicKeyRef.current = null;
-        const questions: Question[] = [];
-        
-        // Minden témakörnél 50 feladatot generálunk nehézségi szintek szerint
-        // 5 nehézségi szint, mindegyikből 10 feladat (egyre nehezebbek)
-        const questionCount = 50;
-        const difficultyLevels = 5;
-        const questionsPerLevel = 10;
-        
-        // Generálunk feladatokat nehézségi szintek szerint
-        for (let difficulty = 0; difficulty < difficultyLevels; difficulty++) {
-            for (let i = 0; i < questionsPerLevel; i++) {
-                const question = generateErettsegiQuestionByTopicId(topicId, level);
-                if (question) {
-                    questions.push({
-                        ...question,
-                        id: `erettsegi_${topicId}_${difficulty}_${i}`,
-                        level: level === 'kozep' ? 'highschool' : 'university'
-                    });
+        const nodeRaw = router.query.node;
+        const nodeParsed = nodeRaw != null ? parseInt(String(nodeRaw), 10) : NaN;
+        const pathRequested = router.query.path === '1' || (Number.isFinite(nodeParsed) && nodeParsed >= 1);
+        const lessonNode = Number.isFinite(nodeParsed) && nodeParsed >= 1 && nodeParsed <= 6
+            ? nodeParsed
+            : pathRequested
+                ? 1
+                : null;
+
+        const qLevel = level === 'kozep' ? 'highschool' : 'university';
+        let stagedSource: (Question & { stage: PracticeStage })[] = [];
+
+        const worksheet = getWorksheetListForTopic(topicId);
+        if (worksheet) {
+            stagedSource = assignStagesToQuestions(
+                worksheet.list.map((q, i) => ({
+                    ...q,
+                    id: `${worksheet.prefix}_${i + 1}`,
+                    level: qLevel,
+                }))
+            );
+        } else {
+            // Generátoros témák: 6 könnyű + 6 közepes + 6 nehéz → path bank
+            for (let band = 0; band < 3; band++) {
+                const stage = (band + 1) as PracticeStage;
+                for (let i = 0; i < 6; i++) {
+                    const question = generateErettsegiQuestionByTopicId(topicId, level);
+                    if (question) {
+                        stagedSource.push({
+                            ...question,
+                            id: `erettsegi_${topicId}_s${stage}_${i}`,
+                            level: qLevel,
+                            stage,
+                        });
+                    }
+                }
+            }
+            if (stagedSource.length === 0) {
+                for (let i = 0; i < 18; i++) {
+                    const question = generateErettsegiQuestionByTopicId(topicId, level);
+                    if (question) {
+                        stagedSource.push({
+                            ...question,
+                            id: `erettsegi_${topicId}_${i}`,
+                            level: qLevel,
+                            stage: lessonToStage(Math.floor(i / 3) + 1) as PracticeStage,
+                        });
+                    }
                 }
             }
         }
 
-        // Nem keverjük össze, hogy a nehézségi sorrend megmaradjon
+        const bank = buildPathQuestionBank(stagedSource);
+        const questions = lessonNode != null
+            ? getLessonQuestions(bank, lessonNode)
+            : bank;
+
+        const pathMode = lessonNode != null;
+        setIsPathMode(pathMode);
+        setPathLesson(lessonNode);
+        pathLessonRef.current = lessonNode;
+        setIsWorksheetMode(true);
+        worksheetTopicKeyRef.current = resolveProgressStorageKey(topicId);
+        setCurrentTopic(topicId);
+        setCorrectQuestionIds([]);
+        setWrongFirstIds([]);
+        setStagesCleared([]);
+        setSessionXp(0);
+        setCorrectStreak(0);
+        setMaxStreak(0);
+        setFailedQuestions([]);
         setErettsegiQuestions(questions);
-        
-        // Ha van elég feladat, azonnal elindítjuk a játékot
+
         if (questions.length > 0) {
-            // Azonnal beállítjuk a játék állapotát
             setGameActive(true);
             setScore(0);
             setLevel(1);
@@ -4772,7 +4790,7 @@ Teljes megoldás:
                 setAvatarProgress(0);
             }
 
-            // Munkalap XP / streak / szakasz
+            // Munkalap / path XP / streak / szakasz
             if (isWorksheetMode) {
                 const qid = currentQ.id || `idx_${currentQuestion}`;
                 const alreadyCorrect = correctQuestionIds.includes(qid);
@@ -4786,16 +4804,26 @@ Teljes megoldás:
                     setSessionXp((x) => x + 10);
                     setTotalXp((x) => x + 10);
 
-                    const stage = currentQ.stage;
-                    if (stage) {
+                    if (!isPathMode) {
+                        const stage = currentQ.stage;
+                        if (stage) {
+                            const baseQs = erettsegiQuestions.length > 0 ? erettsegiQuestions : questions;
+                            const stageBase = baseQs.filter((q) => q.stage === stage);
+                            const allStageDone = stageBase.every((q) => nextCorrect.includes(q.id || ''));
+                            if (allStageDone && !stagesCleared.includes(stage)) {
+                                setStagesCleared((s) => [...s, stage]);
+                                setSessionXp((x) => x + 50);
+                                setTotalXp((x) => x + 50);
+                                msgExtra = `\n\n🔓 Szakasz kész: ${STAGE_LABELS[stage]} (+50 XP)`;
+                            }
+                        }
+                    } else {
                         const baseQs = erettsegiQuestions.length > 0 ? erettsegiQuestions : questions;
-                        const stageBase = baseQs.filter((q) => q.stage === stage);
-                        const allStageDone = stageBase.every((q) => nextCorrect.includes(q.id || ''));
-                        if (allStageDone && !stagesCleared.includes(stage)) {
-                            setStagesCleared((s) => [...s, stage]);
-                            setSessionXp((x) => x + 50);
-                            setTotalXp((x) => x + 50);
-                            msgExtra = `\n\n🔓 Szakasz kész: ${STAGE_LABELS[stage]} (+50 XP)`;
+                        const lessonDone = baseQs.every((q) => nextCorrect.includes(q.id || ''));
+                        if (lessonDone && pathLessonRef.current) {
+                            setSessionXp((x) => x + PATH_LESSON_XP);
+                            setTotalXp((x) => x + PATH_LESSON_XP);
+                            msgExtra = `\n\n🎉 Lecke ${pathLessonRef.current} kész! (+${PATH_LESSON_XP} XP)`;
                         }
                     }
                 }
@@ -4999,11 +5027,10 @@ Teljes megoldás:
 
             await db.collection('gameResults').add(resultData);
 
-            // Globális XP + badge mentés (munkalap)
+            // Globális XP + badge mentés (munkalap / path lecke)
             if (isWorksheetMode) {
                 const topicKey = worksheetTopicKeyRef.current
-                    || resolveTopicProgressKey(topicFromQuery);
-                // Utolsó szakaszok: ha minden stage kérdés kész, biztosítsuk a stagesCleared listát
+                    || resolveProgressStorageKey(topicFromQuery);
                 const allStages: PracticeStage[] = [1, 2, 3];
                 const cleared = [...stagesCleared];
                 for (const st of allStages) {
@@ -5013,17 +5040,23 @@ Teljes megoldás:
                     }
                 }
                 const perfectRun = wrongFirstIds.length === 0 && correctAnswerCount >= totalQuestions;
-                // sessionXp már tartalmazza a válasz + szakasz XP-t; a completion/perfect bónuszt a saver adja
+                const lessonJustCompleted =
+                    isPathMode && pathLessonRef.current
+                    && baseList.every((q) => correctQuestionIds.includes(q.id || ''))
+                        ? pathLessonRef.current
+                        : undefined;
+                // Válasz XP; lecke +30-at az applyAndSaveProgress adja (ne duplázzuk)
                 const answerXpOnly = correctQuestionIds.length * 10;
                 const result = await applyAndSaveProgress(currentUser.uid, {
                     topicKey,
                     topicId: topicFromQuery,
                     correctCount: correctAnswerCount,
                     totalQuestions,
-                    stagesClearedThisRun: cleared,
+                    stagesClearedThisRun: isPathMode ? [] : cleared,
                     perfectRun,
                     maxStreak,
                     sessionXpFromAnswers: answerXpOnly,
+                    lessonJustCompleted,
                 });
                 setTotalXp(result.next.xp);
                 setAvatarLevel(result.next.rankLevel);
@@ -5033,6 +5066,9 @@ Teljes megoldás:
                         .join(', ');
                     setBadgeToast(`🏅 Új badge: ${titles}`);
                     setTimeout(() => setBadgeToast(null), 5000);
+                } else if (lessonJustCompleted) {
+                    setBadgeToast(`🎉 Lecke ${lessonJustCompleted} mentve · +${PATH_LESSON_XP} XP`);
+                    setTimeout(() => setBadgeToast(null), 4000);
                 }
             }
             } catch (error) {
@@ -5493,7 +5529,9 @@ Teljes megoldás:
                                     fontSize: '1rem',
                                     fontWeight: 600
                                 }}>
-                                    Szakasz {questions[currentQuestion].stage}/3 · {STAGE_LABELS[questions[currentQuestion].stage!]}
+                                    {isPathMode && pathLesson
+                                        ? `Lecke ${pathLesson}/6 · ${STAGE_LABELS[questions[currentQuestion].stage!]}`
+                                        : `Szakasz ${questions[currentQuestion].stage}/3 · ${STAGE_LABELS[questions[currentQuestion].stage!]}`}
                                     {sessionXp > 0 ? ` · +${sessionXp} XP ebben a futásban` : ''}
                                 </div>
                             )}
@@ -5827,6 +5865,29 @@ Teljes megoldás:
                                     </>
                                 )}
                             </div>
+
+                            {isPathMode && (
+                                <button
+                                    className="reset-button"
+                                    onClick={() => {
+                                        const topic = (router.query.topic as string) || currentTopic;
+                                        const lvl = (router.query.level as string) || 'emelt';
+                                        router.push(
+                                            `/erettsegi-felkeszules?mode=topics&level=${lvl}&topic=${encodeURIComponent(topic)}`
+                                        );
+                                    }}
+                                    style={{
+                                        marginBottom: '0.75rem',
+                                        background: 'linear-gradient(90deg, #39ff14, #ffd700)',
+                                        color: '#111',
+                                        fontWeight: 800,
+                                        border: 'none',
+                                    }}
+                                >
+                                    <span className="button-icon">🗺️</span>
+                                    Vissza az útra
+                                </button>
+                            )}
 
                             <button className="reset-button" onClick={resetGame}>
                                 <span className="button-icon">🔄</span>

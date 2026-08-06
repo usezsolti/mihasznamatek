@@ -1,4 +1,14 @@
-/** Emelt érettségi munkalap progresszió: XP, rang, badge, stage */
+/** Emelt érettségi / Duolingo út progresszió: XP, rang, badge, stage, leckék */
+
+import {
+    PATH_CHEST_XP,
+    PATH_LESSON_COUNT,
+    PATH_LESSON_XP,
+    PATH_TOTAL_QUESTIONS,
+    computeHighestUnlocked,
+    lessonToStage,
+    normalizeTopicId,
+} from './topicPath';
 
 export type PracticeStage = 1 | 2 | 3;
 
@@ -8,11 +18,13 @@ export type BadgeId =
     | 'absroot_kesz'
     | 'bizonyitas_kesz'
     | 'fuggveny_kesz'
+    | 'ut_bejart'
     | 'mester_szakasz'
     | 'hibatlan_5'
     | 'xp_500'
     | 'xp_1000';
 
+/** Régi munkalap kulcsok — badge mappinghez */
 export type TopicProgressKey = 'parameter' | 'explog' | 'absroot' | 'bizonyitas' | 'egyenletek' | 'fuggvenyek';
 
 export interface BadgeDef {
@@ -28,7 +40,23 @@ export interface TopicProgress {
     stagesCompleted: number[];
     completed: boolean;
     perfect: boolean;
+    lessonsCompleted: number[];
+    highestUnlocked: number;
+    chestsClaimed: number[];
     updatedAt?: any;
+}
+
+function emptyPathTopicProgress(totalQuestions = PATH_TOTAL_QUESTIONS): TopicProgress {
+    return {
+        bestCorrect: 0,
+        totalQuestions,
+        stagesCompleted: [],
+        completed: false,
+        perfect: false,
+        lessonsCompleted: [],
+        highestUnlocked: 1,
+        chestsClaimed: [],
+    };
 }
 
 export interface UserPracticeProgress {
@@ -36,7 +64,8 @@ export interface UserPracticeProgress {
     rank: string;
     rankLevel: number;
     badges: BadgeId[];
-    topics: Partial<Record<TopicProgressKey, TopicProgress>>;
+    /** Kulcs: normalizeTopicId(topicId) vagy régi TopicProgressKey */
+    topics: Record<string, TopicProgress>;
     updatedAt?: any;
 }
 
@@ -46,6 +75,7 @@ export const BADGE_DEFS: BadgeDef[] = [
     { id: 'absroot_kesz', title: 'Abszolútérték–gyök mester', description: 'Abszolútérték/gyök munkalap teljesítve', icon: '|√' },
     { id: 'bizonyitas_kesz', title: 'Bizonyítás mester', description: 'Bizonyítási munkalap teljesítve', icon: '✓' },
     { id: 'fuggveny_kesz', title: 'Függvény mester', description: 'Függvények–analízis munkalap teljesítve', icon: '📈' },
+    { id: 'ut_bejart', title: 'Út bejárva', description: 'Egy teljes témakör-út (6 lecke) kész', icon: '🗺️' },
     { id: 'mester_szakasz', title: 'Mester szakasz', description: 'Bármely munkalap 3. szakasza kész', icon: '🏆' },
     { id: 'hibatlan_5', title: '5 hibátlan', description: '5 helyes válasz egymás után', icon: '🔥' },
     { id: 'xp_500', title: '500 XP', description: 'Elérted az 500 XP-t', icon: '⭐' },
@@ -66,7 +96,6 @@ export function xpToRankLevel(xp: number): number {
     for (let i = 0; i < XP_RANK_THRESHOLDS.length; i++) {
         if (xp >= XP_RANK_THRESHOLDS[i]) level = i + 1;
     }
-    // Extra szintek 1000 XP-nként 5500 felett
     if (xp >= 5500) {
         level = 10 + Math.floor((xp - 5500) / 1000);
     }
@@ -113,7 +142,6 @@ export function assignStagesToQuestions<T extends { stage?: PracticeStage; quest
         let stage: PracticeStage = 1;
         if (i >= t2) stage = 3;
         else if (i >= t1) stage = 2;
-        // Mesterfok feladatok mindig 3. szakasz
         if (q.question && /mesterfok|főgonosz|Mihaszna-mester/i.test(q.question)) {
             stage = 3;
         }
@@ -132,7 +160,14 @@ export function resolveTopicProgressKey(topicId: string): TopicProgressKey | nul
     return null;
 }
 
-export function topicCompletionBadge(key: TopicProgressKey): BadgeId | null {
+/** Progress tároló kulcs minden témához */
+export function resolveProgressStorageKey(topicId: string): string {
+    const legacy = resolveTopicProgressKey(topicId);
+    if (legacy) return legacy;
+    return normalizeTopicId(topicId);
+}
+
+export function topicCompletionBadge(key: string): BadgeId | null {
     switch (key) {
         case 'parameter': return 'parameter_kesz';
         case 'explog': return 'explog_kesz';
@@ -153,6 +188,26 @@ export function emptyProgress(): UserPracticeProgress {
     return { xp: 0, rank: 'BEGINNER', rankLevel: 1, badges: [], topics: {} };
 }
 
+function normalizeLoadedTopic(raw: any): TopicProgress {
+    const base = emptyPathTopicProgress(Number(raw?.totalQuestions) || PATH_TOTAL_QUESTIONS);
+    const lessonsCompleted = Array.isArray(raw?.lessonsCompleted) ? raw.lessonsCompleted.map(Number) : [];
+    const stagesCompleted = Array.isArray(raw?.stagesCompleted) ? raw.stagesCompleted.map(Number) : [];
+    const chestsClaimed = Array.isArray(raw?.chestsClaimed) ? raw.chestsClaimed.map(Number) : [];
+    const highestUnlocked = Number(raw?.highestUnlocked) || computeHighestUnlocked(lessonsCompleted);
+    return {
+        ...base,
+        bestCorrect: Number(raw?.bestCorrect) || 0,
+        totalQuestions: Number(raw?.totalQuestions) || PATH_TOTAL_QUESTIONS,
+        stagesCompleted,
+        completed: Boolean(raw?.completed),
+        perfect: Boolean(raw?.perfect),
+        lessonsCompleted,
+        highestUnlocked,
+        chestsClaimed,
+        updatedAt: raw?.updatedAt,
+    };
+}
+
 export async function loadUserPracticeProgress(uid: string): Promise<UserPracticeProgress> {
     const firebase = (window as any).firebase;
     if (!firebase?.firestore) return emptyProgress();
@@ -162,18 +217,23 @@ export async function loadUserPracticeProgress(uid: string): Promise<UserPractic
     const data = snap.data() || {};
     const xp = Number(data.xp) || 0;
     const rankLevel = Number(data.rankLevel) || xpToRankLevel(xp);
+    const rawTopics = data.topics || {};
+    const topics: Record<string, TopicProgress> = {};
+    Object.keys(rawTopics).forEach((k) => {
+        topics[k] = normalizeLoadedTopic(rawTopics[k]);
+    });
     return {
         xp,
         rank: data.rank || getRankTitle(rankLevel),
         rankLevel,
         badges: Array.isArray(data.badges) ? data.badges : [],
-        topics: data.topics || {},
+        topics,
         updatedAt: data.updatedAt,
     };
 }
 
 export type ProgressUpdateInput = {
-    topicKey: TopicProgressKey | null;
+    topicKey: string | null;
     topicId: string;
     correctCount: number;
     totalQuestions: number;
@@ -181,6 +241,8 @@ export type ProgressUpdateInput = {
     perfectRun: boolean;
     maxStreak: number;
     sessionXpFromAnswers: number;
+    /** Path mód: melyik lecke készült el (1–6) */
+    lessonJustCompleted?: number;
 };
 
 export type ProgressUpdateResult = {
@@ -208,41 +270,84 @@ export async function applyAndSaveProgress(
         }
     };
 
-    if (input.topicKey) {
-        const prevTopic = topics[input.topicKey] || {
-            bestCorrect: 0,
-            totalQuestions: input.totalQuestions,
-            stagesCompleted: [] as number[],
-            completed: false,
-            perfect: false,
-        };
-        const stagesSet = new Set<number>([...(prevTopic.stagesCompleted || []), ...input.stagesClearedThisRun]);
+    const storageKey = input.topicKey || resolveProgressStorageKey(input.topicId);
+
+    if (storageKey) {
+        const prevTopic = topics[storageKey]
+            ? normalizeLoadedTopic(topics[storageKey])
+            : emptyPathTopicProgress(input.totalQuestions || PATH_TOTAL_QUESTIONS);
+
+        const lessonsCompleted = [...(prevTopic.lessonsCompleted || [])];
+        let lessonXp = 0;
+        if (input.lessonJustCompleted && input.lessonJustCompleted >= 1 && input.lessonJustCompleted <= PATH_LESSON_COUNT) {
+            if (!lessonsCompleted.includes(input.lessonJustCompleted)) {
+                lessonsCompleted.push(input.lessonJustCompleted);
+                lessonXp = PATH_LESSON_XP;
+                xpGained += PATH_LESSON_XP;
+            }
+        }
+
+        const stagesFromLessons = lessonsCompleted.map((l) => lessonToStage(l));
+        const stagesSet = new Set<number>([
+            ...(prevTopic.stagesCompleted || []),
+            ...input.stagesClearedThisRun,
+            ...stagesFromLessons,
+        ]);
         const newlyClearedStages = input.stagesClearedThisRun.filter(
             (s) => !(prevTopic.stagesCompleted || []).includes(s)
         );
-        xpGained += newlyClearedStages.length * 50;
+        // Path módban a lecke XP a fő jutalom; stage bónusz csak ha nem path lesson
+        if (!input.lessonJustCompleted) {
+            xpGained += newlyClearedStages.length * 50;
+        }
 
-        const completedNow =
-            input.correctCount >= input.totalQuestions && input.totalQuestions > 0;
+        const highestUnlocked = computeHighestUnlocked(lessonsCompleted);
+        const pathComplete = lessonsCompleted.length >= PATH_LESSON_COUNT
+            && Array.from({ length: PATH_LESSON_COUNT }, (_, i) => i + 1).every((n) => lessonsCompleted.includes(n));
+
+        const correctTotal = Math.max(prevTopic.bestCorrect || 0, input.correctCount);
+        // Path: bestCorrect = kész leckék × 3
+        const pathBest = lessonsCompleted.length * 3;
+        const bestCorrect = input.lessonJustCompleted
+            ? Math.max(prevTopic.bestCorrect || 0, pathBest)
+            : correctTotal;
+
+        const completedNow = pathComplete
+            || (input.correctCount >= input.totalQuestions && input.totalQuestions > 0 && !input.lessonJustCompleted);
         const firstComplete = completedNow && !prevTopic.completed;
-        if (firstComplete) xpGained += 100;
+        if (firstComplete && !input.lessonJustCompleted) xpGained += 100;
+        if (pathComplete && !prevTopic.completed) {
+            xpGained += 100;
+            unlock('ut_bejart');
+        }
         if (completedNow && input.perfectRun && !prevTopic.perfect) xpGained += 50;
 
-        topics[input.topicKey] = {
-            bestCorrect: Math.max(prevTopic.bestCorrect || 0, input.correctCount),
-            totalQuestions: input.totalQuestions,
+        topics[storageKey] = {
+            bestCorrect,
+            totalQuestions: PATH_TOTAL_QUESTIONS,
             stagesCompleted: Array.from(stagesSet).sort((a, b) => a - b),
-            completed: prevTopic.completed || completedNow,
+            completed: prevTopic.completed || completedNow || pathComplete,
             perfect: prevTopic.perfect || (completedNow && input.perfectRun),
+            lessonsCompleted: lessonsCompleted.sort((a, b) => a - b),
+            highestUnlocked,
+            chestsClaimed: prevTopic.chestsClaimed || [],
         };
 
-        if (topics[input.topicKey]!.completed) {
-            const b = topicCompletionBadge(input.topicKey);
+        if (topics[storageKey]!.completed) {
+            const b = topicCompletionBadge(storageKey);
             if (b) unlock(b);
+            // Legacy badge a resolveTopicProgressKey alapján is
+            const legacy = resolveTopicProgressKey(input.topicId);
+            if (legacy) {
+                const lb = topicCompletionBadge(legacy);
+                if (lb) unlock(lb);
+            }
         }
-        if ((topics[input.topicKey]!.stagesCompleted || []).includes(3)) {
+        if ((topics[storageKey]!.stagesCompleted || []).includes(3)) {
             unlock('mester_szakasz');
         }
+
+        void lessonXp;
     }
 
     if (input.maxStreak >= 5) unlock('hibatlan_5');
@@ -272,4 +377,84 @@ export async function applyAndSaveProgress(
     }
 
     return { previous, next, xpGained, newBadges };
+}
+
+/** Kincs claim az útvonalról */
+export async function claimPathChest(
+    uid: string,
+    topicId: string,
+    chest: 1 | 2 | 3
+): Promise<ProgressUpdateResult & { alreadyClaimed: boolean }> {
+    const firebase = (window as any).firebase;
+    const previous = await loadUserPracticeProgress(uid);
+    const storageKey = resolveProgressStorageKey(topicId);
+    const prevTopic = previous.topics[storageKey]
+        ? normalizeLoadedTopic(previous.topics[storageKey])
+        : emptyPathTopicProgress();
+
+    const lessonsCompleted = prevTopic.lessonsCompleted || [];
+    const gate = chest * 2;
+    const unlockable = lessonsCompleted.includes(gate);
+    const already = (prevTopic.chestsClaimed || []).includes(chest);
+
+    if (!unlockable || already) {
+        return { previous, next: previous, xpGained: 0, newBadges: [], alreadyClaimed: true };
+    }
+
+    const xpGained = PATH_CHEST_XP[chest];
+    const badges = new Set<BadgeId>(previous.badges);
+    const newBadges: BadgeId[] = [];
+    const unlock = (id: BadgeId) => {
+        if (!badges.has(id)) {
+            badges.add(id);
+            newBadges.push(id);
+        }
+    };
+
+    const chestsClaimed = [...(prevTopic.chestsClaimed || []), chest];
+    const topics = {
+        ...previous.topics,
+        [storageKey]: {
+            ...prevTopic,
+            chestsClaimed,
+        },
+    };
+
+    const nextXp = previous.xp + xpGained;
+    if (nextXp >= 500) unlock('xp_500');
+    if (nextXp >= 1000) unlock('xp_1000');
+    if (chest === 3) {
+        unlock('ut_bejart');
+        const legacy = resolveTopicProgressKey(topicId);
+        if (legacy) {
+            const b = topicCompletionBadge(legacy);
+            if (b) unlock(b);
+        }
+        topics[storageKey] = {
+            ...topics[storageKey],
+            completed: true,
+        };
+    }
+
+    const rankLevel = xpToRankLevel(nextXp);
+    const next: UserPracticeProgress = {
+        xp: nextXp,
+        rank: getRankTitle(rankLevel),
+        rankLevel,
+        badges: Array.from(badges),
+        topics,
+    };
+
+    if (firebase?.firestore) {
+        const db = firebase.firestore();
+        await db.collection('users').doc(uid).collection('progress').doc('summary').set(
+            {
+                ...next,
+                updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+            },
+            { merge: true }
+        );
+    }
+
+    return { previous, next, xpGained, newBadges, alreadyClaimed: false };
 }

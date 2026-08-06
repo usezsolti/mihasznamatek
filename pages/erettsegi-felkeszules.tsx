@@ -1,13 +1,14 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
+import TopicPathMap from '../components/TopicPathMap';
 import {
     loadUserPracticeProgress,
-    resolveTopicProgressKey,
-    STAGE_LABELS,
+    resolveProgressStorageKey,
     type TopicProgress,
     type UserPracticeProgress,
 } from '../utils/practiceProgress';
+import { PATH_LESSON_COUNT } from '../utils/topicPath';
 
 interface ExamTopic {
     id: string;
@@ -35,6 +36,7 @@ export default function ErettsegiFelkeszules() {
     const [viewMode, setViewMode] = useState<'topics' | 'papers'>('topics');
     const [selectedLevel, setSelectedLevel] = useState<'kozep' | 'emelt' | null>(null);
     const [topicProgressMap, setTopicProgressMap] = useState<Partial<Record<string, TopicProgress>>>({});
+    const [pathTopicId, setPathTopicId] = useState<string | null>(null);
 
     useEffect(() => {
         // URL paraméter alapján beállítjuk a módot
@@ -48,7 +50,13 @@ export default function ErettsegiFelkeszules() {
         if (router.query.level === 'emelt' || router.query.level === 'kozep') {
             setSelectedLevel(router.query.level as 'kozep' | 'emelt');
         }
-    }, [router.query.mode, router.query.level]);
+
+        // Visszatérés a játékból: path újra megnyitása
+        if (typeof router.query.topic === 'string' && router.query.topic) {
+            setPathTopicId(router.query.topic);
+            setViewMode('topics');
+        }
+    }, [router.query.mode, router.query.level, router.query.topic]);
 
     useEffect(() => {
         let cancelled = false;
@@ -379,10 +387,31 @@ export default function ErettsegiFelkeszules() {
         : examPapers;
 
     const handleTopicClick = (topicId: string) => {
-        // Azonnal elindítjuk a játékot a témakörrel
         const topic = examTopics.find(t => t.id === topicId);
-        if (topic) {
-            router.push(`/game?erettsegi=true&topic=${topicId}&level=${selectedLevel}`);
+        if (topic && selectedLevel) {
+            setPathTopicId(topicId);
+            router.replace(
+                {
+                    pathname: '/erettsegi-felkeszules',
+                    query: { mode: 'topics', level: selectedLevel, topic: topicId },
+                },
+                undefined,
+                { shallow: true }
+            );
+        }
+    };
+
+    const handlePathBack = () => {
+        setPathTopicId(null);
+        if (selectedLevel) {
+            router.replace(
+                {
+                    pathname: '/erettsegi-felkeszules',
+                    query: { mode: 'topics', level: selectedLevel },
+                },
+                undefined,
+                { shallow: true }
+            );
         }
     };
 
@@ -461,6 +490,21 @@ export default function ErettsegiFelkeszules() {
                                         </button>
                                     </div>
                                 </div>
+                            ) : pathTopicId && selectedLevel ? (
+                                (() => {
+                                    const pathTopic = examTopics.find((t) => t.id === pathTopicId);
+                                    if (!pathTopic) return null;
+                                    return (
+                                        <TopicPathMap
+                                            topicId={pathTopic.id}
+                                            topicTitle={pathTopic.title}
+                                            topicIcon={pathTopic.icon}
+                                            topicColor={pathTopic.color}
+                                            level={selectedLevel}
+                                            onBack={handlePathBack}
+                                        />
+                                    );
+                                })()
                             ) : (
                                 <>
                                     <div className="selected-level-header">
@@ -475,19 +519,15 @@ export default function ErettsegiFelkeszules() {
                                         </button>
                                     </div>
                                     <p className="section-description">
-                                        Válassz egy témakört, hogy témakörönként gyakorolhass!
+                                        Válassz egy témakört — Duolingo-s úton, leckénként haladhatsz!
                                     </p>
                                     {examTopics.length > 0 ? (
                                         <div className="topics-grid">
                                             {examTopics.map(topic => {
-                                                const key = resolveTopicProgressKey(topic.id);
-                                                const tp = key ? topicProgressMap[key] : undefined;
-                                                const pct = tp && tp.totalQuestions > 0
-                                                    ? Math.round((tp.bestCorrect / tp.totalQuestions) * 100)
-                                                    : 0;
-                                                const stageInfo = tp?.stagesCompleted?.length
-                                                    ? `Szakasz ${Math.max(...tp.stagesCompleted)}/3 · ${STAGE_LABELS[Math.max(...tp.stagesCompleted) as 1|2|3]}`
-                                                    : null;
+                                                const key = resolveProgressStorageKey(topic.id);
+                                                const tp = topicProgressMap[key];
+                                                const lessonsDone = tp?.lessonsCompleted?.length || 0;
+                                                const pct = Math.round((lessonsDone / PATH_LESSON_COUNT) * 100);
                                                 return (
                                                 <div
                                                     key={topic.id}
@@ -499,37 +539,37 @@ export default function ErettsegiFelkeszules() {
                                                     </div>
                                                     <h3 className="topic-title">{topic.title}</h3>
                                                     <p className="topic-description">{topic.description}</p>
-                                                    {tp && tp.totalQuestions > 0 && (
-                                                        <div style={{ marginTop: '0.75rem', width: '100%' }}>
-                                                            <div style={{
-                                                                display: 'flex',
-                                                                justifyContent: 'space-between',
-                                                                fontSize: '0.8rem',
-                                                                color: tp.completed ? '#ffd700' : '#9f9',
-                                                                marginBottom: '0.35rem'
-                                                            }}>
-                                                                <span>
-                                                                    {tp.completed ? '✓ Kész' : `${tp.bestCorrect}/${tp.totalQuestions}`}
-                                                                </span>
-                                                                <span>{stageInfo || `${pct}%`}</span>
-                                                            </div>
-                                                            <div style={{
-                                                                height: '6px',
-                                                                background: 'rgba(255,255,255,0.12)',
-                                                                borderRadius: '999px',
-                                                                overflow: 'hidden'
-                                                            }}>
-                                                                <div style={{
-                                                                    height: '100%',
-                                                                    width: `${Math.min(100, pct)}%`,
-                                                                    background: tp.completed
-                                                                        ? 'linear-gradient(90deg,#ffd700,#39ff14)'
-                                                                        : '#39ff14',
-                                                                    borderRadius: '999px'
-                                                                }} />
-                                                            </div>
+                                                    <div style={{ marginTop: '0.75rem', width: '100%' }}>
+                                                        <div style={{
+                                                            display: 'flex',
+                                                            justifyContent: 'space-between',
+                                                            fontSize: '0.8rem',
+                                                            color: tp?.completed ? '#ffd700' : '#9f9',
+                                                            marginBottom: '0.35rem'
+                                                        }}>
+                                                            <span>
+                                                                {tp?.completed
+                                                                    ? '✓ Út kész'
+                                                                    : `${lessonsDone}/${PATH_LESSON_COUNT} lecke`}
+                                                            </span>
+                                                            <span>{pct}%</span>
                                                         </div>
-                                                    )}
+                                                        <div style={{
+                                                            height: '6px',
+                                                            background: 'rgba(255,255,255,0.12)',
+                                                            borderRadius: '999px',
+                                                            overflow: 'hidden'
+                                                        }}>
+                                                            <div style={{
+                                                                height: '100%',
+                                                                width: `${Math.min(100, pct)}%`,
+                                                                background: tp?.completed
+                                                                    ? 'linear-gradient(90deg,#ffd700,#39ff14)'
+                                                                    : '#39ff14',
+                                                                borderRadius: '999px'
+                                                            }} />
+                                                        </div>
+                                                    </div>
                                                     <div className="topic-arrow">→</div>
                                                 </div>
                                                 );
