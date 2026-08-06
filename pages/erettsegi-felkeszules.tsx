@@ -186,7 +186,7 @@ export default function ErettsegiFelkeszules() {
             title: 'Bizonyítások',
             icon: '✓',
             color: '#ffd700',
-            description: 'Matematikai bizonyítások, tételbizonyítások'
+            description: 'Algebrai, számelméleti, geometriai bizonyítások és mesterfeladatok'
         },
         {
             id: 'egyenletek-egyenlotlensegek-emelt',
