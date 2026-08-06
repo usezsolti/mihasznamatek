@@ -389,10 +389,10 @@ export default function Game() {
         }
     ];
 
-    // Exponenciális és logaritmusos gyakorló feladatok (emelt algebra munkalap)
+    // Exponenciális és logaritmusos gyakorló feladatok (emelt algebra munkalap 1–16)
     const getExponentialLogPracticeQuestions = (): Question[] => [
         {
-            question: `1. Értelmezési tartomány\n\nAdd meg a valós számok halmazának azt a legbővebb részhalmazát, amelyen az alábbi kifejezések értelmezhetők!\n\na) log₃(√(2x − 1))\nb) √(log₂(x + 3))\nc) log_{x−1}(9 − x²)\nd) √(x + 4) / log₂(x − 2)\n\nAdd meg:\n1) a) alsó határát (a legkisebb nem megengedett / határérték), 3 tizedesjegyre;\n2) b) alsó határát (zárt);\n3) d) kizárt belső pontját!`,
+            question: `1. Értelmezési tartomány\n\nAdd meg a valós számok halmazának azt a legbővebb részhalmazát, amelyen az alábbi kifejezések értelmezhetők!\n\na) log₃(√(2x − 1))\nb) √(log₂(x + 3))\nc) log_{x−1}(9 − x²)\nd) √(x + 4) / log₂(x − 2)\n\nAdd meg:\n1) a) alsó határát (nyílt), 3 tizedesjegyre;\n2) b) alsó határát (zárt);\n3) d) kizárt belső pontját!`,
             answer: 0.5,
             alternativeAnswer: -2,
             thirdAnswer: 3,
@@ -400,42 +400,25 @@ export default function Game() {
             expression: `a) 2x−1 > 0 → x > 1/2\nb) log₂(x+3) ≥ 0 → x+3 ≥ 1 → x ≥ −2\nc) (1,2) ∪ (2,3)\nd) x > 2 és x ≠ 3`
         },
         {
-            question: `2. Gyökös egyenletek\n\nOldd meg a valós számok halmazán!\n\na) √(x + 5) = 3 − x\nb) √(3x − 2) = x\n\nAdd meg a) megoldását 3 tizedesjegyre, majd b) két megoldását (tetszőleges sorrendben)!`,
+            question: `2. Gyökös egyenletek\n\nOldd meg a valós számok halmazán!\n\na) √(x + 5) = 3 − x\nb) √(3x − 2) = x\nc) √(2x + 7) − √(x + 3) = 1\n\nAdd meg a) megoldását 3 tizedesjegyre, majd b) két megoldását!`,
             answer: 0.628,
             alternativeAnswer: 1,
             thirdAnswer: 2,
             type: 'multiplication',
-            expression: `a) x = (7−√33)/2 ≈ 0,628 (a másik gyök kilép a tartományból)\nb) x = 1 és x = 2`
+            expression: `a) x = (7−√33)/2 ≈ 0,628\nb) x = 1 és x = 2\nc) x = −3 vagy x = 1`
         },
         {
             question: `2c. Gyökös egyenlet\n\nOldd meg a valós számok halmazán!\n\n√(2x + 7) − √(x + 3) = 1\n\nAdd meg a két megoldást (tetszőleges sorrendben)!`,
             answer: -3,
             alternativeAnswer: 1,
             type: 'multiplication',
-            expression: `√(2x+7) = 1 + √(x+3) → négyzetre emelés után t = √(x+3):\nt² = 2t → t = 0 vagy 2 → x = −3 vagy x = 1\nEllenőrzés: mindkettő jó`
+            expression: `√(2x+7) = 1 + √(x+3) → t = √(x+3): t² = 2t → x = −3 vagy x = 1`
         },
         {
             question: `3. Két gyökös tagot tartalmazó egyenlet\n\nOldd meg a valós számok halmazán!\n\n√(5x − 4) = √(x + 8) + 2\n\nA megoldás során minden négyzetre emelés előtt vizsgáld meg az ekvivalencia feltételeit!\n\nAdd meg a megoldást!`,
             answer: 8,
             type: 'multiplication',
-            expression: `Tartomány + RHS ≥ 0, majd x − 4 = √(x+8) (x ≥ 4)\n(x−4)² = x+8 → x² − 9x + 8 = 0 → x = 1 (kilép) vagy x = 8\nEllenőrzés: √36 = √16 + 2 → 6 = 6`
-        },
-        {
-            question: `4. Vegyes egyenletek\n\nOldd meg a valós számok halmazán!\n\na) √(x + 6) + √(10 − x) = 4\nb) 2^{x+1} + 2^{1−x} = 5\n\nAdd meg a) két megoldását, majd b) két megoldását (tetszőleges sorrendben)!`,
-            answer: -6,
-            alternativeAnswer: 10,
-            thirdAnswer: -1,
-            fourthAnswer: 1,
-            type: 'multiplication',
-            expression: `a) A függvény a végpontokon 4, belül nagyobb → x = −6 és x = 10\nb) t = 2^x: 2t + 2/t = 5 → 2t² − 5t + 2 = 0 → t = 1/2 vagy 2 → x = −1 vagy 1`
-        },
-        {
-            question: `4c–d. Logaritmusos és abszolútértékes egyenlet\n\nOldd meg a valós számok halmazán!\n\nc) log₂(x − 1) + log₂(x + 3) = 3\nd) |x − 1| = √(x + 5)\n\nAdd meg c) megoldását 3 tizedesjegyre, majd d) két megoldását!`,
-            answer: 2.464,
-            alternativeAnswer: -1,
-            thirdAnswer: 4,
-            type: 'multiplication',
-            expression: `c) (x−1)(x+3) = 8 → x² + 2x − 11 = 0 → x = −1 + 2√3 ≈ 2,464 (x > 1)\nd) (x−1)² = x+5 → x² − 3x − 4 = 0 → x = −1 vagy x = 4`
+            expression: `x − 4 = √(x+8) (x ≥ 4) → x² − 9x + 8 = 0 → x = 8`
         },
         {
             question: `7. Exponenciális egyenletek\n\nOldd meg a valós számok halmazán!\n\na) 3^{2x−1} = 27^{x−2}\nb) 2^{x+2} + 2^x = 80\nc) 4^x − 5·2^x + 4 = 0\nd) 9^x + 3^{x+1} − 18 = 0\n\nAdd meg a), b), d) megoldását, majd c) nagyobbik megoldását!`,
@@ -444,30 +427,23 @@ export default function Game() {
             thirdAnswer: 1,
             fourthAnswer: 2,
             type: 'multiplication',
-            expression: `a) 3^{2x−1} = 3^{3x−6} → x = 5\nb) 5·2^x = 80 → 2^x = 16 → x = 4\nc) t = 2^x: t² − 5t + 4 = 0 → x = 0 vagy 2\nd) t = 3^x: t² + 3t − 18 = 0 → t = 3 → x = 1`
-        },
-        {
-            question: `7c. Exponenciális egyenlet (helyettesítés)\n\nOldd meg a valós számok halmazán!\n\n4^x − 5·2^x + 4 = 0\n\nAdd meg a két megoldást (tetszőleges sorrendben)!`,
-            answer: 0,
-            alternativeAnswer: 2,
-            type: 'multiplication',
-            expression: `t = 2^x > 0: t² − 5t + 4 = 0 → (t−1)(t−4) = 0 → t = 1 vagy 4 → x = 0 vagy 2`
+            expression: `a) x = 5\nb) x = 4\nc) x = 0 vagy 2\nd) x = 1`
         },
         {
             question: `8. Helyettesítéssel megoldható exponenciális egyenlet\n\nOldd meg a valós számok halmazán!\n\n5^{2x} − 26·5^x + 25 = 0\n\nA megoldás során vezess be új ismeretlent: t = 5^x.\n\nAdd meg a két megoldást (tetszőleges sorrendben)!`,
             answer: 0,
             alternativeAnswer: 2,
             type: 'multiplication',
-            expression: `t = 5^x: t² − 26t + 25 = 0 → (t−1)(t−25) = 0 → t = 1 vagy 25 → x = 0 vagy 2`
+            expression: `t = 5^x: t² − 26t + 25 = 0 → t = 1 vagy 25 → x = 0 vagy 2`
         },
         {
-            question: `9. Exponenciális egyenlőtlenségek\n\nOldd meg a valós számok halmazán!\n\na) 2^{3x−1} > 16\nb) (1/3)^{2x+1} ≤ 27\nc) 4^x − 5·2^x + 4 ≤ 0\n\nAdd meg:\n1) a) alsó határát 3 tizedesjegyre (x > …);\n2) b) alsó határát (x ≥ …);\n3) c) alsó, majd felső határát (zárt intervallum)!`,
+            question: `9. Exponenciális egyenlőtlenségek\n\nOldd meg a valós számok halmazán!\n\na) 2^{3x−1} > 16\nb) (1/3)^{2x+1} ≤ 27\nc) 4^x − 5·2^x + 4 ≤ 0\n\nAdd meg:\n1) a) alsó határát 3 tizedesjegyre (x > …);\n2) b) alsó határát (x ≥ …);\n3) c) alsó, majd felső határát (zárt)!`,
             answer: 1.667,
             alternativeAnswer: -2,
             thirdAnswer: 0,
             fourthAnswer: 2,
             type: 'multiplication',
-            expression: `a) 3x−1 > 4 → x > 5/3 ≈ 1,667\nb) (1/3)^{2x+1} ≤ (1/3)^{−3} → 2x+1 ≥ −3 → x ≥ −2\nc) 1 ≤ 2^x ≤ 4 → 0 ≤ x ≤ 2`
+            expression: `a) x > 5/3 ≈ 1,667\nb) x ≥ −2\nc) 0 ≤ x ≤ 2`
         },
         {
             question: `10. Logaritmusos egyenletek\n\nOldd meg a valós számok halmazán!\n\na) log₂(x − 1) = 3\nb) log₃(x + 5) + log₃(x − 1) = 2\nc) log₂(x + 2) − log₂(x − 2) = 1\nd) lg x + lg(x − 9) = 2\n\nAdd meg a), c) megoldását, majd b) és d) megoldását 3 tizedesjegyre!`,
@@ -476,7 +452,7 @@ export default function Game() {
             thirdAnswer: 2.243,
             fourthAnswer: 15.466,
             type: 'multiplication',
-            expression: `a) x − 1 = 8 → x = 9\nb) (x+5)(x−1) = 9 → x = −2 + 3√2 ≈ 2,243\nc) (x+2)/(x−2) = 2 → x = 6\nd) x(x−9) = 100 → x = (9+√481)/2 ≈ 15,466`
+            expression: `a) x = 9\nb) x ≈ 2,243\nc) x = 6\nd) x ≈ 15,466`
         },
         {
             question: `11. Logaritmusos egyenlőtlenségek\n\nOldd meg a valós számok halmazán!\n\na) log₂(3x − 1) ≥ 3\nb) log_{1/2}(x + 4) < −2\nc) Hány egész szám elégíti ki: log₃(2x + 7) ≤ 4?\n\nAdd meg:\n1) a) alsó határát (x ≥ …);\n2) b) alsó határát (x > …);\n3) c) egész megoldások számát!`,
@@ -484,33 +460,51 @@ export default function Game() {
             alternativeAnswer: 0,
             thirdAnswer: 41,
             type: 'multiplication',
-            expression: `a) 3x−1 ≥ 8 → x ≥ 3\nb) x+4 > 4 → x > 0\nc) −3,5 < x ≤ 37 → egész: −3,…,37 → 41 db`
+            expression: `a) x ≥ 3\nb) x > 0\nc) −3,…,37 → 41 db`
         },
         {
             question: `12. Változó alapú logaritmus\n\nOldd meg a valós számok halmazán!\n\nlog_{x−1}(x + 5) = 2\n\nA megoldás során külön vizsgáld meg: x−1 > 0, x−1 ≠ 1, x+5 > 0.\n\nAdd meg a megoldást!`,
             answer: 4,
             type: 'multiplication',
-            expression: `x > 1, x ≠ 2: x+5 = (x−1)² → x² − 3x − 4 = 0 → x = 4 (x = −1 kilép)`
+            expression: `x+5 = (x−1)² → x = 4`
         },
         {
             question: `13. Logaritmikus egyenletrendszer\n\nOldd meg az alábbi egyenletrendszert, ahol x és y pozitív valós számok!\n\nx + y = 10\nlog₂ x + log₂ y = 4\n\nAdd meg a két lehetséges x (vagy y) értéket (tetszőleges sorrendben)!`,
             answer: 2,
             alternativeAnswer: 8,
             type: 'multiplication',
-            expression: `xy = 16, x+y = 10 → t² − 10t + 16 = 0 → t = 2 vagy 8\nMegoldáspárok: (2,8) és (8,2)`
+            expression: `xy = 16, x+y = 10 → (2,8) és (8,2)`
         },
         {
             question: `14. Vegyes gyökös és logaritmikus feladat\n\nOldd meg a valós számok halmazán!\n\nlog₂(√(x + 1)) = 2\n\nEllenőrizd, hogy a kapott megoldás eleme-e az értelmezési tartománynak!\n\nAdd meg a megoldást!`,
             answer: 15,
             type: 'multiplication',
-            expression: `√(x+1) = 2² = 4 → x+1 = 16 → x = 15\nÉrtelmezési tartomány: x > −1, teljesül`
+            expression: `√(x+1) = 4 → x = 15`
         },
         {
-            question: `15. Szöveges exponenciális feladat\n\nEgy baktériumtenyészetben kezdetben 500 baktérium található. Számuk óránként 25%-kal nő:\nN(t) = 500 · 1,25^t\n\na) Hány baktérium lesz 4 óra múlva?\nb) Hány óra múlva lesz a szám először legalább 2000?\n\nAdd meg a) értékét 3 tizedesjegyre, majd b) pontos (folytonos) megoldását 3 tizedesjegyre!`,
+            question: `15. Szöveges exponenciális feladat\n\nEgy baktériumtenyészetben kezdetben 500 baktérium. Számuk óránként 25%-kal nő:\nN(t) = 500 · 1,25^t\n\na) Hány baktérium lesz 4 óra múlva?\nb) Hány óra múlva lesz először legalább 2000?\nc) Az aₙ = 500 · 1,25ⁿ sorozat monoton növekvő? (1 = igen, 0 = nem)\n\nAdd meg a), b) értékét 3 tizedesjegyre, majd c) válaszát!`,
             answer: 1220.703,
             alternativeAnswer: 6.213,
+            thirdAnswer: 1,
             type: 'multiplication',
-            expression: `a) N(4) = 500 · 1,25⁴ = 1220,703\nb) 1,25^t ≥ 4 → t ≥ log(4)/log(1,25) ≈ 6,213\n(Egész órában: N(6) ≈ 1907 < 2000, N(7) ≈ 2384 → 7 óra)`
+            expression: `a) N(4) = 1220,703\nb) t ≈ 6,213\nc) q = 1,25 > 1 → szigorúan monoton növekvő`
+        },
+        {
+            question: `16. Mihaszna-mesterfok\n\nOldd meg a valós számok halmazán!\n\na) √(x + 6) + √(10 − x) = 4\nb) 2^{x+1} + 2^{1−x} = 5\n\nAdd meg a) két megoldását, majd b) két megoldását (tetszőleges sorrendben)!`,
+            answer: -6,
+            alternativeAnswer: 10,
+            thirdAnswer: -1,
+            fourthAnswer: 1,
+            type: 'multiplication',
+            expression: `a) x = −6 és x = 10\nb) x = −1 és x = 1`
+        },
+        {
+            question: `16c–d. Mihaszna-mesterfok\n\nOldd meg a valós számok halmazán!\n\nc) log₂(x − 1) + log₂(x + 3) = 3\nd) |x − 1| = √(x + 5)\n\nAdd meg c) megoldását 3 tizedesjegyre, majd d) két megoldását!`,
+            answer: 2.464,
+            alternativeAnswer: -1,
+            thirdAnswer: 4,
+            type: 'multiplication',
+            expression: `c) x = −1 + 2√3 ≈ 2,464\nd) x = −1 vagy x = 4`
         }
     ];
 
