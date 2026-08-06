@@ -193,7 +193,7 @@ export default function ErettsegiFelkeszules() {
             title: 'Egyenletek, egyenlőtlenségek, egyenletrendszerek',
             icon: '=',
             color: '#ffd700',
-            description: 'Haladó egyenletek, egyenlőtlenségek, egyenletrendszerek'
+            description: 'Bizonyítási feladatok: algebra, indukció, geometria, mesterfeladatok'
         },
         {
             id: 'egyszerusitesek-emelt',

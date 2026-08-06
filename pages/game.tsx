@@ -755,27 +755,10 @@ export default function Game() {
             const list = getAbsoluteRootPracticeQuestions();
             return list[Math.floor(Math.random() * list.length)];
         }
-        // Egyenletek, egyenlőtlenségek
+        // Egyenletek, egyenlőtlenségek — munkalap (bizonyítási feladatsor 1–21)
         else if (topicIdLower.includes('egyenletek') || topicIdLower.includes('egyenlotlenseg')) {
-            const levelLower = level.toLowerCase();
-            if (levelLower.includes('emelt')) {
-                // Emelt szint: összetett egyenletek
-                const a = Math.floor(Math.random() * 5) + 2;
-                const b = Math.floor(Math.random() * 10) - 5;
-                const c = Math.floor(Math.random() * 10) - 5;
-                const d = Math.floor(Math.random() * 5) + 1;
-                // (ax + b)(cx + d) = 0 formátumú egyenlet
-                const solution1 = -b / a;
-                const solution2 = -d / c;
-                return {
-                    question: `(${a}x + ${b})(${c}x + ${d}) = 0. Mennyi x?\n\nVálaszaidat 3 tizedesjegyre add meg!`,
-                    answer: Math.round(solution1 * 1000) / 1000,
-                    alternativeAnswer: Math.round(solution2 * 1000) / 1000,
-                    type: 'multiplication',
-                    expression: `(${a}x + ${b})(${c}x + ${d}) = 0 → ${a}x + ${b} = 0 vagy ${c}x + ${d} = 0 → x₁ = ${Math.round(solution1 * 1000) / 1000}, x₂ = ${Math.round(solution2 * 1000) / 1000}`
-                };
-            }
-            return generateQuadraticQuestion();
+            const list = getProofPracticeQuestions();
+            return list[Math.floor(Math.random() * list.length)];
         }
         // Egyszerűsítések, átalakítások
         else if (topicIdLower.includes('egyszerusites') || topicIdLower.includes('atalakitas')) {
@@ -3745,12 +3728,13 @@ Teljes megoldás:
     const generateErettsegiQuestionsByTopic = (topicId: string, level: string) => {
         setIsErettsegiMode(true);
         
-        // Fix munkalap feladatok: paraméter / exponenciális-logaritmus / abszolútérték-gyök / bizonyítások
+        // Fix munkalap feladatok
         const topicLower = topicId.toLowerCase();
         if (topicLower.includes('parameter') || topicLower.includes('paramet')
             || topicLower.includes('exponencialis') || topicLower.includes('logaritmus')
             || topicLower.includes('abszolutertek') || topicLower.includes('gyok')
-            || topicLower.includes('bizonyitas')) {
+            || topicLower.includes('bizonyitas')
+            || topicLower.includes('egyenletek') || topicLower.includes('egyenlotlenseg')) {
             let list: Question[];
             let prefix: string;
             if (topicLower.includes('parameter') || topicLower.includes('paramet')) {
@@ -3759,9 +3743,10 @@ Teljes megoldás:
             } else if (topicLower.includes('abszolutertek') || topicLower.includes('gyok')) {
                 list = getAbsoluteRootPracticeQuestions();
                 prefix = 'erettsegi_absroot';
-            } else if (topicLower.includes('bizonyitas')) {
+            } else if (topicLower.includes('bizonyitas')
+                || topicLower.includes('egyenletek') || topicLower.includes('egyenlotlenseg')) {
                 list = getProofPracticeQuestions();
-                prefix = 'erettsegi_proof';
+                prefix = topicLower.includes('bizonyitas') ? 'erettsegi_proof' : 'erettsegi_egyenletek';
             } else {
                 list = getExponentialLogPracticeQuestions();
                 prefix = 'erettsegi_explog';
