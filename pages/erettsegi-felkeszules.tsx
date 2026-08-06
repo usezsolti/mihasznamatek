@@ -113,7 +113,7 @@ export default function ErettsegiFelkeszules() {
             title: 'Függvények, analízis',
             icon: '📈',
             color: '#39ff14',
-            description: 'Függvényvizsgálat, deriválás alapjai, szélsőértékek'
+            description: 'MIHASZNAMATEK munkalap: paraméteres függvény, optimalizálás, érintő, integrál'
         },
         {
             id: 'halmazok',
@@ -250,7 +250,7 @@ export default function ErettsegiFelkeszules() {
             title: 'Függvények, analízis',
             icon: '📈',
             color: '#ffd700',
-            description: 'Haladó függvényvizsgálat, deriválás, integrálás, szélsőértékek'
+            description: 'MIHASZNAMATEK munkalap 1–10: függvényvizsgálat, optimalizálás, érintő, integrál'
         },
         {
             id: 'halmazok-emelt',

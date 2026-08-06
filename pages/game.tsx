@@ -642,6 +642,93 @@ export default function Game() {
         }
     ];
 
+    // Függvények és analízis (emelt munkalap 1–10) — numerikus ellenőrző kérdések
+    const getFunctionsPracticeQuestions = (): Question[] => [
+        {
+            question: `1. Paraméteres függvény\n\nLegyen p valós paraméter, és tekintsük a valós számok halmazán értelmezett\nfₚ(x) = −2x³ + (p − 1)x² + (p² − 4)x − 3 függvényt!\n\na) Számítsd ki a ∫₀² fₚ(x) dx határozott integrál értékét, ha p = 2!\nb) Határozd meg p értékét úgy, hogy az x = 1 az fₚ függvény zérushelye legyen!\nc) Határozd meg p összes lehetséges értékét úgy, hogy fₚ'(1) > 0 teljesüljön!\n\nAdd meg:\n1) a) értékét 3 tizedesjegyre;\n2) b) pozitív p értékét 3 tizedesjegyre;\n3) c) alsó, majd felső határát (p < … vagy p > …) 3 tizedesjegyre!`,
+            answer: -11.333,
+            alternativeAnswer: 2.702,
+            thirdAnswer: -4.606,
+            fourthAnswer: 2.606,
+            type: 'multiplication',
+            expression: `a) p=2: f₂(x)=−2x³+x²−3 → ∫₀² = −34/3 ≈ −11,333\nb) fₚ(1)=0 → p²+p−10=0 → p = (−1±√41)/2 ≈ 2,702 és −3,702\nc) fₚ'(1)=p²+2p−12 > 0 → p < −1−√13 vagy p > −1+√13 ≈ −4,606 illetve 2,606`
+        },
+        {
+            question: `2. Konzervdoboz optimalizálása\n\nEgy üzemben 1500 cm³ térfogatú, zárt, forgáshenger alakú dobozokat gyártanak. A doboz alap- és fedőlapjához használt anyag ára 0,3 Ft/cm², a palást anyagának ára pedig 0,15 Ft/cm². Jelölje r a doboz alapkörének sugarát, h pedig a magasságát centiméterben!\n\na) Fejezd ki a doboz h magasságát az r sugár segítségével!\nb) Igazold, hogy a doboz teljes anyagköltségét a\nK(r) = 0,6πr² + 450/r, r > 0\nfüggvény adja meg!\nc) Határozd meg a doboz optimális sugarát és magasságát úgy, hogy az anyagköltség minimális legyen! Válaszodat centiméterben, egy tizedesjegyre kerekítve add meg!\n\nAdd meg c) optimális sugarát, majd magasságát (egy tizedesjegy)!`,
+            answer: 4.9,
+            alternativeAnswer: 19.7,
+            type: 'multiplication',
+            expression: `a) h = 1500/(πr²)\nb) K = 0,6πr² + 0,3πrh = 0,6πr² + 450/r\nc) K'(r)=0 → r³ = 375/π → r ≈ 4,9 cm, h ≈ 19,7 cm`
+        },
+        {
+            question: `3. Függvényvizsgálat\n\nLegyen f: ]−3; 4[ → ℝ, f(x) = x³ − 3x² − 9x + 5.\n\na) Határozd meg az f' deriváltfüggvényt és annak zérushelyeit!\nb) Vizsgáld meg az f függvényt monotonitás szempontjából!\nc) Határozd meg az f függvény lokális szélsőértékeinek helyét és értékét!\nd) Add meg azt a g primitív függvényt, amelyre g'(x) = f(x) és g(1) = 0.\n\nAdd meg:\n1) f' kisebbik, majd nagyobbik zérushelyét;\n2) a lokális maximum értékét;\n3) a lokális minimum értékét!`,
+            answer: -1,
+            alternativeAnswer: 3,
+            thirdAnswer: 10,
+            fourthAnswer: -22,
+            type: 'multiplication',
+            expression: `f'(x)=3x²−6x−9=3(x+1)(x−3)\nNövekvő: ]−3,−1] és [3,4[; csökkenő: [−1,3]\nLok. max: f(−1)=10; lok. min: f(3)=−22\ng(x)=x⁴/4 − x³ − (9/2)x² + 5x + 1/4`
+        },
+        {
+            question: `4. Érintő és területszámítás\n\nLegyen f(x) = 4x − x².\n\na) Igazold, hogy a függvény grafikonja az x = 0 és x = 4 helyeken metszi az x tengelyt!\nb) Írd fel a görbe x = 1 abszcisszájú pontjában húzott érintőjének egyenletét!\nc) Számítsd ki a görbe és az x tengely által közbezárt korlátos síkidom területét!\n\nAdd meg:\n1) az érintő meredekségét;\n2) az érintő y-tengelymetszetét;\n3) a területet 3 tizedesjegyre!`,
+            answer: 2,
+            alternativeAnswer: 1,
+            thirdAnswer: 10.667,
+            type: 'multiplication',
+            expression: `a) f(0)=f(4)=0\nb) f'(x)=4−2x, f'(1)=2, f(1)=3 → y = 2x + 1\nc) ∫₀⁴ (4x−x²) dx = 32/3 ≈ 10,667`
+        },
+        {
+            question: `5. Két függvény kapcsolata\n\nLegyen f(x) = 2x + 3 és g(x) = x² − 1.\n\na) Határozd meg a 2f + g függvény zérushelyeit!\nb) Határozd meg az f és g függvény grafikonjainak metszéspontjait!\nc) Számítsd ki az f és g függvények grafikonja által közbezárt korlátos síkidom területét!\nd) Legyen h(x) = g(x)/f(x). Határozd meg a h függvény értelmezési tartományát!\n\nAdd meg:\n1) a) valós zérushelyeinek számát;\n2) b) kisebbik, majd nagyobbik x-koordinátáját 3 tizedesjegyre;\n3) c) területét 3 tizedesjegyre!`,
+            answer: 0,
+            alternativeAnswer: -1.236,
+            thirdAnswer: 3.236,
+            fourthAnswer: 14.907,
+            type: 'multiplication',
+            expression: `a) 2f+g = x²+4x+5, D<0 → 0 db zérushely\nb) x = 1±√5 ≈ −1,236 és 3,236\nc) T = 20√5/3 ≈ 14,907\nd) ℝ ∖ {−3/2}`
+        },
+        {
+            question: `6. Téglalap maximális területtel\n\nEgy 20 cm kerületű téglalap egyik oldalának hossza x cm.\n\na) Fejezd ki a téglalap másik oldalának hosszát x segítségével!\nb) Igazold, hogy a téglalap területét a T(x) = 10x − x², 0 < x < 10 függvény adja meg!\nc) Határozd meg a téglalap oldalainak hosszát úgy, hogy a területe maximális legyen!\nd) Határozd meg a maximális területét!\n\nAdd meg:\n1) a) értékét x = 4 esetén;\n2) c) mindkét oldal hosszát;\n3) d) maximális területét!`,
+            answer: 6,
+            alternativeAnswer: 5,
+            thirdAnswer: 5,
+            fourthAnswer: 25,
+            type: 'multiplication',
+            expression: `a) másik oldal: 10 − x (x=4 → 6)\nb) T = x(10−x) = 10x − x²\nc) T'=0 → x = 5, oldalak: 5 cm és 5 cm\nd) T_max = 25 cm²`
+        },
+        {
+            question: `7. Közlekedési költség\n\nEgy futárszolgálat járművének üzemeltetési költsége két részből áll.\nAz x km/h átlagsebesség mellett az üzemeltetési költség kilométerenként (300 + 0,5x) forint.\nA sofőr órabére 1800 forint.\n\na) Igazold, hogy a kilométerenkénti teljes költséget a\nK(x) = 300 + 0,5x + 1800/x, x > 0\nfüggvény adja meg!\nb) Határozd meg azt az átlagsebességet, amelynél a kilométerenkénti költség minimális! Válaszodat egész kilométer per órára kerekítve add meg!\nc) Határozd meg a minimális kilométerenkénti költséget egész forintra kerekítve!\n\nAdd meg b) átlagsebességét (km/h), majd c) minimális költséget (Ft)!`,
+            answer: 60,
+            alternativeAnswer: 360,
+            type: 'multiplication',
+            expression: `a) bér km-enként: 1800/x → K(x) = 300 + 0,5x + 1800/x\nb) K'=0 → x = 60 km/h\nc) K(60) = 360 Ft`
+        },
+        {
+            question: `8. Paraméteres határozott integrál\n\nLegyen fₚ(x) = x² + px − 2, ahol p valós paraméter.\n\na) Számítsd ki a ∫₀³ fₚ(x) dx integrált p függvényében!\nb) Határozd meg p értékét úgy, hogy ∫₀³ fₚ(x) dx = 0 teljesüljön!\nc) Határozd meg p értékét úgy, hogy az fₚ függvény grafikonjához az x = 1 abszcisszájú pontban húzott érintő párhuzamos legyen az y = 5x − 4 egyenessel!\n\nAdd meg:\n1) a) értékét p = 0 esetén;\n2) b) p értékét 3 tizedesjegyre;\n3) c) p értékét!`,
+            answer: 3,
+            alternativeAnswer: -0.667,
+            thirdAnswer: 3,
+            type: 'multiplication',
+            expression: `a) ∫₀³ = 3 + (9/2)p (p=0 → 3)\nb) 3 + 9p/2 = 0 → p = −2/3 ≈ −0,667\nc) f'=2x+p, f'(1)=2+p = 5 → p = 3`
+        },
+        {
+            question: `9. Bevétel maximalizálása\n\nEgy rendezvényre jelenleg 3000 darab belépőjegyet adnak el darabonként 4000 forintért. A szervezők becslése szerint minden 100 forintos áremelés 50-nel csökkenti az eladott jegyek számát.\nJelölje x a 100 forintos áremelések számát!\n\na) Fejezd ki a jegy új árát és az eladott jegyek számát x segítségével!\nb) Igazold, hogy a teljes bevételt a B(x) = (4000 + 100x)(3000 − 50x) függvény adja meg!\nc) Határozd meg azt a jegyárat, amely mellett a bevétel maximális!\nd) Határozd meg a maximális bevételt!\n\nAdd meg:\n1) a) jegyárat x = 2 esetén;\n2) c) optimális jegyárat;\n3) d) maximális bevételt!`,
+            answer: 4200,
+            alternativeAnswer: 5000,
+            thirdAnswer: 12500000,
+            type: 'multiplication',
+            expression: `a) ár = 4000+100x, darab = 3000−50x (x=2 → 4200 Ft)\nb) B(x)=(4000+100x)(3000−50x)\nc) B'=0 → x=10 → ár = 5000 Ft\nd) B(10)=12 500 000 Ft`
+        },
+        {
+            question: `10. Mihaszna-mesterfok\n\nLegyen f(x) = x⁴ − 4x³ − 2x² + 12x.\n\na) Határozd meg az f' deriváltfüggvény zérushelyeit!\nb) Vizsgáld meg a függvény monotonitását!\nc) Határozd meg a lokális szélsőértékek helyét és értékét!\nd) Határozd meg azokat az intervallumokat, amelyeken az f függvény konvex, illetve konkáv!\ne) Számítsd ki a ∫₀² f(x) dx határozott integrált!\n\nAdd meg f' három zérushelyét növekvő sorrendben, majd e) integrál értékét 3 tizedesjegyre!`,
+            answer: -1,
+            alternativeAnswer: 1,
+            thirdAnswer: 3,
+            fourthAnswer: 9.067,
+            type: 'multiplication',
+            expression: `f'(x)=4(x+1)(x−1)(x−3) → zérusok: −1, 1, 3\nLok. max: f(1)=7; lok. min: f(−1)=f(3)=−9\nKonvex: x < 1−(2/3)√3 vagy x > 1+(2/3)√3\n∫₀² f = 136/15 ≈ 9,067`
+        }
+    ];
+
     // Bizonyítási feladatok (emelt munkalap 1–21) — numerikus ellenőrző kérdések
     const getProofPracticeQuestions = (): Question[] => [
         {
@@ -823,9 +910,10 @@ export default function Game() {
             const list = getExponentialLogPracticeQuestions();
             return list[Math.floor(Math.random() * list.length)];
         }
-        // Függvények, analízis
+        // Függvények, analízis — munkalap feladatok
         else if (topicIdLower.includes('fuggveny') || topicIdLower.includes('analizis')) {
-            return generateDerivativeQuestion();
+            const list = getFunctionsPracticeQuestions();
+            return list[Math.floor(Math.random() * list.length)];
         }
         // Halmazok
         else if (topicIdLower.includes('halmaz')) {
@@ -3765,7 +3853,8 @@ Teljes megoldás:
             || topicLower.includes('exponencialis') || topicLower.includes('logaritmus')
             || topicLower.includes('abszolutertek') || topicLower.includes('gyok')
             || topicLower.includes('bizonyitas')
-            || topicLower.includes('egyenletek') || topicLower.includes('egyenlotlenseg')) {
+            || topicLower.includes('egyenletek') || topicLower.includes('egyenlotlenseg')
+            || topicLower.includes('fuggveny') || topicLower.includes('analizis')) {
             let list: Question[];
             let prefix: string;
             if (topicLower.includes('parameter') || topicLower.includes('paramet')) {
@@ -3778,6 +3867,9 @@ Teljes megoldás:
                 || topicLower.includes('egyenletek') || topicLower.includes('egyenlotlenseg')) {
                 list = getProofPracticeQuestions();
                 prefix = topicLower.includes('bizonyitas') ? 'erettsegi_proof' : 'erettsegi_egyenletek';
+            } else if (topicLower.includes('fuggveny') || topicLower.includes('analizis')) {
+                list = getFunctionsPracticeQuestions();
+                prefix = 'erettsegi_fuggvenyek';
             } else {
                 list = getExponentialLogPracticeQuestions();
                 prefix = 'erettsegi_explog';

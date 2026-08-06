@@ -7,12 +7,13 @@ export type BadgeId =
     | 'explog_kesz'
     | 'absroot_kesz'
     | 'bizonyitas_kesz'
+    | 'fuggveny_kesz'
     | 'mester_szakasz'
     | 'hibatlan_5'
     | 'xp_500'
     | 'xp_1000';
 
-export type TopicProgressKey = 'parameter' | 'explog' | 'absroot' | 'bizonyitas' | 'egyenletek';
+export type TopicProgressKey = 'parameter' | 'explog' | 'absroot' | 'bizonyitas' | 'egyenletek' | 'fuggvenyek';
 
 export interface BadgeDef {
     id: BadgeId;
@@ -44,6 +45,7 @@ export const BADGE_DEFS: BadgeDef[] = [
     { id: 'explog_kesz', title: 'Exp/Log mester', description: 'Exponenciális–logaritmus munkalap teljesítve', icon: 'log' },
     { id: 'absroot_kesz', title: 'Abszolútérték–gyök mester', description: 'Abszolútérték/gyök munkalap teljesítve', icon: '|√' },
     { id: 'bizonyitas_kesz', title: 'Bizonyítás mester', description: 'Bizonyítási munkalap teljesítve', icon: '✓' },
+    { id: 'fuggveny_kesz', title: 'Függvény mester', description: 'Függvények–analízis munkalap teljesítve', icon: '📈' },
     { id: 'mester_szakasz', title: 'Mester szakasz', description: 'Bármely munkalap 3. szakasza kész', icon: '🏆' },
     { id: 'hibatlan_5', title: '5 hibátlan', description: '5 helyes válasz egymás után', icon: '🔥' },
     { id: 'xp_500', title: '500 XP', description: 'Elérted az 500 XP-t', icon: '⭐' },
@@ -126,6 +128,7 @@ export function resolveTopicProgressKey(topicId: string): TopicProgressKey | nul
     if (t.includes('exponencialis') || t.includes('logaritmus')) return 'explog';
     if (t.includes('bizonyitas')) return 'bizonyitas';
     if (t.includes('egyenletek') || t.includes('egyenlotlenseg')) return 'egyenletek';
+    if (t.includes('fuggveny') || t.includes('analizis')) return 'fuggvenyek';
     return null;
 }
 
@@ -137,6 +140,7 @@ export function topicCompletionBadge(key: TopicProgressKey): BadgeId | null {
         case 'bizonyitas':
         case 'egyenletek':
             return 'bizonyitas_kesz';
+        case 'fuggvenyek': return 'fuggveny_kesz';
         default: return null;
     }
 }
