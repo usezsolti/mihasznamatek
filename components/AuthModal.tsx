@@ -6,7 +6,12 @@ import {
     type RegistrationProfile,
     validateRegistrationProfile,
 } from "../utils/registrationProfile";
-import { signInAsTestUser, TEST_LOGIN_EMAIL, TEST_LOGIN_PASSWORD } from "../utils/testLogin";
+import {
+    formatAuthError,
+    signInAsTestUser,
+    TEST_LOGIN_EMAIL,
+    TEST_LOGIN_PASSWORD,
+} from "../utils/testLogin";
 
 type AuthMode = "login" | "register";
 
@@ -39,11 +44,15 @@ function mapFirebaseError(code?: string): string {
         case "auth/account-exists-with-different-credential":
             return "Ez az e-mail cím már egy másik bejelentkezési móddal van regisztrálva.";
         case "auth/operation-not-allowed":
-            return "Ez a bejelentkezési mód jelenleg nem elérhető. Kapcsold be a Google providert a Firebase Console-ban.";
+            return "Ez a bejelentkezési mód ki van kapcsolva. Firebase Console → Authentication → Sign-in method: kapcsold be az Email/Password (és/vagy Anonymous) opciót.";
         case "auth/unauthorized-domain":
             return "Ez a domain nincs engedélyezve a Firebase-ben (Authorized domains).";
+        case "auth/network-request-failed":
+            return "Hálózati hiba — ellenőrizd az internetet / adblokkolót.";
+        case "auth/invalid-login-credentials":
+            return "Hibás e-mail cím vagy jelszó.";
         default:
-            return "Hiba történt. Kérjük, próbáld újra.";
+            return code ? `Hiba történt (${code}).` : "Hiba történt. Kérjük, próbáld újra.";
     }
 }
 
@@ -291,9 +300,9 @@ export default function AuthModal({
         setError("");
         setLoading(true);
         try {
-            await signInAsTestUser();
+            const result = await signInAsTestUser();
             setPassword("");
-            setEmail(TEST_LOGIN_EMAIL);
+            setEmail(result.email.includes("@") ? result.email : TEST_LOGIN_EMAIL);
             onClose();
             if (redirectTo === false) return;
             if (typeof redirectTo === "string" && redirectTo) {
@@ -303,10 +312,7 @@ export default function AuthModal({
             router.push("/erettsegi-felkeszules?mode=topics");
         } catch (err: any) {
             console.error(err);
-            setError(
-                mapFirebaseError(err?.code) +
-                    (err?.message && !err?.code ? ` ${err.message}` : "")
-            );
+            setError(formatAuthError(err) || mapFirebaseError(err?.code));
         } finally {
             setLoading(false);
         }

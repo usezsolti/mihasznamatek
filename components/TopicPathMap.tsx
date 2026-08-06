@@ -18,7 +18,7 @@ import {
     isLessonUnlocked,
     type PathNode,
 } from '../utils/topicPath';
-import { signInAsTestUser, TEST_LOGIN_EMAIL } from '../utils/testLogin';
+import { formatAuthError, signInAsTestUser, TEST_LOGIN_EMAIL } from '../utils/testLogin';
 
 interface Props {
     topicId: string;
@@ -61,7 +61,10 @@ export default function TopicPathMap({
                 attempts++;
             }
             const user = (window as any).firebase?.auth?.()?.currentUser || null;
-            setLoggedInEmail(user?.email || null);
+            const label = user
+                ? (user.email || user.displayName || (user.isAnonymous ? 'Teszt vendég (anonim)' : 'Bejelentkezve'))
+                : null;
+            setLoggedInEmail(label);
             setProgress(await loadUserPracticeProgress(user?.uid || null));
         } catch (e) {
             console.error('Path progress load:', e);
@@ -75,7 +78,10 @@ export default function TopicPathMap({
         const auth = (window as any).firebase?.auth?.();
         if (!auth) return;
         const unsub = auth.onAuthStateChanged((user: any) => {
-            setLoggedInEmail(user?.email || null);
+            const label = user
+                ? (user.email || user.displayName || (user.isAnonymous ? 'Teszt vendég (anonim)' : 'Bejelentkezve'))
+                : null;
+            setLoggedInEmail(label);
             void reload();
         });
         return () => unsub?.();
@@ -84,12 +90,12 @@ export default function TopicPathMap({
     const handleTestLogin = async () => {
         setTestLoading(true);
         try {
-            await signInAsTestUser();
-            showToast(`Bejelentkezve: ${TEST_LOGIN_EMAIL}`);
+            const result = await signInAsTestUser();
+            showToast(`Bejelentkezve: ${result.email}`);
             await reload();
         } catch (e: any) {
             console.error(e);
-            showToast(e?.message || 'Teszt belépés sikertelen');
+            showToast(formatAuthError(e));
         } finally {
             setTestLoading(false);
         }
