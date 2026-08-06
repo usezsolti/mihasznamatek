@@ -508,613 +508,117 @@ export default function Game() {
         }
     ];
 
+    // Abszolútértékes és gyökös kifejezések (emelt algebra munkalap 1–11)
+    const getAbsoluteRootPracticeQuestions = (): Question[] => [
+        {
+            question: `1. Értelmezési tartomány\n\nAdd meg a valós számok halmazának azt a legbővebb részhalmazát, amelyen az alábbi kifejezések értelmezhetők!\n\na) √(5 − 2x)\nb) 1 / √(3x + 6)\nc) √((x − 1)/(x + 4))\nd) √(x + 5) / (x² − 9)\n\nAdd meg:\n1) a) felső határát (zárt), 3 tizedesjegyre;\n2) b) alsó határát (nyílt);\n3) d) pozitív kizárt pontját!`,
+            answer: 2.5,
+            alternativeAnswer: -2,
+            thirdAnswer: 3,
+            type: 'multiplication',
+            expression: `a) x ≤ 5/2 = 2,5\nb) x > −2\nc) (−∞, −4) ∪ [1, ∞)\nd) x ≥ −5, x ≠ ±3`
+        },
+        {
+            question: `2. Egyszerű gyökös egyenletek\n\nOldd meg a valós számok halmazán!\n\na) √(x + 6) = x\nb) √(8 − 2x) = x + 1\nc) √(3x + 4) = x + 2\n\nAdd meg a), b) megoldását 3 tizedesjegyre, majd c) nagyobbik megoldását!`,
+            answer: 3,
+            alternativeAnswer: 1.317,
+            thirdAnswer: 0,
+            type: 'multiplication',
+            expression: `a) x = 3\nb) x = −2 + √11 ≈ 1,317\nc) x = −1 vagy x = 0`
+        },
+        {
+            question: `3. Két gyökös tagot tartalmazó egyenlet\n\nOldd meg a valós számok halmazán!\n\n√(2x + 9) − √(x + 1) = 2\n\nA megoldás során minden négyzetre emelés előtt írd fel az ekvivalens átalakításhoz szükséges feltételeket!\n\nAdd meg a két megoldást (tetszőleges sorrendben)!`,
+            answer: 0,
+            alternativeAnswer: 8,
+            type: 'multiplication',
+            expression: `√(2x+9) = 2 + √(x+1) → négyzetre emelés után x = 0 vagy x = 8`
+        },
+        {
+            question: `4. Gyökös egyenlőtlenségek\n\nOldd meg a valós számok halmazán!\n\na) √(3x − 2) ≤ 4\nb) √(x + 5) > x − 1\nc) Hány egész szám elégíti ki: √(20 − 2x) ≥ 2? — add meg inkább a megoldás felső határát (x ≤ …)!\n\nAdd meg a) alsó és felső határát 3 tizedesjegyre, majd c) felső határát!`,
+            answer: 0.667,
+            alternativeAnswer: 6,
+            thirdAnswer: 8,
+            type: 'multiplication',
+            expression: `a) 2/3 ≤ x ≤ 6\nb) −5 ≤ x < 4\nc) x ≤ 8`
+        },
+        {
+            question: `5. Abszolútértékes egyenletek\n\nOldd meg a valós számok halmazán!\n\na) |2x − 3| = x + 4\nb) |x + 2| = 3x − 1\nc) |x − 4| + |x + 1| = 11\n\nAdd meg a) két megoldását 3 tizedesjegyre, majd b) megoldását!`,
+            answer: 7,
+            alternativeAnswer: -0.333,
+            thirdAnswer: 1.5,
+            type: 'multiplication',
+            expression: `a) x = 7 vagy x = −1/3\nb) x = 3/2\nc) x = −4 vagy x = 7`
+        },
+        {
+            question: `5c. Abszolútértékes egyenlet\n\nOldd meg a valós számok halmazán!\n\n|x − 4| + |x + 1| = 11\n\nAdd meg a két megoldást (tetszőleges sorrendben)!`,
+            answer: -4,
+            alternativeAnswer: 7,
+            type: 'multiplication',
+            expression: `Esetszétválasztás: x = −4 vagy x = 7`
+        },
+        {
+            question: `6. Abszolútértékes egyenlőtlenségek\n\nOldd meg a valós számok halmazán!\n\na) |3x − 2| < 7\nb) |2x + 5| ≥ 9\nc) |x − 3| ≤ |x + 5|\n\nAdd meg a) alsó és felső határát 3 tizedesjegyre (nyílt), majd c) alsó határát (zárt)!`,
+            answer: -1.667,
+            alternativeAnswer: 3,
+            thirdAnswer: -1,
+            type: 'multiplication',
+            expression: `a) −5/3 < x < 3\nb) x ≤ −7 vagy x ≥ 2\nc) x ≥ −1`
+        },
+        {
+            question: `7. Esetszétválasztás\n\nOldd meg a valós számok halmazán!\n\n3|x| = 2x + 5\n\nA megoldást az alábbi két eset vizsgálatával végezd el: x ≥ 0 és x < 0.\n\nAdd meg a két megoldást (tetszőleges sorrendben)!`,
+            answer: 5,
+            alternativeAnswer: -1,
+            type: 'multiplication',
+            expression: `x ≥ 0: x = 5\nx < 0: x = −1`
+        },
+        {
+            question: `8. Másodfokú kifejezés abszolútértékben\n\nOldd meg a valós számok halmazán!\n\n|x² − 4x + 1| = 5\n\nAdd meg a két megoldást 3 tizedesjegyre (tetszőleges sorrendben)!`,
+            answer: 4.828,
+            alternativeAnswer: -0.828,
+            type: 'multiplication',
+            expression: `x² − 4x + 1 = ±5 → x = 2 ± 2√2 ≈ 4,828 és −0,828`
+        },
+        {
+            question: `9. Gyökös kifejezés és abszolútérték\n\nOldd meg a valós számok halmazán!\n\n√(x + 4) = |x − 2|\n\nElőször határozd meg az értelmezési tartományt, majd a négyzetre emelés után ellenőrizd a gyököket!\n\nAdd meg a két megoldást (tetszőleges sorrendben)!`,
+            answer: 0,
+            alternativeAnswer: 5,
+            type: 'multiplication',
+            expression: `x ≥ −4 → x = 0 vagy x = 5 (ellenőrzés: mindkettő jó)`
+        },
+        {
+            question: `10. Halmazok gyökös feltétellel\n\nH: pozitív egészek, amelyekre √(18 − x) ≥ 3.\nB: pozitív egészek b, amelyekre log_b 81 pozitív egész.\n\na) Határozd meg H-t!\nb) Határozd meg B-t!\nc) H ∩ B\nd) B ∖ H\n\nAdd meg |H|, |B|, |H ∩ B| értékét!`,
+            answer: 9,
+            alternativeAnswer: 3,
+            thirdAnswer: 2,
+            type: 'multiplication',
+            expression: `H = {1,…,9}, B = {3,9,81}\nH ∩ B = {3,9}, B ∖ H = {81}`
+        },
+        {
+            question: `11. Mihaszna-mesterfok\n\nOldd meg a valós számok halmazán!\n\na) √(x + 7) + √(11 − x) = 6\nb) |x + 1| = √(3x + 7)\n\nAdd meg a) megoldását, majd b) két megoldását (tetszőleges sorrendben)!`,
+            answer: 2,
+            alternativeAnswer: 3,
+            thirdAnswer: -2,
+            type: 'multiplication',
+            expression: `a) x = 2\nb) x = 3 vagy x = −2`
+        },
+        {
+            question: `11c–d. Mihaszna-mesterfok\n\nOldd meg a valós számok halmazán!\n\nc) √(x² − 4x + 7) = x − 1\nd) |x − 2| + |2x + 1| = 8\n\nAdd meg c) megoldását, majd d) két megoldását 3 tizedesjegyre!`,
+            answer: 3,
+            alternativeAnswer: -2.333,
+            thirdAnswer: 3,
+            type: 'multiplication',
+            expression: `c) x = 3\nd) x = −7/3 ≈ −2,333 vagy x = 3`
+        }
+    ];
+
     const generateErettsegiQuestionByTopicId = (topicId: string, level: string): Question | null => {
         // Érettségi témakör ID alapján feladat generálása
         const topicIdLower = topicId.toLowerCase();
 
-        // Abszolútérték, gyök
+        // Abszolútérték, gyök — munkalap feladatok
         if (topicIdLower.includes('abszolutertek') || topicIdLower.includes('gyok')) {
-            const levelLower = level.toLowerCase();
-            
-            // Emelt szint: abszolútértékes és gyökös egyenletek
-            if (levelLower.includes('emelt')) {
-                const questionType = Math.floor(Math.random() * 43); // 0-42 (43 típus)
-                
-                if (questionType === 0) {
-                    // Abszolútértékes egyenlet: |x - a| = b
-                    const a = Math.floor(Math.random() * 10) + 1;
-                    const b = Math.floor(Math.random() * 10) + 1;
-                    const solution1 = a + b;
-                    const solution2 = a - b;
-                    return {
-                        question: `|x - ${a}| = ${b}. Mennyi x?\n\nVálaszaidat 3 tizedesjegyre add meg!`,
-                        answer: Math.round(solution1 * 1000) / 1000,
-                        alternativeAnswer: Math.round(solution2 * 1000) / 1000,
-                        type: 'multiplication',
-                        expression: `|x - ${a}| = ${b} → x - ${a} = ±${b} → x = ${a} ± ${b} → x₁ = ${Math.round(solution1 * 1000) / 1000}, x₂ = ${Math.round(solution2 * 1000) / 1000}`
-                    };
-                } else if (questionType === 1) {
-                    // Gyökös egyenlet: √(x + a) = b
-                    const a = Math.floor(Math.random() * 10) + 1;
-                    const b = Math.floor(Math.random() * 5) + 2;
-                    const solution = b * b - a;
-                    return {
-                        question: `√(x + ${a}) = ${b}\n\nMennyi x?\n\nVálaszaidat 3 tizedesjegyre add meg!`,
-                        answer: Math.round(solution * 1000) / 1000,
-                        type: 'multiplication',
-                        expression: `√(x + ${a}) = ${b} → x + ${a} = ${b}² → x + ${a} = ${b * b} → x = ${Math.round(solution * 1000) / 1000}`
-                    };
-                } else if (questionType === 2) {
-                    // Abszolútértékes egyenlet négyzetes formában: |x² - a²| = b
-                    const a = Math.floor(Math.random() * 5) + 2;
-                    const b = Math.floor(Math.random() * 5) + 1;
-                    const aSquared = a * a;
-                    const solution1 = Math.sqrt(aSquared + b);
-                    const solution2 = -Math.sqrt(aSquared + b);
-                    const solution3 = aSquared > b ? Math.sqrt(aSquared - b) : null;
-                    const solution4 = aSquared > b ? -Math.sqrt(aSquared - b) : null;
-                    
-                    if (solution3 !== null && solution4 !== null) {
-                        return {
-                            question: `|x² - ${aSquared}| = ${b}\n\nMennyi x?\n\nVálaszaidat 3 tizedesjegyre add meg!`,
-                            answer: Math.round(solution1 * 1000) / 1000,
-                            alternativeAnswer: Math.round(solution2 * 1000) / 1000,
-                            thirdAnswer: Math.round(solution3 * 1000) / 1000,
-                            fourthAnswer: Math.round(solution4 * 1000) / 1000,
-                            type: 'multiplication',
-                            expression: `|x² - ${aSquared}| = ${b} → x² = ${aSquared} ± ${b} → x₁ = ${Math.round(solution1 * 1000) / 1000}, x₂ = ${Math.round(solution2 * 1000) / 1000}, x₃ = ${Math.round(solution3 * 1000) / 1000}, x₄ = ${Math.round(solution4 * 1000) / 1000}`
-                        };
-                    } else {
-                        return {
-                            question: `|x² - ${aSquared}| = ${b}\n\nMennyi x?\n\nVálaszaidat 3 tizedesjegyre add meg!`,
-                            answer: Math.round(solution1 * 1000) / 1000,
-                            alternativeAnswer: Math.round(solution2 * 1000) / 1000,
-                            type: 'multiplication',
-                            expression: `|x² - ${aSquared}| = ${b} → x² = ${aSquared} + ${b} → x₁ = ${Math.round(solution1 * 1000) / 1000}, x₂ = ${Math.round(solution2 * 1000) / 1000}`
-                        };
-                    }
-                } else if (questionType === 3) {
-                    // |x + a| = b
-                    const a = Math.floor(Math.random() * 10) + 1;
-                    const b = Math.floor(Math.random() * 10) + 1;
-                    const solution1 = b - a;
-                    const solution2 = -b - a;
-                    return {
-                        question: `|x + ${a}| = ${b}. Mennyi x?\n\nVálaszaidat 3 tizedesjegyre add meg!`,
-                        answer: Math.round(solution1 * 1000) / 1000,
-                        alternativeAnswer: Math.round(solution2 * 1000) / 1000,
-                        type: 'multiplication',
-                        expression: `|x + ${a}| = ${b} → x + ${a} = ±${b} → x = ±${b} - ${a} → x₁ = ${Math.round(solution1 * 1000) / 1000}, x₂ = ${Math.round(solution2 * 1000) / 1000}`
-                    };
-                } else if (questionType === 4) {
-                    // √(x - a) = b
-                    const a = Math.floor(Math.random() * 10) + 1;
-                    const b = Math.floor(Math.random() * 5) + 2;
-                    const solution = b * b + a;
-                    return {
-                        question: `√(x - ${a}) = ${b}\n\nMennyi x?\n\nVálaszaidat 3 tizedesjegyre add meg!`,
-                        answer: Math.round(solution * 1000) / 1000,
-                        type: 'multiplication',
-                        expression: `√(x - ${a}) = ${b} → x - ${a} = ${b}² → x - ${a} = ${b * b} → x = ${Math.round(solution * 1000) / 1000}`
-                    };
-                } else if (questionType === 5) {
-                    // |x - a| + |x - b| = c
-        const a = Math.floor(Math.random() * 5) + 1;
-                    const b = Math.floor(Math.random() * 5) + 6;
-                    const c = Math.abs(b - a) + 2;
-                    const solution1 = a - (c - Math.abs(b - a)) / 2;
-                    const solution2 = b + (c - Math.abs(b - a)) / 2;
-                    return {
-                        question: `|x - ${a}| + |x - ${b}| = ${c}. Mennyi x?\n\nVálaszaidat 3 tizedesjegyre add meg!`,
-                        answer: Math.round(solution1 * 1000) / 1000,
-                        alternativeAnswer: Math.round(solution2 * 1000) / 1000,
-                        type: 'multiplication',
-                        expression: `|x - ${a}| + |x - ${b}| = ${c} → x₁ = ${Math.round(solution1 * 1000) / 1000}, x₂ = ${Math.round(solution2 * 1000) / 1000}`
-                    };
-                } else if (questionType === 6) {
-                    // √(2x + a) = b
-                    const a = Math.floor(Math.random() * 10) + 1;
-                    const b = Math.floor(Math.random() * 5) + 2;
-                    const solution = (b * b - a) / 2;
-                    return {
-                        question: `√(2x + ${a}) = ${b}\n\nMennyi x?\n\nVálaszaidat 3 tizedesjegyre add meg!`,
-                        answer: Math.round(solution * 1000) / 1000,
-                        type: 'multiplication',
-                        expression: `√(2x + ${a}) = ${b} → 2x + ${a} = ${b}² → 2x = ${b * b} - ${a} → x = ${Math.round(solution * 1000) / 1000}`
-                    };
-                } else if (questionType === 7) {
-                    // |2x - a| = b
-                    const a = Math.floor(Math.random() * 10) + 1;
-                    const b = Math.floor(Math.random() * 10) + 1;
-                    const solution1 = (a + b) / 2;
-                    const solution2 = (a - b) / 2;
-                    return {
-                        question: `|2x - ${a}| = ${b}. Mennyi x?\n\nVálaszaidat 3 tizedesjegyre add meg!`,
-                        answer: Math.round(solution1 * 1000) / 1000,
-                        alternativeAnswer: Math.round(solution2 * 1000) / 1000,
-                        type: 'multiplication',
-                        expression: `|2x - ${a}| = ${b} → 2x - ${a} = ±${b} → 2x = ${a} ± ${b} → x₁ = ${Math.round(solution1 * 1000) / 1000}, x₂ = ${Math.round(solution2 * 1000) / 1000}`
-                    };
-                } else if (questionType === 8) {
-                    // √(3x - a) = b
-                    const a = Math.floor(Math.random() * 10) + 1;
-                    const b = Math.floor(Math.random() * 5) + 2;
-                    const solution = (b * b + a) / 3;
-                    return {
-                        question: `√(3x - ${a}) = ${b}\n\nMennyi x?\n\nVálaszaidat 3 tizedesjegyre add meg!`,
-                        answer: Math.round(solution * 1000) / 1000,
-                        type: 'multiplication',
-                        expression: `√(3x - ${a}) = ${b} → 3x - ${a} = ${b}² → 3x = ${b * b} + ${a} → x = ${Math.round(solution * 1000) / 1000}`
-                    };
-                } else if (questionType === 9) {
-                    // |3x + a| = b
-                    const a = Math.floor(Math.random() * 10) + 1;
-                    const b = Math.floor(Math.random() * 10) + 1;
-                    const solution1 = (b - a) / 3;
-                    const solution2 = (-b - a) / 3;
-                    return {
-                        question: `|3x + ${a}| = ${b}. Mennyi x?\n\nVálaszaidat 3 tizedesjegyre add meg!`,
-                        answer: Math.round(solution1 * 1000) / 1000,
-                        alternativeAnswer: Math.round(solution2 * 1000) / 1000,
-                        type: 'multiplication',
-                        expression: `|3x + ${a}| = ${b} → 3x + ${a} = ±${b} → 3x = ±${b} - ${a} → x₁ = ${Math.round(solution1 * 1000) / 1000}, x₂ = ${Math.round(solution2 * 1000) / 1000}`
-                    };
-                } else if (questionType === 10) {
-                    // √(x² + a) = b
-                    const a = Math.floor(Math.random() * 10) + 1;
-                    const b = Math.floor(Math.random() * 5) + 2;
-                    const solution1 = Math.sqrt(b * b - a);
-                    const solution2 = -Math.sqrt(b * b - a);
-                    if (b * b > a) {
-                        return {
-                            question: `√(x² + ${a}) = ${b}\n\nMennyi x?\n\nVálaszaidat 3 tizedesjegyre add meg!`,
-                            answer: Math.round(solution1 * 1000) / 1000,
-                            alternativeAnswer: Math.round(solution2 * 1000) / 1000,
-                            type: 'multiplication',
-                            expression: `√(x² + ${a}) = ${b} → x² + ${a} = ${b}² → x² = ${b * b} - ${a} → x₁ = ${Math.round(solution1 * 1000) / 1000}, x₂ = ${Math.round(solution2 * 1000) / 1000}`
-                        };
-                    }
-                } else if (questionType === 11) {
-                    // |x² + a| = b
-                    const a = Math.floor(Math.random() * 5) + 1;
-                    const b = Math.floor(Math.random() * 5) + a + 1;
-                    const solution1 = Math.sqrt(b - a);
-                    const solution2 = -Math.sqrt(b - a);
-                    return {
-                        question: `|x² + ${a}| = ${b}. Mennyi x?\n\nVálaszaidat 3 tizedesjegyre add meg!`,
-                        answer: Math.round(solution1 * 1000) / 1000,
-                        alternativeAnswer: Math.round(solution2 * 1000) / 1000,
-                        type: 'multiplication',
-                        expression: `|x² + ${a}| = ${b} → x² + ${a} = ${b} → x² = ${b - a} → x₁ = ${Math.round(solution1 * 1000) / 1000}, x₂ = ${Math.round(solution2 * 1000) / 1000}`
-                    };
-                } else if (questionType === 12) {
-                    // √(4x + a) = b
-                    const a = Math.floor(Math.random() * 10) + 1;
-                    const b = Math.floor(Math.random() * 5) + 2;
-                    const solution = (b * b - a) / 4;
-                    return {
-                        question: `√(4x + ${a}) = ${b}\n\nMennyi x?\n\nVálaszaidat 3 tizedesjegyre add meg!`,
-                        answer: Math.round(solution * 1000) / 1000,
-                        type: 'multiplication',
-                        expression: `√(4x + ${a}) = ${b} → 4x + ${a} = ${b}² → 4x = ${b * b} - ${a} → x = ${Math.round(solution * 1000) / 1000}`
-                    };
-                } else if (questionType === 13) {
-                    // |4x - a| = b
-                    const a = Math.floor(Math.random() * 10) + 1;
-                    const b = Math.floor(Math.random() * 10) + 1;
-                    const solution1 = (a + b) / 4;
-                    const solution2 = (a - b) / 4;
-                    return {
-                        question: `|4x - ${a}| = ${b}. Mennyi x?\n\nVálaszaidat 3 tizedesjegyre add meg!`,
-                        answer: Math.round(solution1 * 1000) / 1000,
-                        alternativeAnswer: Math.round(solution2 * 1000) / 1000,
-                        type: 'multiplication',
-                        expression: `|4x - ${a}| = ${b} → 4x - ${a} = ±${b} → 4x = ${a} ± ${b} → x₁ = ${Math.round(solution1 * 1000) / 1000}, x₂ = ${Math.round(solution2 * 1000) / 1000}`
-                    };
-                } else if (questionType === 14) {
-                    // √(5x - a) = b
-                    const a = Math.floor(Math.random() * 10) + 1;
-                    const b = Math.floor(Math.random() * 5) + 2;
-                    const solution = (b * b + a) / 5;
-                    return {
-                        question: `√(5x - ${a}) = ${b}\n\nMennyi x?\n\nVálaszaidat 3 tizedesjegyre add meg!`,
-                        answer: Math.round(solution * 1000) / 1000,
-                        type: 'multiplication',
-                        expression: `√(5x - ${a}) = ${b} → 5x - ${a} = ${b}² → 5x = ${b * b} + ${a} → x = ${Math.round(solution * 1000) / 1000}`
-                    };
-                } else if (questionType === 15) {
-                    // |5x + a| = b
-                    const a = Math.floor(Math.random() * 10) + 1;
-                    const b = Math.floor(Math.random() * 10) + 1;
-                    const solution1 = (b - a) / 5;
-                    const solution2 = (-b - a) / 5;
-                    return {
-                        question: `|5x + ${a}| = ${b}. Mennyi x?\n\nVálaszaidat 3 tizedesjegyre add meg!`,
-                        answer: Math.round(solution1 * 1000) / 1000,
-                        alternativeAnswer: Math.round(solution2 * 1000) / 1000,
-                        type: 'multiplication',
-                        expression: `|5x + ${a}| = ${b} → 5x + ${a} = ±${b} → 5x = ±${b} - ${a} → x₁ = ${Math.round(solution1 * 1000) / 1000}, x₂ = ${Math.round(solution2 * 1000) / 1000}`
-                    };
-                } else if (questionType === 16) {
-                    // |x - a| = |x - b|
-                    const a = Math.floor(Math.random() * 5) + 1;
-                    const b = Math.floor(Math.random() * 5) + 6;
-                    const solution = (a + b) / 2;
-                    return {
-                        question: `|x - ${a}| = |x - ${b}|. Mennyi x?\n\nVálaszaidat 3 tizedesjegyre add meg!`,
-                        answer: Math.round(solution * 1000) / 1000,
-                        type: 'multiplication',
-                        expression: `|x - ${a}| = |x - ${b}| → x - ${a} = ±(x - ${b}) → x = (${a} + ${b}) / 2 = ${Math.round(solution * 1000) / 1000}`
-                    };
-                } else if (questionType === 17) {
-                    // √(x + a) + √(x + b) = c (egyszerűsített)
-                    const a = Math.floor(Math.random() * 5) + 1;
-                    const b = Math.floor(Math.random() * 5) + 1;
-                    const x = Math.floor(Math.random() * 10) + 5;
-                    const sqrt1 = Math.floor(Math.sqrt(x + a));
-                    const sqrt2 = Math.floor(Math.sqrt(x + b));
-                    const c = sqrt1 + sqrt2;
-                    return {
-                        question: `√(x + ${a}) + √(x + ${b}) = ${c}. Ha x = ${x}, akkor √(x + ${a}) = ?\n\nVálaszaidat 3 tizedesjegyre add meg!`,
-                        answer: Math.round(Math.sqrt(x + a) * 1000) / 1000,
-                        type: 'multiplication',
-                        expression: `√(${x} + ${a}) = √${x + a} = ${Math.round(Math.sqrt(x + a) * 1000) / 1000}`
-                    };
-                } else if (questionType === 18) {
-                    // |x| = a
-                    const a = Math.floor(Math.random() * 10) + 1;
-                    return {
-                        question: `|x| = ${a}. Mennyi x?\n\nVálaszaidat 3 tizedesjegyre add meg!`,
-                        answer: Math.round(a * 1000) / 1000,
-                        alternativeAnswer: Math.round(-a * 1000) / 1000,
-                        type: 'multiplication',
-                        expression: `|x| = ${a} → x = ±${a} → x₁ = ${a}, x₂ = ${-a}`
-                    };
-                } else if (questionType === 19) {
-                    // √(x) = a
-                    const a = Math.floor(Math.random() * 5) + 2;
-                    const solution = a * a;
-                    return {
-                        question: `√x = ${a}. Mennyi x?\n\nVálaszaidat 3 tizedesjegyre add meg!`,
-                        answer: Math.round(solution * 1000) / 1000,
-                        type: 'multiplication',
-                        expression: `√x = ${a} → x = ${a}² = ${solution}`
-                    };
-                } else if (questionType === 20) {
-                    // |x²| = a
-                    const a = Math.floor(Math.random() * 10) + 1;
-                    const solution1 = Math.sqrt(a);
-                    const solution2 = -Math.sqrt(a);
-                    return {
-                        question: `|x²| = ${a}. Mennyi x?\n\nVálaszaidat 3 tizedesjegyre add meg!`,
-                        answer: Math.round(solution1 * 1000) / 1000,
-                        alternativeAnswer: Math.round(solution2 * 1000) / 1000,
-                        type: 'multiplication',
-                        expression: `|x²| = ${a} → x² = ${a} → x₁ = ${Math.round(solution1 * 1000) / 1000}, x₂ = ${Math.round(solution2 * 1000) / 1000}`
-                    };
-                } else if (questionType === 21) {
-                    // √(2x + a) + 1 = b
-                    const a = Math.floor(Math.random() * 10) + 1;
-                    const b = Math.floor(Math.random() * 5) + 3;
-                    const solution = ((b - 1) * (b - 1) - a) / 2;
-                    return {
-                        question: `√(2x + ${a}) + 1 = ${b}. Mennyi x?\n\nVálaszaidat 3 tizedesjegyre add meg!`,
-                        answer: Math.round(solution * 1000) / 1000,
-                        type: 'multiplication',
-                        expression: `√(2x + ${a}) + 1 = ${b} → √(2x + ${a}) = ${b - 1} → 2x + ${a} = ${(b - 1) * (b - 1)} → x = ${Math.round(solution * 1000) / 1000}`
-                    };
-                } else if (questionType === 22) {
-                    // |x - a| + |x + a| = b
-                    const a = Math.floor(Math.random() * 5) + 2;
-                    const b = a * 2 + 2;
-                    const solution1 = b / 2 - a;
-                    const solution2 = -b / 2 + a;
-                    return {
-                        question: `|x - ${a}| + |x + ${a}| = ${b}. Mennyi x?\n\nVálaszaidat 3 tizedesjegyre add meg!`,
-                        answer: Math.round(solution1 * 1000) / 1000,
-                        alternativeAnswer: Math.round(solution2 * 1000) / 1000,
-                        type: 'multiplication',
-                        expression: `|x - ${a}| + |x + ${a}| = ${b} → x₁ = ${Math.round(solution1 * 1000) / 1000}, x₂ = ${Math.round(solution2 * 1000) / 1000}`
-                    };
-                } else if (questionType === 23) {
-                    // √(x² - a) = b
-                    const a = Math.floor(Math.random() * 5) + 1;
-                    const b = Math.floor(Math.random() * 5) + 2;
-                    const solution1 = Math.sqrt(b * b + a);
-                    const solution2 = -Math.sqrt(b * b + a);
-                    return {
-                        question: `√(x² - ${a}) = ${b}\n\nMennyi x?\n\nVálaszaidat 3 tizedesjegyre add meg!`,
-                        answer: Math.round(solution1 * 1000) / 1000,
-                        alternativeAnswer: Math.round(solution2 * 1000) / 1000,
-                        type: 'multiplication',
-                        expression: `√(x² - ${a}) = ${b} → x² - ${a} = ${b}² → x² = ${b * b} + ${a} → x₁ = ${Math.round(solution1 * 1000) / 1000}, x₂ = ${Math.round(solution2 * 1000) / 1000}`
-                    };
-                } else if (questionType === 24) {
-                    // |x - a| = x + b
-                    const a = Math.floor(Math.random() * 5) + 2;
-                    const b = Math.floor(Math.random() * 3) + 1;
-                    const solution = (a - b) / 2;
-                    if (solution > 0) {
-                        return {
-                            question: `|x - ${a}| = x + ${b}. Mennyi x?\n\nVálaszaidat 3 tizedesjegyre add meg!`,
-                            answer: Math.round(solution * 1000) / 1000,
-                            type: 'multiplication',
-                            expression: `|x - ${a}| = x + ${b} → x - ${a} = ±(x + ${b}) → x = (${a} - ${b}) / 2 = ${Math.round(solution * 1000) / 1000}`
-                        };
-                    }
-                } else if (questionType === 25) {
-                    // √(6x + a) = b
-                    const a = Math.floor(Math.random() * 10) + 1;
-                    const b = Math.floor(Math.random() * 5) + 2;
-                    const solution = (b * b - a) / 6;
-                    return {
-                        question: `√(6x + ${a}) = ${b}\n\nMennyi x?\n\nVálaszaidat 3 tizedesjegyre add meg!`,
-                        answer: Math.round(solution * 1000) / 1000,
-                        type: 'multiplication',
-                        expression: `√(6x + ${a}) = ${b} → 6x + ${a} = ${b}² → 6x = ${b * b} - ${a} → x = ${Math.round(solution * 1000) / 1000}`
-                    };
-                } else if (questionType === 26) {
-                    // |6x - a| = b
-                    const a = Math.floor(Math.random() * 10) + 1;
-                    const b = Math.floor(Math.random() * 10) + 1;
-                    const solution1 = (a + b) / 6;
-                    const solution2 = (a - b) / 6;
-                    return {
-                        question: `|6x - ${a}| = ${b}. Mennyi x?\n\nVálaszaidat 3 tizedesjegyre add meg!`,
-                        answer: Math.round(solution1 * 1000) / 1000,
-                        alternativeAnswer: Math.round(solution2 * 1000) / 1000,
-                        type: 'multiplication',
-                        expression: `|6x - ${a}| = ${b} → 6x - ${a} = ±${b} → 6x = ${a} ± ${b} → x₁ = ${Math.round(solution1 * 1000) / 1000}, x₂ = ${Math.round(solution2 * 1000) / 1000}`
-                    };
-                } else if (questionType === 27) {
-                    // √(7x - a) = b
-                    const a = Math.floor(Math.random() * 10) + 1;
-                    const b = Math.floor(Math.random() * 5) + 2;
-                    const solution = (b * b + a) / 7;
-                    return {
-                        question: `√(7x - ${a}) = ${b}\n\nMennyi x?\n\nVálaszaidat 3 tizedesjegyre add meg!`,
-                        answer: Math.round(solution * 1000) / 1000,
-                        type: 'multiplication',
-                        expression: `√(7x - ${a}) = ${b} → 7x - ${a} = ${b}² → 7x = ${b * b} + ${a} → x = ${Math.round(solution * 1000) / 1000}`
-                    };
-                } else if (questionType === 28) {
-                    // |7x + a| = b
-                    const a = Math.floor(Math.random() * 10) + 1;
-                    const b = Math.floor(Math.random() * 10) + 1;
-                    const solution1 = (b - a) / 7;
-                    const solution2 = (-b - a) / 7;
-                    return {
-                        question: `|7x + ${a}| = ${b}. Mennyi x?\n\nVálaszaidat 3 tizedesjegyre add meg!`,
-                        answer: Math.round(solution1 * 1000) / 1000,
-                        alternativeAnswer: Math.round(solution2 * 1000) / 1000,
-                        type: 'multiplication',
-                        expression: `|7x + ${a}| = ${b} → 7x + ${a} = ±${b} → 7x = ±${b} - ${a} → x₁ = ${Math.round(solution1 * 1000) / 1000}, x₂ = ${Math.round(solution2 * 1000) / 1000}`
-                    };
-                } else if (questionType === 29) {
-                    // √(8x + a) = b
-                    const a = Math.floor(Math.random() * 10) + 1;
-                    const b = Math.floor(Math.random() * 5) + 2;
-                    const solution = (b * b - a) / 8;
-                    return {
-                        question: `√(8x + ${a}) = ${b}\n\nMennyi x?\n\nVálaszaidat 3 tizedesjegyre add meg!`,
-                        answer: Math.round(solution * 1000) / 1000,
-                        type: 'multiplication',
-                        expression: `√(8x + ${a}) = ${b} → 8x + ${a} = ${b}² → 8x = ${b * b} - ${a} → x = ${Math.round(solution * 1000) / 1000}`
-                    };
-                } else if (questionType === 30) {
-                    // |8x - a| = b
-                    const a = Math.floor(Math.random() * 10) + 1;
-                    const b = Math.floor(Math.random() * 10) + 1;
-                    const solution1 = (a + b) / 8;
-                    const solution2 = (a - b) / 8;
-                    return {
-                        question: `|8x - ${a}| = ${b}. Mennyi x?\n\nVálaszaidat 3 tizedesjegyre add meg!`,
-                        answer: Math.round(solution1 * 1000) / 1000,
-                        alternativeAnswer: Math.round(solution2 * 1000) / 1000,
-                        type: 'multiplication',
-                        expression: `|8x - ${a}| = ${b} → 8x - ${a} = ±${b} → 8x = ${a} ± ${b} → x₁ = ${Math.round(solution1 * 1000) / 1000}, x₂ = ${Math.round(solution2 * 1000) / 1000}`
-                    };
-                } else if (questionType === 31) {
-                    // √(9x - a) = b
-                    const a = Math.floor(Math.random() * 10) + 1;
-                    const b = Math.floor(Math.random() * 5) + 2;
-                    const solution = (b * b + a) / 9;
-                    return {
-                        question: `√(9x - ${a}) = ${b}\n\nMennyi x?\n\nVálaszaidat 3 tizedesjegyre add meg!`,
-                        answer: Math.round(solution * 1000) / 1000,
-                        type: 'multiplication',
-                        expression: `√(9x - ${a}) = ${b} → 9x - ${a} = ${b}² → 9x = ${b * b} + ${a} → x = ${Math.round(solution * 1000) / 1000}`
-                    };
-                } else if (questionType === 32) {
-                    // |9x + a| = b
-                    const a = Math.floor(Math.random() * 10) + 1;
-                    const b = Math.floor(Math.random() * 10) + 1;
-                    const solution1 = (b - a) / 9;
-                    const solution2 = (-b - a) / 9;
-                    return {
-                        question: `|9x + ${a}| = ${b}. Mennyi x?\n\nVálaszaidat 3 tizedesjegyre add meg!`,
-                        answer: Math.round(solution1 * 1000) / 1000,
-                        alternativeAnswer: Math.round(solution2 * 1000) / 1000,
-                        type: 'multiplication',
-                        expression: `|9x + ${a}| = ${b} → 9x + ${a} = ±${b} → 9x = ±${b} - ${a} → x₁ = ${Math.round(solution1 * 1000) / 1000}, x₂ = ${Math.round(solution2 * 1000) / 1000}`
-                    };
-                } else if (questionType === 33) {
-                    // √(10x + a) = b
-                    const a = Math.floor(Math.random() * 10) + 1;
-                    const b = Math.floor(Math.random() * 5) + 2;
-                    const solution = (b * b - a) / 10;
-                    return {
-                        question: `√(10x + ${a}) = ${b}\n\nMennyi x?\n\nVálaszaidat 3 tizedesjegyre add meg!`,
-                        answer: Math.round(solution * 1000) / 1000,
-                        type: 'multiplication',
-                        expression: `√(10x + ${a}) = ${b} → 10x + ${a} = ${b}² → 10x = ${b * b} - ${a} → x = ${Math.round(solution * 1000) / 1000}`
-                    };
-                } else if (questionType === 34) {
-                    // |10x - a| = b
-                    const a = Math.floor(Math.random() * 10) + 1;
-                    const b = Math.floor(Math.random() * 10) + 1;
-                    const solution1 = (a + b) / 10;
-                    const solution2 = (a - b) / 10;
-                    return {
-                        question: `|10x - ${a}| = ${b}. Mennyi x?\n\nVálaszaidat 3 tizedesjegyre add meg!`,
-                        answer: Math.round(solution1 * 1000) / 1000,
-                        alternativeAnswer: Math.round(solution2 * 1000) / 1000,
-                        type: 'multiplication',
-                        expression: `|10x - ${a}| = ${b} → 10x - ${a} = ±${b} → 10x = ${a} ± ${b} → x₁ = ${Math.round(solution1 * 1000) / 1000}, x₂ = ${Math.round(solution2 * 1000) / 1000}`
-                    };
-                } else if (questionType === 35) {
-                    // √(x + a) - √(x - b) = c (egyszerűsített)
-                    const a = Math.floor(Math.random() * 5) + 5;
-                    const b = Math.floor(Math.random() * 3) + 1;
-                    const x = Math.floor(Math.random() * 10) + b + 1;
-                    const sqrt1 = Math.floor(Math.sqrt(x + a));
-                    const sqrt2 = Math.floor(Math.sqrt(x - b));
-                    const c = sqrt1 - sqrt2;
-                    return {
-                        question: `√(x + ${a}) - √(x - ${b}) = ${c}. Ha x = ${x}, akkor √(x + ${a}) = ?\n\nVálaszaidat 3 tizedesjegyre add meg!`,
-                        answer: Math.round(Math.sqrt(x + a) * 1000) / 1000,
-                        type: 'multiplication',
-                        expression: `√(${x} + ${a}) = √${x + a} = ${Math.round(Math.sqrt(x + a) * 1000) / 1000}`
-                    };
-                } else if (questionType === 36) {
-                    // |x - a| - |x - b| = c
-                    const a = Math.floor(Math.random() * 5) + 1;
-                    const b = Math.floor(Math.random() * 5) + 6;
-                    const c = 2;
-                    const solution = (a + b - c) / 2;
-                    return {
-                        question: `|x - ${a}| - |x - ${b}| = ${c}. Mennyi x?\n\nVálaszaidat 3 tizedesjegyre add meg!`,
-                        answer: Math.round(solution * 1000) / 1000,
-                        type: 'multiplication',
-                        expression: `|x - ${a}| - |x - ${b}| = ${c} → x = (${a} + ${b} - ${c}) / 2 = ${Math.round(solution * 1000) / 1000}`
-                    };
-                } else if (questionType === 37) {
-                    // √(ax + b) = c (általános)
-                    const a = Math.floor(Math.random() * 5) + 2;
-                    const b = Math.floor(Math.random() * 10) + 1;
-                    const c = Math.floor(Math.random() * 5) + 2;
-                    const solution = (c * c - b) / a;
-                    return {
-                        question: `√(${a}x + ${b}) = ${c}. Mennyi x?\n\nVálaszaidat 3 tizedesjegyre add meg!`,
-                        answer: Math.round(solution * 1000) / 1000,
-                        type: 'multiplication',
-                        expression: `√(${a}x + ${b}) = ${c} → ${a}x + ${b} = ${c}² → ${a}x = ${c * c} - ${b} → x = ${Math.round(solution * 1000) / 1000}`
-                    };
-                } else if (questionType === 38) {
-                    // |ax - b| = c (általános)
-                    const a = Math.floor(Math.random() * 5) + 2;
-                    const b = Math.floor(Math.random() * 10) + 1;
-                    const c = Math.floor(Math.random() * 10) + 1;
-                    const solution1 = (b + c) / a;
-                    const solution2 = (b - c) / a;
-                    return {
-                        question: `|${a}x - ${b}| = ${c}. Mennyi x?\n\nVálaszaidat 3 tizedesjegyre add meg!`,
-                        answer: Math.round(solution1 * 1000) / 1000,
-                        alternativeAnswer: Math.round(solution2 * 1000) / 1000,
-                        type: 'multiplication',
-                        expression: `|${a}x - ${b}| = ${c} → ${a}x - ${b} = ±${c} → ${a}x = ${b} ± ${c} → x₁ = ${Math.round(solution1 * 1000) / 1000}, x₂ = ${Math.round(solution2 * 1000) / 1000}`
-                    };
-                } else if (questionType === 39) {
-                    // √(ax - b) = c (általános)
-                    const a = Math.floor(Math.random() * 5) + 2;
-                    const b = Math.floor(Math.random() * 10) + 1;
-                    const c = Math.floor(Math.random() * 5) + 2;
-                    const solution = (c * c + b) / a;
-                    return {
-                        question: `√(${a}x - ${b}) = ${c}. Mennyi x?\n\nVálaszaidat 3 tizedesjegyre add meg!`,
-                        answer: Math.round(solution * 1000) / 1000,
-                        type: 'multiplication',
-                        expression: `√(${a}x - ${b}) = ${c} → ${a}x - ${b} = ${c}² → ${a}x = ${c * c} + ${b} → x = ${Math.round(solution * 1000) / 1000}`
-                    };
-                } else if (questionType === 40) {
-                    // |ax + b| = c (általános)
-                    const a = Math.floor(Math.random() * 5) + 2;
-                    const b = Math.floor(Math.random() * 10) + 1;
-                    const c = Math.floor(Math.random() * 10) + 1;
-                    const solution1 = (c - b) / a;
-                    const solution2 = (-c - b) / a;
-                    return {
-                        question: `|${a}x + ${b}| = ${c}. Mennyi x?\n\nVálaszaidat 3 tizedesjegyre add meg!`,
-                        answer: Math.round(solution1 * 1000) / 1000,
-                        alternativeAnswer: Math.round(solution2 * 1000) / 1000,
-                        type: 'multiplication',
-                        expression: `|${a}x + ${b}| = ${c} → ${a}x + ${b} = ±${c} → ${a}x = ±${c} - ${b} → x₁ = ${Math.round(solution1 * 1000) / 1000}, x₂ = ${Math.round(solution2 * 1000) / 1000}`
-                    };
-                } else if (questionType === 41) {
-                    // |x² - ax| = b
-                    const a = Math.floor(Math.random() * 5) + 2;
-                    const b = Math.floor(Math.random() * 5) + 1;
-                    const solution1 = (a + Math.sqrt(a * a + 4 * b)) / 2;
-                    const solution2 = (a - Math.sqrt(a * a + 4 * b)) / 2;
-                    const solution3 = (-a + Math.sqrt(a * a + 4 * b)) / 2;
-                    const solution4 = (-a - Math.sqrt(a * a + 4 * b)) / 2;
-                    return {
-                        question: `|x² - ${a}x| = ${b}. Mennyi x?\n\nVálaszaidat 3 tizedesjegyre add meg!`,
-                        answer: Math.round(solution1 * 1000) / 1000,
-                        alternativeAnswer: Math.round(solution2 * 1000) / 1000,
-                        thirdAnswer: Math.round(solution3 * 1000) / 1000,
-                        fourthAnswer: Math.round(solution4 * 1000) / 1000,
-                        type: 'multiplication',
-                        expression: `|x² - ${a}x| = ${b} → x(x - ${a}) = ±${b} → x₁ = ${Math.round(solution1 * 1000) / 1000}, x₂ = ${Math.round(solution2 * 1000) / 1000}, x₃ = ${Math.round(solution3 * 1000) / 1000}, x₄ = ${Math.round(solution4 * 1000) / 1000}`
-                    };
-                } else {
-                    // |x² + ax| = b
-                    const a = Math.floor(Math.random() * 5) + 2;
-                    const b = Math.floor(Math.random() * 5) + 1;
-                    const solution1 = (-a + Math.sqrt(a * a + 4 * b)) / 2;
-                    const solution2 = (-a - Math.sqrt(a * a + 4 * b)) / 2;
-                    const solution3 = (a + Math.sqrt(a * a - 4 * b)) / 2;
-                    const solution4 = (a - Math.sqrt(a * a - 4 * b)) / 2;
-                    if (a * a >= 4 * b) {
-                        return {
-                            question: `|x² + ${a}x| = ${b}. Mennyi x?\n\nVálaszaidat 3 tizedesjegyre add meg!`,
-                            answer: Math.round(solution1 * 1000) / 1000,
-                            alternativeAnswer: Math.round(solution2 * 1000) / 1000,
-                            thirdAnswer: Math.round(solution3 * 1000) / 1000,
-                            fourthAnswer: Math.round(solution4 * 1000) / 1000,
-                            type: 'multiplication',
-                            expression: `|x² + ${a}x| = ${b} → x(x + ${a}) = ±${b} → x₁ = ${Math.round(solution1 * 1000) / 1000}, x₂ = ${Math.round(solution2 * 1000) / 1000}, x₃ = ${Math.round(solution3 * 1000) / 1000}, x₄ = ${Math.round(solution4 * 1000) / 1000}`
-                        };
-                    } else {
-                        return {
-                            question: `|x² + ${a}x| = ${b}. Mennyi x?\n\nVálaszaidat 3 tizedesjegyre add meg!`,
-                            answer: Math.round(solution1 * 1000) / 1000,
-                            alternativeAnswer: Math.round(solution2 * 1000) / 1000,
-                            type: 'multiplication',
-                            expression: `|x² + ${a}x| = ${b} → x(x + ${a}) = ±${b} → x₁ = ${Math.round(solution1 * 1000) / 1000}, x₂ = ${Math.round(solution2 * 1000) / 1000}`
-                        };
-                    }
-                }
-            } else {
-                // Közép szint: abszolútértékes és gyökös egyenletek
-                const questionType = Math.floor(Math.random() * 15);
-                
-                if (questionType < 8) {
-                    // Abszolútértékes egyenlet: |x - a| = b
-                    const a = Math.floor(Math.random() * 10) + 1;
-                    const b = Math.floor(Math.random() * 10) + 1;
-                    const solution1 = a + b;
-                    const solution2 = a - b;
-                    return {
-                        question: `|x - ${a}| = ${b}. Mennyi x?\n\nVálaszaidat 3 tizedesjegyre add meg!`,
-                        answer: Math.round(solution1 * 1000) / 1000,
-                        alternativeAnswer: Math.round(solution2 * 1000) / 1000,
-                        type: 'multiplication',
-                        expression: `|x - ${a}| = ${b} → x - ${a} = ±${b} → x = ${a} ± ${b} → x₁ = ${Math.round(solution1 * 1000) / 1000}, x₂ = ${Math.round(solution2 * 1000) / 1000}`
-                    };
-                } else {
-                    // Gyökös egyenlet: √(x + a) = b
-                    const a = Math.floor(Math.random() * 10) + 1;
-                    const b = Math.floor(Math.random() * 5) + 2;
-                    const solution = b * b - a;
-                    return {
-                        question: `√(x + ${a}) = ${b}\n\nMennyi x?\n\nVálaszaidat 3 tizedesjegyre add meg!`,
-                        answer: Math.round(solution * 1000) / 1000,
-                        type: 'multiplication',
-                        expression: `√(x + ${a}) = ${b} → x + ${a} = ${b}² → x + ${a} = ${b * b} → x = ${Math.round(solution * 1000) / 1000}`
-                    };
-                }
-            }
+            const list = getAbsoluteRootPracticeQuestions();
+            return list[Math.floor(Math.random() * list.length)];
         }
         // Egyenletek, egyenlőtlenségek
         else if (topicIdLower.includes('egyenletek') || topicIdLower.includes('egyenlotlenseg')) {
@@ -4110,16 +3614,23 @@ Teljes megoldás:
     const generateErettsegiQuestionsByTopic = (topicId: string, level: string) => {
         setIsErettsegiMode(true);
         
-        // Paraméter / exponenciális-logaritmus: fix munkalap feladatok
+        // Fix munkalap feladatok: paraméter / exponenciális-logaritmus / abszolútérték-gyök
         const topicLower = topicId.toLowerCase();
         if (topicLower.includes('parameter') || topicLower.includes('paramet')
-            || topicLower.includes('exponencialis') || topicLower.includes('logaritmus')) {
-            const list = (topicLower.includes('parameter') || topicLower.includes('paramet'))
-                ? getParameterPracticeQuestions()
-                : getExponentialLogPracticeQuestions();
-            const prefix = (topicLower.includes('parameter') || topicLower.includes('paramet'))
-                ? 'erettsegi_parameter'
-                : 'erettsegi_explog';
+            || topicLower.includes('exponencialis') || topicLower.includes('logaritmus')
+            || topicLower.includes('abszolutertek') || topicLower.includes('gyok')) {
+            let list: Question[];
+            let prefix: string;
+            if (topicLower.includes('parameter') || topicLower.includes('paramet')) {
+                list = getParameterPracticeQuestions();
+                prefix = 'erettsegi_parameter';
+            } else if (topicLower.includes('abszolutertek') || topicLower.includes('gyok')) {
+                list = getAbsoluteRootPracticeQuestions();
+                prefix = 'erettsegi_absroot';
+            } else {
+                list = getExponentialLogPracticeQuestions();
+                prefix = 'erettsegi_explog';
+            }
             const questions = list.map((q, i) => ({
                 ...q,
                 id: `${prefix}_${i + 1}`,

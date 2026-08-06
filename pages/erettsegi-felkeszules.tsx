@@ -179,7 +179,7 @@ export default function ErettsegiFelkeszules() {
             title: 'Abszolútérték, gyök',
             icon: '|√',
             color: '#ffd700',
-            description: 'Haladó abszolútérték és gyökvonás feladatok'
+            description: 'Abszolútértékes és gyökös egyenletek, egyenlőtlenségek, mesterfeladatok'
         },
         {
             id: 'bizonyitasok',
