@@ -686,9 +686,9 @@ export default function Dashboard() {
 
     return (
         <div className="dashboard-container modern-theme">
-            {/* Navigation */}
+            {/* Navigation: dashboard fülek + főoldali menü */}
             <div className="top-nav">
-                <nav className="nav-tabs">
+                <nav className="nav-tabs" aria-label="Dashboard">
                     <button
                         className={`nav-tab ${activeTab === 'tanulas' ? 'active' : ''}`}
                         onClick={() => switchTab('tanulas')}
@@ -713,26 +713,34 @@ export default function Dashboard() {
                             Admin{pendingBookings.length > 0 ? ` (${pendingBookings.length})` : ''}
                         </button>
                     )}
-                    <button
-                        type="button"
-                        className="nav-tab"
-                        onClick={() => {
-                            window.location.href = '/';
-                        }}
-                    >
+                    <span className="nav-tabs-divider" aria-hidden />
+                    <Link href="/" className="nav-tab">
                         <i className="nav-icon">🏠</i>
                         Kezdőlap
-                    </button>
-                    <button
-                        type="button"
-                        className="nav-tab"
-                        onClick={() => {
-                            window.location.href = '/#contact';
-                        }}
-                    >
+                    </Link>
+                    <a href="/#about" className="nav-tab">
+                        Rólam
+                    </a>
+                    <a href="/#courses" className="nav-tab">
+                        Kiket vállalok?
+                    </a>
+                    <a href="/#testimonials" className="nav-tab">
+                        Vélemények
+                    </a>
+                    <a href="/#pricing" className="nav-tab">
+                        Ár
+                    </a>
+                    <Link href="/booking" className="nav-tab">
+                        <i className="nav-icon">📅</i>
+                        Időpontfoglalás
+                    </Link>
+                    <a href="/#contact" className="nav-tab">
                         <i className="nav-icon">📞</i>
                         Kapcsolat
-                    </button>
+                    </a>
+                    <Link href="/workout" className="nav-tab">
+                        Személyi edzés
+                    </Link>
                 </nav>
             </div>
 

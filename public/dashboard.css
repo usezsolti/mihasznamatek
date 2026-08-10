@@ -388,6 +388,8 @@ header .theme-toggler span.active {
     justify-content: flex-end;
     padding: 0 3rem;
     color: var(--color-info);
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
 }
 
 .nav-tabs {
@@ -410,6 +412,21 @@ header .theme-toggler span.active {
     color: var(--color-info);
     cursor: pointer;
     font-family: 'Poppins', sans-serif;
+    text-decoration: none;
+    white-space: nowrap;
+    box-sizing: border-box;
+}
+
+a.nav-tab {
+    text-decoration: none;
+}
+
+.nav-tabs-divider {
+    width: 1px;
+    height: 1.6rem;
+    margin: 0 0.35rem 0 1.25rem;
+    background: rgba(57, 255, 20, 0.35);
+    flex-shrink: 0;
 }
 
 .nav-tab:hover {
@@ -1788,7 +1805,13 @@ header .theme-toggler span.active {
         height: 2.75rem !important;
         font-size: 0.85rem;
         flex: 0 0 auto;
+        flex-shrink: 0;
         white-space: nowrap;
+    }
+
+    .nav-tabs-divider {
+        margin: 0 0.35rem !important;
+        height: 1.25rem;
     }
 
     .nav-tab:hover {
@@ -3485,6 +3508,7 @@ select.form-input:disabled {
     border: none;
     transition: all 0.3s ease;
     text-shadow: 0 0 10px rgba(57, 255, 20, 0.5);
+    text-decoration: none;
 }
 
 .modern-theme .nav-tab:hover {
@@ -3496,6 +3520,10 @@ select.form-input:disabled {
 .modern-theme .nav-tab.active {
     background: rgba(57, 255, 20, 0.3);
     box-shadow: 0 0 20px rgba(57, 255, 20, 0.6);
+}
+
+.modern-theme .nav-tabs-divider {
+    background: rgba(57, 255, 20, 0.4);
 }
 
 .modern-theme .main-content {
