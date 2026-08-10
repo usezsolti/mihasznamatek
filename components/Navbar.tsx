@@ -268,7 +268,7 @@ export default function Navbar() {
                                         }
                                         onClick={toggleMenu}
                                     >
-                                        Tanulás
+                                        mymihaszna mat
                                     </Link>
                                 </li>
                                 <li>

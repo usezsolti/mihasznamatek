@@ -538,7 +538,7 @@ export default function ExamPrep() {
     const assignOnlyToStudent = async () => {
         const ok = await assignSelectedTaskToStudent();
         if (ok) {
-            alert("Feladat kiosztva! A diák a Dashboard → Tanulás felületen látja.");
+            alert("Feladat kiosztva! A diák a Dashboard → mymihaszna mat felületen látja.");
         }
     };
 
