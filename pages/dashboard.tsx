@@ -17,6 +17,7 @@ import {
     EDUCATION_LEVELS,
     getTopicsForEducationLevel,
     type EducationLevelId,
+    type ErettsegiExamLevel,
 } from "../utils/mathTopicsCatalog";
 
 type DashboardTab = "tanulas" | "profil" | "admin";
@@ -46,6 +47,7 @@ export default function Dashboard() {
     const [me, setMe] = useState<UserDoc | null>(null);
     const [error, setError] = useState<string | null>(null);
     const [educationLevel, setEducationLevel] = useState<EducationLevelId>('university');
+    const [erettsegiExamLevel, setErettsegiExamLevel] = useState<ErettsegiExamLevel>('emelt');
     const [isAdmin, setIsAdmin] = useState(false);
     const [activeTab, setActiveTab] = useState<DashboardTab>("tanulas");
     const [publicTasks, setPublicTasks] = useState<any[]>([]);
@@ -70,46 +72,37 @@ export default function Dashboard() {
         color: '#39ff14'
     });
 
-    const allMathTopics = {
-        elementary: getTopicsForEducationLevel('elementary').map((t) => ({
+    const catalogToMathTopics = (level: EducationLevelId, examLevel: ErettsegiExamLevel): MathTopic[] =>
+        getTopicsForEducationLevel(level, examLevel).map((t) => ({
             ...t,
             completed: 0,
             total: 0,
             correctAnswers: 0,
             wrongAnswers: 0,
             totalAnswers: 0,
-        })),
-        highschool: getTopicsForEducationLevel('highschool').map((t) => ({
-            ...t,
-            completed: 0,
-            total: 0,
-            correctAnswers: 0,
-            wrongAnswers: 0,
-            totalAnswers: 0,
-        })),
-        university: getTopicsForEducationLevel('university').map((t) => ({
-            ...t,
-            completed: 0,
-            total: 0,
-            correctAnswers: 0,
-            wrongAnswers: 0,
-            totalAnswers: 0,
-        })),
-    };
+        }));
 
     const [mathTopics, setMathTopics] = useState<MathTopic[]>([]);
 
     useEffect(() => {
         const savedLevel = localStorage.getItem('educationLevel') as EducationLevelId | null;
-        if (savedLevel === 'elementary' || savedLevel === 'highschool' || savedLevel === 'university') {
+        if (
+            savedLevel === 'elementary' ||
+            savedLevel === 'highschool' ||
+            savedLevel === 'university' ||
+            savedLevel === 'erettsegi'
+        ) {
             setEducationLevel(savedLevel);
+        }
+        const savedExam = localStorage.getItem('erettsegiExamLevel') as ErettsegiExamLevel | null;
+        if (savedExam === 'kozep' || savedExam === 'emelt') {
+            setErettsegiExamLevel(savedExam);
         }
     }, []);
 
     useEffect(() => {
-        // Betöltjük a témaköröket 0% progress-szel és játék eredményekkel
-        loadTopicsWithGameResults(allMathTopics[educationLevel]);
-    }, [educationLevel]);
+        loadTopicsWithGameResults(catalogToMathTopics(educationLevel, erettsegiExamLevel));
+    }, [educationLevel, erettsegiExamLevel]);
 
     useEffect(() => {
         const checkAuth = async () => {
@@ -220,6 +213,10 @@ export default function Dashboard() {
         // Load public tasks for current education level
         const loadPublicTasks = async () => {
             if (!(window as any).firebase) return;
+            if (educationLevel === 'erettsegi') {
+                setPublicTasks([]);
+                return;
+            }
 
             try {
                 const db = (window as any).firebase.firestore();
@@ -615,7 +612,12 @@ export default function Dashboard() {
     };
 
     const navigateToProblems = (topicId: string) => {
-        // A kiválasztott oktatási szintnek megfelelő kvíz indítása
+        if (educationLevel === 'erettsegi') {
+            router.push(
+                `/erettsegi-felkeszules?mode=topics&level=${erettsegiExamLevel}&topic=${encodeURIComponent(topicId)}`
+            );
+            return;
+        }
         const params = new URLSearchParams({
             educationLevel,
             topic: topicId,
@@ -904,9 +906,9 @@ export default function Dashboard() {
                 {/* Education Level Selector */}
                 <section className="education-level-section">
                     <h3 className="level-title">
-                        Válassz oktatási szintet:
+                        Válassz kategóriát:
                     </h3>
-                    <div className="level-selector">
+                    <div className="level-selector" style={{ flexWrap: 'wrap' }}>
                         {EDUCATION_LEVELS.map((level) => (
                             <button
                                 key={level.id}
@@ -924,11 +926,33 @@ export default function Dashboard() {
                             </button>
                         ))}
                     </div>
+                    {educationLevel === 'erettsegi' && (
+                        <div className="level-selector" style={{ marginTop: '1rem', flexWrap: 'wrap' }}>
+                            <button
+                                className={`level-btn ${erettsegiExamLevel === 'kozep' ? 'active' : ''}`}
+                                onClick={() => {
+                                    setErettsegiExamLevel('kozep');
+                                    localStorage.setItem('erettsegiExamLevel', 'kozep');
+                                }}
+                            >
+                                📝 Közép szint
+                            </button>
+                            <button
+                                className={`level-btn ${erettsegiExamLevel === 'emelt' ? 'active' : ''}`}
+                                onClick={() => {
+                                    setErettsegiExamLevel('emelt');
+                                    localStorage.setItem('erettsegiExamLevel', 'emelt');
+                                }}
+                            >
+                                ⭐ Emelt szint
+                            </button>
+                        </div>
+                    )}
                 </section>
 
                     {isAdmin && (
                         <section className="exam-prep-section">
-                            <div className="exam-prep-card" onClick={() => router.push(`/exam-prep?level=${educationLevel}`)}>
+                            <div className="exam-prep-card" onClick={() => router.push(`/exam-prep?level=${educationLevel === 'erettsegi' ? 'highschool' : educationLevel}`)}>
                                 <div className="card-header" style={{
                                     textAlign: 'center',
                                     display: 'flex',
@@ -959,16 +983,19 @@ export default function Dashboard() {
                 {/* Mathematical Topics Section */}
                 <section className="attendance-section">
                     <h2 className="section-title">
-                        {educationLevel === 'elementary' && '🏫 Általános iskolai'}
-                        {educationLevel === 'highschool' && '🎒 Középiskolai'}
-                        {educationLevel === 'university' && '🎓 Egyetemi'}
-                        {' '}
-                        {educationLevel === 'university' ? 'tantárgyak' : 'témakörök'}
+                        {educationLevel === 'elementary' && '🏫 Általános iskolai témakörök'}
+                        {educationLevel === 'highschool' && '🎒 Középiskolai témakörök'}
+                        {educationLevel === 'university' && '🎓 Egyetemi tantárgyak'}
+                        {educationLevel === 'erettsegi' &&
+                            (erettsegiExamLevel === 'emelt'
+                                ? '⭐ Emelt érettségi témakörök'
+                                : '📝 Középszintű érettségi témakörök')}
                     </h2>
                     <p className="section-subtitle">
                         {educationLevel === 'elementary' && '1-8. osztály — ugyanazok a témák, mint a játékban'}
                         {educationLevel === 'highschool' && '9-12. osztály — ugyanazok a témák, mint a játékban'}
                         {educationLevel === 'university' && 'Analízis I–III. — ugyanaz, mint a játék kezdőképernyőjén'}
+                        {educationLevel === 'erettsegi' && 'Válassz témakört — Duolingo-szerű útvonal és feladatok'}
                     </p>
 
                     <div className="topics-grid">

@@ -1,6 +1,7 @@
-/** Közös témakörök — ugyanaz, mint a játék kezdőképernyőjén. */
+/** Közös témakörök — ugyanaz, mint a játék kezdőképernyőjén + érettségi. */
 
-export type EducationLevelId = 'elementary' | 'highschool' | 'university';
+export type EducationLevelId = 'elementary' | 'highschool' | 'university' | 'erettsegi';
+export type ErettsegiExamLevel = 'kozep' | 'emelt';
 
 export type CatalogTopic = {
     id: string;
@@ -22,6 +23,7 @@ export const EDUCATION_LEVELS: Array<{
     { id: 'elementary', name: 'Általános iskola', desc: '1-8. osztály', emoji: '🏫' },
     { id: 'highschool', name: 'Középiskola', desc: '9-12. osztály', emoji: '🎒' },
     { id: 'university', name: 'Egyetem', desc: 'Felsőbb matematika', emoji: '🎓' },
+    { id: 'erettsegi', name: 'Érettségire felkészülés', desc: 'Közép és emelt szint', emoji: '📝' },
 ];
 
 export const elementaryTopics: CatalogTopic[] = [
@@ -92,9 +94,62 @@ export const universitySubjects: UniversitySubject[] = [
     },
 ];
 
-/** Dashboard / progress listákhoz: flat témakörök iskolaszintenként (egyetemen a tantárgyak). */
-export function getTopicsForEducationLevel(level: EducationLevelId): CatalogTopic[] {
+const G = '#39ff14';
+const E = '#ffd700';
+
+export const erettsegiKozepTopics: CatalogTopic[] = [
+    { id: 'abszolutertek-gyok', title: 'Abszolútérték, gyök', icon: '|√', color: G },
+    { id: 'egyenletek-egyenlotlensegek', title: 'Egyenletek, egyenlőtlenségek, egyenletrendszerek', icon: '=', color: G },
+    { id: 'egyszerusitesek', title: 'Egyszerűsítések, átalakítások', icon: '↔️', color: G },
+    { id: 'ertelmezesi-tartomany', title: 'Értelmezési tartomány, értékkészlet', icon: '📊', color: G },
+    { id: 'exponencialis-logaritmus', title: 'Exponenciális és logaritmusos feladatok', icon: 'log', color: G },
+    { id: 'fuggvenyek-analizis', title: 'Függvények, analízis', icon: '📈', color: G },
+    { id: 'halmazok', title: 'Halmazok', icon: '{}', color: G },
+    { id: 'kombinatorika', title: 'Kombinatorika', icon: '🔢', color: G },
+    { id: 'koordinatageometria', title: 'Koordinátageometria', icon: '📍', color: G },
+    { id: 'logika-grafok', title: 'Logika, gráfok', icon: '🕸️', color: G },
+    { id: 'sikgeometria', title: 'Síkgeometria', icon: '📐', color: G },
+    { id: 'sorozatok', title: 'Sorozatok', icon: '∞', color: G },
+    { id: 'statisztika', title: 'Statisztika', icon: '📊', color: G },
+    { id: 'szamelmelet', title: 'Számelmélet', icon: '🔢', color: G },
+    { id: 'szoveges-feladatok', title: 'Szöveges feladatok', icon: '📝', color: G },
+    { id: 'tergeometria', title: 'Térgeometria', icon: '📦', color: G },
+    { id: 'trigonometria', title: 'Trigonometria', icon: '📊', color: G },
+    { id: 'valoszinusegszamitas', title: 'Valószínűségszámítás', icon: '🎲', color: G },
+];
+
+export const erettsegiEmeltTopics: CatalogTopic[] = [
+    { id: 'abszolutertek-gyok-emelt', title: 'Abszolútérték, gyök', icon: '|√', color: E },
+    { id: 'bizonyitasok', title: 'Bizonyítások', icon: '✓', color: E },
+    { id: 'egyenletek-egyenlotlensegek-emelt', title: 'Egyenletek, egyenlőtlenségek, egyenletrendszerek', icon: '=', color: E },
+    { id: 'egyszerusitesek-emelt', title: 'Egyszerűsítések, átalakítások', icon: '↔️', color: E },
+    { id: 'ertelmezesi-tartomany-emelt', title: 'Értelmezési tartomány, értékkészlet', icon: '📊', color: E },
+    { id: 'exponencialis-logaritmus-emelt', title: 'Exponenciális és logaritmusos feladatok', icon: 'log', color: E },
+    { id: 'fuggvenyek-analizis-emelt', title: 'Függvények, analízis', icon: '📈', color: E },
+    { id: 'halmazok-emelt', title: 'Halmazok', icon: '{}', color: E },
+    { id: 'kombinatorika-emelt', title: 'Kombinatorika', icon: '🔢', color: E },
+    { id: 'parameter', title: 'Paraméteres egyenletek', icon: 'α', color: E },
+    { id: 'koordinatageometria-emelt', title: 'Koordinátageometria', icon: '📍', color: E },
+    { id: 'logika-grafok-emelt', title: 'Logika, gráfok', icon: '🕸️', color: E },
+    { id: 'sikgeometria-emelt', title: 'Síkgeometria', icon: '📐', color: E },
+    { id: 'sorozatok-emelt', title: 'Sorozatok', icon: '∞', color: E },
+    { id: 'statisztika-emelt', title: 'Statisztika', icon: '📊', color: E },
+    { id: 'szamelmelet-emelt', title: 'Számelmélet', icon: '🔢', color: E },
+    { id: 'szoveges-feladatok-emelt', title: 'Szöveges feladatok', icon: '📝', color: E },
+    { id: 'tergeometria-emelt', title: 'Térgeometria', icon: '📦', color: E },
+    { id: 'trigonometria-emelt', title: 'Trigonometria', icon: '📊', color: E },
+    { id: 'valoszinusegszamitas-emelt', title: 'Valószínűségszámítás', icon: '🎲', color: E },
+];
+
+/** Dashboard / progress listákhoz: flat témakörök iskolaszintenként. */
+export function getTopicsForEducationLevel(
+    level: EducationLevelId,
+    erettsegiLevel: ErettsegiExamLevel = 'emelt'
+): CatalogTopic[] {
     if (level === 'elementary') return elementaryTopics;
     if (level === 'highschool') return highschoolTopics;
+    if (level === 'erettsegi') {
+        return erettsegiLevel === 'kozep' ? erettsegiKozepTopics : erettsegiEmeltTopics;
+    }
     return universitySubjects.map(({ id, title, icon, color }) => ({ id, title, icon, color }));
 }
