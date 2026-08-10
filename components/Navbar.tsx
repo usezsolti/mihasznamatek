@@ -258,31 +258,16 @@ export default function Navbar() {
                             <>
                                 <li>
                                     <Link
-                                        href="/dashboard?tab=tanulas"
+                                        href="/dashboard"
                                         className={
                                             router.pathname === "/dashboard" &&
-                                            (router.query.tab === "tanulas" ||
-                                                !router.query.tab)
+                                            router.query.tab !== "admin"
                                                 ? "nav-link-active"
                                                 : undefined
                                         }
                                         onClick={toggleMenu}
                                     >
                                         MyMihasznaMat
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link
-                                        href="/dashboard?tab=profil"
-                                        className={
-                                            router.pathname === "/dashboard" &&
-                                            router.query.tab === "profil"
-                                                ? "nav-link-active"
-                                                : undefined
-                                        }
-                                        onClick={toggleMenu}
-                                    >
-                                        Profilom
                                     </Link>
                                 </li>
                                 {isAdminEmail(currentUser.email) && (
@@ -343,8 +328,8 @@ export default function Navbar() {
                         </li>
                         {isClient && currentUser && (
                             <li className="nav-auth-mobile">
-                                <Link href="/dashboard?tab=profil" onClick={toggleMenu}>
-                                    Profilom
+                                <Link href="/dashboard" onClick={toggleMenu}>
+                                    MyMihasznaMat
                                 </Link>
                             </li>
                         )}
@@ -409,7 +394,7 @@ export default function Navbar() {
                         <div className="nav-auth">
                             {currentUser ? (
                                 <div className="nav-user">
-                                    <Link href="/dashboard?tab=profil" className="nav-user-link" title={displayLabel}>
+                                    <Link href="/dashboard" className="nav-user-link" title={displayLabel}>
                                         {displayLabel}
                                     </Link>
                                     <button

@@ -98,7 +98,7 @@ export default function TopicPathMap({
             const result = await signInAsTestUser();
             showToast(`Bejelentkezve: ${result.email}`);
             await reload();
-            router.push('/dashboard?tab=profil');
+            router.push('/dashboard');
         } catch (e: any) {
             console.error(e);
             showToast(formatAuthError(e));

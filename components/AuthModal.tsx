@@ -321,7 +321,7 @@ export default function AuthModal({
                 router.push(redirectTo);
                 return;
             }
-            router.push("/dashboard?tab=profil");
+            router.push("/dashboard");
         } catch (err: any) {
             console.error(err);
             setError(formatAuthError(err) || mapFirebaseError(err?.code));

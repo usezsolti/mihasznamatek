@@ -425,7 +425,7 @@ export default function ProfilePanel({ embedded = false }: { embedded?: boolean 
                             backgroundClip: 'text',
                             margin: 0
                         }}>
-                            👤 Profilom
+                            👤 MyMihasznaMat
                         </h1>
                         {!embedded && (
                         <button

@@ -197,23 +197,24 @@ export default function Dashboard() {
     useEffect(() => {
         if (!router.isReady) return;
         const tab = router.query.tab;
-        if (tab === 'profil' || tab === 'admin' || tab === 'tanulas') {
-            if (tab === 'admin' && !isAdmin) {
+        if (tab === 'admin') {
+            if (!isAdmin) {
                 setActiveTab('tanulas');
                 return;
             }
-            setActiveTab(tab);
+            setActiveTab('admin');
             return;
         }
-        // /dashboard (tab nélkül) → mindig Tanulás
+        // profil / tanulas / üres → egy közös MyMihasznaMat oldal
         setActiveTab('tanulas');
     }, [router.isReady, router.query.tab, isAdmin]);
 
     const switchTab = (tab: DashboardTab) => {
         if (tab === 'admin' && !isAdmin) return;
-        setActiveTab(tab);
+        const next = tab === 'profil' ? 'tanulas' : tab;
+        setActiveTab(next);
         router.replace(
-            { pathname: '/dashboard', query: { tab } },
+            { pathname: '/dashboard', query: next === 'tanulas' ? {} : { tab: next } },
             undefined,
             { shallow: true }
         );
@@ -692,12 +693,6 @@ export default function Dashboard() {
         <div className="dashboard-container modern-theme has-site-navbar">
             {/* Main Content */}
             <main className="main-content">
-                {activeTab === 'profil' && (
-                    <section className="profile-embedded-section" style={{ padding: '1rem 0 2rem' }}>
-                        <ProfilePanel embedded />
-                    </section>
-                )}
-
                 {activeTab === 'admin' && isAdmin && (
                     <>
                         <div style={{
@@ -906,6 +901,10 @@ export default function Dashboard() {
 
                 {activeTab === 'tanulas' && (
                 <>
+                <section className="profile-embedded-section" style={{ padding: '0.5rem 0 1.5rem' }}>
+                    <ProfilePanel embedded />
+                </section>
+
                 {/* Education Level Selector */}
                 <section className="education-level-section">
                     <h3 className="level-title">
