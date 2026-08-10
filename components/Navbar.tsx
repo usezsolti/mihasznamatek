@@ -292,14 +292,21 @@ export default function Navbar() {
                     {isClient && currentUser && (
                         <Link
                             href="/dashboard"
-                            className={`nav-brand-mymihaszna${
-                                router.pathname === "/dashboard" && router.query.tab !== "admin"
-                                    ? " is-active"
-                                    : ""
-                            }`}
+                            className="nav-user-chip nav-user-chip-left"
+                            title={displayLabel}
                             onClick={() => setIsMenuOpen(false)}
                         >
-                            MyMihasznaMat
+                            <span className="nav-user-avatar" aria-hidden>
+                                {currentUser.photoURL ? (
+                                    // eslint-disable-next-line @next/next/no-img-element
+                                    <img src={currentUser.photoURL} alt="" />
+                                ) : (
+                                    <span className="nav-user-avatar-fallback">
+                                        {(displayLabel[0] || "?").toUpperCase()}
+                                    </span>
+                                )}
+                            </span>
+                            <span className="nav-user-name">{displayLabel}</span>
                         </Link>
                     )}
                 </div>
@@ -367,7 +374,7 @@ export default function Navbar() {
                         {isClient && currentUser && (
                             <li className="nav-auth-mobile">
                                 <Link href="/dashboard" onClick={toggleMenu}>
-                                    MyMihasznaMat
+                                    {displayLabel}
                                 </Link>
                             </li>
                         )}
@@ -431,33 +438,13 @@ export default function Navbar() {
                     {isClient && (
                         <div className="nav-auth">
                             {currentUser ? (
-                                <div className="nav-user">
-                                    <Link
-                                        href="/dashboard"
-                                        className="nav-user-chip"
-                                        title={displayLabel}
-                                        onClick={() => setIsMenuOpen(false)}
-                                    >
-                                        <span className="nav-user-avatar" aria-hidden>
-                                            {currentUser.photoURL ? (
-                                                // eslint-disable-next-line @next/next/no-img-element
-                                                <img src={currentUser.photoURL} alt="" />
-                                            ) : (
-                                                <span className="nav-user-avatar-fallback">
-                                                    {(displayLabel[0] || "?").toUpperCase()}
-                                                </span>
-                                            )}
-                                        </span>
-                                        <span className="nav-user-name">{displayLabel}</span>
-                                    </Link>
-                                    <button
-                                        type="button"
-                                        className="auth-btn nav-logout-btn"
-                                        onClick={handleLogout}
-                                    >
-                                        Kijelentkezés
-                                    </button>
-                                </div>
+                                <button
+                                    type="button"
+                                    className="auth-btn nav-logout-btn"
+                                    onClick={handleLogout}
+                                >
+                                    Kijelentkezés
+                                </button>
                             ) : (
                                 <button
                                     type="button"

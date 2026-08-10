@@ -53,30 +53,12 @@ nav {
   z-index: 2;
 }
 
+.nav-user-chip-left {
+  margin-left: 0.15rem;
+}
+
 .nav-brand-mymihaszna {
-  color: #39ff14;
-  text-decoration: none;
-  font-family: Montserrat, sans-serif;
-  font-weight: 800;
-  font-size: 1rem;
-  letter-spacing: 0.01em;
-  white-space: nowrap;
-  text-shadow: 0 0 12px rgba(57, 255, 20, 0.35);
-  transition: color 0.2s ease, opacity 0.2s ease;
-}
-
-.nav-brand-mymihaszna:hover,
-.nav-brand-mymihaszna.is-active {
-  color: #fff;
-}
-
-@media (max-width: 767px) {
-  .nav-brand-mymihaszna {
-    font-size: 0.85rem;
-    max-width: 42vw;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
+  display: none;
 }
 
 /* Alap: mobilnézetben rejtett menü */
