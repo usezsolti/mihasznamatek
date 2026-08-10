@@ -289,6 +289,19 @@ export default function Navbar() {
                         </text>
                     </svg>
                     </Link>
+                    {isClient && currentUser && (
+                        <Link
+                            href="/dashboard"
+                            className={`nav-brand-mymihaszna${
+                                router.pathname === "/dashboard" && router.query.tab !== "admin"
+                                    ? " is-active"
+                                    : ""
+                            }`}
+                            onClick={() => setIsMenuOpen(false)}
+                        >
+                            MyMihasznaMat
+                        </Link>
+                    )}
                 </div>
                 <div className="nav-center">
                     <ul className={`nav-links ${isMenuOpen ? "open" : "closed"}`}>
@@ -297,39 +310,21 @@ export default function Navbar() {
                                 ✕
                             </button>
                         </li>
-                        {isClient && currentUser && (
-                            <>
-                                <li>
-                                    <Link
-                                        href="/dashboard"
-                                        className={
-                                            router.pathname === "/dashboard" &&
-                                            router.query.tab !== "admin"
-                                                ? "nav-link-active"
-                                                : undefined
-                                        }
-                                        onClick={toggleMenu}
-                                    >
-                                        MyMihasznaMat
-                                    </Link>
-                                </li>
-                                {isAdminEmail(currentUser.email) && (
-                                    <li>
-                                        <Link
-                                            href="/dashboard?tab=admin"
-                                            className={
-                                                router.pathname === "/dashboard" &&
-                                                router.query.tab === "admin"
-                                                    ? "nav-link-active"
-                                                    : undefined
-                                            }
-                                            onClick={toggleMenu}
-                                        >
-                                            Admin
-                                        </Link>
-                                    </li>
-                                )}
-                            </>
+                        {isClient && currentUser && isAdminEmail(currentUser.email) && (
+                            <li>
+                                <Link
+                                    href="/dashboard?tab=admin"
+                                    className={
+                                        router.pathname === "/dashboard" &&
+                                        router.query.tab === "admin"
+                                            ? "nav-link-active"
+                                            : undefined
+                                    }
+                                    onClick={toggleMenu}
+                                >
+                                    Admin
+                                </Link>
+                            </li>
                         )}
                         <li>
                             <a href="/#about" onClick={handleAnchorClick("#about")}>
@@ -440,7 +435,7 @@ export default function Navbar() {
                                     <Link
                                         href="/dashboard"
                                         className="nav-user-chip"
-                                        title="MyMihasznaMat"
+                                        title={displayLabel}
                                         onClick={() => setIsMenuOpen(false)}
                                     >
                                         <span className="nav-user-avatar" aria-hidden>
@@ -453,10 +448,7 @@ export default function Navbar() {
                                                 </span>
                                             )}
                                         </span>
-                                        <span className="nav-user-meta">
-                                            <span className="nav-user-name">{displayLabel}</span>
-                                            <span className="nav-user-sub">MyMihasznaMat</span>
-                                        </span>
+                                        <span className="nav-user-name">{displayLabel}</span>
                                     </Link>
                                     <button
                                         type="button"
