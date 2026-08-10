@@ -254,6 +254,55 @@ export default function Navbar() {
                                 ✕
                             </button>
                         </li>
+                        {isClient && currentUser && (
+                            <>
+                                <li>
+                                    <Link
+                                        href="/dashboard"
+                                        className={
+                                            router.pathname === "/dashboard" &&
+                                            router.query.tab !== "profil" &&
+                                            router.query.tab !== "admin"
+                                                ? "nav-link-active"
+                                                : undefined
+                                        }
+                                        onClick={toggleMenu}
+                                    >
+                                        Tanulás
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link
+                                        href="/dashboard?tab=profil"
+                                        className={
+                                            router.pathname === "/dashboard" &&
+                                            router.query.tab === "profil"
+                                                ? "nav-link-active"
+                                                : undefined
+                                        }
+                                        onClick={toggleMenu}
+                                    >
+                                        Profilom
+                                    </Link>
+                                </li>
+                                {isAdminEmail(currentUser.email) && (
+                                    <li>
+                                        <Link
+                                            href="/dashboard?tab=admin"
+                                            className={
+                                                router.pathname === "/dashboard" &&
+                                                router.query.tab === "admin"
+                                                    ? "nav-link-active"
+                                                    : undefined
+                                            }
+                                            onClick={toggleMenu}
+                                        >
+                                            Admin
+                                        </Link>
+                                    </li>
+                                )}
+                            </>
+                        )}
                         <li>
                             <a href="/#about" onClick={handleAnchorClick("#about")}>
                                 Rólam
@@ -294,8 +343,8 @@ export default function Navbar() {
                         </li>
                         {isClient && currentUser && (
                             <li className="nav-auth-mobile">
-                                <Link href="/dashboard" onClick={toggleMenu}>
-                                    Dashboard
+                                <Link href="/dashboard?tab=profil" onClick={toggleMenu}>
+                                    Profilom
                                 </Link>
                             </li>
                         )}
@@ -360,7 +409,7 @@ export default function Navbar() {
                         <div className="nav-auth">
                             {currentUser ? (
                                 <div className="nav-user">
-                                    <Link href="/dashboard" className="nav-user-link" title={displayLabel}>
+                                    <Link href="/dashboard?tab=profil" className="nav-user-link" title={displayLabel}>
                                         {displayLabel}
                                     </Link>
                                     <button

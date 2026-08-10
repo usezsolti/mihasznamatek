@@ -11,7 +11,6 @@ import Navbar from "../components/Navbar";   // DEFAULT import!
 
 export default function App({ Component, pageProps }: AppProps) {
     const router = useRouter();
-    const isDashboard = router.pathname === '/dashboard';
     const isGame = router.pathname === '/game';
     const isUniBoostGame = router.pathname === '/uniboost-game';
 
@@ -73,7 +72,7 @@ export default function App({ Component, pageProps }: AppProps) {
                 <Script src="/firebase-init.js" strategy="beforeInteractive" />
                 <Script src="/main.js" strategy="afterInteractive" />
 
-                {!isDashboard && !isGame && !isUniBoostGame && <Navbar />}
+                {!isGame && !isUniBoostGame && <Navbar />}
                 <Component {...pageProps} />
             </>
         </div>

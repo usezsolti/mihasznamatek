@@ -1720,6 +1720,11 @@ h1 {
   visibility: visible;
 }
 
+.nav-links li a.nav-link-active {
+  color: #39ff14 !important;
+  text-shadow: 0 0 10px rgba(57, 255, 20, 0.55);
+}
+
 /* Mobilnézeti linkek */
 @media (max-width: 767px) {
   .nav-links li a {

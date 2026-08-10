@@ -216,6 +216,14 @@ body {
     overflow-x: hidden;
 }
 
+.dashboard-container.has-site-navbar {
+    padding-top: 60px;
+}
+
+.dashboard-container.has-site-navbar > .main-content {
+    padding-top: 1.25rem;
+}
+
 .dashboard-container.dark-theme {
     background: var(--color-background);
     color: var(--color-dark);
