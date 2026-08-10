@@ -261,6 +261,15 @@ export default function ProfilePanel({ embedded = false }: { embedded?: boolean 
 
             setPhotoURL(url);
             setAvatarMessage('Profilkép sikeresen frissítve!');
+            try {
+                window.dispatchEvent(
+                    new CustomEvent('mihaszna:user-profile-updated', {
+                        detail: { photoURL: url },
+                    })
+                );
+            } catch {
+                /* ignore */
+            }
         } catch (err: any) {
             console.error('Avatar feltöltési hiba:', err);
             setAvatarError(err?.message || 'Nem sikerült feltölteni a képet. Próbáld újra.');
@@ -407,7 +416,8 @@ export default function ProfilePanel({ embedded = false }: { embedded?: boolean 
                     maxWidth: '1200px',
                     margin: '0 auto'
                 }}>
-                    {/* Header */}
+                    {/* Header — név/kép a site headerben van, itt csak szerkesztés */}
+                    {!embedded && (
                     <div style={{
                         display: 'flex',
                         justifyContent: 'space-between',
@@ -417,7 +427,7 @@ export default function ProfilePanel({ embedded = false }: { embedded?: boolean 
                         gap: '1rem'
                     }}>
                         <h1 style={{
-                            fontSize: embedded ? '2rem' : '2.5rem',
+                            fontSize: '2.5rem',
                             fontWeight: 'bold',
                             background: 'linear-gradient(90deg, #39ff14 0%, #ff69b4 100%)',
                             WebkitBackgroundClip: 'text',
@@ -427,7 +437,6 @@ export default function ProfilePanel({ embedded = false }: { embedded?: boolean 
                         }}>
                             👤 MyMihasznaMat
                         </h1>
-                        {!embedded && (
                         <button
                             onClick={() => router.push('/dashboard')}
                             style={{
@@ -452,18 +461,28 @@ export default function ProfilePanel({ embedded = false }: { embedded?: boolean 
                         >
                             ← Vissza a Dashboard-ra
                         </button>
-                        )}
                     </div>
+                    )}
 
                     {/* User Info */}
                     <div style={{
                         background: 'rgba(255, 255, 255, 0.1)',
                         border: '2px solid rgba(57, 255, 20, 0.5)',
                         borderRadius: '25px',
-                        padding: '2rem',
+                        padding: embedded ? '1.25rem' : '2rem',
                         marginBottom: '2rem',
                         backdropFilter: 'blur(20px)'
                     }}>
+                        {embedded && (
+                            <h2 style={{
+                                margin: '0 0 1rem',
+                                fontSize: '1.15rem',
+                                color: '#39ff14',
+                                fontWeight: 700,
+                            }}>
+                                Profil szerkesztése
+                            </h2>
+                        )}
                         <div style={{
                             display: 'flex',
                             alignItems: 'center',
@@ -492,14 +511,14 @@ export default function ProfilePanel({ embedded = false }: { embedded?: boolean 
                                 }}
                                 style={{
                                     position: 'relative',
-                                    width: '96px',
-                                    height: '96px',
+                                    width: embedded ? '72px' : '96px',
+                                    height: embedded ? '72px' : '96px',
                                     borderRadius: '50%',
                                     background: 'linear-gradient(45deg, #39ff14, #ff69b4)',
                                     display: 'flex',
                                     alignItems: 'center',
                                     justifyContent: 'center',
-                                    fontSize: '2.5rem',
+                                    fontSize: embedded ? '1.75rem' : '2.5rem',
                                     fontWeight: 'bold',
                                     border: '3px solid rgba(57, 255, 20, 0.6)',
                                     cursor: uploadingAvatar ? 'wait' : 'pointer',

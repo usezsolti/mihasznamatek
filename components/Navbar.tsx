@@ -10,6 +10,7 @@ interface NavUser {
     uid: string;
     displayName: string | null;
     email: string | null;
+    photoURL: string | null;
 }
 
 export default function Navbar() {
@@ -30,6 +31,7 @@ export default function Navbar() {
 
         let unsub: (() => void) | undefined;
         let cancelled = false;
+        let onProfileUpdated: ((e: Event) => void) | undefined;
 
         const init = async () => {
             for (let i = 0; i < 50; i++) {
@@ -51,18 +53,31 @@ export default function Navbar() {
             if (!firebase?.apps?.length) return;
 
             const auth = firebase.auth();
-            unsub = auth.onAuthStateChanged((user: any) => {
+            const applyUser = async (user: any) => {
                 if (!user) {
                     setCurrentUser(null);
                     return;
                 }
+                let photoURL: string | null = user.photoURL || null;
+                let displayName: string | null = user.displayName || null;
+                try {
+                    const snap = await firebase.firestore().collection("users").doc(user.uid).get();
+                    if (snap.exists) {
+                        const data = snap.data() || {};
+                        if (data.photoURL) photoURL = String(data.photoURL);
+                        if (data.name) displayName = String(data.name);
+                    }
+                } catch {
+                    /* firestore optional */
+                }
+                if (cancelled) return;
                 setCurrentUser({
                     uid: user.uid,
-                    displayName: user.displayName || null,
+                    displayName,
                     email: user.email || null,
+                    photoURL,
                 });
 
-                // Admin: naponta egyszer, bárhol a site-on — holnapi órák emlékeztetője
                 if (isAdminEmail(user.email)) {
                     (async () => {
                         try {
@@ -79,13 +94,41 @@ export default function Navbar() {
                         }
                     })();
                 }
+            };
+
+            if (cancelled) return;
+
+            unsub = auth.onAuthStateChanged((user: any) => {
+                void applyUser(user);
             });
+
+            onProfileUpdated = (e: Event) => {
+                const detail = (e as CustomEvent<{ photoURL?: string | null; displayName?: string | null }>)
+                    .detail;
+                setCurrentUser((prev) =>
+                    prev
+                        ? {
+                              ...prev,
+                              photoURL:
+                                  detail?.photoURL !== undefined ? detail.photoURL : prev.photoURL,
+                              displayName:
+                                  detail?.displayName !== undefined
+                                      ? detail.displayName
+                                      : prev.displayName,
+                          }
+                        : prev
+                );
+            };
+            window.addEventListener("mihaszna:user-profile-updated", onProfileUpdated);
         };
 
         init();
         return () => {
             cancelled = true;
             if (unsub) unsub();
+            if (onProfileUpdated) {
+                window.removeEventListener("mihaszna:user-profile-updated", onProfileUpdated);
+            }
         };
     }, [isClient]);
 
@@ -394,8 +437,26 @@ export default function Navbar() {
                         <div className="nav-auth">
                             {currentUser ? (
                                 <div className="nav-user">
-                                    <Link href="/dashboard" className="nav-user-link" title={displayLabel}>
-                                        {displayLabel}
+                                    <Link
+                                        href="/dashboard"
+                                        className="nav-user-chip"
+                                        title="MyMihasznaMat"
+                                        onClick={() => setIsMenuOpen(false)}
+                                    >
+                                        <span className="nav-user-avatar" aria-hidden>
+                                            {currentUser.photoURL ? (
+                                                // eslint-disable-next-line @next/next/no-img-element
+                                                <img src={currentUser.photoURL} alt="" />
+                                            ) : (
+                                                <span className="nav-user-avatar-fallback">
+                                                    {(displayLabel[0] || "?").toUpperCase()}
+                                                </span>
+                                            )}
+                                        </span>
+                                        <span className="nav-user-meta">
+                                            <span className="nav-user-name">{displayLabel}</span>
+                                            <span className="nav-user-sub">MyMihasznaMat</span>
+                                        </span>
                                     </Link>
                                     <button
                                         type="button"
