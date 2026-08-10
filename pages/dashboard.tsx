@@ -195,6 +195,7 @@ export default function Dashboard() {
     }, [me?.uid, me?.email]);
 
     useEffect(() => {
+        if (!router.isReady) return;
         const tab = router.query.tab;
         if (tab === 'profil' || tab === 'admin' || tab === 'tanulas') {
             if (tab === 'admin' && !isAdmin) {
@@ -202,14 +203,17 @@ export default function Dashboard() {
                 return;
             }
             setActiveTab(tab);
+            return;
         }
-    }, [router.query.tab, isAdmin]);
+        // /dashboard (tab nélkül) → mindig Tanulás
+        setActiveTab('tanulas');
+    }, [router.isReady, router.query.tab, isAdmin]);
 
     const switchTab = (tab: DashboardTab) => {
         if (tab === 'admin' && !isAdmin) return;
         setActiveTab(tab);
         router.replace(
-            { pathname: '/dashboard', query: tab === 'tanulas' ? {} : { tab } },
+            { pathname: '/dashboard', query: { tab } },
             undefined,
             { shallow: true }
         );

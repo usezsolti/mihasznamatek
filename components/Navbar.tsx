@@ -258,11 +258,11 @@ export default function Navbar() {
                             <>
                                 <li>
                                     <Link
-                                        href="/dashboard"
+                                        href="/dashboard?tab=tanulas"
                                         className={
                                             router.pathname === "/dashboard" &&
-                                            router.query.tab !== "profil" &&
-                                            router.query.tab !== "admin"
+                                            (router.query.tab === "tanulas" ||
+                                                !router.query.tab)
                                                 ? "nav-link-active"
                                                 : undefined
                                         }
