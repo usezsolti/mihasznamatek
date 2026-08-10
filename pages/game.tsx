@@ -24,6 +24,11 @@ import {
     isWorksheetTopicId,
     lessonToStage,
 } from '../utils/topicPath';
+import {
+    elementaryTopics as ELEMENTARY_TOPICS_FROM_CATALOG,
+    highschoolTopics as HIGHSCHOOL_TOPICS_FROM_CATALOG,
+    universitySubjects as UNIVERSITY_SUBJECTS_FROM_CATALOG,
+} from '../utils/mathTopicsCatalog';
 
 export default function Game() {
     const router = useRouter();
@@ -4230,75 +4235,13 @@ Teljes megoldás:
     }
 
     // Általános iskolai témakörök
-    const elementaryTopics = [
-        { id: 'szamok-20ig', title: 'Számok 20-ig', icon: '2️⃣', color: '#39ff14' },
-        { id: 'szamok-100ig', title: 'Számok 100-ig', icon: '💯', color: '#39ff14' },
-        { id: 'osszeadas-kivonas', title: 'Összeadás-kivonás', icon: '➕', color: '#39ff14' },
-        { id: 'szorzotabla', title: 'Szorzótábla', icon: '✖️', color: '#39ff14' },
-        { id: 'tortek', title: 'Törtek', icon: '½', color: '#39ff14' },
-        { id: 'geometria-alapok', title: 'Geometria alapok', icon: '📐', color: '#39ff14' },
-    ];
+    const elementaryTopics = ELEMENTARY_TOPICS_FROM_CATALOG;
 
     // Középiskolai témakörök
-    const highschoolTopics = [
-        { id: 'abszolutertek', title: 'Abszolútérték', icon: '|x|', color: '#39ff14' },
-        { id: 'egyenletek', title: 'Egyenletek', icon: 'Σ', color: '#39ff14' },
-        { id: 'sikgeometria', title: 'Síkgeometria', icon: '📐', color: '#39ff14' },
-        { id: 'fuggvenyek', title: 'Függvények', icon: '📈', color: '#39ff14' },
-        { id: 'trigonometria', title: 'Trigonometria', icon: '📐', color: '#39ff14' },
-        { id: 'statisztika', title: 'Statisztika', icon: '📊', color: '#39ff14' },
-        { id: 'koordinatageometria', title: 'Koordinátageometria', icon: '📍', color: '#39ff14' },
-        { id: 'valoszinusegszamitas', title: 'Valószínűségszámítás', icon: '🎲', color: '#39ff14' },
-        { id: 'logaritmus', title: 'Logaritmus', icon: 'log', color: '#39ff14' },
-        { id: 'kombinatorika', title: 'Kombinatorika', icon: '🔢', color: '#39ff14' },
-        { id: 'sorozatok', title: 'Sorozatok', icon: '∞', color: '#39ff14' },
-    ];
+    const highschoolTopics = HIGHSCHOOL_TOPICS_FROM_CATALOG;
 
     // Egyetemi tantárgyak és témakörök
-    const universitySubjects = [
-        {
-            id: 'analizis1',
-            title: 'Analízis I.',
-            icon: '∫',
-            color: '#39ff14',
-            topics: [
-                { id: 'komplex-szamok', title: 'Komplex számok', icon: 'ℂ' },
-                { id: 'sorozatok', title: 'Sorozatok', icon: 'Σ' },
-                { id: 'egyvaltozos-fuggvenyek', title: 'Egyváltozós függvények', icon: 'f(x)' },
-                { id: 'fuggvenyvizsgalat', title: 'Függvényvizsgálat', icon: 'f(x)' },
-                { id: 'differencialszamitas', title: 'Differenciálszámítás', icon: 'd/dx' },
-                { id: 'kozeperteketelek', title: 'Középérték tételek', icon: 'MVT' },
-                { id: 'parametereesen-adott-gorbek', title: 'Paraméteresen adott görbék', icon: 'r(t)' },
-                { id: 'integralas', title: 'Integrálás', icon: '∫' },
-            ]
-        },
-        {
-            id: 'analizis2',
-            title: 'Analízis II.',
-            icon: '∂',
-            color: '#39ff14',
-            topics: [
-                { id: 'matrix-muveletek', title: 'Mátrix műveletek', icon: '[]' },
-                { id: 'linearis-transzformaciok', title: 'Lineáris transzformációk', icon: 'T' },
-                { id: 'numerikus-sorok', title: 'Numerikus sorok', icon: 'Σ' },
-                { id: 'sorok', title: 'Sorok', icon: 'Σ' },
-                { id: 'fourier-sorok', title: 'Fourier-sorok', icon: 'ℱ' },
-                { id: 'taylor-sorok', title: 'Taylor-sorok', icon: 'T' },
-                { id: 'ketvaltozos-fuggvenyek', title: 'Kétváltozós függvények', icon: 'f(x,y)' },
-                { id: 'tobbvaltozos-fuggvenyek', title: 'Többváltozós függvények', icon: 'f(x,y,z)' },
-            ]
-        },
-        {
-            id: 'analizis3',
-            title: 'Analízis III.',
-            icon: '∭',
-            color: '#39ff14',
-            topics: [
-                { id: 'vektoranalizis', title: 'Vektoranalízis', icon: '→' },
-                { id: 'differencialegyenletek', title: 'Differenciálegyenletek', icon: 'dy/dx' },
-            ]
-        },
-    ];
+    const universitySubjects = UNIVERSITY_SUBJECTS_FROM_CATALOG;
 
     // Általános iskola feladatok (központi felvételi szint)
     const elementaryQuestions: Question[] = [

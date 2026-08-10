@@ -13,6 +13,11 @@ import {
     type AssignedTaskDoc,
 } from "../utils/assignedTasks";
 import { paymentStatusLabel } from "../utils/bookingNotify";
+import {
+    EDUCATION_LEVELS,
+    getTopicsForEducationLevel,
+    type EducationLevelId,
+} from "../utils/mathTopicsCatalog";
 
 type DashboardTab = "tanulas" | "profil" | "admin";
 
@@ -40,7 +45,7 @@ export default function Dashboard() {
     const [loading, setLoading] = useState(true);
     const [me, setMe] = useState<UserDoc | null>(null);
     const [error, setError] = useState<string | null>(null);
-    const [educationLevel, setEducationLevel] = useState<'elementary' | 'highschool' | 'university'>('university');
+    const [educationLevel, setEducationLevel] = useState<EducationLevelId>('university');
     const [isAdmin, setIsAdmin] = useState(false);
     const [activeTab, setActiveTab] = useState<DashboardTab>("tanulas");
     const [publicTasks, setPublicTasks] = useState<any[]>([]);
@@ -66,46 +71,37 @@ export default function Dashboard() {
     });
 
     const allMathTopics = {
-        elementary: [
-            { id: 'szamok-20ig', title: 'Számok 20-ig', completed: 0, total: 0, color: '#39ff14', icon: '2️⃣', correctAnswers: 8, wrongAnswers: 2, totalAnswers: 10 },
-            { id: 'szamok-100ig', title: 'Számok 100-ig', completed: 0, total: 0, color: '#39ff14', icon: '💯', correctAnswers: 5, wrongAnswers: 3, totalAnswers: 8 },
-            { id: 'osszeadas-kivonas', title: 'Összeadás-kivonás', completed: 0, total: 0, color: '#39ff14', icon: '➕', correctAnswers: 12, wrongAnswers: 1, totalAnswers: 13 },
-            { id: 'szorzotabla', title: 'Szorzótábla', completed: 0, total: 0, color: '#39ff14', icon: '✖️', correctAnswers: 6, wrongAnswers: 4, totalAnswers: 10 },
-            { id: 'tortek', title: 'Törtek', completed: 0, total: 0, color: '#39ff14', icon: '½', correctAnswers: 7, wrongAnswers: 3, totalAnswers: 10 },
-            { id: 'geometria-alapok', title: 'Geometria alapok', completed: 0, total: 0, color: '#39ff14', icon: '📐', correctAnswers: 9, wrongAnswers: 1, totalAnswers: 10 },
-        ],
-        highschool: [
-            { id: 'abszolutertek', title: 'Abszolútérték', completed: 0, total: 0, color: '#39ff14', icon: 'A', correctAnswers: 15, wrongAnswers: 5, totalAnswers: 20 },
-            { id: 'egyenletek', title: 'Egyenletek', completed: 0, total: 0, color: '#39ff14', icon: 'Σ', correctAnswers: 8, wrongAnswers: 7, totalAnswers: 15 },
-            { id: 'sikgeometria', title: 'Síkgeometria', completed: 0, total: 0, color: '#39ff14', icon: '📐', correctAnswers: 12, wrongAnswers: 3, totalAnswers: 15 },
-            { id: 'fuggvenyek', title: 'Függvények', completed: 0, total: 0, color: '#39ff14', icon: '📈', correctAnswers: 10, wrongAnswers: 5, totalAnswers: 15 },
-            { id: 'trigonometria', title: 'Trigonometria', completed: 0, total: 0, color: '#39ff14', icon: '📐', correctAnswers: 6, wrongAnswers: 9, totalAnswers: 15 },
-            { id: 'statisztika', title: 'Statisztika', completed: 0, total: 0, color: '#39ff14', icon: '📊', correctAnswers: 14, wrongAnswers: 1, totalAnswers: 15 },
-            { id: 'koordinatageometria', title: 'Koordinátageometria', completed: 0, total: 0, color: '#39ff14', icon: '📍', correctAnswers: 7, wrongAnswers: 8, totalAnswers: 15 },
-            { id: 'valoszinusegszamitas', title: 'Valószínűségszámítás', completed: 0, total: 0, color: '#39ff14', icon: '🎲', correctAnswers: 11, wrongAnswers: 4, totalAnswers: 15 },
-            { id: 'logaritmus', title: 'Logaritmus', completed: 0, total: 0, color: '#39ff14', icon: 'log', correctAnswers: 9, wrongAnswers: 6, totalAnswers: 15 },
-            { id: 'kombinatorika', title: 'Kombinatorika', completed: 0, total: 0, color: '#39ff14', icon: '🔢', correctAnswers: 13, wrongAnswers: 2, totalAnswers: 15 },
-            { id: 'sorozatok', title: 'Sorozatok', completed: 0, total: 0, color: '#39ff14', icon: '∞', correctAnswers: 5, wrongAnswers: 10, totalAnswers: 15 },
-        ],
-        university: [
-            { id: 'analizis1', title: 'Analízis I.', completed: 0, total: 0, color: '#39ff14', icon: '∫', correctAnswers: 20, wrongAnswers: 5, totalAnswers: 25 },
-            { id: 'analizis2', title: 'Analízis II.', completed: 0, total: 0, color: '#39ff14', icon: '∂', correctAnswers: 12, wrongAnswers: 8, totalAnswers: 20 },
-            { id: 'linearis-algebra', title: 'Lineáris Algebra', completed: 0, total: 0, color: '#39ff14', icon: '⬜', correctAnswers: 18, wrongAnswers: 7, totalAnswers: 25 },
-            { id: 'differencial-geometria', title: 'Differenciálgeometria', completed: 0, total: 0, color: '#39ff14', icon: '🌀', correctAnswers: 8, wrongAnswers: 12, totalAnswers: 20 },
-            { id: 'topologia', title: 'Topológia', completed: 0, total: 0, color: '#39ff14', icon: '🔗', correctAnswers: 6, wrongAnswers: 14, totalAnswers: 20 },
-            { id: 'valoszinuseg-elmeleti', title: 'Valószínűség-elmélet', completed: 0, total: 0, color: '#39ff14', icon: 'P', correctAnswers: 15, wrongAnswers: 5, totalAnswers: 20 },
-            { id: 'numerikus-modszerek', title: 'Numerikus Módszerek', completed: 0, total: 0, color: '#39ff14', icon: '🔢', correctAnswers: 22, wrongAnswers: 3, totalAnswers: 25 },
-            { id: 'operaciokutatas', title: 'Operációkutatás', completed: 0, total: 0, color: '#39ff14', icon: '⚙️', correctAnswers: 16, wrongAnswers: 4, totalAnswers: 20 },
-            { id: 'diszkret-matematika', title: 'Diszkrét Matematika', completed: 0, total: 0, color: '#39ff14', icon: '⚫', correctAnswers: 14, wrongAnswers: 6, totalAnswers: 20 },
-            { id: 'graf-elmelet', title: 'Gráfelmélet', completed: 0, total: 0, color: '#39ff14', icon: '🕸️', correctAnswers: 10, wrongAnswers: 10, totalAnswers: 20 },
-        ]
+        elementary: getTopicsForEducationLevel('elementary').map((t) => ({
+            ...t,
+            completed: 0,
+            total: 0,
+            correctAnswers: 0,
+            wrongAnswers: 0,
+            totalAnswers: 0,
+        })),
+        highschool: getTopicsForEducationLevel('highschool').map((t) => ({
+            ...t,
+            completed: 0,
+            total: 0,
+            correctAnswers: 0,
+            wrongAnswers: 0,
+            totalAnswers: 0,
+        })),
+        university: getTopicsForEducationLevel('university').map((t) => ({
+            ...t,
+            completed: 0,
+            total: 0,
+            correctAnswers: 0,
+            wrongAnswers: 0,
+            totalAnswers: 0,
+        })),
     };
 
     const [mathTopics, setMathTopics] = useState<MathTopic[]>([]);
 
     useEffect(() => {
-        const savedLevel = localStorage.getItem('educationLevel') as 'elementary' | 'highschool' | 'university';
-        if (savedLevel && allMathTopics[savedLevel]) {
+        const savedLevel = localStorage.getItem('educationLevel') as EducationLevelId | null;
+        if (savedLevel === 'elementary' || savedLevel === 'highschool' || savedLevel === 'university') {
             setEducationLevel(savedLevel);
         }
     }, []);
@@ -908,36 +904,25 @@ export default function Dashboard() {
                 {/* Education Level Selector */}
                 <section className="education-level-section">
                     <h3 className="level-title">
-                        🎓 Válaszd ki az oktatási szinted
+                        Válassz oktatási szintet:
                     </h3>
                     <div className="level-selector">
-                        <button
-                            className={`level-btn ${educationLevel === 'elementary' ? 'active' : ''}`}
-                            onClick={() => {
-                                setEducationLevel('elementary');
-                                localStorage.setItem('educationLevel', 'elementary');
-                            }}
-                        >
-                            🏫 Általános Iskola
-                        </button>
-                        <button
-                            className={`level-btn ${educationLevel === 'highschool' ? 'active' : ''}`}
-                            onClick={() => {
-                                setEducationLevel('highschool');
-                                localStorage.setItem('educationLevel', 'highschool');
-                            }}
-                        >
-                            🎒 Középiskola
-                        </button>
-                        <button
-                            className={`level-btn ${educationLevel === 'university' ? 'active' : ''}`}
-                            onClick={() => {
-                                setEducationLevel('university');
-                                localStorage.setItem('educationLevel', 'university');
-                            }}
-                        >
-                            🎓 Egyetem
-                        </button>
+                        {EDUCATION_LEVELS.map((level) => (
+                            <button
+                                key={level.id}
+                                className={`level-btn ${educationLevel === level.id ? 'active' : ''}`}
+                                onClick={() => {
+                                    setEducationLevel(level.id);
+                                    localStorage.setItem('educationLevel', level.id);
+                                }}
+                            >
+                                <span style={{ display: 'block', fontSize: '1.35rem' }}>{level.emoji}</span>
+                                {level.name}
+                                <span style={{ display: 'block', fontSize: '0.8rem', opacity: 0.75, fontWeight: 500 }}>
+                                    {level.desc}
+                                </span>
+                            </button>
+                        ))}
                     </div>
                 </section>
 
@@ -974,15 +959,16 @@ export default function Dashboard() {
                 {/* Mathematical Topics Section */}
                 <section className="attendance-section">
                     <h2 className="section-title">
-                        {educationLevel === 'elementary' && '🏫 Általános Iskolai'}
+                        {educationLevel === 'elementary' && '🏫 Általános iskolai'}
                         {educationLevel === 'highschool' && '🎒 Középiskolai'}
                         {educationLevel === 'university' && '🎓 Egyetemi'}
-                        {' '}Matematikai Témakörök
+                        {' '}
+                        {educationLevel === 'university' ? 'tantárgyak' : 'témakörök'}
                     </h2>
                     <p className="section-subtitle">
-                        {educationLevel === 'elementary' && 'Alapozd meg a matematikai tudásod'}
-                        {educationLevel === 'highschool' && 'Készülj fel az érettségire és továbbtanulásra'}
-                        {educationLevel === 'university' && 'Mélyítsd el a felsőfokú matematikai ismereteid'}
+                        {educationLevel === 'elementary' && '1-8. osztály — ugyanazok a témák, mint a játékban'}
+                        {educationLevel === 'highschool' && '9-12. osztály — ugyanazok a témák, mint a játékban'}
+                        {educationLevel === 'university' && 'Analízis I–III. — ugyanaz, mint a játék kezdőképernyőjén'}
                     </p>
 
                     <div className="topics-grid">
