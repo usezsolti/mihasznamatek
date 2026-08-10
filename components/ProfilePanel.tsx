@@ -435,7 +435,7 @@ export default function ProfilePanel({ embedded = false }: { embedded?: boolean 
                             backgroundClip: 'text',
                             margin: 0
                         }}>
-                            👤 MyMihasznaMat
+                            👤 Profil
                         </h1>
                         <button
                             onClick={() => router.push('/dashboard')}

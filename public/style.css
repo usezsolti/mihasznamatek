@@ -57,10 +57,6 @@ nav {
   margin-left: 0.15rem;
 }
 
-.nav-brand-mymihaszna {
-  display: none;
-}
-
 /* Alap: mobilnézetben rejtett menü */
 .nav-links {
   display: flex;
