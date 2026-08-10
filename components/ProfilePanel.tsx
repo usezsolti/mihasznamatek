@@ -1094,7 +1094,7 @@ export default function ProfilePanel({ embedded = false }: { embedded?: boolean 
                                 transition: 'all 0.3s ease'
                             }}
                         >
-                            📚 Érettségi
+                            📝 Érettségire felkészülés
                         </button>
                     </div>
 

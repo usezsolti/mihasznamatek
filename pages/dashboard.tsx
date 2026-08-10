@@ -899,11 +899,7 @@ export default function Dashboard() {
 
                 {activeTab === 'tanulas' && (
                 <>
-                <section className="profile-embedded-section" style={{ padding: '0.5rem 0 1.5rem' }}>
-                    <ProfilePanel embedded />
-                </section>
-
-                {/* Education Level Selector */}
+                {/* Education Level Selector — first so the 4 categories are visible */}
                 <section className="education-level-section">
                     <h3 className="level-title">
                         Válassz kategóriát:
@@ -948,6 +944,10 @@ export default function Dashboard() {
                             </button>
                         </div>
                     )}
+                </section>
+
+                <section className="profile-embedded-section" style={{ padding: '0.5rem 0 1.5rem' }}>
+                    <ProfilePanel embedded />
                 </section>
 
                     {isAdmin && (
