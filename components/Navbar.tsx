@@ -268,7 +268,7 @@ export default function Navbar() {
                                         }
                                         onClick={toggleMenu}
                                     >
-                                        mymihaszna mat
+                                        MyMihasznaMat
                                     </Link>
                                 </li>
                                 <li>
