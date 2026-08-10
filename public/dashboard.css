@@ -384,17 +384,23 @@ header .theme-toggler span.active {
     z-index: 1000;
     background-color: var(--color-background);
     display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    padding: 0 3rem;
+    align-items: stretch;
+    justify-content: flex-start;
+    padding: 0 1rem;
     color: var(--color-info);
+    min-height: 3.7rem;
     overflow-x: auto;
+    overflow-y: hidden;
     -webkit-overflow-scrolling: touch;
+    box-sizing: border-box;
 }
 
 .nav-tabs {
     display: flex;
     align-items: center;
+    min-height: 3.7rem;
+    width: max-content;
+    margin-left: auto;
 }
 
 .nav-tab {
@@ -3500,6 +3506,7 @@ select.form-input:disabled {
     backdrop-filter: blur(15px);
     border-bottom: 2px solid rgba(57, 255, 20, 0.3);
     box-shadow: 0 0 20px rgba(57, 255, 20, 0.2);
+    min-height: 3.7rem;
 }
 
 .modern-theme .nav-tab {
