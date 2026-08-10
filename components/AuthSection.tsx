@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { openAuthModal } from "../utils/authModal";
+import { isTestAuthUser } from "../utils/testLogin";
 
 interface CurrentUser {
     uid: string;
@@ -55,7 +56,7 @@ export default function AuthSection() {
                 const isPassword = (user.providerData || []).some(
                     (p: any) => p?.providerId === "password"
                 );
-                if (isPassword && !user.emailVerified) {
+                if (isPassword && !user.emailVerified && !isTestAuthUser(user)) {
                     setCurrentUser(null);
                     setCheckingAuth(false);
                     return;

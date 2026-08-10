@@ -18,6 +18,14 @@ function initializeFirebase() {
             console.error('Firebase inicializálási hiba:', error);
         }
     }
+    // Munkamenet maradjon böngésző frissítés / navigáció után is
+    try {
+        if (window.firebase?.apps?.length && window.firebase.auth?.Auth?.Persistence?.LOCAL) {
+            window.firebase.auth().setPersistence(window.firebase.auth.Auth.Persistence.LOCAL);
+        }
+    } catch (e) {
+        console.warn('Auth persistence LOCAL set failed:', e);
+    }
 }
 
 // Várjuk meg, hogy a Firebase SDK-k betöltődjenek

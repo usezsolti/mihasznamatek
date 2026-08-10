@@ -87,23 +87,24 @@ export default function TopicPathMap({
         return () => unsub?.();
     }, [reload, topicId]);
 
+    const showToast = (msg: string) => {
+        setToast(msg);
+        window.setTimeout(() => setToast(null), 2800);
+    };
+
     const handleTestLogin = async () => {
         setTestLoading(true);
         try {
             const result = await signInAsTestUser();
             showToast(`Bejelentkezve: ${result.email}`);
             await reload();
+            router.push('/dashboard?tab=profil');
         } catch (e: any) {
             console.error(e);
             showToast(formatAuthError(e));
         } finally {
             setTestLoading(false);
         }
-    };
-
-    const showToast = (msg: string) => {
-        setToast(msg);
-        window.setTimeout(() => setToast(null), 2800);
     };
 
     const startLesson = (lesson: number) => {
@@ -164,38 +165,68 @@ export default function TopicPathMap({
 
     const renderNode = (node: PathNode, index: number) => {
         const zigLeft = index % 2 === 0;
+        const side = zigLeft ? 'left' : 'right';
+
         if (node.kind === 'lesson') {
             const done = lessonsCompleted.includes(node.lesson);
             const unlocked = isLessonUnlocked(node.lesson, highestUnlocked, lessonsCompleted);
             const current = node.lesson === continueLesson && !done;
+            const allDone = lessonsCompleted.length >= PATH_LESSON_COUNT;
+            const showMascot = current || (allDone && node.lesson === PATH_LESSON_COUNT);
+
             return (
-                <div
-                    key={`L${node.lesson}`}
-                    className={`path-row ${zigLeft ? 'path-left' : 'path-right'}`}
-                >
-                    <button
-                        type="button"
-                        className={`path-node lesson ${done ? 'done' : ''} ${unlocked ? 'unlocked' : 'locked'} ${current ? 'current' : ''}`}
-                        style={{
-                            borderColor: current || done ? topicColor : undefined,
-                            boxShadow: current ? `0 0 24px ${topicColor}66` : undefined,
-                        }}
-                        disabled={!unlocked}
-                        onClick={() => startLesson(node.lesson)}
-                        aria-label={node.label}
-                    >
-                        <span className="path-node-icon">
-                            {done ? '✓' : unlocked ? node.lesson : '🔒'}
-                        </span>
-                        <span className="path-node-label">{node.label}</span>
-                        {!unlocked && (
-                            <span className="path-cta locked-hint">
-                                Előbb Lecke {node.lesson - 1}
-                            </span>
+                <div key={`L${node.lesson}`} className={`duo-row duo-${side}`}>
+                    <div className={`duo-cluster ${current ? 'is-current' : ''}`}>
+                        {current && (
+                            <button
+                                type="button"
+                                className="duo-bubble"
+                                onClick={() => startLesson(node.lesson)}
+                            >
+                                KEZDÉS
+                            </button>
                         )}
-                        {current && <span className="path-cta">Folytatás</span>}
-                        {done && <span className="path-stars">★★★</span>}
-                    </button>
+                        <button
+                            type="button"
+                            className={`duo-node lesson ${done ? 'done' : ''} ${unlocked ? 'unlocked' : 'locked'} ${current ? 'current' : ''}`}
+                            style={
+                                current || done
+                                    ? {
+                                          background: done
+                                              ? 'linear-gradient(180deg,#ffd700,#e6a800)'
+                                              : `linear-gradient(180deg, ${topicColor}, #1f9a0d)`,
+                                          boxShadow: current
+                                              ? `0 8px 0 #14660a, 0 0 28px ${topicColor}88`
+                                              : '0 8px 0 #a67c00',
+                                      }
+                                    : undefined
+                            }
+                            disabled={!unlocked}
+                            onClick={() => startLesson(node.lesson)}
+                            aria-label={node.label}
+                        >
+                            <span className="duo-glyph">
+                                {done ? '★' : unlocked ? (current ? '★' : String(node.lesson)) : '★'}
+                            </span>
+                        </button>
+                        <span className={`duo-caption ${unlocked ? '' : 'muted'}`}>
+                            {done ? `Lecke ${node.lesson} · Kész` : node.label}
+                        </span>
+                    </div>
+
+                    {showMascot && (
+                        <div className={`duo-mascot ${side === 'left' ? 'mascot-right' : 'mascot-left'}`}>
+                            <img
+                                src="/mihaszna-mascot.png"
+                                alt="Mihaszna"
+                                width={120}
+                                height={120}
+                                onError={(e) => {
+                                    (e.currentTarget as HTMLImageElement).src = '/mihaszna-mascot.svg';
+                                }}
+                            />
+                        </div>
+                    )}
                 </div>
             );
         }
@@ -203,30 +234,25 @@ export default function TopicPathMap({
         const unlocked = isChestUnlockable(node.chest, lessonsCompleted);
         const claimed = chestsClaimed.includes(node.chest);
         return (
-            <div
-                key={`C${node.chest}`}
-                className={`path-row ${zigLeft ? 'path-left' : 'path-right'}`}
-            >
+            <div key={`C${node.chest}`} className={`duo-row duo-${side}`}>
                 <button
                     type="button"
-                    className={`path-node chest ${claimed ? 'claimed' : ''} ${unlocked ? 'unlocked' : 'locked'}`}
+                    className={`duo-chest ${claimed ? 'claimed' : ''} ${unlocked ? 'unlocked' : 'locked'}`}
                     disabled={!unlocked || claimed || claiming}
                     onClick={() => onChestClick(node.chest)}
                     aria-label={node.label}
                 >
-                    <span className="path-node-icon">{claimed ? '📦' : unlocked ? '🎁' : '🔒'}</span>
-                    <span className="path-node-label">
-                        {node.label} · +{node.xp} XP
+                    <span className="chest-icon">{claimed ? '📦' : '🎁'}</span>
+                    <span className="chest-label">
+                        {claimed ? 'Begyűjtve' : unlocked ? `+${node.xp} XP` : 'Zárva'}
                     </span>
-                    {unlocked && !claimed && <span className="path-cta">Begyűjtés</span>}
-                    {claimed && <span className="path-cta">Kész</span>}
                 </button>
             </div>
         );
     };
 
     return (
-        <div className="topic-path">
+        <div className="topic-path duo-path">
             <div className="path-top">
                 <button type="button" className="path-back" onClick={onBack}>
                     ← Témakörök
@@ -254,22 +280,20 @@ export default function TopicPathMap({
                         <div className="path-xp-fill" style={{ width: `${xpPct}%`, background: topicColor }} />
                     </div>
                 </div>
-                <button
-                    type="button"
-                    className="path-continue-main"
-                    style={{ background: topicColor }}
-                    onClick={() => startLesson(continueLesson)}
-                >
-                    {doneCount >= PATH_LESSON_COUNT ? 'Újra a mester lecke' : `Folytatás · Lecke ${continueLesson}`}
-                </button>
 
                 {!loggedInEmail ? (
                     <div className="path-test-login">
-                        <p>
-                            Haladás mentéséhez: egy kattintásos teszt fiók ({TEST_LOGIN_EMAIL})
-                        </p>
+                        <p>Haladás mentéséhez: egy kattintásos teszt fiók ({TEST_LOGIN_EMAIL})</p>
                         <div className="path-test-actions">
-                            <button type="button" disabled={testLoading} onClick={handleTestLogin}>
+                            <button
+                                type="button"
+                                disabled={testLoading}
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    e.stopPropagation();
+                                    void handleTestLogin();
+                                }}
+                            >
                                 {testLoading ? 'Belépés…' : 'Teszt belépés'}
                             </button>
                             <button
@@ -296,22 +320,18 @@ export default function TopicPathMap({
                 )}
             </div>
 
-            <div className="path-track">
-                <div className="path-line" aria-hidden />
+            <div className="duo-track">
+                <div className="duo-rail" aria-hidden />
                 {nodes.map((n, i) => renderNode(n, i))}
             </div>
 
             {toast && <div className="path-toast">{toast}</div>}
 
             <style jsx>{`
-                .topic-path {
-                    max-width: 520px;
+                .duo-path {
+                    max-width: 420px;
                     margin: 0 auto;
-                    padding: 0.5rem 1rem 3rem;
-                    position: relative;
-                }
-                .path-top {
-                    margin-bottom: 1.5rem;
+                    padding: 0.5rem 0.75rem 3.5rem;
                 }
                 .path-back {
                     background: transparent;
@@ -342,7 +362,7 @@ export default function TopicPathMap({
                     font-size: 0.9rem;
                 }
                 .path-xp {
-                    margin-bottom: 1rem;
+                    margin-bottom: 0.75rem;
                 }
                 .path-xp-labels {
                     display: flex;
@@ -364,19 +384,8 @@ export default function TopicPathMap({
                     border-radius: 999px;
                     transition: width 0.35s ease;
                 }
-                .path-continue-main {
-                    width: 100%;
-                    border: none;
-                    color: #111;
-                    font-weight: 800;
-                    font-size: 1.05rem;
-                    padding: 0.85rem 1rem;
-                    border-radius: 16px;
-                    cursor: pointer;
-                    margin-top: 0.25rem;
-                }
                 .path-test-login {
-                    margin-top: 1rem;
+                    margin-top: 0.75rem;
                     padding: 0.85rem 1rem;
                     border-radius: 14px;
                     border: 1px dashed rgba(255, 215, 0, 0.55);
@@ -408,115 +417,213 @@ export default function TopicPathMap({
                     border: 1px solid rgba(255, 255, 255, 0.35);
                     color: #fff;
                 }
-                .path-test-login button:disabled {
-                    opacity: 0.6;
-                    cursor: wait;
-                }
                 .path-logged-in {
                     margin: 0.75rem 0 0;
                     color: #9f9;
                     font-size: 0.85rem;
                     text-align: center;
                 }
-                .path-track {
+
+                .duo-track {
                     position: relative;
-                    padding: 1rem 0 2rem;
+                    margin-top: 1.25rem;
+                    padding: 1.5rem 0 2rem;
+                    min-height: 640px;
                 }
-                .path-line {
+                .duo-rail {
                     position: absolute;
                     left: 50%;
-                    top: 0;
-                    bottom: 0;
-                    width: 4px;
-                    margin-left: -2px;
+                    top: 24px;
+                    bottom: 24px;
+                    width: 18px;
+                    margin-left: -9px;
+                    border-radius: 999px;
                     background: linear-gradient(
                         180deg,
-                        rgba(57, 255, 20, 0.15),
-                        rgba(255, 215, 0, 0.35),
-                        rgba(255, 105, 180, 0.25)
+                        rgba(57, 255, 20, 0.35),
+                        rgba(80, 80, 90, 0.55) 40%,
+                        rgba(60, 60, 70, 0.65)
                     );
-                    border-radius: 4px;
+                    box-shadow: inset 0 0 0 3px rgba(0, 0, 0, 0.35);
                     z-index: 0;
                 }
-                .path-row {
+                .duo-row {
                     position: relative;
                     z-index: 1;
                     display: flex;
-                    margin: 1.1rem 0;
+                    align-items: center;
+                    min-height: 118px;
+                    margin: 0.35rem 0;
                 }
-                .path-left {
+                .duo-left {
                     justify-content: flex-start;
-                    padding-right: 18%;
+                    padding-left: 12%;
                 }
-                .path-right {
+                .duo-right {
                     justify-content: flex-end;
-                    padding-left: 18%;
+                    padding-right: 12%;
                 }
-                .path-node {
+                .duo-cluster {
+                    position: relative;
                     display: flex;
                     flex-direction: column;
                     align-items: center;
-                    gap: 0.35rem;
-                    min-width: 140px;
-                    max-width: 180px;
-                    padding: 0.85rem 0.75rem;
-                    border-radius: 22px;
-                    border: 2px solid rgba(255, 255, 255, 0.2);
-                    background: rgba(0, 0, 0, 0.45);
-                    color: #fff;
+                    width: 110px;
+                }
+                .duo-bubble {
+                    position: absolute;
+                    top: -42px;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    background: #1c1c1e;
+                    color: #39ff14;
+                    border: none;
+                    border-radius: 14px;
+                    padding: 0.45rem 0.9rem;
+                    font-weight: 900;
+                    font-size: 0.85rem;
+                    letter-spacing: 0.06em;
                     cursor: pointer;
-                    transition: transform 0.2s ease, box-shadow 0.2s ease;
+                    box-shadow: 0 6px 0 #0a0a0a;
+                    animation: duoPulse 1.6s ease-in-out infinite;
+                    z-index: 3;
                 }
-                .path-node:disabled {
-                    cursor: not-allowed;
-                    opacity: 0.55;
+                .duo-bubble::after {
+                    content: '';
+                    position: absolute;
+                    left: 50%;
+                    bottom: -8px;
+                    margin-left: -7px;
+                    border: 7px solid transparent;
+                    border-top-color: #1c1c1e;
                 }
-                .path-node.unlocked:not(:disabled):hover {
-                    transform: translateY(-3px);
+                @keyframes duoPulse {
+                    0%,
+                    100% {
+                        transform: translateX(-50%) translateY(0);
+                    }
+                    50% {
+                        transform: translateX(-50%) translateY(-4px);
+                    }
                 }
-                .path-node.current {
-                    background: rgba(57, 255, 20, 0.12);
-                }
-                .path-node.done {
-                    background: rgba(255, 215, 0, 0.12);
-                }
-                .path-node.chest.unlocked:not(.claimed) {
-                    background: rgba(255, 105, 180, 0.15);
-                    border-color: rgba(255, 105, 180, 0.7);
-                }
-                .path-node-icon {
-                    font-size: 1.6rem;
-                    font-weight: 800;
-                    width: 52px;
-                    height: 52px;
+                .duo-node {
+                    width: 78px;
+                    height: 78px;
                     border-radius: 50%;
+                    border: 0;
                     display: flex;
                     align-items: center;
                     justify-content: center;
-                    background: rgba(255, 255, 255, 0.08);
+                    cursor: pointer;
+                    background: linear-gradient(180deg, #4a4a52, #2e2e34);
+                    box-shadow: 0 8px 0 #1a1a1e;
+                    transition: transform 0.15s ease;
                 }
-                .path-node-label {
-                    font-size: 0.82rem;
+                .duo-node.locked {
+                    cursor: not-allowed;
+                    filter: grayscale(0.35);
+                    opacity: 0.85;
+                }
+                .duo-node.unlocked:not(:disabled):active {
+                    transform: translateY(4px);
+                    box-shadow: 0 4px 0 #14660a;
+                }
+                .duo-node.current {
+                    animation: duoGlow 2s ease-in-out infinite;
+                }
+                @keyframes duoGlow {
+                    0%,
+                    100% {
+                        filter: brightness(1);
+                    }
+                    50% {
+                        filter: brightness(1.12);
+                    }
+                }
+                .duo-glyph {
+                    font-size: 2rem;
+                    color: rgba(255, 255, 255, 0.92);
+                    font-weight: 900;
+                    text-shadow: 0 2px 0 rgba(0, 0, 0, 0.25);
+                }
+                .duo-node.locked .duo-glyph {
+                    color: rgba(255, 255, 255, 0.28);
+                }
+                .duo-caption {
+                    margin-top: 0.45rem;
+                    font-size: 0.78rem;
+                    color: #ddd;
                     text-align: center;
-                    line-height: 1.25;
-                    color: #eee;
+                    max-width: 120px;
+                    line-height: 1.2;
                 }
-                .path-cta {
-                    font-size: 0.75rem;
+                .duo-caption.muted {
+                    color: #777;
+                }
+                .duo-chest {
+                    width: 72px;
+                    height: 72px;
+                    border-radius: 18px;
+                    border: 3px solid rgba(255, 255, 255, 0.12);
+                    background: #2a2a32;
+                    color: #fff;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: center;
+                    gap: 0.15rem;
+                    cursor: pointer;
+                    box-shadow: 0 6px 0 #15151a;
+                }
+                .duo-chest.locked {
+                    opacity: 0.55;
+                    cursor: not-allowed;
+                    filter: grayscale(0.6);
+                }
+                .duo-chest.unlocked:not(.claimed) {
+                    border-color: #4da3ff;
+                    background: linear-gradient(180deg, #3d6ea8, #2a4f7a);
+                }
+                .duo-chest.claimed {
+                    border-color: #ffd700;
+                    background: linear-gradient(180deg, #5a4a12, #3a2f0a);
+                }
+                .chest-icon {
+                    font-size: 1.6rem;
+                }
+                .chest-label {
+                    font-size: 0.65rem;
                     font-weight: 700;
-                    color: #39ff14;
-                    text-transform: uppercase;
-                    letter-spacing: 0.04em;
+                    letter-spacing: 0.02em;
                 }
-                .path-cta.locked-hint {
-                    color: #aaa;
-                    text-transform: none;
-                    font-weight: 600;
+                .duo-mascot {
+                    position: absolute;
+                    top: 50%;
+                    transform: translateY(-42%);
+                    width: 112px;
+                    pointer-events: none;
+                    filter: drop-shadow(0 10px 16px rgba(0, 0, 0, 0.45));
+                    animation: mascotBob 2.4s ease-in-out infinite;
                 }
-                .path-stars {
-                    color: #ffd700;
-                    font-size: 0.85rem;
-                    letter-spacing: 0.1em;
+                .mascot-right {
+                    left: calc(50% + 56px);
+                }
+                .mascot-left {
+                    right: calc(50% + 56px);
+                }
+                .duo-mascot img {
+                    width: 112px;
+                    height: auto;
+                    display: block;
+                }
+                @keyframes mascotBob {
+                    0%,
+                    100% {
+                        transform: translateY(-42%);
+                    }
+                    50% {
+                        transform: translateY(calc(-42% - 8px));
+                    }
                 }
                 .path-toast {
                     position: fixed;
@@ -531,16 +638,23 @@ export default function TopicPathMap({
                     z-index: 50;
                     font-weight: 600;
                     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.45);
-                    animation: pathToastIn 0.25s ease;
                 }
-                @keyframes pathToastIn {
-                    from {
-                        opacity: 0;
-                        transform: translate(-50%, 12px);
+                @media (max-width: 420px) {
+                    .duo-mascot {
+                        width: 88px;
                     }
-                    to {
-                        opacity: 1;
-                        transform: translate(-50%, 0);
+                    .duo-mascot img {
+                        width: 88px;
+                    }
+                    .mascot-right {
+                        left: calc(50% + 40px);
+                    }
+                    .mascot-left {
+                        right: calc(50% + 40px);
+                    }
+                    .duo-node {
+                        width: 70px;
+                        height: 70px;
                     }
                 }
             `}</style>

@@ -6,6 +6,7 @@ import AdminWorkingHoursEditor from "../components/AdminWorkingHoursEditor";
 import BookingAttachments from "../components/BookingAttachments";
 import ProfilePanel from "../components/ProfilePanel";
 import { isAdminEmail } from "../utils/admin";
+import { isTestAuthUser } from "../utils/testLogin";
 import {
     gameUrlForAssignedTask,
     loadStudentAssignedTasks,
@@ -139,11 +140,11 @@ export default function Dashboard() {
                         return;
                     }
 
-                    // E-mail/jelszó fiókoknál kötelező a megerősített e-mail
+                    // E-mail/jelszó fiókoknál kötelező a megerősített e-mail (teszt fiók kivétel)
                     const isPasswordUser = (user.providerData || []).some(
                         (p: any) => p?.providerId === 'password'
                     );
-                    if (isPasswordUser && !user.emailVerified) {
+                    if (isPasswordUser && !user.emailVerified && !isTestAuthUser(user)) {
                         setMe(null);
                         setIsAdmin(false);
                         setLoading(false);

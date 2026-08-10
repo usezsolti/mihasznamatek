@@ -3,6 +3,28 @@
 export const TEST_LOGIN_EMAIL = "teszt@mihasznamatek.hu";
 export const TEST_LOGIN_PASSWORD = "teszt123456";
 
+/** Teszt fiók (e-mail vagy isTestAccount jelölés) — e-mail megerősítés nélkül is bejelentkezve maradhat. */
+export function isTestAuthUser(user: any): boolean {
+    if (!user) return false;
+    const email = String(user.email || "").trim().toLowerCase();
+    if (email && email === TEST_LOGIN_EMAIL.toLowerCase()) return true;
+    if (user.isAnonymous && String(user.displayName || "").toLowerCase().includes("teszt")) {
+        return true;
+    }
+    return false;
+}
+
+async function ensureAuthPersistence(auth: any, firebase: any) {
+    try {
+        const Persistence = firebase?.auth?.Auth?.Persistence;
+        if (Persistence?.LOCAL && typeof auth.setPersistence === "function") {
+            await auth.setPersistence(Persistence.LOCAL);
+        }
+    } catch (e) {
+        console.warn("setPersistence(LOCAL) skipped:", e);
+    }
+}
+
 export function formatAuthError(err: any): string {
     const code = err?.code || "";
     switch (code) {
@@ -144,6 +166,7 @@ export async function signInAsTestUser(): Promise<{
         throw new Error("A Firebase nem töltődött be. Frissítsd az oldalt.");
     }
     const auth = firebase.auth();
+    await ensureAuthPersistence(auth, firebase);
 
     try {
         return await signInWithEmail(auth, firebase);

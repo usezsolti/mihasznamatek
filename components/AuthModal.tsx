@@ -242,13 +242,21 @@ export default function AuthModal({
             if (mode === "login") {
                 const cred = await auth.signInWithEmailAndPassword(email.trim(), password);
                 const user = cred.user;
-                if (user && isEmailPasswordUser(user) && !user.emailVerified) {
+                const isTestEmail =
+                    email.trim().toLowerCase() === TEST_LOGIN_EMAIL.toLowerCase();
+                // Teszt fióknál ne blokkoljon az e-mail megerősítés
+                if (user && isEmailPasswordUser(user) && !user.emailVerified && !isTestEmail) {
                     setAwaitingVerification(true);
                     setInfoMessage(
                         "Erősítsd meg az e-mail címed a belépéshez. Nézd a postaládát (és a Spam mappát)."
                     );
                     setPassword("");
                     return;
+                }
+                try {
+                    await ensureUserDoc(firebase, user, { name: user?.displayName || undefined });
+                } catch (docErr) {
+                    console.warn("ensureUserDoc after login:", docErr);
                 }
             } else {
                 const profile = buildProfile();
@@ -268,11 +276,15 @@ export default function AuthModal({
                 const user = credential.user;
                 if (user) {
                     await user.updateProfile({ displayName: profile.name });
-                    await ensureUserDoc(firebase, user, {
-                        name: profile.name,
-                        gdprAccepted: true,
-                        profile,
-                    });
+                    try {
+                        await ensureUserDoc(firebase, user, {
+                            name: profile.name,
+                            gdprAccepted: true,
+                            profile,
+                        });
+                    } catch (docErr) {
+                        console.warn("ensureUserDoc after register:", docErr);
+                    }
                     try {
                         await user.sendEmailVerification();
                     } catch (verErr) {
@@ -290,7 +302,7 @@ export default function AuthModal({
             finishAuthSuccess();
         } catch (err: any) {
             console.error(err);
-            setError(mapFirebaseError(err?.code));
+            setError(formatAuthError(err) || mapFirebaseError(err?.code));
         } finally {
             setLoading(false);
         }
@@ -309,7 +321,7 @@ export default function AuthModal({
                 router.push(redirectTo);
                 return;
             }
-            router.push("/erettsegi-felkeszules?mode=topics");
+            router.push("/dashboard?tab=profil");
         } catch (err: any) {
             console.error(err);
             setError(formatAuthError(err) || mapFirebaseError(err?.code));
@@ -393,17 +405,21 @@ export default function AuthModal({
                         }
                     }
                 }
-                await ensureUserDoc(firebase, result.user, {
-                    gdprAccepted: Boolean(isNewUser && gdprAccepted),
-                    profile: isNewUser ? fullProfile : undefined,
-                    name: displayName || undefined,
-                });
+                try {
+                    await ensureUserDoc(firebase, result.user, {
+                        gdprAccepted: Boolean(isNewUser && gdprAccepted),
+                        profile: isNewUser ? fullProfile : undefined,
+                        name: displayName || undefined,
+                    });
+                } catch (docErr) {
+                    console.warn("ensureUserDoc after Google:", docErr);
+                }
             }
             setPassword("");
             finishAuthSuccess();
         } catch (err: any) {
             console.error(err);
-            setError(mapFirebaseError(err?.code));
+            setError(formatAuthError(err) || mapFirebaseError(err?.code));
         } finally {
             setLoading(false);
         }
@@ -537,6 +553,39 @@ export default function AuthModal({
                         </div>
 
                         <div className="auth-tab-content active">
+                            {mode === "login" && (
+                                <div style={{ marginBottom: "1rem" }}>
+                                    <button
+                                        type="button"
+                                        className="google-login-btn"
+                                        onClick={handleTestLogin}
+                                        disabled={loading}
+                                        style={{
+                                            background: "rgba(255, 215, 0, 0.18)",
+                                            border: "2px solid #ffd700",
+                                            color: "#ffd700",
+                                            width: "100%",
+                                            position: "relative",
+                                            zIndex: 5,
+                                        }}
+                                    >
+                                        {loading ? "Belépés…" : "Teszt belépés (1 kattintás)"}
+                                    </button>
+                                    <p
+                                        style={{
+                                            color: "#888",
+                                            fontSize: "0.75rem",
+                                            margin: "0.45rem 0 0",
+                                            textAlign: "center",
+                                        }}
+                                    >
+                                        {TEST_LOGIN_EMAIL} / {TEST_LOGIN_PASSWORD}
+                                    </p>
+                                    <div className="auth-divider" style={{ margin: "1rem 0" }}>
+                                        <span>vagy e-mail / Google</span>
+                                    </div>
+                                </div>
+                            )}
                             <form className="email-form" onSubmit={handleEmailSubmit}>
                                 {mode === "register" && (
                                     <div className="form-group">
@@ -739,35 +788,6 @@ export default function AuthModal({
                             >
                                 Folytatás Google-lal
                             </button>
-
-                            {mode === "login" && (
-                                <>
-                                    <button
-                                        type="button"
-                                        className="google-login-btn"
-                                        onClick={handleTestLogin}
-                                        disabled={loading}
-                                        style={{
-                                            marginTop: "0.75rem",
-                                            background: "rgba(255, 215, 0, 0.15)",
-                                            border: "2px solid #ffd700",
-                                            color: "#ffd700",
-                                        }}
-                                    >
-                                        Teszt belépés
-                                    </button>
-                                    <p
-                                        style={{
-                                            color: "#888",
-                                            fontSize: "0.75rem",
-                                            marginTop: "0.5rem",
-                                            textAlign: "center",
-                                        }}
-                                    >
-                                        {TEST_LOGIN_EMAIL} / {TEST_LOGIN_PASSWORD}
-                                    </p>
-                                </>
-                            )}
 
                             {mode === "register" && (
                                 <p
