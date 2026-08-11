@@ -23,6 +23,7 @@ import {
 import { formatAuthError, signInAsTestUser, TEST_LOGIN_EMAIL } from '../utils/testLogin';
 import MathHexMascot from './MathHexMascot';
 import MathNodeIcon from './MathNodeIcon';
+import MathRewardIcon from './MathRewardIcon';
 
 interface Props {
     topicId: string;
@@ -165,7 +166,7 @@ export default function TopicPathMap({
                     .filter(Boolean)
                     .join(', ');
                 showToast(
-                    `🎁 +${result.xpGained} XP` + (badgeBits ? ` · ${badgeBits}` : '')
+                    `★ +${result.xpGained} XP` + (badgeBits ? ` · ${badgeBits}` : '')
                 );
             }
         } catch (e) {
@@ -302,9 +303,16 @@ export default function TopicPathMap({
                         onClick={() => onChestClick(node.chest)}
                         aria-label={node.label}
                     >
-                        <span className="mm-path-chest-icon">{claimed ? '✓' : '🎁'}</span>
+                        <span className="mm-path-chest-icon">
+                            <MathRewardIcon
+                                chest={node.chest}
+                                claimed={claimed}
+                                locked={!unlocked}
+                                size={claimed || unlocked ? 36 : 32}
+                            />
+                        </span>
                         <span className="mm-path-chest-label">
-                            {claimed ? 'Kész' : unlocked ? `+${node.xp}` : 'Zárva'}
+                            {claimed ? 'Kész' : unlocked ? `+${node.xp} XP` : 'Zárva'}
                         </span>
                     </button>
                 </div>
