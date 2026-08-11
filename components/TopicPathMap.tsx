@@ -17,10 +17,12 @@ import {
     buildWindingLayout,
     isChestUnlockable,
     isLessonUnlocked,
+    lessonMathSymbol,
     type PathNode,
 } from '../utils/topicPath';
 import { formatAuthError, signInAsTestUser, TEST_LOGIN_EMAIL } from '../utils/testLogin';
 import MathHexMascot from './MathHexMascot';
+import MathNodeIcon from './MathNodeIcon';
 
 interface Props {
     topicId: string;
@@ -243,24 +245,28 @@ export default function TopicPathMap({
                             aria-label={node.label}
                         >
                             <span className="mm-path-glyph">
-                                {done
-                                    ? '★'
-                                    : unlocked
-                                      ? current
-                                          ? '★'
-                                          : node.lesson === PATH_LESSON_COUNT
-                                            ? '🏆'
-                                            : String(node.lesson)
-                                      : '★'}
+                                <MathNodeIcon
+                                    lesson={node.lesson}
+                                    locked={!unlocked}
+                                    done={done}
+                                    current={current}
+                                    size={current || done ? 36 : 32}
+                                />
                             </span>
                         </button>
                         <span className={`mm-path-caption ${unlocked ? '' : 'muted'}`}>
                             {done ? `Lecke ${node.lesson} · Kész` : node.label}
                         </span>
                         {(done || starCount > 0) && (
-                            <span className="mm-path-stars" aria-label={`${starCount} csillag`}>
-                                {'★'.repeat(starCount)}
-                                {'☆'.repeat(Math.max(0, 3 - starCount))}
+                            <span className="mm-path-stars" aria-label={`${starCount} alakzat`}>
+                                {Array.from({ length: 3 }, (_, i) => (
+                                    <span
+                                        key={i}
+                                        style={{ opacity: i < starCount ? 1 : 0.25 }}
+                                    >
+                                        {lessonMathSymbol(node.lesson)}
+                                    </span>
+                                ))}
                             </span>
                         )}
 
@@ -385,30 +391,45 @@ export default function TopicPathMap({
                     preserveAspectRatio="none"
                     aria-hidden
                 >
-                    {/* Vastag út a háttérben */}
+                    <defs>
+                        <linearGradient id="mmMobiusFront" x1="0" y1="0" x2="1" y2="1">
+                            <stop offset="0%" stopColor={accent} stopOpacity="0.95" />
+                            <stop offset="100%" stopColor="#b8ff4a" stopOpacity="0.85" />
+                        </linearGradient>
+                        <linearGradient id="mmMobiusBack" x1="0" y1="0" x2="1" y2="1">
+                            <stop offset="0%" stopColor="#1f5a00" stopOpacity="0.95" />
+                            <stop offset="100%" stopColor="#2f7a0a" stopOpacity="0.9" />
+                        </linearGradient>
+                    </defs>
+                    {/* Möbius él / árnyék */}
                     <path
-                        d={winding.svgPath}
-                        fill="none"
-                        stroke="#1f1f23"
-                        strokeWidth="7"
-                        strokeLinecap="round"
+                        d={winding.mobius.edge}
+                        fill="#0a0a0a"
+                        fillOpacity="0.45"
                     />
+                    {/* Hátlap (csavar utáni sötétebb oldal) */}
                     <path
-                        d={winding.svgPath}
-                        fill="none"
-                        stroke={accent}
-                        strokeOpacity="0.85"
-                        strokeWidth="4.5"
-                        strokeLinecap="round"
+                        d={winding.mobius.back}
+                        fill="url(#mmMobiusBack)"
+                        stroke="#0d2a00"
+                        strokeWidth="0.35"
                     />
+                    {/* Előlap (világosabb oldal) */}
                     <path
-                        d={winding.svgPath}
+                        d={winding.mobius.front}
+                        fill="url(#mmMobiusFront)"
+                        stroke="#0d2a00"
+                        strokeWidth="0.35"
+                    />
+                    {/* Középvonal — szalag „útvonal” mintája */}
+                    <path
+                        d={winding.mobius.center}
                         fill="none"
                         stroke="#0a0a0a"
-                        strokeWidth="1.5"
+                        strokeWidth="0.7"
                         strokeLinecap="round"
-                        strokeDasharray="1.2 2"
-                        opacity="0.45"
+                        strokeDasharray="1.4 1.8"
+                        opacity="0.55"
                     />
                 </svg>
                 {nodes.map((n, i) => renderPlacedNode(n, i))}

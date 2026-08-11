@@ -83,9 +83,129 @@ export function buildPathNodes(): PathNode[] {
 /** Duolingo-szerű kanyargós layout: x/y százalék + SVG path (viewBox 0 0 100 100). */
 export type WindingPoint = { x: number; y: number; side: 'left' | 'right' };
 
+export type MobiusRibbon = {
+    /** Világosabb „előlap” sáv */
+    front: string;
+    /** Sötétebb „hátlap” sáv (csavar után) */
+    back: string;
+    /** Középvonal a szaggatott mintához */
+    center: string;
+    /** Élvonal a 3D hatáshoz */
+    edge: string;
+};
+
+function densifyPoints(
+    points: Array<{ x: number; y: number }>,
+    samplesPerSeg = 10
+): Array<{ x: number; y: number }> {
+    if (points.length < 2) return points.slice();
+    const out: Array<{ x: number; y: number }> = [];
+    for (let i = 0; i < points.length - 1; i++) {
+        const a = points[i];
+        const b = points[i + 1];
+        for (let s = 0; s < samplesPerSeg; s++) {
+            const t = s / samplesPerSeg;
+            // enyhe S-görbe interpoláció
+            const mt = t * t * (3 - 2 * t);
+            out.push({
+                x: a.x + (b.x - a.x) * mt,
+                y: a.y + (b.y - a.y) * mt,
+            });
+        }
+    }
+    out.push(points[points.length - 1]);
+    return out;
+}
+
+function polyPath(pts: Array<{ x: number; y: number }>, close = false): string {
+    if (!pts.length) return '';
+    let d = `M ${pts[0].x.toFixed(2)} ${pts[0].y.toFixed(2)}`;
+    for (let i = 1; i < pts.length; i++) {
+        d += ` L ${pts[i].x.toFixed(2)} ${pts[i].y.toFixed(2)}`;
+    }
+    if (close) d += ' Z';
+    return d;
+}
+
+/** Möbius-szalag: félfordulatos csavar a sávban (előlap/hátlap). */
+export function buildMobiusRibbon(
+    points: Array<{ x: number; y: number }>,
+    halfWidth = 3.4
+): MobiusRibbon {
+    const dense = densifyPoints(points, 12);
+    const left: Array<{ x: number; y: number }> = [];
+    const right: Array<{ x: number; y: number }> = [];
+    const center = dense;
+
+    for (let i = 0; i < dense.length; i++) {
+        const p = dense[i];
+        const prev = dense[Math.max(0, i - 1)];
+        const next = dense[Math.min(dense.length - 1, i + 1)];
+        let tx = next.x - prev.x;
+        let ty = next.y - prev.y;
+        const len = Math.hypot(tx, ty) || 1;
+        tx /= len;
+        ty /= len;
+        // normál
+        let nx = -ty;
+        let ny = tx;
+
+        // Fél fordulat (0 → π): a szélesség előjele megfordul → Möbius hatás
+        const theta = (i / Math.max(1, dense.length - 1)) * Math.PI;
+        const w = halfWidth * Math.cos(theta);
+        // a csavar közepén ne tűnjön el teljesen
+        const ww = Math.abs(w) < 0.55 ? (w >= 0 ? 0.55 : -0.55) : w;
+
+        left.push({ x: p.x + nx * ww, y: p.y + ny * ww });
+        right.push({ x: p.x - nx * ww, y: p.y - ny * ww });
+    }
+
+    const mid = Math.floor(dense.length / 2);
+    // Előlap: 0..mid, hátlap: mid..end (másik szín)
+    const frontPoly = [
+        ...left.slice(0, mid + 1),
+        ...right.slice(0, mid + 1).reverse(),
+    ];
+    const backPoly = [
+        ...left.slice(mid),
+        ...right.slice(mid).reverse(),
+    ];
+
+    // Él: bal oldal végig + jobb vissza
+    const edgePoly = [...left, ...right.slice().reverse()];
+
+    return {
+        front: polyPath(frontPoly, true),
+        back: polyPath(backPoly, true),
+        center: polyPath(center, false),
+        edge: polyPath(edgePoly, true),
+    };
+}
+
+/** Lecke ikon: matematikai alakzat (csillag helyett). */
+export function lessonMathSymbol(lesson: number): string {
+    switch (lesson) {
+        case 1:
+            return '△';
+        case 2:
+            return '□';
+        case 3:
+            return '○';
+        case 4:
+            return '◇';
+        case 5:
+            return '⬡';
+        case 6:
+            return 'Σ';
+        default:
+            return 'π';
+    }
+}
+
 export function buildWindingLayout(count: number): {
     points: WindingPoint[];
     svgPath: string;
+    mobius: MobiusRibbon;
 } {
     // Erősebb zigzag — a node-ok jól láthatóan bal/jobb oldalon
     const patternX = [50, 26, 30, 74, 70, 26, 30, 74, 70];
@@ -114,7 +234,9 @@ export function buildWindingLayout(count: number): {
         }
     }
 
-    return { points, svgPath };
+    const mobius = buildMobiusRibbon(points, 3.6);
+
+    return { points, svgPath, mobius };
 }
 
 export function computeHighestUnlocked(lessonsCompleted: number[]): number {
