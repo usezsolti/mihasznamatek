@@ -356,11 +356,20 @@ export default function Navbar() {
                                 Ár
                             </a>
                         </li>
-                        <li>
-                            <Link href="/booking" onClick={toggleMenu}>
-                                Időpontfoglalás
-                            </Link>
-                        </li>
+                            <li>
+                                <Link
+                                    href="/community"
+                                    className={router.pathname === "/community" ? "nav-link-active" : undefined}
+                                    onClick={toggleMenu}
+                                >
+                                    Közösség
+                                </Link>
+                            </li>
+                            <li>
+                                <Link href="/booking" onClick={toggleMenu}>
+                                    Időpontfoglalás
+                                </Link>
+                            </li>
                         <li>
                             <a href="/#contact" onClick={handleAnchorClick("#contact")}>
                                 Kapcsolat

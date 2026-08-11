@@ -977,6 +977,20 @@ export default function Dashboard() {
                         </section>
                     )}
 
+                <section className="attendance-section" style={{ marginBottom: '1.5rem' }}>
+                    <div className="mm-social-dash-card">
+                        <div>
+                            <h2 className="section-title" style={{ marginBottom: '0.35rem' }}>Közösség</h2>
+                            <p className="section-subtitle" style={{ margin: 0 }}>
+                                Követés, posztok, kommentek, tanulócsoportok, üzenetek, AI matek shorts és XP ranglista.
+                            </p>
+                        </div>
+                        <Link href="/community" className="mm-social-primary" style={{ textDecoration: 'none' }}>
+                            Megnyitás
+                        </Link>
+                    </div>
+                </section>
+
                 {/* Mathematical Topics Section */}
                 <section className="attendance-section">
                     <h2 className="section-title">
