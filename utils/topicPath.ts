@@ -83,15 +83,12 @@ export function buildPathNodes(): PathNode[] {
 /** Duolingo-szerű kanyargós layout: x/y százalék + SVG path (viewBox 0 0 100 100). */
 export type WindingPoint = { x: number; y: number; side: 'left' | 'right' };
 
-export type MobiusRibbon = {
-    /** Világosabb „előlap” sáv */
-    front: string;
-    /** Sötétebb „hátlap” sáv (csavar után) */
-    back: string;
-    /** Középvonal a szaggatott mintához */
-    center: string;
-    /** Élvonal a 3D hatáshoz */
-    edge: string;
+export type DoubleHelixPaths = {
+    strandA: string;
+    strandB: string;
+    /** Szalag / „cső” a szálak körül */
+    tubeA: string;
+    tubeB: string;
 };
 
 function densifyPoints(
@@ -105,7 +102,6 @@ function densifyPoints(
         const b = points[i + 1];
         for (let s = 0; s < samplesPerSeg; s++) {
             const t = s / samplesPerSeg;
-            // enyhe S-görbe interpoláció
             const mt = t * t * (3 - 2 * t);
             out.push({
                 x: a.x + (b.x - a.x) * mt,
@@ -127,60 +123,102 @@ function polyPath(pts: Array<{ x: number; y: number }>, close = false): string {
     return d;
 }
 
-/** Möbius-szalag: félfordulatos csavar a sávban (előlap/hátlap). */
-export function buildMobiusRibbon(
-    points: Array<{ x: number; y: number }>,
-    halfWidth = 3.4
-): MobiusRibbon {
-    const dense = densifyPoints(points, 12);
+function tubeAround(
+    center: Array<{ x: number; y: number }>,
+    halfWidth: number
+): string {
+    if (center.length < 2) return '';
     const left: Array<{ x: number; y: number }> = [];
     const right: Array<{ x: number; y: number }> = [];
-    const center = dense;
-
-    for (let i = 0; i < dense.length; i++) {
-        const p = dense[i];
-        const prev = dense[Math.max(0, i - 1)];
-        const next = dense[Math.min(dense.length - 1, i + 1)];
+    for (let i = 0; i < center.length; i++) {
+        const p = center[i];
+        const prev = center[Math.max(0, i - 1)];
+        const next = center[Math.min(center.length - 1, i + 1)];
         let tx = next.x - prev.x;
         let ty = next.y - prev.y;
         const len = Math.hypot(tx, ty) || 1;
         tx /= len;
         ty /= len;
-        // normál
-        let nx = -ty;
-        let ny = tx;
+        const nx = -ty;
+        const ny = tx;
+        left.push({ x: p.x + nx * halfWidth, y: p.y + ny * halfWidth });
+        right.push({ x: p.x - nx * halfWidth, y: p.y - ny * halfWidth });
+    }
+    return polyPath([...left, ...right.reverse()], true);
+}
 
-        // Fél fordulat (0 → π): a szélesség előjele megfordul → Möbius hatás
-        const theta = (i / Math.max(1, dense.length - 1)) * Math.PI;
-        const w = halfWidth * Math.cos(theta);
-        // a csavar közepén ne tűnjön el teljesen
-        const ww = Math.abs(w) < 0.55 ? (w >= 0 ? 0.55 : -0.55) : w;
+/** Kettős hélix: két összefonódó szál. */
+export function buildDoubleHelix(
+    count: number,
+    opts?: { turns?: number; amplitude?: number; y0?: number; y1?: number }
+): {
+    points: WindingPoint[];
+    helix: DoubleHelixPaths;
+    svgPath: string;
+} {
+    const turns = opts?.turns ?? 1.55;
+    const amplitude = opts?.amplitude ?? 16;
+    const y0 = opts?.y0 ?? 7;
+    const y1 = opts?.y1 ?? 93;
+    const n = Math.max(1, count);
 
-        left.push({ x: p.x + nx * ww, y: p.y + ny * ww });
-        right.push({ x: p.x - nx * ww, y: p.y - ny * ww });
+    const strandAPts: Array<{ x: number; y: number }> = [];
+    const strandBPts: Array<{ x: number; y: number }> = [];
+    const samples = Math.max(48, n * 14);
+
+    for (let i = 0; i <= samples; i++) {
+        const t = i / samples;
+        const y = y0 + (y1 - y0) * t;
+        const phase = t * turns * Math.PI * 2;
+        strandAPts.push({ x: 50 + amplitude * Math.sin(phase), y });
+        strandBPts.push({ x: 50 + amplitude * Math.sin(phase + Math.PI), y });
     }
 
-    const mid = Math.floor(dense.length / 2);
-    // Előlap: 0..mid, hátlap: mid..end (másik szín)
-    const frontPoly = [
-        ...left.slice(0, mid + 1),
-        ...right.slice(0, mid + 1).reverse(),
-    ];
-    const backPoly = [
-        ...left.slice(mid),
-        ...right.slice(mid).reverse(),
-    ];
+    // Node-ok a hélixre: váltakozva A/B szálon
+    const points: WindingPoint[] = [];
+    for (let i = 0; i < n; i++) {
+        const t = n === 1 ? 0 : i / (n - 1);
+        const y = y0 + (y1 - y0) * t;
+        const phase = t * turns * Math.PI * 2;
+        const onA = i % 2 === 0;
+        const x = 50 + amplitude * Math.sin(phase + (onA ? 0 : Math.PI));
+        points.push({
+            x,
+            y,
+            side: x < 50 ? 'left' : 'right',
+        });
+    }
 
-    // Él: bal oldal végig + jobb vissza
-    const edgePoly = [...left, ...right.slice().reverse()];
+    const helix: DoubleHelixPaths = {
+        strandA: polyPath(strandAPts),
+        strandB: polyPath(strandBPts),
+        tubeA: tubeAround(densifyPoints(strandAPts, 1), 2.4),
+        tubeB: tubeAround(densifyPoints(strandBPts, 1), 2.4),
+    };
+
+    // Középvonal (referencia)
+    const mid = densifyPoints(
+        Array.from({ length: 12 }, (_, i) => {
+            const t = i / 11;
+            return { x: 50, y: y0 + (y1 - y0) * t };
+        }),
+        4
+    );
 
     return {
-        front: polyPath(frontPoly, true),
-        back: polyPath(backPoly, true),
-        center: polyPath(center, false),
-        edge: polyPath(edgePoly, true),
+        points,
+        helix,
+        svgPath: polyPath(mid),
     };
 }
+
+/** @deprecated — a Möbius helyett double helixet használunk; kompatibilitás miatt megmarad. */
+export type MobiusRibbon = {
+    front: string;
+    back: string;
+    center: string;
+    edge: string;
+};
 
 /** Lecke ikon: matematikai alakzat (csillag helyett). */
 export function lessonMathSymbol(lesson: number): string {
@@ -205,38 +243,14 @@ export function lessonMathSymbol(lesson: number): string {
 export function buildWindingLayout(count: number): {
     points: WindingPoint[];
     svgPath: string;
-    mobius: MobiusRibbon;
+    helix: DoubleHelixPaths;
 } {
-    // Erősebb zigzag — a node-ok jól láthatóan bal/jobb oldalon
-    const patternX = [50, 26, 30, 74, 70, 26, 30, 74, 70];
-    const points: WindingPoint[] = [];
-    const n = Math.max(1, count);
-    for (let i = 0; i < n; i++) {
-        const x = patternX[i % patternX.length];
-        const y = 7 + (i / Math.max(1, n - 1)) * 86;
-        points.push({
-            x,
-            y,
-            side: x < 50 ? 'left' : 'right',
-        });
-    }
-
-    let svgPath = '';
-    if (points.length === 1) {
-        svgPath = `M ${points[0].x} ${points[0].y}`;
-    } else {
-        svgPath = `M ${points[0].x} ${points[0].y}`;
-        for (let i = 1; i < points.length; i++) {
-            const prev = points[i - 1];
-            const curr = points[i];
-            const midY = (prev.y + curr.y) / 2;
-            svgPath += ` C ${prev.x} ${midY}, ${curr.x} ${midY}, ${curr.x} ${curr.y}`;
-        }
-    }
-
-    const mobius = buildMobiusRibbon(points, 3.6);
-
-    return { points, svgPath, mobius };
+    const built = buildDoubleHelix(count);
+    return {
+        points: built.points,
+        svgPath: built.svgPath,
+        helix: built.helix,
+    };
 }
 
 export function computeHighestUnlocked(lessonsCompleted: number[]): number {

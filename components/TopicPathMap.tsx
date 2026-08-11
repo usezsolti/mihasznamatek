@@ -203,7 +203,7 @@ export default function TopicPathMap({
             position: 'absolute',
             left: `${pt.x}%`,
             top: `${pt.y}%`,
-            zIndex: 2,
+            zIndex: 5,
         };
 
         if (node.kind === 'lesson') {
@@ -225,38 +225,42 @@ export default function TopicPathMap({
                                 KEZDÉS
                             </button>
                         )}
-                        <button
-                            type="button"
-                            className={`mm-path-btn ${done ? 'done' : ''} ${unlocked ? 'unlocked' : 'locked'} ${current ? 'current' : ''}`}
-                            style={
-                                current || done
-                                    ? {
-                                          background: done
-                                              ? 'linear-gradient(180deg,#ffc800,#e0a800)'
-                                              : `linear-gradient(180deg, ${accent}, #3d9e00)`,
-                                          boxShadow: current
-                                              ? `0 8px 0 #2f6f00, 0 0 0 5px #1f1f23`
-                                              : '0 8px 0 #a67c00',
-                                      }
-                                    : undefined
-                            }
-                            disabled={!unlocked}
-                            onClick={() => startLesson(node.lesson)}
-                            aria-label={node.label}
-                        >
-                            <span className="mm-path-glyph">
-                                <MathNodeIcon
-                                    lesson={node.lesson}
-                                    locked={!unlocked}
-                                    done={done}
-                                    current={current}
-                                    size={current || done ? 36 : 32}
-                                />
+                        <div className="mm-path-btn-wrap">
+                            <button
+                                type="button"
+                                className={`mm-path-btn ${done ? 'done' : ''} ${unlocked ? 'unlocked' : 'locked'} ${current ? 'current' : ''}`}
+                                style={
+                                    current || done
+                                        ? {
+                                              background: done
+                                                  ? 'linear-gradient(180deg,#ffc800,#e0a800)'
+                                                  : `linear-gradient(180deg, ${accent}, #3d9e00)`,
+                                              boxShadow: current
+                                                  ? `0 8px 0 #2f6f00, 0 0 0 5px #1f1f23`
+                                                  : '0 8px 0 #a67c00',
+                                          }
+                                        : undefined
+                                }
+                                disabled={!unlocked}
+                                onClick={() => startLesson(node.lesson)}
+                                aria-label={node.label}
+                            >
+                                <span className="mm-path-glyph">
+                                    <MathNodeIcon
+                                        lesson={node.lesson}
+                                        locked={!unlocked}
+                                        done={done}
+                                        current={current}
+                                        size={current || done ? 36 : 32}
+                                    />
+                                </span>
+                            </button>
+                            <span
+                                className={`mm-path-caption ${unlocked ? '' : 'muted'} ${pt.side === 'left' ? 'cap-right' : 'cap-left'}`}
+                            >
+                                {done ? `Lecke ${node.lesson} · Kész` : node.label}
                             </span>
-                        </button>
-                        <span className={`mm-path-caption ${unlocked ? '' : 'muted'}`}>
-                            {done ? `Lecke ${node.lesson} · Kész` : node.label}
-                        </span>
+                        </div>
                         {(done || starCount > 0) && (
                             <span className="mm-path-stars" aria-label={`${starCount} alakzat`}>
                                 {Array.from({ length: 3 }, (_, i) => (
@@ -392,44 +396,51 @@ export default function TopicPathMap({
                     aria-hidden
                 >
                     <defs>
-                        <linearGradient id="mmMobiusFront" x1="0" y1="0" x2="1" y2="1">
+                        <linearGradient id="mmHelixA" x1="0" y1="0" x2="0" y2="1">
                             <stop offset="0%" stopColor={accent} stopOpacity="0.95" />
-                            <stop offset="100%" stopColor="#b8ff4a" stopOpacity="0.85" />
+                            <stop offset="100%" stopColor="#9dff3a" stopOpacity="0.85" />
                         </linearGradient>
-                        <linearGradient id="mmMobiusBack" x1="0" y1="0" x2="1" y2="1">
-                            <stop offset="0%" stopColor="#1f5a00" stopOpacity="0.95" />
-                            <stop offset="100%" stopColor="#2f7a0a" stopOpacity="0.9" />
+                        <linearGradient id="mmHelixB" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="0%" stopColor="#3aa0ff" stopOpacity="0.9" />
+                            <stop offset="100%" stopColor="#1a6fd0" stopOpacity="0.85" />
                         </linearGradient>
                     </defs>
-                    {/* Möbius él / árnyék */}
+                    {/* Double helix tubes */}
+                    <path d={winding.helix.tubeB} fill="url(#mmHelixB)" opacity="0.88" />
+                    <path d={winding.helix.tubeA} fill="url(#mmHelixA)" opacity="0.92" />
                     <path
-                        d={winding.mobius.edge}
-                        fill="#0a0a0a"
-                        fillOpacity="0.45"
-                    />
-                    {/* Hátlap (csavar utáni sötétebb oldal) */}
-                    <path
-                        d={winding.mobius.back}
-                        fill="url(#mmMobiusBack)"
-                        stroke="#0d2a00"
-                        strokeWidth="0.35"
-                    />
-                    {/* Előlap (világosabb oldal) */}
-                    <path
-                        d={winding.mobius.front}
-                        fill="url(#mmMobiusFront)"
-                        stroke="#0d2a00"
-                        strokeWidth="0.35"
-                    />
-                    {/* Középvonal — szalag „útvonal” mintája */}
-                    <path
-                        d={winding.mobius.center}
+                        d={winding.helix.strandB}
                         fill="none"
-                        stroke="#0a0a0a"
-                        strokeWidth="0.7"
+                        stroke="#0a2a55"
+                        strokeWidth="0.55"
                         strokeLinecap="round"
-                        strokeDasharray="1.4 1.8"
-                        opacity="0.55"
+                        opacity="0.7"
+                    />
+                    <path
+                        d={winding.helix.strandA}
+                        fill="none"
+                        stroke="#143800"
+                        strokeWidth="0.55"
+                        strokeLinecap="round"
+                        opacity="0.7"
+                    />
+                    <path
+                        d={winding.helix.strandB}
+                        fill="none"
+                        stroke="#dff0ff"
+                        strokeWidth="0.35"
+                        strokeLinecap="round"
+                        strokeDasharray="1.1 1.6"
+                        opacity="0.45"
+                    />
+                    <path
+                        d={winding.helix.strandA}
+                        fill="none"
+                        stroke="#f0ffe0"
+                        strokeWidth="0.35"
+                        strokeLinecap="round"
+                        strokeDasharray="1.1 1.6"
+                        opacity="0.45"
                     />
                 </svg>
                 {nodes.map((n, i) => renderPlacedNode(n, i))}
