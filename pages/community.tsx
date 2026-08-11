@@ -4,28 +4,31 @@ import { useRouter } from 'next/router';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import PostCard, { resolveLikedMap } from '../components/community/PostCard';
 import {
-    createPost,
-    createStudyGroup,
-    ensureSocialProfile,
+    apiCreateGroup,
+    apiCreatePost,
+    apiEnsureProfile,
+    apiFollow,
+    apiGetProfile,
+    apiIsFollowing,
+    apiJoinGroup,
+    apiLeaveGroup,
+    apiListConversations,
+    apiListFeed,
+    apiListFollowingIds,
+    apiListGroups,
+    apiListMessages,
+    apiListProfiles,
+    apiSendMessage,
+    apiUnfollow,
+    apiUpdateProfile,
+} from '../utils/socialApi';
+import {
     FALLBACK_MATH_SHORTS,
-    followUser,
-    getSocialProfile,
-    isFollowing,
-    joinStudyGroup,
-    leaveStudyGroup,
-    listConversations,
-    listFeedPosts,
-    listFollowingIds,
     listMathShorts,
-    listMessages,
-    listProfiles,
-    listStudyGroups,
     saveMathShort,
-    sendDirectMessage,
-    unfollowUser,
-    updateSocialProfile,
 } from '../utils/social';
 import { conversationIdFor, type ConversationPreview, type DirectMessage, type MathShort, type SocialPost, type SocialProfile, type StudyGroup } from '../utils/socialTypes';
+import { backendHealth } from '../utils/backendClient';
 
 type Tab = 'feed' | 'shorts' | 'explore' | 'groups' | 'messages' | 'profile';
 
@@ -88,7 +91,16 @@ export default function CommunityPage() {
     }, [router.query.tab]);
 
     const refreshFeed = useCallback(async (userId: string, following: string[]) => {
-        const list = await listFeedPosts({ authorIds: [...following, userId], limit: 50 });
+        const list = await apiListFeed(50);
+        // Követettek előre
+        if (following.length) {
+            const set = new Set([...following, userId]);
+            const followed = list.filter((p) => set.has(p.authorId));
+            const rest = list.filter((p) => !set.has(p.authorId));
+            setPosts([...followed, ...rest]);
+            setLikedMap(await resolveLikedMap([...followed, ...rest], userId));
+            return;
+        }
         setPosts(list);
         setLikedMap(await resolveLikedMap(list, userId));
     }, []);
@@ -108,19 +120,23 @@ export default function CommunityPage() {
             }
             try {
                 setUid(user.uid);
-                const profile = await ensureSocialProfile(user.uid);
+                const profile = await apiEnsureProfile(user.uid);
                 setMe(profile);
                 setBioDraft(profile.bio);
                 setUsernameDraft(profile.username);
-                const following = await listFollowingIds(user.uid);
+                const following = await apiListFollowingIds(user.uid);
                 setFollowingIds(following);
                 await refreshFeed(user.uid, following);
-                const [p, g, c, s] = await Promise.all([
-                    listProfiles(30),
-                    listStudyGroups(40),
-                    listConversations(user.uid),
+                const [p, g, c, s, health] = await Promise.all([
+                    apiListProfiles(30),
+                    apiListGroups(),
+                    apiListConversations(user.uid),
                     listMathShorts(20).catch(() => []),
+                    backendHealth().catch(() => null),
                 ]);
+                if (health && (health as any).ok) {
+                    console.info('backend health', (health as any).data);
+                }
                 setProfiles(p);
                 setGroups(g);
                 setConversations(c);
@@ -157,19 +173,19 @@ export default function CommunityPage() {
     const openProfile = async (targetUid: string) => {
         if (!uid) return;
         let p = profiles.find((x) => x.uid === targetUid) || null;
-        if (!p) p = await getSocialProfile(targetUid);
+        if (!p) p = await apiGetProfile(targetUid);
         if (!p) {
             showToast('Profil nem található.');
             return;
         }
         setViewProfile(p);
-        setFollowingView(await isFollowing(uid, targetUid));
+        setFollowingView(await apiIsFollowing(uid, targetUid));
         setTab('profile');
     };
 
     const startMessage = async (targetUid: string) => {
         if (!me || !uid || targetUid === uid) return;
-        let other = profiles.find((p) => p.uid === targetUid) || (await getSocialProfile(targetUid));
+        let other = profiles.find((p) => p.uid === targetUid) || (await apiGetProfile(targetUid));
         if (!other) {
             showToast('Felhasználó nem található.');
             return;
@@ -187,7 +203,7 @@ export default function CommunityPage() {
             };
         }
         setActiveChat(conv);
-        setMessages(await listMessages(cid).catch(() => []));
+        setMessages(await apiListMessages(cid).catch(() => []));
         setTab('messages');
     };
 
@@ -195,7 +211,7 @@ export default function CommunityPage() {
         if (!me || busy) return;
         setBusy(true);
         try {
-            const p = await createPost(me, postText);
+            const p = await apiCreatePost(me, postText);
             setPostText('');
             setPosts((prev) => [p, ...prev]);
             showToast('Poszt kint van!');
@@ -210,21 +226,21 @@ export default function CommunityPage() {
         if (!uid || uid === target.uid || busy) return;
         setBusy(true);
         try {
-            const already = await isFollowing(uid, target.uid);
+            const already = await apiIsFollowing(uid, target.uid);
             if (already) {
-                await unfollowUser(uid, target.uid);
+                await apiUnfollow(uid, target.uid);
                 setFollowingIds((ids) => ids.filter((id) => id !== target.uid));
                 setFollowingView(false);
                 showToast('Követés leállítva');
             } else {
-                await followUser(uid, target.uid);
+                await apiFollow(uid, target.uid);
                 setFollowingIds((ids) => [...ids, target.uid]);
                 setFollowingView(true);
                 showToast(`Követed: @${target.username}`);
             }
-            const fresh = await ensureSocialProfile(uid);
+            const fresh = await apiEnsureProfile(uid);
             setMe(fresh);
-            setProfiles(await listProfiles(30));
+            setProfiles(await apiListProfiles(30));
         } catch (e: any) {
             showToast(e?.message || 'Követés hiba');
         } finally {
@@ -236,7 +252,7 @@ export default function CommunityPage() {
         if (!me || busy) return;
         setBusy(true);
         try {
-            const g = await createStudyGroup(me, groupName, groupDesc, groupTopic);
+            const g = await apiCreateGroup(me, groupName, groupDesc, groupTopic);
             setGroups((prev) => [g, ...prev]);
             setGroupName('');
             setGroupDesc('');
@@ -254,13 +270,13 @@ export default function CommunityPage() {
         setBusy(true);
         try {
             if (g.memberIds.includes(uid)) {
-                await leaveStudyGroup(g.id, uid);
+                await apiLeaveGroup(g.id, uid);
                 showToast('Kiléptél a csoportból');
             } else {
-                await joinStudyGroup(g.id, uid);
+                await apiJoinGroup(g.id, uid);
                 showToast('Csatlakoztál!');
             }
-            setGroups(await listStudyGroups(40));
+            setGroups(await apiListGroups());
         } catch (e: any) {
             showToast(e?.message || 'Csoport művelet hiba');
         } finally {
@@ -274,12 +290,12 @@ export default function CommunityPage() {
         try {
             let other =
                 profiles.find((p) => p.uid === activeChat.otherUid) ||
-                (await getSocialProfile(activeChat.otherUid));
+                (await apiGetProfile(activeChat.otherUid));
             if (!other) throw new Error('Címzett hiányzik');
-            await sendDirectMessage(uid, activeChat.otherUid, msgDraft, me, other);
+            await apiSendMessage(uid, activeChat.otherUid, msgDraft, me, other);
             setMsgDraft('');
-            setMessages(await listMessages(activeChat.id));
-            setConversations(await listConversations(uid));
+            setMessages(await apiListMessages(activeChat.id));
+            setConversations(await apiListConversations(uid));
         } catch (e: any) {
             showToast(e?.message || 'Üzenet hiba');
         } finally {
@@ -291,11 +307,11 @@ export default function CommunityPage() {
         if (!me || busy) return;
         setBusy(true);
         try {
-            await updateSocialProfile(me.uid, {
+            await apiUpdateProfile(me.uid, {
                 bio: bioDraft,
                 username: usernameDraft,
             });
-            const fresh = await ensureSocialProfile(me.uid);
+            const fresh = await apiEnsureProfile(me.uid);
             setMe(fresh);
             showToast('Profil mentve');
         } catch (e: any) {
@@ -620,7 +636,7 @@ export default function CommunityPage() {
                                 className={`mm-social-inbox-row ${activeChat?.id === c.id ? 'is-on' : ''}`}
                                 onClick={async () => {
                                     setActiveChat(c);
-                                    setMessages(await listMessages(c.id));
+                                    setMessages(await apiListMessages(c.id));
                                 }}
                             >
                                 <Avatar url={c.otherPhoto} name={c.otherName} size={36} />

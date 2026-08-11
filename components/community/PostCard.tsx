@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import type { SocialComment, SocialPost, SocialProfile } from '../../utils/socialTypes';
-import { addComment, hasLiked, listComments, toggleLike } from '../../utils/social';
+import { apiAddComment, apiHasLiked, apiListComments, apiToggleLike } from '../../utils/socialApi';
 
 type Props = {
     post: SocialPost;
@@ -37,7 +37,7 @@ export default function PostCard({ post, me, liked: likedProp, onOpenProfile, on
     }, [likedProp, post.likeCount, post.id]);
 
     const loadComments = useCallback(async () => {
-        const list = await listComments(post.id);
+        const list = await apiListComments(post.id);
         setComments(list);
     }, [post.id]);
 
@@ -45,7 +45,7 @@ export default function PostCard({ post, me, liked: likedProp, onOpenProfile, on
         if (busy) return;
         setBusy(true);
         try {
-            const res = await toggleLike(post.id, me.uid);
+            const res = await apiToggleLike(post.id, me.uid);
             setLiked(res.liked);
             setLikeCount(res.likeCount);
             onChanged({ ...post, likeCount: res.likeCount });
@@ -64,7 +64,7 @@ export default function PostCard({ post, me, liked: likedProp, onOpenProfile, on
         if (!draft.trim() || busy) return;
         setBusy(true);
         try {
-            const c = await addComment(post.id, me, draft);
+            const c = await apiAddComment(post.id, me, draft);
             setComments((prev) => [...prev, c]);
             setDraft('');
             onChanged({ ...post, commentCount: post.commentCount + 1, likeCount });
@@ -149,7 +149,7 @@ export default function PostCard({ post, me, liked: likedProp, onOpenProfile, on
 
 export async function resolveLikedMap(posts: SocialPost[], uid: string): Promise<Record<string, boolean>> {
     const entries = await Promise.all(
-        posts.map(async (p) => [p.id, await hasLiked(p.id, uid)] as const)
+        posts.map(async (p) => [p.id, await apiHasLiked(p.id, uid)] as const)
     );
     return Object.fromEntries(entries);
 }

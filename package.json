@@ -1,17 +1,20 @@
 {
-  "name": "frontend",
+  "name": "mihasznamatek",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev --turbo",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "backend:dev": "next dev --turbo",
+    "backend:start": "next start"
   },
   "dependencies": {
     "@babylonjs/core": "^8.23.0",
     "@babylonjs/gui": "^8.23.0",
     "@babylonjs/loaders": "^8.23.0",
+    "firebase-admin": "^14.2.0",
     "googleapis": "^157.0.0",
     "katex": "^0.16.27",
     "next": "15.5.22",
