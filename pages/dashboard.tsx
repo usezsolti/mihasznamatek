@@ -19,6 +19,17 @@ import {
     type EducationLevelId,
     type ErettsegiExamLevel,
 } from "../utils/mathTopicsCatalog";
+import {
+    loadUserPracticeProgress,
+    resolveProgressStorageKey,
+} from "../utils/practiceProgress";
+import { PATH_LESSON_COUNT } from "../utils/topicPath";
+import {
+    buildTopicStatsHref,
+    indexBestSessionsByTopic,
+    lookupBestSessionForTopic,
+    type RawGameResult,
+} from "../utils/topicStats";
 
 type DashboardTab = "tanulas" | "profil" | "admin";
 
@@ -38,6 +49,8 @@ type MathTopic = {
     correctAnswers: number;
     wrongAnswers: number;
     totalAnswers: number;
+    lessonsCompleted?: number;
+    pathCompleted?: boolean;
 };
 
 export default function Dashboard() {
@@ -80,6 +93,8 @@ export default function Dashboard() {
             correctAnswers: 0,
             wrongAnswers: 0,
             totalAnswers: 0,
+            lessonsCompleted: 0,
+            pathCompleted: false,
         }));
 
     const [mathTopics, setMathTopics] = useState<MathTopic[]>([]);
@@ -496,52 +511,54 @@ export default function Dashboard() {
         );
     };
     const loadTopicsWithGameResults = async (baseTopics: MathTopic[]) => {
+        const zeroed = (topics: MathTopic[]) =>
+            topics.map((topic) => ({
+                ...topic,
+                completed: 0,
+                total: 0,
+                correctAnswers: 0,
+                wrongAnswers: 0,
+                totalAnswers: 0,
+                lessonsCompleted: 0,
+                pathCompleted: false,
+            }));
+
         try {
             if (!(window as any).firebase) {
-                // Ha nincs Firebase, csak 0% progress-szel betöltjük
-                const topicsWithZeroProgress = baseTopics.map(topic => ({
-                    ...topic,
-                    completed: 0,
-                    total: 0,
-                    correctAnswers: 0,
-                    wrongAnswers: 0,
-                    totalAnswers: 0
-                }));
-                setMathTopics(topicsWithZeroProgress);
+                setMathTopics(zeroed(baseTopics));
                 return;
             }
 
+            const uid = (window as any).firebase.auth().currentUser?.uid || '';
             const db = (window as any).firebase.firestore();
 
-            // Betöltjük a játék eredményeket a gameResults collection-ból
             const gameResultsSnapshot = await db.collection('gameResults')
-                .where('userId', '==', (window as any).firebase.auth().currentUser?.uid || '')
+                .where('userId', '==', uid)
                 .get();
 
-            const gameResults: { [topicId: string]: { correct: number, total: number } } = {};
-
+            const rows: RawGameResult[] = [];
             gameResultsSnapshot.forEach((doc: any) => {
-                const data = doc.data();
-                const key = data.topicId || data.topic;
-                if (key && data.correct !== undefined && data.total !== undefined) {
-                    const prev = gameResults[key];
-                    // Legjobb / legújabb: tartsuk a nagyobb correct arányút
-                    if (!prev || data.correct >= prev.correct) {
-                        gameResults[key] = {
-                            correct: data.correct,
-                            total: data.total
-                        };
-                    }
-                }
+                rows.push({ id: doc.id, ...doc.data() });
             });
+            const bestByKey = indexBestSessionsByTopic(rows);
 
-            // Frissítjük a témaköröket a játék eredményekkel
-            const topicsWithResults = baseTopics.map(topic => {
-                const result = gameResults[topic.id]
-                    || Object.entries(gameResults).find(([k]) =>
-                        k.toLowerCase().includes(topic.id.toLowerCase())
-                        || topic.id.toLowerCase().includes(k.toLowerCase())
-                    )?.[1];
+            let practiceTopics: Record<string, { lessonsCompleted?: number[]; completed?: boolean }> = {};
+            if (uid) {
+                try {
+                    const progress = await loadUserPracticeProgress(uid);
+                    practiceTopics = progress.topics || {};
+                } catch (err) {
+                    console.error('Error loading practice progress:', err);
+                }
+            }
+
+            const topicsWithResults = baseTopics.map((topic) => {
+                const result = lookupBestSessionForTopic(bestByKey, topic.id);
+                const key = resolveProgressStorageKey(topic.id);
+                const tp = practiceTopics[key];
+                const lessonsCompleted = tp?.lessonsCompleted?.length || 0;
+                const pathCompleted = !!tp?.completed;
+
                 if (result) {
                     return {
                         ...topic,
@@ -549,33 +566,27 @@ export default function Dashboard() {
                         total: result.total,
                         correctAnswers: result.correct,
                         wrongAnswers: Math.max(0, result.total - result.correct),
-                        totalAnswers: result.total
-                    };
-                } else {
-                    return {
-                        ...topic,
-                        completed: 0,
-                        total: 0,
-                        correctAnswers: 0,
-                        wrongAnswers: 0,
-                        totalAnswers: 0
+                        totalAnswers: result.total,
+                        lessonsCompleted,
+                        pathCompleted,
                     };
                 }
+                return {
+                    ...topic,
+                    completed: 0,
+                    total: 0,
+                    correctAnswers: 0,
+                    wrongAnswers: 0,
+                    totalAnswers: 0,
+                    lessonsCompleted,
+                    pathCompleted,
+                };
             });
 
             setMathTopics(topicsWithResults);
         } catch (error) {
             console.error('Error loading game results:', error);
-            // Hiba esetén is 0% progress-szel betöltjük
-            const topicsWithZeroProgress = baseTopics.map(topic => ({
-                ...topic,
-                completed: 0,
-                total: 0,
-                correctAnswers: 0,
-                wrongAnswers: 0,
-                totalAnswers: 0
-            }));
-            setMathTopics(topicsWithZeroProgress);
+            setMathTopics(zeroed(baseTopics));
         }
     };
 
@@ -611,23 +622,8 @@ export default function Dashboard() {
         updateTopicProgress(topicId);
     };
 
-    const navigateToProblems = (topicId: string) => {
-        if (educationLevel === 'erettsegi') {
-            router.push(
-                `/erettsegi-felkeszules?mode=topics&level=${erettsegiExamLevel}&topic=${encodeURIComponent(topicId)}`
-            );
-            return;
-        }
-        const params = new URLSearchParams({
-            educationLevel,
-            topic: topicId,
-        });
-        if (educationLevel === 'elementary') {
-            params.set('grade', '5');
-        } else if (educationLevel === 'highschool') {
-            params.set('grade', '10');
-        }
-        router.push(`/game?${params.toString()}`);
+    const navigateToTopicStats = (topicId: string) => {
+        router.push(buildTopicStatsHref(topicId, educationLevel, erettsegiExamLevel));
     };
 
     const addNewTopic = () => {
@@ -1001,10 +997,21 @@ export default function Dashboard() {
                     <div className="topics-grid">
                         {mathTopics.map((topic) => {
                             const successRate = topic.totalAnswers > 0 ? (topic.correctAnswers / topic.totalAnswers) * 100 : 0;
-                            const speedValue = topic.totalAnswers; // Összes válasz száma
-                            const completedValue = topic.correctAnswers; // Helyes válaszok száma
+                            const lessonsDone = topic.lessonsCompleted || 0;
                             return (
-                                <div key={topic.id} className="topic-card speedometer-card" onClick={() => navigateToProblems(topic.id)}>
+                                <div
+                                    key={topic.id}
+                                    className="topic-card speedometer-card"
+                                    onClick={() => navigateToTopicStats(topic.id)}
+                                    role="button"
+                                    tabIndex={0}
+                                    onKeyDown={(e) => {
+                                        if (e.key === 'Enter' || e.key === ' ') {
+                                            e.preventDefault();
+                                            navigateToTopicStats(topic.id);
+                                        }
+                                    }}
+                                >
                                     <div className="card-header">
                                         <div className="topic-icon" style={{ backgroundColor: topic.color }}>
                                             {topic.icon}
@@ -1106,6 +1113,18 @@ export default function Dashboard() {
 
                                             <div className="speedometer-display">
                                                 <div className="progress-percentage">{topic.correctAnswers}/{topic.totalAnswers} helyes</div>
+                                                <div
+                                                    className="progress-percentage"
+                                                    style={{
+                                                        marginTop: '0.35rem',
+                                                        fontSize: '0.85rem',
+                                                        color: topic.pathCompleted ? '#ffd700' : '#9f9',
+                                                    }}
+                                                >
+                                                    {topic.pathCompleted
+                                                        ? '✓ Út kész'
+                                                        : `${lessonsDone}/${PATH_LESSON_COUNT} lecke`}
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
