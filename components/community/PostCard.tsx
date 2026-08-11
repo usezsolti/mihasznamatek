@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import type { SocialComment, SocialPost, SocialProfile } from '../utils/socialTypes';
-import { addComment, hasLiked, listComments, toggleLike } from '../utils/social';
+import type { SocialComment, SocialPost, SocialProfile } from '../../utils/socialTypes';
+import { addComment, hasLiked, listComments, toggleLike } from '../../utils/social';
 
 type Props = {
     post: SocialPost;
