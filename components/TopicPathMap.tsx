@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState, type CSSProperties } from 'react';
 import { useRouter } from 'next/router';
 import {
     claimPathChest,
@@ -27,7 +27,6 @@ interface Props {
     topicTitle: string;
     topicIcon: string;
     topicColor: string;
-    /** @deprecated use educationLevel + erettsegiLevel */
     level?: 'kozep' | 'emelt';
     educationLevel?: 'elementary' | 'highschool' | 'university' | 'erettsegi';
     erettsegiLevel?: 'kozep' | 'emelt';
@@ -196,7 +195,14 @@ export default function TopicPathMap({
     const renderPlacedNode = (node: PathNode, index: number) => {
         const pt = winding.points[index];
         if (!pt) return null;
-        const side = pt.side;
+
+        // Inline absolute — must sit ON the curve even if CSS classes fail
+        const placeStyle: CSSProperties = {
+            position: 'absolute',
+            left: `${pt.x}%`,
+            top: `${pt.y}%`,
+            zIndex: 2,
+        };
 
         if (node.kind === 'lesson') {
             const done = lessonsCompleted.includes(node.lesson);
@@ -206,16 +212,12 @@ export default function TopicPathMap({
             const starCount = topicProg?.lessonStars?.[node.lesson] || 0;
 
             return (
-                <div
-                    key={`L${node.lesson}`}
-                    className={`wind-node ${current ? 'is-current' : ''}`}
-                    style={{ left: `${pt.x}%`, top: `${pt.y}%` }}
-                >
-                    <div className="duo-cluster">
+                <div key={`L${node.lesson}`} className="mm-path-node" style={placeStyle}>
+                    <div className="mm-path-cluster">
                         {current && (
                             <button
                                 type="button"
-                                className="duo-bubble"
+                                className="mm-path-bubble"
                                 onClick={() => startLesson(node.lesson)}
                             >
                                 KEZDÉS
@@ -223,7 +225,7 @@ export default function TopicPathMap({
                         )}
                         <button
                             type="button"
-                            className={`duo-node lesson ${done ? 'done' : ''} ${unlocked ? 'unlocked' : 'locked'} ${current ? 'current' : ''}`}
+                            className={`mm-path-btn ${done ? 'done' : ''} ${unlocked ? 'unlocked' : 'locked'} ${current ? 'current' : ''}`}
                             style={
                                 current || done
                                     ? {
@@ -240,7 +242,7 @@ export default function TopicPathMap({
                             onClick={() => startLesson(node.lesson)}
                             aria-label={node.label}
                         >
-                            <span className="duo-glyph">
+                            <span className="mm-path-glyph">
                                 {done
                                     ? '★'
                                     : unlocked
@@ -252,26 +254,28 @@ export default function TopicPathMap({
                                       : '★'}
                             </span>
                         </button>
-                        <span className={`duo-caption ${unlocked ? '' : 'muted'}`}>
+                        <span className={`mm-path-caption ${unlocked ? '' : 'muted'}`}>
                             {done ? `Lecke ${node.lesson} · Kész` : node.label}
                         </span>
                         {(done || starCount > 0) && (
-                            <span className="duo-lesson-stars" aria-label={`${starCount} csillag`}>
+                            <span className="mm-path-stars" aria-label={`${starCount} csillag`}>
                                 {'★'.repeat(starCount)}
                                 {'☆'.repeat(Math.max(0, 3 - starCount))}
                             </span>
                         )}
-                    </div>
 
-                    {showMascot && (
-                        <div className={`duo-mascot mascot-${side === 'left' ? 'right' : 'left'}`}>
-                            <MathHexMascot
-                                size={108}
-                                color={accent}
-                                mood={done && allDone ? 'happy' : 'idle'}
-                            />
-                        </div>
-                    )}
+                        {showMascot && (
+                            <div
+                                className={`mm-path-mascot ${pt.side === 'left' ? 'on-right' : 'on-left'}`}
+                            >
+                                <MathHexMascot
+                                    size={108}
+                                    color={accent}
+                                    mood={done && allDone ? 'happy' : 'idle'}
+                                />
+                            </div>
+                        )}
+                    </div>
                 </div>
             );
         }
@@ -279,40 +283,38 @@ export default function TopicPathMap({
         const unlocked = isChestUnlockable(node.chest, lessonsCompleted);
         const claimed = chestsClaimed.includes(node.chest);
         return (
-            <div
-                key={`C${node.chest}`}
-                className="wind-node"
-                style={{ left: `${pt.x}%`, top: `${pt.y}%` }}
-            >
-                <button
-                    type="button"
-                    className={`duo-chest ${claimed ? 'claimed' : ''} ${unlocked ? 'unlocked' : 'locked'}`}
-                    disabled={!unlocked || claimed || claiming}
-                    onClick={() => onChestClick(node.chest)}
-                    aria-label={node.label}
-                >
-                    <span className="chest-icon">{claimed ? '✓' : '🎁'}</span>
-                    <span className="chest-label">
-                        {claimed ? 'Kész' : unlocked ? `+${node.xp}` : 'Zárva'}
-                    </span>
-                </button>
+            <div key={`C${node.chest}`} className="mm-path-node" style={placeStyle}>
+                <div className="mm-path-cluster">
+                    <button
+                        type="button"
+                        className={`mm-path-chest ${claimed ? 'claimed' : ''} ${unlocked ? 'unlocked' : 'locked'}`}
+                        disabled={!unlocked || claimed || claiming}
+                        onClick={() => onChestClick(node.chest)}
+                        aria-label={node.label}
+                    >
+                        <span className="mm-path-chest-icon">{claimed ? '✓' : '🎁'}</span>
+                        <span className="mm-path-chest-label">
+                            {claimed ? 'Kész' : unlocked ? `+${node.xp}` : 'Zárva'}
+                        </span>
+                    </button>
+                </div>
             </div>
         );
     };
 
     return (
-        <div className="topic-path duo-path">
-            <div className="duo-module-bar" style={{ background: accent }}>
-                <button type="button" className="duo-module-back" onClick={onBack} aria-label="Vissza">
+        <div className="mm-path">
+            <div className="mm-path-bar" style={{ background: accent }}>
+                <button type="button" className="mm-path-back" onClick={onBack} aria-label="Vissza">
                     ←
                 </button>
-                <div className="duo-module-text">
-                    <div className="duo-module-kicker">
+                <div className="mm-path-bar-text">
+                    <div className="mm-path-kicker">
                         {topicIcon} · {doneCount}/{PATH_LESSON_COUNT} LECKE · {PATH_TOTAL_QUESTIONS} FELADAT
                     </div>
-                    <div className="duo-module-title">{topicTitle}</div>
+                    <div className="mm-path-title">{topicTitle}</div>
                 </div>
-                <label className={`duo-guide-btn ${sprintMode ? 'is-on' : ''}`}>
+                <label className={`mm-path-sprint ${sprintMode ? 'is-on' : ''}`}>
                     <input
                         type="checkbox"
                         checked={sprintMode}
@@ -322,23 +324,26 @@ export default function TopicPathMap({
                 </label>
             </div>
 
-            <div className="duo-xp-row">
-                <div className="path-xp-labels">
+            <div className="mm-path-xp">
+                <div className="mm-path-xp-labels">
                     <span>
                         {getRankEmoji(progress?.rankLevel || 1)} {progress?.rank || 'BEGINNER'} ·{' '}
                         {progress?.xp || 0} XP
                     </span>
                     <span>Következő: {rankInfo.next} XP</span>
                 </div>
-                <div className="path-xp-bar">
-                    <div className="path-xp-fill" style={{ width: `${xpPct}%`, background: accent }} />
+                <div className="mm-path-xp-bar">
+                    <div
+                        className="mm-path-xp-fill"
+                        style={{ width: `${xpPct}%`, background: accent }}
+                    />
                 </div>
             </div>
 
             {!loggedInEmail ? (
-                <div className="path-test-login">
+                <div className="mm-path-login">
                     <p>Haladás mentéséhez: egy kattintásos teszt fiók ({TEST_LOGIN_EMAIL})</p>
-                    <div className="path-test-actions">
+                    <div className="mm-path-login-actions">
                         <button
                             type="button"
                             disabled={testLoading}
@@ -370,389 +375,46 @@ export default function TopicPathMap({
                     </div>
                 </div>
             ) : (
-                <p className="path-logged-in">Bejelentkezve: {loggedInEmail}</p>
+                <p className="mm-path-logged">Bejelentkezve: {loggedInEmail}</p>
             )}
 
-            <div className="duo-track wind-track">
+            <div className="mm-path-track">
                 <svg
-                    className="wind-svg"
+                    className="mm-path-svg"
                     viewBox="0 0 100 100"
                     preserveAspectRatio="none"
                     aria-hidden
                 >
+                    {/* Vastag út a háttérben */}
                     <path
                         d={winding.svgPath}
                         fill="none"
-                        stroke="rgba(255,255,255,0.08)"
-                        strokeWidth="5"
+                        stroke="#1f1f23"
+                        strokeWidth="7"
                         strokeLinecap="round"
-                        vectorEffect="non-scaling-stroke"
                     />
                     <path
                         d={winding.svgPath}
                         fill="none"
                         stroke={accent}
-                        strokeOpacity="0.55"
-                        strokeWidth="3.2"
+                        strokeOpacity="0.85"
+                        strokeWidth="4.5"
                         strokeLinecap="round"
-                        vectorEffect="non-scaling-stroke"
                     />
                     <path
                         d={winding.svgPath}
                         fill="none"
-                        stroke="#1a1a1e"
-                        strokeWidth="1.4"
+                        stroke="#0a0a0a"
+                        strokeWidth="1.5"
                         strokeLinecap="round"
-                        strokeDasharray="0.8 1.6"
-                        vectorEffect="non-scaling-stroke"
-                        opacity="0.55"
+                        strokeDasharray="1.2 2"
+                        opacity="0.45"
                     />
                 </svg>
                 {nodes.map((n, i) => renderPlacedNode(n, i))}
             </div>
 
-            {toast && <div className="path-toast">{toast}</div>}
-
-            <style jsx>{`
-                .duo-path {
-                    max-width: 440px;
-                    margin: 0 auto;
-                    padding: 0.35rem 0.5rem 3.5rem;
-                }
-                .duo-module-bar {
-                    display: flex;
-                    align-items: center;
-                    gap: 0.65rem;
-                    border-radius: 18px;
-                    padding: 0.85rem 0.9rem;
-                    color: #fff;
-                    box-shadow: 0 6px 0 rgba(0, 0, 0, 0.28);
-                    margin-bottom: 1rem;
-                }
-                .duo-module-back {
-                    width: 40px;
-                    height: 40px;
-                    border-radius: 12px;
-                    border: none;
-                    background: rgba(0, 0, 0, 0.18);
-                    color: #fff;
-                    font-size: 1.25rem;
-                    font-weight: 800;
-                    cursor: pointer;
-                    flex-shrink: 0;
-                }
-                .duo-module-text {
-                    flex: 1;
-                    min-width: 0;
-                }
-                .duo-module-kicker {
-                    font-size: 0.7rem;
-                    font-weight: 800;
-                    letter-spacing: 0.04em;
-                    opacity: 0.95;
-                    text-transform: uppercase;
-                }
-                .duo-module-title {
-                    font-size: 1.15rem;
-                    font-weight: 800;
-                    line-height: 1.2;
-                    margin-top: 0.15rem;
-                }
-                .duo-guide-btn {
-                    display: flex;
-                    align-items: center;
-                    gap: 0.35rem;
-                    background: rgba(0, 0, 0, 0.2);
-                    border-radius: 14px;
-                    padding: 0.55rem 0.7rem;
-                    font-size: 0.72rem;
-                    font-weight: 900;
-                    letter-spacing: 0.04em;
-                    cursor: pointer;
-                    flex-shrink: 0;
-                    user-select: none;
-                }
-                .duo-guide-btn input {
-                    display: none;
-                }
-                .duo-guide-btn.is-on {
-                    background: #111;
-                    color: #58cc02;
-                    box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.2);
-                }
-                .duo-xp-row {
-                    margin-bottom: 0.65rem;
-                    padding: 0 0.15rem;
-                }
-                .path-xp-labels {
-                    display: flex;
-                    justify-content: space-between;
-                    color: #bdbdbd;
-                    font-size: 0.82rem;
-                    margin-bottom: 0.35rem;
-                    gap: 0.5rem;
-                    flex-wrap: wrap;
-                }
-                .path-xp-bar {
-                    height: 10px;
-                    background: rgba(255, 255, 255, 0.1);
-                    border-radius: 999px;
-                    overflow: hidden;
-                }
-                .path-xp-fill {
-                    height: 100%;
-                    border-radius: 999px;
-                    transition: width 0.35s ease;
-                }
-                .path-test-login {
-                    margin: 0.5rem 0 0.75rem;
-                    padding: 0.85rem 1rem;
-                    border-radius: 14px;
-                    border: 1px dashed rgba(255, 215, 0, 0.55);
-                    background: rgba(255, 215, 0, 0.08);
-                }
-                .path-test-login p {
-                    margin: 0 0 0.65rem;
-                    color: #eee;
-                    font-size: 0.88rem;
-                }
-                .path-test-actions {
-                    display: flex;
-                    gap: 0.5rem;
-                    flex-wrap: wrap;
-                }
-                .path-test-login button {
-                    flex: 1;
-                    min-width: 120px;
-                    border: none;
-                    border-radius: 12px;
-                    padding: 0.65rem 0.75rem;
-                    font-weight: 700;
-                    cursor: pointer;
-                    background: #ffd700;
-                    color: #111;
-                }
-                .path-test-login button.secondary {
-                    background: transparent;
-                    border: 1px solid rgba(255, 255, 255, 0.35);
-                    color: #fff;
-                }
-                .path-logged-in {
-                    margin: 0.35rem 0 0.5rem;
-                    color: #8f8;
-                    font-size: 0.8rem;
-                    text-align: center;
-                }
-                .wind-track {
-                    position: relative;
-                    margin-top: 0.5rem;
-                    height: 920px;
-                    overflow: visible;
-                    background:
-                        radial-gradient(ellipse at 30% 10%, rgba(88, 204, 2, 0.07), transparent 42%),
-                        radial-gradient(ellipse at 70% 60%, rgba(77, 163, 255, 0.06), transparent 40%);
-                }
-                .wind-svg {
-                    position: absolute;
-                    inset: 0;
-                    width: 100%;
-                    height: 100%;
-                    z-index: 0;
-                    pointer-events: none;
-                }
-                .wind-node {
-                    position: absolute;
-                    z-index: 2;
-                    transform: translate(-50%, -50%);
-                    width: 120px;
-                    display: flex;
-                    justify-content: center;
-                }
-                .duo-cluster {
-                    position: relative;
-                    display: flex;
-                    flex-direction: column;
-                    align-items: center;
-                    width: 110px;
-                }
-                .duo-bubble {
-                    position: absolute;
-                    top: -44px;
-                    left: 50%;
-                    transform: translateX(-50%);
-                    background: #1c1c1e;
-                    color: #58cc02;
-                    border: none;
-                    border-radius: 14px;
-                    padding: 0.5rem 1rem;
-                    font-weight: 900;
-                    font-size: 0.9rem;
-                    letter-spacing: 0.08em;
-                    cursor: pointer;
-                    box-shadow: 0 6px 0 #0a0a0a;
-                    animation: duoPulse 1.6s ease-in-out infinite;
-                    z-index: 3;
-                }
-                .duo-bubble::after {
-                    content: '';
-                    position: absolute;
-                    left: 50%;
-                    bottom: -8px;
-                    margin-left: -7px;
-                    border: 7px solid transparent;
-                    border-top-color: #1c1c1e;
-                }
-                @keyframes duoPulse {
-                    0%,
-                    100% {
-                        transform: translateX(-50%) translateY(0);
-                    }
-                    50% {
-                        transform: translateX(-50%) translateY(-4px);
-                    }
-                }
-                .duo-node {
-                    width: 78px;
-                    height: 78px;
-                    border-radius: 50%;
-                    border: 0;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    cursor: pointer;
-                    background: linear-gradient(180deg, #4a4a52, #2e2e34);
-                    box-shadow: 0 8px 0 #1a1a1e;
-                    transition: transform 0.15s ease;
-                }
-                .duo-node.locked {
-                    cursor: not-allowed;
-                    background: linear-gradient(180deg, #3a3a40, #26262c);
-                    box-shadow: 0 8px 0 #151518;
-                }
-                .duo-node.unlocked:not(:disabled):active {
-                    transform: translateY(4px);
-                    box-shadow: 0 4px 0 #14660a;
-                }
-                .duo-node.current {
-                    animation: duoGlow 2s ease-in-out infinite;
-                }
-                @keyframes duoGlow {
-                    0%,
-                    100% {
-                        filter: brightness(1);
-                    }
-                    50% {
-                        filter: brightness(1.1);
-                    }
-                }
-                .duo-glyph {
-                    font-size: 2rem;
-                    color: rgba(255, 255, 255, 0.92);
-                    font-weight: 900;
-                    text-shadow: 0 2px 0 rgba(0, 0, 0, 0.25);
-                }
-                .duo-node.locked .duo-glyph {
-                    color: rgba(255, 255, 255, 0.22);
-                }
-                .duo-caption {
-                    margin-top: 0.45rem;
-                    font-size: 0.78rem;
-                    color: #cfcfcf;
-                    text-align: center;
-                    max-width: 120px;
-                    line-height: 1.2;
-                }
-                .duo-caption.muted {
-                    color: #666;
-                }
-                .duo-lesson-stars {
-                    display: block;
-                    margin-top: 0.2rem;
-                    font-size: 0.85rem;
-                    letter-spacing: 0.08em;
-                    color: #ffc800;
-                }
-                .duo-chest {
-                    width: 72px;
-                    height: 72px;
-                    border-radius: 50%;
-                    border: 0;
-                    background: linear-gradient(180deg, #4a4a52, #2e2e34);
-                    color: #fff;
-                    display: flex;
-                    flex-direction: column;
-                    align-items: center;
-                    justify-content: center;
-                    gap: 0.1rem;
-                    cursor: pointer;
-                    box-shadow: 0 8px 0 #1a1a1e;
-                }
-                .duo-chest.locked {
-                    opacity: 0.75;
-                    cursor: not-allowed;
-                }
-                .duo-chest.unlocked:not(.claimed) {
-                    background: linear-gradient(180deg, #4da3ff, #2a6fb8);
-                    box-shadow: 0 8px 0 #1a4a7a;
-                }
-                .duo-chest.claimed {
-                    background: linear-gradient(180deg, #ffc800, #d4a000);
-                    box-shadow: 0 8px 0 #8a6a00;
-                    color: #111;
-                }
-                .chest-icon {
-                    font-size: 1.55rem;
-                    line-height: 1;
-                }
-                .chest-label {
-                    font-size: 0.62rem;
-                    font-weight: 800;
-                }
-                .duo-mascot {
-                    position: absolute;
-                    top: 50%;
-                    transform: translateY(-40%);
-                    width: 108px;
-                    pointer-events: none;
-                    filter: drop-shadow(0 12px 14px rgba(0, 0, 0, 0.45));
-                    z-index: 4;
-                }
-                .mascot-right {
-                    left: calc(100% + 4px);
-                }
-                .mascot-left {
-                    right: calc(100% + 4px);
-                }
-                .path-toast {
-                    position: fixed;
-                    left: 50%;
-                    bottom: 1.5rem;
-                    transform: translateX(-50%);
-                    background: rgba(20, 20, 20, 0.95);
-                    border: 2px solid #58cc02;
-                    color: #fff;
-                    padding: 0.85rem 1.25rem;
-                    border-radius: 16px;
-                    z-index: 50;
-                    font-weight: 600;
-                    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.45);
-                }
-                @media (max-width: 420px) {
-                    .wind-track {
-                        height: 860px;
-                    }
-                    .duo-mascot {
-                        width: 86px;
-                    }
-                    .duo-node {
-                        width: 70px;
-                        height: 70px;
-                    }
-                    .duo-module-title {
-                        font-size: 1rem;
-                    }
-                }
-            `}</style>
+            {toast && <div className="mm-path-toast">{toast}</div>}
         </div>
     );
 }

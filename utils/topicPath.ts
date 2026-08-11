@@ -87,13 +87,13 @@ export function buildWindingLayout(count: number): {
     points: WindingPoint[];
     svgPath: string;
 } {
-    // Ismétlődő zigzag: közép → bal → bal(kincs) → jobb → jobb(kincs) …
-    const patternX = [50, 28, 34, 72, 66, 28, 34, 72, 68];
+    // Erősebb zigzag — a node-ok jól láthatóan bal/jobb oldalon
+    const patternX = [50, 26, 30, 74, 70, 26, 30, 74, 70];
     const points: WindingPoint[] = [];
     const n = Math.max(1, count);
     for (let i = 0; i < n; i++) {
         const x = patternX[i % patternX.length];
-        const y = 6 + (i / Math.max(1, n - 1)) * 88;
+        const y = 7 + (i / Math.max(1, n - 1)) * 86;
         points.push({
             x,
             y,
@@ -101,7 +101,6 @@ export function buildWindingLayout(count: number): {
         });
     }
 
-    // Sima cubic spline-szerű path a pontokon keresztül
     let svgPath = '';
     if (points.length === 1) {
         svgPath = `M ${points[0].x} ${points[0].y}`;

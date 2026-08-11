@@ -5286,3 +5286,375 @@ select.form-input:disabled {
         width: 100%;
     }
 }
+
+/* ---- Duolingo-style winding path (TopicPathMap) ----
+   Global CSS so layout cannot break if styled-jsx fails to apply. */
+.mm-path {
+    max-width: 440px;
+    margin: 0 auto;
+    padding: 0.35rem 0.5rem 3.5rem;
+    position: relative;
+    z-index: 1;
+}
+
+.mm-path-bar {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    border-radius: 18px;
+    padding: 0.85rem 0.9rem;
+    color: #fff;
+    box-shadow: 0 6px 0 rgba(0, 0, 0, 0.28);
+    margin-bottom: 1rem;
+}
+
+.mm-path-back {
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    border: none;
+    background: rgba(0, 0, 0, 0.18);
+    color: #fff;
+    font-size: 1.25rem;
+    font-weight: 800;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.mm-path-bar-text {
+    flex: 1;
+    min-width: 0;
+}
+
+.mm-path-kicker {
+    font-size: 0.7rem;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    opacity: 0.95;
+}
+
+.mm-path-title {
+    font-size: 1.15rem;
+    font-weight: 800;
+    line-height: 1.2;
+    margin-top: 0.15rem;
+}
+
+.mm-path-sprint {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 14px;
+    padding: 0.55rem 0.7rem;
+    font-size: 0.72rem;
+    font-weight: 900;
+    letter-spacing: 0.04em;
+    cursor: pointer;
+    flex-shrink: 0;
+    user-select: none;
+}
+
+.mm-path-sprint input {
+    display: none;
+}
+
+.mm-path-sprint.is-on {
+    background: #111;
+    color: #58cc02;
+}
+
+.mm-path-xp {
+    margin-bottom: 0.65rem;
+    padding: 0 0.15rem;
+}
+
+.mm-path-xp-labels {
+    display: flex;
+    justify-content: space-between;
+    color: #bdbdbd;
+    font-size: 0.82rem;
+    margin-bottom: 0.35rem;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.mm-path-xp-bar {
+    height: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 999px;
+    overflow: hidden;
+}
+
+.mm-path-xp-fill {
+    height: 100%;
+    border-radius: 999px;
+}
+
+.mm-path-track {
+    position: relative !important;
+    width: 100%;
+    height: 900px;
+    margin-top: 0.75rem;
+    overflow: visible;
+}
+
+.mm-path-svg {
+    position: absolute !important;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.mm-path-node {
+    position: absolute !important;
+    z-index: 2;
+    width: 0;
+    height: 0;
+    /* left/top + translate set inline so nodes stay ON the curve */
+}
+
+.mm-path-cluster {
+    position: absolute;
+    left: 0;
+    top: 0;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 120px;
+}
+
+.mm-path-bubble {
+    position: absolute;
+    top: -46px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #1c1c1e;
+    color: #58cc02;
+    border: none;
+    border-radius: 14px;
+    padding: 0.5rem 1rem;
+    font-weight: 900;
+    font-size: 0.9rem;
+    letter-spacing: 0.08em;
+    cursor: pointer;
+    box-shadow: 0 6px 0 #0a0a0a;
+    z-index: 5;
+    animation: mmPathPulse 1.6s ease-in-out infinite;
+}
+
+.mm-path-bubble::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: -8px;
+    margin-left: -7px;
+    border: 7px solid transparent;
+    border-top-color: #1c1c1e;
+}
+
+@keyframes mmPathPulse {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(-4px); }
+}
+
+.mm-path-btn {
+    width: 78px;
+    height: 78px;
+    border-radius: 50%;
+    border: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    background: linear-gradient(180deg, #4a4a52, #2e2e34);
+    box-shadow: 0 8px 0 #1a1a1e;
+    flex-shrink: 0;
+}
+
+.mm-path-btn.locked {
+    cursor: not-allowed;
+    background: linear-gradient(180deg, #3a3a40, #26262c);
+    box-shadow: 0 8px 0 #151518;
+}
+
+.mm-path-btn.current {
+    animation: mmPathGlow 2s ease-in-out infinite;
+}
+
+@keyframes mmPathGlow {
+    0%, 100% { filter: brightness(1); }
+    50% { filter: brightness(1.12); }
+}
+
+.mm-path-glyph {
+    font-size: 2rem;
+    color: rgba(255, 255, 255, 0.92);
+    font-weight: 900;
+    text-shadow: 0 2px 0 rgba(0, 0, 0, 0.25);
+}
+
+.mm-path-btn.locked .mm-path-glyph {
+    color: rgba(255, 255, 255, 0.22);
+}
+
+.mm-path-caption {
+    margin-top: 0.4rem;
+    font-size: 0.78rem;
+    color: #cfcfcf;
+    text-align: center;
+    max-width: 120px;
+    line-height: 1.2;
+}
+
+.mm-path-caption.muted {
+    color: #666;
+}
+
+.mm-path-stars {
+    display: block;
+    margin-top: 0.15rem;
+    font-size: 0.85rem;
+    letter-spacing: 0.08em;
+    color: #ffc800;
+}
+
+.mm-path-chest {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    border: 0;
+    background: linear-gradient(180deg, #4a4a52, #2e2e34);
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.1rem;
+    cursor: pointer;
+    box-shadow: 0 8px 0 #1a1a1e;
+}
+
+.mm-path-chest.locked {
+    opacity: 0.75;
+    cursor: not-allowed;
+}
+
+.mm-path-chest.unlocked:not(.claimed) {
+    background: linear-gradient(180deg, #4da3ff, #2a6fb8);
+    box-shadow: 0 8px 0 #1a4a7a;
+}
+
+.mm-path-chest.claimed {
+    background: linear-gradient(180deg, #ffc800, #d4a000);
+    box-shadow: 0 8px 0 #8a6a00;
+    color: #111;
+}
+
+.mm-path-chest-icon {
+    font-size: 1.55rem;
+    line-height: 1;
+}
+
+.mm-path-chest-label {
+    font-size: 0.62rem;
+    font-weight: 800;
+}
+
+.mm-path-mascot {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-40%);
+    width: 108px;
+    pointer-events: none;
+    filter: drop-shadow(0 12px 14px rgba(0, 0, 0, 0.45));
+    z-index: 4;
+}
+
+.mm-path-mascot.on-right {
+    left: calc(50% + 52px);
+}
+
+.mm-path-mascot.on-left {
+    right: calc(50% + 52px);
+}
+
+.mm-path-toast {
+    position: fixed;
+    left: 50%;
+    bottom: 1.5rem;
+    transform: translateX(-50%);
+    background: rgba(20, 20, 20, 0.95);
+    border: 2px solid #58cc02;
+    color: #fff;
+    padding: 0.85rem 1.25rem;
+    border-radius: 16px;
+    z-index: 50;
+    font-weight: 600;
+}
+
+.mm-path-login {
+    margin: 0.5rem 0 0.75rem;
+    padding: 0.85rem 1rem;
+    border-radius: 14px;
+    border: 1px dashed rgba(255, 215, 0, 0.55);
+    background: rgba(255, 215, 0, 0.08);
+}
+
+.mm-path-login p {
+    margin: 0 0 0.65rem;
+    color: #eee;
+    font-size: 0.88rem;
+}
+
+.mm-path-login-actions {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.mm-path-login button {
+    flex: 1;
+    min-width: 120px;
+    border: none;
+    border-radius: 12px;
+    padding: 0.65rem 0.75rem;
+    font-weight: 700;
+    cursor: pointer;
+    background: #ffd700;
+    color: #111;
+}
+
+.mm-path-login button.secondary {
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    color: #fff;
+}
+
+.mm-path-logged {
+    margin: 0.35rem 0 0.5rem;
+    color: #8f8;
+    font-size: 0.8rem;
+    text-align: center;
+}
+
+@media (max-width: 420px) {
+    .mm-path-track {
+        height: 820px;
+    }
+    .mm-path-btn {
+        width: 70px;
+        height: 70px;
+    }
+    .mm-path-mascot {
+        width: 86px;
+    }
+    .mm-path-title {
+        font-size: 1rem;
+    }
+}
