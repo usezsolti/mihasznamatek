@@ -1,8 +1,9 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import type { SocialComment, SocialPost, SocialProfile } from '../../utils/socialTypes';
 import { apiAddComment, apiHasLiked, apiListComments, apiToggleLike } from '../../utils/socialApi';
+import CommunityAvatar from './CommunityAvatar';
 
-type Props = {
+type CommunityPostCardProps = {
     post: SocialPost;
     me: SocialProfile;
     liked: boolean;
@@ -11,19 +12,7 @@ type Props = {
     onChanged: (post: SocialPost) => void;
 };
 
-function Avatar({ url, name }: { url?: string; name: string }) {
-    if (url) {
-        // eslint-disable-next-line @next/next/no-img-element
-        return <img className="mm-social-avatar" src={url} alt="" />;
-    }
-    return (
-        <span className="mm-social-avatar mm-social-avatar-fallback" aria-hidden>
-            {(name[0] || '?').toUpperCase()}
-        </span>
-    );
-}
-
-export default function PostCard({ post, me, liked: likedProp, onOpenProfile, onMessage, onChanged }: Props) {
+export default function CommunityPostCard({ post, me, liked: likedProp, onOpenProfile, onMessage, onChanged }: CommunityPostCardProps) {
     const [liked, setLiked] = useState(likedProp);
     const [likeCount, setLikeCount] = useState(post.likeCount);
     const [comments, setComments] = useState<SocialComment[]>([]);
@@ -86,10 +75,10 @@ export default function PostCard({ post, me, liked: likedProp, onOpenProfile, on
     }, [post.createdAtMs]);
 
     return (
-        <article className="mm-social-post">
-            <header className="mm-social-post-head">
+        <div className="mm-social-post">
+            <div className="mm-social-post-head">
                 <button type="button" className="mm-social-userbtn" onClick={() => onOpenProfile(post.authorId)}>
-                    <Avatar url={post.authorPhoto} name={post.authorName} />
+                    <CommunityAvatar url={post.authorPhoto} name={post.authorName} />
                     <span>
                         <strong>{post.authorName}</strong>
                         <small>
@@ -102,7 +91,7 @@ export default function PostCard({ post, me, liked: likedProp, onOpenProfile, on
                         Üzenet
                     </button>
                 )}
-            </header>
+            </div>
             <p className="mm-social-post-text">{post.text}</p>
             {post.imageUrl ? (
                 // eslint-disable-next-line @next/next/no-img-element
@@ -120,7 +109,7 @@ export default function PostCard({ post, me, liked: likedProp, onOpenProfile, on
                 <div className="mm-social-comments">
                     {comments.map((c) => (
                         <div key={c.id} className="mm-social-comment">
-                            <Avatar url={c.authorPhoto} name={c.authorName} />
+                            <CommunityAvatar url={c.authorPhoto} name={c.authorName} />
                             <div>
                                 <strong>{c.authorName}</strong>
                                 <p>{c.text}</p>
@@ -143,7 +132,7 @@ export default function PostCard({ post, me, liked: likedProp, onOpenProfile, on
                     </div>
                 </div>
             )}
-        </article>
+        </div>
     );
 }
 

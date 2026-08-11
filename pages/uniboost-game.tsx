@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
+import { getAvatarColor, getRankEmoji, getRankTitle } from '../utils/practiceProgress';
 
 export default function UniBoostGame() {
     const router = useRouter();
@@ -377,29 +378,9 @@ export default function UniBoostGame() {
     };
 
 
-    const getAvatarImage = (level: number) => {
-        if (level >= 20) return '🏆'; // Master
-        if (level >= 15) return '👑'; // Expert
-        if (level >= 10) return '⭐'; // Advanced
-        if (level >= 5) return '🔥'; // Intermediate
-        return '🌟'; // Beginner
-    };
+    const getAvatarImage = (level: number) => getRankEmoji(level);
 
-    const getAvatarTitle = (level: number) => {
-        if (level >= 20) return 'MASTER';
-        if (level >= 15) return 'EXPERT';
-        if (level >= 10) return 'ADVANCED';
-        if (level >= 5) return 'INTERMEDIATE';
-        return 'BEGINNER';
-    };
-
-    const getAvatarColor = (level: number) => {
-        if (level >= 20) return 'linear-gradient(45deg, #FFD700, #FFA500)'; // Gold
-        if (level >= 15) return 'linear-gradient(45deg, #C0C0C0, #808080)'; // Silver
-        if (level >= 10) return 'linear-gradient(45deg, #CD7F32, #8B4513)'; // Bronze
-        if (level >= 5) return 'linear-gradient(45deg, #4169E1, #1E90FF)'; // Blue
-        return 'linear-gradient(45deg, #87CEEB, #4682B4)'; // Light blue
-    };
+    const getAvatarTitle = (level: number) => getRankTitle(level);
 
     if (!isClient) {
         return <div>Loading...</div>;

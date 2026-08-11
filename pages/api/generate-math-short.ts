@@ -1,4 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next';
+import { sendErr, sendOk } from '../../server/http';
 import {
     getClientIp,
     isAllowedOrigin,
@@ -10,7 +11,9 @@ import { FALLBACK_MATH_SHORTS } from '../../utils/mathShortFallbacks';
 
 function pickFallback(topic?: string) {
     const t = (topic || '').toLowerCase();
-    const match = FALLBACK_MATH_SHORTS.find((s) => s.topic.toLowerCase().includes(t) || t.includes(s.topic.toLowerCase()));
+    const match = FALLBACK_MATH_SHORTS.find(
+        (s) => s.topic.toLowerCase().includes(t) || t.includes(s.topic.toLowerCase())
+    );
     const base = match || FALLBACK_MATH_SHORTS[Math.floor(Math.random() * FALLBACK_MATH_SHORTS.length)];
     return {
         topic: base.topic,
@@ -26,10 +29,10 @@ function pickFallback(topic?: string) {
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     if (req.method !== 'POST') {
-        return res.status(405).json({ error: 'Method not allowed' });
+        return sendErr(res, 'Method not allowed', 405);
     }
     if (!isAllowedOrigin(req)) {
-        return res.status(403).json({ error: 'Nem engedélyezett origin.' });
+        return sendErr(res, 'Nem engedélyezett origin.', 403);
     }
     const user = await requireAuth(req, res);
     if (!user) return;
@@ -38,7 +41,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const rlIp = rateLimit(`math-short:${ip}`, 30, 60 * 60 * 1000);
     const rlUser = rateLimit(`math-short:uid:${user.uid}`, 15, 60 * 60 * 1000);
     if (!rlIp.ok || !rlUser.ok) {
-        return res.status(429).json({ error: 'Túl sok short-generálás. Próbáld később.' });
+        return sendErr(res, 'Túl sok short-generálás. Próbáld később.', 429);
     }
 
     const topic = sanitizeText(req.body?.topic, 80) || 'matek trükk';
@@ -46,7 +49,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const openaiApiKey = process.env.OPENAI_API_KEY;
 
     if (!openaiApiKey) {
-        return res.status(200).json(pickFallback(topic));
+        return sendOk(res, pickFallback(topic));
     }
 
     try {
@@ -78,17 +81,17 @@ Ne használj markdownot.`;
         });
 
         if (!response.ok) {
-            return res.status(200).json(pickFallback(topic));
+            return sendOk(res, pickFallback(topic));
         }
 
         const data = await response.json();
         const raw = data?.choices?.[0]?.message?.content || '';
         const jsonMatch = String(raw).match(/\{[\s\S]*\}/);
         if (!jsonMatch) {
-            return res.status(200).json(pickFallback(topic));
+            return sendOk(res, pickFallback(topic));
         }
         const parsed = JSON.parse(jsonMatch[0]);
-        return res.status(200).json({
+        return sendOk(res, {
             topic: sanitizeText(parsed.topic || topic, 60) || topic,
             title: sanitizeText(parsed.title, 80) || 'Matek short',
             hook: sanitizeText(parsed.hook, 160) || '',
@@ -100,6 +103,6 @@ Ne használj markdownot.`;
         });
     } catch (e) {
         console.error('generate-math-short', e);
-        return res.status(200).json(pickFallback(topic));
+        return sendOk(res, pickFallback(topic));
     }
 }

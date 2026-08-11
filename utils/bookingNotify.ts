@@ -423,47 +423,26 @@ export function buildMailsForType(
     ];
 }
 
-async function getClientIdToken(): Promise<string | null> {
-    try {
-        const auth = getFirebase()?.auth?.();
-        const user = auth?.currentUser;
-        if (!user) return null;
-        return (await user.getIdToken()) || null;
-    } catch {
-        return null;
-    }
-}
-
 /** Kliens: mindig az API-n keresztül (+ Firebase ID token, ha van). */
 export async function sendBookingEmailFromClient(
     type: BookingEmailType,
     booking: BookingPayload
 ): Promise<EmailSendResult> {
-    const clientOrigin =
-        typeof window !== "undefined" ? window.location.origin : "https://mihasznamatek.hu";
     try {
-        const token = await getClientIdToken();
-        const headers: Record<string, string> = { "Content-Type": "application/json" };
-        if (token) headers.Authorization = `Bearer ${token}`;
-
-        const res = await fetch("/api/send-booking-email", {
-            method: "POST",
-            headers,
-            body: JSON.stringify({ type, booking, origin: clientOrigin }),
-        });
-        const data = await res.json().catch(() => ({}));
-        if (res.ok && data.ok) {
+        const { apiSendBookingEmail } = await import("./apiClient");
+        const res = await apiSendBookingEmail(type, booking as unknown as Record<string, unknown>);
+        if (res.ok) {
             return {
                 ok: true,
-                provider: data.provider,
-                warning: data.warning,
+                provider: res.data.provider,
+                warning: res.data.warning,
             };
         }
         return {
             ok: false,
-            needsActivation: !!data.needsActivation,
-            error: data.error || `E-mail API hiba (${res.status})`,
-            provider: data.provider,
+            needsActivation: !!res.meta?.needsActivation,
+            error: res.error || "E-mail API hiba",
+            provider: res.meta?.provider as string | undefined,
         };
     } catch (err: any) {
         console.error("sendBookingEmailFromClient error:", err);

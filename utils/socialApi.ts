@@ -1,4 +1,4 @@
-/** Community adatréteg: Next.js Node backend, kliens Firestore fallbackkel. */
+/** Community adatréteg: Next.js backend. Kliens Firestore csak explicit opt-in fallback. */
 
 import { backendSocial } from './backendClient';
 import * as clientSocial from './social';
@@ -11,15 +11,23 @@ import type {
     StudyGroup,
 } from './socialTypes';
 
-let preferBackend = true;
+/** true = soha ne essünk vissza kliens Firestore-ra (local store / clean path). */
+function isApiOnly(): boolean {
+    return String(process.env.NEXT_PUBLIC_SOCIAL_API_ONLY || '') === '1';
+}
 
-async function viaBackend<T>(action: string, body: Record<string, unknown>, fallback: () => Promise<T>): Promise<T> {
-    if (!preferBackend) return fallback();
+async function viaBackend<T>(
+    action: string,
+    body: Record<string, unknown>,
+    fallback: () => Promise<T>
+): Promise<T> {
     try {
         return await backendSocial<T>(action, body);
     } catch (e) {
+        const msg = String((e as any)?.message || e || '');
+        const rateLimited = /429|Túl sok kérés/i.test(msg);
+        if (rateLimited || isApiOnly()) throw e;
         console.warn(`backend ${action} failed, falling back to client:`, e);
-        preferBackend = false;
         return fallback();
     }
 }
@@ -61,14 +69,16 @@ export async function apiToggleLike(postId: string, uid: string) {
 }
 
 export async function apiHasLiked(postId: string, uid: string): Promise<boolean> {
-    return viaBackend(
-        'hasLiked',
-        { postId },
-        async () => clientSocial.hasLiked(postId, uid)
-    ).then((r: any) => (typeof r === 'boolean' ? r : !!r?.liked));
+    return viaBackend('hasLiked', { postId }, async () => clientSocial.hasLiked(postId, uid)).then(
+        (r: any) => (typeof r === 'boolean' ? r : !!r?.liked)
+    );
 }
 
-export async function apiAddComment(postId: string, author: SocialProfile, text: string): Promise<SocialComment> {
+export async function apiAddComment(
+    postId: string,
+    author: SocialProfile,
+    text: string
+): Promise<SocialComment> {
     return viaBackend('addComment', { postId, text }, () => clientSocial.addComment(postId, author, text));
 }
 
@@ -81,7 +91,9 @@ export async function apiFollow(followerId: string, followingId: string): Promis
 }
 
 export async function apiUnfollow(followerId: string, followingId: string): Promise<void> {
-    await viaBackend('unfollow', { uid: followingId }, () => clientSocial.unfollowUser(followerId, followingId));
+    await viaBackend('unfollow', { uid: followingId }, () =>
+        clientSocial.unfollowUser(followerId, followingId)
+    );
 }
 
 export async function apiIsFollowing(followerId: string, followingId: string): Promise<boolean> {

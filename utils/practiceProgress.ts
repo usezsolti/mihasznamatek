@@ -122,6 +122,15 @@ export function getRankEmoji(level: number): string {
     return '🌟';
 }
 
+/** Avatar háttérszín — game + uniboost közös. */
+export function getAvatarColor(level: number): string {
+    if (level >= 20) return 'linear-gradient(45deg, #FFD700, #FFA500)';
+    if (level >= 15) return 'linear-gradient(45deg, #C0C0C0, #808080)';
+    if (level >= 10) return 'linear-gradient(45deg, #CD7F32, #8B4513)';
+    if (level >= 5) return 'linear-gradient(45deg, #4169E1, #1E90FF)';
+    return 'linear-gradient(45deg, #87CEEB, #4682B4)';
+}
+
 export function xpForNextRank(xp: number): { current: number; next: number; level: number } {
     const level = xpToRankLevel(xp);
     const currentThreshold = level <= XP_RANK_THRESHOLDS.length

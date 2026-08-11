@@ -205,7 +205,8 @@ body {
     }
 }
 
-* {
+.dashboard-container,
+.dashboard-container * {
     color: var(--color-dark);
 }
 
@@ -5735,12 +5736,67 @@ select.form-input:disabled {
     border: 1px solid rgba(57, 255, 20, 0.28);
 }
 
+/* Community full-bleed dark surface — body is light elsewhere; without this, #f2f2f2 text vanishes */
+body.mm-social-body {
+    background: #0a0a12 !important;
+    background-image: linear-gradient(165deg, #07070d 0%, #12121c 45%, #0c1510 100%) !important;
+    min-height: 100vh;
+    color: #f2f2f2 !important;
+}
+
+/* Beat dashboard.css / style.css color bombs (#363949 on dark = "blank page") */
+body.mm-social-body .mm-social-page,
+body.mm-social-body .mm-social-page *:not(.mm-social-primary):not(.is-on) {
+    color: #f2f2f2;
+}
+
+body.mm-social-body .mm-social-kicker {
+    color: #9dff3a !important;
+}
+
+body.mm-social-body .mm-social-muted,
+body.mm-social-body .mm-social-empty {
+    color: #dfffd0 !important;
+}
+
+body.mm-social-body .mm-social-primary,
+body.mm-social-body .mm-social-tabs button.is-on {
+    color: #111 !important;
+}
+
 .mm-social-page {
+    position: relative;
+    z-index: 1;
     max-width: 720px;
-    margin: 0 auto;
-    padding: 1rem 1rem 5rem;
+    margin: 4.5rem auto 0;
+    padding: 1.25rem 1rem 5rem;
     color: #f2f2f2;
     min-height: 70vh;
+    background: rgba(8, 8, 14, 0.92);
+    border-radius: 18px;
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.06);
+}
+
+/* style.css gives bare header/section min-height:100vh — neutralize on community */
+.mm-social-page .mm-social-top,
+.mm-social-page .mm-social-panel {
+    min-height: 0 !important;
+    width: auto !important;
+    max-width: 100%;
+    padding-top: 0;
+    padding-bottom: 0;
+    align-items: stretch;
+}
+
+.mm-social-empty {
+    margin: 0;
+    padding: 1.1rem 1.2rem;
+    border-radius: 14px;
+    background: rgba(57, 255, 20, 0.1);
+    border: 1px dashed rgba(57, 255, 20, 0.45);
+    color: #dfffd0;
+    font-weight: 600;
+    line-height: 1.45;
 }
 
 .mm-social-top {
@@ -5763,6 +5819,7 @@ select.form-input:disabled {
     margin: 0.15rem 0 0;
     font-size: 1.85rem;
     font-family: Georgia, "Times New Roman", serif;
+    color: #f2f2f2 !important;
 }
 
 .mm-social-tabs {
@@ -5772,6 +5829,16 @@ select.form-input:disabled {
     padding-bottom: 0.5rem;
     margin-bottom: 1rem;
     -webkit-overflow-scrolling: touch;
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    right: auto !important;
+    height: auto !important;
+    background: transparent !important;
+    z-index: 1 !important;
+    justify-content: flex-start !important;
+    align-items: center;
+    flex-wrap: wrap;
 }
 
 .mm-social-tabs button {
@@ -5879,8 +5946,12 @@ select.form-input:disabled {
 .mm-social-short-card {
     padding: 1rem;
     border-radius: 18px;
-    background: rgba(16,16,22,0.92);
-    border: 1px solid rgba(255,255,255,0.1);
+    background: rgba(16, 16, 22, 0.96) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    min-height: 0 !important;
+    width: auto !important;
+    max-width: 100%;
+    color: #f2f2f2;
 }
 
 .mm-social-post-head {
@@ -5889,6 +5960,12 @@ select.form-input:disabled {
     justify-content: space-between;
     gap: 0.75rem;
     margin-bottom: 0.65rem;
+    min-height: 0 !important;
+    width: auto !important;
+    max-width: 100%;
+    padding: 0 !important;
+    background: transparent !important;
+    position: relative !important;
 }
 
 .mm-social-userbtn {
@@ -5917,6 +5994,7 @@ select.form-input:disabled {
     margin: 0 0 0.75rem;
     white-space: pre-wrap;
     line-height: 1.45;
+    color: #f2f2f2 !important;
 }
 
 .mm-social-post-image {

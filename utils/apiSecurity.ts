@@ -1,10 +1,8 @@
-import type { NextApiRequest, NextApiResponse } from "next";
-import { ADMIN_EMAIL, isAdminEmail } from "./admin";
+import type { NextApiRequest, NextApiResponse } from 'next';
+import { ADMIN_EMAIL, isAdminEmail } from './admin';
+import { resolveFirebaseWebApiKey } from './firebasePublicConfig';
 
-const FIREBASE_API_KEY =
-    process.env.FIREBASE_WEB_API_KEY ||
-    process.env.NEXT_PUBLIC_FIREBASE_API_KEY ||
-    "AIzaSyD1gvtJjjod5J3oJUI-iBPnR6yzU-AldtI";
+const FIREBASE_API_KEY = resolveFirebaseWebApiKey();
 
 export type VerifiedUser = {
     uid: string;
@@ -35,15 +33,21 @@ export function rateLimit(
 }
 
 export function getClientIp(req: NextApiRequest): string {
-    const xf = req.headers["x-forwarded-for"];
-    if (typeof xf === "string" && xf.length) return xf.split(",")[0].trim();
-    if (Array.isArray(xf) && xf[0]) return xf[0].split(",")[0].trim();
-    return req.socket?.remoteAddress || "unknown";
+    // Vercel / trusted proxy: utolsó megbízható hop helyett az első XFF (kliens)
+    // Spoof ellen: productionben preferáld a platform IP header-t ha van
+    const vercelIp = req.headers['x-real-ip'] || req.headers['x-vercel-forwarded-for'];
+    if (typeof vercelIp === 'string' && vercelIp.length) {
+        return vercelIp.split(',')[0].trim();
+    }
+    const xf = req.headers['x-forwarded-for'];
+    if (typeof xf === 'string' && xf.length) return xf.split(',')[0].trim();
+    if (Array.isArray(xf) && xf[0]) return xf[0].split(',')[0].trim();
+    return req.socket?.remoteAddress || 'unknown';
 }
 
 export function extractBearerToken(req: NextApiRequest): string | null {
     const h = req.headers.authorization;
-    if (typeof h === "string" && h.toLowerCase().startsWith("bearer ")) {
+    if (typeof h === 'string' && h.toLowerCase().startsWith('bearer ')) {
         return h.slice(7).trim() || null;
     }
     return null;
@@ -51,27 +55,35 @@ export function extractBearerToken(req: NextApiRequest): string | null {
 
 /** Firebase ID token ellenőrzés (Identity Toolkit REST — Admin SDK nélkül). */
 export async function verifyFirebaseIdToken(idToken: string): Promise<VerifiedUser | null> {
-    if (!idToken || idToken.length < 20) return null;
+    if (!idToken || idToken.length < 20 || !FIREBASE_API_KEY) {
+        return null;
+    }
     try {
         const res = await fetch(
             `https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=${encodeURIComponent(FIREBASE_API_KEY)}`,
             {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ idToken }),
             }
         );
-        if (!res.ok) return null;
+        if (!res.ok) {
+            return null;
+        }
         const data = await res.json();
         const user = data?.users?.[0];
-        if (!user?.localId || !user?.email) return null;
+        // Anonim fióknak lehet, hogy nincs email — uid elég a social API-hoz
+        if (!user?.localId) {
+            return null;
+        }
+        const email = user.email ? String(user.email).toLowerCase() : '';
         return {
             uid: String(user.localId),
-            email: String(user.email).toLowerCase(),
+            email,
             emailVerified: Boolean(user.emailVerified),
         };
     } catch (err) {
-        console.error("verifyFirebaseIdToken failed:", err);
+        console.error('verifyFirebaseIdToken failed:', err);
         return null;
     }
 }
@@ -82,12 +94,12 @@ export async function requireAuth(
 ): Promise<VerifiedUser | null> {
     const token = extractBearerToken(req);
     if (!token) {
-        res.status(401).json({ ok: false, error: "Bejelentkezés szükséges." });
+        res.status(401).json({ ok: false, error: 'Bejelentkezés szükséges.' });
         return null;
     }
     const user = await verifyFirebaseIdToken(token);
     if (!user) {
-        res.status(401).json({ ok: false, error: "Érvénytelen vagy lejárt munkamenet." });
+        res.status(401).json({ ok: false, error: 'Érvénytelen vagy lejárt munkamenet.' });
         return null;
     }
     return user;
@@ -99,8 +111,13 @@ export async function requireAdmin(
 ): Promise<VerifiedUser | null> {
     const user = await requireAuth(req, res);
     if (!user) return null;
+    // Production: követeljük a megerősített e-mailt admin műveletekhez
+    if (process.env.NODE_ENV === 'production' && !user.emailVerified) {
+        res.status(403).json({ ok: false, error: 'Adminhoz igazolt e-mail kell.' });
+        return null;
+    }
     if (!isAdminEmail(user.email) && user.email !== ADMIN_EMAIL.toLowerCase()) {
-        res.status(403).json({ ok: false, error: "Nincs admin jogosultság." });
+        res.status(403).json({ ok: false, error: 'Nincs admin jogosultság.' });
         return null;
     }
     return user;
@@ -109,14 +126,14 @@ export async function requireAdmin(
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export function isValidEmail(email?: string): boolean {
-    if (!email || typeof email !== "string") return false;
+    if (!email || typeof email !== 'string') return false;
     if (email.length > 200) return false;
     return EMAIL_RE.test(email.trim());
 }
 
 export function sanitizeText(value: unknown, maxLen: number): string {
-    const s = String(value ?? "")
-        .replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F]/g, "")
+    const s = String(value ?? '')
+        .replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F]/g, '')
         .trim();
     return s.slice(0, maxLen);
 }
@@ -129,18 +146,21 @@ function hostnameOf(urlLike: string): string | null {
     }
 }
 
-/** Origin ellenőrzés — csak saját site / localhost / Vercel preview. */
+/** Origin ellenőrzés — csak saját site / localhost / saját Vercel URL. */
 export function isAllowedOrigin(req: NextApiRequest): boolean {
-    const origin = String(req.headers.origin || "");
-    const referer = String(req.headers.referer || "");
-    const site = (process.env.NEXT_PUBLIC_SITE_URL || "https://mihasznamatek.hu").replace(/\/$/, "");
+    const origin = String(req.headers.origin || '');
+    const referer = String(req.headers.referer || '');
+    const site = (process.env.NEXT_PUBLIC_SITE_URL || 'https://mihasznamatek.hu').replace(/\/$/, '');
     const allowedHosts = new Set(
         [
             hostnameOf(site),
-            "mihasznamatek.hu",
-            "www.mihasznamatek.hu",
-            "localhost",
-            "127.0.0.1",
+            'mihasznamatek.hu',
+            'www.mihasznamatek.hu',
+            'localhost',
+            '127.0.0.1',
+            process.env.VERCEL_URL?.toLowerCase(),
+            process.env.VERCEL_BRANCH_URL?.toLowerCase(),
+            process.env.VERCEL_PROJECT_PRODUCTION_URL?.toLowerCase(),
         ].filter(Boolean) as string[]
     );
 
@@ -148,20 +168,25 @@ export function isAllowedOrigin(req: NextApiRequest): boolean {
         const host = hostnameOf(value);
         if (!host) return false;
         if (allowedHosts.has(host)) return true;
-        if (host.endsWith(".vercel.app")) return true;
+        // Explicit preview allowlist (nem minden *.vercel.app)
+        const extra = String(process.env.ALLOWED_ORIGINS || '')
+            .split(',')
+            .map((s) => s.trim().toLowerCase())
+            .filter(Boolean);
+        if (extra.includes(host) || extra.includes(value.toLowerCase())) return true;
         return false;
     };
 
     if (origin && check(origin)) return true;
     if (referer && check(referer)) return true;
     // Szerver-szerver / hiányzó Origin — productionben tiltsuk
-    if (!origin && !referer) return process.env.NODE_ENV !== "production";
+    if (!origin && !referer) return process.env.NODE_ENV !== 'production';
     return false;
 }
 
 export function secureSiteOrigin(): string {
-    const envUrl = (process.env.NEXT_PUBLIC_SITE_URL || "").replace(/\/$/, "");
+    const envUrl = (process.env.NEXT_PUBLIC_SITE_URL || '').replace(/\/$/, '');
     if (envUrl) return envUrl;
-    if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`.replace(/\/$/, "");
-    return "https://mihasznamatek.hu";
+    if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`.replace(/\/$/, '');
+    return 'https://mihasznamatek.hu';
 }

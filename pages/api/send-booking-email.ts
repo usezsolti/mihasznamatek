@@ -20,6 +20,8 @@ import {
     sanitizeText,
     secureSiteOrigin,
 } from "../../utils/apiSecurity";
+import { sendErr, sendOk } from "../../server/http";
+import { isAdminEmail } from "../../utils/admin";
 
 type Body = {
     type?: BookingEmailType;
@@ -154,13 +156,30 @@ async function sendViaFormSubmitAll(
     return { ok: false, provider: "formsubmit", error: lastError || "FormSubmit sikertelen" };
 }
 
+function emailOk(res: NextApiResponse, result: EmailSendResult) {
+    return sendOk(res, {
+        provider: result.provider,
+        warning: result.warning,
+        needsActivation: result.needsActivation,
+    });
+}
+
+function emailFail(res: NextApiResponse, result: EmailSendResult, status = 502) {
+    return res.status(status).json({
+        ok: false,
+        error: result.error || "E-mail küldés sikertelen",
+        provider: result.provider,
+        needsActivation: result.needsActivation,
+    });
+}
+
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     if (req.method !== "POST") {
-        return res.status(405).json({ ok: false, error: "Method not allowed" });
+        return sendErr(res, "Method not allowed", 405);
     }
 
     if (!isAllowedOrigin(req)) {
-        return res.status(403).json({ ok: false, error: "Nem engedélyezett origin." });
+        return sendErr(res, "Nem engedélyezett origin.", 403);
     }
 
     const ip = getClientIp(req);
@@ -174,31 +193,32 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         "lesson_reminder",
     ];
     if (!type || !allowed.includes(type)) {
-        return res.status(400).json({ ok: false, error: "Érvénytelen e-mail típus" });
+        return sendErr(res, "Érvénytelen e-mail típus", 400);
     }
 
     const booking = sanitizeBooking(rawBooking);
     if (!booking) {
-        return res.status(400).json({ ok: false, error: "Érvénytelen foglalási adat" });
+        return sendErr(res, "Érvénytelen foglalási adat", 400);
     }
 
     // Rate limits
     if (type === "admin_new") {
         const rl = rateLimit(`email:admin_new:${ip}`, 8, 60 * 60 * 1000);
         if (!rl.ok) {
-            return res.status(429).json({
-                ok: false,
-                error: `Túl sok foglalási e-mail. Próbáld ${rl.retryAfterSec}s múlva.`,
-            });
+            return sendErr(
+                res,
+                `Túl sok foglalási e-mail. Próbáld ${rl.retryAfterSec}s múlva.`,
+                429
+            );
         }
         const rlEmail = rateLimit(`email:admin_new:to:${booking.customerEmail}`, 5, 60 * 60 * 1000);
         if (!rlEmail.ok) {
-            return res.status(429).json({ ok: false, error: "Túl sok kérés ezzel az e-mail címmel." });
+            return sendErr(res, "Túl sok kérés ezzel az e-mail címmel.", 429);
         }
     } else {
         const rl = rateLimit(`email:${type}:${ip}`, 30, 60 * 60 * 1000);
         if (!rl.ok) {
-            return res.status(429).json({ ok: false, error: "Túl sok kérés." });
+            return sendErr(res, "Túl sok kérés.", 429);
         }
     }
 
@@ -214,13 +234,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         if (token) {
             const user = await verifyFirebaseIdToken(token);
             if (!user) {
-                return res.status(401).json({ ok: false, error: "Érvénytelen vagy lejárt munkamenet." });
+                return sendErr(res, "Érvénytelen vagy lejárt munkamenet.", 401);
             }
             if (user.email !== booking.customerEmail.toLowerCase()) {
-                return res.status(403).json({
-                    ok: false,
-                    error: "A foglalási e-mailnek egyeznie kell a bejelentkezett fiókkal.",
-                });
+                return sendErr(
+                    res,
+                    "A foglalási e-mailnek egyeznie kell a bejelentkezett fiókkal.",
+                    403
+                );
             }
         }
     }
@@ -229,11 +250,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     if (type === "booking_cancelled") {
         const user = await requireAuth(req, res);
         if (!user) return;
-        const isAdmin =
-            user.email === ADMIN_BOOKING_EMAIL.toLowerCase() ||
-            user.email === "usezsolti@gmail.com";
-        if (!isAdmin && user.email !== booking.customerEmail.toLowerCase()) {
-            return res.status(403).json({ ok: false, error: "Csak a saját foglalásod mondható le." });
+        if (!isAdminEmail(user.email) && user.email !== booking.customerEmail.toLowerCase()) {
+            return sendErr(res, "Csak a saját foglalásod mondható le.", 403);
         }
     }
 
@@ -244,18 +262,18 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     try {
         if (process.env.GMAIL_APP_PASSWORD) {
             const gmailResult = await sendViaGmail(mails);
-            if (gmailResult.ok) return res.status(200).json(gmailResult);
+            if (gmailResult.ok) return emailOk(res, gmailResult);
             console.warn("Gmail failed, trying fallbacks:", gmailResult.error);
         }
         if (process.env.WEB3FORMS_ACCESS_KEY) {
             const w3 = await sendViaWeb3Forms(mails);
-            if (w3.ok) return res.status(200).json(w3);
+            if (w3.ok) return emailOk(res, w3);
         }
         const fsResult = await sendViaFormSubmitAll(type, mails, baseOrigin);
-        if (fsResult.ok) return res.status(200).json(fsResult);
-        return res.status(502).json(fsResult);
+        if (fsResult.ok) return emailOk(res, fsResult);
+        return emailFail(res, fsResult, 502);
     } catch (err: any) {
         console.error("send-booking-email API error:", err);
-        return res.status(500).json({ ok: false, error: "Szerver hiba" });
+        return sendErr(res, "Szerver hiba", 500);
     }
 }

@@ -360,12 +360,10 @@ export default function Dashboard() {
         if (!isAdmin) return;
         (async () => {
             try {
-                const token = await (window as any).firebase?.auth()?.currentUser?.getIdToken?.();
-                const res = await fetch('/api/email-status', {
-                    headers: token ? { Authorization: `Bearer ${token}` } : {},
-                });
-                const data = await res.json();
-                setEmailStatus(data);
+                const { apiEmailStatus } = await import('../utils/apiClient');
+                const res = await apiEmailStatus();
+                if (res.ok) setEmailStatus(res.data);
+                else setEmailStatus({ ready: false, hint: res.error });
             } catch {
                 setEmailStatus({ ready: false, hint: 'Nem sikerült lekérni az e-mail állapotot.' });
             }
@@ -394,11 +392,9 @@ export default function Dashboard() {
             } else {
                 alert(`Teszt e-mail nem ment el:\n\n${result.error || 'Ismeretlen hiba'}`);
             }
-            const token = await (window as any).firebase?.auth()?.currentUser?.getIdToken?.();
-            const status = await fetch('/api/email-status', {
-                headers: token ? { Authorization: `Bearer ${token}` } : {},
-            }).then((r) => r.json());
-            setEmailStatus(status);
+            const { apiEmailStatus } = await import('../utils/apiClient');
+            const statusRes = await apiEmailStatus();
+            if (statusRes.ok) setEmailStatus(statusRes.data);
         } catch (err: any) {
             alert(err?.message || 'Tesztküldés sikertelen');
         } finally {
@@ -531,28 +527,29 @@ export default function Dashboard() {
             }
 
             const uid = (window as any).firebase.auth().currentUser?.uid || '';
-            const db = (window as any).firebase.firestore();
 
             if (!uid) {
                 setMathTopics(zeroed(baseTopics));
                 return;
             }
 
-            let gameResultsSnapshot: any;
+            let gameResultsSnapshot: { forEach: (cb: (doc: any) => void) => void; empty?: boolean };
             try {
-                gameResultsSnapshot = await db.collection('gameResults')
-                    .where('userId', '==', uid)
-                    .get();
+                const { fetchGameResultsForUser } = await import('../utils/gameResultsClient');
+                const loaded = await fetchGameResultsForUser(uid);
+                const docs = loaded.results;
+                gameResultsSnapshot = {
+                    empty: docs.length === 0,
+                    forEach: (cb) => {
+                        docs.forEach((row) => {
+                            const { id, ...data } = row;
+                            cb({ id, data: () => data });
+                        });
+                    },
+                };
             } catch (err) {
-                console.warn('gameResults userId query failed, trying uid field:', err);
-                try {
-                    gameResultsSnapshot = await db.collection('gameResults')
-                        .where('uid', '==', uid)
-                        .get();
-                } catch (err2) {
-                    console.warn('gameResults uid query failed:', err2);
-                    gameResultsSnapshot = { forEach: () => undefined, empty: true };
-                }
+                console.warn('gameResults load failed:', err);
+                gameResultsSnapshot = { forEach: () => undefined, empty: true };
             }
 
             const rows: RawGameResult[] = [];

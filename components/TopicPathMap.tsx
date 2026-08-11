@@ -20,7 +20,7 @@ import {
     lessonMathSymbol,
     type PathNode,
 } from '../utils/topicPath';
-import { formatAuthError, signInAsTestUser, TEST_LOGIN_EMAIL } from '../utils/testLogin';
+import { formatAuthError, isTestLoginAllowed, signInAsTestUser, TEST_LOGIN_EMAIL } from '../utils/testLogin';
 import MathHexMascot from './MathHexMascot';
 import MathNodeIcon from './MathNodeIcon';
 import MathRewardIcon from './MathRewardIcon';
@@ -108,6 +108,10 @@ export default function TopicPathMap({
     };
 
     const handleTestLogin = async () => {
+        if (!isTestLoginAllowed()) {
+            showToast('A teszt belépés ebben a környezetben nem elérhető.');
+            return;
+        }
         setTestLoading(true);
         try {
             const result = await signInAsTestUser();
@@ -360,8 +364,13 @@ export default function TopicPathMap({
 
             {!loggedInEmail ? (
                 <div className="mm-path-login">
-                    <p>Haladás mentéséhez: egy kattintásos teszt fiók ({TEST_LOGIN_EMAIL})</p>
+                    {isTestLoginAllowed() ? (
+                        <p>Haladás mentéséhez: egy kattintásos teszt fiók ({TEST_LOGIN_EMAIL})</p>
+                    ) : (
+                        <p>Haladás mentéséhez jelentkezz be.</p>
+                    )}
                     <div className="mm-path-login-actions">
+                        {isTestLoginAllowed() && (
                         <button
                             type="button"
                             disabled={testLoading}
@@ -373,6 +382,7 @@ export default function TopicPathMap({
                         >
                             {testLoading ? 'Belépés…' : 'Teszt belépés'}
                         </button>
+                        )}
                         <button
                             type="button"
                             className="secondary"

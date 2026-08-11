@@ -9,9 +9,19 @@ import { FIREBASE_PROJECT_ID } from './config';
 let initTried = false;
 
 export function getFirebaseAdmin(): typeof admin | null {
-    if (admin.apps.length) return admin;
+    try {
+        if (admin?.apps?.length) return admin;
+    } catch {
+        return null;
+    }
 
-    if (initTried) return admin.apps.length ? admin : null;
+    if (initTried) {
+        try {
+            return admin?.apps?.length ? admin : null;
+        } catch {
+            return null;
+        }
+    }
     initTried = true;
 
     try {

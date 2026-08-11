@@ -279,22 +279,16 @@ export default function ProfilePanel({ embedded = false }: { embedded?: boolean 
     };
     const loadGameResults = async (userId: string) => {
         try {
-            const db = (window as any).firebase.firestore();
+            const { fetchGameResultsForUser } = await import('../utils/gameResultsClient');
+            const { results, permissionDenied } = await fetchGameResultsForUser(userId);
+            if (permissionDenied) {
+                setGameResults([]);
+                calculateStats([]);
+                return;
+            }
 
-            // Csak userId szerinti szűrés (összetett index nélkül); rendezés kliensoldalon
-            const resultsSnapshot = await db.collection('gameResults')
-                .where('userId', '==', userId)
-                .get();
-
-            const results: GameResult[] = [];
-            resultsSnapshot.forEach((doc: any) => {
-                results.push({
-                    id: doc.id,
-                    ...doc.data()
-                });
-            });
-
-            results.sort((a, b) => {
+            const typed = results as GameResult[];
+            typed.sort((a, b) => {
                 const toMs = (ts: any) => {
                     if (!ts) return 0;
                     if (typeof ts.toDate === 'function') return ts.toDate().getTime();
@@ -304,11 +298,13 @@ export default function ProfilePanel({ embedded = false }: { embedded?: boolean 
                 return toMs(b.completedAt) - toMs(a.completedAt);
             });
 
-            const limited = results.slice(0, 100);
+            const limited = typed.slice(0, 100);
             setGameResults(limited);
             calculateStats(limited);
         } catch (error) {
-            console.error('Error loading game results:', error);
+            console.warn('gameResults load skipped:', error);
+            setGameResults([]);
+            calculateStats([]);
         }
     };
 

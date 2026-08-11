@@ -1,4 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next';
+import { sendErr, sendOk } from '../../server/http';
 import {
     getClientIp,
     isAllowedOrigin,
@@ -9,11 +10,11 @@ import {
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     if (req.method !== 'POST') {
-        return res.status(405).json({ error: 'Method not allowed' });
+        return sendErr(res, 'Method not allowed', 405);
     }
 
     if (!isAllowedOrigin(req)) {
-        return res.status(403).json({ error: 'Nem engedélyezett origin.' });
+        return sendErr(res, 'Nem engedélyezett origin.', 403);
     }
 
     const user = await requireAuth(req, res);
@@ -23,14 +24,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const rlIp = rateLimit(`math-q:${ip}`, 40, 60 * 60 * 1000);
     const rlUser = rateLimit(`math-q:uid:${user.uid}`, 25, 60 * 60 * 1000);
     if (!rlIp.ok || !rlUser.ok) {
-        return res.status(429).json({ error: 'Túl sok generálási kérés. Próbáld később.' });
+        return sendErr(res, 'Túl sok generálási kérés. Próbáld később.', 429);
     }
 
     const topic = sanitizeText(req.body?.topic, 80);
     const difficulty = sanitizeText(req.body?.difficulty || 'közepes', 20) || 'közepes';
 
     if (!topic) {
-        return res.status(400).json({ error: 'Topic is required' });
+        return sendErr(res, 'Topic is required', 400);
     }
 
     try {
@@ -94,13 +95,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
             const fallback = fallbackQuestions[topic as keyof typeof fallbackQuestions] || fallbackQuestions['deriválás'];
 
-            return res.status(200).json({
+            return sendOk(res, {
                 success: true,
                 question: fallback.question,
                 answer: fallback.answer,
                 explanation: fallback.explanation,
                 type: topic,
-                fallback: true
+                fallback: true,
             });
         }
 
@@ -171,19 +172,19 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             throw new Error('Invalid question data structure');
         }
 
-        res.status(200).json({
+        return sendOk(res, {
             success: true,
             question: questionData.question,
             answer: questionData.answer,
             explanation: questionData.explanation || 'Nincs magyarázat elérhető.',
-            type: questionData.type || topic
+            type: questionData.type || topic,
         });
-
     } catch (error) {
         console.error('Error generating math question:', error);
-        res.status(500).json({
-            error: 'Failed to generate math question',
-            details: error instanceof Error ? error.message : 'Unknown error'
-        });
+        return sendErr(
+            res,
+            error instanceof Error ? error.message : 'Failed to generate math question',
+            500
+        );
     }
 }

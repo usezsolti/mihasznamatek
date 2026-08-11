@@ -1,40 +1,33 @@
-/** Kliens → Next.js / Node.js backend API */
+/**
+ * Backend convenience — vékony wrapper az apiClient fölött (backward compat).
+ * Új kód: preferáld közvetlenül az apiClient domain helperjeit.
+ */
+import {
+    apiBackendHealth,
+    apiBackendSocial,
+    authHeaders,
+    getIdToken,
+    type ApiResult,
+    type BackendResponse,
+} from './apiClient';
 
-export type BackendResponse<T> = { ok: true; data: T } | { ok: false; error: string };
-
-async function getIdToken(): Promise<string | null> {
-    try {
-        const user = (window as any).firebase?.auth?.()?.currentUser;
-        if (!user?.getIdToken) return null;
-        return (await user.getIdToken()) || null;
-    } catch {
-        return null;
-    }
-}
+export type { BackendResponse };
+export { authHeaders, getIdToken };
 
 export async function backendHealth(): Promise<BackendResponse<Record<string, unknown>>> {
-    const res = await fetch('/api/backend/health');
-    return res.json();
+    const res = await apiBackendHealth();
+    if (!res.ok) return { ok: false, error: res.error };
+    return { ok: true, data: res.data };
 }
 
+/** Social action — throw on error (socialApi viaBackend elvárja). */
 export async function backendSocial<T = unknown>(
     action: string,
     body: Record<string, unknown> = {}
 ): Promise<T> {
-    const token = await getIdToken();
-    if (!token) throw new Error('Bejelentkezés szükséges.');
-
-    const res = await fetch('/api/backend/social', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({ action, ...body }),
-    });
-    const json = (await res.json()) as BackendResponse<T>;
-    if (!res.ok || !json.ok) {
-        throw new Error((json as any)?.error || `Backend hiba (${res.status})`);
+    const res: ApiResult<T> = await apiBackendSocial<T>(action, body);
+    if (!res.ok) {
+        throw new Error(res.error || 'Backend hiba');
     }
-    return json.data;
+    return res.data;
 }

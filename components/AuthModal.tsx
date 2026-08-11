@@ -10,7 +10,7 @@ import {
     formatAuthError,
     signInAsTestUser,
     TEST_LOGIN_EMAIL,
-    TEST_LOGIN_PASSWORD,
+    isTestLoginAllowed,
 } from "../utils/testLogin";
 
 type AuthMode = "login" | "register";
@@ -553,7 +553,7 @@ export default function AuthModal({
                         </div>
 
                         <div className="auth-tab-content active">
-                            {mode === "login" && (
+                            {mode === "login" && isTestLoginAllowed() && (
                                 <div style={{ marginBottom: "1rem" }}>
                                     <button
                                         type="button"
@@ -579,7 +579,7 @@ export default function AuthModal({
                                             textAlign: "center",
                                         }}
                                     >
-                                        {TEST_LOGIN_EMAIL} / {TEST_LOGIN_PASSWORD}
+                                        Dev: {TEST_LOGIN_EMAIL} (jelszó csak szerveren)
                                     </p>
                                     <div className="auth-divider" style={{ margin: "1rem 0" }}>
                                         <span>vagy e-mail / Google</span>

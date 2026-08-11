@@ -7,8 +7,12 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "smoke:clean": "npx --yes tsx scripts/smoke-clean.ts",
+    "test": "npx --yes tsx scripts/run-tests.ts",
+    "test:unit": "npx --yes tsx --test tests/unit/*.test.ts",
     "backend:dev": "next dev --turbo",
-    "backend:start": "next start"
+    "backend:start": "next start",
+    "deploy:rules": "npx firebase-tools@13 deploy --only firestore:rules --project mihasznamatek-c9701"
   },
   "dependencies": {
     "@babylonjs/core": "^8.23.0",

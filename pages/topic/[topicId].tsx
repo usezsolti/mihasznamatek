@@ -83,17 +83,13 @@ export default function TopicStatsPage() {
             setUid(userId);
 
             try {
-                const firebase = (window as any).firebase;
-                const db = firebase?.firestore?.();
+                const { fetchGameResultsForUser } = await import('../../utils/gameResultsClient');
                 let rows: RawGameResult[] = [];
 
-                if (db) {
-                    const snap = await db.collection('gameResults').where('userId', '==', userId).get();
-                    snap.forEach((doc: any) => {
-                        rows.push({ id: doc.id, ...doc.data() });
-                    });
-                    rows = sortResultsNewestFirst(filterResultsForTopic(rows, topicIdParam));
-                }
+                const loaded = await fetchGameResultsForUser(userId);
+                rows = sortResultsNewestFirst(
+                    filterResultsForTopic(loaded.results as RawGameResult[], topicIdParam)
+                );
 
                 const progress = await loadUserPracticeProgress(userId);
                 const key = resolveProgressStorageKey(topicIdParam);
@@ -104,7 +100,7 @@ export default function TopicStatsPage() {
                     setTopicProgress(tp);
                 }
             } catch (err) {
-                console.error('Topic stats load error:', err);
+                console.warn('Topic stats load skipped:', err);
                 if (!cancelled) {
                     setResults([]);
                     setTopicProgress(null);

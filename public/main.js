@@ -68,30 +68,9 @@
   // --- EmailJS removed - using dashboard notifications only ---
   console.log("EmailJS functionality removed - using dashboard notifications");
 
-  // --- Google Maps callback (globális névtérbe kell) ---
+  // Google Maps JS API nincs betöltve a főoldalon (nincs érvényes kulcs / placeholder map).
+  // Ha később NEXT_PUBLIC_GOOGLE_API_KEY + #map elem lesz, itt lehet újra inicializálni.
   window.initMap = function () {
-    const mapEl = document.getElementById("map");
-    if (!mapEl || !window.google?.maps) return;
-
-    const geocoder = new google.maps.Geocoder();
-    geocoder.geocode(
-      {
-        address: "Szent Imre utca 18, Fót, 2151, Magyarország",
-        componentRestrictions: { country: "HU" },
-      },
-      (results, status) => {
-        const loc =
-          status === "OK" && results[0]
-            ? results[0].geometry.location
-            : { lat: 47.6170658, lng: 19.1901412 };
-
-        const map = new google.maps.Map(mapEl, {
-          center: loc,
-          zoom: 16,
-          mapTypeId: "roadmap",
-        });
-        new google.maps.Marker({ position: loc, map });
-      }
-    );
+    /* no-op: contact szekció linkeket használ */
   };
 })();
