@@ -5496,7 +5496,11 @@ select.form-input:disabled {
     font-size: 2rem;
     color: rgba(255, 255, 255, 0.92);
     font-weight: 900;
-    text-shadow: 0 2px 0 rgba(0, 0, 0, 0.25);
+    text-shadow: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 0;
 }
 
 .mm-path-btn.locked .mm-path-glyph {
@@ -5517,10 +5521,12 @@ select.form-input:disabled {
 }
 
 .mm-path-stars {
-    display: block;
+    display: flex;
+    gap: 0.12rem;
+    justify-content: center;
     margin-top: 0.15rem;
-    font-size: 0.85rem;
-    letter-spacing: 0.08em;
+    font-size: 0.78rem;
+    letter-spacing: 0;
     color: #ffc800;
 }
 
