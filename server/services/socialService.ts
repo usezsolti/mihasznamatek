@@ -59,18 +59,22 @@ export async function ensureProfile(
         const profile = asProfile(uid, existing);
         profile.xp = progress.xp || profile.xp;
         profile.rank = progress.rank || profile.rank;
-        await setDocument(
-            `socialProfiles/${uid}`,
-            token,
-            {
-                xp: profile.xp,
-                rank: profile.rank,
-                displayName: profile.displayName || hints?.name || 'Diák',
-                photoURL: profile.photoURL || hints?.photoURL || '',
-                updatedAtMs: nowMs(),
-            },
-            true
-        );
+        try {
+            await setDocument(
+                `socialProfiles/${uid}`,
+                token,
+                {
+                    xp: profile.xp,
+                    rank: profile.rank,
+                    displayName: profile.displayName || hints?.name || 'Diák',
+                    photoURL: profile.photoURL || hints?.photoURL || '',
+                    updatedAtMs: nowMs(),
+                },
+                true
+            );
+        } catch {
+            /* sync opcionális */
+        }
         return profile;
     }
 

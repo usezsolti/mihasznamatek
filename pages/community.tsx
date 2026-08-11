@@ -53,6 +53,7 @@ export default function CommunityPage() {
     const [ready, setReady] = useState(false);
     const [uid, setUid] = useState<string | null>(null);
     const [me, setMe] = useState<SocialProfile | null>(null);
+    const [rulesBlocked, setRulesBlocked] = useState(false);
     const [tab, setTab] = useState<Tab>('feed');
     const [posts, setPosts] = useState<SocialPost[]>([]);
     const [likedMap, setLikedMap] = useState<Record<string, boolean>>({});
@@ -150,9 +151,15 @@ export default function CommunityPage() {
                         }))
                     );
                 }
-            } catch (e) {
+            } catch (e: any) {
                 console.error(e);
-                showToast('Nem sikerült betölteni a közösséget.');
+                const msg = String(e?.message || e || '');
+                if (/permission|insufficient|PERMISSION_DENIED|403/i.test(msg)) {
+                    setRulesBlocked(true);
+                    showToast('Firestore jogosultság hiányzik — telepítsd a rules fájlt.');
+                } else {
+                    showToast('Nem sikerült betölteni a közösséget.');
+                }
             } finally {
                 setReady(true);
             }
@@ -435,6 +442,17 @@ export default function CommunityPage() {
                     MyMihasznaMat
                 </Link>
             </header>
+
+            {rulesBlocked && (
+                <div className="mm-social-rules-banner" role="alert">
+                    <strong>Firestore rules nincs telepítve</strong>
+                    <p>
+                        A közösséghez másold be a projekt <code>firestore.rules</code> tartalmát ide:
+                        Firebase Console → Firestore Database → Rules → Publish.
+                        Enélkül a poszt / követés / profil írás tiltva marad.
+                    </p>
+                </div>
+            )}
 
             <nav className="mm-social-tabs" aria-label="Közösség menü">
                 {(

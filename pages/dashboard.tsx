@@ -533,9 +533,27 @@ export default function Dashboard() {
             const uid = (window as any).firebase.auth().currentUser?.uid || '';
             const db = (window as any).firebase.firestore();
 
-            const gameResultsSnapshot = await db.collection('gameResults')
-                .where('userId', '==', uid)
-                .get();
+            if (!uid) {
+                setMathTopics(zeroed(baseTopics));
+                return;
+            }
+
+            let gameResultsSnapshot: any;
+            try {
+                gameResultsSnapshot = await db.collection('gameResults')
+                    .where('userId', '==', uid)
+                    .get();
+            } catch (err) {
+                console.warn('gameResults userId query failed, trying uid field:', err);
+                try {
+                    gameResultsSnapshot = await db.collection('gameResults')
+                        .where('uid', '==', uid)
+                        .get();
+                } catch (err2) {
+                    console.warn('gameResults uid query failed:', err2);
+                    gameResultsSnapshot = { forEach: () => undefined, empty: true };
+                }
+            }
 
             const rows: RawGameResult[] = [];
             gameResultsSnapshot.forEach((doc: any) => {

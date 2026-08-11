@@ -111,19 +111,25 @@ service cloud.firestore {
     }
 
     // ---- Közösség (Instagram-szerű) ----
+    // Fontos: ezt a fájlt telepíteni kell a Firebase Console → Firestore → Rules alá!
     match /socialProfiles/{userId} {
       allow read: if signedIn();
       allow create: if isOwner(userId);
       allow update: if isOwner(userId)
         || (signedIn() && request.resource.data.diff(resource.data).affectedKeys()
-              .hasOnly(['followerCount', 'followingCount', 'postCount', 'xp', 'rank', 'displayName', 'photoURL', 'updatedAt']));
+              .hasOnly([
+                'followerCount', 'followingCount', 'postCount',
+                'xp', 'rank', 'displayName', 'photoURL',
+                'updatedAt', 'updatedAtMs'
+              ]));
       allow delete: if isAdmin();
     }
 
     match /follows/{id} {
       allow read: if signedIn();
       allow create: if signedIn()
-        && request.resource.data.followerId == request.auth.uid;
+        && request.resource.data.followerId == request.auth.uid
+        && request.resource.data.followingId is string;
       allow delete: if signedIn()
         && resource.data.followerId == request.auth.uid;
     }
@@ -131,7 +137,8 @@ service cloud.firestore {
     match /posts/{postId} {
       allow read: if signedIn();
       allow create: if signedIn()
-        && request.resource.data.authorId == request.auth.uid;
+        && request.resource.data.authorId == request.auth.uid
+        && request.resource.data.text is string;
       allow update: if signedIn() && (
         resource.data.authorId == request.auth.uid
         || request.resource.data.diff(resource.data).affectedKeys()
@@ -139,15 +146,17 @@ service cloud.firestore {
       );
       allow delete: if isAdmin() || (signedIn() && resource.data.authorId == request.auth.uid);
 
-      match /likes/{uid} {
+      match /likes/{likeUid} {
         allow read: if signedIn();
-        allow create, delete: if signedIn() && request.auth.uid == uid;
+        allow create, delete: if signedIn() && request.auth.uid == likeUid;
       }
 
       match /comments/{commentId} {
         allow read: if signedIn();
         allow create: if signedIn()
-          && request.resource.data.authorId == request.auth.uid;
+          && request.resource.data.authorId == request.auth.uid
+          && request.resource.data.text is string;
+        allow update: if false;
         allow delete: if isAdmin()
           || (signedIn() && resource.data.authorId == request.auth.uid);
       }

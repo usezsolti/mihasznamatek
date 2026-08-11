@@ -6207,3 +6207,20 @@ select.form-input:disabled {
     color: #9a9a9a;
     margin: 0.35rem 0 0.75rem;
 }
+
+.mm-social-rules-banner {
+    margin-bottom: 1rem;
+    padding: 0.9rem 1rem;
+    border-radius: 14px;
+    border: 1px solid rgba(255, 180, 0, 0.45);
+    background: rgba(80, 50, 0, 0.45);
+    color: #ffe6a8;
+}
+.mm-social-rules-banner p {
+    margin: 0.4rem 0 0;
+    line-height: 1.4;
+    font-size: 0.92rem;
+}
+.mm-social-rules-banner code {
+    color: #fff;
+}
