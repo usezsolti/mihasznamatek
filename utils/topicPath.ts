@@ -80,6 +80,44 @@ export function buildPathNodes(): PathNode[] {
     return nodes;
 }
 
+/** Duolingo-szerű kanyargós layout: x/y százalék + SVG path (viewBox 0 0 100 100). */
+export type WindingPoint = { x: number; y: number; side: 'left' | 'right' };
+
+export function buildWindingLayout(count: number): {
+    points: WindingPoint[];
+    svgPath: string;
+} {
+    // Ismétlődő zigzag: közép → bal → bal(kincs) → jobb → jobb(kincs) …
+    const patternX = [50, 28, 34, 72, 66, 28, 34, 72, 68];
+    const points: WindingPoint[] = [];
+    const n = Math.max(1, count);
+    for (let i = 0; i < n; i++) {
+        const x = patternX[i % patternX.length];
+        const y = 6 + (i / Math.max(1, n - 1)) * 88;
+        points.push({
+            x,
+            y,
+            side: x < 50 ? 'left' : 'right',
+        });
+    }
+
+    // Sima cubic spline-szerű path a pontokon keresztül
+    let svgPath = '';
+    if (points.length === 1) {
+        svgPath = `M ${points[0].x} ${points[0].y}`;
+    } else {
+        svgPath = `M ${points[0].x} ${points[0].y}`;
+        for (let i = 1; i < points.length; i++) {
+            const prev = points[i - 1];
+            const curr = points[i];
+            const midY = (prev.y + curr.y) / 2;
+            svgPath += ` C ${prev.x} ${midY}, ${curr.x} ${midY}, ${curr.x} ${curr.y}`;
+        }
+    }
+
+    return { points, svgPath };
+}
+
 export function computeHighestUnlocked(lessonsCompleted: number[]): number {
     const sorted = [...lessonsCompleted].sort((a, b) => a - b);
     let contiguous = 0;

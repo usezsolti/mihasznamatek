@@ -14,6 +14,7 @@ import {
     PATH_LESSON_COUNT,
     PATH_TOTAL_QUESTIONS,
     buildPathNodes,
+    buildWindingLayout,
     isChestUnlockable,
     isLessonUnlocked,
     type PathNode,
@@ -55,6 +56,7 @@ export default function TopicPathMap({
     const [testLoading, setTestLoading] = useState(false);
     const [sprintMode, setSprintMode] = useState(false);
     const nodes = useMemo(() => buildPathNodes(), []);
+    const winding = useMemo(() => buildWindingLayout(nodes.length), [nodes.length]);
 
     const storageKey = resolveProgressStorageKey(topicId);
     const topicProg: TopicProgress | undefined = progress?.topics?.[storageKey];
@@ -189,22 +191,27 @@ export default function TopicPathMap({
     })();
 
     const accent = topicColor || '#58cc02';
+    const allDone = lessonsCompleted.length >= PATH_LESSON_COUNT;
 
-    const renderNode = (node: PathNode, index: number) => {
-        const zigLeft = index % 2 === 0;
-        const side = zigLeft ? 'left' : 'right';
+    const renderPlacedNode = (node: PathNode, index: number) => {
+        const pt = winding.points[index];
+        if (!pt) return null;
+        const side = pt.side;
 
         if (node.kind === 'lesson') {
             const done = lessonsCompleted.includes(node.lesson);
             const unlocked = isLessonUnlocked(node.lesson, highestUnlocked, lessonsCompleted);
             const current = node.lesson === continueLesson && !done;
-            const allDone = lessonsCompleted.length >= PATH_LESSON_COUNT;
             const showMascot = current || (allDone && node.lesson === PATH_LESSON_COUNT);
             const starCount = topicProg?.lessonStars?.[node.lesson] || 0;
 
             return (
-                <div key={`L${node.lesson}`} className={`duo-row duo-${side}`}>
-                    <div className={`duo-cluster ${current ? 'is-current' : ''}`}>
+                <div
+                    key={`L${node.lesson}`}
+                    className={`wind-node ${current ? 'is-current' : ''}`}
+                    style={{ left: `${pt.x}%`, top: `${pt.y}%` }}
+                >
+                    <div className="duo-cluster">
                         {current && (
                             <button
                                 type="button"
@@ -257,9 +264,9 @@ export default function TopicPathMap({
                     </div>
 
                     {showMascot && (
-                        <div className={`duo-mascot ${side === 'left' ? 'mascot-right' : 'mascot-left'}`}>
+                        <div className={`duo-mascot mascot-${side === 'left' ? 'right' : 'left'}`}>
                             <MathHexMascot
-                                size={120}
+                                size={108}
                                 color={accent}
                                 mood={done && allDone ? 'happy' : 'idle'}
                             />
@@ -272,7 +279,11 @@ export default function TopicPathMap({
         const unlocked = isChestUnlockable(node.chest, lessonsCompleted);
         const claimed = chestsClaimed.includes(node.chest);
         return (
-            <div key={`C${node.chest}`} className={`duo-row duo-${side}`}>
+            <div
+                key={`C${node.chest}`}
+                className="wind-node"
+                style={{ left: `${pt.x}%`, top: `${pt.y}%` }}
+            >
                 <button
                     type="button"
                     className={`duo-chest ${claimed ? 'claimed' : ''} ${unlocked ? 'unlocked' : 'locked'}`}
@@ -362,9 +373,42 @@ export default function TopicPathMap({
                 <p className="path-logged-in">Bejelentkezve: {loggedInEmail}</p>
             )}
 
-            <div className="duo-track">
-                <div className="duo-rail" aria-hidden />
-                {nodes.map((n, i) => renderNode(n, i))}
+            <div className="duo-track wind-track">
+                <svg
+                    className="wind-svg"
+                    viewBox="0 0 100 100"
+                    preserveAspectRatio="none"
+                    aria-hidden
+                >
+                    <path
+                        d={winding.svgPath}
+                        fill="none"
+                        stroke="rgba(255,255,255,0.08)"
+                        strokeWidth="5"
+                        strokeLinecap="round"
+                        vectorEffect="non-scaling-stroke"
+                    />
+                    <path
+                        d={winding.svgPath}
+                        fill="none"
+                        stroke={accent}
+                        strokeOpacity="0.55"
+                        strokeWidth="3.2"
+                        strokeLinecap="round"
+                        vectorEffect="non-scaling-stroke"
+                    />
+                    <path
+                        d={winding.svgPath}
+                        fill="none"
+                        stroke="#1a1a1e"
+                        strokeWidth="1.4"
+                        strokeLinecap="round"
+                        strokeDasharray="0.8 1.6"
+                        vectorEffect="non-scaling-stroke"
+                        opacity="0.55"
+                    />
+                </svg>
+                {nodes.map((n, i) => renderPlacedNode(n, i))}
             </div>
 
             {toast && <div className="path-toast">{toast}</div>}
@@ -499,40 +543,30 @@ export default function TopicPathMap({
                     font-size: 0.8rem;
                     text-align: center;
                 }
-                .duo-track {
+                .wind-track {
                     position: relative;
-                    margin-top: 0.75rem;
-                    padding: 1.25rem 0 2rem;
-                    min-height: 640px;
-                    background: radial-gradient(ellipse at 50% 0%, rgba(88, 204, 2, 0.08), transparent 55%);
+                    margin-top: 0.5rem;
+                    height: 920px;
+                    overflow: visible;
+                    background:
+                        radial-gradient(ellipse at 30% 10%, rgba(88, 204, 2, 0.07), transparent 42%),
+                        radial-gradient(ellipse at 70% 60%, rgba(77, 163, 255, 0.06), transparent 40%);
                 }
-                .duo-rail {
+                .wind-svg {
                     position: absolute;
-                    left: 50%;
-                    top: 28px;
-                    bottom: 28px;
-                    width: 14px;
-                    margin-left: -7px;
-                    border-radius: 999px;
-                    background: #2b2b2f;
-                    box-shadow: inset 0 0 0 2px rgba(0, 0, 0, 0.45);
+                    inset: 0;
+                    width: 100%;
+                    height: 100%;
                     z-index: 0;
+                    pointer-events: none;
                 }
-                .duo-row {
-                    position: relative;
-                    z-index: 1;
+                .wind-node {
+                    position: absolute;
+                    z-index: 2;
+                    transform: translate(-50%, -50%);
+                    width: 120px;
                     display: flex;
-                    align-items: center;
-                    min-height: 118px;
-                    margin: 0.2rem 0;
-                }
-                .duo-left {
-                    justify-content: flex-start;
-                    padding-left: 14%;
-                }
-                .duo-right {
-                    justify-content: flex-end;
-                    padding-right: 14%;
+                    justify-content: center;
                 }
                 .duo-cluster {
                     position: relative;
@@ -677,16 +711,17 @@ export default function TopicPathMap({
                 .duo-mascot {
                     position: absolute;
                     top: 50%;
-                    transform: translateY(-42%);
-                    width: 120px;
+                    transform: translateY(-40%);
+                    width: 108px;
                     pointer-events: none;
                     filter: drop-shadow(0 12px 14px rgba(0, 0, 0, 0.45));
+                    z-index: 4;
                 }
                 .mascot-right {
-                    left: calc(50% + 52px);
+                    left: calc(100% + 4px);
                 }
                 .mascot-left {
-                    right: calc(50% + 52px);
+                    right: calc(100% + 4px);
                 }
                 .path-toast {
                     position: fixed;
@@ -703,14 +738,11 @@ export default function TopicPathMap({
                     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.45);
                 }
                 @media (max-width: 420px) {
+                    .wind-track {
+                        height: 860px;
+                    }
                     .duo-mascot {
-                        width: 92px;
-                    }
-                    .mascot-right {
-                        left: calc(50% + 36px);
-                    }
-                    .mascot-left {
-                        right: calc(50% + 36px);
+                        width: 86px;
                     }
                     .duo-node {
                         width: 70px;
