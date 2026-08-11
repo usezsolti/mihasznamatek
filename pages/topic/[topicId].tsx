@@ -127,7 +127,6 @@ export default function TopicStatsPage() {
         [results]
     );
     const path = useMemo(() => pathLessonSummary(topicProgress), [topicProgress]);
-
     const practiceHref = buildTopicPracticeHref(topicIdParam, educationLevel, erettsegiLevel);
 
     const goPractice = () => {
@@ -137,7 +136,7 @@ export default function TopicStatsPage() {
     if (!router.isReady || !topicIdParam) {
         return (
             <div className="dashboard-container modern-theme has-site-navbar">
-                <main className="main-content">
+                <main className="main-content topic-stats-page">
                     <div className="loading-screen">
                         <div className="loading-spinner" />
                         <p>Betöltés...</p>
@@ -149,69 +148,30 @@ export default function TopicStatsPage() {
 
     return (
         <div className="dashboard-container modern-theme has-site-navbar">
-            <main className="main-content" style={{ maxWidth: 960, margin: '0 auto' }}>
-                <div style={{ marginBottom: '1.25rem' }}>
-                    <Link
-                        href="/dashboard"
-                        style={{ color: '#9f9', textDecoration: 'none', fontWeight: 600 }}
-                    >
-                        ← Vissza a dashboardra
-                    </Link>
-                </div>
+            <main
+                className="main-content topic-stats-page"
+                style={{ ['--topic-color' as string]: topicColor }}
+            >
+                <Link href="/dashboard" className="topic-stats-back">
+                    ← Vissza a dashboardra
+                </Link>
 
-                <header
-                    style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '1rem',
-                        flexWrap: 'wrap',
-                        marginBottom: '1.5rem',
-                    }}
-                >
-                    <div
-                        style={{
-                            width: 64,
-                            height: 64,
-                            borderRadius: 16,
-                            background: topicColor,
-                            color: '#0a0a0a',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            fontSize: '1.75rem',
-                            fontWeight: 800,
-                            flexShrink: 0,
-                        }}
-                    >
+                <div className="topic-stats-hero">
+                    <div className="topic-stats-icon" aria-hidden="true">
                         {topicIcon}
                     </div>
-                    <div style={{ flex: 1, minWidth: 200 }}>
-                        <h1 style={{ margin: 0, color: topicColor, fontSize: '1.75rem' }}>
-                            {topicTitle}
-                        </h1>
-                        <p style={{ margin: '0.35rem 0 0', color: '#aaa' }}>
+                    <div className="topic-stats-hero-text">
+                        <h1 className="topic-stats-title">{topicTitle}</h1>
+                        <p className="topic-stats-subtitle">
                             Statisztikák és előrehaladás ebben a témakörben
                         </p>
                     </div>
                     {uid && (
-                        <button
-                            type="button"
-                            onClick={goPractice}
-                            style={{
-                                background: topicColor,
-                                color: '#0a0a0a',
-                                border: 'none',
-                                borderRadius: 12,
-                                padding: '0.85rem 1.4rem',
-                                fontWeight: 800,
-                                cursor: 'pointer',
-                                fontSize: '1rem',
-                            }}
-                        >
+                        <button type="button" className="topic-stats-cta" onClick={goPractice}>
                             Gyakorlás →
                         </button>
                     )}
-                </header>
+                </div>
 
                 {loading ? (
                     <div className="loading-screen" style={{ minHeight: 200 }}>
@@ -219,45 +179,19 @@ export default function TopicStatsPage() {
                         <p>Betöltés...</p>
                     </div>
                 ) : !uid ? (
-                    <section
-                        style={{
-                            background: 'rgba(255,255,255,0.04)',
-                            border: '1px solid rgba(57,255,20,0.25)',
-                            borderRadius: 16,
-                            padding: '2rem',
-                            textAlign: 'center',
-                        }}
-                    >
-                        <p style={{ color: '#fff', fontSize: '1.1rem', marginTop: 0 }}>
-                            Jelentkezz be a témakör statisztikáinak megtekintéséhez.
-                        </p>
+                    <div className="topic-stats-panel topic-stats-login">
+                        <p>Jelentkezz be a témakör statisztikáinak megtekintéséhez.</p>
                         <button
                             type="button"
-                            className="auth-btn"
+                            className="topic-stats-cta"
                             onClick={() => openAuthModal({ mode: 'login' })}
-                            style={{
-                                background: '#39ff14',
-                                color: '#0a0a0a',
-                                border: 'none',
-                                borderRadius: 10,
-                                padding: '0.75rem 1.25rem',
-                                fontWeight: 800,
-                                cursor: 'pointer',
-                            }}
                         >
                             Bejelentkezés
                         </button>
-                    </section>
+                    </div>
                 ) : (
                     <>
-                        <section
-                            style={{
-                                display: 'grid',
-                                gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))',
-                                gap: '0.85rem',
-                                marginBottom: '1.5rem',
-                            }}
-                        >
+                        <div className="topic-stats-grid">
                             {[
                                 { label: 'Játszott körök', value: String(stats.totalGames) },
                                 {
@@ -272,61 +206,31 @@ export default function TopicStatsPage() {
                                     value: stats.lastPlayedAt
                                         ? formatResultDate(stats.lastPlayedAt)
                                         : '—',
+                                    small: true,
                                 },
                             ].map((card) => (
-                                <div
-                                    key={card.label}
-                                    style={{
-                                        background: 'rgba(255,255,255,0.04)',
-                                        border: '1px solid rgba(255,255,255,0.08)',
-                                        borderRadius: 14,
-                                        padding: '1rem',
-                                    }}
-                                >
-                                    <div style={{ color: '#888', fontSize: '0.8rem', marginBottom: 6 }}>
-                                        {card.label}
-                                    </div>
+                                <div key={card.label} className="topic-stats-card">
+                                    <div className="topic-stats-card-label">{card.label}</div>
                                     <div
-                                        style={{
-                                            color: topicColor,
-                                            fontWeight: 800,
-                                            fontSize: card.label === 'Utolsó játék' ? '0.95rem' : '1.35rem',
-                                            lineHeight: 1.25,
-                                        }}
+                                        className={`topic-stats-card-value${card.small ? ' is-small' : ''}`}
                                     >
                                         {card.value}
                                     </div>
                                 </div>
                             ))}
-                        </section>
+                        </div>
 
-                        <section
-                            style={{
-                                background: 'rgba(255,255,255,0.04)',
-                                border: '1px solid rgba(255,255,255,0.08)',
-                                borderRadius: 16,
-                                padding: '1.25rem 1.4rem',
-                                marginBottom: '1.5rem',
-                            }}
-                        >
-                            <h2 style={{ margin: '0 0 0.75rem', color: '#fff', fontSize: '1.2rem' }}>
-                                Út / leckék
-                            </h2>
+                        <div className="topic-stats-panel">
+                            <h2 className="topic-stats-panel-title">Út / leckék</h2>
                             {path.lessonsDone === 0 && !topicProgress ? (
-                                <p style={{ color: '#aaa', margin: 0 }}>
+                                <p className="topic-stats-muted">
                                     Még nincs út-progressz ebben a témában. A gyakorlás indításával
                                     elkezded a leckéket.
                                 </p>
                             ) : (
                                 <>
                                     <div
-                                        style={{
-                                            display: 'flex',
-                                            justifyContent: 'space-between',
-                                            marginBottom: 8,
-                                            color: path.completed ? '#ffd700' : '#9f9',
-                                            fontWeight: 700,
-                                        }}
+                                        className={`topic-stats-path-meta${path.completed ? ' is-done' : ''}`}
                                     >
                                         <span>
                                             {path.completed
@@ -336,41 +240,19 @@ export default function TopicStatsPage() {
                                         </span>
                                         <span>{path.percent}%</span>
                                     </div>
-                                    <div
-                                        style={{
-                                            height: 10,
-                                            background: 'rgba(255,255,255,0.12)',
-                                            borderRadius: 999,
-                                            overflow: 'hidden',
-                                            marginBottom: '0.85rem',
-                                        }}
-                                    >
+                                    <div className="topic-stats-path-bar">
                                         <div
-                                            style={{
-                                                height: '100%',
-                                                width: `${Math.min(100, path.percent)}%`,
-                                                background: path.completed
-                                                    ? 'linear-gradient(90deg,#ffd700,#39ff14)'
-                                                    : topicColor,
-                                                borderRadius: 999,
-                                            }}
+                                            className={`topic-stats-path-fill${path.completed ? ' is-done' : ''}`}
+                                            style={{ width: `${Math.min(100, path.percent)}%` }}
                                         />
                                     </div>
-                                    <div
-                                        style={{
-                                            display: 'flex',
-                                            flexWrap: 'wrap',
-                                            gap: '0.75rem 1.25rem',
-                                            color: '#bbb',
-                                            fontSize: '0.9rem',
-                                        }}
-                                    >
+                                    <div className="topic-stats-path-details">
                                         <span>
                                             Legjobb: {topicProgress?.bestCorrect ?? 0}/
                                             {topicProgress?.totalQuestions ?? path.lessonsTotal * 3}
                                         </span>
                                         <span>
-                                            Szakaszok:{" "}
+                                            Szakaszok:{' '}
                                             {path.stagesCompleted.length
                                                 ? path.stagesCompleted.join(', ')
                                                 : '—'}
@@ -379,26 +261,16 @@ export default function TopicStatsPage() {
                                     </div>
                                 </>
                             )}
-                        </section>
+                        </div>
 
-                        <section
-                            style={{
-                                background: 'rgba(255,255,255,0.04)',
-                                border: '1px solid rgba(255,255,255,0.08)',
-                                borderRadius: 16,
-                                padding: '1.25rem 1.4rem',
-                                marginBottom: '2rem',
-                            }}
-                        >
-                            <h2 style={{ margin: '0 0 0.75rem', color: '#fff', fontSize: '1.2rem' }}>
-                                Játéktörténet
-                            </h2>
+                        <div className="topic-stats-panel">
+                            <h2 className="topic-stats-panel-title">Játéktörténet</h2>
                             {results.length === 0 ? (
-                                <p style={{ color: '#aaa', margin: 0 }}>
+                                <p className="topic-stats-muted">
                                     Még nincs mentett játék ebben a témakörben.
                                 </p>
                             ) : (
-                                <ul style={{ listStyle: 'none', margin: 0, padding: 0 }}>
+                                <ul className="topic-stats-history">
                                     {results.map((r, i) => {
                                         const correct = r.correct || 0;
                                         const total = r.total || 0;
@@ -407,37 +279,20 @@ export default function TopicStatsPage() {
                                         return (
                                             <li
                                                 key={r.id || `${i}-${correct}-${total}`}
-                                                style={{
-                                                    display: 'flex',
-                                                    flexWrap: 'wrap',
-                                                    gap: '0.5rem 1rem',
-                                                    justifyContent: 'space-between',
-                                                    alignItems: 'center',
-                                                    padding: '0.85rem 0',
-                                                    borderTop:
-                                                        i === 0
-                                                            ? 'none'
-                                                            : '1px solid rgba(255,255,255,0.08)',
-                                                }}
+                                                className="topic-stats-history-item"
                                             >
                                                 <div>
-                                                    <div style={{ color: '#fff', fontWeight: 600 }}>
+                                                    <div className="topic-stats-history-date">
                                                         {formatResultDate(r.completedAt)}
                                                     </div>
-                                                    <div style={{ color: '#888', fontSize: '0.85rem' }}>
+                                                    <div className="topic-stats-history-meta">
                                                         {correct}/{total} helyes · {rate}%
                                                     </div>
                                                 </div>
-                                                <div
-                                                    style={{
-                                                        color: topicColor,
-                                                        fontWeight: 700,
-                                                        textAlign: 'right',
-                                                    }}
-                                                >
+                                                <div className="topic-stats-history-score">
                                                     <div>Score: {r.score || 0}</div>
                                                     {(r.xpEarned || 0) > 0 && (
-                                                        <div style={{ fontSize: '0.85rem', color: '#9f9' }}>
+                                                        <div className="topic-stats-history-xp">
                                                             +{r.xpEarned} XP
                                                         </div>
                                                     )}
@@ -447,23 +302,10 @@ export default function TopicStatsPage() {
                                     })}
                                 </ul>
                             )}
-                        </section>
+                        </div>
 
-                        <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
-                            <button
-                                type="button"
-                                onClick={goPractice}
-                                style={{
-                                    background: topicColor,
-                                    color: '#0a0a0a',
-                                    border: 'none',
-                                    borderRadius: 12,
-                                    padding: '0.95rem 1.75rem',
-                                    fontWeight: 800,
-                                    cursor: 'pointer',
-                                    fontSize: '1.05rem',
-                                }}
-                            >
+                        <div className="topic-stats-footer-cta">
+                            <button type="button" className="topic-stats-cta" onClick={goPractice}>
                                 Gyakorlás indítása
                             </button>
                         </div>

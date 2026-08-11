@@ -5036,3 +5036,253 @@ select.form-input:disabled {
     cursor: not-allowed;
     transform: none;
 }
+
+/* ---- Topic stats page (/topic/[topicId]) ----
+   Avoid bare <header>/<section>: style.css treats those as full-viewport heroes. */
+.topic-stats-page {
+    --topic-color: #39ff14;
+    position: relative;
+    z-index: 1;
+    max-width: 960px;
+    margin: 0 auto;
+    width: 100%;
+    background: transparent !important;
+}
+
+.topic-stats-back {
+    display: inline-block;
+    color: #9f9;
+    text-decoration: none;
+    font-weight: 600;
+    margin-bottom: 1.25rem;
+}
+
+.topic-stats-back:hover {
+    color: #39ff14;
+}
+
+.topic-stats-hero {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-bottom: 1.75rem;
+    padding: 1.25rem 1.4rem;
+    background: rgba(20, 20, 30, 0.75);
+    border: 1px solid rgba(57, 255, 20, 0.25);
+    border-radius: 18px;
+}
+
+.topic-stats-icon {
+    width: 64px;
+    height: 64px;
+    border-radius: 16px;
+    background: var(--topic-color);
+    color: #0a0a0a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.75rem;
+    font-weight: 800;
+    flex-shrink: 0;
+}
+
+.topic-stats-hero-text {
+    flex: 1 1 220px;
+    min-width: 0;
+}
+
+.topic-stats-title {
+    margin: 0 !important;
+    padding: 0 !important;
+    color: var(--topic-color) !important;
+    font-family: 'Montserrat', sans-serif !important;
+    font-size: 1.75rem !important;
+    font-weight: 800 !important;
+    text-align: left !important;
+    text-shadow: 0 0 16px rgba(57, 255, 20, 0.35);
+    line-height: 1.2;
+}
+
+.topic-stats-subtitle {
+    margin: 0.4rem 0 0 !important;
+    color: #aaa !important;
+    font-size: 0.95rem !important;
+    text-align: left !important;
+    text-shadow: none !important;
+}
+
+.topic-stats-cta {
+    background: var(--topic-color);
+    color: #0a0a0a;
+    border: none;
+    border-radius: 12px;
+    padding: 0.85rem 1.4rem;
+    font-weight: 800;
+    cursor: pointer;
+    font-size: 1rem;
+    flex-shrink: 0;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.topic-stats-cta:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 0 18px rgba(57, 255, 20, 0.45);
+}
+
+.topic-stats-login {
+    text-align: center;
+    padding: 2rem !important;
+}
+
+.topic-stats-login p {
+    color: #fff;
+    font-size: 1.1rem;
+    margin: 0 0 1.25rem;
+}
+
+.topic-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 0.85rem;
+    margin-bottom: 1.5rem;
+}
+
+.topic-stats-card {
+    background: rgba(20, 20, 30, 0.75);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 14px;
+    padding: 1rem;
+}
+
+.topic-stats-card-label {
+    color: #888;
+    font-size: 0.8rem;
+    margin-bottom: 6px;
+}
+
+.topic-stats-card-value {
+    color: var(--topic-color);
+    font-weight: 800;
+    font-size: 1.35rem;
+    line-height: 1.25;
+}
+
+.topic-stats-card-value.is-small {
+    font-size: 0.95rem;
+}
+
+.topic-stats-panel {
+    background: rgba(20, 20, 30, 0.75);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    padding: 1.25rem 1.4rem;
+    margin-bottom: 1.5rem;
+}
+
+.topic-stats-panel-title {
+    margin: 0 0 0.75rem;
+    color: #fff;
+    font-size: 1.2rem;
+    font-weight: 700;
+}
+
+.topic-stats-muted {
+    color: #aaa;
+    margin: 0;
+}
+
+.topic-stats-path-meta {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    color: #9f9;
+    font-weight: 700;
+}
+
+.topic-stats-path-meta.is-done {
+    color: #ffd700;
+}
+
+.topic-stats-path-bar {
+    height: 10px;
+    background: rgba(255, 255, 255, 0.12);
+    border-radius: 999px;
+    overflow: hidden;
+    margin-bottom: 0.85rem;
+}
+
+.topic-stats-path-fill {
+    height: 100%;
+    background: var(--topic-color);
+    border-radius: 999px;
+}
+
+.topic-stats-path-fill.is-done {
+    background: linear-gradient(90deg, #ffd700, #39ff14);
+}
+
+.topic-stats-path-details {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem 1.25rem;
+    color: #bbb;
+    font-size: 0.9rem;
+}
+
+.topic-stats-history {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.topic-stats-history-item {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1rem;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.85rem 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.topic-stats-history-item:first-child {
+    border-top: none;
+    padding-top: 0;
+}
+
+.topic-stats-history-date {
+    color: #fff;
+    font-weight: 600;
+}
+
+.topic-stats-history-meta {
+    color: #888;
+    font-size: 0.85rem;
+}
+
+.topic-stats-history-score {
+    color: var(--topic-color);
+    font-weight: 700;
+    text-align: right;
+}
+
+.topic-stats-history-xp {
+    font-size: 0.85rem;
+    color: #9f9;
+}
+
+.topic-stats-footer-cta {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+@media (max-width: 640px) {
+    .topic-stats-hero {
+        align-items: flex-start;
+    }
+
+    .topic-stats-cta {
+        width: 100%;
+    }
+}
