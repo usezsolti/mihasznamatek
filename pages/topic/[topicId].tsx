@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
+import TopicPathMap from '../../components/TopicPathMap';
 import { openAuthModal } from '../../utils/authModal';
 import {
     loadUserPracticeProgress,
@@ -11,6 +12,7 @@ import type { EducationLevelId, ErettsegiExamLevel } from '../../utils/mathTopic
 import {
     aggregateTopicStats,
     buildTopicPracticeHref,
+    buildTopicStatsHref,
     findCatalogTopic,
     filterResultsForTopic,
     formatResultDate,
@@ -36,6 +38,15 @@ export default function TopicStatsPage() {
     const topicIdParam = typeof router.query.topicId === 'string' ? router.query.topicId : '';
     const educationLevel = parseEducationLevel(router.query.educationLevel);
     const erettsegiLevel = parseErettsegiLevel(router.query.level);
+    const showPath = router.query.view === 'path';
+    const gradeParam = router.query.grade ? parseInt(String(router.query.grade), 10) : NaN;
+    const pathGrade = Number.isFinite(gradeParam)
+        ? gradeParam
+        : educationLevel === 'elementary'
+          ? 5
+          : educationLevel === 'highschool'
+            ? 10
+            : undefined;
 
     const [loading, setLoading] = useState(true);
     const [uid, setUid] = useState<string | null>(null);
@@ -141,6 +152,29 @@ export default function TopicStatsPage() {
                         <div className="loading-spinner" />
                         <p>Betöltés...</p>
                     </div>
+                </main>
+            </div>
+        );
+    }
+
+    if (showPath) {
+        return (
+            <div className="dashboard-container modern-theme has-site-navbar">
+                <main className="main-content topic-stats-page">
+                    <TopicPathMap
+                        topicId={topicIdParam}
+                        topicTitle={topicTitle}
+                        topicIcon={topicIcon}
+                        topicColor={topicColor}
+                        educationLevel={educationLevel}
+                        erettsegiLevel={erettsegiLevel}
+                        grade={pathGrade}
+                        onBack={() =>
+                            router.push(
+                                buildTopicStatsHref(topicIdParam, educationLevel, erettsegiLevel)
+                            )
+                        }
+                    />
                 </main>
             </div>
         );

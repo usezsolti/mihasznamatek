@@ -8,6 +8,7 @@ import {
     computeHighestUnlocked,
     lessonToStage,
     normalizeTopicId,
+    starsFromWrongCount,
 } from './topicPath';
 
 export type PracticeStage = 1 | 2 | 3;
@@ -43,6 +44,8 @@ export interface TopicProgress {
     lessonsCompleted: number[];
     highestUnlocked: number;
     chestsClaimed: number[];
+    /** Lecke → legjobb csillag (1–3) */
+    lessonStars?: Record<number, 1 | 2 | 3>;
     updatedAt?: any;
 }
 
@@ -56,6 +59,7 @@ function emptyPathTopicProgress(totalQuestions = PATH_TOTAL_QUESTIONS): TopicPro
         lessonsCompleted: [],
         highestUnlocked: 1,
         chestsClaimed: [],
+        lessonStars: {},
     };
 }
 
@@ -196,6 +200,16 @@ function normalizeLoadedTopic(raw: any): TopicProgress {
     const stagesCompleted = Array.isArray(raw?.stagesCompleted) ? raw.stagesCompleted.map(Number) : [];
     const chestsClaimed = Array.isArray(raw?.chestsClaimed) ? raw.chestsClaimed.map(Number) : [];
     const highestUnlocked = Number(raw?.highestUnlocked) || computeHighestUnlocked(lessonsCompleted);
+    const lessonStars: Record<number, 1 | 2 | 3> = {};
+    if (raw?.lessonStars && typeof raw.lessonStars === 'object') {
+        Object.keys(raw.lessonStars).forEach((k) => {
+            const lesson = Number(k);
+            const stars = Number(raw.lessonStars[k]);
+            if (lesson >= 1 && (stars === 1 || stars === 2 || stars === 3)) {
+                lessonStars[lesson] = stars;
+            }
+        });
+    }
     return {
         ...base,
         bestCorrect: Number(raw?.bestCorrect) || 0,
@@ -206,6 +220,7 @@ function normalizeLoadedTopic(raw: any): TopicProgress {
         lessonsCompleted,
         highestUnlocked,
         chestsClaimed,
+        lessonStars,
         updatedAt: raw?.updatedAt,
     };
 }
@@ -351,6 +366,8 @@ export type ProgressUpdateInput = {
     sessionXpFromAnswers: number;
     /** Path mód: melyik lecke készült el (1–6) */
     lessonJustCompleted?: number;
+    /** Path mód: hibás első tippek száma a leckében → csillagok */
+    lessonWrongCount?: number;
 };
 
 export type ProgressUpdateResult = {
@@ -429,6 +446,15 @@ export async function applyAndSaveProgress(
         }
         if (completedNow && input.perfectRun && !prevTopic.perfect) xpGained += 50;
 
+        const lessonStars = { ...(prevTopic.lessonStars || {}) };
+        if (input.lessonJustCompleted) {
+            const earned = starsFromWrongCount(input.lessonWrongCount ?? 0);
+            const prevStars = lessonStars[input.lessonJustCompleted] || 0;
+            if (earned > prevStars) {
+                lessonStars[input.lessonJustCompleted] = earned;
+            }
+        }
+
         topics[storageKey] = {
             bestCorrect,
             totalQuestions: PATH_TOTAL_QUESTIONS,
@@ -438,6 +464,7 @@ export async function applyAndSaveProgress(
             lessonsCompleted: lessonsCompleted.sort((a, b) => a - b),
             highestUnlocked,
             chestsClaimed: prevTopic.chestsClaimed || [],
+            lessonStars,
         };
 
         if (topics[storageKey]!.completed) {

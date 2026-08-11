@@ -211,23 +211,35 @@ export function buildTopicStatsHref(
     return `/topic/${encodeURIComponent(topicId)}?${params.toString()}`;
 }
 
+/** Gyakorlás → Duolingo-út (minden iskolaszinten). */
 export function buildTopicPracticeHref(
     topicId: string,
     educationLevel: EducationLevelId,
     erettsegiLevel: ErettsegiExamLevel = 'emelt'
 ): string {
-    if (educationLevel === 'erettsegi') {
-        return `/erettsegi-felkeszules?mode=topics&level=${erettsegiLevel}&topic=${encodeURIComponent(topicId)}`;
-    }
     const params = new URLSearchParams({
         educationLevel,
-        topic: topicId,
+        view: 'path',
     });
+    if (educationLevel === 'erettsegi') {
+        params.set('level', erettsegiLevel);
+    }
     if (educationLevel === 'elementary') {
         params.set('grade', '5');
     } else if (educationLevel === 'highschool') {
         params.set('grade', '10');
     }
+    return `/topic/${encodeURIComponent(topicId)}?${params.toString()}`;
+}
+
+/** Napi vegyes gyakorlás (több témából). */
+export function buildDailyPracticeHref(educationLevel: EducationLevelId): string {
+    const params = new URLSearchParams({
+        daily: '1',
+        educationLevel,
+    });
+    if (educationLevel === 'elementary') params.set('grade', '5');
+    if (educationLevel === 'highschool') params.set('grade', '10');
     return `/game?${params.toString()}`;
 }
 

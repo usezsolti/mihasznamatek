@@ -25,7 +25,11 @@ interface Props {
     topicTitle: string;
     topicIcon: string;
     topicColor: string;
-    level: 'kozep' | 'emelt';
+    /** @deprecated use educationLevel + erettsegiLevel */
+    level?: 'kozep' | 'emelt';
+    educationLevel?: 'elementary' | 'highschool' | 'university' | 'erettsegi';
+    erettsegiLevel?: 'kozep' | 'emelt';
+    grade?: number;
     onBack: () => void;
 }
 
@@ -35,14 +39,20 @@ export default function TopicPathMap({
     topicIcon,
     topicColor,
     level,
+    educationLevel: educationLevelProp,
+    erettsegiLevel: erettsegiLevelProp,
+    grade,
     onBack,
 }: Props) {
     const router = useRouter();
+    const educationLevel = educationLevelProp || 'erettsegi';
+    const erettsegiLevel = erettsegiLevelProp || level || 'emelt';
     const [progress, setProgress] = useState<UserPracticeProgress | null>(null);
     const [toast, setToast] = useState<string | null>(null);
     const [claiming, setClaiming] = useState(false);
     const [loggedInEmail, setLoggedInEmail] = useState<string | null>(null);
     const [testLoading, setTestLoading] = useState(false);
+    const [sprintMode, setSprintMode] = useState(false);
     const nodes = useMemo(() => buildPathNodes(), []);
 
     const storageKey = resolveProgressStorageKey(topicId);
@@ -109,9 +119,23 @@ export default function TopicPathMap({
 
     const startLesson = (lesson: number) => {
         if (!isLessonUnlocked(lesson, highestUnlocked, lessonsCompleted)) return;
-        router.push(
-            `/game?erettsegi=true&topic=${encodeURIComponent(topicId)}&level=${level}&node=${lesson}&path=1`
-        );
+        const params = new URLSearchParams({
+            topic: topicId,
+            node: String(lesson),
+            path: '1',
+        });
+        if (sprintMode) params.set('sprint', '1');
+
+        if (educationLevel === 'erettsegi') {
+            params.set('erettsegi', 'true');
+            params.set('level', erettsegiLevel);
+        } else {
+            params.set('educationLevel', educationLevel);
+            if (grade != null) params.set('grade', String(grade));
+            else if (educationLevel === 'elementary') params.set('grade', '5');
+            else if (educationLevel === 'highschool') params.set('grade', '10');
+        }
+        router.push(`/game?${params.toString()}`);
     };
 
     const onChestClick = async (chest: 1 | 2 | 3) => {
@@ -173,6 +197,7 @@ export default function TopicPathMap({
             const current = node.lesson === continueLesson && !done;
             const allDone = lessonsCompleted.length >= PATH_LESSON_COUNT;
             const showMascot = current || (allDone && node.lesson === PATH_LESSON_COUNT);
+            const starCount = topicProg?.lessonStars?.[node.lesson] || 0;
 
             return (
                 <div key={`L${node.lesson}`} className={`duo-row duo-${side}`}>
@@ -212,6 +237,12 @@ export default function TopicPathMap({
                         <span className={`duo-caption ${unlocked ? '' : 'muted'}`}>
                             {done ? `Lecke ${node.lesson} · Kész` : node.label}
                         </span>
+                        {(done || starCount > 0) && (
+                            <span className="duo-lesson-stars" aria-label={`${starCount} csillag`}>
+                                {'★'.repeat(starCount)}
+                                {'☆'.repeat(Math.max(0, 3 - starCount))}
+                            </span>
+                        )}
                     </div>
 
                     {showMascot && (
@@ -280,6 +311,15 @@ export default function TopicPathMap({
                         <div className="path-xp-fill" style={{ width: `${xpPct}%`, background: topicColor }} />
                     </div>
                 </div>
+
+                <label className="path-sprint-toggle">
+                    <input
+                        type="checkbox"
+                        checked={sprintMode}
+                        onChange={(e) => setSprintMode(e.target.checked)}
+                    />
+                    <span>⏱ Sprint mód (90 mp, életek számítanak)</span>
+                </label>
 
                 {!loggedInEmail ? (
                     <div className="path-test-login">
@@ -559,6 +599,29 @@ export default function TopicPathMap({
                 }
                 .duo-caption.muted {
                     color: #777;
+                }
+                .duo-lesson-stars {
+                    display: block;
+                    margin-top: 0.2rem;
+                    font-size: 0.85rem;
+                    letter-spacing: 0.08em;
+                    color: #ffd700;
+                    text-shadow: 0 0 8px rgba(255, 215, 0, 0.45);
+                }
+                .path-sprint-toggle {
+                    display: flex;
+                    align-items: center;
+                    gap: 0.55rem;
+                    margin: 0.75rem 0 0.25rem;
+                    color: #cfcfcf;
+                    font-size: 0.9rem;
+                    cursor: pointer;
+                    user-select: none;
+                }
+                .path-sprint-toggle input {
+                    width: 1.05rem;
+                    height: 1.05rem;
+                    accent-color: #39ff14;
                 }
                 .duo-chest {
                     width: 72px;

@@ -28,7 +28,19 @@ import {
     elementaryTopics as ELEMENTARY_TOPICS_FROM_CATALOG,
     highschoolTopics as HIGHSCHOOL_TOPICS_FROM_CATALOG,
     universitySubjects as UNIVERSITY_SUBJECTS_FROM_CATALOG,
+    getTopicsForEducationLevel,
+    type EducationLevelId,
 } from '../utils/mathTopicsCatalog';
+import {
+    SPRINT_SECONDS,
+    playCorrectSound,
+    playLifeLostSound,
+    playStreakSound,
+    playWrongSound,
+    streakBonusXp,
+    type MascotMood,
+} from '../utils/gameFeedback';
+import { buildTopicPracticeHref } from '../utils/topicStats';
 
 export default function Game() {
     const router = useRouter();
@@ -63,8 +75,14 @@ export default function Game() {
     const [isWorksheetMode, setIsWorksheetMode] = useState(false);
     const [isPathMode, setIsPathMode] = useState(false);
     const [pathLesson, setPathLesson] = useState<number | null>(null);
+    const [isSprintMode, setIsSprintMode] = useState(false);
+    const [sprintLeft, setSprintLeft] = useState(SPRINT_SECONDS);
+    const [mascotMood, setMascotMood] = useState<MascotMood>('idle');
+    const [isDailyMode, setIsDailyMode] = useState(false);
     const worksheetTopicKeyRef = useRef<string | null>(null);
     const pathLessonRef = useRef<number | null>(null);
+    const livesRef = useRef(3);
+    const sprintEndedRef = useRef(false);
     const correctQuestionIdsRef = useRef<string[]>([]);
     const wrongFirstIdsRef = useRef<string[]>([]);
     const erettsegiQuestionsRef = useRef<Question[]>([]);
@@ -171,8 +189,53 @@ export default function Game() {
                 setCurrentTopic(topicParam);
             }
 
-            // Deep-link: témakör kvíz azonnali indítása a megfelelő szinten
-            if (resolvedLevel === 'elementary' && topicParam && !gameActive) {
+            const pathRequested = router.query.path === '1';
+            const dailyRequested = router.query.daily === '1';
+            const sprintRequested = router.query.sprint === '1';
+
+            if (dailyRequested && resolvedLevel && !gameActive) {
+                const grade = !isNaN(gradeParam) ? gradeParam : resolvedLevel === 'elementary' ? 5 : 10;
+                generateDailyMixedQuestions(resolvedLevel, grade);
+            } else if (pathRequested && resolvedLevel && topicParam && !gameActive) {
+                const grade = !isNaN(gradeParam)
+                    ? gradeParam
+                    : resolvedLevel === 'elementary'
+                      ? 5
+                      : 10;
+                const runPath = async () => {
+                    const nodeParsed = router.query.node != null
+                        ? parseInt(String(router.query.node), 10)
+                        : 1;
+                    if (Number.isFinite(nodeParsed) && nodeParsed > 1) {
+                        try {
+                            let attempts = 0;
+                            while (!(window as any).firebase?.auth && attempts < 30) {
+                                await new Promise((r) => setTimeout(r, 100));
+                                attempts++;
+                            }
+                            const uid = (window as any).firebase?.auth?.()?.currentUser?.uid || null;
+                            const prog = await loadUserPracticeProgress(uid);
+                            const key = resolveProgressStorageKey(topicParam);
+                            const tp = prog.topics[key];
+                            if (!isLessonUnlocked(nodeParsed, tp?.highestUnlocked || 1, tp?.lessonsCompleted || [])) {
+                                router.replace(
+                                    buildTopicPracticeHref(topicParam, resolvedLevel as EducationLevelId)
+                                );
+                                return;
+                            }
+                        } catch (e) {
+                            console.error('Path unlock check:', e);
+                        }
+                    }
+                    startPathLessonForEducationLevel(
+                        resolvedLevel,
+                        topicParam,
+                        grade,
+                        sprintRequested
+                    );
+                };
+                void runPath();
+            } else if (resolvedLevel === 'elementary' && topicParam && !gameActive) {
                 const grade = !isNaN(gradeParam) && gradeParam >= 1 && gradeParam <= 8 ? gradeParam : 5;
                 setSelectedGrade(grade);
                 setSelectedElementaryTopic(topicParam);
@@ -185,10 +248,8 @@ export default function Game() {
             } else if (resolvedLevel === 'university' && topicParam && !gameActive) {
                 const knownSubject = ['analizis1', 'analizis2', 'analizis3'].includes(topicParam);
                 if (knownSubject) {
-                    // Tantárgy kiválasztása → témakör választó jelenik meg
                     setSelectedUniversitySubject(topicParam);
                 } else {
-                    // Ismeretlen / egyéb egyetemi témakör → azonnali kvíz a témából
                     setSelectedUniversitySubject(topicParam);
                     setSelectedUniversityTopic(topicParam);
                     generateUniversityQuestionsByTopic(topicParam, topicParam);
@@ -227,9 +288,14 @@ export default function Game() {
                         console.error('Path unlock check:', e);
                     }
                 }
-                generateErettsegiQuestionsByTopic(topicId, level);
+                generateErettsegiQuestionsByTopic(topicId, level, router.query.sprint === '1');
             };
             void run();
+        }
+
+        // Napi vegyes (érettségi szint)
+        if (router.isReady && router.query.daily === '1' && router.query.educationLevel === 'erettsegi') {
+            generateDailyMixedQuestions('erettsegi', 10);
         }
 
         // Érettségi feladatsor kezelése - közép vagy emelt szintű feladatokkal vegyes témakörökből
@@ -269,6 +335,24 @@ export default function Game() {
         // Kiosztott feladatok betöltése
         loadAssignedTasks();
     }, [router.query]);
+
+    // Sprint visszaszámláló
+    useEffect(() => {
+        if (!gameActive || !isSprintMode) return;
+        if (sprintLeft <= 0) {
+            if (!sprintEndedRef.current) {
+                sprintEndedRef.current = true;
+                setMessage('Lejárt az idő! ⏱');
+                setMascotMood('sad');
+                setGameActive(false);
+                void saveGameResults();
+            }
+            return;
+        }
+        const id = window.setTimeout(() => setSprintLeft((s) => s - 1), 1000);
+        return () => window.clearTimeout(id);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [gameActive, isSprintMode, sprintLeft]);
 
     // Érettségi feladatok betöltése után automatikusan elindítjuk a játékot
     useEffect(() => {
@@ -1211,24 +1295,75 @@ export default function Game() {
     const generateElementaryQuestionByTopic = (topicId: string, grade: number, difficulty: number = 0): Question | null => {
         const topicIdLower = topicId.toLowerCase();
 
-        // Számok 20-ig
+        // Számok 20-ig — többféle feladatvariáns
         if (topicIdLower.includes('szamok-20ig') || topicIdLower.includes('20ig')) {
-            const num = Math.floor(Math.random() * 20) + 1;
+            const max = 10 + Math.min(10, difficulty * 2);
+            const a = Math.floor(Math.random() * max) + 1;
+            const b = Math.floor(Math.random() * Math.max(1, max - a + 1));
+            const variant = Math.floor(Math.random() * 4);
+            if (variant === 0) {
+                return {
+                    question: `Mennyi ${a} + ${b}?`,
+                    answer: a + b,
+                    type: 'addition',
+                    expression: `${a} + ${b} = ${a + b}`,
+                };
+            }
+            if (variant === 1) {
+                const larger = Math.max(a, b);
+                const smaller = Math.min(a, b);
+                return {
+                    question: `Mennyi ${larger} − ${smaller}?`,
+                    answer: larger - smaller,
+                    type: 'subtraction',
+                    expression: `${larger} - ${smaller} = ${larger - smaller}`,
+                };
+            }
+            if (variant === 2) {
+                return {
+                    question: `Melyik a nagyobb: ${a} vagy ${b}? Írd be a nagyobbat!`,
+                    answer: Math.max(a, b),
+                    type: 'addition',
+                    expression: `max(${a},${b}) = ${Math.max(a, b)}`,
+                };
+            }
             return {
-                question: `Számolj ${num}-ig! Mennyi ${num}?`,
-                answer: num,
+                question: `Mi következik ${a} után?`,
+                answer: a + 1,
                 type: 'addition',
-                expression: `${num} = ${num}`
+                expression: `${a} + 1 = ${a + 1}`,
             };
         }
         // Számok 100-ig
         else if (topicIdLower.includes('szamok-100ig') || topicIdLower.includes('100ig')) {
-            const num = Math.floor(Math.random() * 100) + 1;
+            const max = 20 + difficulty * 15;
+            const a = Math.floor(Math.random() * max) + 1;
+            const b = Math.floor(Math.random() * max) + 1;
+            const variant = Math.floor(Math.random() * 3);
+            if (variant === 0) {
+                return {
+                    question: `Mennyi ${a} + ${b}?`,
+                    answer: a + b,
+                    type: 'addition',
+                    expression: `${a} + ${b} = ${a + b}`,
+                };
+            }
+            if (variant === 1) {
+                const larger = Math.max(a, b);
+                const smaller = Math.min(a, b);
+                return {
+                    question: `Mennyi ${larger} − ${smaller}?`,
+                    answer: larger - smaller,
+                    type: 'subtraction',
+                    expression: `${larger} - ${smaller} = ${larger - smaller}`,
+                };
+            }
+            const tens = Math.floor(a / 10) * 10;
             return {
-                question: `Számolj ${num}-ig! Mennyi ${num}?`,
-                answer: num,
+                question: `Kerekítsd ${a}-t a legközelebbi tizesre!`,
+                answer: a - tens >= 5 ? tens + 10 : tens,
                 type: 'addition',
-                expression: `${num} = ${num}`
+                expression: `kerekítés(${a})`,
             };
         }
         // Összeadás-kivonás
@@ -3916,9 +4051,178 @@ Teljes megoldás:
         return null;
     };
 
-    const generateErettsegiQuestionsByTopic = (topicId: string, level: string) => {
-        setIsErettsegiMode(true);
+    const beginPathOrWorksheetRun = (
+        questions: Question[],
+        opts: {
+            topicId: string;
+            lessonNode: number | null;
+            sprint?: boolean;
+            erettsegi?: boolean;
+            daily?: boolean;
+        }
+    ) => {
+        const pathMode = opts.lessonNode != null;
+        setIsPathMode(pathMode);
+        setPathLesson(opts.lessonNode);
+        pathLessonRef.current = opts.lessonNode;
+        setIsWorksheetMode(true);
+        setIsErettsegiMode(!!opts.erettsegi);
+        setIsDailyMode(!!opts.daily);
+        setIsSprintMode(!!opts.sprint);
+        setSprintLeft(SPRINT_SECONDS);
+        sprintEndedRef.current = false;
+        setMascotMood('idle');
+        worksheetTopicKeyRef.current = resolveProgressStorageKey(opts.topicId);
+        setCurrentTopic(opts.topicId);
+        setCorrectQuestionIds([]);
+        setWrongFirstIds([]);
+        setStagesCleared([]);
+        setSessionXp(0);
+        setCorrectStreak(0);
+        setMaxStreak(0);
+        setFailedQuestions([]);
+        correctQuestionIdsRef.current = [];
+        wrongFirstIdsRef.current = [];
+        erettsegiQuestionsRef.current = questions;
+        setErettsegiQuestions(questions);
+        setTaskQuestions(questions);
 
+        if (questions.length > 0) {
+            setGameActive(true);
+            setScore(0);
+            setLevel(1);
+            const startLives = opts.sprint ? 2 : 3;
+            livesRef.current = startLives;
+            setLives(startLives);
+            setCurrentQuestion(0);
+            setUserAnswer('');
+            setUserAnswer2('');
+            setUserAnswer3('');
+            setUserAnswer4('');
+            setMessage('');
+            setIsCorrect(false);
+            setShowExpression(false);
+        }
+    };
+
+    /** Path lecke általános / közép / egyetem témákhoz */
+    const startPathLessonForEducationLevel = (
+        eduLevel: 'elementary' | 'highschool' | 'university',
+        topicId: string,
+        grade: number,
+        sprint = false
+    ) => {
+        const nodeRaw = router.query.node;
+        const nodeParsed = nodeRaw != null ? parseInt(String(nodeRaw), 10) : NaN;
+        const lessonNode = Number.isFinite(nodeParsed) && nodeParsed >= 1 && nodeParsed <= 6
+            ? nodeParsed
+            : 1;
+
+        let stagedSource: (Question & { stage: PracticeStage })[] = [];
+        const worksheet = getWorksheetListForTopic(topicId);
+        if (worksheet) {
+            stagedSource = assignStagesToQuestions(
+                worksheet.list.map((q, i) => ({
+                    ...q,
+                    id: `${worksheet.prefix}_${i + 1}`,
+                    level: eduLevel === 'university' ? 'university' : 'highschool',
+                }))
+            );
+        } else {
+            // Gazdagabb bank: 10 kérdés / szakasz
+            for (let band = 0; band < 3; band++) {
+                const stage = (band + 1) as PracticeStage;
+                const difficulty = band * 2;
+                for (let i = 0; i < 10; i++) {
+                    let question: Question | null = null;
+                    if (eduLevel === 'elementary') {
+                        question = generateElementaryQuestionByTopic(topicId, grade, difficulty);
+                    } else if (eduLevel === 'highschool') {
+                        question = generateHighschoolQuestionByTopic(topicId, grade, difficulty);
+                    } else {
+                        question = generateUniversityQuestionByTopic(topicId, topicId);
+                    }
+                    if (question) {
+                        stagedSource.push({
+                            ...question,
+                            id: `${eduLevel}_${topicId}_s${stage}_${i}_${Math.random().toString(36).slice(2, 7)}`,
+                            level: eduLevel === 'university' ? 'university' : eduLevel === 'elementary' ? 'elementary' : 'highschool',
+                            stage,
+                        });
+                    }
+                }
+            }
+        }
+
+        const bank = buildPathQuestionBank(stagedSource);
+        const questions = getLessonQuestions(bank, lessonNode);
+        if (eduLevel === 'elementary') {
+            setSelectedGrade(grade);
+            setSelectedElementaryTopic(topicId);
+        } else if (eduLevel === 'highschool') {
+            setSelectedHighschoolGrade(grade);
+            setSelectedHighschoolTopic(topicId);
+        } else {
+            setSelectedUniversitySubject(topicId);
+            setSelectedUniversityTopic(topicId);
+        }
+        setEducationLevel(eduLevel);
+        beginPathOrWorksheetRun(questions, {
+            topicId,
+            lessonNode,
+            sprint,
+            erettsegi: false,
+        });
+    };
+
+    /** Napi vegyes: több témából 12 kérdés */
+    const generateDailyMixedQuestions = (
+        eduLevel: EducationLevelId,
+        grade: number
+    ) => {
+        const examLevel = eduLevel === 'erettsegi'
+            ? ((router.query.level as string) === 'kozep' ? 'kozep' : 'emelt')
+            : 'emelt';
+        const topics = getTopicsForEducationLevel(
+            eduLevel === 'erettsegi' ? 'erettsegi' : eduLevel,
+            examLevel as 'kozep' | 'emelt'
+        );
+        const picked = [...topics].sort(() => Math.random() - 0.5).slice(0, 6);
+        const questions: Question[] = [];
+        let guard = 0;
+        while (questions.length < 12 && guard < 80) {
+            guard++;
+            const t = picked[questions.length % Math.max(1, picked.length)];
+            if (!t) break;
+            let q: Question | null = null;
+            if (eduLevel === 'elementary') {
+                q = generateElementaryQuestionByTopic(t.id, grade || 5, Math.floor(Math.random() * 4));
+            } else if (eduLevel === 'highschool') {
+                q = generateHighschoolQuestionByTopic(t.id, grade || 10, Math.floor(Math.random() * 4));
+            } else if (eduLevel === 'university') {
+                q = generateUniversityQuestionByTopic(t.id, t.id);
+            } else {
+                q = generateErettsegiQuestionByTopicId(t.id, examLevel);
+            }
+            if (q) {
+                questions.push({
+                    ...q,
+                    id: `daily_${t.id}_${questions.length}`,
+                    stage: lessonToStage(Math.floor(questions.length / 4) + 1) as PracticeStage,
+                });
+            }
+        }
+        setEducationLevel(eduLevel === 'erettsegi' ? null : eduLevel === 'elementary' || eduLevel === 'highschool' || eduLevel === 'university' ? eduLevel : null);
+        beginPathOrWorksheetRun(questions, {
+            topicId: `daily_${eduLevel}`,
+            lessonNode: null,
+            sprint: router.query.sprint === '1',
+            erettsegi: eduLevel === 'erettsegi',
+            daily: true,
+        });
+    };
+
+    const generateErettsegiQuestionsByTopic = (topicId: string, level: string, sprint = false) => {
         const nodeRaw = router.query.node;
         const nodeParsed = nodeRaw != null ? parseInt(String(nodeRaw), 10) : NaN;
         const pathRequested = router.query.path === '1' || (Number.isFinite(nodeParsed) && nodeParsed >= 1);
@@ -3941,15 +4245,15 @@ Teljes megoldás:
                 }))
             );
         } else {
-            // Generátoros témák: 6 könnyű + 6 közepes + 6 nehéz → path bank
+            // Gazdagabb bank: 10 könnyű + 10 közepes + 10 nehéz
             for (let band = 0; band < 3; band++) {
                 const stage = (band + 1) as PracticeStage;
-                for (let i = 0; i < 6; i++) {
+                for (let i = 0; i < 10; i++) {
                     const question = generateErettsegiQuestionByTopicId(topicId, level);
                     if (question) {
                         stagedSource.push({
                             ...question,
-                            id: `erettsegi_${topicId}_s${stage}_${i}`,
+                            id: `erettsegi_${topicId}_s${stage}_${i}_${Math.random().toString(36).slice(2, 7)}`,
                             level: qLevel,
                             stage,
                         });
@@ -3976,39 +4280,12 @@ Teljes megoldás:
             ? getLessonQuestions(bank, lessonNode)
             : bank;
 
-        const pathMode = lessonNode != null;
-        setIsPathMode(pathMode);
-        setPathLesson(lessonNode);
-        pathLessonRef.current = lessonNode;
-        setIsWorksheetMode(true);
-        worksheetTopicKeyRef.current = resolveProgressStorageKey(topicId);
-        setCurrentTopic(topicId);
-        setCorrectQuestionIds([]);
-        setWrongFirstIds([]);
-        setStagesCleared([]);
-        setSessionXp(0);
-        setCorrectStreak(0);
-        setMaxStreak(0);
-        setFailedQuestions([]);
-        correctQuestionIdsRef.current = [];
-        wrongFirstIdsRef.current = [];
-        erettsegiQuestionsRef.current = questions;
-        setErettsegiQuestions(questions);
-
-        if (questions.length > 0) {
-            setGameActive(true);
-            setScore(0);
-            setLevel(1);
-            setLives(3);
-            setCurrentQuestion(0);
-            setUserAnswer('');
-            setUserAnswer2('');
-            setUserAnswer3('');
-            setUserAnswer4('');
-            setMessage('');
-            setIsCorrect(false);
-            setShowExpression(false);
-        }
+        beginPathOrWorksheetRun(questions, {
+            topicId,
+            lessonNode,
+            sprint: sprint || router.query.sprint === '1',
+            erettsegi: true,
+        });
     };
 
     const generateMixedErettsegiQuestions = (level: string) => {
@@ -4750,6 +5027,8 @@ Teljes megoldás:
         setShowExpression(true);
 
         if (correct) {
+            playCorrectSound();
+            setMascotMood('happy');
             const newScore = score + 10;
             setScore(newScore);
             
@@ -4784,6 +5063,14 @@ Teljes megoldás:
                     setSessionXp((x) => x + 10);
                     setTotalXp((x) => x + 10);
 
+                    const bonus = streakBonusXp(newStreak);
+                    if (bonus > 0) {
+                        playStreakSound();
+                        setSessionXp((x) => x + bonus);
+                        setTotalXp((x) => x + bonus);
+                        msgExtra += `\n\n🔥 Streak ${newStreak}! (+${bonus} XP)`;
+                    }
+
                     if (!isPathMode) {
                         const stage = currentQ.stage;
                         if (stage) {
@@ -4794,7 +5081,7 @@ Teljes megoldás:
                                 setStagesCleared((s) => [...s, stage]);
                                 setSessionXp((x) => x + 50);
                                 setTotalXp((x) => x + 50);
-                                msgExtra = `\n\n🔓 Szakasz kész: ${STAGE_LABELS[stage]} (+50 XP)`;
+                                msgExtra += `\n\n🔓 Szakasz kész: ${STAGE_LABELS[stage]} (+50 XP)`;
                             }
                         }
                     } else {
@@ -4803,7 +5090,7 @@ Teljes megoldás:
                         if (lessonDone && pathLessonRef.current) {
                             setSessionXp((x) => x + PATH_LESSON_XP);
                             setTotalXp((x) => x + PATH_LESSON_XP);
-                            msgExtra = `\n\n🎉 Lecke ${pathLessonRef.current} kész! (+${PATH_LESSON_XP} XP)`;
+                            msgExtra += `\n\n🎉 Lecke ${pathLessonRef.current} kész! (+${PATH_LESSON_XP} XP)`;
                         }
                     }
                 }
@@ -4816,10 +5103,13 @@ Teljes megoldás:
                 }
             }
         } else {
+            playWrongSound();
+            setMascotMood('sad');
             setCorrectStreak(0);
             // Hibás válasz: hozzáadjuk a hibás feladatok listájához (ha még nincs benne)
             const baseQuestionsCount = questions.length - failedQuestions.length;
             const isFailedQuestion = currentQuestion >= baseQuestionsCount;
+            let lostLife = false;
             
             if (!isFailedQuestion) {
                 // Csak akkor adjuk hozzá, ha még nem hibás feladat
@@ -4835,17 +5125,28 @@ Teljes megoldás:
                     const nextWrong = [...wrongFirstIdsRef.current, qid];
                     wrongFirstIdsRef.current = nextWrong;
                     setWrongFirstIds(nextWrong);
+                    if (isPathMode || isSprintMode || isDailyMode) {
+                        lostLife = true;
+                        playLifeLostSound();
+                        const nextLives = Math.max(0, livesRef.current - 1);
+                        livesRef.current = nextLives;
+                        setLives(nextLives);
+                    }
                 }
             }
+
+            const lifeNote = lostLife
+                ? `\n\n💔 Élet: ${livesRef.current}/3`
+                : '';
             
             if (currentQ.fourthAnswer !== undefined) {
-                setMessage(`Hibás! A helyes válaszok: ${currentQ.answer}, ${currentQ.alternativeAnswer}, ${currentQ.thirdAnswer}, ${currentQ.fourthAnswer}\n\nEz a feladat később újra megjelenik.`);
+                setMessage(`Hibás! A helyes válaszok: ${currentQ.answer}, ${currentQ.alternativeAnswer}, ${currentQ.thirdAnswer}, ${currentQ.fourthAnswer}\n\nEz a feladat később újra megjelenik.${lifeNote}`);
             } else if (currentQ.thirdAnswer !== undefined) {
-                setMessage(`Hibás! A helyes válaszok: ${currentQ.answer}, ${currentQ.alternativeAnswer}, ${currentQ.thirdAnswer}\n\nEz a feladat később újra megjelenik.`);
+                setMessage(`Hibás! A helyes válaszok: ${currentQ.answer}, ${currentQ.alternativeAnswer}, ${currentQ.thirdAnswer}\n\nEz a feladat később újra megjelenik.${lifeNote}`);
             } else if (currentQ.alternativeAnswer !== undefined) {
-                setMessage(`Hibás! A helyes válaszok: ${currentQ.answer}, ${currentQ.alternativeAnswer}\n\nEz a feladat később újra megjelenik.`);
+                setMessage(`Hibás! A helyes válaszok: ${currentQ.answer}, ${currentQ.alternativeAnswer}\n\nEz a feladat később újra megjelenik.${lifeNote}`);
             } else {
-                setMessage(`Hibás! A helyes válasz: ${currentQ.answer}\n\nEz a feladat később újra megjelenik.`);
+                setMessage(`Hibás! A helyes válasz: ${currentQ.answer}\n\nEz a feladat később újra megjelenik.${lifeNote}`);
             }
         }
 
@@ -4869,10 +5170,11 @@ Teljes megoldás:
                     setMessage('');
                     setIsCorrect(false);
                     setShowExpression(false);
+                    setMascotMood('idle');
                 } else {
                     // Ha nincs több feladat, de vannak még hibás feladatok
                     const remainingFailed = updatedFailed.length !== failedQuestions.length ? updatedFailed : failedQuestions;
-                    if (remainingFailed.length > 0) {
+                    if (remainingFailed.length > 0 && !(isPathMode || isSprintMode)) {
                         // Vissza a hibás feladatokhoz - a questions tömb végén vannak
                         const baseCount = questions.length - failedQuestions.length;
                         setCurrentQuestion(baseCount); // Vissza a hibás feladatokhoz
@@ -4883,6 +5185,7 @@ Teljes megoldás:
                         setMessage('Most a hibás feladatokat oldd meg újra!');
                     setIsCorrect(false);
                     setShowExpression(false);
+                    setMascotMood('idle');
                 } else {
                     // Game won
                     if (score > highScore) {
@@ -4892,11 +5195,19 @@ Teljes megoldás:
                         }
                     }
                     setMessage('Gratulálok! Megnyerted a játékot! 🏆');
+                    setMascotMood('happy');
                     saveGameResults();
                     }
                 }
             } else {
-                // Hibás válasz: továbblépünk (nem veszítünk életet)
+                // Hibás válasz: ha elfogyott az élet (path/sprint), mentés és vége
+                if ((isPathMode || isSprintMode || isDailyMode) && livesRef.current <= 0) {
+                    setMessage('Elfogyott az életed! 💔 Próbáld újra a leckét.');
+                    setMascotMood('sad');
+                    setGameActive(false);
+                    saveGameResults();
+                    return;
+                }
                 if (currentQuestion < questions.length - 1) {
                     setCurrentQuestion(currentQuestion + 1);
                     setUserAnswer('');
@@ -4906,12 +5217,11 @@ Teljes megoldás:
                     setMessage('');
                     setIsCorrect(false);
                     setShowExpression(false);
+                    setMascotMood('idle');
                 } else {
-                    // Ha nincs több feladat, de vannak még hibás feladatok
-                    if (failedQuestions.length > 0) {
-                        // Vissza a hibás feladatokhoz - a questions tömb végén vannak
+                    if (failedQuestions.length > 0 && !(isPathMode || isSprintMode)) {
                         const baseCount = questions.length - failedQuestions.length;
-                        setCurrentQuestion(baseCount); // Vissza a hibás feladatokhoz
+                        setCurrentQuestion(baseCount);
                         setUserAnswer('');
                         setUserAnswer2('');
                         setUserAnswer3('');
@@ -4920,15 +5230,14 @@ Teljes megoldás:
                         setIsCorrect(false);
                         setShowExpression(false);
                     } else {
-                        // Játék vége
-                    if (score > highScore) {
-                        setHighScore(score);
-                        if (typeof window !== 'undefined') {
-                            localStorage.setItem('highScore', score.toString());
+                        if (score > highScore) {
+                            setHighScore(score);
+                            if (typeof window !== 'undefined') {
+                                localStorage.setItem('highScore', score.toString());
+                            }
                         }
-                    }
                         setMessage('Gratulálok! Megnyerted a játékot! 🏆');
-                    saveGameResults();
+                        saveGameResults();
                     }
                 }
             }
@@ -4987,6 +5296,7 @@ Teljes megoldás:
                     maxStreak,
                     sessionXpFromAnswers: answerXpOnly,
                     lessonJustCompleted,
+                    lessonWrongCount: lessonJustCompleted ? wrongIds.length : undefined,
                 });
                 setTotalXp(result.next.xp);
                 setAvatarLevel(result.next.rankLevel);
@@ -5000,12 +5310,18 @@ Teljes megoldás:
                     setBadgeToast(`🎉 Lecke ${lessonJustCompleted} kész — következhet a következő!`);
                     setTimeout(() => setBadgeToast(null), 4000);
                 }
-                if (isPathMode && lessonJustCompleted) {
-                    const lvl = (router.query.level as string) || 'emelt';
+                if (isPathMode) {
                     setTimeout(() => {
-                        router.push(
-                            `/erettsegi-felkeszules?mode=topics&level=${lvl}&topic=${encodeURIComponent(topicFromQuery)}`
-                        );
+                        const edu = (router.query.educationLevel as EducationLevelId)
+                            || (router.query.erettsegi === 'true' ? 'erettsegi' : null);
+                        const examLvl = ((router.query.level as string) === 'kozep' ? 'kozep' : 'emelt') as 'kozep' | 'emelt';
+                        if (edu) {
+                            router.push(buildTopicPracticeHref(topicFromQuery, edu, examLvl));
+                        } else if (router.query.erettsegi === 'true') {
+                            router.push(
+                                `/erettsegi-felkeszules?mode=topics&level=${examLvl}&topic=${encodeURIComponent(topicFromQuery)}`
+                            );
+                        }
                     }, 2200);
                 }
             }
@@ -5518,6 +5834,53 @@ Teljes megoldás:
                                     <span className="hud-label">Feladat:</span>
                                     <span className="hud-value">{currentQuestion + 1}/{questions.length}</span>
                                 </div>
+                                {(isPathMode || isSprintMode || isDailyMode) && (
+                                    <div className="hud-item">
+                                        <span className="hud-label">Élet:</span>
+                                        <span className="hud-value" style={{ letterSpacing: '0.08em' }}>
+                                            {'❤️'.repeat(Math.max(0, lives))}
+                                            {'🖤'.repeat(Math.max(0, (isSprintMode ? 2 : 3) - lives))}
+                                        </span>
+                                    </div>
+                                )}
+                                {correctStreak > 0 && (
+                                    <div className="hud-item">
+                                        <span className="hud-label">Streak:</span>
+                                        <span className="hud-value">🔥 {correctStreak}</span>
+                                    </div>
+                                )}
+                                {isSprintMode && (
+                                    <div className="hud-item">
+                                        <span className="hud-label">Idő:</span>
+                                        <span
+                                            className="hud-value"
+                                            style={{ color: sprintLeft <= 15 ? '#ff6b6b' : '#39ff14' }}
+                                        >
+                                            {sprintLeft}s
+                                        </span>
+                                    </div>
+                                )}
+                                {isDailyMode && (
+                                    <div className="hud-item">
+                                        <span className="hud-label">Mód:</span>
+                                        <span className="hud-value">Napi</span>
+                                    </div>
+                                )}
+                            </div>
+
+                            <div
+                                className={`game-mascot-react mood-${mascotMood}`}
+                                aria-hidden="true"
+                            >
+                                <img
+                                    src="/mihaszna-mascot.png"
+                                    alt=""
+                                    width={72}
+                                    height={72}
+                                    onError={(e) => {
+                                        (e.currentTarget as HTMLImageElement).src = '/mihaszna-mascot.svg';
+                                    }}
+                                />
                             </div>
 
                             {isWorksheetMode && questions[currentQuestion]?.stage && (
@@ -5870,10 +6233,10 @@ Teljes megoldás:
                                     className="reset-button"
                                     onClick={() => {
                                         const topic = (router.query.topic as string) || currentTopic;
-                                        const lvl = (router.query.level as string) || 'emelt';
-                                        router.push(
-                                            `/erettsegi-felkeszules?mode=topics&level=${lvl}&topic=${encodeURIComponent(topic)}`
-                                        );
+                                        const edu = (router.query.educationLevel as EducationLevelId)
+                                            || (router.query.erettsegi === 'true' ? 'erettsegi' : 'erettsegi');
+                                        const examLvl = ((router.query.level as string) === 'kozep' ? 'kozep' : 'emelt') as 'kozep' | 'emelt';
+                                        router.push(buildTopicPracticeHref(topic, edu, examLvl));
                                     }}
                                     style={{
                                         marginBottom: '0.75rem',
@@ -6339,6 +6702,34 @@ Teljes megoldás:
                     color: white;
                     font-size: 1.3rem;
                     font-weight: 800;
+                }
+
+                .game-mascot-react {
+                    display: flex;
+                    justify-content: center;
+                    margin: -0.5rem 0 1rem;
+                    transition: transform 0.25s ease, filter 0.25s ease;
+                }
+                .game-mascot-react img {
+                    width: 72px;
+                    height: 72px;
+                    object-fit: contain;
+                    filter: drop-shadow(0 0 12px rgba(57, 255, 20, 0.35));
+                }
+                .game-mascot-react.mood-happy {
+                    transform: translateY(-4px) scale(1.08);
+                    filter: drop-shadow(0 0 16px rgba(57, 255, 20, 0.7));
+                }
+                .game-mascot-react.mood-sad {
+                    transform: translateY(4px) scale(0.95) rotate(-4deg);
+                    filter: grayscale(0.35) drop-shadow(0 0 10px rgba(255, 73, 219, 0.45));
+                }
+                .game-mascot-react.mood-idle {
+                    animation: mascotBob 2.4s ease-in-out infinite;
+                }
+                @keyframes mascotBob {
+                    0%, 100% { transform: translateY(0); }
+                    50% { transform: translateY(-5px); }
                 }
 
                 .avatar-container {

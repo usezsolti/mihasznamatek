@@ -499,6 +499,8 @@ export default function ErettsegiFelkeszules() {
                                             topicTitle={pathTopic.title}
                                             topicIcon={pathTopic.icon}
                                             topicColor={pathTopic.color}
+                                            educationLevel="erettsegi"
+                                            erettsegiLevel={selectedLevel}
                                             level={selectedLevel}
                                             onBack={handlePathBack}
                                         />

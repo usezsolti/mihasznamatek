@@ -25,6 +25,7 @@ import {
 } from "../utils/practiceProgress";
 import { PATH_LESSON_COUNT } from "../utils/topicPath";
 import {
+    buildDailyPracticeHref,
     buildTopicStatsHref,
     indexBestSessionsByTopic,
     lookupBestSessionForTopic,
@@ -993,6 +994,25 @@ export default function Dashboard() {
                         {educationLevel === 'university' && 'Analízis I–III. — ugyanaz, mint a játék kezdőképernyőjén'}
                         {educationLevel === 'erettsegi' && 'Válassz témakört — Duolingo-szerű útvonal és feladatok'}
                     </p>
+
+                    <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '1.25rem' }}>
+                        <button
+                            type="button"
+                            onClick={() => router.push(buildDailyPracticeHref(educationLevel))}
+                            style={{
+                                background: 'linear-gradient(90deg, #39ff14, #ffd700)',
+                                color: '#111',
+                                border: 'none',
+                                borderRadius: 12,
+                                padding: '0.75rem 1.35rem',
+                                fontWeight: 800,
+                                cursor: 'pointer',
+                                fontSize: '0.95rem',
+                            }}
+                        >
+                            🎲 Napi vegyes gyakorlás
+                        </button>
+                    </div>
 
                     <div className="topics-grid">
                         {mathTopics.map((topic) => {
