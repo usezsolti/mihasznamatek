@@ -31,6 +31,7 @@ import {
     getTopicsForEducationLevel,
     type EducationLevelId,
 } from '../utils/mathTopicsCatalog';
+import MathHexMascot from '../components/MathHexMascot';
 import {
     SPRINT_SECONDS,
     playCorrectSound,
@@ -5868,19 +5869,8 @@ Teljes megoldás:
                                 )}
                             </div>
 
-                            <div
-                                className={`game-mascot-react mood-${mascotMood}`}
-                                aria-hidden="true"
-                            >
-                                <img
-                                    src="/mihaszna-mascot.png"
-                                    alt=""
-                                    width={72}
-                                    height={72}
-                                    onError={(e) => {
-                                        (e.currentTarget as HTMLImageElement).src = '/mihaszna-mascot.svg';
-                                    }}
-                                />
+                            <div className={`game-mascot-react mood-${mascotMood}`} aria-hidden="true">
+                                <MathHexMascot size={72} color="#58cc02" mood={mascotMood} />
                             </div>
 
                             {isWorksheetMode && questions[currentQuestion]?.stage && (

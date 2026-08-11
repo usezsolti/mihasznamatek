@@ -19,6 +19,7 @@ import {
     type PathNode,
 } from '../utils/topicPath';
 import { formatAuthError, signInAsTestUser, TEST_LOGIN_EMAIL } from '../utils/testLogin';
+import MathHexMascot from './MathHexMascot';
 
 interface Props {
     topicId: string;
@@ -187,6 +188,8 @@ export default function TopicPathMap({
         return Math.min(100, Math.round((((progress?.xp || 0) - rankInfo.current) / span) * 100));
     })();
 
+    const accent = topicColor || '#58cc02';
+
     const renderNode = (node: PathNode, index: number) => {
         const zigLeft = index % 2 === 0;
         const side = zigLeft ? 'left' : 'right';
@@ -218,10 +221,10 @@ export default function TopicPathMap({
                                 current || done
                                     ? {
                                           background: done
-                                              ? 'linear-gradient(180deg,#ffd700,#e6a800)'
-                                              : `linear-gradient(180deg, ${topicColor}, #1f9a0d)`,
+                                              ? 'linear-gradient(180deg,#ffc800,#e0a800)'
+                                              : `linear-gradient(180deg, ${accent}, #3d9e00)`,
                                           boxShadow: current
-                                              ? `0 8px 0 #14660a, 0 0 28px ${topicColor}88`
+                                              ? `0 8px 0 #2f6f00, 0 0 0 5px #1f1f23`
                                               : '0 8px 0 #a67c00',
                                       }
                                     : undefined
@@ -231,7 +234,15 @@ export default function TopicPathMap({
                             aria-label={node.label}
                         >
                             <span className="duo-glyph">
-                                {done ? '★' : unlocked ? (current ? '★' : String(node.lesson)) : '★'}
+                                {done
+                                    ? '★'
+                                    : unlocked
+                                      ? current
+                                          ? '★'
+                                          : node.lesson === PATH_LESSON_COUNT
+                                            ? '🏆'
+                                            : String(node.lesson)
+                                      : '★'}
                             </span>
                         </button>
                         <span className={`duo-caption ${unlocked ? '' : 'muted'}`}>
@@ -247,14 +258,10 @@ export default function TopicPathMap({
 
                     {showMascot && (
                         <div className={`duo-mascot ${side === 'left' ? 'mascot-right' : 'mascot-left'}`}>
-                            <img
-                                src="/mihaszna-mascot.png"
-                                alt="Mihaszna"
-                                width={120}
-                                height={120}
-                                onError={(e) => {
-                                    (e.currentTarget as HTMLImageElement).src = '/mihaszna-mascot.svg';
-                                }}
+                            <MathHexMascot
+                                size={120}
+                                color={accent}
+                                mood={done && allDone ? 'happy' : 'idle'}
                             />
                         </div>
                     )}
@@ -273,9 +280,9 @@ export default function TopicPathMap({
                     onClick={() => onChestClick(node.chest)}
                     aria-label={node.label}
                 >
-                    <span className="chest-icon">{claimed ? '📦' : '🎁'}</span>
+                    <span className="chest-icon">{claimed ? '✓' : '🎁'}</span>
                     <span className="chest-label">
-                        {claimed ? 'Begyűjtve' : unlocked ? `+${node.xp} XP` : 'Zárva'}
+                        {claimed ? 'Kész' : unlocked ? `+${node.xp}` : 'Zárva'}
                     </span>
                 </button>
             </div>
@@ -284,81 +291,76 @@ export default function TopicPathMap({
 
     return (
         <div className="topic-path duo-path">
-            <div className="path-top">
-                <button type="button" className="path-back" onClick={onBack}>
-                    ← Témakörök
+            <div className="duo-module-bar" style={{ background: accent }}>
+                <button type="button" className="duo-module-back" onClick={onBack} aria-label="Vissza">
+                    ←
                 </button>
-                <div className="path-heading">
-                    <span className="path-topic-icon" style={{ color: topicColor }}>
-                        {topicIcon}
-                    </span>
-                    <div>
-                        <h2>{topicTitle}</h2>
-                        <p>
-                            {doneCount}/{PATH_LESSON_COUNT} lecke · {PATH_TOTAL_QUESTIONS} feladat az úton
-                        </p>
+                <div className="duo-module-text">
+                    <div className="duo-module-kicker">
+                        {topicIcon} · {doneCount}/{PATH_LESSON_COUNT} LECKE · {PATH_TOTAL_QUESTIONS} FELADAT
                     </div>
+                    <div className="duo-module-title">{topicTitle}</div>
                 </div>
-                <div className="path-xp">
-                    <div className="path-xp-labels">
-                        <span>
-                            {getRankEmoji(progress?.rankLevel || 1)} {progress?.rank || 'BEGINNER'} ·{' '}
-                            {progress?.xp || 0} XP
-                        </span>
-                        <span>Következő: {rankInfo.next} XP</span>
-                    </div>
-                    <div className="path-xp-bar">
-                        <div className="path-xp-fill" style={{ width: `${xpPct}%`, background: topicColor }} />
-                    </div>
-                </div>
-
-                <label className="path-sprint-toggle">
+                <label className={`duo-guide-btn ${sprintMode ? 'is-on' : ''}`}>
                     <input
                         type="checkbox"
                         checked={sprintMode}
                         onChange={(e) => setSprintMode(e.target.checked)}
                     />
-                    <span>⏱ Sprint mód (90 mp, életek számítanak)</span>
+                    <span>⏱ SPRINT</span>
                 </label>
-
-                {!loggedInEmail ? (
-                    <div className="path-test-login">
-                        <p>Haladás mentéséhez: egy kattintásos teszt fiók ({TEST_LOGIN_EMAIL})</p>
-                        <div className="path-test-actions">
-                            <button
-                                type="button"
-                                disabled={testLoading}
-                                onClick={(e) => {
-                                    e.preventDefault();
-                                    e.stopPropagation();
-                                    void handleTestLogin();
-                                }}
-                            >
-                                {testLoading ? 'Belépés…' : 'Teszt belépés'}
-                            </button>
-                            <button
-                                type="button"
-                                className="secondary"
-                                onClick={() => {
-                                    try {
-                                        window.dispatchEvent(
-                                            new CustomEvent('mihaszna:open-auth-modal', {
-                                                detail: { mode: 'login', redirectTo: false },
-                                            })
-                                        );
-                                    } catch {
-                                        /* ignore */
-                                    }
-                                }}
-                            >
-                                Normál belépés
-                            </button>
-                        </div>
-                    </div>
-                ) : (
-                    <p className="path-logged-in">Bejelentkezve: {loggedInEmail}</p>
-                )}
             </div>
+
+            <div className="duo-xp-row">
+                <div className="path-xp-labels">
+                    <span>
+                        {getRankEmoji(progress?.rankLevel || 1)} {progress?.rank || 'BEGINNER'} ·{' '}
+                        {progress?.xp || 0} XP
+                    </span>
+                    <span>Következő: {rankInfo.next} XP</span>
+                </div>
+                <div className="path-xp-bar">
+                    <div className="path-xp-fill" style={{ width: `${xpPct}%`, background: accent }} />
+                </div>
+            </div>
+
+            {!loggedInEmail ? (
+                <div className="path-test-login">
+                    <p>Haladás mentéséhez: egy kattintásos teszt fiók ({TEST_LOGIN_EMAIL})</p>
+                    <div className="path-test-actions">
+                        <button
+                            type="button"
+                            disabled={testLoading}
+                            onClick={(e) => {
+                                e.preventDefault();
+                                e.stopPropagation();
+                                void handleTestLogin();
+                            }}
+                        >
+                            {testLoading ? 'Belépés…' : 'Teszt belépés'}
+                        </button>
+                        <button
+                            type="button"
+                            className="secondary"
+                            onClick={() => {
+                                try {
+                                    window.dispatchEvent(
+                                        new CustomEvent('mihaszna:open-auth-modal', {
+                                            detail: { mode: 'login', redirectTo: false },
+                                        })
+                                    );
+                                } catch {
+                                    /* ignore */
+                                }
+                            }}
+                        >
+                            Normál belépés
+                        </button>
+                    </div>
+                </div>
+            ) : (
+                <p className="path-logged-in">Bejelentkezve: {loggedInEmail}</p>
+            )}
 
             <div className="duo-track">
                 <div className="duo-rail" aria-hidden />
@@ -369,53 +371,87 @@ export default function TopicPathMap({
 
             <style jsx>{`
                 .duo-path {
-                    max-width: 420px;
+                    max-width: 440px;
                     margin: 0 auto;
-                    padding: 0.5rem 0.75rem 3.5rem;
+                    padding: 0.35rem 0.5rem 3.5rem;
                 }
-                .path-back {
-                    background: transparent;
-                    border: 1px solid rgba(255, 255, 255, 0.25);
-                    color: #ccc;
-                    border-radius: 999px;
-                    padding: 0.4rem 0.9rem;
-                    cursor: pointer;
-                    margin-bottom: 1rem;
-                }
-                .path-heading {
+                .duo-module-bar {
                     display: flex;
-                    gap: 0.85rem;
                     align-items: center;
+                    gap: 0.65rem;
+                    border-radius: 18px;
+                    padding: 0.85rem 0.9rem;
+                    color: #fff;
+                    box-shadow: 0 6px 0 rgba(0, 0, 0, 0.28);
                     margin-bottom: 1rem;
                 }
-                .path-topic-icon {
-                    font-size: 2.2rem;
-                }
-                .path-heading h2 {
-                    margin: 0;
+                .duo-module-back {
+                    width: 40px;
+                    height: 40px;
+                    border-radius: 12px;
+                    border: none;
+                    background: rgba(0, 0, 0, 0.18);
                     color: #fff;
-                    font-size: 1.45rem;
+                    font-size: 1.25rem;
+                    font-weight: 800;
+                    cursor: pointer;
+                    flex-shrink: 0;
                 }
-                .path-heading p {
-                    margin: 0.25rem 0 0;
-                    color: #9f9;
-                    font-size: 0.9rem;
+                .duo-module-text {
+                    flex: 1;
+                    min-width: 0;
                 }
-                .path-xp {
-                    margin-bottom: 0.75rem;
+                .duo-module-kicker {
+                    font-size: 0.7rem;
+                    font-weight: 800;
+                    letter-spacing: 0.04em;
+                    opacity: 0.95;
+                    text-transform: uppercase;
+                }
+                .duo-module-title {
+                    font-size: 1.15rem;
+                    font-weight: 800;
+                    line-height: 1.2;
+                    margin-top: 0.15rem;
+                }
+                .duo-guide-btn {
+                    display: flex;
+                    align-items: center;
+                    gap: 0.35rem;
+                    background: rgba(0, 0, 0, 0.2);
+                    border-radius: 14px;
+                    padding: 0.55rem 0.7rem;
+                    font-size: 0.72rem;
+                    font-weight: 900;
+                    letter-spacing: 0.04em;
+                    cursor: pointer;
+                    flex-shrink: 0;
+                    user-select: none;
+                }
+                .duo-guide-btn input {
+                    display: none;
+                }
+                .duo-guide-btn.is-on {
+                    background: #111;
+                    color: #58cc02;
+                    box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.2);
+                }
+                .duo-xp-row {
+                    margin-bottom: 0.65rem;
+                    padding: 0 0.15rem;
                 }
                 .path-xp-labels {
                     display: flex;
                     justify-content: space-between;
-                    color: #ddd;
-                    font-size: 0.85rem;
+                    color: #bdbdbd;
+                    font-size: 0.82rem;
                     margin-bottom: 0.35rem;
                     gap: 0.5rem;
                     flex-wrap: wrap;
                 }
                 .path-xp-bar {
                     height: 10px;
-                    background: rgba(255, 255, 255, 0.12);
+                    background: rgba(255, 255, 255, 0.1);
                     border-radius: 999px;
                     overflow: hidden;
                 }
@@ -425,7 +461,7 @@ export default function TopicPathMap({
                     transition: width 0.35s ease;
                 }
                 .path-test-login {
-                    margin-top: 0.75rem;
+                    margin: 0.5rem 0 0.75rem;
                     padding: 0.85rem 1rem;
                     border-radius: 14px;
                     border: 1px dashed rgba(255, 215, 0, 0.55);
@@ -458,33 +494,28 @@ export default function TopicPathMap({
                     color: #fff;
                 }
                 .path-logged-in {
-                    margin: 0.75rem 0 0;
-                    color: #9f9;
-                    font-size: 0.85rem;
+                    margin: 0.35rem 0 0.5rem;
+                    color: #8f8;
+                    font-size: 0.8rem;
                     text-align: center;
                 }
-
                 .duo-track {
                     position: relative;
-                    margin-top: 1.25rem;
-                    padding: 1.5rem 0 2rem;
+                    margin-top: 0.75rem;
+                    padding: 1.25rem 0 2rem;
                     min-height: 640px;
+                    background: radial-gradient(ellipse at 50% 0%, rgba(88, 204, 2, 0.08), transparent 55%);
                 }
                 .duo-rail {
                     position: absolute;
                     left: 50%;
-                    top: 24px;
-                    bottom: 24px;
-                    width: 18px;
-                    margin-left: -9px;
+                    top: 28px;
+                    bottom: 28px;
+                    width: 14px;
+                    margin-left: -7px;
                     border-radius: 999px;
-                    background: linear-gradient(
-                        180deg,
-                        rgba(57, 255, 20, 0.35),
-                        rgba(80, 80, 90, 0.55) 40%,
-                        rgba(60, 60, 70, 0.65)
-                    );
-                    box-shadow: inset 0 0 0 3px rgba(0, 0, 0, 0.35);
+                    background: #2b2b2f;
+                    box-shadow: inset 0 0 0 2px rgba(0, 0, 0, 0.45);
                     z-index: 0;
                 }
                 .duo-row {
@@ -493,15 +524,15 @@ export default function TopicPathMap({
                     display: flex;
                     align-items: center;
                     min-height: 118px;
-                    margin: 0.35rem 0;
+                    margin: 0.2rem 0;
                 }
                 .duo-left {
                     justify-content: flex-start;
-                    padding-left: 12%;
+                    padding-left: 14%;
                 }
                 .duo-right {
                     justify-content: flex-end;
-                    padding-right: 12%;
+                    padding-right: 14%;
                 }
                 .duo-cluster {
                     position: relative;
@@ -512,17 +543,17 @@ export default function TopicPathMap({
                 }
                 .duo-bubble {
                     position: absolute;
-                    top: -42px;
+                    top: -44px;
                     left: 50%;
                     transform: translateX(-50%);
                     background: #1c1c1e;
-                    color: #39ff14;
+                    color: #58cc02;
                     border: none;
                     border-radius: 14px;
-                    padding: 0.45rem 0.9rem;
+                    padding: 0.5rem 1rem;
                     font-weight: 900;
-                    font-size: 0.85rem;
-                    letter-spacing: 0.06em;
+                    font-size: 0.9rem;
+                    letter-spacing: 0.08em;
                     cursor: pointer;
                     box-shadow: 0 6px 0 #0a0a0a;
                     animation: duoPulse 1.6s ease-in-out infinite;
@@ -561,8 +592,8 @@ export default function TopicPathMap({
                 }
                 .duo-node.locked {
                     cursor: not-allowed;
-                    filter: grayscale(0.35);
-                    opacity: 0.85;
+                    background: linear-gradient(180deg, #3a3a40, #26262c);
+                    box-shadow: 0 8px 0 #151518;
                 }
                 .duo-node.unlocked:not(:disabled):active {
                     transform: translateY(4px);
@@ -577,7 +608,7 @@ export default function TopicPathMap({
                         filter: brightness(1);
                     }
                     50% {
-                        filter: brightness(1.12);
+                        filter: brightness(1.1);
                     }
                 }
                 .duo-glyph {
@@ -587,106 +618,75 @@ export default function TopicPathMap({
                     text-shadow: 0 2px 0 rgba(0, 0, 0, 0.25);
                 }
                 .duo-node.locked .duo-glyph {
-                    color: rgba(255, 255, 255, 0.28);
+                    color: rgba(255, 255, 255, 0.22);
                 }
                 .duo-caption {
                     margin-top: 0.45rem;
                     font-size: 0.78rem;
-                    color: #ddd;
+                    color: #cfcfcf;
                     text-align: center;
                     max-width: 120px;
                     line-height: 1.2;
                 }
                 .duo-caption.muted {
-                    color: #777;
+                    color: #666;
                 }
                 .duo-lesson-stars {
                     display: block;
                     margin-top: 0.2rem;
                     font-size: 0.85rem;
                     letter-spacing: 0.08em;
-                    color: #ffd700;
-                    text-shadow: 0 0 8px rgba(255, 215, 0, 0.45);
-                }
-                .path-sprint-toggle {
-                    display: flex;
-                    align-items: center;
-                    gap: 0.55rem;
-                    margin: 0.75rem 0 0.25rem;
-                    color: #cfcfcf;
-                    font-size: 0.9rem;
-                    cursor: pointer;
-                    user-select: none;
-                }
-                .path-sprint-toggle input {
-                    width: 1.05rem;
-                    height: 1.05rem;
-                    accent-color: #39ff14;
+                    color: #ffc800;
                 }
                 .duo-chest {
                     width: 72px;
                     height: 72px;
-                    border-radius: 18px;
-                    border: 3px solid rgba(255, 255, 255, 0.12);
-                    background: #2a2a32;
+                    border-radius: 50%;
+                    border: 0;
+                    background: linear-gradient(180deg, #4a4a52, #2e2e34);
                     color: #fff;
                     display: flex;
                     flex-direction: column;
                     align-items: center;
                     justify-content: center;
-                    gap: 0.15rem;
+                    gap: 0.1rem;
                     cursor: pointer;
-                    box-shadow: 0 6px 0 #15151a;
+                    box-shadow: 0 8px 0 #1a1a1e;
                 }
                 .duo-chest.locked {
-                    opacity: 0.55;
+                    opacity: 0.75;
                     cursor: not-allowed;
-                    filter: grayscale(0.6);
                 }
                 .duo-chest.unlocked:not(.claimed) {
-                    border-color: #4da3ff;
-                    background: linear-gradient(180deg, #3d6ea8, #2a4f7a);
+                    background: linear-gradient(180deg, #4da3ff, #2a6fb8);
+                    box-shadow: 0 8px 0 #1a4a7a;
                 }
                 .duo-chest.claimed {
-                    border-color: #ffd700;
-                    background: linear-gradient(180deg, #5a4a12, #3a2f0a);
+                    background: linear-gradient(180deg, #ffc800, #d4a000);
+                    box-shadow: 0 8px 0 #8a6a00;
+                    color: #111;
                 }
                 .chest-icon {
-                    font-size: 1.6rem;
+                    font-size: 1.55rem;
+                    line-height: 1;
                 }
                 .chest-label {
-                    font-size: 0.65rem;
-                    font-weight: 700;
-                    letter-spacing: 0.02em;
+                    font-size: 0.62rem;
+                    font-weight: 800;
                 }
                 .duo-mascot {
                     position: absolute;
                     top: 50%;
                     transform: translateY(-42%);
-                    width: 112px;
+                    width: 120px;
                     pointer-events: none;
-                    filter: drop-shadow(0 10px 16px rgba(0, 0, 0, 0.45));
-                    animation: mascotBob 2.4s ease-in-out infinite;
+                    filter: drop-shadow(0 12px 14px rgba(0, 0, 0, 0.45));
                 }
                 .mascot-right {
-                    left: calc(50% + 56px);
+                    left: calc(50% + 52px);
                 }
                 .mascot-left {
-                    right: calc(50% + 56px);
-                }
-                .duo-mascot img {
-                    width: 112px;
-                    height: auto;
-                    display: block;
-                }
-                @keyframes mascotBob {
-                    0%,
-                    100% {
-                        transform: translateY(-42%);
-                    }
-                    50% {
-                        transform: translateY(calc(-42% - 8px));
-                    }
+                    right: calc(50% + 52px);
                 }
                 .path-toast {
                     position: fixed;
@@ -694,7 +694,7 @@ export default function TopicPathMap({
                     bottom: 1.5rem;
                     transform: translateX(-50%);
                     background: rgba(20, 20, 20, 0.95);
-                    border: 2px solid #ffd700;
+                    border: 2px solid #58cc02;
                     color: #fff;
                     padding: 0.85rem 1.25rem;
                     border-radius: 16px;
@@ -704,20 +704,20 @@ export default function TopicPathMap({
                 }
                 @media (max-width: 420px) {
                     .duo-mascot {
-                        width: 88px;
-                    }
-                    .duo-mascot img {
-                        width: 88px;
+                        width: 92px;
                     }
                     .mascot-right {
-                        left: calc(50% + 40px);
+                        left: calc(50% + 36px);
                     }
                     .mascot-left {
-                        right: calc(50% + 40px);
+                        right: calc(50% + 36px);
                     }
                     .duo-node {
                         width: 70px;
                         height: 70px;
+                    }
+                    .duo-module-title {
+                        font-size: 1rem;
                     }
                 }
             `}</style>
