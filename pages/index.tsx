@@ -188,6 +188,8 @@ export default function Home() {
             const fixInputColors = () => {
                 const inputs = document.querySelectorAll('input, textarea');
                 inputs.forEach((input: any) => {
+                    // A MihAIy chat világos buborék — ne legyen fehér szöveg
+                    if (input.closest('.chat-bot-container')) return;
                     input.style.color = '#ffffff';
                     input.style.setProperty('color', '#ffffff', 'important');
                 });

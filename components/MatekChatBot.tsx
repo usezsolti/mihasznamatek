@@ -1,30 +1,107 @@
-import { FormEvent, useEffect, useRef, useState } from 'react';
+import { FormEvent, Fragment, useEffect, useRef, useState, type ReactNode } from 'react';
+import { useRouter } from 'next/router';
 import { useMatekChat } from '../hooks/useMatekChat';
 
-const QUICK = [
-    'Mennyibe kerül egy óra?',
-    'Kiket vállalsz?',
-    'Van online óra?',
-    'Hogyan foglalhatok?',
-];
+const NEAR_BOTTOM_PX = 80;
 
-/** Presentation: UI only — chat use-case a hooks/useMatekChat-ben. */
+const SITE_PATHS =
+    /(?:https?:\/\/(?:www\.)?mihasznamatek\.hu)?(\/(?:booking|community|dashboard|workout|game|adatkezelesi-tajekoztato)(?:[?#][^\s]*)?|\/#[\w-]+)/gi;
+
+/** Turn site URLs / paths into in-app links (same origin — works on localhost & production). */
+function linkifyMessage(
+    text: string,
+    onInternalNav: (href: string) => void
+): ReactNode[] {
+    const nodes: ReactNode[] = [];
+    let last = 0;
+    let key = 0;
+    const re = new RegExp(SITE_PATHS.source, 'gi');
+    let match: RegExpExecArray | null;
+    while ((match = re.exec(text)) !== null) {
+        if (match.index > last) {
+            nodes.push(<Fragment key={`t${key++}`}>{text.slice(last, match.index)}</Fragment>);
+        }
+        const full = match[0];
+        const path = match[1] || full.replace(/^https?:\/\/[^/]+/i, '') || '/';
+        const href = path.startsWith('/') ? path : `/${path}`;
+        nodes.push(
+            <a
+                key={`a${key++}`}
+                href={href}
+                className="chat-inline-link"
+                onClick={(e) => {
+                    e.preventDefault();
+                    onInternalNav(href);
+                }}
+            >
+                {full.includes('http') ? href : full}
+            </a>
+        );
+        last = match.index + full.length;
+    }
+    if (last < text.length) {
+        nodes.push(<Fragment key={`t${key++}`}>{text.slice(last)}</Fragment>);
+    }
+    return nodes.length ? nodes : [text];
+}
+
+/** Presentation: UI only — chat use-case lives in hooks/useMatekChat. */
 export default function MatekChatBot() {
+    const router = useRouter();
     const [open, setOpen] = useState(false);
     const [minimized, setMinimized] = useState(false);
     const [input, setInput] = useState('');
     const { messages, busy, send } = useMatekChat();
     const endRef = useRef<HTMLDivElement>(null);
+    const messagesRef = useRef<HTMLDivElement>(null);
+    /** Only auto-scroll when the user is already near the bottom (or just sent). */
+    const stickToBottomRef = useRef(true);
+    const wasOpenRef = useRef(false);
+
+    const goInternal = (href: string) => {
+        setOpen(false);
+        void router.push(href);
+    };
+
+    const isNearBottom = () => {
+        const el = messagesRef.current;
+        if (!el) return true;
+        return el.scrollHeight - el.scrollTop - el.clientHeight <= NEAR_BOTTOM_PX;
+    };
+
+    const scrollToBottom = (behavior: ScrollBehavior = 'smooth') => {
+        const el = messagesRef.current;
+        if (!el) {
+            endRef.current?.scrollIntoView({ behavior, block: 'end' });
+            return;
+        }
+        el.scrollTo({ top: el.scrollHeight, behavior });
+    };
 
     useEffect(() => {
-        if (open && !minimized) {
-            endRef.current?.scrollIntoView({ behavior: 'smooth' });
+        if (open && !wasOpenRef.current) {
+            stickToBottomRef.current = false;
+            requestAnimationFrame(() => {
+                const el = messagesRef.current;
+                if (el) el.scrollTop = 0;
+            });
         }
-    }, [messages, open, minimized]);
+        wasOpenRef.current = open;
+    }, [open]);
+
+    useEffect(() => {
+        if (!open || minimized) return;
+        if (!stickToBottomRef.current) return;
+        scrollToBottom('smooth');
+    }, [messages, busy, open, minimized]);
 
     const sendAndClear = async (text: string) => {
+        const cleaned = text.trim();
+        if (!cleaned) return;
         setInput('');
-        await send(text);
+        stickToBottomRef.current = true;
+        scrollToBottom('auto');
+        await send(cleaned);
     };
 
     const onSubmit = (e: FormEvent) => {
@@ -38,7 +115,7 @@ export default function MatekChatBot() {
                 <button
                     type="button"
                     className="chat-button"
-                    title="MihaAI chat"
+                    title="MihAIy chat"
                     onClick={() => {
                         setOpen(true);
                         setMinimized(false);
@@ -61,7 +138,7 @@ export default function MatekChatBot() {
                     <div
                         className={`chat-bot-container${minimized ? ' minimized' : ''}`}
                         role="dialog"
-                        aria-label="MihaAI chat"
+                        aria-label="MihAIy chat"
                     >
                         <div className="chat-header">
                             <div className="chat-title">
@@ -69,9 +146,9 @@ export default function MatekChatBot() {
                                     π
                                 </span>
                                 <div>
-                                    <h3>MihaAI</h3>
+                                    <h3>MihAIy</h3>
                                     <div className="chat-status">
-                                        {busy ? 'Gondolkodom…' : 'MihaAI chat'}
+                                        {busy ? 'Gondolkodom…' : 'Kérdezz bármit — magyarul vagy angolul'}
                                     </div>
                                 </div>
                             </div>
@@ -97,30 +174,21 @@ export default function MatekChatBot() {
 
                         {!minimized && (
                             <>
-                                <div className="chat-messages">
+                                <div
+                                    className="chat-messages"
+                                    ref={messagesRef}
+                                    onScroll={() => {
+                                        stickToBottomRef.current = isNearBottom();
+                                    }}
+                                >
                                     {messages.map((m) => (
                                         <div
                                             key={m.id}
                                             className={`message ${m.isUser ? 'user-message' : 'bot-message'}`}
                                         >
-                                            <div className="message-content">{m.text}</div>
+                                            <div className="message-content">{linkifyMessage(m.text, goInternal)}</div>
                                         </div>
                                     ))}
-                                    {messages.length <= 2 && (
-                                        <div className="quick-replies">
-                                            {QUICK.map((q) => (
-                                                <button
-                                                    key={q}
-                                                    type="button"
-                                                    className="quick-reply-btn"
-                                                    disabled={busy}
-                                                    onClick={() => void sendAndClear(q)}
-                                                >
-                                                    {q}
-                                                </button>
-                                            ))}
-                                        </div>
-                                    )}
                                     <div ref={endRef} />
                                 </div>
 
@@ -130,7 +198,7 @@ export default function MatekChatBot() {
                                         onChange={(e) => setInput(e.target.value)}
                                         placeholder="Írd ide a kérdésed…"
                                         rows={2}
-                                        maxLength={800}
+                                        maxLength={2000}
                                         disabled={busy}
                                         onKeyDown={(e) => {
                                             if (e.key === 'Enter' && !e.shiftKey) {

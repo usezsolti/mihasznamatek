@@ -9,11 +9,11 @@ export type ChatMsg = {
 
 const WELCOME: ChatMsg = {
     id: 'welcome',
-    text: 'Szia! Én vagyok MihaAI — matek órákról, árról és foglalásról kérdezhetsz.',
+    text: 'Szia! Én vagyok MihAIy — a Mihaszna Matek AI asszisztense. Kérdezz bátran bármit.',
     isUser: false,
 };
 
-/** Application hook — chat UI a presentation rétegben marad. */
+/** Application hook — chat UI stays in the presentation layer. */
 export function useMatekChat() {
     const [messages, setMessages] = useState<ChatMsg[]>([WELCOME]);
     const [busy, setBusy] = useState(false);
@@ -23,12 +23,14 @@ export function useMatekChat() {
         if (!cleaned || busy) return;
 
         const userMsg: ChatMsg = { id: `u_${Date.now()}`, text: cleaned, isUser: true };
+        const prior = messages;
         setMessages((prev) => [...prev, userMsg]);
         setBusy(true);
 
-        const history = messages
+        // Include prior turns only (current question is sent as `message`)
+        const history = prior
             .filter((m) => m.id !== 'welcome')
-            .slice(-8)
+            .slice(-10)
             .map((m) => ({ role: m.isUser ? 'user' : 'model', text: m.text }));
 
         try {

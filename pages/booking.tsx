@@ -1,7 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import Head from "next/head";
 import Link from "next/link";
-import { useRouter } from "next/router";
 import {
     blockedTimesMap,
     loadActiveBookingsFromFirestore,
@@ -50,7 +49,6 @@ function loadBookingsLocal(): BookingRequest[] {
 }
 
 export default function BookingPage() {
-    const router = useRouter();
     const today = useMemo(() => {
         const d = new Date();
         d.setHours(0, 0, 0, 0);
@@ -73,7 +71,6 @@ export default function BookingPage() {
     const [submitting, setSubmitting] = useState(false);
     const [success, setSuccess] = useState(false);
     const [error, setError] = useState("");
-    const [authReady, setAuthReady] = useState(false);
     const [authUser, setAuthUser] = useState<{ email: string; name: string } | null>(null);
 
     const [customerName, setCustomerName] = useState("");
@@ -96,46 +93,53 @@ export default function BookingPage() {
 
         let unsub: (() => void) | undefined;
         let cancelled = false;
+
         (async () => {
-            let attempts = 0;
-            while (!(window as any).firebase && attempts < 50) {
-                await new Promise((r) => setTimeout(r, 100));
-                attempts++;
-            }
-            if (cancelled || !(window as any).firebase) {
-                setAuthReady(true);
-                return;
-            }
-            const auth = (window as any).firebase.auth();
-            unsub = auth.onAuthStateChanged((user: any) => {
-                if (!user) {
-                    setAuthUser(null);
-                    setAuthReady(true);
-                    return;
+            try {
+                let attempts = 0;
+                while (!(window as any).firebase?.auth && attempts < 50) {
+                    await new Promise((r) => setTimeout(r, 100));
+                    attempts++;
                 }
-                const email = String(user.email || "").toLowerCase();
-                const name = String(user.displayName || "");
-                setAuthUser({ email, name });
-                // Foglalási mezőket NEM töltjük ki automatikusan — mindig meg kell adni
-                setBookingPath("account");
-                setError("");
-                setAuthReady(true);
-            });
+                if (cancelled || !(window as any).firebase?.auth) return;
+                const auth = (window as any).firebase.auth();
+                unsub = auth.onAuthStateChanged((user: any) => {
+                    if (cancelled) return;
+                    if (!user) {
+                        setAuthUser(null);
+                        return;
+                    }
+                    const email = String(user.email || "").toLowerCase();
+                    const name = String(user.displayName || "");
+                    setAuthUser({ email, name });
+                    // Foglalási mezőket NEM töltjük ki automatikusan — mindig meg kell adni
+                    setBookingPath("account");
+                    setError("");
+                });
+            } catch (e) {
+                console.warn("booking auth init failed", e);
+            }
         })();
 
         const refresh = async () => {
-            const [remote, blocked, hours] = await Promise.all([
-                loadActiveBookingsFromFirestore(),
-                loadBlockedDaysFromFirestore(),
-                loadWorkingHoursFromFirestore(),
-            ]);
-            setWorkingHours(hours);
-            setBlockedByDate(blockedTimesMap(blocked, makeSlotsForDateKeyFn(hours)));
-            if (remote.length > 0) {
-                setExistingBookings(remote as BookingRequest[]);
-                return;
+            try {
+                const [remote, blocked, hours] = await Promise.all([
+                    loadActiveBookingsFromFirestore(),
+                    loadBlockedDaysFromFirestore(),
+                    loadWorkingHoursFromFirestore(),
+                ]);
+                if (cancelled) return;
+                setWorkingHours(hours);
+                setBlockedByDate(blockedTimesMap(blocked, makeSlotsForDateKeyFn(hours)));
+                if (remote.length > 0) {
+                    setExistingBookings(remote as BookingRequest[]);
+                    return;
+                }
+                setExistingBookings(loadBookingsLocal());
+            } catch (e) {
+                console.warn("booking refresh failed", e);
+                if (!cancelled) setExistingBookings(loadBookingsLocal());
             }
-            setExistingBookings(loadBookingsLocal());
         };
 
         refresh();
@@ -145,7 +149,7 @@ export default function BookingPage() {
             clearInterval(t);
             if (unsub) unsub();
         };
-    }, [router]);
+    }, []);
 
     const handleGoogleForBooking = async () => {
         setError("");
@@ -435,11 +439,7 @@ export default function BookingPage() {
                         </p>
                     </div>
 
-                    {!authReady ? (
-                        <p className="booking-muted" style={{ textAlign: "center", padding: "2rem" }}>
-                            Betöltés…
-                        </p>
-                    ) : !authUser && bookingPath === null ? (
+                    {!authUser && bookingPath === null ? (
                         <section className="booking-auth-gate">
                             <h2>Hogyan szeretnél foglalni?</h2>
                             <p>

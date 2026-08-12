@@ -772,30 +772,35 @@ export async function cancelBookingByStudent(
 }
 
 export async function loadActiveBookingsFromFirestore(): Promise<BookingPayload[]> {
+    // Public calendar must NOT query bookings.* from the client — rules only allow
+    // admin or own-email reads, so a full collection get throws permission-denied.
     try {
-        const firebase = getFirebase();
-        if (!firebase?.firestore) return [];
-        const db = firebase.firestore();
-        const snap = await db.collection("bookings").get();
-        const list: BookingPayload[] = [];
-        snap.forEach((doc: any) => {
-            const data = doc.data();
-            if (data.status === "pending" || data.status === "approved") {
-                list.push({ id: doc.id, ...data });
-            }
+        const res = await fetch('/api/public-busy-slots', {
+            method: 'GET',
+            headers: { Accept: 'application/json' },
+            credentials: 'same-origin',
         });
-        if (list.length === 0) {
-            const pending = await db.collection("pendingBookings").get();
-            pending.forEach((doc: any) => {
-                const data = doc.data();
-                if (!data.status || data.status === "pending" || data.status === "approved") {
-                    list.push({ id: doc.id, ...data });
-                }
-            });
+        if (!res.ok) return [];
+        const json = await res.json();
+        const slots = Array.isArray(json?.data?.slots) ? json.data.slots : [];
+        return slots.map((s: any, i: number) => ({
+            id: `busy_${s.date}_${i}`,
+            date: String(s.date || ''),
+            times: Array.isArray(s.times) ? s.times.map(String) : [],
+            customerName: '',
+            customerEmail: '',
+            lessonType: 'online',
+            selectedSubject: '',
+            hobby: '',
+            totalPrice: 0,
+            submittedAt: '',
+            status: (s.status === 'approved' ? 'approved' : 'pending') as BookingStatus,
+        }));
+    } catch (err: any) {
+        const msg = String(err?.message || err || '');
+        if (!/permission|insufficient/i.test(msg)) {
+            console.warn('loadActiveBookingsFromFirestore:', msg.slice(0, 120));
         }
-        return list;
-    } catch (err) {
-        console.error("loadActiveBookingsFromFirestore failed:", err);
         return [];
     }
 }
@@ -946,8 +951,11 @@ export async function loadBlockedDaysFromFirestore(): Promise<BlockedDay[]> {
             });
         });
         return list;
-    } catch (err) {
-        console.error("loadBlockedDaysFromFirestore failed:", err);
+    } catch (err: any) {
+        const msg = String(err?.message || err || "");
+        if (!/permission|insufficient/i.test(msg)) {
+            console.warn("loadBlockedDaysFromFirestore:", msg.slice(0, 120));
+        }
         return [];
     }
 }

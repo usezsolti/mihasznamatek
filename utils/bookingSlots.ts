@@ -125,8 +125,11 @@ export async function loadWorkingHoursFromFirestore(): Promise<WorkingHoursMap> 
         const snap = await firebase.firestore().collection("settings").doc(SETTINGS_DOC).get();
         if (!snap.exists) return cloneWorkingHours();
         return normalizeWorkingHours(snap.data());
-    } catch (err) {
-        console.error("loadWorkingHoursFromFirestore failed:", err);
+    } catch (err: any) {
+        const msg = String(err?.message || err || '');
+        if (!/permission|insufficient/i.test(msg)) {
+            console.warn('loadWorkingHoursFromFirestore:', msg.slice(0, 120));
+        }
         return cloneWorkingHours();
     }
 }
