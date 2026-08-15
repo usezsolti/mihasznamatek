@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import MatekCallRoom from './MatekCallRoom';
 import MatekWhiteboard from './whiteboard/MatekWhiteboard';
+import { useLang } from '../utils/i18n';
 import {
     ensureLessonWhiteboard,
     lessonJoinPath,
@@ -28,6 +29,7 @@ export default function LessonHourRoom({
     photoURL = '',
     onRoomUpdated,
 }: Props) {
+    const { t, lang } = useLang();
     const [tab, setTab] = useState<LessonTab>('lesson');
     const [callOpen, setCallOpen] = useState(false);
     const [messages, setMessages] = useState<LessonMessage[]>([]);
@@ -68,7 +70,6 @@ export default function LessonHourRoom({
         }
     }, [boardId, onRoomUpdated, room, uid]);
 
-    // Tábla mindig betöltődik az óra nézetben
     useEffect(() => {
         void ensureBoard();
     }, [ensureBoard]);
@@ -81,7 +82,7 @@ export default function LessonHourRoom({
     const copyLink = async () => {
         try {
             await navigator.clipboard.writeText(joinUrl);
-            setToast('Csatlakozási link a vágólapra másolva.');
+            setToast(t('lesson.linkCopied'));
         } catch {
             setToast(joinUrl);
         }
@@ -118,19 +119,19 @@ export default function LessonHourRoom({
             <header className="lhr-head">
                 <div className="lhr-head-main">
                     <div className="lhr-brand">
-                        <span className="lhr-kicker">Élő óra</span>
-                        {callOpen ? <span className="lhr-live">ÉLŐ</span> : null}
+                        <span className="lhr-kicker">{t('lesson.live')}</span>
+                        {callOpen ? <span className="lhr-live">{t('lesson.liveBadge')}</span> : null}
                     </div>
                     <h1 className="lhr-title">{room.title}</h1>
                     <p className="lhr-meta">
                         {displayName}
-                        {room.studentName ? ` · Diák: ${room.studentName}` : ''}
-                        {callOpen ? ' · Hívás + tábla együtt' : ' · Tábla kész · indítsd a hívást'}
+                        {room.studentName ? ` · ${t('lesson.student')}: ${room.studentName}` : ''}
+                        {callOpen ? ` · ${t('lesson.metaLive')}` : ` · ${t('lesson.metaReady')}`}
                     </p>
                 </div>
                 <div className="lhr-head-actions">
                     <button type="button" className="lhr-btn lhr-btn-copy" onClick={() => void copyLink()}>
-                        Link másolása
+                        {t('lesson.copyLink')}
                     </button>
                     {!callOpen ? (
                         <button
@@ -138,7 +139,7 @@ export default function LessonHourRoom({
                             className="lhr-btn lhr-btn-primary"
                             onClick={() => void startCall()}
                         >
-                            Hívás indítása
+                            {t('lesson.startCall')}
                         </button>
                     ) : (
                         <button
@@ -146,11 +147,11 @@ export default function LessonHourRoom({
                             className="lhr-btn lhr-btn-end"
                             onClick={() => setCallOpen(false)}
                         >
-                            Hívás vége
+                            {t('lesson.endCall')}
                         </button>
                     )}
                     <Link href="/dashboard" className="lhr-btn lhr-btn-exit">
-                        Kilépés
+                        {t('lesson.exit')}
                     </Link>
                 </div>
             </header>
@@ -169,7 +170,7 @@ export default function LessonHourRoom({
                     className={tab === 'lesson' ? 'is-on' : ''}
                     onClick={() => setTab('lesson')}
                 >
-                    Hívás + tábla
+                    {t('lesson.tabLesson')}
                 </button>
                 <button
                     type="button"
@@ -178,14 +179,13 @@ export default function LessonHourRoom({
                     className={tab === 'chat' ? 'is-on' : ''}
                     onClick={() => setTab('chat')}
                 >
-                    Csevegés
+                    {t('lesson.tabChat')}
                     {messages.length > 0 ? (
                         <span className="lhr-tab-count">{messages.length}</span>
                     ) : null}
                 </button>
             </nav>
 
-            {/* Egy közös nézet: hívás + tábla mindig együtt; chat csak elrejti CSS-sel */}
             <div
                 className={`lhr-pane lhr-lesson ${callOpen ? 'is-live' : 'is-board-only'} ${
                     tab === 'lesson' ? 'is-shown' : 'is-hidden'
@@ -194,18 +194,15 @@ export default function LessonHourRoom({
                 {!callOpen ? (
                     <div className="lhr-call-strip">
                         <div>
-                            <strong>Videóhívás + közös tábla</strong>
-                            <p>
-                                A tábla már itt van. Indítsd a hívást — a kép a tábla mellett / felett
-                                jelenik meg. Képernyőmegosztás a hívás sávban.
-                            </p>
+                            <strong>{t('lesson.stripTitle')}</strong>
+                            <p>{t('lesson.stripBody')}</p>
                         </div>
                         <button
                             type="button"
                             className="lhr-btn lhr-btn-primary"
                             onClick={() => void startCall()}
                         >
-                            Hívás indítása
+                            {t('lesson.startCall')}
                         </button>
                     </div>
                 ) : null}
@@ -217,6 +214,7 @@ export default function LessonHourRoom({
                                 roomId={room.id}
                                 uid={uid}
                                 displayName={displayName}
+                                role={room.createdBy === uid ? 'teacher' : 'student'}
                                 active={callOpen}
                                 onClose={() => setCallOpen(false)}
                             />
@@ -233,7 +231,7 @@ export default function LessonHourRoom({
                             />
                         ) : (
                             <p className="lhr-muted" style={{ padding: '1rem' }}>
-                                {busy ? 'Tábla betöltése…' : 'Tábla előkészítése…'}
+                                {busy ? t('lesson.boardLoading') : t('lesson.boardPrep')}
                             </p>
                         )}
                     </section>
@@ -243,7 +241,7 @@ export default function LessonHourRoom({
             <div className={`lhr-pane lhr-chat ${tab === 'chat' ? 'is-shown' : 'is-hidden'}`}>
                 <div className="lhr-chat-list">
                     {messages.length === 0 ? (
-                        <p className="lhr-muted">Még nincs üzenet. Írj a diáknak / tanárnak.</p>
+                        <p className="lhr-muted">{t('lesson.chatEmpty')}</p>
                     ) : (
                         messages.map((m) => (
                             <div
@@ -253,10 +251,13 @@ export default function LessonHourRoom({
                                 <strong>{m.senderName}</strong>
                                 <p>{m.text}</p>
                                 <time>
-                                    {new Date(m.createdAtMs).toLocaleTimeString('hu-HU', {
-                                        hour: '2-digit',
-                                        minute: '2-digit',
-                                    })}
+                                    {new Date(m.createdAtMs).toLocaleTimeString(
+                                        lang === 'en' ? 'en-GB' : 'hu-HU',
+                                        {
+                                            hour: '2-digit',
+                                            minute: '2-digit',
+                                        }
+                                    )}
                                 </time>
                             </div>
                         ))
@@ -267,7 +268,7 @@ export default function LessonHourRoom({
                     <input
                         value={draft}
                         onChange={(e) => setDraft(e.target.value)}
-                        placeholder="Üzenet…"
+                        placeholder={t('lesson.chatPlaceholder')}
                         maxLength={1000}
                         onKeyDown={(e) => {
                             if (e.key === 'Enter' && !e.shiftKey) {
@@ -282,7 +283,7 @@ export default function LessonHourRoom({
                         disabled={busy || !draft.trim()}
                         onClick={() => void send()}
                     >
-                        Küldés
+                        {t('lesson.send')}
                     </button>
                 </div>
             </div>

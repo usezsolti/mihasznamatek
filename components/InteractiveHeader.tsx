@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { useLang } from '../utils/i18n';
 
 interface MathElement {
     x: number;
@@ -14,6 +15,7 @@ interface MathElement {
 }
 
 const InteractiveHeader: React.FC = () => {
+    const { t } = useLang();
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
     const [isHovering, setIsHovering] = useState(false);
@@ -172,10 +174,10 @@ const InteractiveHeader: React.FC = () => {
             <div className={`header-content ${isVisible ? 'animate-in' : ''}`}>
                 <div className="profile-section">
                     <div className="profile-image">
-                        <img src="/profile.png" alt="Mihaszna Matek" />
+                        <img src="/profile.png" alt={t('hero.alt')} />
                     </div>
                     <h1 className="main-title">MIHASZNA MATEK</h1>
-                    <p className="subtitle">Hogyan lehet úgy matekozni, hogy közben szakadsz a nevetéstől?</p>
+                    <p className="subtitle">{t('hero.subtitle')}</p>
                 </div>
             </div>
         </div>

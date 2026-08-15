@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { useLang } from '../utils/i18n';
 
 /** Alsó cookie / GDPR sáv — stílus: public/style.css (.cookie-banner). */
 export default function CookieBanner() {
+    const { t } = useLang();
     const [showBanner, setShowBanner] = useState(false);
 
     useEffect(() => {
@@ -35,21 +37,20 @@ export default function CookieBanner() {
         <div className="cookie-banner" role="dialog" aria-labelledby="cookie-banner-title" aria-live="polite">
             <div className="cookie-banner__inner">
                 <div className="cookie-banner__copy">
-                    <h3 id="cookie-banner-title">Cookie-k és adatkezelés</h3>
+                    <h3 id="cookie-banner-title">{t('cookie.title')}</h3>
                     <p>
-                        A szükséges cookie-k a belépéshez és a biztonságos működéshez kellenek.
-                        A részleteket az adatkezelési tájékoztatóban találod.{' '}
+                        {t('cookie.body')}{' '}
                         <Link href="/adatkezelesi-tajekoztato" target="_blank" rel="noopener noreferrer">
-                            Adatkezelési tájékoztató
+                            {t('cookie.privacyLink')}
                         </Link>
                     </p>
                 </div>
                 <div className="cookie-banner__actions">
                     <button type="button" className="cookie-banner__btn cookie-banner__btn--ghost" onClick={declineCookies}>
-                        Elutasítom
+                        {t('cookie.decline')}
                     </button>
                     <button type="button" className="cookie-banner__btn cookie-banner__btn--primary" onClick={acceptCookies}>
-                        Elfogadom
+                        {t('cookie.accept')}
                     </button>
                 </div>
             </div>

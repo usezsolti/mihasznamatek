@@ -3,8 +3,10 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { FaYoutube, FaFacebook, FaInstagram, FaTiktok } from "react-icons/fa";
 import AuthModal from "./AuthModal";
+import LanguageToggle from "./LanguageToggle";
 import { isAdminEmail } from "../utils/admin";
 import { OPEN_AUTH_MODAL_EVENT, type OpenAuthModalDetail } from "../utils/authModal";
+import { useLang } from "../utils/i18n";
 
 interface NavUser {
     uid: string;
@@ -15,6 +17,7 @@ interface NavUser {
 
 export default function Navbar() {
     const router = useRouter();
+    const { t } = useLang();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isClient, setIsClient] = useState(false);
     const [currentUser, setCurrentUser] = useState<NavUser | null>(null);
@@ -246,13 +249,13 @@ export default function Navbar() {
     }, [isClient, router.events]);
 
     const displayLabel =
-        currentUser?.displayName || currentUser?.email || "Felhasználó";
+        currentUser?.displayName || currentUser?.email || t('nav.user');
 
     return (
         <>
             <nav className="site-navbar" suppressHydrationWarning>
                 <div className="logo">
-                    <Link href="/" aria-label="Kezdőlap" onClick={() => setIsMenuOpen(false)}>
+                    <Link href="/" aria-label={t('nav.home')} onClick={() => setIsMenuOpen(false)}>
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 200 200"
@@ -338,18 +341,18 @@ export default function Navbar() {
                                     }
                                     onClick={toggleMenu}
                                 >
-                                    Admin
+                                    {t('nav.admin')}
                                 </Link>
                             </li>
                         )}
                         <li>
                             <a href="/#about" onClick={handleAnchorClick("#about")}>
-                                Rólam
+                                {t('nav.about')}
                             </a>
                         </li>
                         <li>
                             <a href="/#courses" onClick={handleAnchorClick("#courses")}>
-                                Kiket vállalok?
+                                {t('nav.courses')}
                             </a>
                         </li>
                         <li>
@@ -357,12 +360,12 @@ export default function Navbar() {
                                 href="/#testimonials"
                                 onClick={handleAnchorClick("#testimonials")}
                             >
-                                Vélemények
+                                {t('nav.testimonials')}
                             </a>
                         </li>
                         <li>
                             <a href="/#pricing" onClick={handleAnchorClick("#pricing")}>
-                                Ár
+                                {t('nav.pricing')}
                             </a>
                         </li>
                             <li>
@@ -371,7 +374,7 @@ export default function Navbar() {
                                     className={router.pathname === "/community" ? "nav-link-active" : undefined}
                                     onClick={toggleMenu}
                                 >
-                                    MihaSocial
+                                    {t('nav.community')}
                                 </Link>
                             </li>
                             <li>
@@ -380,23 +383,26 @@ export default function Navbar() {
                                     className={router.pathname === "/whiteboard" ? "nav-link-active" : undefined}
                                     onClick={toggleMenu}
                                 >
-                                    Whiteboard
+                                    {t('nav.whiteboard')}
                                 </Link>
                             </li>
                             <li>
                                 <Link href="/booking" onClick={toggleMenu}>
-                                    Időpontfoglalás
+                                    {t('nav.booking')}
                                 </Link>
                             </li>
                         <li>
                             <a href="/#contact" onClick={handleAnchorClick("#contact")}>
-                                Kapcsolat
+                                {t('nav.contact')}
                             </a>
                         </li>
                         <li>
                             <Link href="/workout" onClick={toggleMenu}>
-                                Személyi edzés
+                                {t('nav.workout')}
                             </Link>
+                        </li>
+                        <li className="nav-lang-mobile">
+                            <LanguageToggle />
                         </li>
                         {isClient && currentUser && (
                             <li className="nav-auth-mobile">
@@ -408,14 +414,14 @@ export default function Navbar() {
                         {isClient && currentUser && (
                             <li className="nav-auth-mobile">
                                 <button type="button" className="auth-btn" onClick={handleLogout}>
-                                    Kijelentkezés
+                                    {t('nav.logout')}
                                 </button>
                             </li>
                         )}
                         {isClient && !currentUser && (
                             <li className="nav-auth-mobile">
                                 <button type="button" className="auth-btn" onClick={() => openLocalAuthModal("login")}>
-                                    Bejelentkezés
+                                    {t('nav.login')}
                                 </button>
                             </li>
                         )}
@@ -457,9 +463,13 @@ export default function Navbar() {
                         >
                             <FaTiktok size={16} />
                         </a>
-                        <a href="/game" className="nav-social-link game" title="Játék">
+                        <a href="/game" className="nav-social-link game" title={t('nav.game')}>
                             🎮
                         </a>
+                    </div>
+
+                    <div className="nav-lang-desktop">
+                        <LanguageToggle />
                     </div>
 
                     {isClient && (
@@ -470,7 +480,7 @@ export default function Navbar() {
                                     className="auth-btn nav-logout-btn"
                                     onClick={handleLogout}
                                 >
-                                    Kijelentkezés
+                                    {t('nav.logout')}
                                 </button>
                             ) : (
                                 <button
@@ -478,7 +488,7 @@ export default function Navbar() {
                                     className="auth-btn nav-login-btn"
                                     onClick={() => openLocalAuthModal("login")}
                                 >
-                                    Bejelentkezés
+                                    {t('nav.login')}
                                 </button>
                             )}
                         </div>

@@ -3,6 +3,7 @@ import Link from "next/link";
 import { openAuthModal } from "../utils/authModal";
 import { isTestAuthUser } from "../utils/testLogin";
 import { isAdminEmail } from "../utils/admin";
+import { useLang } from "../utils/i18n";
 
 interface CurrentUser {
     uid: string;
@@ -34,6 +35,7 @@ async function waitForFirebaseReady(maxAttempts = 50): Promise<any | null> {
  * Bejelentkezve: dashboard + kijelentkezés.
  */
 export default function AuthSection() {
+    const { t } = useLang();
     const [currentUser, setCurrentUser] = useState<CurrentUser | null>(null);
     const [checkingAuth, setCheckingAuth] = useState(true);
 
@@ -85,7 +87,7 @@ export default function AuthSection() {
     };
 
     if (checkingAuth) {
-        return <p className="form-msg" style={{ textAlign: "center" }}>Betöltés…</p>;
+        return <p className="form-msg" style={{ textAlign: "center" }}>{t("common.loading")}</p>;
     }
 
     if (currentUser) {
@@ -122,10 +124,10 @@ export default function AuthSection() {
                     </div>
                 )}
                 <p style={{ color: "#eee", fontSize: "1.15rem", margin: "0 0 0.35rem" }}>
-                    Szia, <strong>{label}</strong>!
+                    {t("auth.hello", { name: label })}
                 </p>
                 <p style={{ color: "#aaa", margin: "0 0 1.25rem" }}>
-                    Itt követheted a foglalásaidat és a tanulási előrehaladásodat.
+                    {t("auth.signedInHint")}
                 </p>
                 <div style={{ display: "flex", gap: "0.75rem", justifyContent: "center", flexWrap: "wrap" }}>
                     <Link
@@ -137,7 +139,7 @@ export default function AuthSection() {
                             padding: "0.75rem 1.25rem",
                         }}
                     >
-                        Dashboard megnyitása
+                        {t("auth.openDashboard")}
                     </Link>
                     <button
                         type="button"
@@ -153,7 +155,7 @@ export default function AuthSection() {
                             cursor: "pointer",
                         }}
                     >
-                        Kijelentkezés
+                        {t("nav.logout")}
                     </button>
                 </div>
             </div>
@@ -163,8 +165,7 @@ export default function AuthSection() {
     return (
         <div className="home-auth-cta" style={{ textAlign: "center", maxWidth: 480, margin: "0 auto" }}>
             <p style={{ color: "#ccc", marginBottom: "1.25rem", lineHeight: 1.55 }}>
-                Egy helyen jelentkezhetsz be: a navigáció <strong>Bejelentkezés</strong> gombjával,
-                vagy ide kattintva.
+                {t("auth.ctaHint")}
             </p>
             <div style={{ display: "flex", gap: "0.75rem", justifyContent: "center", flexWrap: "wrap" }}>
                 <button
@@ -173,7 +174,7 @@ export default function AuthSection() {
                     onClick={() => openAuthModal({ mode: "login" })}
                     style={{ padding: "0.85rem 1.4rem", cursor: "pointer", border: "none" }}
                 >
-                    Bejelentkezés
+                    {t("auth.login")}
                 </button>
                 <button
                     type="button"
@@ -188,7 +189,7 @@ export default function AuthSection() {
                         cursor: "pointer",
                     }}
                 >
-                    Regisztráció
+                    {t("auth.register")}
                 </button>
             </div>
         </div>

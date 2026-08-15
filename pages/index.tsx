@@ -12,6 +12,7 @@ import CookieBanner from "../components/CookieBanner";
 import AuthSection from "../components/AuthSection";
 import MatekChatBot from "../components/MatekChatBot";
 import { trackContactConversion } from "../utils/gtag";
+import { useLang } from "../utils/i18n";
 
 // Firebase típus definíciók
 // Window interface már definiálva van a types/global.d.ts fájlban
@@ -19,7 +20,7 @@ import { trackContactConversion } from "../utils/gtag";
 
 
 export default function Home() {
-
+    const { t } = useLang();
 
     // EmailJS removed - using dashboard notifications only
 
@@ -326,8 +327,8 @@ export default function Home() {
             {/* RÓLAM SZEKCIÓ */}
             <section id="about" className="section">
                 <div className="section-content">
-                    <h2 className="section-title">Rólam</h2>
-                    <p className="section-subtitle">Fedezd fel az életpályámat!</p>
+                    <h2 className="section-title">{t('home.about')}</h2>
+                    <p className="section-subtitle">{t('home.aboutSub')}</p>
 
                     <div className="about-profile">
                         <div className="profile-card">
@@ -336,7 +337,7 @@ export default function Home() {
                             </div>
                             <div className="profile-info">
                                 <h3>Mihaszna Matek</h3>
-                                <p>Gyere, megmutatom!</p>
+                                <p>{t('home.aboutTagline')}</p>
                             </div>
                         </div>
 
@@ -345,29 +346,29 @@ export default function Home() {
                             <div className="counter-item">
                                 <div className="counter-icon">⏰</div>
                                 <div className="counter-number">{tanitottOrak}</div>
-                                <div className="counter-label">Tanított órák</div>
+                                <div className="counter-label">{t('home.stat.hours')}</div>
                             </div>
                             <div className="counter-item">
                                 <div className="counter-icon">📚</div>
                                 <div className="counter-number">{temakorok}</div>
-                                <div className="counter-label">Tantárgyak</div>
+                                <div className="counter-label">{t('home.stat.subjects')}</div>
                             </div>
                             <div className="counter-item">
                                 <div className="counter-icon">👥</div>
                                 <div className="counter-number">{tanitvanyok}</div>
-                                <div className="counter-label">Tanítványok</div>
+                                <div className="counter-label">{t('home.stat.students')}</div>
                             </div>
                             <div className="counter-item">
                                 <div className="counter-icon">⭐</div>
                                 <div className="counter-number">{elegedettseg}%</div>
-                                <div className="counter-label">Elégedettség</div>
+                                <div className="counter-label">{t('home.stat.satisfaction')}</div>
                             </div>
                         </div>
                     </div>
 
                     <div className="about-cv">
                         <div className="cv-section">
-                            <h3>🎓 Tanulmányok & Nyelvtudás</h3>
+                            <h3>🎓 {t('home.cv.studies')}</h3>
                             <div className="cv-item">
                                 <span className="cv-year">2016-2021</span>
                                 <span className="cv-details">Óbudai Egyetem Bánki Donát Gépész és Biztonságtechnikai Kar, Budapest - <strong>Mechatronikai Mérnök</strong></span>
@@ -399,7 +400,7 @@ export default function Home() {
                         </div>
 
                         <div className="cv-section">
-                            <h3>💼 Munkatapasztalat</h3>
+                            <h3>💼 {t('home.cv.work')}</h3>
                             <div className="cv-item">
                                 <span className="cv-year">2020</span>
                                 <span className="cv-details">Vaskapu Generálkivitelező Kft. - <strong>Segédmérnök</strong></span>
@@ -419,7 +420,7 @@ export default function Home() {
                         </div>
 
                         <div className="cv-section">
-                            <h3>🛠️ Készségek</h3>
+                            <h3>🛠️ {t('home.cv.skills')}</h3>
                             <div className="skills-container">
                                 <div className="skills-category">
                                     <h4>💻 Programozási nyelvek & eszközök</h4>
@@ -753,79 +754,79 @@ export default function Home() {
             {/* KIKET VÁLLALOK SZEKCIÓ */}
             <section id="courses" className="section alt-bg">
                 <div className="section-content">
-                    <h2 className="section-title">Kiket vállalok?</h2>
-                    <p className="section-subtitle">Személyre szabott matektanítás minden szinten</p>
+                    <h2 className="section-title">{t('home.courses')}</h2>
+                    <p className="section-subtitle">{t('home.coursesSub')}</p>
 
                     <div className="courses-grid">
                         <div className="course-card">
                             <div className="course-icon">🎓</div>
-                            <h3>Általános iskolások</h3>
-                            <p>1-8. osztályos diákok számára alapvető matematikai készségek fejlesztése, szóbeli és írásbeli felkészítés</p>
+                            <h3>{t('home.course.elem.title')}</h3>
+                            <p>{t('home.course.elem.body')}</p>
                             <ul className="course-features">
-                                <li>Alapvető műveletek elsajátítása</li>
-                                <li>Szöveges feladatok megoldása</li>
-                                <li>Geometria és mérés</li>
-                                <li>Statisztika és valószínűség</li>
+                                <li>{t('home.course.elem.f1')}</li>
+                                <li>{t('home.course.elem.f2')}</li>
+                                <li>{t('home.course.elem.f3')}</li>
+                                <li>{t('home.course.elem.f4')}</li>
                             </ul>
                         </div>
 
                         <div className="course-card">
                             <div className="course-icon">🏫</div>
-                            <h3>Középiskolások</h3>
-                            <p>9-12. osztályos diákok számára érettségi felkészítés és haladó matematikai témák</p>
+                            <h3>{t('home.course.high.title')}</h3>
+                            <p>{t('home.course.high.body')}</p>
                             <ul className="course-features">
-                                <li>Érettségi felkészítés</li>
-                                <li>Függvények és grafikonok</li>
-                                <li>Geometria és trigonometria</li>
-                                <li>Kombinatorika és valószínűség</li>
+                                <li>{t('home.course.high.f1')}</li>
+                                <li>{t('home.course.high.f2')}</li>
+                                <li>{t('home.course.high.f3')}</li>
+                                <li>{t('home.course.high.f4')}</li>
                             </ul>
                         </div>
 
                         <div className="course-card">
                             <div className="course-icon">🎯</div>
-                            <h3>Egyetemisták</h3>
-                            <p>Felsőoktatási intézményekben tanuló hallgatók számára speciális matematikai segítség</p>
+                            <h3>{t('home.course.uni.title')}</h3>
+                            <p>{t('home.course.uni.body')}</p>
                             <ul className="course-features">
-                                <li>Analízis és differenciálszámítás</li>
-                                <li>Lineáris algebra</li>
-                                <li>Valószínűségszámítás</li>
-                                <li>Numerikus módszerek</li>
+                                <li>{t('home.course.uni.f1')}</li>
+                                <li>{t('home.course.uni.f2')}</li>
+                                <li>{t('home.course.uni.f3')}</li>
+                                <li>{t('home.course.uni.f4')}</li>
                             </ul>
                         </div>
 
                         <div className="course-card">
                             <div className="course-icon">💼</div>
-                            <h3>Felnőttek</h3>
-                            <p>Munkahelyi felkészítés, továbbképzés vagy személyes fejlődés céljából</p>
+                            <h3>{t('home.course.adult.title')}</h3>
+                            <p>{t('home.course.adult.body')}</p>
                             <ul className="course-features">
-                                <li>Munkahelyi matematika</li>
-                                <li>Statisztika és elemzés</li>
-                                <li>Excel és adatelemzés</li>
-                                <li>Pénzügyi számítások</li>
+                                <li>{t('home.course.adult.f1')}</li>
+                                <li>{t('home.course.adult.f2')}</li>
+                                <li>{t('home.course.adult.f3')}</li>
+                                <li>{t('home.course.adult.f4')}</li>
                             </ul>
                         </div>
 
                         <div className="course-card">
                             <div className="course-icon">🚀</div>
-                            <h3>Versenyfelkészítés</h3>
-                            <p>Matematikai versenyekre való felkészítés és speciális problémamegoldás</p>
+                            <h3>{t('home.course.competition.title')}</h3>
+                            <p>{t('home.course.competition.body')}</p>
                             <ul className="course-features">
-                                <li>Középiskolai matematikai versenyek</li>
-                                <li>OKTV felkészítés</li>
-                                <li>Logikai feladatok</li>
-                                <li>Kreatív problémamegoldás</li>
+                                <li>{t('home.course.competition.f1')}</li>
+                                <li>{t('home.course.competition.f2')}</li>
+                                <li>{t('home.course.competition.f3')}</li>
+                                <li>{t('home.course.competition.f4')}</li>
                             </ul>
                         </div>
 
                         <div className="course-card">
                             <div className="course-icon">📚</div>
-                            <h3>Online tanítás</h3>
-                            <p>Videókonferenciás platformokon keresztül, akár csoportos, akár egyéni órák</p>
+                            <h3>{t('home.course.online.title')}</h3>
+                            <p>{t('home.course.online.body')}</p>
                             <ul className="course-features">
-                                <li>Zoom, Teams, Skype órák</li>
-                                <li>Interaktív digitális eszközök</li>
-                                <li>Rugalmas időbeosztás</li>
-                                <li>Anyagok digitális megosztása</li>
+                                <li>{t('home.course.online.f1')}</li>
+                                <li>{t('home.course.online.f2')}</li>
+                                <li>{t('home.course.online.f3')}</li>
+                                <li>{t('home.course.online.f4')}</li>
                             </ul>
                         </div>
                     </div>
@@ -838,7 +839,7 @@ export default function Home() {
             {/* PRICING SECTION */}
             <section id="pricing" className="section">
                 <div className="section-content">
-                    <h2 className="section-title">💰 Ár &amp; Foglalási információk</h2>
+                    <h2 className="section-title">💰 {t('home.pricing')}</h2>
                     <p className="section-subtitle">Délutáni és délelőtti időpontokban is elérhetőek az órák</p>
 
                     <div className="pricing-container">
@@ -928,7 +929,7 @@ export default function Home() {
             {/* CONTACT SECTION */}
             <section id="contact" className="section contact-section">
                 <div className="section-content">
-                    <h2 className="section-title">Kapcsolat</h2>
+                    <h2 className="section-title">{t('home.contact')}</h2>
                     <p className="section-subtitle">Ha szükséged van egy MIHASZNA tanára keress bátran!</p>
 
                     <div className="contact-grid">
@@ -1074,7 +1075,7 @@ export default function Home() {
 
             <section id="auth" className="section home-auth-section">
                 <div className="section-content">
-                    <h2 className="section-title">Fiókom</h2>
+                    <h2 className="section-title">{t('home.account')}</h2>
                     <p className="section-subtitle">
                         Belépés után a Dashboardon látod a foglalásaidat és a tanulási előrehaladásodat.
                     </p>

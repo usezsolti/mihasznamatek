@@ -1,6 +1,7 @@
 import { FormEvent, Fragment, useEffect, useRef, useState, type ReactNode } from 'react';
 import { useRouter } from 'next/router';
 import { useMatekChat } from '../hooks/useMatekChat';
+import { useLang } from '../utils/i18n';
 
 const NEAR_BOTTOM_PX = 80;
 
@@ -47,6 +48,7 @@ function linkifyMessage(
 
 /** Presentation: UI only — chat use-case lives in hooks/useMatekChat. */
 export default function MatekChatBot() {
+    const { t } = useLang();
     const router = useRouter();
     const [open, setOpen] = useState(false);
     const [minimized, setMinimized] = useState(false);
@@ -115,7 +117,8 @@ export default function MatekChatBot() {
                 <button
                     type="button"
                     className="chat-button"
-                    title="MihAIy chat"
+                    title={t('chat.open')}
+                    aria-label={t('chat.open')}
                     onClick={() => {
                         setOpen(true);
                         setMinimized(false);
@@ -138,7 +141,7 @@ export default function MatekChatBot() {
                     <div
                         className={`chat-bot-container${minimized ? ' minimized' : ''}`}
                         role="dialog"
-                        aria-label="MihAIy chat"
+                        aria-label={t('chat.dialog')}
                     >
                         <div className="chat-header">
                             <div className="chat-title">
@@ -148,7 +151,7 @@ export default function MatekChatBot() {
                                 <div>
                                     <h3>MihAIy</h3>
                                     <div className="chat-status">
-                                        {busy ? 'Gondolkodom…' : 'Kérdezz bármit — magyarul vagy angolul'}
+                                        {busy ? t('chat.thinking') : t('chat.statusReady')}
                                     </div>
                                 </div>
                             </div>
@@ -156,7 +159,7 @@ export default function MatekChatBot() {
                                 <button
                                     type="button"
                                     className="chat-minimize"
-                                    aria-label={minimized ? 'Kibontás' : 'Minimalizálás'}
+                                    aria-label={minimized ? t('chat.expand') : t('chat.minimize')}
                                     onClick={() => setMinimized((v) => !v)}
                                 >
                                     {minimized ? '□' : '–'}
@@ -164,7 +167,7 @@ export default function MatekChatBot() {
                                 <button
                                     type="button"
                                     className="chat-close"
-                                    aria-label="Bezárás"
+                                    aria-label={t('common.close')}
                                     onClick={() => setOpen(false)}
                                 >
                                     ×
@@ -196,7 +199,7 @@ export default function MatekChatBot() {
                                     <textarea
                                         value={input}
                                         onChange={(e) => setInput(e.target.value)}
-                                        placeholder="Írd ide a kérdésed…"
+                                        placeholder={t('chat.placeholder')}
                                         rows={2}
                                         maxLength={2000}
                                         disabled={busy}
@@ -211,7 +214,7 @@ export default function MatekChatBot() {
                                         type="submit"
                                         className="send-button"
                                         disabled={busy || !input.trim()}
-                                        aria-label="Küldés"
+                                        aria-label={t('chat.send')}
                                     >
                                         →
                                     </button>

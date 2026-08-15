@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import Image from 'next/image';
+import { useLang } from '../utils/i18n';
 
 interface Testimonial {
     id: number;
@@ -174,6 +175,7 @@ const testimonials: Testimonial[] = [
 ];
 
 const Testimonials: React.FC = () => {
+    const { t } = useLang();
     const [isClient, setIsClient] = useState(false);
     const [currentIndex, setCurrentIndex] = useState(0);
     const [isDragging, setIsDragging] = useState(false);
@@ -248,8 +250,8 @@ const Testimonials: React.FC = () => {
     return (
         <section id="testimonials" className="testimonials-section">
             <div className="container">
-                <h2 className="section-title">Vélemények</h2>
-                <p className="section-subtitle">Miért vagyok igazi MIHASZNA matektanár?</p>
+                <h2 className="section-title">{t('testimonials.title')}</h2>
+                <p className="section-subtitle">{t('testimonials.subtitle')}</p>
 
                 <div className="testimonials-grid">
                     {/* Swipe-able testimonials for mobile */}

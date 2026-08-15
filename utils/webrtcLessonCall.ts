@@ -9,6 +9,15 @@ export type CallStatus =
     | 'ended'
     | 'error';
 
+export type CallPeerRole = 'teacher' | 'student';
+
+export type CallShareState = {
+    localSharing: boolean;
+    remoteSharing: boolean;
+    remoteName: string;
+    remoteRole: CallPeerRole | '';
+};
+
 export type LessonCallControls = {
     stop: () => Promise<void>;
     setMuted: (muted: boolean) => void;
@@ -76,9 +85,11 @@ export async function startLessonCall(opts: {
     roomId: string;
     uid: string;
     displayName: string;
+    role?: CallPeerRole;
     localVideo: HTMLVideoElement;
     remoteVideo: HTMLVideoElement;
     onStatus: (status: CallStatus, detail?: string) => void;
+    onShareState?: (state: CallShareState) => void;
 }): Promise<LessonCallControls> {
     const firestore = db();
     if (!firestore) {
@@ -91,6 +102,7 @@ export async function startLessonCall(opts: {
     }
 
     const { roomId, uid, displayName, localVideo, remoteVideo, onStatus } = opts;
+    const role: CallPeerRole = opts.role === 'teacher' ? 'teacher' : 'student';
     const participantsRef = firestore.collection('lessonRooms').doc(roomId).collection('callParticipants');
     const signalsRef = firestore.collection('lessonRooms').doc(roomId).collection('callSignals');
 
@@ -101,6 +113,9 @@ export async function startLessonCall(opts: {
     let muted = false;
     let cameraOff = false;
     let sharingScreen = false;
+    let remoteSharing = false;
+    let remoteName = '';
+    let remoteRole: CallPeerRole | '' = '';
     let stopped = false;
     let makingOffer = false;
     let ignoreOffer = false;
@@ -109,6 +124,31 @@ export async function startLessonCall(opts: {
     const pendingIce: RTCIceCandidateInit[] = [];
     const unsubs: Array<() => void> = [];
     const processedSignalIds = new Set<string>();
+
+    const publishShareState = () => {
+        opts.onShareState?.({
+            localSharing: sharingScreen,
+            remoteSharing,
+            remoteName,
+            remoteRole,
+        });
+    };
+
+    const writeShareFlag = async (on: boolean) => {
+        sharingScreen = on;
+        publishShareState();
+        try {
+            await participantsRef.doc(uid).set(
+                {
+                    sharingScreen: on,
+                    shareUpdatedAtMs: Date.now(),
+                },
+                { merge: true }
+            );
+        } catch {
+            /* rules / offline — UI still updates locally */
+        }
+    };
 
     const findVideoSender = () => {
         if (!pc) return null;
@@ -128,7 +168,7 @@ export async function startLessonCall(opts: {
             screenStream.getTracks().forEach((t) => t.stop());
             screenStream = null;
         }
-        sharingScreen = false;
+        await writeShareFlag(false);
         if (sender && cameraTrack && cameraTrack.readyState === 'live') {
             await sender.replaceTrack(cameraTrack);
             if (localStream) {
@@ -178,7 +218,6 @@ export async function startLessonCall(opts: {
             const conn = ensurePc();
             let sender = conn.getSenders().find((s) => s.track?.kind === 'video');
             if (!sender) {
-                // Ha még nincs video sender, addTrack
                 if (localStream) {
                     conn.addTrack(screenTrack, localStream);
                     sender = conn.getSenders().find((s) => s.track === screenTrack) || null;
@@ -198,8 +237,8 @@ export async function startLessonCall(opts: {
                 screenStream.getTracks().forEach((t) => t.stop());
             }
             screenStream = display;
-            sharingScreen = true;
             applyLocalPreview(display);
+            await writeShareFlag(true);
             onStatus(
                 pc?.connectionState === 'connected' ? 'connected' : 'waiting',
                 'Képernyő megosztva'
@@ -309,6 +348,25 @@ export async function startLessonCall(opts: {
             if (stream) {
                 remoteVideo.srcObject = stream;
                 void remoteVideo.play().catch(() => undefined);
+                const vt = stream.getVideoTracks()[0];
+                if (vt) {
+                    const sniff = () => {
+                        try {
+                            const settings = vt.getSettings?.() as { displaySurface?: string };
+                            if (settings?.displaySurface) {
+                                remoteSharing = true;
+                                publishShareState();
+                            }
+                        } catch {
+                            /* ignore */
+                        }
+                    };
+                    sniff();
+                    vt.addEventListener('unmute', sniff);
+                    vt.addEventListener('ended', () => {
+                        // Firestore flag is source of truth; soft hint only
+                    });
+                }
             }
             onStatus('connected', 'Kapcsolat él');
         };
@@ -373,6 +431,8 @@ export async function startLessonCall(opts: {
         await participantsRef.doc(uid).set({
             uid,
             displayName: displayName.slice(0, 80),
+            role,
+            sharingScreen: false,
             joinedAtMs: Date.now(),
         });
     } catch (err: any) {
@@ -413,18 +473,35 @@ export async function startLessonCall(opts: {
         async (snap: any) => {
             if (stopped) return;
             const others = snap.docs
-                .map((d: any) => d.id as string)
-                .filter((id: string) => id !== uid);
+                .map((d: any) => ({ id: d.id as string, data: d.data() || {} }))
+                .filter((p: { id: string }) => p.id !== uid);
+
             if (others.length === 0) {
+                remoteSharing = false;
+                remoteName = '';
+                remoteRole = '';
+                publishShareState();
                 onStatus('waiting', 'Várjuk a másik felet…');
                 offerSent = false;
                 return;
             }
-            const remoteId = others.sort()[0];
+
+            const peer = others.sort((a: { id: string }, b: { id: string }) =>
+                a.id.localeCompare(b.id)
+            )[0];
+            remoteName = String(peer.data.displayName || '').slice(0, 80);
+            remoteRole =
+                peer.data.role === 'teacher' || peer.data.role === 'student'
+                    ? peer.data.role
+                    : '';
+            remoteSharing = !!peer.data.sharingScreen;
+            publishShareState();
+
+            const remoteId = peer.id;
             if (uid > remoteId && pc && !pc.currentRemoteDescription && !makingOffer && !offerSent) {
                 offerSent = true;
                 await makeOffer();
-            } else if (uid <= remoteId) {
+            } else if (uid <= remoteId && pc?.connectionState !== 'connected') {
                 onStatus('waiting', 'Várjuk a másik fél ajánlatát…');
             }
         },

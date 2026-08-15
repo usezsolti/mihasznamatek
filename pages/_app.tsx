@@ -14,6 +14,7 @@ import Script from "next/script";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import Navbar from "../components/Navbar";
+import { LanguageProvider } from "../utils/i18n";
 
 function isFirestorePermissionNoise(reason: unknown): boolean {
     const code = String((reason as any)?.code || "");
@@ -60,6 +61,7 @@ export default function App({ Component, pageProps }: AppProps) {
     }, []);
 
     return (
+        <LanguageProvider>
         <div suppressHydrationWarning>
             <>
                 <Head>
@@ -140,5 +142,6 @@ export default function App({ Component, pageProps }: AppProps) {
                 <Component {...pageProps} />
             </>
         </div>
+        </LanguageProvider>
     );
 }

@@ -1901,6 +1901,18 @@ h1 {
 }
 
 /* Navbar auth block — mindig kattintható, ne csússzon le a sáv végéről */
+.nav-lang-desktop {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  margin-left: 0.45rem;
+}
+
+.nav-lang-mobile {
+  display: none;
+  padding: 0.35rem 0;
+}
+
 .nav-auth {
   display: flex;
   align-items: center;
@@ -2026,11 +2038,20 @@ h1 {
   .nav-auth-mobile {
     display: none !important;
   }
+  .nav-lang-mobile {
+    display: none !important;
+  }
 }
 
 @media (max-width: 768px) {
   .nav-auth {
     display: none;
+  }
+  .nav-lang-desktop {
+    display: none;
+  }
+  .nav-lang-mobile {
+    display: list-item;
   }
 }
 

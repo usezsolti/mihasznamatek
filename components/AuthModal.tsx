@@ -13,6 +13,7 @@ import {
     isTestLoginAllowed,
 } from "../utils/testLogin";
 import { isAdminEmail } from "../utils/admin";
+import { useLang } from "../utils/i18n";
 
 type AuthMode = "login" | "register";
 
@@ -147,6 +148,7 @@ export default function AuthModal({
     redirectTo,
 }: AuthModalProps) {
     const router = useRouter();
+    const { t } = useLang();
     const [mode, setMode] = useState<AuthMode>(initialMode);
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
@@ -241,7 +243,7 @@ export default function AuthModal({
         try {
             const firebase = await waitForFirebaseReady();
             if (!firebase) {
-                setError("A Firebase nem töltődött be. Frissítsd az oldalt.");
+                setError(t("auth.errorFirebase"));
                 return;
             }
             const auth = firebase.auth();
@@ -255,7 +257,7 @@ export default function AuthModal({
                 if (user && isEmailPasswordUser(user) && !user.emailVerified && !isTestEmail && !isAdminEmail(user.email)) {
                     setAwaitingVerification(true);
                     setInfoMessage(
-                        "Erősítsd meg az e-mail címed a belépéshez. Nézd a postaládát (és a Spam mappát)."
+                        t("auth.verifyLoginInfo")
                     );
                     setPassword("");
                     return;
@@ -273,7 +275,7 @@ export default function AuthModal({
                     return;
                 }
                 if (!gdprAccepted) {
-                    setError("A regisztrációhoz el kell fogadnod az adatkezelési tájékoztatót.");
+                    setError(t("auth.errorGdpr"));
                     return;
                 }
                 const credential = await auth.createUserWithEmailAndPassword(
@@ -299,7 +301,7 @@ export default function AuthModal({
                     }
                     setAwaitingVerification(true);
                     setInfoMessage(
-                        "Regisztráció kész! Küldtünk egy megerősítő e-mailt. Erősítsd meg, majd jelentkezz be."
+                        t("auth.verifyRegisteredInfo")
                     );
                     setPassword("");
                     return;
@@ -347,11 +349,11 @@ export default function AuthModal({
         if (mode === "register") {
             const profile = buildProfile();
             if (!profile.postalCode.trim() || !profile.street.trim() || !profile.houseNumber.trim()) {
-                setError("Google regisztráció előtt add meg a számlázási címet is.");
+                setError(t("auth.errorGoogleBilling"));
                 return;
             }
             if (!gdprAccepted) {
-                setError("A regisztrációhoz el kell fogadnod az adatkezelési tájékoztatót.");
+                setError(t("auth.errorGdpr"));
                 return;
             }
         }
@@ -359,7 +361,7 @@ export default function AuthModal({
         try {
             const firebase = await waitForFirebaseReady();
             if (!firebase) {
-                setError("A Firebase nem töltődött be. Frissítsd az oldalt.");
+                setError(t("auth.errorFirebase"));
                 return;
             }
             const provider = new firebase.auth.GoogleAuthProvider();
@@ -375,7 +377,7 @@ export default function AuthModal({
                 }
                 setMode("register");
                 setError(
-                    "Új fiókhoz előbb töltsd ki a regisztrációs adatokat (cím, témakör, GDPR), majd kattints újra a Google gombra."
+                    t("auth.errorGoogleNew")
                 );
                 return;
             }
@@ -387,7 +389,7 @@ export default function AuthModal({
                 }
                 setMode("register");
                 setError(
-                    "Új fiók létrehozásához fogadd el az adatkezelési tájékoztatót, majd próbáld újra a Google belépést."
+                    t("auth.errorGoogleGdpr")
                 );
                 return;
             }
@@ -454,7 +456,7 @@ export default function AuthModal({
                     type="button"
                     className="auth-modal-close"
                     onClick={onClose}
-                    aria-label="Bezárás"
+                    aria-label={t("common.close")}
                 >
                     <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden>
                         <path
@@ -468,19 +470,19 @@ export default function AuthModal({
                 </button>
                 <h2 id="auth-modal-title">
                     {awaitingVerification
-                        ? "E-mail megerősítés"
+                        ? t("auth.verifyTitle")
                         : mode === "login"
-                          ? "Bejelentkezés"
-                          : "Regisztráció"}
+                          ? t("auth.login")
+                          : t("auth.register")}
                 </h2>
 
                 {awaitingVerification ? (
                     <div className="auth-tab-content active">
                         <p className="form-msg" style={{ color: "#39ff14" }}>
-                            {infoMessage || "Erősítsd meg az e-mail címed."}
+                            {infoMessage || t("auth.verifyPrompt")}
                         </p>
                         <p style={{ color: "#aaa", fontSize: "0.95rem", marginBottom: "1rem" }}>
-                            Cím: <strong style={{ color: "#eee" }}>{email}</strong>
+                            {t("auth.verifyAddress")}: <strong style={{ color: "#eee" }}>{email}</strong>
                         </p>
                         <button
                             type="button"
@@ -500,7 +502,7 @@ export default function AuthModal({
                                         }
                                     }
                                     setError(
-                                        "Még nincs megerősítve. Kattints a levélben a linkre, majd ide."
+                                        t("auth.verifyMissing")
                                     );
                                 } catch (err: any) {
                                     setError(mapFirebaseError(err?.code));
@@ -509,7 +511,7 @@ export default function AuthModal({
                                 }
                             }}
                         >
-                            Már megerősítettem
+                            {t("auth.verified")}
                         </button>
                         <button
                             type="button"
@@ -523,7 +525,7 @@ export default function AuthModal({
                                     const firebase = await waitForFirebaseReady();
                                     const user = firebase?.auth()?.currentUser;
                                     if (user) await user.sendEmailVerification();
-                                    setInfoMessage("Újra elküldtük a megerősítő levelet.");
+                                    setInfoMessage(t("auth.verifyResent"));
                                 } catch (err: any) {
                                     setError(mapFirebaseError(err?.code));
                                 } finally {
@@ -531,7 +533,7 @@ export default function AuthModal({
                                 }
                             }}
                         >
-                            Megerősítő e-mail újraküldése
+                            {t("auth.resendVerify")}
                         </button>
                         {error && <p className="form-msg">{error}</p>}
                         <button
@@ -550,7 +552,7 @@ export default function AuthModal({
                                 textDecoration: "underline",
                             }}
                         >
-                            Vissza a bejelentkezéshez
+                            {t("auth.backToLogin")}
                         </button>
                     </div>
                 ) : (
@@ -561,14 +563,14 @@ export default function AuthModal({
                                 className={"auth-tab " + (mode === "login" ? "active" : "")}
                                 onClick={() => switchMode("login")}
                             >
-                                Bejelentkezés
+                                {t("auth.login")}
                             </button>
                             <button
                                 type="button"
                                 className={"auth-tab " + (mode === "register" ? "active" : "")}
                                 onClick={() => switchMode("register")}
                             >
-                                Regisztráció
+                                {t("auth.register")}
                             </button>
                         </div>
 
@@ -589,7 +591,7 @@ export default function AuthModal({
                                             zIndex: 5,
                                         }}
                                     >
-                                        {loading ? "Belépés…" : "Teszt belépés (1 kattintás)"}
+                                        {loading ? t("auth.loggingIn") : t("auth.testLogin")}
                                     </button>
                                     <p
                                         style={{
@@ -602,45 +604,45 @@ export default function AuthModal({
                                         Dev: {TEST_LOGIN_EMAIL} (jelszó csak szerveren)
                                     </p>
                                     <div className="auth-divider" style={{ margin: "1rem 0" }}>
-                                        <span>vagy e-mail / Google</span>
+                                        <span>{t("auth.orEmailGoogle")}</span>
                                     </div>
                                 </div>
                             )}
                             <form className="email-form" onSubmit={handleEmailSubmit}>
                                 {mode === "register" && (
                                     <div className="form-group">
-                                        <label htmlFor="auth-modal-name">Név *</label>
+                                        <label htmlFor="auth-modal-name">{t("auth.name")}</label>
                                         <input
                                             id="auth-modal-name"
                                             type="text"
                                             value={name}
                                             onChange={(e) => setName(e.target.value)}
-                                            placeholder="Teljes neved"
+                                            placeholder={t("auth.namePlaceholder")}
                                             autoComplete="name"
                                             required
                                         />
                                     </div>
                                 )}
                                 <div className="form-group">
-                                    <label htmlFor="auth-modal-email">E-mail *</label>
+                                    <label htmlFor="auth-modal-email">{t("auth.email")}</label>
                                     <input
                                         id="auth-modal-email"
                                         type="email"
                                         value={email}
                                         onChange={(e) => setEmail(e.target.value)}
-                                        placeholder="pelda@email.hu"
+                                        placeholder={t("auth.emailPlaceholder")}
                                         autoComplete="email"
                                         required
                                     />
                                 </div>
                                 <div className="form-group">
-                                    <label htmlFor="auth-modal-password">Jelszó *</label>
+                                    <label htmlFor="auth-modal-password">{t("auth.password")}</label>
                                     <input
                                         id="auth-modal-password"
                                         type="password"
                                         value={password}
                                         onChange={(e) => setPassword(e.target.value)}
-                                        placeholder="Legalább 6 karakter"
+                                        placeholder={t("auth.passwordPlaceholder")}
                                         autoComplete={
                                             mode === "login" ? "current-password" : "new-password"
                                         }
@@ -671,29 +673,29 @@ export default function AuthModal({
                                                 margin: "0 0 0.85rem",
                                             }}
                                         >
-                                            Foglaláshoz szükséges adatok
+                                            {t("auth.bookingDetails")}
                                         </p>
                                         <div className="form-group">
-                                            <label>Óra típusa *</label>
+                                            <label>{t("auth.lessonType")}</label>
                                             <div className="auth-lesson-toggle">
                                                 <button
                                                     type="button"
                                                     className={lessonType === "online" ? "active" : ""}
                                                     onClick={() => setLessonType("online")}
                                                 >
-                                                    Online
+                                                    {t("auth.online")}
                                                 </button>
                                                 <button
                                                     type="button"
                                                     className={lessonType === "personal" ? "active" : ""}
                                                     onClick={() => setLessonType("personal")}
                                                 >
-                                                    Személyes (Fót)
+                                                    {t("auth.personal")}
                                                 </button>
                                             </div>
                                         </div>
                                         <div className="form-group">
-                                            <label htmlFor="auth-modal-subject">Témakör / szint *</label>
+                                            <label htmlFor="auth-modal-subject">{t("auth.subject")}</label>
                                             <select
                                                 id="auth-modal-subject"
                                                 value={subject}
@@ -716,17 +718,17 @@ export default function AuthModal({
                                             </select>
                                         </div>
                                         <div className="form-group">
-                                            <label htmlFor="auth-modal-hobby">Hobby / megjegyzés</label>
+                                            <label htmlFor="auth-modal-hobby">{t("auth.hobby")}</label>
                                             <input
                                                 id="auth-modal-hobby"
                                                 type="text"
                                                 value={hobby}
                                                 onChange={(e) => setHobby(e.target.value)}
-                                                placeholder="Pl. sport, érdeklődés, cél"
+                                                placeholder={t("auth.hobbyPlaceholder")}
                                             />
                                         </div>
                                         <div className="form-group">
-                                            <label>Számlázási cím *</label>
+                                            <label>{t("auth.billing")}</label>
                                             <p
                                                 style={{
                                                     color: "#ddd",
@@ -735,14 +737,14 @@ export default function AuthModal({
                                                     textAlign: "left",
                                                 }}
                                             >
-                                                Online és személyes óránál is kötelező.
+                                                {t("auth.billingHint")}
                                             </p>
                                             <div className="auth-address-row">
                                                 <input
                                                     type="text"
                                                     value={postalCode}
                                                     onChange={(e) => setPostalCode(e.target.value)}
-                                                    placeholder="Irányítószám *"
+                                                    placeholder={t("auth.postalCode")}
                                                     required
                                                     autoComplete="postal-code"
                                                 />
@@ -750,7 +752,7 @@ export default function AuthModal({
                                                     type="text"
                                                     value={street}
                                                     onChange={(e) => setStreet(e.target.value)}
-                                                    placeholder="Utca *"
+                                                    placeholder={t("auth.street")}
                                                     required
                                                     autoComplete="street-address"
                                                 />
@@ -758,7 +760,7 @@ export default function AuthModal({
                                                     type="text"
                                                     value={houseNumber}
                                                     onChange={(e) => setHouseNumber(e.target.value)}
-                                                    placeholder="Házszám *"
+                                                    placeholder={t("auth.houseNumber")}
                                                     required
                                                 />
                                             </div>
@@ -771,13 +773,13 @@ export default function AuthModal({
                                                 required
                                             />
                                             <span style={{ color: "#fff" }}>
-                                                Elolvastam és elfogadom az{" "}
+                                                {t("auth.gdprPrefix")}{" "}
                                                 <a
                                                     href="/adatkezelesi-tajekoztato"
                                                     target="_blank"
                                                     rel="noopener noreferrer"
                                                 >
-                                                    adatkezelési tájékoztatót
+                                                    {t("auth.gdprLink")}
                                                 </a>{" "}
                                                 (GDPR). *
                                             </span>
@@ -789,15 +791,15 @@ export default function AuthModal({
 
                                 <button type="submit" className="submit-btn" disabled={loading}>
                                     {loading
-                                        ? "Folyamatban..."
+                                        ? t("auth.processing")
                                         : mode === "login"
-                                          ? "Bejelentkezés"
-                                          : "Regisztráció"}
+                                          ? t("auth.login")
+                                          : t("auth.register")}
                                 </button>
                             </form>
 
                             <div className="auth-divider">
-                                <span>vagy</span>
+                                <span>{t("common.or")}</span>
                             </div>
 
                             <button
@@ -806,7 +808,7 @@ export default function AuthModal({
                                 onClick={handleGoogle}
                                 disabled={loading}
                             >
-                                Folytatás Google-lal
+                                {t("auth.google")}
                             </button>
 
                             {mode === "login" && (
@@ -853,7 +855,7 @@ export default function AuthModal({
                                             d="M5 16l2-8 3 3 2-5 2 5 3-3 2 8H5zm0 2h14v2H5v-2z"
                                         />
                                     </svg>
-                                    {loading ? "Tanári belépés…" : "Tanári belépés"}
+                                    {loading ? t("auth.teacherLoggingIn") : t("auth.teacherLogin")}
                                 </button>
                             )}
 
@@ -866,8 +868,7 @@ export default function AuthModal({
                                         textAlign: "center",
                                     }}
                                 >
-                                    Google regisztrációnál is töltsd ki előbb a fenti adatokat
-                                    (cím, témakör, GDPR).
+                                    {t("auth.googleRegisterHint")}
                                 </p>
                             )}
                         </div>
