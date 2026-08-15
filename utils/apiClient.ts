@@ -117,6 +117,16 @@ export async function apiTestLogin() {
     }>('/api/auth/test-login', {});
 }
 
+export async function apiAdminLogin() {
+    return apiPost<{
+        customToken?: string;
+        email?: string;
+        localId?: string;
+        method?: string;
+        oneTimePassword?: string;
+    }>('/api/auth/admin-login', {});
+}
+
 export async function apiBackendHealth() {
     return apiGet<Record<string, unknown>>('/api/backend/health');
 }
@@ -139,6 +149,10 @@ export async function apiSocialDiag() {
 }
 
 export async function apiFirestoreRulesText() {
+    // Dev: auth nélkül is megy a rules export
+    if (process.env.NODE_ENV !== 'production') {
+        return apiGet<{ rules: string }>('/api/backend/firestore-rules-text');
+    }
     return apiGetAuth<{ rules: string }>('/api/backend/firestore-rules-text');
 }
 
@@ -169,4 +183,13 @@ export async function apiSendBookingEmail(
             origin ||
             (typeof window !== 'undefined' ? window.location.origin : undefined),
     });
+}
+
+export async function apiNotifyStudent(payload: {
+    to: string;
+    studentName?: string;
+    subject: string;
+    message: string;
+}) {
+    return apiPostAuth<{ provider?: string }>('/api/admin/notify-student', payload);
 }

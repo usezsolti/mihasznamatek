@@ -364,6 +364,40 @@ export async function loadUserPracticeProgress(uid?: string | null): Promise<Use
     }
 }
 
+/** Csak Firestore — tanári dossziéhoz (ne keverje az admin lokális progressét). */
+export async function loadRemotePracticeProgress(uid: string): Promise<UserPracticeProgress> {
+    const firebase = (window as any).firebase;
+    if (!uid || !firebase?.firestore) return emptyProgress();
+    try {
+        const snap = await firebase
+            .firestore()
+            .collection('users')
+            .doc(uid)
+            .collection('progress')
+            .doc('summary')
+            .get();
+        if (!snap.exists) return emptyProgress();
+        const data = snap.data() || {};
+        const xp = Number(data.xp) || 0;
+        const rankLevel = Number(data.rankLevel) || xpToRankLevel(xp);
+        const rawTopics = data.topics || {};
+        const topics: Record<string, TopicProgress> = {};
+        Object.keys(rawTopics).forEach((k) => {
+            topics[k] = normalizeLoadedTopic(rawTopics[k]);
+        });
+        return {
+            xp,
+            rank: data.rank || getRankTitle(rankLevel),
+            rankLevel,
+            badges: Array.isArray(data.badges) ? data.badges : [],
+            topics,
+            updatedAt: data.updatedAt,
+        };
+    } catch {
+        return emptyProgress();
+    }
+}
+
 export type ProgressUpdateInput = {
     topicKey: string | null;
     topicId: string;

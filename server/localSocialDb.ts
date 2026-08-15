@@ -200,7 +200,7 @@ export const localSocial = {
 
                 profile,
 
-                'Üdv a Mihaszna Közösségben! Írj egy tippet, kérdést vagy sikert — ez a te első feeded.',
+                'Üdv a MihaSocialban! Írj egy tippet, kérdést vagy sikert — ez a te első feeded.',
 
                 Date.now()
 
@@ -286,28 +286,28 @@ export const localSocial = {
 
 
 
-    createPost(author: SocialProfile, text: string): SocialPost {
-
-        const cleaned = normalizePostText(text);
-
+    createPost(
+        author: SocialProfile,
+        text: string,
+        media?: { imageUrl?: string | null; videoUrl?: string | null }
+    ): SocialPost {
+        const hasMedia = !!(media?.imageUrl || media?.videoUrl);
+        const cleaned = normalizePostText(text, { allowEmpty: hasMedia });
         const db = readDb();
-
         const post: SocialPost = {
-
             id: `p_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`,
-
-            ...buildPostFields(author, cleaned, Date.now()),
-
+            ...buildPostFields(
+                author,
+                cleaned,
+                Date.now(),
+                media?.imageUrl || null,
+                media?.videoUrl || null
+            ),
         };
-
         db.posts.unshift(post);
-
         if (db.profiles[author.uid]) db.profiles[author.uid].postCount += 1;
-
         writeDb(db);
-
         return post;
-
     },
 
 

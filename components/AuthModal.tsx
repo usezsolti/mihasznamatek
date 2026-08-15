@@ -12,6 +12,7 @@ import {
     TEST_LOGIN_EMAIL,
     isTestLoginAllowed,
 } from "../utils/testLogin";
+import { isAdminEmail } from "../utils/admin";
 
 type AuthMode = "login" | "register";
 
@@ -176,10 +177,16 @@ export default function AuthModal({
         onClose();
         if (redirectTo === false) return;
         if (typeof redirectTo === "string" && redirectTo) {
-            router.push(redirectTo);
+            const here =
+                typeof window !== "undefined"
+                    ? `${window.location.pathname}${window.location.search}`
+                    : "";
+            // Ne navigáljunk újra ugyanarra az URL-re (üres / fehér flash).
+            if (here === redirectTo || router.asPath === redirectTo) return;
+            void router.push(redirectTo);
             return;
         }
-        router.push("/dashboard");
+        void router.push("/dashboard");
     };
 
     const resetForm = () => {
@@ -245,7 +252,7 @@ export default function AuthModal({
                 const isTestEmail =
                     email.trim().toLowerCase() === TEST_LOGIN_EMAIL.toLowerCase();
                 // Teszt fióknál ne blokkoljon az e-mail megerősítés
-                if (user && isEmailPasswordUser(user) && !user.emailVerified && !isTestEmail) {
+                if (user && isEmailPasswordUser(user) && !user.emailVerified && !isTestEmail && !isAdminEmail(user.email)) {
                     setAwaitingVerification(true);
                     setInfoMessage(
                         "Erősítsd meg az e-mail címed a belépéshez. Nézd a postaládát (és a Spam mappát)."
@@ -318,10 +325,15 @@ export default function AuthModal({
             onClose();
             if (redirectTo === false) return;
             if (typeof redirectTo === "string" && redirectTo) {
-                router.push(redirectTo);
+                const here =
+                    typeof window !== "undefined"
+                        ? `${window.location.pathname}${window.location.search}`
+                        : "";
+                if (here === redirectTo || router.asPath === redirectTo) return;
+                void router.push(redirectTo);
                 return;
             }
-            router.push("/dashboard");
+            void router.push("/dashboard");
         } catch (err: any) {
             console.error(err);
             setError(formatAuthError(err) || mapFirebaseError(err?.code));
@@ -444,7 +456,15 @@ export default function AuthModal({
                     onClick={onClose}
                     aria-label="Bezárás"
                 >
-                    ×
+                    <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden>
+                        <path
+                            d="M6 6l12 12M18 6L6 18"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2.2"
+                            strokeLinecap="round"
+                        />
+                    </svg>
                 </button>
                 <h2 id="auth-modal-title">
                     {awaitingVerification
@@ -788,6 +808,54 @@ export default function AuthModal({
                             >
                                 Folytatás Google-lal
                             </button>
+
+                            {mode === "login" && (
+                                <button
+                                    type="button"
+                                    className="auth-admin-login-btn"
+                                    disabled={loading}
+                                    onClick={async () => {
+                                        setLoading(true);
+                                        setError("");
+                                        try {
+                                            const { signInAsAdmin } = await import("../utils/adminLogin");
+                                            await signInAsAdmin();
+                                            const firebase = await waitForFirebaseReady();
+                                            const user = firebase?.auth?.()?.currentUser;
+                                            if (user) {
+                                                await user.getIdToken(true);
+                                                try {
+                                                    await ensureUserDoc(firebase, user, {
+                                                        name: user.displayName || "Tanár",
+                                                    });
+                                                } catch {
+                                                    /* ignore */
+                                                }
+                                            }
+                                            onClose();
+                                            router.push("/dashboard?tab=admin");
+                                        } catch (err: any) {
+                                            setError(err?.message || "Tanári belépés sikertelen.");
+                                        } finally {
+                                            setLoading(false);
+                                        }
+                                    }}
+                                >
+                                    <svg
+                                        className="auth-admin-login-ico"
+                                        viewBox="0 0 24 24"
+                                        width="16"
+                                        height="16"
+                                        aria-hidden
+                                    >
+                                        <path
+                                            fill="currentColor"
+                                            d="M5 16l2-8 3 3 2-5 2 5 3-3 2 8H5zm0 2h14v2H5v-2z"
+                                        />
+                                    </svg>
+                                    {loading ? "Tanári belépés…" : "Tanári belépés"}
+                                </button>
+                            )}
 
                             {mode === "register" && (
                                 <p

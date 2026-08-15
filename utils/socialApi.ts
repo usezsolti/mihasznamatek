@@ -52,6 +52,13 @@ export async function apiUpdateProfile(
     });
 }
 
+export async function apiSyncSocialIdentity(
+    uid: string,
+    patch: { photoURL?: string; displayName?: string }
+): Promise<void> {
+    await clientSocial.syncSocialIdentity(uid, patch);
+}
+
 export async function apiListProfiles(limit = 30): Promise<SocialProfile[]> {
     return viaBackend('listProfiles', { limit }, () => clientSocial.listProfiles(limit));
 }
@@ -60,8 +67,20 @@ export async function apiListFeed(limit = 40): Promise<SocialPost[]> {
     return viaBackend('listFeed', { limit }, () => clientSocial.listFeedPosts({ limit }));
 }
 
-export async function apiCreatePost(author: SocialProfile, text: string): Promise<SocialPost> {
-    return viaBackend('createPost', { text }, () => clientSocial.createPost(author, text));
+export async function apiCreatePost(
+    author: SocialProfile,
+    text: string,
+    media?: { imageUrl?: string | null; videoUrl?: string | null }
+): Promise<SocialPost> {
+    return viaBackend(
+        'createPost',
+        {
+            text,
+            imageUrl: media?.imageUrl || null,
+            videoUrl: media?.videoUrl || null,
+        },
+        () => clientSocial.createPost(author, text, media?.imageUrl, media?.videoUrl)
+    );
 }
 
 export async function apiToggleLike(postId: string, uid: string) {

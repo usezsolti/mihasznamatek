@@ -23,10 +23,16 @@ export type SocialPost = {
     authorPhoto: string;
     text: string;
     imageUrl?: string | null;
+    videoUrl?: string | null;
     likeCount: number;
     commentCount: number;
     createdAt?: unknown;
     createdAtMs: number;
+};
+
+export type PostMedia = {
+    imageUrl?: string | null;
+    videoUrl?: string | null;
 };
 
 export type SocialComment = {
@@ -47,6 +53,16 @@ export type StudyGroup = {
     ownerName: string;
     memberIds: string[];
     memberCount: number;
+    createdAtMs: number;
+    whiteboardId?: string | null;
+};
+
+export type GroupMessage = {
+    id: string;
+    senderId: string;
+    senderName: string;
+    senderPhoto: string;
+    text: string;
     createdAtMs: number;
 };
 

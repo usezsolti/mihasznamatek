@@ -1,4 +1,8 @@
 import { getGoogleCalendarUrl } from "./bookingCalendar";
+import {
+    isAdminFirestoreDenied,
+    markAdminFirestoreDenied,
+} from "./adminFirestoreGate";
 
 export const ADMIN_BOOKING_EMAIL = "usezsolti@gmail.com";
 
@@ -685,9 +689,8 @@ export async function loadReminderCandidatesFromFirestore(
                 .where("status", "==", "approved")
                 .get();
             merge(byDate);
-        } catch {
-            const all = await db.collection("bookings").get();
-            merge(all);
+        } catch (err) {
+            console.warn("reminder bookings query failed:", err);
         }
 
         try {
@@ -805,64 +808,125 @@ export async function loadActiveBookingsFromFirestore(): Promise<BookingPayload[
     }
 }
 
-/** Admin naptár: pending + approved (+ rejected opcionálisan). */
-export async function loadAdminCalendarBookingsFromFirestore(): Promise<BookingPayload[]> {
+let adminCalendarDenied = false;
+
+export function isAdminCalendarDenied(): boolean {
+    return adminCalendarDenied || isAdminFirestoreDenied();
+}
+
+/** Admin naptár + blockedSlots — egy API hívás, nincs kliens bookings.get(). */
+export async function loadAdminCalendarBundle(): Promise<{
+    bookings: BookingPayload[];
+    blocked: BlockedDay[];
+}> {
+    if (adminCalendarDenied || isAdminFirestoreDenied()) {
+        return { bookings: [], blocked: [] };
+    }
+
     try {
-        const firebase = getFirebase();
-        if (!firebase?.firestore) return [];
-        const db = firebase.firestore();
-        const map = new Map<string, BookingPayload>();
+        const { apiGetAuth, getIdToken } = await import("./apiClient");
+        const token = await getIdToken();
+        if (!token) return { bookings: [], blocked: [] };
 
-        const addSnap = (snap: any) => {
-            snap.forEach((doc: any) => {
-                map.set(doc.id, { id: doc.id, ...doc.data() });
+        const res = await apiGetAuth<{
+            bookings?: BookingPayload[];
+            blocked?: BlockedDay[];
+            permissionDenied?: boolean;
+        }>("/api/admin/calendar-bookings");
+
+        if (res.ok && res.data?.permissionDenied) {
+            adminCalendarDenied = true;
+            markAdminFirestoreDenied();
+            return { bookings: [], blocked: [] };
+        }
+
+        if (res.ok) {
+            adminCalendarDenied = false;
+            const bookings = Array.isArray(res.data?.bookings) ? [...res.data.bookings] : [];
+            bookings.sort((a, b) => {
+                const d = String(b.date || "").localeCompare(String(a.date || ""));
+                if (d !== 0) return d;
+                return String(a.times?.[0] || "").localeCompare(String(b.times?.[0] || ""));
             });
-        };
-
-        const bookings = await db.collection("bookings").get();
-        addSnap(bookings);
-
-        try {
-            addSnap(await db.collection("pendingBookings").get());
-        } catch {
-            // ignore
-        }
-        try {
-            addSnap(await db.collection("approvedBookings").get());
-        } catch {
-            // ignore
+            return {
+                bookings,
+                blocked: Array.isArray(res.data?.blocked) ? res.data.blocked : [],
+            };
         }
 
-        return Array.from(map.values()).sort((a, b) => {
-            const d = String(b.date || "").localeCompare(String(a.date || ""));
-            if (d !== 0) return d;
-            return String(a.times?.[0] || "").localeCompare(String(b.times?.[0] || ""));
-        });
-    } catch (err) {
-        console.error("loadAdminCalendarBookingsFromFirestore failed:", err);
-        return [];
+        const status = Number((res as any).status || 0);
+        if (status === 403 || status === 401) {
+            adminCalendarDenied = true;
+            markAdminFirestoreDenied();
+        }
+        return { bookings: [], blocked: [] };
+    } catch {
+        return { bookings: [], blocked: [] };
     }
 }
 
+/** @deprecated — használd loadAdminCalendarBundle */
+export async function loadAdminCalendarBookingsFromFirestore(): Promise<BookingPayload[]> {
+    const { bookings } = await loadAdminCalendarBundle();
+    return bookings;
+}
+
+let pendingBookingsDenied = false;
+
+export function isPendingBookingsDenied(): boolean {
+    return pendingBookingsDenied || isAdminFirestoreDenied();
+}
+
 export async function loadPendingBookingsFromFirestore(): Promise<BookingPayload[]> {
+    // Csak admin API — ne legyen kliens Firestore bookings query (rules / overlay zaj).
+    if (pendingBookingsDenied || isAdminFirestoreDenied()) return [];
+
     try {
-        const firebase = getFirebase();
-        if (!firebase?.firestore) return [];
-        const db = firebase.firestore();
-        const snap = await db.collection("bookings").where("status", "==", "pending").get();
-        let list = snap.docs.map((doc: any) => ({ id: doc.id, ...doc.data() }));
-        if (list.length === 0) {
-            const legacy = await db.collection("pendingBookings").where("status", "==", "pending").get();
-            list = legacy.docs.map((doc: any) => ({ id: doc.id, ...doc.data() }));
+        const { apiGetAuth, getIdToken } = await import("./apiClient");
+        const token = await getIdToken();
+        if (!token) {
+            // Auth még nincs kész — ne 401-spam; a dashboard újra fogja próbálni auth után.
+            return [];
         }
-        return list.sort(
-            (a: any, b: any) =>
-                new Date(b.submittedAt || 0).getTime() - new Date(a.submittedAt || 0).getTime()
-        );
-    } catch (err) {
-        console.error("loadPendingBookingsFromFirestore failed:", err);
-        return [];
+
+        const res = await apiGetAuth<{
+            pending?: BookingPayload[];
+            permissionDenied?: boolean;
+        }>("/api/admin/teacher-bootstrap");
+
+        if (res.ok && res.data?.permissionDenied) {
+            pendingBookingsDenied = true;
+            markAdminFirestoreDenied();
+            return [];
+        }
+
+        if (res.ok && Array.isArray(res.data?.pending)) {
+            pendingBookingsDenied = false;
+            return [...res.data.pending].sort(
+                (a: any, b: any) =>
+                    new Date(b.submittedAt || 0).getTime() - new Date(a.submittedAt || 0).getTime()
+            );
+        }
+
+        if (!res.ok) {
+            const status = Number((res as any).status || 0);
+            const err = String(res.error || "");
+            // 403 = jogosultság / rules; 401 ismétlődő → állj (nincs session)
+            if (
+                status === 403 ||
+                status === 401 ||
+                /rules|permission|jogosult|tilt|HTTP 403/i.test(err)
+            ) {
+                pendingBookingsDenied = true;
+                markAdminFirestoreDenied();
+            }
+            return [];
+        }
+    } catch {
+        /* soft empty */
     }
+
+    return [];
 }
 
 /** Diák saját foglalásai e-mail alapján (pending + approved + rejected). */
@@ -887,30 +951,20 @@ export async function loadStudentBookingsFromFirestore(
             });
         };
 
-        try {
-            const byEmail = await db
-                .collection("bookings")
-                .where("customerEmail", "==", customerEmail.trim())
-                .get();
-            mergeSnap(byEmail);
-        } catch (err) {
-            console.warn("bookings by email query failed, scanning:", err);
-            const all = await db.collection("bookings").get();
-            mergeSnap(all);
-        }
-
-        // Legacy collections
-        try {
-            const pending = await db.collection("pendingBookings").get();
-            mergeSnap(pending);
-        } catch {
-            // ignore
-        }
-        try {
-            const approved = await db.collection("approvedBookings").get();
-            mergeSnap(approved);
-        } catch {
-            // ignore
+        // Csak saját e-mail query — teljes pending/approved scan diákoknak tiltva van
+        const emailVariants = Array.from(
+            new Set([customerEmail.trim(), email].filter(Boolean))
+        );
+        for (const variant of emailVariants) {
+            try {
+                const byEmail = await db
+                    .collection("bookings")
+                    .where("customerEmail", "==", variant)
+                    .get();
+                mergeSnap(byEmail);
+            } catch (err) {
+                console.warn("bookings by email query failed:", err);
+            }
         }
 
         return Array.from(map.values()).sort((a, b) => {

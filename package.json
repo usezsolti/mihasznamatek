@@ -20,6 +20,7 @@
     "@babylonjs/loaders": "^8.23.0",
     "firebase-admin": "^14.2.0",
     "googleapis": "^157.0.0",
+    "jspdf": "^4.2.1",
     "katex": "^0.16.27",
     "next": "15.5.22",
     "nodemailer": "^9.0.3",

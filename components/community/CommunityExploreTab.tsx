@@ -9,6 +9,7 @@ type CommunityExploreTabProps = {
     busy: boolean;
     onOpenProfile: (uid: string) => void;
     onToggleFollow: (target: SocialProfile) => void;
+    onMessage: (uid: string) => void;
 };
 
 export default function CommunityExploreTab({
@@ -19,10 +20,11 @@ export default function CommunityExploreTab({
     busy,
     onOpenProfile,
     onToggleFollow,
+    onMessage,
 }: CommunityExploreTabProps) {
     return (
         <div className="mm-social-panel">
-            <h2>XP ranglista</h2>
+            <h2 className="mm-social-section-title">XP ranglista</h2>
             <p className="mm-social-muted">Lásd egymás pontjait — aki megosztja az XP-jét.</p>
             <div className="mm-social-leaderboard">
                 {leaderboard.map((p, i) => (
@@ -44,12 +46,13 @@ export default function CommunityExploreTab({
                     </button>
                 ))}
             </div>
-            <h2>Diákok</h2>
-            <div className="mm-social-people">
+
+            <h2 className="mm-social-section-title">Diákok</h2>
+            <div className="mm-social-people-grid">
                 {profiles.map((p) => (
-                    <div key={p.uid} className="mm-social-person">
+                    <div key={p.uid} className="mm-social-person-card">
                         <button type="button" className="mm-social-userbtn" onClick={() => onOpenProfile(p.uid)}>
-                            <CommunityAvatar url={p.photoURL} name={p.displayName} />
+                            <CommunityAvatar url={p.photoURL} name={p.displayName} size={56} />
                             <span>
                                 <strong>{p.displayName}</strong>
                                 <small>
@@ -59,14 +62,23 @@ export default function CommunityExploreTab({
                             </span>
                         </button>
                         {p.uid !== me.uid && (
-                            <button
-                                type="button"
-                                className="mm-social-ghost"
-                                onClick={() => onToggleFollow(p)}
-                                disabled={busy}
-                            >
-                                {followingIds.includes(p.uid) ? 'Követed' : 'Követés'}
-                            </button>
+                            <div className="mm-social-person-actions">
+                                <button
+                                    type="button"
+                                    className="mm-social-primary mm-social-btn-sm"
+                                    onClick={() => onToggleFollow(p)}
+                                    disabled={busy}
+                                >
+                                    {followingIds.includes(p.uid) ? 'Követed' : 'Követés'}
+                                </button>
+                                <button
+                                    type="button"
+                                    className="mm-social-ghost mm-social-btn-sm"
+                                    onClick={() => onMessage(p.uid)}
+                                >
+                                    Üzenet
+                                </button>
+                            </div>
                         )}
                     </div>
                 ))}

@@ -92,10 +92,14 @@ export default function CommunityPostCard({ post, me, liked: likedProp, onOpenPr
                     </button>
                 )}
             </div>
-            <p className="mm-social-post-text">{post.text}</p>
+            {post.text ? <p className="mm-social-post-text">{post.text}</p> : null}
             {post.imageUrl ? (
                 // eslint-disable-next-line @next/next/no-img-element
                 <img className="mm-social-post-image" src={post.imageUrl} alt="" />
+            ) : null}
+            {post.videoUrl ? (
+                // eslint-disable-next-line jsx-a11y/media-has-caption
+                <video className="mm-social-post-video" src={post.videoUrl} controls playsInline preload="metadata" />
             ) : null}
             <div className="mm-social-post-actions">
                 <button type="button" className={liked ? 'is-on' : ''} onClick={onLike} disabled={busy}>
@@ -104,6 +108,11 @@ export default function CommunityPostCard({ post, me, liked: likedProp, onOpenPr
                 <button type="button" onClick={onToggleComments}>
                     💬 {post.commentCount}
                 </button>
+                {post.authorId !== me.uid && (
+                    <button type="button" onClick={() => onMessage(post.authorId)}>
+                        ✉ Üzenet
+                    </button>
+                )}
             </div>
             {showComments && (
                 <div className="mm-social-comments">

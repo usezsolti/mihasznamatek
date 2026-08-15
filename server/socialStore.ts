@@ -28,7 +28,11 @@ export type SocialStore = {
     updateProfile(uid: string, patch: ProfilePatch): Promise<SocialProfile>;
     listProfiles(limit?: number): Promise<SocialProfile[]>;
     listFeed(limit?: number): Promise<SocialPost[]>;
-    createPost(author: SocialProfile, text: string): Promise<SocialPost>;
+    createPost(
+        author: SocialProfile,
+        text: string,
+        media?: { imageUrl?: string | null; videoUrl?: string | null }
+    ): Promise<SocialPost>;
     toggleLike(postId: string, uid: string): Promise<{ liked: boolean; likeCount: number }>;
     hasLiked(postId: string, uid: string): Promise<boolean>;
     addComment(postId: string, author: SocialProfile, text: string): Promise<SocialComment>;
@@ -57,7 +61,7 @@ const localStore: SocialStore = {
     updateProfile: async (uid, patch) => localSocial.updateProfile(uid, patch),
     listProfiles: async (limit) => localSocial.listProfiles(limit),
     listFeed: async (limit) => localSocial.listFeed(limit),
-    createPost: async (author, text) => localSocial.createPost(author, text),
+    createPost: async (author, text, media) => localSocial.createPost(author, text, media),
     toggleLike: async (postId, uid) => localSocial.toggleLike(postId, uid),
     hasLiked: async (postId, uid) => localSocial.hasLiked(postId, uid),
     addComment: async (postId, author, text) => localSocial.addComment(postId, author, text),
@@ -93,7 +97,7 @@ function firestoreStore(token: string): SocialStore {
         updateProfile: (uid, patch) => firestoreSocial.updateProfile(token, uid, patch),
         listProfiles: (limit) => firestoreSocial.listProfiles(token, limit),
         listFeed: (limit) => firestoreSocial.listFeed(token, limit),
-        createPost: (author, text) => firestoreSocial.createPost(token, author, text),
+        createPost: (author, text, media) => firestoreSocial.createPost(token, author, text, media),
         toggleLike: (postId, uid) => firestoreSocial.toggleLike(token, postId, uid),
         hasLiked: (postId, uid) => firestoreSocial.hasLiked(token, postId, uid),
         addComment: (postId, author, text) => firestoreSocial.addComment(token, postId, author, text),
@@ -151,7 +155,13 @@ export async function runSocialAction(
             return { data: await store.listFeed(Number(body.limit) || 40) };
         case 'createPost': {
             const me = await store.ensureProfile(uid);
-            return { data: await store.createPost(me, String(body.text || '')), status: 201 };
+            return {
+                data: await store.createPost(me, String(body.text || ''), {
+                    imageUrl: (body.imageUrl as string) || null,
+                    videoUrl: (body.videoUrl as string) || null,
+                }),
+                status: 201,
+            };
         }
         case 'toggleLike':
             return { data: await store.toggleLike(String(body.postId || ''), uid) };

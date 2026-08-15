@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { openAuthModal } from "../utils/authModal";
 import { isTestAuthUser } from "../utils/testLogin";
+import { isAdminEmail } from "../utils/admin";
 
 interface CurrentUser {
     uid: string;
@@ -56,7 +57,7 @@ export default function AuthSection() {
                 const isPassword = (user.providerData || []).some(
                     (p: any) => p?.providerId === "password"
                 );
-                if (isPassword && !user.emailVerified && !isTestAuthUser(user)) {
+                if (isPassword && !user.emailVerified && !isTestAuthUser(user) && !isAdminEmail(user.email)) {
                     setCurrentUser(null);
                     setCheckingAuth(false);
                     return;
@@ -78,12 +79,9 @@ export default function AuthSection() {
     }, []);
 
     const handleLogout = async () => {
-        try {
-            const firebase = (window as any).firebase;
-            if (firebase?.auth) await firebase.auth().signOut();
-        } catch (err) {
-            console.error("Logout error:", err);
-        }
+        setCurrentUser(null);
+        const { signOutUser } = await import("../utils/authLogout");
+        await signOutUser({ redirectTo: "/" });
     };
 
     if (checkingAuth) {

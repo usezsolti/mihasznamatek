@@ -2,6 +2,8 @@ import Head from 'next/head';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useCallback, useEffect, useMemo, useState } from 'react';
+import CommunityAvatar from '../components/community/CommunityAvatar';
+import CommunityChatDock from '../components/community/CommunityChatDock';
 import CommunityExploreTab from '../components/community/CommunityExploreTab';
 import CommunityFeedTab from '../components/community/CommunityFeedTab';
 import CommunityGroupsTab from '../components/community/CommunityGroupsTab';
@@ -60,6 +62,7 @@ export default function CommunityPage() {
     const [groups, setGroups] = useState<StudyGroup[]>([]);
     const [conversations, setConversations] = useState<ConversationPreview[]>([]);
     const [activeChat, setActiveChat] = useState<ConversationPreview | null>(null);
+    const [chatDockOpen, setChatDockOpen] = useState(false);
     const [messages, setMessages] = useState<DirectMessage[]>([]);
     const [shorts, setShorts] = useState<MathShort[]>([]);
     const [shortIndex, setShortIndex] = useState(0);
@@ -69,6 +72,7 @@ export default function CommunityPage() {
     const [busy, setBusy] = useState(false);
 
     const [postText, setPostText] = useState('');
+    const [mediaFile, setMediaFile] = useState<File | null>(null);
     const [groupName, setGroupName] = useState('');
     const [groupDesc, setGroupDesc] = useState('');
     const [groupTopic, setGroupTopic] = useState('');
@@ -174,7 +178,7 @@ export default function CommunityPage() {
                         /* diag best-effort */
                     }
                 } else {
-                    showToast('Nem sikerült betölteni a közösséget.');
+                    showToast('Nem sikerült betölteni a MihaSocialt.');
                 }
             } finally {
                 if (!cancelled) setReady(true);
@@ -221,15 +225,29 @@ export default function CommunityPage() {
         }
         setActiveChat(conv);
         setMessages(await apiListMessages(cid).catch(() => []));
-        setTab('messages');
+        setChatDockOpen(true);
     };
 
     const onCreatePost = async () => {
         if (!me || busy) return;
+        if (!postText.trim() && !mediaFile) {
+            showToast('Írj szöveget, vagy válassz képet/videót.');
+            return;
+        }
         setBusy(true);
         try {
-            const p = await apiCreatePost(me, postText);
+            let imageUrl: string | null = null;
+            let videoUrl: string | null = null;
+            if (mediaFile) {
+                showToast('Média feltöltése…');
+                const { uploadSocialMedia } = await import('../utils/socialMediaUpload');
+                const uploaded = await uploadSocialMedia(mediaFile, me.uid);
+                if (uploaded.kind === 'video') videoUrl = uploaded.url;
+                else imageUrl = uploaded.url;
+            }
+            const p = await apiCreatePost(me, postText, { imageUrl, videoUrl });
             setPostText('');
+            setMediaFile(null);
             setPosts((prev) => [p, ...prev]);
             showToast('Poszt kint van!');
         } catch (e: any) {
@@ -322,8 +340,33 @@ export default function CommunityPage() {
 
     const onSelectConversation = async (c: ConversationPreview) => {
         setActiveChat(c);
-        setMessages(await apiListMessages(c.id));
+        setMessages(await apiListMessages(c.id).catch(() => []));
     };
+
+    // Live-ish DMs: poll while Messages tab or floating chat dock is open
+    useEffect(() => {
+        if (!uid) return;
+        if (tab !== 'messages' && !chatDockOpen) return;
+        let cancelled = false;
+        const tick = async () => {
+            try {
+                const convs = await apiListConversations(uid);
+                if (!cancelled) setConversations(convs);
+                if (activeChat?.id) {
+                    const msgs = await apiListMessages(activeChat.id);
+                    if (!cancelled) setMessages(msgs);
+                }
+            } catch {
+                /* ignore transient poll errors */
+            }
+        };
+        void tick();
+        const id = window.setInterval(tick, 3500);
+        return () => {
+            cancelled = true;
+            window.clearInterval(id);
+        };
+    }, [tab, uid, activeChat?.id, chatDockOpen]);
 
     const onSaveProfile = async () => {
         if (!me || busy) return;
@@ -389,12 +432,51 @@ export default function CommunityPage() {
         [profiles]
     );
 
+    const storyProfiles = useMemo(() => {
+        const myUid = me?.uid;
+        if (!myUid) return [];
+        const followed = profiles.filter((p) => followingIds.includes(p.uid) && p.uid !== myUid);
+        const rest = profiles.filter((p) => !followingIds.includes(p.uid) && p.uid !== myUid);
+        return [...followed, ...rest].slice(0, 12);
+    }, [profiles, followingIds, me?.uid]);
+
+    const suggested = useMemo(() => {
+        const myUid = me?.uid;
+        if (!myUid) return [];
+        return profiles.filter((p) => p.uid !== myUid && !followingIds.includes(p.uid)).slice(0, 5);
+    }, [profiles, followingIds, me?.uid]);
+
     const currentShort = shorts[shortIndex] || null;
 
     if (!ready) {
         return (
-            <div className="mm-social-page">
-                <p className="mm-social-muted">Közösség betöltése…</p>
+            <div className="mm-social-page mm-ig-shell mm-ig-boot">
+                <Head>
+                    <title>MihaSocial | Mihaszna Matek</title>
+                </Head>
+                <div className="mm-ig-boot-stage" aria-busy="true" aria-live="polite">
+                    <div className="mm-ig-boot-glow" aria-hidden />
+                    <div className="mm-ig-boot-orbit" aria-hidden>
+                        <span />
+                        <span />
+                        <span />
+                    </div>
+                    <div className="mm-ig-boot-mark">
+                        <div className="mm-ig-boot-ring">
+                            <span className="mm-ig-boot-logo">M</span>
+                        </div>
+                        <h1 className="mm-ig-boot-title">MihaSocial</h1>
+                        <p className="mm-ig-boot-sub">Matek közösség betöltése</p>
+                    </div>
+                    <div className="mm-ig-boot-bar" aria-hidden>
+                        <span />
+                    </div>
+                    <ul className="mm-ig-boot-dots" aria-hidden>
+                        <li />
+                        <li />
+                        <li />
+                    </ul>
+                </div>
             </div>
         );
     }
@@ -403,11 +485,11 @@ export default function CommunityPage() {
         return (
             <div className="mm-social-page">
                 <Head>
-                    <title>Közösség | Mihaszna Matek</title>
+                    <title>MihaSocial | Mihaszna Matek</title>
                 </Head>
                 <div className="mm-social-gate">
-                    <h1>Mihaszna Közösség</h1>
-                    <p>Instagram-szerű matek közösség: posztok, követés, csoportok, üzenetek, AI shorts.</p>
+                    <h1 className="mm-ig-wordmark">MihaSocial</h1>
+                    <p>Matek közösség: posztok, követés, csoportok, üzenetek, AI shorts.</p>
                     <button
                         type="button"
                         className="mm-social-primary"
@@ -434,72 +516,257 @@ export default function CommunityPage() {
     const profileShown =
         tab === 'profile' ? (viewProfile && viewProfile.uid !== me.uid ? viewProfile : me) : null;
 
+    const navItems = [
+        ['feed', 'Kezdőlap'],
+        ['explore', 'Keresés'],
+        ['shorts', 'Shorts'],
+        ['messages', 'Üzenetek'],
+        ['groups', 'Csoportok'],
+        ['profile', 'Profil'],
+    ] as const;
+
     return (
-        <div className="mm-social-page">
+        <div
+            className={`mm-social-page mm-ig-shell${tab === 'messages' ? ' is-messages' : ''}${
+                tab === 'feed' ? ' is-feed' : ''
+            }${tab === 'profile' ? ' is-profile' : ''}`}
+        >
             <Head>
-                <title>Közösség | Mihaszna Matek</title>
+                <title>MihaSocial | Mihaszna Matek</title>
             </Head>
 
-            <div className="mm-social-top">
-                <div>
-                    <p className="mm-social-kicker">MIHASZNA SOCIAL</p>
-                    <h1>Közösség</h1>
+            <aside className="mm-ig-nav" aria-label="MihaSocial navigáció">
+                <div className="mm-ig-nav-brand">
+                    <span className="mm-ig-wordmark">MihaSocial</span>
                 </div>
-                <Link href="/dashboard" className="mm-social-ghost">
-                    MyMihasznaMat
+                <nav className="mm-ig-nav-list">
+                    {navItems.map(([id, label]) => (
+                        <button
+                            key={id}
+                            type="button"
+                            className={`mm-ig-nav-item${tab === id ? ' is-on' : ''}`}
+                            onClick={() => {
+                                if (id === 'profile') setViewProfile(me);
+                                setTab(id);
+                            }}
+                        >
+                            <span className={`mm-ig-ico mm-ig-ico--${id}`} aria-hidden />
+                            <span className="mm-ig-nav-label">{label}</span>
+                        </button>
+                    ))}
+                </nav>
+                <Link href="/dashboard" className="mm-ig-nav-item mm-ig-nav-dash">
+                    <span className="mm-ig-ico mm-ig-ico--more" aria-hidden />
+                    <span className="mm-ig-nav-label">Dashboard</span>
                 </Link>
+            </aside>
+
+            <div className="mm-ig-center">
+                {rulesBlocked && (
+                    <div className="mm-social-rules-banner" role="alert">
+                        <strong>Firestore rules nincs telepítve (vagy hibás)</strong>
+                        <p>
+                            A MihaSocial <code>socialProfiles</code> / <code>posts</code> gyűjteményeihez
+                            Publish kell.{' '}
+                            <a href="/rules-setup">Nyisd meg a Rules setup oldalt</a>, majd Firebase Console →{' '}
+                            <strong>Publish</strong>.
+                        </p>
+                        <button
+                            type="button"
+                            className="mm-social-ghost"
+                            style={{ marginTop: '0.65rem' }}
+                            onClick={async () => {
+                                try {
+                                    const res = await apiSocialDiag();
+                                    if (!res.ok) {
+                                        showToast(res.error || 'Diag hiba');
+                                        return;
+                                    }
+                                    showToast(
+                                        res.data?.ok
+                                            ? 'Diag OK — rules rendben'
+                                            : `Diag FAIL (${res.data?.step}): ${String(res.data?.error || '').slice(0, 120)}`
+                                    );
+                                    if (res.data?.ok) {
+                                        setRulesBlocked(false);
+                                        window.location.reload();
+                                    }
+                                } catch (e: any) {
+                                    showToast(e?.message || 'Diag hiba');
+                                }
+                            }}
+                        >
+                            Rules diagnosztika futtatása
+                        </button>
+                    </div>
+                )}
+
+                <div className="mm-social-main">
+                    {tab === 'feed' && (
+                        <CommunityFeedTab
+                            me={me}
+                            postText={postText}
+                            onPostTextChange={setPostText}
+                            mediaFile={mediaFile}
+                            onMediaFileChange={setMediaFile}
+                            onCreatePost={onCreatePost}
+                            busy={busy}
+                            posts={posts}
+                            likedMap={likedMap}
+                            followingIds={followingIds}
+                            storyProfiles={storyProfiles}
+                            onOpenProfile={openProfile}
+                            onMessage={startMessage}
+                            onPostChanged={(next) =>
+                                setPosts((prev) => prev.map((x) => (x.id === next.id ? next : x)))
+                            }
+                        />
+                    )}
+
+                    {tab === 'shorts' && (
+                        <CommunityShortsTab
+                            shortTopic={shortTopic}
+                            onShortTopicChange={setShortTopic}
+                            onGenerateShort={onGenerateShort}
+                            busy={busy}
+                            currentShort={currentShort}
+                            shortIndex={shortIndex}
+                            shortsLength={shorts.length}
+                            onPrev={() => setShortIndex((i) => Math.max(0, i - 1))}
+                            onNext={() => setShortIndex((i) => Math.min(shorts.length - 1, i + 1))}
+                        />
+                    )}
+
+                    {tab === 'explore' && (
+                        <CommunityExploreTab
+                            me={me}
+                            leaderboard={leaderboard}
+                            profiles={profiles}
+                            followingIds={followingIds}
+                            busy={busy}
+                            onOpenProfile={openProfile}
+                            onToggleFollow={onToggleFollow}
+                            onMessage={startMessage}
+                        />
+                    )}
+
+                    {tab === 'groups' && (
+                        <CommunityGroupsTab
+                            uid={uid}
+                            me={me}
+                            groupName={groupName}
+                            groupTopic={groupTopic}
+                            groupDesc={groupDesc}
+                            onGroupNameChange={setGroupName}
+                            onGroupTopicChange={setGroupTopic}
+                            onGroupDescChange={setGroupDesc}
+                            onCreateGroup={onCreateGroup}
+                            groups={groups}
+                            onJoinLeave={onJoinLeave}
+                            onGroupUpdated={(next) =>
+                                setGroups((prev) => prev.map((g) => (g.id === next.id ? next : g)))
+                            }
+                            onToast={showToast}
+                            busy={busy}
+                        />
+                    )}
+
+                    {tab === 'messages' && (
+                        <CommunityMessagesTab
+                            uid={uid}
+                            me={me}
+                            conversations={conversations}
+                            activeChat={activeChat}
+                            messages={messages}
+                            msgDraft={msgDraft}
+                            onMsgDraftChange={setMsgDraft}
+                            onSelectConversation={onSelectConversation}
+                            onBackToInbox={() => setActiveChat(null)}
+                            onSendMsg={onSendMsg}
+                            busy={busy}
+                        />
+                    )}
+
+                    {tab === 'profile' && profileShown && (
+                        <CommunityProfileTab
+                            me={me}
+                            profileShown={profileShown}
+                            followingView={followingView}
+                            busy={busy}
+                            usernameDraft={usernameDraft}
+                            bioDraft={bioDraft}
+                            posts={posts.filter((p) => p.authorId === profileShown.uid)}
+                            likedMap={likedMap}
+                            onUsernameDraftChange={setUsernameDraft}
+                            onBioDraftChange={setBioDraft}
+                            onToggleFollow={onToggleFollow}
+                            onStartMessage={startMessage}
+                            onSaveProfile={onSaveProfile}
+                            onOpenProfile={openProfile}
+                            onMessage={startMessage}
+                            onPostChanged={(next) =>
+                                setPosts((prev) => prev.map((x) => (x.id === next.id ? next : x)))
+                            }
+                        />
+                    )}
+                </div>
             </div>
 
-            {rulesBlocked && (
-                <div className="mm-social-rules-banner" role="alert">
-                    <strong>Firestore rules nincs telepítve (vagy hibás)</strong>
-                    <p>
-                        A közösség <code>socialProfiles</code> / <code>posts</code> gyűjteményeihez
-                        Publish kell.{' '}
-                        <a href="/rules-setup">Nyisd meg a Rules setup oldalt</a> (egy kattintásos másolás +
-                        diagnosztika), majd Firebase Console → <strong>Publish</strong>.
-                    </p>
-                    <button
-                        type="button"
-                        className="mm-social-ghost"
-                        style={{ marginTop: '0.65rem' }}
-                        onClick={async () => {
-                            try {
-                                const res = await apiSocialDiag();
-                                if (!res.ok) {
-                                    showToast(res.error || 'Diag hiba');
-                                    return;
-                                }
-                                showToast(
-                                    res.data?.ok
-                                        ? 'Diag OK — rules rendben'
-                                        : `Diag FAIL (${res.data?.step}): ${String(res.data?.error || '').slice(0, 120)}`
-                                );
-                                if (res.data?.ok) {
-                                    setRulesBlocked(false);
-                                    window.location.reload();
-                                }
-                            } catch (e: any) {
-                                showToast(e?.message || 'Diag hiba');
-                            }
-                        }}
-                    >
-                        Rules diagnosztika futtatása
-                    </button>
-                </div>
+            {tab === 'feed' && (
+                <aside className="mm-ig-rail" aria-label="Javaslatok">
+                    <div className="mm-ig-rail-me">
+                        <button type="button" className="mm-social-userbtn" onClick={() => openProfile(me.uid)}>
+                            <CommunityAvatar url={me.photoURL} name={me.displayName} size={44} />
+                            <span>
+                                <strong>{me.username || me.displayName}</strong>
+                                <small>{me.displayName}</small>
+                            </span>
+                        </button>
+                        <Link href="/dashboard" className="mm-ig-link">
+                            Váltás
+                        </Link>
+                    </div>
+
+                    <div className="mm-ig-rail-head">
+                        <span>Ajánlott neked</span>
+                        <button type="button" className="mm-ig-link" onClick={() => setTab('explore')}>
+                            Összes
+                        </button>
+                    </div>
+
+                    <div className="mm-ig-suggest-list">
+                        {suggested.length === 0 && <p className="mm-social-muted">Nincs új javaslat.</p>}
+                        {suggested.map((p) => (
+                            <div key={p.uid} className="mm-ig-suggest-row">
+                                <button
+                                    type="button"
+                                    className="mm-social-userbtn"
+                                    onClick={() => openProfile(p.uid)}
+                                >
+                                    <CommunityAvatar url={p.photoURL} name={p.displayName} size={36} />
+                                    <span>
+                                        <strong>{p.username || p.displayName}</strong>
+                                        <small>{p.rank || 'Diák'}</small>
+                                    </span>
+                                </button>
+                                <button
+                                    type="button"
+                                    className="mm-ig-link"
+                                    disabled={busy}
+                                    onClick={() => onToggleFollow(p)}
+                                >
+                                    Követés
+                                </button>
+                            </div>
+                        ))}
+                    </div>
+
+                    <p className="mm-ig-rail-foot">© Mihaszna Matek · MihaSocial</p>
+                </aside>
             )}
 
-            <div className="mm-social-tabs" role="navigation" aria-label="Közösség menü">
-                {(
-                    [
-                        ['feed', 'Feed'],
-                        ['shorts', 'Shorts'],
-                        ['explore', 'Felfedezés'],
-                        ['groups', 'Csoportok'],
-                        ['messages', 'Üzenetek'],
-                        ['profile', 'Profil'],
-                    ] as const
-                ).map(([id, label]) => (
+            <nav className="mm-social-tabs mm-ig-bottom" role="navigation" aria-label="MihaSocial menü">
+                {navItems.map(([id, label]) => (
                     <button
                         key={id}
                         type="button"
@@ -509,97 +776,26 @@ export default function CommunityPage() {
                             setTab(id);
                         }}
                     >
-                        {label}
+                        <span className={`mm-ig-ico mm-ig-ico--${id}`} aria-hidden />
+                        <span className="mm-social-tab-label">{label}</span>
                     </button>
                 ))}
-            </div>
+            </nav>
 
-            {tab === 'feed' && (
-                <CommunityFeedTab
-                    me={me}
-                    postText={postText}
-                    onPostTextChange={setPostText}
-                    onCreatePost={onCreatePost}
-                    busy={busy}
-                    posts={posts}
-                    likedMap={likedMap}
-                    onOpenProfile={openProfile}
-                    onMessage={startMessage}
-                    onPostChanged={(next) =>
-                        setPosts((prev) => prev.map((x) => (x.id === next.id ? next : x)))
-                    }
-                />
-            )}
-
-            {tab === 'shorts' && (
-                <CommunityShortsTab
-                    shortTopic={shortTopic}
-                    onShortTopicChange={setShortTopic}
-                    onGenerateShort={onGenerateShort}
-                    busy={busy}
-                    currentShort={currentShort}
-                    shortIndex={shortIndex}
-                    shortsLength={shorts.length}
-                    onPrev={() => setShortIndex((i) => Math.max(0, i - 1))}
-                    onNext={() => setShortIndex((i) => Math.min(shorts.length - 1, i + 1))}
-                />
-            )}
-
-            {tab === 'explore' && (
-                <CommunityExploreTab
-                    me={me}
-                    leaderboard={leaderboard}
-                    profiles={profiles}
-                    followingIds={followingIds}
-                    busy={busy}
-                    onOpenProfile={openProfile}
-                    onToggleFollow={onToggleFollow}
-                />
-            )}
-
-            {tab === 'groups' && (
-                <CommunityGroupsTab
+            {chatDockOpen && activeChat && tab !== 'messages' && (
+                <CommunityChatDock
                     uid={uid}
-                    groupName={groupName}
-                    groupTopic={groupTopic}
-                    groupDesc={groupDesc}
-                    onGroupNameChange={setGroupName}
-                    onGroupTopicChange={setGroupTopic}
-                    onGroupDescChange={setGroupDesc}
-                    onCreateGroup={onCreateGroup}
-                    groups={groups}
-                    onJoinLeave={onJoinLeave}
-                    busy={busy}
-                />
-            )}
-
-            {tab === 'messages' && (
-                <CommunityMessagesTab
-                    uid={uid}
-                    conversations={conversations}
-                    activeChat={activeChat}
+                    peer={activeChat}
                     messages={messages}
                     msgDraft={msgDraft}
                     onMsgDraftChange={setMsgDraft}
-                    onSelectConversation={onSelectConversation}
-                    onSendMsg={onSendMsg}
+                    onSend={onSendMsg}
                     busy={busy}
-                />
-            )}
-
-            {tab === 'profile' && profileShown && (
-                <CommunityProfileTab
-                    me={me}
-                    profileShown={profileShown}
-                    followingView={followingView}
-                    busy={busy}
-                    usernameDraft={usernameDraft}
-                    bioDraft={bioDraft}
-                    onUsernameDraftChange={setUsernameDraft}
-                    onBioDraftChange={setBioDraft}
-                    onToggleFollow={onToggleFollow}
-                    onStartMessage={startMessage}
-                    onSaveProfile={onSaveProfile}
+                    onClose={() => setChatDockOpen(false)}
+                    onExpand={() => {
+                        setChatDockOpen(false);
+                        setTab('messages');
+                    }}
                 />
             )}
 

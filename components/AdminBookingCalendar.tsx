@@ -5,8 +5,8 @@ import {
     BlockedDay,
     BookingPayload,
     blockedTimesMap,
-    loadAdminCalendarBookingsFromFirestore,
-    loadBlockedDaysFromFirestore,
+    isAdminCalendarDenied,
+    loadAdminCalendarBundle,
     paymentStatusLabel,
     sendBookingEmailFromClient,
     setDayBlocked,
@@ -27,9 +27,16 @@ import {
 
 type Props = {
     onChanged?: () => void;
+    /** Naptárból: diák/foglalás kiválasztása után lobby (élő óra) indítása */
+    onCreateLobby?: (booking: BookingPayload) => void | Promise<void>;
+    lobbyBusy?: boolean;
 };
 
-export default function AdminBookingCalendar({ onChanged }: Props) {
+export default function AdminBookingCalendar({
+    onChanged,
+    onCreateLobby,
+    lobbyBusy = false,
+}: Props) {
     const [currentMonth, setCurrentMonth] = useState(() => {
         const d = new Date();
         d.setDate(1);
@@ -49,19 +56,23 @@ export default function AdminBookingCalendar({ onChanged }: Props) {
     const [loading, setLoading] = useState(true);
     const [busyId, setBusyId] = useState<string | null>(null);
     const [blockBusy, setBlockBusy] = useState(false);
+    const [selectedBookingId, setSelectedBookingId] = useState<string | null>(null);
 
     const todayKey = toDateKey(new Date());
 
     const refresh = async () => {
+        if (isAdminCalendarDenied()) {
+            setLoading(false);
+            return;
+        }
         setLoading(true);
         try {
-            const [list, blocked, hours] = await Promise.all([
-                loadAdminCalendarBookingsFromFirestore(),
-                loadBlockedDaysFromFirestore(),
+            const [bundle, hours] = await Promise.all([
+                loadAdminCalendarBundle(),
                 loadWorkingHoursFromFirestore(),
             ]);
-            setBookings(list);
-            setBlockedDays(blocked);
+            setBookings(bundle.bookings);
+            setBlockedDays(bundle.blocked);
             setWorkingHours(hours);
         } finally {
             setLoading(false);
@@ -69,9 +80,27 @@ export default function AdminBookingCalendar({ onChanged }: Props) {
     };
 
     useEffect(() => {
-        refresh();
-        const t = setInterval(refresh, 20000);
-        return () => clearInterval(t);
+        let cancelled = false;
+        let interval: ReturnType<typeof setInterval> | undefined;
+
+        const start = async () => {
+            await refresh();
+            if (cancelled || isAdminCalendarDenied()) return;
+            interval = setInterval(() => {
+                if (isAdminCalendarDenied()) {
+                    if (interval) clearInterval(interval);
+                    return;
+                }
+                void refresh();
+            }, 20000);
+        };
+
+        void start();
+        return () => {
+            cancelled = true;
+            if (interval) clearInterval(interval);
+        };
+        // eslint-disable-next-line react-hooks/exhaustive-deps -- mount-only poll
     }, []);
 
     const monthLabel = currentMonth.toLocaleDateString("hu-HU", {
@@ -199,7 +228,9 @@ export default function AdminBookingCalendar({ onChanged }: Props) {
                 📆 Foglalási naptár
             </h2>
             <p className="section-subtitle" style={{ marginBottom: "1.25rem" }}>
-                Sárga = függőben, zöld = jóváhagyva, piros = blokkolt. Kattints egy napra a részletekhez.
+                Válassz napot → kattints a diák foglalására →{" "}
+                <strong style={{ color: "#39ff14" }}>Lobby létrehozása</strong> (link + e-mail a
+                diáknak). Sárga = függőben, zöld = jóváhagyva, piros = blokkolt.
             </p>
 
             <div className="booking-calendar-card" style={{ marginBottom: "1.25rem" }}>
@@ -263,6 +294,7 @@ export default function AdminBookingCalendar({ onChanged }: Props) {
                                     const d = new Date(date);
                                     d.setHours(0, 0, 0, 0);
                                     setSelectedDate(d);
+                                    setSelectedBookingId(null);
                                 }}
                                 style={{ position: "relative", minHeight: "3.2rem" }}
                             >
@@ -414,7 +446,9 @@ export default function AdminBookingCalendar({ onChanged }: Props) {
                     </div>
                 )}
 
-                <h4 style={{ margin: "0 0 0.75rem", color: "#ccc", fontWeight: 600 }}>Foglalások ezen a napon</h4>
+                <h4 style={{ margin: "0 0 0.75rem", color: "#ccc", fontWeight: 600 }}>
+                    Diákok / foglalások ezen a napon
+                </h4>
 
                 {loading ? (
                     <p style={{ color: "#aaa" }}>Betöltés…</p>
@@ -424,14 +458,32 @@ export default function AdminBookingCalendar({ onChanged }: Props) {
                     <div style={{ display: "grid", gap: "0.85rem" }}>
                         {dayBookings.map((b) => {
                             const meta = statusMeta(b.status);
+                            const isPick = selectedBookingId === b.id;
                             return (
                                 <div
                                     key={b.id}
+                                    role="button"
+                                    tabIndex={0}
+                                    onClick={() => setSelectedBookingId(b.id)}
+                                    onKeyDown={(e) => {
+                                        if (e.key === "Enter" || e.key === " ") {
+                                            e.preventDefault();
+                                            setSelectedBookingId(b.id);
+                                        }
+                                    }}
                                     style={{
-                                        border: `1px solid ${meta.color}66`,
+                                        border: isPick
+                                            ? "2px solid #39ff14"
+                                            : `1px solid ${meta.color}66`,
                                         borderRadius: "14px",
                                         padding: "1rem",
-                                        background: "rgba(255,255,255,0.04)",
+                                        background: isPick
+                                            ? "rgba(57,255,20,0.1)"
+                                            : "rgba(255,255,255,0.04)",
+                                        cursor: "pointer",
+                                        boxShadow: isPick
+                                            ? "0 0 0 1px rgba(57,255,20,0.35)"
+                                            : "none",
                                     }}
                                 >
                                     <div
@@ -444,7 +496,8 @@ export default function AdminBookingCalendar({ onChanged }: Props) {
                                         }}
                                     >
                                         <strong style={{ color: "#fff" }}>
-                                            ⏰ {(b.times || []).join(", ") || "—"} · {b.customerName}
+                                            {(b.times || []).join(", ") || "—"} · {b.customerName}
+                                            {isPick ? " · kiválasztva" : ""}
                                         </strong>
                                         <span
                                             style={{
@@ -460,21 +513,22 @@ export default function AdminBookingCalendar({ onChanged }: Props) {
                                         </span>
                                     </div>
                                     <p style={{ margin: "0.2rem 0", color: "#ccc", fontSize: "0.95rem" }}>
-                                        📧 {b.customerEmail}
+                                        {b.customerEmail}
                                     </p>
                                     <p style={{ margin: "0.2rem 0", color: "#bbb", fontSize: "0.9rem" }}>
-                                        {b.lessonType === "online" ? "💻 Online" : "🏠 Személyes"}
+                                        {b.lessonType === "online" ? "Online" : "Személyes"}
                                         {b.selectedSubject ? ` · ${b.selectedSubject}` : ""}
                                         {typeof b.totalPrice === "number"
                                             ? ` · ${b.totalPrice.toLocaleString("hu-HU")} Ft`
                                             : ""}
                                     </p>
                                     <p style={{ margin: "0.2rem 0", color: "#ccc", fontSize: "0.9rem" }}>
-                                        🧾 Számlázási cím:{" "}
-                                        {[b.postalCode, b.street, b.houseNumber].filter(Boolean).join(" ") || "—"}
+                                        Számlázási cím:{" "}
+                                        {[b.postalCode, b.street, b.houseNumber].filter(Boolean).join(" ") ||
+                                            "—"}
                                     </p>
                                     <p style={{ margin: "0.35rem 0", fontSize: "0.9rem" }}>
-                                        💳{" "}
+                                        Fizetés:{" "}
                                         <span
                                             style={{
                                                 color:
@@ -489,7 +543,15 @@ export default function AdminBookingCalendar({ onChanged }: Props) {
                                             {paymentStatusLabel(b.paymentStatus)}
                                         </span>
                                     </p>
-                                    <div style={{ display: "flex", gap: "0.4rem", flexWrap: "wrap", marginBottom: "0.5rem" }}>
+                                    <div
+                                        style={{
+                                            display: "flex",
+                                            gap: "0.4rem",
+                                            flexWrap: "wrap",
+                                            marginBottom: "0.5rem",
+                                        }}
+                                        onClick={(e) => e.stopPropagation()}
+                                    >
                                         {(
                                             [
                                                 ["unpaid", "Nincs fizetve"],
@@ -531,17 +593,62 @@ export default function AdminBookingCalendar({ onChanged }: Props) {
                                             </button>
                                         ))}
                                     </div>
-                                    <BookingAttachments files={b.uploadedFiles} />
-                                    <BookingCalendarLinks booking={b} forceShow />
+                                    <div onClick={(e) => e.stopPropagation()}>
+                                        <BookingAttachments files={b.uploadedFiles} />
+                                        <BookingCalendarLinks booking={b} forceShow />
+                                    </div>
+                                    {onCreateLobby ? (
+                                        <div
+                                            style={{
+                                                display: "flex",
+                                                gap: "0.5rem",
+                                                marginTop: "0.85rem",
+                                                flexWrap: "wrap",
+                                            }}
+                                            onClick={(e) => e.stopPropagation()}
+                                        >
+                                            <button
+                                                type="button"
+                                                disabled={lobbyBusy}
+                                                onClick={() => {
+                                                    setSelectedBookingId(b.id);
+                                                    void onCreateLobby(b);
+                                                }}
+                                                style={{
+                                                    background:
+                                                        "linear-gradient(135deg, #39ff14, #b8ff5a)",
+                                                    color: "#061008",
+                                                    border: "none",
+                                                    borderRadius: "10px",
+                                                    padding: "0.55rem 1rem",
+                                                    fontWeight: 800,
+                                                    cursor: lobbyBusy ? "wait" : "pointer",
+                                                    fontSize: "0.9rem",
+                                                }}
+                                            >
+                                                {lobbyBusy && selectedBookingId === b.id
+                                                    ? "Lobby…"
+                                                    : "Lobby + e-mail"}
+                                            </button>
+                                        </div>
+                                    ) : null}
                                     {(!b.status || b.status === "pending") && (
-                                        <div style={{ display: "flex", gap: "0.5rem", marginTop: "0.75rem", flexWrap: "wrap" }}>
+                                        <div
+                                            style={{
+                                                display: "flex",
+                                                gap: "0.5rem",
+                                                marginTop: "0.75rem",
+                                                flexWrap: "wrap",
+                                            }}
+                                            onClick={(e) => e.stopPropagation()}
+                                        >
                                             <button
                                                 type="button"
                                                 className="approve-btn"
                                                 disabled={busyId === b.id}
                                                 onClick={() => handleApprove(b)}
                                             >
-                                                ✅ Jóváhagyás
+                                                Jóváhagyás
                                             </button>
                                             <button
                                                 type="button"
@@ -549,7 +656,7 @@ export default function AdminBookingCalendar({ onChanged }: Props) {
                                                 disabled={busyId === b.id}
                                                 onClick={() => handleReject(b)}
                                             >
-                                                ❌ Elutasítás
+                                                Elutasítás
                                             </button>
                                         </div>
                                     )}
@@ -558,6 +665,53 @@ export default function AdminBookingCalendar({ onChanged }: Props) {
                         })}
                     </div>
                 )}
+
+                {onCreateLobby && selectedBookingId && dayBookings.some((b) => b.id === selectedBookingId) ? (
+                    <div
+                        style={{
+                            marginTop: "1rem",
+                            padding: "0.85rem 1rem",
+                            borderRadius: "12px",
+                            border: "1px solid rgba(57,255,20,0.35)",
+                            background: "rgba(57,255,20,0.08)",
+                            display: "flex",
+                            justifyContent: "space-between",
+                            gap: "0.75rem",
+                            flexWrap: "wrap",
+                            alignItems: "center",
+                        }}
+                    >
+                        <div>
+                            <strong style={{ color: "#39ff14" }}>Kiválasztott diák</strong>
+                            <p style={{ margin: "0.25rem 0 0", color: "#ddd", fontSize: "0.9rem" }}>
+                                {dayBookings.find((b) => b.id === selectedBookingId)?.customerName}
+                                {" · "}
+                                {(
+                                    dayBookings.find((b) => b.id === selectedBookingId)?.times || []
+                                ).join(", ") || "—"}
+                            </p>
+                        </div>
+                        <button
+                            type="button"
+                            disabled={lobbyBusy}
+                            onClick={() => {
+                                const b = dayBookings.find((x) => x.id === selectedBookingId);
+                                if (b) void onCreateLobby(b);
+                            }}
+                            style={{
+                                background: "linear-gradient(135deg, #39ff14, #b8ff5a)",
+                                color: "#061008",
+                                border: "none",
+                                borderRadius: "10px",
+                                padding: "0.65rem 1.15rem",
+                                fontWeight: 800,
+                                cursor: lobbyBusy ? "wait" : "pointer",
+                            }}
+                        >
+                            {lobbyBusy ? "Lobby készül…" : "Lobby + e-mail"}
+                        </button>
+                    </div>
+                ) : null}
             </div>
         </section>
     );

@@ -25,7 +25,7 @@ When linking pages, paste a site path (works on this site). Prefer these exact p
 - Pricing: /#pricing
 - About: /#about
 - Courses: /#courses
-- Community: /community
+- MihaSocial: /community
 - Home: /
 - Privacy: /adatkezelesi-tajekoztato
 

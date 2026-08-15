@@ -71,9 +71,9 @@ export function normalizeUsernameOrThrow(raw: string): string {
     return u;
 }
 
-export function normalizePostText(text: string): string {
+export function normalizePostText(text: string, opts?: { allowEmpty?: boolean }): string {
     const cleaned = text.trim().slice(0, 500);
-    if (!cleaned) throw new Error('Írj valamit a posztba!');
+    if (!cleaned && !opts?.allowEmpty) throw new Error('Írj valamit a posztba!');
     return cleaned;
 }
 
@@ -81,7 +81,8 @@ export function buildPostFields(
     author: SocialProfile,
     cleaned: string,
     createdAtMs: number,
-    imageUrl: string | null = null
+    imageUrl: string | null = null,
+    videoUrl: string | null = null
 ): Omit<SocialPost, 'id'> {
     return {
         authorId: author.uid,
@@ -90,6 +91,7 @@ export function buildPostFields(
         authorPhoto: author.photoURL,
         text: cleaned,
         imageUrl,
+        videoUrl,
         likeCount: 0,
         commentCount: 0,
         createdAtMs,
@@ -105,6 +107,7 @@ export function mapSocialPost(d: Record<string, unknown>): SocialPost {
         authorPhoto: String(d.authorPhoto || ''),
         text: String(d.text || ''),
         imageUrl: (d.imageUrl as string) || null,
+        videoUrl: (d.videoUrl as string) || null,
         likeCount: Number(d.likeCount || 0),
         commentCount: Number(d.commentCount || 0),
         createdAtMs: Number(d.createdAtMs || Date.now()),
@@ -183,6 +186,7 @@ export function mapStudyGroup(d: Record<string, unknown>): StudyGroup {
         memberIds,
         memberCount: Number(d.memberCount || memberIds.length || 0),
         createdAtMs: Number(d.createdAtMs || Date.now()),
+        whiteboardId: d.whiteboardId ? String(d.whiteboardId) : null,
     };
 }
 

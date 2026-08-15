@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
+﻿import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import AdminBookingCalendar from "../components/AdminBookingCalendar";
+import AdminTeacherConsole from "../components/AdminTeacherConsole";
 import AdminWorkingHoursEditor from "../components/AdminWorkingHoursEditor";
 import BookingAttachments from "../components/BookingAttachments";
 import ProfilePanel from "../components/ProfilePanel";
@@ -121,12 +122,17 @@ export default function Dashboard() {
     }, [educationLevel, erettsegiExamLevel]);
 
     useEffect(() => {
+        let unsub: (() => void) | undefined;
+        let cancelled = false;
+
         const checkAuth = async () => {
             let attempts = 0;
             while (!(window as any).firebase && attempts < 50) {
-                await new Promise(resolve => setTimeout(resolve, 100));
+                await new Promise((resolve) => setTimeout(resolve, 100));
                 attempts++;
             }
+
+            if (cancelled) return;
 
             if (!(window as any).firebase) {
                 setError("Firebase nem elérhető.");
@@ -136,12 +142,22 @@ export default function Dashboard() {
 
             try {
                 const auth = (window as any).firebase.auth();
-                const unsub = auth.onAuthStateChanged(async (user: any) => {
+                unsub = auth.onAuthStateChanged(async (user: any) => {
+                    if (cancelled) return;
                     if (!user) {
                         setMe(null);
                         setIsAdmin(false);
                         setLoading(false);
-                        router.replace('/?auth=1');
+                        if (router.pathname === '/dashboard') {
+                            let justOut = false;
+                            try {
+                                justOut = sessionStorage.getItem('mihaszna:justLoggedOut') === '1';
+                                if (justOut) sessionStorage.removeItem('mihaszna:justLoggedOut');
+                            } catch {
+                                /* ignore */
+                            }
+                            router.replace(justOut ? '/' : '/?auth=1');
+                        }
                         return;
                     }
 
@@ -149,7 +165,12 @@ export default function Dashboard() {
                     const isPasswordUser = (user.providerData || []).some(
                         (p: any) => p?.providerId === 'password'
                     );
-                    if (isPasswordUser && !user.emailVerified && !isTestAuthUser(user)) {
+                    if (
+                        isPasswordUser &&
+                        !user.emailVerified &&
+                        !isTestAuthUser(user) &&
+                        !isAdminEmail(user.email)
+                    ) {
                         setMe(null);
                         setIsAdmin(false);
                         setLoading(false);
@@ -162,26 +183,25 @@ export default function Dashboard() {
                         return;
                     }
 
-                    const userData = {
+                    setMe({
                         uid: user.uid,
                         name: user.displayName || '',
                         email: user.email || '',
-                    };
-
-                    setMe(userData);
-                    const adminStatus = isAdminEmail(user.email);
-                    setIsAdmin(adminStatus);
+                    });
+                    setIsAdmin(isAdminEmail(user.email));
                     setLoading(false);
                 });
-
-                return () => unsub();
             } catch (err) {
                 setError("Hiba történt.");
                 setLoading(false);
             }
         };
 
-        checkAuth();
+        void checkAuth();
+        return () => {
+            cancelled = true;
+            if (unsub) unsub();
+        };
     }, [router]);
 
     useEffect(() => {
@@ -210,19 +230,36 @@ export default function Dashboard() {
             setActiveTab('admin');
             return;
         }
-        // profil / tanulas / üres → egy közös MyMihasznaMat oldal
+        if (tab === 'tanulas') {
+            setActiveTab('tanulas');
+            return;
+        }
+        // Admin alapból a tanári konzolra érkezik (ne a diák nézetre)
+        if (isAdmin && (tab === undefined || tab === '' || tab === 'profil')) {
+            setActiveTab('admin');
+            void router.replace(
+                { pathname: '/dashboard', query: { tab: 'admin' } },
+                undefined,
+                { shallow: true }
+            );
+            return;
+        }
         setActiveTab('tanulas');
-    }, [router.isReady, router.query.tab, isAdmin]);
+    }, [router.isReady, router.query.tab, isAdmin, router]);
 
     const switchTab = (tab: DashboardTab) => {
         if (tab === 'admin' && !isAdmin) return;
         const next = tab === 'profil' ? 'tanulas' : tab;
         setActiveTab(next);
-        router.replace(
-            { pathname: '/dashboard', query: next === 'tanulas' ? {} : { tab: next } },
-            undefined,
-            { shallow: true }
-        );
+        const query =
+            next === 'admin'
+                ? { tab: 'admin' }
+                : next === 'tanulas' && isAdmin
+                  ? { tab: 'tanulas' }
+                  : next === 'tanulas'
+                    ? {}
+                    : { tab: next };
+        router.replace({ pathname: '/dashboard', query }, undefined, { shallow: true });
     };
 
     useEffect(() => {
@@ -251,8 +288,11 @@ export default function Dashboard() {
 
                 console.log('Loaded public tasks for', educationLevel, ':', tasks.length);
                 setPublicTasks(tasks);
-            } catch (error) {
-                console.error('Error loading public tasks:', error);
+            } catch (error: any) {
+                const msg = String(error?.message || error || '');
+                if (!/permission|insufficient/i.test(msg)) {
+                    console.warn('Error loading public tasks:', msg.slice(0, 160));
+                }
             }
         };
 
@@ -268,7 +308,7 @@ export default function Dashboard() {
         }
     }, []);
 
-    // Pending foglalások: Firestore (bookings collection) + legacy fallback
+    // Pending foglalások: csak admin API (nincs kliens Firestore / onSnapshot)
     useEffect(() => {
         if (!isAdmin || typeof window === 'undefined') return;
 
@@ -303,48 +343,54 @@ export default function Dashboard() {
         };
 
         const start = async () => {
-            const { loadPendingBookingsFromFirestore } = await import('../utils/bookingNotify');
+            const {
+                loadPendingBookingsFromFirestore,
+                isPendingBookingsDenied,
+            } = await import('../utils/bookingNotify');
 
-            // First paint from Firestore query
+            // Már tudjuk, hogy rules tilt — ne kérdezzük újra (terminál scrollozik)
+            if (isPendingBookingsDenied()) return;
+
+            // Várj auth tokenre (különben 401 spam)
+            const fb = (window as any).firebase;
+            const auth = fb?.auth?.();
+            if (auth && !auth.currentUser) {
+                await new Promise<void>((resolve) => {
+                    let unsubAuth: (() => void) | undefined;
+                    const t = setTimeout(() => {
+                        unsubAuth?.();
+                        resolve();
+                    }, 4000);
+                    unsubAuth = auth.onAuthStateChanged((u: unknown) => {
+                        if (!u) return;
+                        clearTimeout(t);
+                        unsubAuth?.();
+                        resolve();
+                    });
+                });
+            }
+
+            if (cancelled || isPendingBookingsDenied()) return;
+
             const initial = await loadPendingBookingsFromFirestore();
             if (!cancelled) applyList(initial);
 
-            const firebase = (window as any).firebase;
-            if (!firebase?.firestore) {
-                // poll fallback
-                const interval = setInterval(async () => {
-                    const list = await loadPendingBookingsFromFirestore();
-                    if (!cancelled) applyList(list);
-                }, 8000);
-                unsub = () => clearInterval(interval);
-                return;
-            }
+            // Rules / setup hiány → ne spameljük a hálózatot
+            if (isPendingBookingsDenied()) return;
 
-            try {
-                unsub = firebase
-                    .firestore()
-                    .collection('bookings')
-                    .where('status', '==', 'pending')
-                    .onSnapshot(
-                        (snap: any) => {
-                            const list = snap.docs.map((doc: any) => ({ id: doc.id, ...doc.data() }));
-                            applyList(list);
-                        },
-                        async () => {
-                            const list = await loadPendingBookingsFromFirestore();
-                            applyList(list);
-                        }
-                    );
-            } catch {
-                const interval = setInterval(async () => {
-                    const list = await loadPendingBookingsFromFirestore();
-                    if (!cancelled) applyList(list);
-                }, 8000);
-                unsub = () => clearInterval(interval);
-            }
+            const interval = setInterval(async () => {
+                if (isPendingBookingsDenied() || cancelled) {
+                    clearInterval(interval);
+                    return;
+                }
+                const list = await loadPendingBookingsFromFirestore();
+                if (!cancelled) applyList(list);
+                if (isPendingBookingsDenied()) clearInterval(interval);
+            }, 15000);
+            unsub = () => clearInterval(interval);
         };
 
-        start();
+        void start();
 
         if ('Notification' in window && Notification.permission === 'default') {
             Notification.requestPermission();
@@ -704,144 +750,75 @@ export default function Dashboard() {
             {/* Main Content */}
             <main className="main-content">
                 {activeTab === 'admin' && isAdmin && (
-                    <>
-                        <div style={{
-                            background: 'linear-gradient(45deg, #39FF14, #FF49DB)',
-                            color: '#000',
-                            padding: '0.5rem 1rem',
-                            borderRadius: '15px',
-                            fontSize: '0.9rem',
-                            fontWeight: '600',
-                            textAlign: 'center',
-                            marginTop: '1rem',
-                            marginBottom: '1.5rem',
-                            boxShadow: '0 0 20px rgba(57, 255, 20, 0.5)',
-                            maxWidth: '400px',
-                            margin: '1rem auto 1.5rem'
-                        }}>
-                            👑 ADMIN FELÜLET - {me?.email}
-                        </div>
-
-                        <div style={{ textAlign: 'center', marginBottom: '1.5rem' }}>
-                            <button
-                                type="button"
-                                className="nav-tab"
-                                onClick={() => router.push('/exam-prep')}
-                                style={{
-                                    display: 'inline-flex',
-                                    gap: '0.5rem',
-                                    border: '2px solid #39ff14',
-                                    borderRadius: '12px',
-                                    padding: '0.75rem 1.25rem',
-                                    cursor: 'pointer',
-                                    background: 'rgba(57,255,20,0.12)',
-                                    color: '#39ff14',
-                                    fontWeight: 700,
-                                }}
-                            >
-                                ⚙️ Feladatkiosztás (Exam Prep)
-                            </button>
-                        </div>
-
+                    <AdminTeacherConsole
+                        adminUid={me?.uid}
+                        adminEmail={me?.email}
+                        initialTab={
+                            router.query.view === 'tasks'
+                                ? 'tasks'
+                                : router.query.view === 'lessons'
+                                  ? 'lessons'
+                                  : 'schedule'
+                        }
+                        schedulePanel={({ createLobbyFromBooking, lobbyBusy }) => (
+                            <>
                         {emailStatus && (
                             <div style={{
-                                background: emailStatus.ready
-                                    ? 'rgba(57, 255, 20, 0.12)'
-                                    : 'rgba(255, 105, 180, 0.12)',
-                                border: `1px solid ${emailStatus.ready ? 'rgba(57,255,20,0.5)' : 'rgba(255,105,180,0.5)'}`,
-                                borderRadius: '14px',
-                                padding: '1rem 1.25rem',
-                                margin: '0 auto 2rem',
-                                maxWidth: '720px',
-                                color: '#eee',
+                                display: 'flex',
+                                flexWrap: 'wrap',
+                                gap: '0.65rem',
+                                alignItems: 'center',
+                                justifyContent: 'space-between',
+                                background: 'rgba(18, 24, 33, 0.9)',
+                                border: '1px solid rgba(57,255,20,0.25)',
+                                borderRadius: '12px',
+                                padding: '0.75rem 1rem',
+                                margin: '0 0 1rem',
+                                color: '#ddd',
+                                fontSize: '0.9rem',
                             }}>
-                                <strong style={{ color: emailStatus.ready ? '#39ff14' : '#ff69b4' }}>
-                                    {emailStatus.ready ? 'E-mail rendszer kész' : 'E-mail beállítás'}
-                                </strong>
-                                <p style={{ margin: '0.5rem 0', color: '#bbb', fontSize: '0.95rem' }}>
-                                    Mód: <code>{emailStatus.mode}</code>
-                                    {emailStatus.adminEmail ? ` · Admin: ${emailStatus.adminEmail}` : ''}
-                                    {emailStatus.siteUrl ? ` · Site: ${emailStatus.siteUrl}` : ''}
-                                </p>
-                                {!emailStatus.hasGmail ? (
-                                    <ol style={{ margin: '0.75rem 0', paddingLeft: '1.25rem', color: '#ccc', fontSize: '0.92rem', lineHeight: 1.55 }}>
-                                        <li>
-                                            Nyisd meg:{' '}
-                                            <a
-                                                href="https://myaccount.google.com/apppasswords"
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                                style={{ color: '#39ff14' }}
-                                            >
-                                                Google App-jelszavak
-                                            </a>
-                                            {' '}(2 lépéses azonosítás kell)
-                                        </li>
-                                        <li>Generálj új app-jelszót (pl. „Mihaszna Matek”)</li>
-                                        <li>
-                                            Illeszd a 16 karakteres kódot a projekt{' '}
-                                            <code>.env.local</code> fájljába:{' '}
-                                            <code>GMAIL_APP_PASSWORD=xxxxxxxxxxxx</code>
-                                            {' '}(szóközök nélkül)
-                                        </li>
-                                        <li>Írd meg ide a chatben, hogy megvan — újraindítom a szervert és tesztejük</li>
-                                    </ol>
-                                ) : (
-                                    <p style={{ margin: '0 0 0.75rem', color: '#ccc', fontSize: '0.9rem' }}>
-                                        {emailStatus.hint}
-                                    </p>
-                                )}
-                                <div style={{ display: 'flex', gap: '0.65rem', flexWrap: 'wrap' }}>
+                                <span>
+                                    E-mail:{' '}
+                                    <strong style={{ color: emailStatus.hasGmail ? '#39ff14' : '#ff69b4' }}>
+                                        {emailStatus.hasGmail ? 'kész' : 'nincs beállítva'}
+                                    </strong>
+                                    {reminderInfo ? (' - ' + reminderInfo) : ''}
+                                </span>
+                                <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
                                     <button
                                         type="button"
                                         onClick={sendTestBookingEmail}
                                         disabled={emailTestLoading || !emailStatus.hasGmail}
+                                        className="atc-inline-btn"
                                         style={{
-                                            background: emailStatus.hasGmail
-                                                ? 'linear-gradient(135deg, #39ff14, #ff69b4)'
-                                                : 'rgba(255,255,255,0.15)',
-                                            color: emailStatus.hasGmail ? '#000' : '#888',
-                                            border: 'none',
-                                            borderRadius: '10px',
-                                            padding: '0.65rem 1rem',
+                                            background: 'rgba(57,255,20,0.12)',
+                                            color: '#39ff14',
+                                            border: '1px solid #39ff14',
+                                            borderRadius: '8px',
+                                            padding: '0.4rem 0.75rem',
                                             fontWeight: 700,
                                             cursor: emailTestLoading || !emailStatus.hasGmail ? 'not-allowed' : 'pointer',
                                         }}
                                     >
-                                        {emailTestLoading
-                                            ? 'Küldés...'
-                                            : emailStatus.hasGmail
-                                              ? 'Teszt e-mail küldése'
-                                              : 'Előbb App-jelszó kell'}
+                                        {emailTestLoading ? '…' : 'Teszt e-mail'}
                                     </button>
                                     <button
                                         type="button"
                                         onClick={() => runLessonReminders()}
                                         disabled={reminderLoading || !emailStatus.hasGmail}
                                         style={{
-                                            background: emailStatus.hasGmail
-                                                ? 'rgba(57,255,20,0.15)'
-                                                : 'rgba(255,255,255,0.1)',
-                                            color: emailStatus.hasGmail ? '#39ff14' : '#888',
-                                            border: `1px solid ${emailStatus.hasGmail ? '#39ff14' : '#555'}`,
-                                            borderRadius: '10px',
-                                            padding: '0.65rem 1rem',
+                                            background: 'rgba(57,255,20,0.12)',
+                                            color: '#39ff14',
+                                            border: '1px solid #39ff14',
+                                            borderRadius: '8px',
+                                            padding: '0.4rem 0.75rem',
                                             fontWeight: 700,
                                             cursor: reminderLoading || !emailStatus.hasGmail ? 'not-allowed' : 'pointer',
                                         }}
                                     >
-                                        {reminderLoading ? 'Emlékeztetők…' : 'Holnapi emlékeztetők'}
+                                        {reminderLoading ? '…' : 'Holnapi emlékeztető'}
                                     </button>
                                 </div>
-                                {reminderInfo && (
-                                    <p style={{ margin: '0.75rem 0 0', color: '#aaa', fontSize: '0.88rem' }}>
-                                        {reminderInfo}
-                                    </p>
-                                )}
-                                <p style={{ margin: '0.65rem 0 0', color: '#777', fontSize: '0.82rem' }}>
-                                    Holnapi jóváhagyott órákra emlékeztető megy a diáknak (+ másolat neked).
-                                    Ha adminnal belépsz a Dashboardra, naponta egyszer automatikusan lefut — vagy nyomd meg a gombot.
-                                </p>
                             </div>
                         )}
 
@@ -851,6 +828,8 @@ export default function Dashboard() {
 
                         <AdminBookingCalendar
                             key={workingHoursVersion}
+                            lobbyBusy={lobbyBusy}
+                            onCreateLobby={(booking) => void createLobbyFromBooking(booking)}
                             onChanged={async () => {
                                 const { loadPendingBookingsFromFirestore } = await import('../utils/bookingNotify');
                                 const list = await loadPendingBookingsFromFirestore();
@@ -860,42 +839,43 @@ export default function Dashboard() {
 
                         {pendingBookings.length > 0 ? (
                             <section className="pending-bookings-section">
-                                <h2 className="section-title">⚠️ Függőben Lévő Foglalások</h2>
-                                <p className="section-subtitle">Jóváhagyásra váró időpontfoglalások</p>
+                                <h2 className="section-title">Függő foglalások</h2>
                                 <div className="pending-bookings-grid">
                                     {pendingBookings.map(booking => (
                                         <div key={booking.id} className="pending-booking-card">
                                             <div className="booking-header">
-                                                <h3>📅 {new Date(booking.date).toLocaleDateString('hu-HU')}</h3>
+                                                <h3>{new Date(booking.date).toLocaleDateString('hu-HU')}</h3>
                                                 <span className="booking-status pending">Függőben</span>
                                             </div>
                                             <div className="booking-content">
                                                 <div className="booking-info">
-                                                    <p><strong>👤 Név:</strong> {booking.customerName}</p>
-                                                    <p><strong>📧 Email:</strong> {booking.customerEmail}</p>
-                                                    <p><strong>⏰ Időpontok:</strong> {(booking.times || []).join(', ')}</p>
-                                                    <p><strong>📍 Típus:</strong> {booking.lessonType === 'online' ? '💻 Online' : '🏠 Személyes'}</p>
-                                                    <p><strong>📚 Témakör:</strong> {booking.selectedSubject}</p>
-                                                    <p><strong>💰 Ár:</strong> {booking.totalPrice} Ft</p>
+                                                    <p><strong>Név:</strong> {booking.customerName}</p>
+                                                    <p><strong>Email:</strong> {booking.customerEmail}</p>
+                                                    <p><strong>Idő:</strong> {(booking.times || []).join(', ')}</p>
+                                                    <p><strong>Típus:</strong> {booking.lessonType === 'online' ? 'Online' : 'Személyes'}</p>
+                                                    <p><strong>Téma:</strong> {booking.selectedSubject}</p>
+                                                    <p><strong>Ár:</strong> {booking.totalPrice} Ft</p>
                                                     <p>
-                                                        <strong>🧾 Számlázási cím:</strong>{" "}
-                                                        {[booking.postalCode, booking.street, booking.houseNumber]
-                                                            .filter(Boolean)
-                                                            .join(" ") || "—"}
-                                                    </p>
-                                                    <p>
-                                                        <strong>💳 Fizetés:</strong>{" "}
+                                                        <strong>Fizetés:</strong>{' '}
                                                         {paymentStatusLabel(booking.paymentStatus)}
                                                     </p>
-                                                    <p><strong>📅 Beküldve:</strong> {booking.submittedAt ? new Date(booking.submittedAt).toLocaleString('hu-HU') : '—'}</p>
                                                     <BookingAttachments files={booking.uploadedFiles} />
                                                 </div>
                                                 <div className="booking-actions">
                                                     <button className="approve-btn" onClick={() => approveBooking(booking.id)}>
-                                                        ✅ Jóváhagyás
+                                                        Jóváhagyás
                                                     </button>
                                                     <button className="reject-btn" onClick={() => rejectBooking(booking.id)}>
-                                                        ❌ Elutasítás
+                                                        Elutasítás
+                                                    </button>
+                                                    <button
+                                                        type="button"
+                                                        className="approve-btn"
+                                                        disabled={lobbyBusy}
+                                                        onClick={() => void createLobbyFromBooking(booking)}
+                                                        style={{ background: 'linear-gradient(135deg,#39ff14,#b8ff5a)', color: '#061008', border: 'none' }}
+                                                    >
+                                                        Lobby
                                                     </button>
                                                 </div>
                                             </div>
@@ -906,9 +886,10 @@ export default function Dashboard() {
                         ) : (
                             <p style={{ textAlign: 'center', color: '#a0a0a0' }}>Nincs függő foglalás.</p>
                         )}
-                    </>
+                            </>
+                        )}
+                    />
                 )}
-
                 {activeTab === 'tanulas' && (
                 <>
                 {/* Education Level Selector — first so the 4 categories are visible */}
@@ -958,53 +939,89 @@ export default function Dashboard() {
                     )}
                 </section>
 
-                <section className="profile-embedded-section" style={{ padding: '0.5rem 0 1.5rem' }}>
-                    <ProfilePanel embedded />
-                </section>
+                {isAdmin ? (
+                    <div
+                        style={{
+                            margin: '0.5rem auto 1.25rem',
+                            maxWidth: 720,
+                            padding: '0.85rem 1rem',
+                            borderRadius: 12,
+                            border: '1px solid rgba(57,255,20,0.35)',
+                            background: 'rgba(18,24,33,0.95)',
+                            display: 'flex',
+                            flexWrap: 'wrap',
+                            gap: '0.75rem',
+                            alignItems: 'center',
+                            justifyContent: 'space-between',
+                        }}
+                    >
+                        <span style={{ color: '#cfe9d4' }}>
+                            Diák nézet — az admin platformon látod a diákokat.
+                        </span>
+                        <button
+                            type="button"
+                            onClick={() => switchTab('admin')}
+                            style={{
+                                border: 'none',
+                                borderRadius: 10,
+                                padding: '0.55rem 0.9rem',
+                                fontWeight: 800,
+                                cursor: 'pointer',
+                                background: 'linear-gradient(135deg, #39ff14, #b8ff5a)',
+                                color: '#061008',
+                            }}
+                        >
+                            Admin platform
+                        </button>
+                    </div>
+                ) : (
+                    <>
+                        <section className="profile-embedded-section" style={{ padding: '0.5rem 0 1.5rem' }}>
+                            <ProfilePanel embedded />
+                        </section>
 
-                    {isAdmin && (
-                        <section className="exam-prep-section">
-                            <div className="exam-prep-card" onClick={() => router.push(`/exam-prep?level=${educationLevel === 'erettsegi' ? 'highschool' : educationLevel}`)}>
-                                <div className="card-header" style={{
-                                    textAlign: 'center',
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    justifyContent: 'center',
-                                    gap: '10px'
-                                }}>
-                                    <span style={{ fontSize: '1.5rem' }}>⚙️</span>
-                                    <h3 style={{
-                                        background: 'linear-gradient(90deg, #39ff14 0%, #ff69b4 100%)',
-                                        WebkitBackgroundClip: 'text',
-                                        WebkitTextFillColor: 'transparent',
-                                        backgroundClip: 'text',
-                                        margin: 0,
-                                        fontSize: '1.8rem',
-                                        fontWeight: 'bold'
-                                    }}>
-                                        Feladatkiosztás diákoknak
-                                    </h3>
+                        <section className="attendance-section" style={{ marginBottom: '1.5rem' }}>
+                            <div className="mm-social-dash-card">
+                                <div>
+                                    <h2 className="section-title" style={{ marginBottom: '0.35rem' }}>
+                                        MihaSocial profil
+                                    </h2>
+                                    <p className="section-subtitle" style={{ margin: 0 }}>
+                                        A közösségi profilod egyben a nyilvános profilod — bio, posztok, üzenetek,
+                                        csoportok. A fenti profilkép mindkét helyen érvényes.
+                                    </p>
                                 </div>
-                                <p style={{ textAlign: 'center', color: '#a0a0a0', marginTop: '0.5rem' }}>
-                                    Admin: kvízek és feladatok kiosztása
-                                </p>
+                                <Link
+                                    href="/community?tab=profile"
+                                    className="mm-social-primary"
+                                    style={{ textDecoration: 'none' }}
+                                >
+                                    Profil megnyitása
+                                </Link>
                             </div>
                         </section>
-                    )}
 
-                <section className="attendance-section" style={{ marginBottom: '1.5rem' }}>
-                    <div className="mm-social-dash-card">
-                        <div>
-                            <h2 className="section-title" style={{ marginBottom: '0.35rem' }}>Közösség</h2>
-                            <p className="section-subtitle" style={{ margin: 0 }}>
-                                Követés, posztok, kommentek, tanulócsoportok, üzenetek, AI matek shorts és XP ranglista.
-                            </p>
-                        </div>
-                        <Link href="/community" className="mm-social-primary" style={{ textDecoration: 'none' }}>
-                            Megnyitás
-                        </Link>
-                    </div>
-                </section>
+                        <section className="attendance-section" style={{ marginBottom: '1.5rem' }}>
+                            <div className="mm-social-dash-card">
+                                <div>
+                                    <h2 className="section-title" style={{ marginBottom: '0.35rem' }}>
+                                        Whiteboard
+                                    </h2>
+                                    <p className="section-subtitle" style={{ margin: 0 }}>
+                                        Közös tábla neked és a diákoknak — toll, kiemelő, radír, alakzatok, szöveg.
+                                    </p>
+                                </div>
+                                <Link
+                                    href="/whiteboard"
+                                    className="mm-social-primary"
+                                    style={{ textDecoration: 'none' }}
+                                >
+                                    Megnyitás
+                                </Link>
+                            </div>
+                        </section>
+                    </>
+                )}
 
                 {/* Mathematical Topics Section */}
                 <section className="attendance-section">
@@ -1182,60 +1199,6 @@ export default function Dashboard() {
                             );
                         })}
 
-                        {/* Új témakör hozzáadás — csak admin */}
-                        {isAdmin && (
-                        <div className="add-topic-card" onClick={toggleNewTopicForm}>
-                            <div className="add-topic-content">
-                                <div className="add-topic-icon">➕</div>
-                                <div className="add-topic-text">Új Témakör</div>
-                            </div>
-                        </div>
-                        )}
-
-                        {/* Új témakör form */}
-                        {isAdmin && showNewTopicForm && (
-                            <div className="new-topic-form">
-                                <div className="form-header">
-                                    <h3>Új Témakör Létrehozása</h3>
-                                    <button className="close-form-btn" onClick={toggleNewTopicForm}>✕</button>
-                                </div>
-                                <div className="form-content">
-                                    <div className="form-group">
-                                        <label>Témakör neve:</label>
-                                        <input
-                                            type="text"
-                                            value={newTopic.title}
-                                            onChange={(e) => setNewTopic({ ...newTopic, title: e.target.value })}
-                                            placeholder="pl. Algebra alapok"
-                                            className="topic-input"
-                                        />
-                                    </div>
-                                    <div className="form-group">
-                                        <label>Ikon:</label>
-                                        <input
-                                            type="text"
-                                            value={newTopic.icon}
-                                            onChange={(e) => setNewTopic({ ...newTopic, icon: e.target.value })}
-                                            placeholder="📚"
-                                            className="icon-input"
-                                            maxLength={2}
-                                        />
-                                    </div>
-                                    <div className="form-group">
-                                        <label>Szín:</label>
-                                        <input
-                                            type="color"
-                                            value={newTopic.color}
-                                            onChange={(e) => setNewTopic({ ...newTopic, color: e.target.value })}
-                                            className="color-input"
-                                        />
-                                    </div>
-                                    <button className="create-topic-btn" onClick={addNewTopic}>
-                                        Témakör Létrehozása
-                                    </button>
-                                </div>
-                            </div>
-                        )}
                     </div>
                 </section>
 
@@ -1511,3 +1474,4 @@ export default function Dashboard() {
         </div>
     );
 }
+

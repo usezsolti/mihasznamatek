@@ -32,6 +32,7 @@ export default function Navbar() {
         let unsub: (() => void) | undefined;
         let cancelled = false;
         let onProfileUpdated: ((e: Event) => void) | undefined;
+        let onLogoutEvent: (() => void) | undefined;
 
         const init = async () => {
             for (let i = 0; i < 50; i++) {
@@ -53,7 +54,9 @@ export default function Navbar() {
             if (!firebase?.apps?.length) return;
 
             const auth = firebase.auth();
+            let applySeq = 0;
             const applyUser = async (user: any) => {
+                const seq = ++applySeq;
                 if (!user) {
                     setCurrentUser(null);
                     return;
@@ -70,7 +73,12 @@ export default function Navbar() {
                 } catch {
                     /* firestore optional */
                 }
-                if (cancelled) return;
+                if (cancelled || seq !== applySeq) return;
+                // Ha közben kijelentkezett, ne írjuk vissza
+                if (!auth.currentUser || auth.currentUser.uid !== user.uid) {
+                    setCurrentUser(null);
+                    return;
+                }
                 setCurrentUser({
                     uid: user.uid,
                     displayName,
@@ -120,6 +128,9 @@ export default function Navbar() {
                 );
             };
             window.addEventListener("mihaszna:user-profile-updated", onProfileUpdated);
+
+            onLogoutEvent = () => setCurrentUser(null);
+            window.addEventListener("mihaszna:auth-logout", onLogoutEvent);
         };
 
         init();
@@ -128,6 +139,9 @@ export default function Navbar() {
             if (unsub) unsub();
             if (onProfileUpdated) {
                 window.removeEventListener("mihaszna:user-profile-updated", onProfileUpdated);
+            }
+            if (onLogoutEvent) {
+                window.removeEventListener("mihaszna:auth-logout", onLogoutEvent);
             }
         };
     }, [isClient]);
@@ -157,14 +171,9 @@ export default function Navbar() {
 
     const handleLogout = async () => {
         setIsMenuOpen(false);
-        try {
-            const firebase = (window as any).firebase;
-            if (firebase?.auth) {
-                await firebase.auth().signOut();
-            }
-        } catch (err) {
-            console.error("Logout error:", err);
-        }
+        setCurrentUser(null);
+        const { signOutUser } = await import("../utils/authLogout");
+        await signOutUser({ redirectTo: "/" });
     };
 
     const openLocalAuthModal = (
@@ -241,7 +250,7 @@ export default function Navbar() {
 
     return (
         <>
-            <nav suppressHydrationWarning>
+            <nav className="site-navbar" suppressHydrationWarning>
                 <div className="logo">
                     <Link href="/" aria-label="Kezdőlap" onClick={() => setIsMenuOpen(false)}>
                     <svg
@@ -362,7 +371,16 @@ export default function Navbar() {
                                     className={router.pathname === "/community" ? "nav-link-active" : undefined}
                                     onClick={toggleMenu}
                                 >
-                                    Közösség
+                                    MihaSocial
+                                </Link>
+                            </li>
+                            <li>
+                                <Link
+                                    href="/whiteboard"
+                                    className={router.pathname === "/whiteboard" ? "nav-link-active" : undefined}
+                                    onClick={toggleMenu}
+                                >
+                                    Whiteboard
                                 </Link>
                             </li>
                             <li>

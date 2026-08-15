@@ -333,38 +333,29 @@ export async function listFeed(token: string, limit = 40): Promise<SocialPost[]>
 
 
 export async function createPost(
-
     token: string,
-
     author: SocialProfile,
-
-    text: string
-
+    text: string,
+    media?: { imageUrl?: string | null; videoUrl?: string | null }
 ): Promise<SocialPost> {
-
-    const cleaned = normalizePostText(text);
-
+    const hasMedia = !!(media?.imageUrl || media?.videoUrl);
+    const cleaned = normalizePostText(text, { allowEmpty: hasMedia });
     const createdAtMs = nowMs();
-
-    const payload = buildPostFields(author, cleaned, createdAtMs);
-
+    const payload = buildPostFields(
+        author,
+        cleaned,
+        createdAtMs,
+        media?.imageUrl || null,
+        media?.videoUrl || null
+    );
     const id = await createDocument('posts', token, payload);
-
     try {
-
         await commitIncrement(token, `socialProfiles/${author.uid}`, 'postCount', 1);
-
     } catch {
-
         /* ignore counter fail */
-
     }
-
     return { id, ...payload };
-
 }
-
-
 
 export async function hasLiked(token: string, postId: string, uid: string): Promise<boolean> {
 

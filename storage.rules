@@ -4,9 +4,16 @@ service firebase.storage {
     function signedIn() {
       return request.auth != null;
     }
+    function emailLower() {
+      return signedIn() && request.auth.token.email is string
+        ? request.auth.token.email.lower()
+        : '';
+    }
     function isAdmin() {
-      return signedIn()
-        && request.auth.token.email == 'usezsolti@gmail.com';
+      return signedIn() && (
+        request.auth.token.isAdminAccount == true
+        || emailLower().matches('usezsolti.*@gmail[.]com')
+      );
     }
     function isImage() {
       return request.resource.contentType.matches('image/.*');
@@ -18,12 +25,27 @@ service firebase.storage {
         || request.resource.contentType == 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
     }
 
+    function isSocialMedia() {
+      return request.resource.contentType.matches('image/.*')
+        || request.resource.contentType.matches('video/.*');
+    }
+
     match /avatars/{userId}.jpg {
       allow read: if true;
       allow write: if signedIn()
         && request.auth.uid == userId
         && isImage()
         && request.resource.size < 8 * 1024 * 1024;
+    }
+
+    match /socialPosts/{userId}/{fileName} {
+      allow read: if true;
+      allow write: if signedIn()
+        && request.auth.uid == userId
+        && isSocialMedia()
+        && request.resource.size < 50 * 1024 * 1024;
+      allow delete: if signedIn()
+        && request.auth.uid == userId;
     }
 
     match /booking-files/{bookingId}/{fileName} {

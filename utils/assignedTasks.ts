@@ -143,6 +143,7 @@ export function gameUrlForAssignedTask(task: AssignedTaskDoc): string {
         educationLevel: level,
         taskId: task.taskId,
     });
+    if (task.topicId) params.set("topic", task.topicId);
     if (task.studentId) params.set("studentId", task.studentId);
     if (task.studentName) params.set("studentName", task.studentName);
     return `/game?${params.toString()}`;

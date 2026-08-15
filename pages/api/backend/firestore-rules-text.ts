@@ -21,8 +21,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         return sendErr(res, 'Not found', 404);
     }
 
-    const admin = await requireAdmin(req, res);
-    if (!admin) return;
+    // Dev/local: ne kelljen admin token a másoláshoz (éppen a rules Publish a cél).
+    if (process.env.NODE_ENV === 'production') {
+        const admin = await requireAdmin(req, res);
+        if (!admin) return;
+    }
 
     try {
         const rulesPath = path.join(process.cwd(), 'firestore.rules');

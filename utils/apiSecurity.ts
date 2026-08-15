@@ -105,22 +105,48 @@ export async function requireAuth(
     return user;
 }
 
+/** Firebase ID token payload (claims) — aláírás nélkül, csak requireAuth után. */
+function peekIdTokenClaims(idToken: string): Record<string, unknown> | null {
+    try {
+        const mid = idToken.split('.')[1];
+        if (!mid) return null;
+        const b64 = mid.replace(/-/g, '+').replace(/_/g, '/');
+        const pad = b64 + '='.repeat((4 - (b64.length % 4)) % 4);
+        const json =
+            typeof Buffer !== 'undefined'
+                ? Buffer.from(pad, 'base64').toString('utf8')
+                : '';
+        if (!json) return null;
+        return JSON.parse(json) as Record<string, unknown>;
+    } catch {
+        return null;
+    }
+}
+
 export async function requireAdmin(
     req: NextApiRequest,
     res: NextApiResponse
 ): Promise<VerifiedUser | null> {
     const user = await requireAuth(req, res);
     if (!user) return null;
-    // Production: követeljük a megerősített e-mailt admin műveletekhez
-    if (process.env.NODE_ENV === 'production' && !user.emailVerified) {
-        res.status(403).json({ ok: false, error: 'Adminhoz igazolt e-mail kell.' });
-        return null;
+
+    const token = extractBearerToken(req) || '';
+    const claims = token ? peekIdTokenClaims(token) : null;
+    const claimEmail = String(claims?.email || '').toLowerCase();
+    const email = (user.email || claimEmail || '').toLowerCase();
+    const claimAdmin = claims?.isAdminAccount === true;
+
+    if (
+        claimAdmin ||
+        isAdminEmail(email) ||
+        (ADMIN_EMAIL && email === ADMIN_EMAIL.toLowerCase())
+    ) {
+        // Alias / claim / gyors admin — emailVerified nem kötelező
+        return { ...user, email: email || user.email };
     }
-    if (!isAdminEmail(user.email) && user.email !== ADMIN_EMAIL.toLowerCase()) {
-        res.status(403).json({ ok: false, error: 'Nincs admin jogosultság.' });
-        return null;
-    }
-    return user;
+
+    res.status(403).json({ ok: false, error: 'Nincs admin jogosultság.' });
+    return null;
 }
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;

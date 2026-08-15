@@ -121,6 +121,11 @@ export default function ProfilePanel({ embedded = false }: { embedded?: boolean 
     const [bookingsLoading, setBookingsLoading] = useState(false);
     const [cancellingId, setCancellingId] = useState<string | null>(null);
     const [practiceProgress, setPracticeProgress] = useState<UserPracticeProgress>(emptyProgress());
+    const [socialUsername, setSocialUsername] = useState('');
+    const [socialBio, setSocialBio] = useState('');
+    const [socialFollowers, setSocialFollowers] = useState(0);
+    const [socialFollowing, setSocialFollowing] = useState(0);
+    const [socialPosts, setSocialPosts] = useState(0);
 
     useEffect(() => {
         const checkAuth = async () => {
@@ -149,6 +154,11 @@ export default function ProfilePanel({ embedded = false }: { embedded?: boolean 
 
                     setCurrentUser(user);
                     setPhotoURL(user.photoURL || null);
+                    try {
+                        await user.getIdToken(true);
+                    } catch {
+                        /* ignore */
+                    }
 
                     try {
                         const snap = await (window as any).firebase.firestore().collection('users').doc(user.uid).get();
@@ -163,6 +173,23 @@ export default function ProfilePanel({ embedded = false }: { embedded?: boolean 
                     }
 
                     await loadGameResults(user.uid);
+                    try {
+                        const { apiEnsureProfile } = await import('../utils/socialApi');
+                        const social = await apiEnsureProfile(user.uid, {
+                            name: user.displayName || undefined,
+                            photoURL: user.photoURL || undefined,
+                        });
+                        setSocialUsername(social.username || '');
+                        setSocialBio(social.bio || '');
+                        setSocialFollowers(Number(social.followerCount || 0));
+                        setSocialFollowing(Number(social.followingCount || 0));
+                        setSocialPosts(Number(social.postCount || 0));
+                        if (social.photoURL) {
+                            setPhotoURL((prev) => prev || social.photoURL);
+                        }
+                    } catch (e) {
+                        console.warn('MihaSocial profil betöltési hiba:', e);
+                    }
                     try {
                         const prog = await loadUserPracticeProgress(user.uid);
                         setPracticeProgress(prog);
@@ -261,6 +288,15 @@ export default function ProfilePanel({ embedded = false }: { embedded?: boolean 
 
             setPhotoURL(url);
             setAvatarMessage('Profilkép sikeresen frissítve!');
+            try {
+                const { apiSyncSocialIdentity } = await import('../utils/socialApi');
+                await apiSyncSocialIdentity(currentUser.uid, {
+                    photoURL: url,
+                    displayName: currentUser.displayName || undefined,
+                });
+            } catch (syncErr) {
+                console.warn('MihaSocial profilkép szinkron hiba:', syncErr);
+            }
             try {
                 window.dispatchEvent(
                     new CustomEvent('mihaszna:user-profile-updated', {
@@ -573,6 +609,76 @@ export default function ProfilePanel({ embedded = false }: { embedded?: boolean 
                                 }}>
                                     {currentUser?.email}
                                 </p>
+                                {socialUsername && (
+                                    <p style={{ color: '#ff69b4', margin: '0 0 0.75rem', fontSize: '0.95rem' }}>
+                                        MihaSocial: @{socialUsername}
+                                        {socialBio ? ` · ${socialBio.slice(0, 60)}${socialBio.length > 60 ? '…' : ''}` : ''}
+                                    </p>
+                                )}
+                                <div
+                                    style={{
+                                        display: 'flex',
+                                        flexWrap: 'wrap',
+                                        gap: '1.25rem',
+                                        margin: '0 0 0.9rem',
+                                        fontSize: '0.95rem',
+                                        color: '#f2f2f2',
+                                    }}
+                                >
+                                    <Link
+                                        href="/community?tab=profile"
+                                        style={{ color: 'inherit', textDecoration: 'none' }}
+                                    >
+                                        <strong style={{ color: '#fff' }}>{socialPosts}</strong>{' '}
+                                        <span style={{ color: '#a0a0a0' }}>posts</span>
+                                    </Link>
+                                    <Link
+                                        href="/community?tab=profile"
+                                        style={{ color: 'inherit', textDecoration: 'none' }}
+                                    >
+                                        <strong style={{ color: '#fff' }}>{socialFollowers}</strong>{' '}
+                                        <span style={{ color: '#a0a0a0' }}>followers</span>
+                                    </Link>
+                                    <Link
+                                        href="/community?tab=explore"
+                                        style={{ color: 'inherit', textDecoration: 'none' }}
+                                    >
+                                        <strong style={{ color: '#fff' }}>{socialFollowing}</strong>{' '}
+                                        <span style={{ color: '#a0a0a0' }}>following</span>
+                                    </Link>
+                                </div>
+                                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', marginBottom: '0.65rem' }}>
+                                    <Link
+                                        href="/community?tab=profile"
+                                        style={{
+                                            padding: '0.5rem 1rem',
+                                            background: 'linear-gradient(135deg, rgba(57,255,20,0.25), rgba(255,73,219,0.2))',
+                                            border: '2px solid rgba(57, 255, 20, 0.55)',
+                                            borderRadius: '12px',
+                                            color: '#39ff14',
+                                            fontSize: '0.9rem',
+                                            fontWeight: 700,
+                                            textDecoration: 'none',
+                                        }}
+                                    >
+                                        MihaSocial profil
+                                    </Link>
+                                    <Link
+                                        href="/community"
+                                        style={{
+                                            padding: '0.5rem 1rem',
+                                            background: 'rgba(255, 255, 255, 0.06)',
+                                            border: '2px solid rgba(255, 73, 219, 0.4)',
+                                            borderRadius: '12px',
+                                            color: '#ff69b4',
+                                            fontSize: '0.9rem',
+                                            fontWeight: 600,
+                                            textDecoration: 'none',
+                                        }}
+                                    >
+                                        Közösség megnyitása
+                                    </Link>
+                                </div>
                                 <button
                                     type="button"
                                     onClick={handleAvatarClick}

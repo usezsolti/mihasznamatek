@@ -24,7 +24,7 @@ export default function CommunityShortsTab({
     onNext,
 }: CommunityShortsTabProps) {
     return (
-        <div className="mm-social-panel">
+        <div className="mm-social-panel mm-social-shorts-panel">
             <div className="mm-social-shorts-toolbar">
                 <input
                     value={shortTopic}
@@ -32,24 +32,26 @@ export default function CommunityShortsTab({
                     placeholder="Téma (pl. deriválás)"
                 />
                 <button type="button" className="mm-social-primary" onClick={onGenerateShort} disabled={busy}>
-                    AI short generálás
+                    AI short
                 </button>
             </div>
             {currentShort ? (
-                <div className="mm-social-short-card">
-                    <p className="mm-social-short-topic">
-                        {currentShort.topic} · {currentShort.difficulty}
-                    </p>
-                    <h2>{currentShort.title}</h2>
-                    <p className="mm-social-short-hook">{currentShort.hook}</p>
-                    <p className="mm-social-short-body">{currentShort.body}</p>
-                    <p className="mm-social-short-tip">Tipp: {currentShort.tip}</p>
+                <div className="mm-social-short-stage">
+                    <div className="mm-social-short-card ig">
+                        <p className="mm-social-short-topic">
+                            {currentShort.topic} · {currentShort.difficulty}
+                        </p>
+                        <h2>{currentShort.title}</h2>
+                        <p className="mm-social-short-hook">{currentShort.hook}</p>
+                        <p className="mm-social-short-body">{currentShort.body}</p>
+                        <p className="mm-social-short-tip">Tipp: {currentShort.tip}</p>
+                    </div>
                     <div className="mm-social-short-nav">
                         <button type="button" disabled={shortIndex <= 0} onClick={onPrev}>
                             ↑ Előző
                         </button>
                         <span>
-                            {shortIndex + 1}/{shortsLength}
+                            {shortIndex + 1}/{shortsLength || 1}
                         </span>
                         <button type="button" disabled={shortIndex >= shortsLength - 1} onClick={onNext}>
                             Következő ↓
@@ -57,7 +59,7 @@ export default function CommunityShortsTab({
                     </div>
                 </div>
             ) : (
-                <p className="mm-social-muted">Generálj egy AI matek shortot!</p>
+                <p className="mm-social-empty">Generálj egy AI matek shortot — függőleges, Instagram-szerű kártya.</p>
             )}
         </div>
     );

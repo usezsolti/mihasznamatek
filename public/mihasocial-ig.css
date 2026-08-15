@@ -1,0 +1,2057 @@
+/* MihaSocial — Mihaszna Matek brand theme (neon green / pink) */
+body.mm-social-body {
+    --mm-neon-g: #39ff14;
+    --mm-neon-p: #ff49db;
+    --mm-bg-0: #07070d;
+    --mm-bg-1: #0f0f23;
+    --mm-surface: rgba(16, 16, 28, 0.92);
+    --mm-surface-2: rgba(22, 22, 36, 0.95);
+    --mm-border: rgba(57, 255, 20, 0.22);
+    --mm-border-soft: rgba(255, 255, 255, 0.1);
+    --mm-text: #f2f2f2;
+    --mm-muted: #a0a0a0;
+    --mm-link: #9dff3a;
+    background: var(--mm-bg-0) !important;
+    background-image:
+        radial-gradient(ellipse 80% 50% at 10% -10%, rgba(57, 255, 20, 0.14), transparent 55%),
+        radial-gradient(ellipse 70% 45% at 95% 5%, rgba(255, 73, 219, 0.12), transparent 50%),
+        linear-gradient(165deg, #07070d 0%, #0f0f23 42%, #12182a 100%) !important;
+    background-attachment: fixed !important;
+    background-color: #07070d !important;
+    color: var(--mm-text) !important;
+    font-family: "Open Sans", "Segoe UI", system-ui, sans-serif;
+}
+
+body.mm-social-body .mm-ig-link,
+body.mm-social-body .mm-ig-link * {
+    color: var(--mm-link) !important;
+}
+
+body.mm-social-body .mm-social-primary {
+    color: #0a0a12 !important;
+    background: var(--mm-neon-g) !important;
+    background-image: none !important;
+    box-shadow: 0 0 14px rgba(57, 255, 20, 0.35);
+    font-family: "Montserrat", "Segoe UI", sans-serif;
+    font-weight: 700;
+}
+
+body.mm-social-body .mm-social-tabs button.is-on,
+body.mm-social-body .mm-ig-nav-item.is-on {
+    color: var(--mm-neon-g) !important;
+}
+
+.mm-social-page.mm-ig-shell {
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 3.75rem 0 4.5rem !important;
+    min-height: 100vh;
+    background: transparent !important;
+    display: grid;
+    grid-template-columns: 1fr;
+    color: var(--mm-text);
+}
+
+
+.mm-ig-nav {
+    display: none;
+}
+
+.mm-ig-center {
+    width: 100%;
+    max-width: 630px;
+    margin: 0 auto;
+    padding: 0.75rem 0.75rem 1rem;
+}
+
+.mm-ig-rail {
+    display: none;
+}
+
+.mm-ig-wordmark {
+    font-family: "Segoe UI Variable", "Segoe UI", system-ui, sans-serif;
+    font-size: 1.45rem;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    color: #fff !important;
+}
+
+.mm-ig-feed-tabs {
+    display: flex;
+    gap: 0;
+    border-bottom: 1px solid #262626;
+    margin: 0 0 0.85rem;
+}
+
+.mm-ig-feed-tabs button {
+    flex: 1;
+    border: none;
+    background: transparent;
+    color: #a8a8a8 !important;
+    font-weight: 650;
+    font-size: 0.92rem;
+    padding: 0.85rem 0.5rem;
+    cursor: pointer;
+    position: relative;
+}
+
+.mm-ig-feed-tabs button.is-on {
+    color: #f5f5f5 !important;
+}
+
+.mm-ig-feed-tabs button.is-on::after {
+    content: "";
+    position: absolute;
+    left: 18%;
+    right: 18%;
+    bottom: 0;
+    height: 1px;
+    background: #f5f5f5;
+}
+
+.mm-ig-stories {
+    display: flex;
+    gap: 0.85rem;
+    overflow-x: auto;
+    padding: 0.35rem 0.15rem 1rem;
+    margin-bottom: 0.35rem;
+    -webkit-overflow-scrolling: touch;
+}
+
+.mm-ig-story {
+    border: none;
+    background: transparent;
+    color: #f5f5f5;
+    width: 74px;
+    flex: 0 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.35rem;
+    cursor: pointer;
+    padding: 0;
+}
+
+.mm-ig-story-ring {
+    width: 66px;
+    height: 66px;
+    border-radius: 50%;
+    padding: 2px;
+    background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.mm-ig-story.is-self .mm-ig-story-ring {
+    background: linear-gradient(145deg, #393939, #262626);
+}
+
+.mm-ig-story-ring > * {
+    border: 2px solid #000 !important;
+    box-sizing: border-box;
+}
+
+.mm-ig-story-name {
+    font-size: 0.68rem;
+    max-width: 74px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: #f5f5f5 !important;
+}
+
+.mm-ig-link {
+    border: none;
+    background: transparent;
+    color: #39ff14 !important;
+    font-weight: 700;
+    font-size: 0.78rem;
+    cursor: pointer;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.mm-ig-link:hover {
+    color: #e0f1ff !important;
+}
+
+.mm-ig-rail-me,
+.mm-ig-suggest-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+}
+
+.mm-ig-rail-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 1.25rem 0 0.75rem;
+    color: #a8a8a8 !important;
+    font-size: 0.86rem;
+    font-weight: 700;
+}
+
+.mm-ig-suggest-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+}
+
+.mm-ig-rail-foot {
+    margin: 1.5rem 0 0;
+    font-size: 0.72rem;
+    color: #737373 !important;
+    line-height: 1.4;
+}
+
+.mm-ig-ico {
+    width: 24px;
+    height: 24px;
+    display: inline-block;
+    background: currentColor;
+    mask-size: contain;
+    mask-repeat: no-repeat;
+    mask-position: center;
+    -webkit-mask-size: contain;
+    -webkit-mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+}
+
+.mm-ig-ico--feed {
+    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8'%3E%3Cpath d='M3 10.5 12 3l9 7.5V21a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1v-10.5Z'/%3E%3C/svg%3E");
+    -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8'%3E%3Cpath d='M3 10.5 12 3l9 7.5V21a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1v-10.5Z'/%3E%3C/svg%3E");
+}
+
+.mm-ig-ico--explore {
+    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8'%3E%3Ccircle cx='11' cy='11' r='7'/%3E%3Cpath d='m20 20-3.5-3.5'/%3E%3C/svg%3E");
+    -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8'%3E%3Ccircle cx='11' cy='11' r='7'/%3E%3Cpath d='m20 20-3.5-3.5'/%3E%3C/svg%3E");
+}
+
+.mm-ig-ico--shorts {
+    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8'%3E%3Crect x='3' y='3' width='18' height='18' rx='5'/%3E%3Cpath d='M10 8.5v7l6-3.5-6-3.5Z'/%3E%3C/svg%3E");
+    -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8'%3E%3Crect x='3' y='3' width='18' height='18' rx='5'/%3E%3Cpath d='M10 8.5v7l6-3.5-6-3.5Z'/%3E%3C/svg%3E");
+}
+
+.mm-ig-ico--messages {
+    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8'%3E%3Cpath d='M21 12a8.5 8.5 0 0 1-11.7 7.9L3 21l1.3-5.1A8.5 8.5 0 1 1 21 12Z'/%3E%3C/svg%3E");
+    -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8'%3E%3Cpath d='M21 12a8.5 8.5 0 0 1-11.7 7.9L3 21l1.3-5.1A8.5 8.5 0 1 1 21 12Z'/%3E%3C/svg%3E");
+}
+
+.mm-ig-ico--groups {
+    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8'%3E%3Ccircle cx='9' cy='8' r='3'/%3E%3Ccircle cx='17' cy='9' r='2.5'/%3E%3Cpath d='M3.5 19c.8-3 3-4.5 5.5-4.5S13.7 16 14.5 19M14 14.5c2.1.1 3.8 1.2 4.5 3.5'/%3E%3C/svg%3E");
+    -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8'%3E%3Ccircle cx='9' cy='8' r='3'/%3E%3Ccircle cx='17' cy='9' r='2.5'/%3E%3Cpath d='M3.5 19c.8-3 3-4.5 5.5-4.5S13.7 16 14.5 19M14 14.5c2.1.1 3.8 1.2 4.5 3.5'/%3E%3C/svg%3E");
+}
+
+.mm-ig-ico--profile {
+    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8'%3E%3Ccircle cx='12' cy='8' r='3.5'/%3E%3Cpath d='M5 20c1.2-3.5 3.8-5 7-5s5.8 1.5 7 5'/%3E%3C/svg%3E");
+    -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8'%3E%3Ccircle cx='12' cy='8' r='3.5'/%3E%3Cpath d='M5 20c1.2-3.5 3.8-5 7-5s5.8 1.5 7 5'/%3E%3C/svg%3E");
+}
+
+.mm-ig-ico--more {
+    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8'%3E%3Cpath d='M4 7h16M4 12h16M4 17h16'/%3E%3C/svg%3E");
+    -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8'%3E%3Cpath d='M4 7h16M4 12h16M4 17h16'/%3E%3C/svg%3E");
+}
+
+.mm-social-page.mm-ig-shell .mm-social-top {
+    display: none !important;
+}
+
+.mm-social-page.mm-ig-shell .mm-social-tabs.mm-ig-bottom {
+    position: fixed !important;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: auto !important;
+    margin: 0;
+    border-radius: 0;
+    border: none;
+    border-top: 1px solid #262626;
+    background: transparent !important;
+    z-index: 40 !important;
+    padding: 0.35rem 0.25rem calc(0.35rem + env(safe-area-inset-bottom));
+    order: 99;
+}
+
+.mm-social-page.mm-ig-shell .mm-social-tabs.mm-ig-bottom button {
+    color: #f5f5f5;
+    background: transparent;
+}
+
+.mm-social-page.mm-ig-shell .mm-social-tabs.mm-ig-bottom button.is-on {
+    background: transparent;
+    color: #fff !important;
+}
+
+.mm-social-compose-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.mm-social-media-preview {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-top: 0.35rem;
+}
+
+.mm-social-media-preview img,
+.mm-social-media-preview video,
+.mm-social-post-video {
+    width: 100%;
+    max-height: 420px;
+    object-fit: contain;
+    border-radius: 12px;
+    background: #0a0a0a;
+    border: 1px solid #262626;
+}
+
+.mm-social-page.mm-ig-shell .mm-social-compose textarea,
+.mm-social-page.mm-ig-shell .mm-social-compose input,
+.mm-social-page.mm-ig-shell .mm-social-panel input,
+.mm-social-page.mm-ig-shell .mm-social-panel textarea {
+    background: #121212 !important;
+    border-color: #262626 !important;
+    color: #f5f5f5 !important;
+}
+
+.mm-social-page.mm-ig-shell .mm-social-empty {
+    background: #121212;
+    border-color: #262626;
+    color: #a8a8a8 !important;
+}
+
+.mm-social-page.mm-ig-shell .mm-social-muted {
+    color: #a8a8a8 !important;
+}
+
+.mm-social-page.mm-ig-shell .mm-social-ghost {
+    border-color: #262626;
+    color: #f5f5f5;
+}
+
+@media (min-width: 960px) {
+    .mm-social-page.mm-ig-shell {
+        grid-template-columns: 244px minmax(0, 1fr);
+        padding: 0 !important;
+        min-height: 100vh;
+    }
+
+    .mm-social-page.mm-ig-shell.is-feed {
+        grid-template-columns: 244px minmax(0, 630px) 320px;
+        justify-content: center;
+        column-gap: 1.5rem;
+        padding: 0 1rem !important;
+    }
+
+    .mm-ig-nav {
+        display: flex;
+        flex-direction: column;
+        position: sticky;
+        top: 0;
+        height: 100vh;
+        padding: 2rem 0.85rem 1.25rem;
+        border-right: 1px solid #262626;
+        background: #000;
+        z-index: 20;
+    }
+
+    .mm-ig-nav-brand {
+        padding: 0.35rem 0.75rem 1.5rem;
+    }
+
+    .mm-ig-nav-list {
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+        flex: 1;
+    }
+
+    .mm-ig-nav-item {
+        display: flex;
+        align-items: center;
+        gap: 0.85rem;
+        width: 100%;
+        border: none;
+        background: transparent;
+        color: #f5f5f5 !important;
+        text-decoration: none;
+        border-radius: 12px;
+        padding: 0.75rem 0.85rem;
+        font-size: 1rem;
+        font-weight: 500;
+        cursor: pointer;
+        text-align: left;
+    }
+
+    .mm-ig-nav-item:hover {
+        background: #121212;
+    }
+
+    .mm-ig-nav-item.is-on {
+        font-weight: 750;
+    }
+
+    .mm-ig-nav-dash {
+        margin-top: auto;
+    }
+
+    .mm-ig-center {
+        padding: 1.25rem 0 2rem;
+        max-width: 630px;
+        width: 100%;
+    }
+
+    .mm-ig-rail {
+        display: block;
+        position: sticky;
+        top: 2rem;
+        align-self: start;
+        padding: 2rem 0 2rem 0.25rem;
+        max-width: 320px;
+    }
+
+    .mm-social-page.mm-ig-shell .mm-social-tabs.mm-ig-bottom {
+        display: none !important;
+    }
+
+    .mm-social-page.mm-ig-shell {
+        padding-bottom: 0 !important;
+    }
+
+    .mm-social-page.mm-ig-shell.is-messages {
+        grid-template-columns: 244px minmax(0, 1fr);
+    }
+
+    .mm-social-page.mm-ig-shell.is-messages .mm-ig-center {
+        max-width: none;
+        width: 100%;
+        padding: 0;
+        height: 100vh;
+    }
+
+    .mm-social-page.mm-ig-shell.is-messages .mm-social-main {
+        height: 100%;
+    }
+}
+
+@media (min-width: 1260px) {
+    .mm-social-page.mm-ig-shell.is-feed {
+        grid-template-columns: 244px minmax(0, 630px) 340px;
+    }
+
+    .mm-social-page.mm-ig-shell.is-profile {
+        grid-template-columns: 244px minmax(0, 935px);
+        justify-content: center;
+    }
+
+    .mm-social-page.mm-ig-shell.is-profile .mm-ig-center {
+        max-width: 935px;
+    }
+}
+
+/* ---- Instagram-style profile ---- */
+.mm-ig-profile {
+    max-width: 935px;
+    margin: 0 auto;
+    padding: 1.25rem 1rem 2.5rem;
+    color: #f5f5f5 !important;
+    background: transparent !important;
+    min-height: 0 !important;
+    width: auto !important;
+}
+
+.mm-ig-profile-head {
+    display: grid !important;
+    grid-template-columns: 150px 1fr;
+    gap: 2.25rem 3rem;
+    align-items: start !important;
+    margin-bottom: 1rem;
+    min-height: 0 !important;
+    width: auto !important;
+    max-width: 100%;
+    padding: 0 !important;
+    position: relative;
+    background: transparent !important;
+}
+
+.mm-ig-profile-avatar-wrap {
+    position: relative;
+    justify-self: center;
+    width: 150px;
+    height: 150px;
+}
+
+.mm-ig-profile-avatar-wrap > img,
+.mm-ig-profile-avatar-wrap > span {
+    border-radius: 50%;
+}
+
+.mm-ig-profile-note {
+    position: absolute;
+    top: -0.15rem;
+    left: -0.15rem;
+    transform: none;
+    background: #262626;
+    color: #c7c7c7 !important;
+    font-size: 0.72rem;
+    line-height: 1.2;
+    padding: 0.35rem 0.55rem;
+    border-radius: 12px;
+    z-index: 2;
+    white-space: nowrap;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+}
+
+.mm-ig-profile-note::after {
+    content: "";
+    position: absolute;
+    left: 1.1rem;
+    bottom: -5px;
+    width: 10px;
+    height: 10px;
+    background: #262626;
+    border-radius: 2px;
+    transform: rotate(45deg);
+}
+
+.mm-ig-profile-main {
+    min-width: 0;
+    padding-top: 0.15rem;
+}
+
+.mm-ig-profile-top {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.55rem;
+}
+
+.mm-ig-profile-top h1,
+.mm-ig-profile-username {
+    margin: 0 !important;
+    padding: 0 !important;
+    font-size: 1.25rem !important;
+    font-weight: 600 !important;
+    font-family: "Segoe UI Variable", "Segoe UI", system-ui, sans-serif !important;
+    letter-spacing: 0 !important;
+    text-align: left !important;
+    color: #f5f5f5 !important;
+    text-shadow: none !important;
+    line-height: 1.2;
+}
+
+.mm-ig-profile-gear {
+    border: none;
+    background: transparent;
+    color: #f5f5f5 !important;
+    padding: 0.15rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    opacity: 0.95;
+}
+
+.mm-ig-profile-gear:hover {
+    opacity: 0.7;
+}
+
+.mm-ig-profile-name {
+    margin: 0 0 0.65rem !important;
+    font-weight: 400;
+    font-size: 0.95rem !important;
+    color: #f5f5f5 !important;
+    text-align: left !important;
+    line-height: 1.3;
+}
+
+.mm-ig-profile-stats {
+    display: flex;
+    gap: 1.75rem;
+    margin-bottom: 0.85rem;
+    font-size: 0.95rem;
+    color: #f5f5f5 !important;
+}
+
+.mm-ig-profile-stats span {
+    color: #f5f5f5 !important;
+}
+
+.mm-ig-profile-stats strong {
+    font-weight: 700;
+    margin-right: 0.28rem;
+    color: #f5f5f5 !important;
+}
+
+.mm-ig-profile-bio-block {
+    color: #f5f5f5 !important;
+    margin-bottom: 0.35rem;
+}
+
+.mm-ig-profile-bio-block p,
+.mm-ig-profile-bio-block a {
+    text-shadow: none !important;
+}
+
+.mm-ig-profile-category {
+    margin: 0 0 0.1rem !important;
+    color: #a8a8a8 !important;
+    font-size: 0.92rem !important;
+    font-weight: 400;
+    text-align: left !important;
+}
+
+.mm-ig-profile-bio-line {
+    margin: 0 !important;
+    color: #f5f5f5 !important;
+    font-size: 0.92rem !important;
+    line-height: 1.4;
+    text-align: left !important;
+}
+
+.mm-ig-profile-bio-empty,
+.mm-ig-profile-xp {
+    margin: 0.15rem 0 !important;
+    color: #a8a8a8 !important;
+    font-size: 0.9rem !important;
+    text-align: left !important;
+}
+
+.mm-ig-profile-url-plain {
+    margin: 0.15rem 0 0 !important;
+    color: #f5f5f5 !important;
+    font-size: 0.92rem !important;
+    text-align: left !important;
+    word-break: break-all;
+}
+
+.mm-ig-profile-links {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.85rem 1.1rem;
+    margin-top: 0.45rem;
+}
+
+.mm-ig-profile-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    color: #e0f1ff !important;
+    font-weight: 650;
+    font-size: 0.9rem;
+    text-decoration: none;
+}
+
+.mm-ig-profile-link svg {
+    flex-shrink: 0;
+    color: #39ff14;
+}
+
+.mm-ig-profile-threads {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    color: #f5f5f5 !important;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.mm-ig-profile-threads svg {
+    flex-shrink: 0;
+    opacity: 0.9;
+}
+
+.mm-ig-profile-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.55rem;
+    margin: 0.35rem 0 1.15rem;
+}
+
+.mm-ig-btn {
+    border: none;
+    background: #262626;
+    color: #f5f5f5 !important;
+    font-weight: 650;
+    font-size: 0.86rem;
+    border-radius: 8px;
+    padding: 0.55rem 1rem;
+    cursor: pointer;
+    text-transform: none;
+    box-shadow: none;
+}
+
+.mm-ig-btn-wide {
+    width: 100%;
+    text-align: center;
+}
+
+.mm-ig-btn.is-primary {
+    background: #39ff14;
+    color: #fff !important;
+}
+
+.mm-ig-btn:disabled {
+    opacity: 0.55;
+    cursor: default;
+}
+
+.mm-ig-profile-edit {
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+    margin-bottom: 1.25rem;
+    padding: 0.85rem;
+    border: 1px solid #262626;
+    border-radius: 12px;
+    background: #121212;
+}
+
+.mm-ig-profile-edit input,
+.mm-ig-profile-edit textarea {
+    background: transparent !important;
+    border: 1px solid #262626 !important;
+    color: #f5f5f5 !important;
+    border-radius: 10px;
+    padding: 0.55rem 0.7rem;
+}
+
+.mm-ig-highlights {
+    display: flex;
+    gap: 1rem;
+    padding: 0.5rem 0 1.25rem;
+    overflow-x: auto;
+}
+
+.mm-ig-highlight {
+    border: none;
+    background: transparent;
+    color: #f5f5f5;
+    width: 74px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.35rem;
+    cursor: pointer;
+    padding: 0;
+}
+
+.mm-ig-highlight span {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    border: 1px solid #262626;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    color: #f5f5f5;
+}
+
+.mm-ig-highlight small {
+    color: #f5f5f5 !important;
+    font-size: 0.72rem;
+}
+
+.mm-ig-profile-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 3rem;
+    border-top: 1px solid #262626;
+}
+
+.mm-ig-profile-tabs button {
+    border: none;
+    background: transparent;
+    color: #a8a8a8;
+    padding: 0.85rem 0.5rem;
+    cursor: pointer;
+    position: relative;
+    font-size: 1.1rem;
+}
+
+.mm-ig-profile-tabs button.is-on {
+    color: #f5f5f5;
+}
+
+.mm-ig-profile-tabs button.is-on::before {
+    content: "";
+    position: absolute;
+    top: -1px;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: #f5f5f5;
+}
+
+.mm-ig-post-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.2rem;
+    margin-top: 0.15rem;
+}
+
+.mm-ig-grid-cell {
+    position: relative;
+    aspect-ratio: 1;
+    border: none;
+    padding: 0;
+    background: #121212;
+    cursor: pointer;
+    overflow: hidden;
+}
+
+.mm-ig-grid-cell img,
+.mm-ig-grid-cell video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.mm-ig-grid-text {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    padding: 0.75rem;
+    text-align: center;
+    font-size: 0.78rem;
+    color: #f5f5f5 !important;
+    line-height: 1.35;
+}
+
+.mm-ig-grid-video {
+    position: absolute;
+    top: 0.45rem;
+    right: 0.45rem;
+    color: #fff;
+    font-size: 0.85rem;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.7);
+}
+
+.mm-ig-profile-empty {
+    grid-column: 1 / -1;
+    text-align: center;
+    color: #a8a8a8 !important;
+    padding: 2rem 1rem;
+}
+
+.mm-ig-lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 80;
+    background: rgba(0, 0, 0, 0.82);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+}
+
+.mm-ig-lightbox-close {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.9rem;
+    border: none;
+    background: transparent;
+    color: #fff;
+    font-size: 2rem;
+    cursor: pointer;
+}
+
+.mm-ig-lightbox-card {
+    width: min(560px, 100%);
+    max-height: 90vh;
+    overflow: auto;
+}
+
+/* Floating chat dock */
+.mm-chat-dock {
+    position: fixed;
+    right: 1rem;
+    bottom: 4.5rem;
+    width: min(360px, calc(100vw - 1.5rem));
+    height: min(460px, calc(100vh - 6rem));
+    z-index: 70;
+    background: #262626;
+    border: 1px solid #363636;
+    border-radius: 14px 14px 0 0;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.55);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    color: #f5f5f5;
+}
+
+.mm-chat-dock-head {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    padding: 0.65rem 0.75rem;
+    background: #1a1a1a;
+    border-bottom: 1px solid #363636;
+}
+
+.mm-chat-dock-head strong {
+    flex: 1;
+    font-size: 0.9rem;
+    color: #f5f5f5 !important;
+}
+
+.mm-chat-dock-actions {
+    display: flex;
+    gap: 0.25rem;
+}
+
+.mm-chat-dock-actions button {
+    border: none;
+    background: transparent;
+    color: #f5f5f5;
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1.1rem;
+}
+
+.mm-chat-dock-actions button:hover {
+    background: #333;
+}
+
+.mm-chat-dock-list {
+    flex: 1;
+    overflow-y: auto;
+    padding: 0.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+    background: #000;
+    min-height: 0;
+}
+
+.mm-chat-dock-empty {
+    margin: auto;
+    color: #a8a8a8 !important;
+    font-size: 0.85rem;
+}
+
+.mm-chat-dock-msg {
+    display: flex;
+    align-items: flex-end;
+    gap: 0.35rem;
+    max-width: 100%;
+}
+
+.mm-chat-dock-msg.is-mine {
+    justify-content: flex-end;
+}
+
+.mm-chat-dock-bubble {
+    max-width: 78%;
+    background: #262626;
+    border-radius: 18px;
+    padding: 0.55rem 0.75rem;
+    font-size: 0.88rem;
+    line-height: 1.4;
+    white-space: pre-wrap;
+    color: #f5f5f5 !important;
+}
+
+.mm-chat-dock-msg.is-mine .mm-chat-dock-bubble {
+    background: #3797f0;
+}
+
+.mm-chat-dock-compose {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.55rem 0.65rem;
+    border-top: 1px solid #363636;
+    background: #1a1a1a;
+}
+
+.mm-chat-dock-compose input {
+    flex: 1;
+    border: 1px solid #363636 !important;
+    border-radius: 999px !important;
+    background: transparent !important;
+    color: #f5f5f5 !important;
+    padding: 0.5rem 0.75rem !important;
+    outline: none;
+}
+
+.mm-chat-dock-compose button {
+    border: none;
+    background: transparent;
+    color: #39ff14 !important;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.mm-chat-dock-tools {
+    color: #f5f5f5;
+    padding: 0 0.35rem;
+}
+
+@media (max-width: 720px) {
+    .mm-ig-profile-head {
+        grid-template-columns: 86px 1fr;
+        gap: 1rem;
+    }
+
+    .mm-ig-profile-avatar-wrap {
+        width: 86px;
+        height: 86px;
+    }
+
+    .mm-ig-profile-avatar-wrap > .mm-social-avatar {
+        width: 86px !important;
+        height: 86px !important;
+    }
+
+    .mm-ig-profile-note {
+        font-size: 0.65rem;
+        padding: 0.28rem 0.45rem;
+    }
+
+    .mm-ig-profile-top h1,
+    .mm-ig-profile-username {
+        font-size: 1.1rem !important;
+    }
+
+    .mm-ig-profile-stats {
+        gap: 0.85rem;
+        font-size: 0.85rem;
+    }
+
+    .mm-ig-profile-actions {
+        gap: 0.4rem;
+    }
+
+    .mm-chat-dock {
+        right: 0;
+        left: 0;
+        bottom: 3.6rem;
+        width: 100%;
+        border-radius: 14px 14px 0 0;
+        height: min(55vh, 420px);
+    }
+}
+
+@media (min-width: 960px) {
+    .mm-chat-dock {
+        bottom: 1rem;
+    }
+}
+
+/* ---- Instagram-style Direct Messages ---- */
+.mm-dm {
+    display: grid;
+    grid-template-columns: 1fr;
+    height: calc(100vh - 4.5rem);
+    min-height: 480px;
+    background: #000;
+    border: 1px solid #262626;
+    border-radius: 0;
+    overflow: hidden;
+    color: #f5f5f5;
+}
+
+.mm-dm-inbox {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    background: #000;
+    border-right: 1px solid #262626;
+}
+
+.mm-dm-inbox-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.1rem 1rem 0.75rem;
+}
+
+.mm-dm-user-menu {
+    border: none;
+    background: transparent;
+    color: #f5f5f5 !important;
+    font-size: 1.15rem;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    cursor: pointer;
+    padding: 0;
+}
+
+.mm-dm-chevron {
+    font-size: 0.75rem;
+    opacity: 0.7;
+}
+
+.mm-dm-compose-ico {
+    width: 36px;
+    height: 36px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.15rem;
+    color: #f5f5f5;
+}
+
+.mm-dm-tabs {
+    display: flex;
+    gap: 1.25rem;
+    padding: 0 1rem;
+    border-bottom: 1px solid #262626;
+}
+
+.mm-dm-tabs button {
+    border: none;
+    background: transparent;
+    color: #a8a8a8 !important;
+    font-weight: 650;
+    font-size: 0.9rem;
+    padding: 0.75rem 0;
+    cursor: pointer;
+    position: relative;
+}
+
+.mm-dm-tabs button.is-on {
+    color: #f5f5f5 !important;
+}
+
+.mm-dm-tabs button.is-on::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 1px;
+    background: #f5f5f5;
+}
+
+.mm-dm-tabs button:disabled {
+    opacity: 0.45;
+    cursor: default;
+}
+
+.mm-dm-search {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 0.75rem 1rem;
+    padding: 0.55rem 0.85rem;
+    border-radius: 12px;
+    background: #262626;
+}
+
+.mm-dm-search-ico {
+    color: #a8a8a8;
+    font-size: 1rem;
+}
+
+.mm-dm-search input {
+    flex: 1;
+    border: none !important;
+    background: transparent !important;
+    color: #f5f5f5 !important;
+    outline: none;
+    font-size: 0.92rem;
+    padding: 0 !important;
+}
+
+.mm-dm-note {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.35rem;
+    padding: 0.35rem 1rem 0.85rem;
+    position: relative;
+}
+
+.mm-dm-note-bubble {
+    position: absolute;
+    left: 4.2rem;
+    top: 0.2rem;
+    background: #262626;
+    color: #f5f5f5 !important;
+    font-size: 0.72rem;
+    padding: 0.35rem 0.55rem;
+    border-radius: 12px;
+    max-width: 110px;
+}
+
+.mm-dm-note-label {
+    font-size: 0.72rem;
+    color: #a8a8a8 !important;
+    margin-top: 0.15rem;
+}
+
+.mm-dm-inbox-list {
+    flex: 1;
+    overflow-y: auto;
+    min-height: 0;
+}
+
+.mm-dm-empty {
+    padding: 1.25rem 1rem;
+    color: #a8a8a8 !important;
+    font-size: 0.9rem;
+    line-height: 1.4;
+}
+
+.mm-dm-row {
+    width: 100%;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 0.75rem;
+    align-items: center;
+    border: none;
+    background: transparent;
+    color: #f5f5f5;
+    text-align: left;
+    padding: 0.65rem 1rem;
+    cursor: pointer;
+}
+
+.mm-dm-row:hover {
+    background: #121212;
+}
+
+.mm-dm-row.is-on {
+    background: #262626;
+}
+
+.mm-dm-row-meta {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+}
+
+.mm-dm-row-meta strong {
+    font-size: 0.92rem;
+    font-weight: 650;
+    color: #f5f5f5 !important;
+}
+
+.mm-dm-row-meta small {
+    color: #a8a8a8 !important;
+    font-size: 0.8rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.mm-dm-row-time {
+    color: #a8a8a8 !important;
+    font-size: 0.72rem;
+    align-self: start;
+    margin-top: 0.2rem;
+}
+
+.mm-dm-thread {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    background: #000;
+}
+
+.mm-dm-thread-head {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.85rem 1rem;
+    border-bottom: 1px solid #262626;
+}
+
+.mm-dm-back {
+    display: none;
+    border: none;
+    background: transparent;
+    color: #f5f5f5;
+    font-size: 1.25rem;
+    cursor: pointer;
+    padding: 0.2rem 0.35rem;
+}
+
+.mm-dm-thread-title {
+    min-width: 0;
+    flex: 1;
+}
+
+.mm-dm-thread-title strong,
+.mm-dm-thread-title small {
+    display: block;
+}
+
+.mm-dm-thread-title strong {
+    font-size: 0.95rem;
+    color: #f5f5f5 !important;
+}
+
+.mm-dm-thread-title small {
+    color: #a8a8a8 !important;
+    font-size: 0.75rem;
+}
+
+.mm-dm-thread-actions {
+    display: flex;
+    gap: 0.85rem;
+    color: #f5f5f5;
+    font-size: 1.05rem;
+    opacity: 0.9;
+}
+
+.mm-dm-thread-list {
+    flex: 1;
+    overflow-y: auto;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    min-height: 0;
+}
+
+.mm-dm-thread-empty {
+    margin: auto;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.45rem;
+    color: #a8a8a8;
+}
+
+.mm-dm-thread-empty strong {
+    color: #f5f5f5 !important;
+    font-size: 1.1rem;
+}
+
+.mm-dm-msg {
+    display: flex;
+    align-items: flex-end;
+    gap: 0.45rem;
+    max-width: 100%;
+}
+
+.mm-dm-msg.is-mine {
+    justify-content: flex-end;
+}
+
+.mm-dm-msg-av {
+    width: 28px;
+    flex-shrink: 0;
+}
+
+.mm-dm-bubble {
+    max-width: min(70%, 420px);
+    padding: 0.65rem 0.9rem 0.4rem;
+    border-radius: 22px;
+    background: #262626;
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+}
+
+.mm-dm-msg.is-mine .mm-dm-bubble {
+    background: #3797f0;
+    color: #fff;
+}
+
+.mm-dm-bubble span {
+    white-space: pre-wrap;
+    line-height: 1.4;
+    font-size: 0.92rem;
+    color: inherit !important;
+}
+
+.mm-dm-bubble time {
+    font-size: 0.65rem;
+    opacity: 0.7;
+    align-self: flex-end;
+}
+
+.mm-dm-compose {
+    padding: 0.75rem 1rem 1rem;
+    border-top: 1px solid #262626;
+}
+
+.mm-dm-compose-bar {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    padding: 0.35rem 0.55rem 0.35rem 0.65rem;
+    border: 1px solid #262626;
+    border-radius: 999px;
+    background: #000;
+}
+
+.mm-dm-emoji {
+    font-size: 1.25rem;
+    opacity: 0.85;
+}
+
+.mm-dm-compose-bar input {
+    flex: 1;
+    border: none !important;
+    background: transparent !important;
+    color: #f5f5f5 !important;
+    outline: none;
+    font-size: 0.95rem;
+    padding: 0.55rem 0.2rem !important;
+}
+
+.mm-dm-send {
+    border: none;
+    background: transparent;
+    color: #39ff14 !important;
+    font-weight: 700;
+    font-size: 0.9rem;
+    cursor: pointer;
+    padding: 0.4rem 0.65rem;
+}
+
+.mm-dm-compose-tools {
+    display: inline-flex;
+    gap: 0.65rem;
+    padding-right: 0.35rem;
+    font-size: 1.15rem;
+    color: #f5f5f5;
+}
+
+.mm-dm-placeholder {
+    margin: auto;
+    text-align: center;
+    max-width: 320px;
+    padding: 2rem;
+}
+
+.mm-dm-placeholder-icon {
+    width: 72px;
+    height: 72px;
+    margin: 0 auto 1rem;
+    border: 2px solid #f5f5f5;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+}
+
+.mm-dm-placeholder h3 {
+    margin: 0 0 0.4rem;
+    font-size: 1.35rem;
+    color: #f5f5f5 !important;
+}
+
+.mm-dm-placeholder p {
+    margin: 0;
+    color: #a8a8a8 !important;
+    line-height: 1.45;
+}
+
+@media (max-width: 859px) {
+    .mm-dm {
+        height: calc(100vh - 4.5rem);
+        border: none;
+    }
+
+    .mm-dm.has-thread .mm-dm-inbox {
+        display: none;
+    }
+
+    .mm-dm:not(.has-thread) .mm-dm-thread {
+        display: none;
+    }
+
+    .mm-dm-back {
+        display: inline-flex;
+    }
+}
+
+@media (min-width: 860px) {
+    .mm-dm {
+        grid-template-columns: minmax(280px, 360px) 1fr;
+        height: 100vh;
+        border-left: none;
+        border-top: none;
+        border-bottom: none;
+    }
+}
+
+/* ---- Group learning room ---- */
+.mm-social-group-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+    margin-top: 0.65rem;
+}
+
+.mm-group-room {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    min-height: min(70vh, 640px);
+}
+
+.mm-group-room-head {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.mm-group-room-title h2 {
+    margin: 0;
+    font-size: 1.15rem;
+    color: #f5f5f5 !important;
+    text-shadow: none !important;
+}
+
+.mm-group-room-title p {
+    margin: 0.15rem 0 0;
+    color: #a8a8a8 !important;
+    font-size: 0.85rem;
+}
+
+.mm-group-room-hint {
+    margin: 0;
+    color: #a8a8a8 !important;
+    font-size: 0.9rem;
+}
+
+.mm-group-room-tabs {
+    display: flex;
+    gap: 0.35rem;
+    border-bottom: 1px solid #262626;
+    padding-bottom: 0.35rem;
+}
+
+.mm-group-room-tabs button {
+    border: none;
+    background: transparent;
+    color: #a8a8a8 !important;
+    font-weight: 650;
+    padding: 0.55rem 0.85rem;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.mm-group-room-tabs button.is-on {
+    background: #262626;
+    color: #f5f5f5 !important;
+}
+
+.mm-group-chat {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-height: 360px;
+    border: 1px solid #262626;
+    border-radius: 14px;
+    overflow: hidden;
+    background: #0a0a0a;
+}
+
+.mm-group-chat-list {
+    flex: 1;
+    overflow-y: auto;
+    padding: 0.85rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+}
+
+.mm-group-bubble {
+    display: flex;
+    gap: 0.45rem;
+    align-items: flex-end;
+    max-width: 85%;
+}
+
+.mm-group-bubble.is-mine {
+    align-self: flex-end;
+}
+
+.mm-group-bubble strong {
+    display: block;
+    font-size: 0.72rem;
+    color: #a8a8a8 !important;
+    margin-bottom: 0.15rem;
+}
+
+.mm-group-bubble p {
+    margin: 0;
+    background: #262626;
+    color: #f5f5f5 !important;
+    padding: 0.45rem 0.7rem;
+    border-radius: 14px 14px 14px 4px;
+    line-height: 1.4;
+    white-space: pre-wrap;
+}
+
+.mm-group-bubble.is-mine p {
+    background: #39ff14;
+    border-radius: 14px 14px 4px 14px;
+}
+
+.mm-group-chat-compose {
+    display: flex;
+    gap: 0.45rem;
+    padding: 0.65rem;
+    border-top: 1px solid #262626;
+    background: #121212;
+}
+
+.mm-group-chat-compose input {
+    flex: 1;
+    border: 1px solid #262626 !important;
+    background: transparent !important;
+    color: #f5f5f5 !important;
+    border-radius: 10px;
+    padding: 0.55rem 0.7rem;
+}
+
+.mm-group-call,
+.mm-group-board {
+    border: 1px solid #262626;
+    border-radius: 14px;
+    padding: 1rem;
+    background: #0a0a0a;
+    min-height: 360px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.mm-group-call-start {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    align-items: flex-start;
+    margin: auto 0;
+}
+
+.mm-group-call-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.mm-group-call-frame {
+    width: 100%;
+    flex: 1;
+    min-height: 420px;
+    border: none;
+    border-radius: 10px;
+    background: #000;
+}
+
+.mm-group-board p {
+    color: #f5f5f5 !important;
+    margin: 0;
+    line-height: 1.45;
+}
+
+/* ---- MihaSocial boot / loading splash ---- */
+.mm-ig-boot {
+    min-height: 100vh !important;
+    display: grid !important;
+    place-items: center;
+    padding: 0 !important;
+    background: transparent !important;
+}
+
+.mm-ig-boot-stage {
+    position: relative;
+    width: min(420px, 92vw);
+    min-height: 420px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1.25rem;
+    text-align: center;
+    overflow: hidden;
+}
+
+.mm-ig-boot-glow {
+    position: absolute;
+    inset: 18% 10% 28%;
+    background:
+        radial-gradient(circle at 35% 40%, rgba(0, 149, 246, 0.28), transparent 55%),
+        radial-gradient(circle at 70% 55%, rgba(225, 48, 108, 0.22), transparent 50%),
+        radial-gradient(circle at 50% 70%, rgba(252, 175, 69, 0.16), transparent 45%);
+    filter: blur(18px);
+    animation: mm-ig-boot-breathe 2.8s ease-in-out infinite;
+    pointer-events: none;
+}
+
+.mm-ig-boot-orbit {
+    position: absolute;
+    width: 220px;
+    height: 220px;
+    border-radius: 50%;
+    animation: mm-ig-boot-spin 8s linear infinite;
+    pointer-events: none;
+}
+
+.mm-ig-boot-orbit span {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+    box-shadow: 0 0 12px rgba(220, 39, 67, 0.55);
+}
+
+.mm-ig-boot-orbit span:nth-child(1) { top: 0; left: 50%; transform: translateX(-50%); }
+.mm-ig-boot-orbit span:nth-child(2) { right: 8%; top: 62%; }
+.mm-ig-boot-orbit span:nth-child(3) { left: 10%; top: 58%; width: 7px; height: 7px; opacity: 0.75; }
+
+.mm-ig-boot-mark {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.65rem;
+    animation: mm-ig-boot-rise 0.7s ease-out both;
+}
+
+.mm-ig-boot-ring {
+    width: 92px;
+    height: 92px;
+    border-radius: 50%;
+    padding: 3px;
+    background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+    display: grid;
+    place-items: center;
+    animation: mm-ig-boot-pulse 1.8s ease-in-out infinite;
+}
+
+.mm-ig-boot-logo {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: #000;
+    display: grid;
+    place-items: center;
+    font-size: 2.1rem;
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    color: #fff !important;
+    font-family: "Segoe UI Variable", "Segoe UI", system-ui, sans-serif;
+}
+
+.mm-ig-boot-title {
+    margin: 0.35rem 0 0 !important;
+    padding: 0 !important;
+    font-size: 2rem !important;
+    font-weight: 700 !important;
+    letter-spacing: -0.04em;
+    color: #fff !important;
+    text-align: center !important;
+    text-shadow: none !important;
+    font-family: "Segoe UI Variable", "Segoe UI", system-ui, sans-serif !important;
+}
+
+.mm-ig-boot-sub {
+    margin: 0 !important;
+    color: #a8a8a8 !important;
+    font-size: 0.95rem !important;
+    letter-spacing: 0.02em;
+    animation: mm-ig-boot-fade 1.4s ease-in-out infinite;
+}
+
+.mm-ig-boot-bar {
+    position: relative;
+    z-index: 1;
+    width: min(220px, 70%);
+    height: 3px;
+    border-radius: 999px;
+    background: #1a1a1a;
+    overflow: hidden;
+}
+
+.mm-ig-boot-bar span {
+    display: block;
+    height: 100%;
+    width: 42%;
+    border-radius: inherit;
+    background: linear-gradient(90deg, #f09433, #e1306c, #833ab4, #39ff14);
+    background-size: 200% 100%;
+    animation: mm-ig-boot-slide 1.15s ease-in-out infinite;
+}
+
+.mm-ig-boot-dots {
+    position: relative;
+    z-index: 1;
+    list-style: none;
+    display: flex;
+    gap: 0.45rem;
+    margin: 0;
+    padding: 0;
+}
+
+.mm-ig-boot-dots li {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #3a3a3a;
+    animation: mm-ig-boot-dot 1.1s ease-in-out infinite;
+}
+
+.mm-ig-boot-dots li:nth-child(2) { animation-delay: 0.15s; }
+.mm-ig-boot-dots li:nth-child(3) { animation-delay: 0.3s; }
+
+@keyframes mm-ig-boot-spin {
+    to { transform: rotate(360deg); }
+}
+
+@keyframes mm-ig-boot-breathe {
+    0%, 100% { opacity: 0.7; transform: scale(0.96); }
+    50% { opacity: 1; transform: scale(1.05); }
+}
+
+@keyframes mm-ig-boot-pulse {
+    0%, 100% { transform: scale(1); filter: brightness(1); }
+    50% { transform: scale(1.04); filter: brightness(1.12); }
+}
+
+@keyframes mm-ig-boot-rise {
+    from { opacity: 0; transform: translateY(14px) scale(0.96); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes mm-ig-boot-fade {
+    0%, 100% { opacity: 0.55; }
+    50% { opacity: 1; }
+}
+
+@keyframes mm-ig-boot-slide {
+    0% { transform: translateX(-120%); }
+    100% { transform: translateX(280%); }
+}
+
+@keyframes mm-ig-boot-dot {
+    0%, 100% { background: #3a3a3a; transform: translateY(0); }
+    50% { background: #f5f5f5; transform: translateY(-3px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .mm-ig-boot-glow,
+    .mm-ig-boot-orbit,
+    .mm-ig-boot-ring,
+    .mm-ig-boot-sub,
+    .mm-ig-boot-bar span,
+    .mm-ig-boot-dots li {
+        animation: none !important;
+    }
+}
+
+/* ---- Mihaszna brand overrides (keep IG layout, site look) ---- */
+body.mm-social-body .mm-ig-wordmark {
+    font-family: "Playfair Display", Georgia, serif !important;
+    font-weight: 700 !important;
+    font-size: 1.55rem !important;
+    letter-spacing: -0.02em;
+    background: linear-gradient(45deg, #39ff14, #ff49db);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent !important;
+    filter: drop-shadow(0 0 10px rgba(57, 255, 20, 0.35));
+}
+
+body.mm-social-body .mm-ig-nav {
+    background: rgba(8, 8, 16, 0.88) !important;
+    border-right: 1px solid rgba(57, 255, 20, 0.18) !important;
+    backdrop-filter: blur(12px);
+}
+
+body.mm-social-body .mm-ig-nav-item:hover {
+    background: rgba(57, 255, 20, 0.08) !important;
+}
+
+body.mm-social-body .mm-ig-nav-item.is-on {
+    background: rgba(57, 255, 20, 0.12) !important;
+    color: #39ff14 !important;
+}
+
+body.mm-social-body .mm-ig-ico {
+    background: currentColor;
+}
+
+body.mm-social-body .mm-ig-story-ring,
+body.mm-social-body .mm-ig-boot-ring {
+    background: linear-gradient(45deg, #39ff14, #7cff5a, #ff49db, #ff69b4) !important;
+}
+
+body.mm-social-body .mm-ig-feed-tabs {
+    border-bottom-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+body.mm-social-body .mm-ig-feed-tabs button.is-on {
+    color: #39ff14 !important;
+}
+
+body.mm-social-body .mm-ig-feed-tabs button.is-on::after {
+    background: linear-gradient(90deg, #39ff14, #ff49db) !important;
+    height: 2px !important;
+}
+
+body.mm-social-body .mm-ig-btn {
+    background: rgba(255, 255, 255, 0.08) !important;
+    border: 1px solid rgba(57, 255, 20, 0.2) !important;
+    color: #f2f2f2 !important;
+    box-shadow: none;
+}
+
+body.mm-social-body .mm-ig-btn.is-primary,
+body.mm-social-body .mm-ig-btn.is-primary * {
+    background: #39ff14 !important;
+    color: #0a0a12 !important;
+    border-color: transparent !important;
+    box-shadow: 0 0 16px rgba(57, 255, 20, 0.35);
+}
+
+body.mm-social-body .mm-social-compose,
+body.mm-social-body .mm-social-group,
+body.mm-social-body .mm-social-person-card,
+body.mm-social-body .mm-social-gate,
+body.mm-social-body .mm-ig-profile-edit,
+body.mm-social-body .mm-group-chat,
+body.mm-social-body .mm-group-call,
+body.mm-social-body .mm-group-board,
+body.mm-social-body .mm-chat-dock,
+body.mm-social-body .mm-dm {
+    background: rgba(16, 16, 28, 0.92) !important;
+    border: 1px solid rgba(57, 255, 20, 0.18) !important;
+    box-shadow: 0 0 24px rgba(57, 255, 20, 0.06);
+}
+
+body.mm-social-body .mm-social-post,
+body.mm-social-body .mm-ig-grid-cell {
+    background: rgba(12, 12, 20, 0.9) !important;
+    border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+body.mm-social-body .mm-ig-profile-username,
+body.mm-social-body .mm-ig-boot-title {
+    font-family: "Playfair Display", Georgia, serif !important;
+    background: linear-gradient(45deg, #39ff14, #ff49db);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent !important;
+    text-shadow: none !important;
+    filter: drop-shadow(0 0 8px rgba(57, 255, 20, 0.25));
+}
+
+body.mm-social-body .mm-ig-profile-note {
+    background: rgba(20, 20, 32, 0.95) !important;
+    border: 1px solid rgba(57, 255, 20, 0.25);
+    color: #dfffd0 !important;
+}
+
+body.mm-social-body .mm-ig-profile-note::after {
+    background: rgba(20, 20, 32, 0.95) !important;
+}
+
+body.mm-social-body .mm-ig-profile-tabs,
+body.mm-social-body .mm-ig-profile-actions .mm-ig-btn {
+    border-color: rgba(57, 255, 20, 0.2) !important;
+}
+
+body.mm-social-body .mm-ig-profile-tabs button.is-on {
+    color: #39ff14 !important;
+}
+
+body.mm-social-body .mm-ig-profile-tabs button.is-on::before {
+    background: linear-gradient(90deg, #39ff14, #ff49db) !important;
+}
+
+body.mm-social-body .mm-ig-highlight span {
+    border-color: rgba(57, 255, 20, 0.35) !important;
+    box-shadow: 0 0 12px rgba(57, 255, 20, 0.15);
+}
+
+body.mm-social-body .mm-group-bubble.is-mine p,
+body.mm-social-body .mm-dm-bubble.is-mine,
+body.mm-social-body .mm-chat-dock-bubble.is-mine {
+    background: linear-gradient(135deg, rgba(57, 255, 20, 0.45), rgba(57, 255, 20, 0.22)) !important;
+    color: #f2f2f2 !important;
+}
+
+body.mm-social-body .mm-group-room-tabs button.is-on {
+    background: rgba(57, 255, 20, 0.14) !important;
+    color: #39ff14 !important;
+}
+
+body.mm-social-body .mm-ig-rail-head span,
+body.mm-social-body .mm-social-muted,
+body.mm-social-body .mm-ig-profile-category,
+body.mm-social-body .mm-ig-profile-bio-empty,
+body.mm-social-body .mm-ig-boot-sub {
+    color: #a0a0a0 !important;
+}
+
+body.mm-social-body .mm-social-tabs.mm-ig-bottom {
+    background: rgba(10, 10, 18, 0.94) !important;
+    border: 1px solid rgba(57, 255, 20, 0.22) !important;
+    box-shadow: 0 0 20px rgba(57, 255, 20, 0.12);
+}
+
+body.mm-social-body .mm-ig-boot {
+    background: transparent !important;
+}
+
+body.mm-social-body .mm-ig-boot-glow {
+    background:
+        radial-gradient(circle at 35% 40%, rgba(57, 255, 20, 0.32), transparent 55%),
+        radial-gradient(circle at 70% 55%, rgba(255, 73, 219, 0.26), transparent 50%) !important;
+}
+
+body.mm-social-body .mm-ig-boot-bar span,
+body.mm-social-body .mm-ig-boot-orbit span {
+    background: linear-gradient(90deg, #39ff14, #ff49db, #39ff14) !important;
+}
+
+body.mm-social-body .mm-ig-boot-logo {
+    background: #07070d !important;
+    color: #39ff14 !important;
+    text-shadow: 0 0 12px rgba(57, 255, 20, 0.5);
+    font-family: "Playfair Display", Georgia, serif !important;
+}
+
+body.mm-social-body input,
+body.mm-social-body textarea {
+    border-color: rgba(57, 255, 20, 0.25) !important;
+    background: rgba(0, 0, 0, 0.35) !important;
+    color: #f2f2f2 !important;
+}
+
+body.mm-social-body .mm-social-avatar-fallback {
+    background: linear-gradient(135deg, rgba(57, 255, 20, 0.25), rgba(255, 73, 219, 0.2)) !important;
+    color: #39ff14 !important;
+    border: 1px solid rgba(57, 255, 20, 0.35);
+}
+
+body.mm-social-body .mm-ig-profile-avatar-wrap > .mm-social-avatar {
+    border: 3px solid #39ff14;
+    box-shadow: 0 0 20px rgba(57, 255, 20, 0.45);
+}
+

@@ -272,6 +272,22 @@ export async function updateSocialProfile(
 
 
 
+/** Dashboard / Auth profilkép és név → socialProfiles szinkron */
+export async function syncSocialIdentity(
+    uid: string,
+    patch: { photoURL?: string; displayName?: string }
+): Promise<void> {
+    const firebase = fb();
+    const data: Record<string, unknown> = {
+        updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+    };
+    if (patch.photoURL !== undefined) data.photoURL = patch.photoURL;
+    if (patch.displayName !== undefined) data.displayName = String(patch.displayName).slice(0, 40);
+    await db().collection('socialProfiles').doc(uid).set(data, { merge: true });
+}
+
+
+
 export async function listProfiles(limit = 24): Promise<SocialProfile[]> {
 
     const mapDoc = (doc: any): SocialProfile => mapSocialProfile(doc.id, doc.data() || {});
@@ -441,53 +457,31 @@ function mapPost(doc: any): SocialPost {
 
 
 export async function createPost(
-
     author: SocialProfile,
-
     text: string,
-
-    imageUrl?: string | null
-
+    imageUrl?: string | null,
+    videoUrl?: string | null
 ): Promise<SocialPost> {
-
     const firebase = fb();
-
     const firestore = db();
-
-    const cleaned = normalizePostText(text);
-
+    const hasMedia = !!(imageUrl || videoUrl);
+    const cleaned = normalizePostText(text, { allowEmpty: hasMedia });
     const createdAtMs = Date.now();
-
-    const fields = buildPostFields(author, cleaned, createdAtMs, imageUrl || null);
-
+    const fields = buildPostFields(author, cleaned, createdAtMs, imageUrl || null, videoUrl || null);
     const ref = firestore.collection('posts').doc();
-
     const payload = {
-
         ...fields,
-
         createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-
     };
-
     const batch = firestore.batch();
-
     batch.set(ref, payload);
-
     batch.set(
-
         firestore.collection('socialProfiles').doc(author.uid),
-
         { postCount: firebase.firestore.FieldValue.increment(1) },
-
         { merge: true }
-
     );
-
     await batch.commit();
-
     return { id: ref.id, ...fields, createdAt: payload.createdAt };
-
 }
 
 
