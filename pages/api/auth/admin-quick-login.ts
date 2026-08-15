@@ -13,6 +13,13 @@ type IdToolkitAuth = {
     error?: { message?: string };
 };
 
+function envFlagOn(name: string): boolean {
+    const v = String(process.env[name] || '')
+        .trim()
+        .toLowerCase();
+    return v === '1' || v === 'true' || v === 'yes';
+}
+
 async function idToolkit(
     path: 'signInWithPassword' | 'signUp',
     email: string,
@@ -32,8 +39,7 @@ async function idToolkit(
 
 /**
  * POST /api/auth/admin-quick-login
- * Egykattintás — Admin SDK (custom token) vagy Identity Toolkit (csak ha ADMIN_LOGIN_PASSWORD env be van állítva).
- * SOHA ne hardcode-olj jelszót ebbe a fájlba.
+ * Prefer Admin SDK custom token. Password relay only via server env (never hardcode).
  */
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     if (req.method !== 'POST') {
@@ -51,9 +57,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     const email = (process.env.ADMIN_LOGIN_EMAIL || ADMIN_LOGIN_EMAIL).trim().toLowerCase();
     const password = String(process.env.ADMIN_LOGIN_PASSWORD || '').trim();
-    const allowPasswordRelay =
-        process.env.ALLOW_ADMIN_PASSWORD_RELAY === '1' ||
-        process.env.ALLOW_ADMIN_PASSWORD_RELAY === 'true';
+    const allowPasswordRelay = envFlagOn('ALLOW_ADMIN_PASSWORD_RELAY');
 
     // 1) Firebase Admin SDK — preferált (nincs jelszó a kliens felé)
     try {
@@ -66,7 +70,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 if (!password) {
                     return sendErr(
                         res,
-                        'Admin fiók nincs a Firebase-ben. Állítsd be az ADMIN_LOGIN_PASSWORD env változót, vagy hozd létre a fiókot a Console-ban.',
+                        'Admin fiók nincs a Firebase-ben. Állítsd be a szerver env jelszót, vagy hozd létre a fiókot a Console-ban.',
                         503
                     );
                 }
@@ -107,14 +111,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     if (!password) {
         return sendErr(
             res,
-            'Hiányzik az ADMIN_LOGIN_PASSWORD (és/vagy a Firebase Admin SDK). Állítsd be a szerver env változókat.',
+            'Hiányzik a szerver oldali admin jelszó env, és/vagy a Firebase Admin SDK. Állítsd be a hosting env változókat.',
             503
         );
     }
     if (!allowPasswordRelay) {
         return sendErr(
             res,
-            'Admin SDK nélkül a jelszavas relay ki van kapcsolva. Állítsd be a FIREBASE_SERVICE_ACCOUNT_JSON-t, vagy ALLOW_ADMIN_PASSWORD_RELAY=1-et staginghez.',
+            'Jelszavas relay ki van kapcsolva. Add hozzá a Firebase service account JSON env-et, vagy kapcsold be a relay flaget a staging env-ben.',
             503
         );
     }
@@ -145,7 +149,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             }
             return sendErr(
                 res,
-                'Az admin Firebase jelszó nem egyezik az ADMIN_LOGIN_PASSWORD env értékkel. Frissítsd a jelszót a Firebase Console → Authentication alatt, vagy a Vercel/env beállítást.',
+                'Az admin Firebase jelszó nem egyezik a szerver env értékkel. Frissítsd a Firebase Authentication jelszót vagy a hosting env beállítást.',
                 401
             );
         }
