@@ -5,8 +5,6 @@ import { ADMIN_LOGIN_EMAIL } from '../../../utils/adminLoginShared';
 import { resolveFirebaseWebApiKey } from '../../../utils/firebasePublicConfig';
 import { getClientIp, isAllowedOrigin, rateLimit } from '../../../utils/apiSecurity';
 
-const DEFAULT_ADMIN_PASSWORD = 'Dont4getbjj';
-
 type IdToolkitAuth = {
     idToken?: string;
     refreshToken?: string;
@@ -34,7 +32,8 @@ async function idToolkit(
 
 /**
  * POST /api/auth/admin-quick-login
- * Egykattintás — Admin SDK vagy Identity Toolkit (signIn / signUp).
+ * Egykattintás — Admin SDK (custom token) vagy Identity Toolkit (csak ha ADMIN_LOGIN_PASSWORD env be van állítva).
+ * SOHA ne hardcode-olj jelszót ebbe a fájlba.
  */
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     if (req.method !== 'POST') {
@@ -51,27 +50,39 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
 
     const email = (process.env.ADMIN_LOGIN_EMAIL || ADMIN_LOGIN_EMAIL).trim().toLowerCase();
-    const password = process.env.ADMIN_LOGIN_PASSWORD || DEFAULT_ADMIN_PASSWORD;
+    const password = String(process.env.ADMIN_LOGIN_PASSWORD || '').trim();
+    const allowPasswordRelay =
+        process.env.ALLOW_ADMIN_PASSWORD_RELAY === '1' ||
+        process.env.ALLOW_ADMIN_PASSWORD_RELAY === 'true';
 
-    // 1) Firebase Admin SDK (ha van)
+    // 1) Firebase Admin SDK — preferált (nincs jelszó a kliens felé)
     try {
         const admin = getFirebaseAdmin();
         if (admin?.auth) {
-            const user = await admin
-                .auth()
-                .getUserByEmail(email)
-                .catch(async () =>
-                    admin.auth().createUser({
-                        email,
-                        password,
-                        emailVerified: true,
-                        displayName: 'Admin',
-                    })
-                );
+            let user: { uid: string };
             try {
-                await admin.auth().updateUser(user.uid, { password, emailVerified: true });
+                user = await admin.auth().getUserByEmail(email);
             } catch {
-                /* ignore */
+                if (!password) {
+                    return sendErr(
+                        res,
+                        'Admin fiók nincs a Firebase-ben. Állítsd be az ADMIN_LOGIN_PASSWORD env változót, vagy hozd létre a fiókot a Console-ban.',
+                        503
+                    );
+                }
+                user = await admin.auth().createUser({
+                    email,
+                    password,
+                    emailVerified: true,
+                    displayName: 'Admin',
+                });
+            }
+            if (password) {
+                try {
+                    await admin.auth().updateUser(user.uid, { password, emailVerified: true });
+                } catch {
+                    /* ignore */
+                }
             }
             try {
                 await admin.auth().setCustomUserClaims(user.uid, { isAdminAccount: true });
@@ -92,7 +103,22 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         console.warn('admin-quick-login admin sdk skipped:', e);
     }
 
-    // 2) Identity Toolkit REST — nincs Admin SDK sem kell
+    // 2) Identity Toolkit REST — csak env jelszóval, soha hardcode-dal
+    if (!password) {
+        return sendErr(
+            res,
+            'Hiányzik az ADMIN_LOGIN_PASSWORD (és/vagy a Firebase Admin SDK). Állítsd be a szerver env változókat.',
+            503
+        );
+    }
+    if (!allowPasswordRelay) {
+        return sendErr(
+            res,
+            'Admin SDK nélkül a jelszavas relay ki van kapcsolva. Állítsd be a FIREBASE_SERVICE_ACCOUNT_JSON-t, vagy ALLOW_ADMIN_PASSWORD_RELAY=1-et staginghez.',
+            503
+        );
+    }
+
     try {
         let auth = await idToolkit('signInWithPassword', email, password);
         const msg = String(auth.error?.message || '');
@@ -100,8 +126,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         if (msg.includes('EMAIL_NOT_FOUND')) {
             auth = await idToolkit('signUp', email, password);
         } else if (msg.includes('INVALID_PASSWORD') || msg.includes('INVALID_LOGIN_CREDENTIALS')) {
-            // Létező fiók, más jelszó — próbáljunk Admin nélkül sem tudjuk átírni.
-            // Gmail alias fiók létrehozása egykattintáshoz:
             const alias = email.includes('+')
                 ? email
                 : email.replace('@', '+mihaadmin@');
@@ -121,7 +145,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             }
             return sendErr(
                 res,
-                'Az admin e-mailhez tartozó Firebase jelszó nem egyezik. Állítsd a jelszót Dont4getbjj-re a Firebase Console → Authentication alatt, vagy add hozzá a service accountot.',
+                'Az admin Firebase jelszó nem egyezik az ADMIN_LOGIN_PASSWORD env értékkel. Frissítsd a jelszót a Firebase Console → Authentication alatt, vagy a Vercel/env beállítást.',
                 401
             );
         }
@@ -139,11 +163,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         });
     } catch (e: any) {
         console.error('admin-quick-login toolkit error:', e);
-        // Utolsó esély: kliens próbálja a jelszavas belépést
-        return sendOk(res, {
-            email,
-            oneTimePassword: password,
-            method: 'password-relay',
-        });
+        return sendErr(res, 'Admin belépés sikertelen (szerver hiba).', 500);
     }
 }

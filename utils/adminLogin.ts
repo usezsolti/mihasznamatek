@@ -128,12 +128,9 @@ export async function signInAsAdmin(): Promise<{ uid: string; email: string }> {
     }
 
     if (!signed) {
-        const alias = ADMIN_LOGIN_EMAIL.replace('@', '+mihaadmin@');
-        try {
-            signed = await signInWithPasswordFlexible(auth, ADMIN_LOGIN_EMAIL, 'Dont4getbjj');
-        } catch {
-            signed = await signInWithPasswordFlexible(auth, alias, 'Dont4getbjj');
-        }
+        throw new Error(
+            'Admin belépés sikertelen. Állítsd be a szerveren az ADMIN_LOGIN_PASSWORD-t és/vagy a Firebase Admin SDK-t (FIREBASE_SERVICE_ACCOUNT_JSON).'
+        );
     }
 
     await ensureAdminUserDoc(firebase, signed);
