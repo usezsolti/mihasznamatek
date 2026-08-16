@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { sendErr, sendOk } from '../../../server/http';
-import { prisma } from '../../../server/prisma';
-import { isAllowedOrigin, requireAdmin, sanitizeText } from '../../../utils/apiSecurity';
+import { sendErr, sendOk } from '../../../../server/http';
+import { prisma } from '../../../../server/prisma';
+import { isAllowedOrigin, requireAdmin, sanitizeText } from '../../../../utils/apiSecurity';
 
 /**
  * GET /api/admin/teacher-notes/[studentId]

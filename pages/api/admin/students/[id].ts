@@ -1,10 +1,10 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { sendErr, sendOk } from '../../../server/http';
-import { prisma } from '../../../server/prisma';
-import { parseJsonField, stringifyJsonField } from '../../../server/jsonField';
-import { isAdminEmail } from '../../../utils/admin';
-import { isAllowedOrigin, requireAdmin, sanitizeText } from '../../../utils/apiSecurity';
-import type { TeacherAdminMeta } from '../../../utils/teacherConsole';
+import { sendErr, sendOk } from '../../../../server/http';
+import { prisma } from '../../../../server/prisma';
+import { parseJsonField, stringifyJsonField } from '../../../../server/jsonField';
+import { isAdminEmail } from '../../../../utils/admin';
+import { isAllowedOrigin, requireAdmin, sanitizeText } from '../../../../utils/apiSecurity';
+import type { TeacherAdminMeta } from '../../../../utils/teacherConsole';
 
 /**
  * GET /api/admin/students/[id] — student profile for teacher console
