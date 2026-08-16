@@ -467,7 +467,9 @@ export default function Navbar() {
                             🎮
                         </a>
                     </div>
+                </div>
 
+                <div className="nav-right">
                     <div className="nav-lang-desktop">
                         <LanguageToggle />
                     </div>
@@ -494,6 +496,7 @@ export default function Navbar() {
                         </div>
                     )}
                 </div>
+
                 <button className="hamburger-menu" onClick={toggleMenu} aria-label="Menu">
                     <span className={`hamburger-line ${isMenuOpen ? "open" : ""}`}></span>
                     <span className={`hamburger-line ${isMenuOpen ? "open" : ""}`}></span>
