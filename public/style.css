@@ -1900,12 +1900,46 @@ h1 {
   height: 28px;
 }
 
+/* Language toggle (HU | EN) */
+.lang-toggle {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid rgba(57, 255, 20, 0.35);
+  border-radius: 999px;
+  overflow: hidden;
+  background: rgba(0, 0, 0, 0.35);
+  flex-shrink: 0;
+}
+
+.lang-toggle button {
+  border: none;
+  background: transparent;
+  color: #9aa89f;
+  font-weight: 800;
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  padding: 0.35rem 0.55rem;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.lang-toggle button.is-on {
+  background: linear-gradient(135deg, #39ff14, #b8ff5a);
+  color: #061008;
+}
+
+.lang-toggle button:not(.is-on):hover {
+  color: #e8f0ea;
+}
+
 /* Navbar auth block — mindig kattintható, ne csússzon le a sáv végéről */
 .nav-lang-desktop {
   display: flex;
   align-items: center;
   flex-shrink: 0;
   margin-left: 0.45rem;
+  position: relative;
+  z-index: 6;
 }
 
 .nav-lang-mobile {
@@ -2069,8 +2103,8 @@ h1 {
 /* Desktop view - nagyobb távolság */
 @media (min-width: 769px) {
   .nav-social-links {
-    gap: 1rem;
-    margin-right: 3rem;
+    gap: 0.65rem;
+    margin-right: 0.75rem;
   }
   
   .nav-social-link {
