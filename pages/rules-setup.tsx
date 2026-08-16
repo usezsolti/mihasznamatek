@@ -21,10 +21,12 @@ export default function RulesSetupPage() {
             setRules(res.data.rules || '');
             const text = res.data.rules || '';
             const hasLatestAdmin =
-                text.includes('isAdminAccount') &&
-                (text.includes("usezsolti.*@gmail") || text.includes("split('+')[0] == 'usezsolti'"));
+                text.includes("emailLower() == 'usezsolti@gmail.com'") ||
+                text.includes('emailLower() == "usezsolti@gmail.com"');
             if (!hasLatestAdmin) {
-                setStatus('Figyelem: a betöltött rules nem a legújabb admin-verzió.');
+                setStatus(
+                    'Figyelem: a betöltött rules nem a legújabb (csak usezsolti@gmail.com admin).'
+                );
             } else {
                 setStatus('Rules betöltve. Csak a fekete doboz szövegét másold a Firebase Console-ba.');
             }
@@ -175,8 +177,8 @@ export default function RulesSetupPage() {
                     <code>rules_version = &apos;2&apos;;</code>
                 </li>
                 <li>
-                    A rules-ban keresd: <code>usezsolti.*@gmail</code> — ez engedi a{' '}
-                    <code>usezsolti+mihaadmin@gmail.com</code> fiókot is.
+                    A rules-ban keresd: <code>emailLower() == &apos;usezsolti@gmail.com&apos;</code>{' '}
+                    — csak ez a fiók admin.
                 </li>
                 <li>
                     <button type="button" onClick={runDiag} disabled={busy}>

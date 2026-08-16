@@ -183,7 +183,11 @@ export default function MatekCallRoom({
             : t(statusHuKey[status]);
 
     return (
-        <div className={`mcr ${anyoneSharing ? 'is-share-mode' : ''}`}>
+        <div
+            className={`mcr ${anyoneSharing ? 'is-share-mode' : ''} ${
+                status === 'connected' ? 'is-connected' : ''
+            }`}
+        >
             <div
                 className={`mcr-stage ${focusLocalShare ? 'focus-local' : ''} ${
                     focusRemoteShare ? 'focus-remote' : ''
@@ -204,12 +208,15 @@ export default function MatekCallRoom({
                     autoPlay
                     playsInline
                 />
+                {/* Keep local video mounted for WebRTC; hide empty PiP until connected / sharing */}
                 <video
                     ref={localRef}
                     className={`mcr-local ${cameraOff && !sharing ? 'is-off' : ''} ${
                         sharing ? 'is-share' : ''
                     } ${focusLocalShare ? 'is-share-main' : ''} ${
                         focusRemoteShare || !focusLocalShare ? 'is-pip' : ''
+                    } ${
+                        status !== 'connected' && !anyoneSharing ? 'is-hidden-pip' : ''
                     }`}
                     autoPlay
                     playsInline
@@ -301,26 +308,20 @@ export default function MatekCallRoom({
 
             <style jsx>{`
                 .mcr {
-                    flex: 1;
                     display: flex;
                     flex-direction: column;
-                    min-height: 0;
-                    height: 100%;
                     background: #070a0e;
                     color: #e8f0ea;
                 }
-                .mcr.is-share-mode {
-                    min-height: 0;
-                }
                 .mcr-stage {
                     position: relative;
-                    flex: 1;
-                    min-height: 280px;
+                    height: 320px;
                     background: #000;
                     overflow: hidden;
                 }
-                .mcr.is-share-mode .mcr-stage {
-                    min-height: min(52vh, 640px);
+                .mcr.is-share-mode .mcr-stage,
+                .mcr.is-connected .mcr-stage {
+                    height: min(52vh, 480px);
                 }
                 .mcr-share-banner {
                     position: absolute;
@@ -381,6 +382,16 @@ export default function MatekCallRoom({
                     border: 2px solid rgba(57, 255, 20, 0.45);
                     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
                     z-index: 2;
+                }
+                .mcr-local.is-hidden-pip {
+                    opacity: 0;
+                    pointer-events: none;
+                    width: 1px;
+                    height: 1px;
+                    border: none;
+                    box-shadow: none;
+                    right: 0;
+                    bottom: 0;
                 }
                 .mcr-local.is-share {
                     border-color: rgba(80, 180, 255, 0.7);
@@ -566,10 +577,11 @@ export default function MatekCallRoom({
                         max-width: 140px;
                     }
                     .mcr-stage {
-                        min-height: 220px;
+                        height: 240px;
                     }
-                    .mcr.is-share-mode .mcr-stage {
-                        min-height: 42vh;
+                    .mcr.is-share-mode .mcr-stage,
+                    .mcr.is-connected .mcr-stage {
+                        height: min(42vh, 360px);
                     }
                     .mcr-share-banner {
                         font-size: 0.75rem;

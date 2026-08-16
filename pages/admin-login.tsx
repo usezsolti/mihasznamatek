@@ -20,6 +20,7 @@ export default function AdminLoginPage() {
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
     const [checking, setChecking] = useState(true);
+    const [password, setPassword] = useState('');
 
     useEffect(() => {
         let cancelled = false;
@@ -49,11 +50,12 @@ export default function AdminLoginPage() {
         };
     }, [router]);
 
-    const onQuickLogin = async () => {
+    const onLogin = async () => {
         setError('');
         setLoading(true);
         try {
-            await signInAsAdmin();
+            await signInAsAdmin(password);
+            setPassword('');
             await router.replace('/dashboard?tab=admin');
         } catch (err: any) {
             setError(err?.message || 'Tanári belépés sikertelen.');
@@ -72,18 +74,35 @@ export default function AdminLoginPage() {
                     <p className="mm-admin-login-kicker">Mihaszna Matek</p>
                     <h1>Tanári belépés</h1>
                     <p className="mm-admin-login-sub">
-                        Egy kattintás a tanári konzolra — <strong>{ADMIN_LOGIN_EMAIL}</strong>
+                        Csak <strong>{ADMIN_LOGIN_EMAIL}</strong> — add meg a fiók jelszavát.
                     </p>
 
                     {checking ? (
                         <p className="mm-admin-login-status">Ellenőrzés…</p>
                     ) : (
                         <>
+                            <label className="mm-admin-login-label">
+                                Jelszó
+                                <input
+                                    type="password"
+                                    autoComplete="current-password"
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
+                                    placeholder="Tanári jelszó"
+                                    disabled={loading}
+                                    onKeyDown={(e) => {
+                                        if (e.key === 'Enter') {
+                                            e.preventDefault();
+                                            void onLogin();
+                                        }
+                                    }}
+                                />
+                            </label>
                             <button
                                 type="button"
                                 className="mm-admin-login-quick"
-                                disabled={loading}
-                                onClick={() => void onQuickLogin()}
+                                disabled={loading || !password.trim()}
+                                onClick={() => void onLogin()}
                             >
                                 {loading ? 'Belépés…' : 'Belépés a konzolra'}
                             </button>
@@ -93,7 +112,7 @@ export default function AdminLoginPage() {
 
                     <div className="mm-admin-login-links">
                         <Link href="/">Főoldal</Link>
-                        <Link href="/dashboard?tab=admin">Tanári konzol</Link>
+                        <Link href="/dashboard">Dashboard</Link>
                     </div>
                 </div>
             </div>
@@ -145,6 +164,22 @@ export default function AdminLoginPage() {
                 }
                 .mm-admin-login-sub strong {
                     color: #9dff3a;
+                }
+                .mm-admin-login-label {
+                    display: grid;
+                    gap: 0.35rem;
+                    text-align: left;
+                    color: #bbb;
+                    font-size: 0.85rem;
+                    margin-bottom: 0.85rem;
+                }
+                .mm-admin-login-label input {
+                    border-radius: 12px;
+                    border: 1px solid rgba(255, 255, 255, 0.14);
+                    background: #0a0f0c;
+                    color: #fff;
+                    padding: 0.75rem 0.85rem;
+                    font-size: 1rem;
                 }
                 .mm-admin-login-quick {
                     width: 100%;

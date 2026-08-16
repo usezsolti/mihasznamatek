@@ -10,10 +10,7 @@ service firebase.storage {
         : '';
     }
     function isAdmin() {
-      return signedIn() && (
-        request.auth.token.isAdminAccount == true
-        || emailLower().matches('usezsolti.*@gmail[.]com')
-      );
+      return signedIn() && emailLower() == 'usezsolti@gmail.com';
     }
     function isImage() {
       return request.resource.contentType.matches('image/.*');

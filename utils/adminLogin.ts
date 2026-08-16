@@ -1,7 +1,8 @@
-/** Egykattintásos admin belépés. */
+/** Tanári belépés — csak usezsolti@gmail.com + saját jelszó (nincs nyilvános egykattintás). */
 
 export { ADMIN_LOGIN_EMAIL } from './adminLoginShared';
 import { ADMIN_LOGIN_EMAIL } from './adminLoginShared';
+import { isAdminEmail } from './admin';
 
 async function waitForFirebase(maxAttempts = 50): Promise<any | null> {
     for (let i = 0; i < maxAttempts; i++) {
@@ -10,46 +11,6 @@ async function waitForFirebase(maxAttempts = 50): Promise<any | null> {
         await new Promise((r) => setTimeout(r, 100));
     }
     return (window as any).firebase?.apps?.length ? (window as any).firebase : null;
-}
-
-async function signInWithPasswordFlexible(
-    auth: any,
-    email: string,
-    password: string
-): Promise<{ uid: string; email: string }> {
-    try {
-        const signed = await auth.signInWithEmailAndPassword(email, password);
-        return {
-            uid: signed.user.uid,
-            email: signed.user.email || email,
-        };
-    } catch (err: any) {
-        const code = String(err?.code || '');
-        if (
-            code.includes('user-not-found') ||
-            code.includes('invalid-credential') ||
-            code.includes('invalid-login-credentials')
-        ) {
-            try {
-                const created = await auth.createUserWithEmailAndPassword(email, password);
-                try {
-                    await created.user.updateProfile({ displayName: 'Tanár' });
-                } catch {
-                    /* ignore */
-                }
-                return {
-                    uid: created.user.uid,
-                    email: created.user.email || email,
-                };
-            } catch (createErr: any) {
-                if (String(createErr?.code || '').includes('email-already-in-use')) {
-                    throw err;
-                }
-                throw createErr;
-            }
-        }
-        throw err;
-    }
 }
 
 async function ensureAdminUserDoc(
@@ -77,7 +38,16 @@ async function ensureAdminUserDoc(
     }
 }
 
-export async function signInAsAdmin(): Promise<{ uid: string; email: string }> {
+/**
+ * Csak a kijelölt admin e-mail + jelszó. Nem hoz létre fiókot, nem használ
+ * szerveres jelszó-relayt (az bárkit beengedne).
+ */
+export async function signInAsAdmin(password: string): Promise<{ uid: string; email: string }> {
+    const pwd = String(password || '').trim();
+    if (!pwd) {
+        throw new Error('Add meg a tanári jelszót.');
+    }
+
     const firebase = await waitForFirebase();
     if (!firebase?.auth) {
         throw new Error('A Firebase nem töltődött be. Frissítsd az oldalt.');
@@ -92,51 +62,39 @@ export async function signInAsAdmin(): Promise<{ uid: string; email: string }> {
         /* ignore */
     }
 
-    let signed: { uid: string; email: string } | null = null;
-
+    const email = ADMIN_LOGIN_EMAIL.toLowerCase();
+    let cred: any;
     try {
-        const { apiPost } = await import('./apiClient');
-        const res = await apiPost<{
-            customToken?: string;
-            email?: string;
-            oneTimePassword?: string;
-            method?: string;
-        }>('/api/auth/admin-quick-login', {});
-
-        if (res.ok) {
-            const data = res.data || {};
-            if (data.customToken) {
-                const cred = await auth.signInWithCustomToken(data.customToken);
-                try {
-                    // Claim-ek (isAdminAccount) azonnal legyenek a tokenben
-                    await cred.user.getIdToken(true);
-                } catch {
-                    /* ignore */
-                }
-                signed = {
-                    uid: cred.user.uid,
-                    email: cred.user.email || data.email || ADMIN_LOGIN_EMAIL,
-                };
-            } else if (data.oneTimePassword && data.email) {
-                signed = await signInWithPasswordFlexible(auth, data.email, data.oneTimePassword);
-            }
-        } else if (res.error) {
-            console.warn('admin-quick-login:', res.error);
-            throw new Error(String(res.error));
+        cred = await auth.signInWithEmailAndPassword(email, pwd);
+    } catch (err: any) {
+        const code = String(err?.code || '');
+        if (code.includes('user-not-found')) {
+            throw new Error('Nincs tanári fiók ezzel az e-maillel a Firebase-ben.');
         }
-    } catch (e) {
-        if (e instanceof Error && e.message && !e.message.includes('admin-quick-login')) {
-            throw e;
+        if (
+            code.includes('wrong-password') ||
+            code.includes('invalid-credential') ||
+            code.includes('invalid-login-credentials')
+        ) {
+            throw new Error('Hibás tanári jelszó.');
         }
-        console.warn('admin-quick-login request failed:', e);
+        throw new Error(err?.message || 'Tanári belépés sikertelen.');
     }
 
-    if (!signed) {
-        throw new Error(
-            'Admin belépés sikertelen. Állítsd be a szerveren az ADMIN_LOGIN_PASSWORD-t + ALLOW_ADMIN_PASSWORD_RELAY=1, vagy a Firebase Admin SDK-t (FIREBASE_SERVICE_ACCOUNT_JSON).'
-        );
+    const signedEmail = String(cred.user?.email || email).toLowerCase();
+    if (!isAdminEmail(signedEmail)) {
+        try {
+            await auth.signOut();
+        } catch {
+            /* ignore */
+        }
+        throw new Error('Ez a fiók nem tanári admin.');
     }
 
+    const signed = {
+        uid: String(cred.user.uid),
+        email: signedEmail,
+    };
     await ensureAdminUserDoc(firebase, signed);
     return signed;
 }

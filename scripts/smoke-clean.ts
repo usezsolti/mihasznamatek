@@ -85,16 +85,23 @@ function runSecurityHygieneChecks(): Record<string, unknown> {
         'H3'
     );
 
-    // H4: admin fail-closed (no unconditional hardcoded return)
+    // H4: admin locked to designated email (no Gmail +alias wildcard)
     const adminSrc = read('utils/admin.ts');
     const adminFailClosed =
-        /NODE_ENV === 'production'/.test(adminSrc) &&
-        /return \[\]/.test(adminSrc) &&
-        /ALLOW_DEV_ADMIN_FALLBACK/.test(adminSrc);
+        /ADMIN_LOGIN_EMAIL/.test(adminSrc) &&
+        /ADMIN_EMAILS\.includes\(e\)/.test(adminSrc) &&
+        !/base\(e\) === base\(primary\)/.test(adminSrc) &&
+        !/matches\('usezsolti/.test(adminSrc);
+    const rulesSrc = read('firestore.rules');
+    const rulesExactAdmin = /emailLower\(\) == 'usezsolti@gmail\.com'/.test(rulesSrc);
     const apiSec = read('utils/apiSecurity.ts');
     const noHardcodedServerKey = !/AIzaSy[A-Za-z0-9_-]+/.test(apiSec);
     const publicKeyModule = fs.existsSync(path.join(root, 'utils/firebasePublicConfig.ts'));
-    logDebug('H4 admin/api key hygiene', { adminFailClosed, noHardcodedServerKey, publicKeyModule }, 'H4');
+    logDebug(
+        'H4 admin/api key hygiene',
+        { adminFailClosed, rulesExactAdmin, noHardcodedServerKey, publicKeyModule },
+        'H4'
+    );
 
     // H5: password-relay gated
     const testLoginApi = read('pages/api/auth/test-login.ts');
@@ -110,6 +117,7 @@ function runSecurityHygieneChecks(): Record<string, unknown> {
         profileOwnerOnly &&
         mathShortsGated &&
         adminFailClosed &&
+        rulesExactAdmin &&
         noHardcodedServerKey &&
         relayGated;
 
@@ -123,6 +131,7 @@ function runSecurityHygieneChecks(): Record<string, unknown> {
                     profileOwnerOnly,
                     mathShortsGated,
                     adminFailClosed,
+                    rulesExactAdmin,
                     noHardcodedServerKey,
                     relayGated,
                 })

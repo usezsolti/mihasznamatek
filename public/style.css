@@ -3820,6 +3820,48 @@ html, body {
   transition: box-shadow 0.2s ease, border-color 0.2s ease, transform 0.15s ease;
 }
 
+.auth-teacher-box {
+  width: 100%;
+  margin-top: 0.85rem;
+}
+
+.auth-teacher-form {
+  display: grid;
+  gap: 0.55rem;
+  padding: 0.75rem;
+  border-radius: 12px;
+  border: 1px solid rgba(57, 255, 20, 0.28);
+  background: rgba(0, 0, 0, 0.28);
+}
+
+.auth-teacher-hint {
+  margin: 0;
+  color: #9eb5a8;
+  font-size: 0.8rem;
+  text-align: center;
+}
+
+.auth-teacher-label {
+  display: grid;
+  gap: 0.3rem;
+  color: #bbb;
+  font-size: 0.82rem;
+  text-align: left;
+}
+
+.auth-teacher-label input {
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: #0a0f0c;
+  color: #fff;
+  padding: 0.65rem 0.75rem;
+  font-size: 0.95rem;
+}
+
+.auth-teacher-form .auth-admin-login-btn {
+  margin-top: 0.15rem;
+}
+
 .auth-admin-login-btn:hover {
   border-color: rgba(57, 255, 20, 0.75);
   box-shadow: 0 0 18px rgba(57, 255, 20, 0.25);

@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import MatekCallRoom from './MatekCallRoom';
 import MatekWhiteboard from './whiteboard/MatekWhiteboard';
 import { useLang } from '../utils/i18n';
@@ -12,7 +12,7 @@ import {
     type LessonRoom,
 } from '../utils/lessonRoom';
 
-type LessonTab = 'lesson' | 'chat';
+type LessonTab = 'call' | 'board' | 'chat';
 
 type Props = {
     room: LessonRoom;
@@ -22,6 +22,13 @@ type Props = {
     onRoomUpdated?: (room: LessonRoom) => void;
 };
 
+function friendlyName(raw: string, fallback: string): string {
+    const s = String(raw || '').trim();
+    if (!s) return fallback;
+    if (s.includes('@')) return s.split('@')[0].replace(/\+/g, ' ');
+    return s;
+}
+
 export default function LessonHourRoom({
     room,
     uid,
@@ -30,7 +37,8 @@ export default function LessonHourRoom({
     onRoomUpdated,
 }: Props) {
     const { t, lang } = useLang();
-    const [tab, setTab] = useState<LessonTab>('lesson');
+    const isTeacher = room.createdBy === uid;
+    const [tab, setTab] = useState<LessonTab>('call');
     const [callOpen, setCallOpen] = useState(false);
     const [messages, setMessages] = useState<LessonMessage[]>([]);
     const [draft, setDraft] = useState('');
@@ -38,6 +46,22 @@ export default function LessonHourRoom({
     const [toast, setToast] = useState('');
     const [boardId, setBoardId] = useState(room.whiteboardId || '');
     const bottomRef = useRef<HTMLDivElement | null>(null);
+    const autoStarted = useRef(false);
+
+    const who = useMemo(
+        () => friendlyName(displayName, t('lesson.youFallback')),
+        [displayName, t]
+    );
+    const student = useMemo(
+        () => friendlyName(room.studentName || '', ''),
+        [room.studentName]
+    );
+    const title = useMemo(() => {
+        const raw = String(room.title || '').trim();
+        if (!raw) return t('lesson.live');
+        if (raw.includes('@')) return t('lesson.defaultTitle');
+        return raw;
+    }, [room.title, t]);
 
     useEffect(() => {
         return subscribeLessonMessages(room.id, setMessages);
@@ -63,12 +87,12 @@ export default function LessonHourRoom({
             if (res.warning) setToast(res.warning);
             return res.whiteboardId;
         } catch (e: any) {
-            setToast(e?.message || 'Tábla hiba');
+            setToast(e?.message || t('lesson.boardError'));
             return '';
         } finally {
             setBusy(false);
         }
-    }, [boardId, onRoomUpdated, room, uid]);
+    }, [boardId, onRoomUpdated, room, t, uid]);
 
     useEffect(() => {
         void ensureBoard();
@@ -88,10 +112,21 @@ export default function LessonHourRoom({
         }
     };
 
-    const startCall = async () => {
+    const startCall = useCallback(async () => {
         setCallOpen(true);
-        setTab('lesson');
+        setTab('call');
         await ensureBoard();
+    }, [ensureBoard]);
+
+    useEffect(() => {
+        if (!isTeacher || autoStarted.current) return;
+        autoStarted.current = true;
+        void startCall();
+    }, [isTeacher, startCall]);
+
+    const openBoard = () => {
+        setTab('board');
+        void ensureBoard();
     };
 
     const send = async () => {
@@ -108,49 +143,76 @@ export default function LessonHourRoom({
                 text,
             });
         } catch (e: any) {
-            setToast(e?.message || 'Üzenet hiba');
+            setToast(e?.message || t('lesson.chatError'));
         } finally {
             setBusy(false);
         }
     };
 
     return (
-        <div className="lhr">
-            <header className="lhr-head">
-                <div className="lhr-head-main">
-                    <div className="lhr-brand">
-                        <span className="lhr-kicker">{t('lesson.live')}</span>
-                        {callOpen ? <span className="lhr-live">{t('lesson.liveBadge')}</span> : null}
+        <div className={`lhr ${callOpen ? 'is-live' : 'is-ready'}`}>
+            <header className="lhr-bar">
+                <div className="lhr-bar-left">
+                    <span className={`lhr-badge ${callOpen ? 'is-live' : ''}`}>
+                        {callOpen ? t('lesson.liveBadge') : t('lesson.readyBadge')}
+                    </span>
+                    <div className="lhr-bar-text">
+                        <strong className="lhr-bar-title">{title}</strong>
+                        <span className="lhr-bar-sub">
+                            {isTeacher ? t('lesson.roleTeacher') : t('lesson.roleStudent')}
+                            {student ? ` · ${student}` : ''}
+                            {` · ${who}`}
+                        </span>
                     </div>
-                    <h1 className="lhr-title">{room.title}</h1>
-                    <p className="lhr-meta">
-                        {displayName}
-                        {room.studentName ? ` · ${t('lesson.student')}: ${room.studentName}` : ''}
-                        {callOpen ? ` · ${t('lesson.metaLive')}` : ` · ${t('lesson.metaReady')}`}
-                    </p>
                 </div>
-                <div className="lhr-head-actions">
-                    <button type="button" className="lhr-btn lhr-btn-copy" onClick={() => void copyLink()}>
+
+                <nav className="lhr-tabs" role="tablist" aria-label={t('lesson.tabsLabel')}>
+                    <button
+                        type="button"
+                        role="tab"
+                        aria-selected={tab === 'call'}
+                        className={tab === 'call' ? 'is-on' : ''}
+                        onClick={() => setTab('call')}
+                    >
+                        {t('lesson.tabCall')}
+                    </button>
+                    <button
+                        type="button"
+                        role="tab"
+                        aria-selected={tab === 'board'}
+                        className={tab === 'board' ? 'is-on' : ''}
+                        onClick={() => openBoard()}
+                    >
+                        {t('lesson.tabBoard')}
+                    </button>
+                    <button
+                        type="button"
+                        role="tab"
+                        aria-selected={tab === 'chat'}
+                        className={tab === 'chat' ? 'is-on' : ''}
+                        onClick={() => setTab('chat')}
+                    >
+                        {t('lesson.tabChat')}
+                        {messages.length > 0 ? (
+                            <span className="lhr-tab-count">{messages.length}</span>
+                        ) : null}
+                    </button>
+                </nav>
+
+                <div className="lhr-bar-actions">
+                    <button type="button" className="lhr-btn lhr-btn-ghost" onClick={() => void copyLink()}>
                         {t('lesson.copyLink')}
                     </button>
                     {!callOpen ? (
-                        <button
-                            type="button"
-                            className="lhr-btn lhr-btn-primary"
-                            onClick={() => void startCall()}
-                        >
+                        <button type="button" className="lhr-btn lhr-btn-go" onClick={() => void startCall()}>
                             {t('lesson.startCall')}
                         </button>
                     ) : (
-                        <button
-                            type="button"
-                            className="lhr-btn lhr-btn-end"
-                            onClick={() => setCallOpen(false)}
-                        >
+                        <button type="button" className="lhr-btn lhr-btn-end" onClick={() => setCallOpen(false)}>
                             {t('lesson.endCall')}
                         </button>
                     )}
-                    <Link href="/dashboard" className="lhr-btn lhr-btn-exit">
+                    <Link href="/dashboard" className="lhr-btn lhr-btn-ghost">
                         {t('lesson.exit')}
                     </Link>
                 </div>
@@ -162,360 +224,283 @@ export default function LessonHourRoom({
                 </p>
             ) : null}
 
-            <nav className="lhr-tabs" role="tablist" aria-label="Óra nézetek">
-                <button
-                    type="button"
-                    role="tab"
-                    aria-selected={tab === 'lesson'}
-                    className={tab === 'lesson' ? 'is-on' : ''}
-                    onClick={() => setTab('lesson')}
-                >
-                    {t('lesson.tabLesson')}
-                </button>
-                <button
-                    type="button"
-                    role="tab"
-                    aria-selected={tab === 'chat'}
-                    className={tab === 'chat' ? 'is-on' : ''}
-                    onClick={() => setTab('chat')}
-                >
-                    {t('lesson.tabChat')}
-                    {messages.length > 0 ? (
-                        <span className="lhr-tab-count">{messages.length}</span>
-                    ) : null}
-                </button>
-            </nav>
-
-            <div
-                className={`lhr-pane lhr-lesson ${callOpen ? 'is-live' : 'is-board-only'} ${
-                    tab === 'lesson' ? 'is-shown' : 'is-hidden'
-                }`}
-            >
-                {!callOpen ? (
-                    <div className="lhr-call-strip">
-                        <div>
-                            <strong>{t('lesson.stripTitle')}</strong>
+            {tab === 'call' ? (
+                <div className="lhr-pane lhr-call-pane">
+                    {!callOpen ? (
+                        <div className="lhr-ready">
+                            <p className="lhr-ready-kicker">{t('lesson.stripTitle')}</p>
+                            <h2>{t('lesson.startCall')}</h2>
                             <p>{t('lesson.stripBody')}</p>
+                            <div className="lhr-ready-actions">
+                                <button
+                                    type="button"
+                                    className="lhr-btn lhr-btn-go lhr-btn-lg"
+                                    onClick={() => void startCall()}
+                                >
+                                    {t('lesson.startCall')}
+                                </button>
+                                <button
+                                    type="button"
+                                    className="lhr-btn lhr-btn-ghost"
+                                    onClick={() => void copyLink()}
+                                >
+                                    {t('lesson.copyLink')}
+                                </button>
+                            </div>
+                            <p className="lhr-ready-note">{t('lesson.studentWait')}</p>
                         </div>
+                    ) : (
+                        <MatekCallRoom
+                            roomId={room.id}
+                            uid={uid}
+                            displayName={displayName}
+                            role={isTeacher ? 'teacher' : 'student'}
+                            active={callOpen}
+                            onClose={() => setCallOpen(false)}
+                        />
+                    )}
+                </div>
+            ) : null}
+
+            {tab === 'board' ? (
+                <div className="lhr-pane lhr-board-pane">
+                    {boardId ? (
+                        <MatekWhiteboard
+                            uid={uid}
+                            displayName={displayName}
+                            initialBoardId={boardId}
+                            onBoardId={(id) => setBoardId(id)}
+                        />
+                    ) : (
+                        <p className="lhr-muted">
+                            {busy ? t('lesson.boardLoading') : t('lesson.boardPrep')}
+                        </p>
+                    )}
+                </div>
+            ) : null}
+
+            {tab === 'chat' ? (
+                <div className="lhr-pane lhr-chat">
+                    <div className="lhr-chat-list">
+                        {messages.length === 0 ? (
+                            <p className="lhr-muted">{t('lesson.chatEmpty')}</p>
+                        ) : (
+                            messages.map((m) => (
+                                <div
+                                    key={m.id}
+                                    className={`lhr-msg ${m.senderId === uid ? 'is-me' : ''}`}
+                                >
+                                    <strong>{friendlyName(m.senderName, t('lesson.student'))}</strong>
+                                    <p>{m.text}</p>
+                                    <time>
+                                        {new Date(m.createdAtMs).toLocaleTimeString(
+                                            lang === 'en' ? 'en-GB' : 'hu-HU',
+                                            { hour: '2-digit', minute: '2-digit' }
+                                        )}
+                                    </time>
+                                </div>
+                            ))
+                        )}
+                        <div ref={bottomRef} />
+                    </div>
+                    <div className="lhr-chat-compose">
+                        <input
+                            value={draft}
+                            onChange={(e) => setDraft(e.target.value)}
+                            placeholder={t('lesson.chatPlaceholder')}
+                            maxLength={1000}
+                            onKeyDown={(e) => {
+                                if (e.key === 'Enter' && !e.shiftKey) {
+                                    e.preventDefault();
+                                    void send();
+                                }
+                            }}
+                        />
                         <button
                             type="button"
-                            className="lhr-btn lhr-btn-primary"
-                            onClick={() => void startCall()}
+                            className="lhr-btn lhr-btn-go"
+                            disabled={busy || !draft.trim()}
+                            onClick={() => void send()}
                         >
-                            {t('lesson.startCall')}
+                            {t('lesson.send')}
                         </button>
                     </div>
-                ) : null}
-
-                <div className={`lhr-merge ${callOpen ? 'has-call' : ''}`}>
-                    {callOpen ? (
-                        <section className="lhr-merge-call" aria-label="Videóhívás">
-                            <MatekCallRoom
-                                roomId={room.id}
-                                uid={uid}
-                                displayName={displayName}
-                                role={room.createdBy === uid ? 'teacher' : 'student'}
-                                active={callOpen}
-                                onClose={() => setCallOpen(false)}
-                            />
-                        </section>
-                    ) : null}
-
-                    <section className="lhr-merge-board" aria-label="Whiteboard">
-                        {boardId ? (
-                            <MatekWhiteboard
-                                uid={uid}
-                                displayName={displayName}
-                                initialBoardId={boardId}
-                                onBoardId={(id) => setBoardId(id)}
-                            />
-                        ) : (
-                            <p className="lhr-muted" style={{ padding: '1rem' }}>
-                                {busy ? t('lesson.boardLoading') : t('lesson.boardPrep')}
-                            </p>
-                        )}
-                    </section>
                 </div>
-            </div>
-
-            <div className={`lhr-pane lhr-chat ${tab === 'chat' ? 'is-shown' : 'is-hidden'}`}>
-                <div className="lhr-chat-list">
-                    {messages.length === 0 ? (
-                        <p className="lhr-muted">{t('lesson.chatEmpty')}</p>
-                    ) : (
-                        messages.map((m) => (
-                            <div
-                                key={m.id}
-                                className={`lhr-msg ${m.senderId === uid ? 'is-me' : ''}`}
-                            >
-                                <strong>{m.senderName}</strong>
-                                <p>{m.text}</p>
-                                <time>
-                                    {new Date(m.createdAtMs).toLocaleTimeString(
-                                        lang === 'en' ? 'en-GB' : 'hu-HU',
-                                        {
-                                            hour: '2-digit',
-                                            minute: '2-digit',
-                                        }
-                                    )}
-                                </time>
-                            </div>
-                        ))
-                    )}
-                    <div ref={bottomRef} />
-                </div>
-                <div className="lhr-chat-compose">
-                    <input
-                        value={draft}
-                        onChange={(e) => setDraft(e.target.value)}
-                        placeholder={t('lesson.chatPlaceholder')}
-                        maxLength={1000}
-                        onKeyDown={(e) => {
-                            if (e.key === 'Enter' && !e.shiftKey) {
-                                e.preventDefault();
-                                void send();
-                            }
-                        }}
-                    />
-                    <button
-                        type="button"
-                        className="lhr-btn lhr-btn-primary"
-                        disabled={busy || !draft.trim()}
-                        onClick={() => void send()}
-                    >
-                        {t('lesson.send')}
-                    </button>
-                </div>
-            </div>
+            ) : null}
 
             <style jsx>{`
                 .lhr {
-                    --line: rgba(57, 255, 20, 0.22);
-                    --muted: #8b9a93;
+                    --line: rgba(57, 255, 20, 0.28);
+                    --muted: #b7cfc0;
                     --accent: #39ff14;
-                    max-width: min(1480px, 100%);
-                    margin: 0 auto;
-                    padding: 0.6rem 0.75rem 1.25rem;
-                    color: #e8f0ea;
-                    min-height: calc(100vh - 72px);
+                    width: 100%;
+                    max-width: 920px;
+                    margin: 0.75rem auto 1.5rem;
+                    padding: 0 0.75rem;
+                    color: #eef7f0;
                     display: flex;
                     flex-direction: column;
                     gap: 0.55rem;
+                    box-sizing: border-box;
                 }
-                .lhr-head {
+                .lhr-bar {
                     display: flex;
-                    justify-content: space-between;
-                    gap: 1rem;
                     flex-wrap: wrap;
                     align-items: center;
-                    padding: 0.85rem 1rem;
+                    gap: 0.55rem 0.75rem;
+                    padding: 0.55rem 0.7rem;
                     border: 1px solid var(--line);
-                    border-radius: 16px;
-                    background: linear-gradient(
-                        135deg,
-                        rgba(14, 22, 18, 0.98),
-                        rgba(10, 14, 20, 0.95)
-                    );
+                    border-radius: 12px;
+                    background: linear-gradient(135deg, #101812, #0d1218);
                 }
-                .lhr-head-main {
+                .lhr-bar-left {
+                    display: flex;
+                    align-items: center;
+                    gap: 0.55rem;
                     min-width: 0;
-                    flex: 1;
+                    flex: 1 1 200px;
                 }
-                .lhr-brand {
-                    display: flex;
-                    align-items: center;
-                    gap: 0.45rem;
-                    margin-bottom: 0.2rem;
-                }
-                .lhr-kicker {
-                    margin: 0;
+                .lhr-badge {
+                    flex-shrink: 0;
                     font-size: 0.68rem;
-                    letter-spacing: 0.14em;
-                    text-transform: uppercase;
-                    color: var(--accent);
-                    font-weight: 800;
-                }
-                .lhr-live {
-                    font-size: 0.65rem;
-                    font-weight: 800;
-                    letter-spacing: 0.08em;
+                    font-weight: 900;
+                    letter-spacing: 0.06em;
                     color: #061008;
-                    background: #39ff14;
-                    padding: 0.15rem 0.4rem;
+                    background: #9eb5a8;
+                    padding: 0.26rem 0.5rem;
                     border-radius: 999px;
-                    animation: lhr-pulse 1.6s ease-in-out infinite;
                 }
-                @keyframes lhr-pulse {
-                    0%,
-                    100% {
-                        opacity: 1;
-                    }
-                    50% {
-                        opacity: 0.55;
-                    }
+                .lhr-badge.is-live {
+                    background: var(--accent);
                 }
-                .lhr-title {
-                    margin: 0;
-                    font-size: 1.28rem;
-                    font-weight: 800;
-                    letter-spacing: -0.02em;
-                    line-height: 1.2;
-                }
-                .lhr-meta {
-                    margin: 0.3rem 0 0;
-                    color: var(--muted);
-                    font-size: 0.84rem;
-                }
-                .lhr-muted {
-                    color: var(--muted);
-                    font-size: 0.88rem;
-                    margin: 0.25rem 0 0;
-                }
-                .lhr-head-actions {
+                .lhr-bar-text {
+                    min-width: 0;
                     display: flex;
-                    gap: 0.45rem;
-                    flex-wrap: wrap;
-                    align-items: center;
+                    flex-direction: column;
+                    gap: 0.05rem;
                 }
-                .lhr-toast {
-                    margin: 0;
-                    color: var(--accent);
-                    font-size: 0.88rem;
+                .lhr-bar-title {
+                    font-size: 0.95rem;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                }
+                .lhr-bar-sub {
+                    color: var(--muted);
+                    font-size: 0.75rem;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
                 }
                 .lhr-tabs {
-                    display: flex;
-                    gap: 0.35rem;
-                    flex-wrap: wrap;
-                    padding: 0.35rem;
-                    border-radius: 14px;
+                    display: inline-flex;
+                    gap: 0.2rem;
+                    padding: 0.2rem;
+                    border-radius: 10px;
                     border: 1px solid rgba(255, 255, 255, 0.08);
-                    background: rgba(0, 0, 0, 0.28);
+                    background: rgba(0, 0, 0, 0.35);
+                    flex: 0 0 auto;
                 }
                 .lhr-tabs button {
-                    border: 1px solid transparent;
+                    border: none;
                     background: transparent;
                     color: var(--muted);
                     font-weight: 700;
-                    padding: 0.55rem 1rem;
-                    border-radius: 10px;
+                    padding: 0.38rem 0.7rem;
+                    border-radius: 8px;
                     cursor: pointer;
                     display: inline-flex;
                     align-items: center;
-                    gap: 0.4rem;
+                    gap: 0.3rem;
+                    font-size: 0.84rem;
                 }
                 .lhr-tabs button.is-on {
                     color: #061008;
                     background: linear-gradient(135deg, #39ff14, #b8ff5a);
-                    border-color: transparent;
-                    box-shadow: 0 4px 16px rgba(57, 255, 20, 0.25);
                 }
                 .lhr-tab-count {
-                    font-size: 0.72rem;
+                    font-size: 0.68rem;
                     font-weight: 800;
-                    background: rgba(0, 0, 0, 0.2);
-                    padding: 0.1rem 0.4rem;
+                    background: rgba(0, 0, 0, 0.18);
+                    padding: 0.06rem 0.32rem;
                     border-radius: 999px;
                 }
-                .lhr-pane {
-                    flex: 1;
-                    min-height: 520px;
-                    border: 1px solid var(--line);
-                    border-radius: 16px;
-                    background: rgba(12, 16, 22, 0.88);
-                    overflow: hidden;
+                .lhr-bar-actions {
                     display: flex;
-                    flex-direction: column;
-                }
-                .lhr-pane.is-hidden {
-                    display: none;
-                }
-                .lhr-lesson {
-                    min-height: min(82vh, 920px);
-                }
-                .lhr-call-strip {
-                    display: flex;
-                    justify-content: space-between;
-                    align-items: center;
-                    gap: 1rem;
+                    gap: 0.35rem;
                     flex-wrap: wrap;
-                    padding: 0.85rem 1rem;
-                    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-                    background: rgba(57, 255, 20, 0.06);
-                    flex-shrink: 0;
+                    align-items: center;
+                    margin-left: auto;
                 }
-                .lhr-call-strip strong {
-                    display: block;
+                .lhr-toast {
+                    margin: 0;
                     color: var(--accent);
-                    font-size: 0.95rem;
+                    font-size: 0.82rem;
                 }
-                .lhr-call-strip p {
-                    margin: 0.25rem 0 0;
-                    color: var(--muted);
-                    font-size: 0.84rem;
-                    line-height: 1.4;
-                    max-width: 40rem;
+                .lhr-pane {
+                    border: 1px solid var(--line);
+                    border-radius: 14px;
+                    background: rgba(8, 12, 14, 0.95);
+                    overflow: hidden;
                 }
-                .lhr-merge {
-                    flex: 1;
+                .lhr-call-pane {
                     min-height: 0;
-                    display: grid;
-                    grid-template-columns: 1fr;
-                    grid-template-rows: 1fr;
                 }
-                .lhr-merge.has-call {
-                    grid-template-rows: minmax(240px, 32vh) minmax(420px, 1fr);
-                }
-                .lhr-merge-call {
-                    min-height: 220px;
-                    height: 100%;
-                    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+                .lhr-ready {
+                    padding: 1.25rem 1.15rem;
                     display: flex;
                     flex-direction: column;
-                    background: #0a0e13;
+                    gap: 0.45rem;
+                    background: radial-gradient(circle at top left, rgba(57, 255, 20, 0.12), transparent 55%),
+                        #0e1512;
                 }
-                .lhr-merge-board {
-                    min-height: 420px;
-                    height: 100%;
-                    overflow: hidden;
-                    background: #1a1a1a;
-                    position: relative;
+                .lhr-ready-kicker {
+                    margin: 0;
+                    color: var(--accent);
+                    font-size: 0.72rem;
+                    font-weight: 800;
+                    letter-spacing: 0.06em;
+                    text-transform: uppercase;
                 }
-                .lhr-lesson.is-board-only .lhr-merge-board {
-                    min-height: min(70vh, 720px);
+                .lhr-ready h2 {
+                    margin: 0;
+                    font-size: 1.35rem;
+                    line-height: 1.2;
                 }
-                .lhr-merge-board :global(.wb-app--board) {
+                .lhr-ready p {
+                    margin: 0;
+                    color: var(--muted);
+                    line-height: 1.45;
+                    max-width: 36rem;
+                    font-size: 0.92rem;
+                }
+                .lhr-ready-actions {
+                    display: flex;
+                    flex-wrap: wrap;
+                    gap: 0.45rem;
+                    margin-top: 0.35rem;
+                }
+                .lhr-ready-note {
+                    font-size: 0.82rem !important;
+                }
+                .lhr-board-pane {
+                    height: min(62vh, 560px);
+                    min-height: 360px;
+                }
+                .lhr-board-pane :global(.wb-app--board) {
                     height: 100% !important;
-                    min-height: 420px !important;
+                    min-height: 100% !important;
                     max-height: none !important;
                 }
-                .lhr-merge-board :global(.wb-canvas-wrap),
-                .lhr-merge-board :global(.wb-canvas) {
-                    background: #f7f7f9;
+                .lhr-chat {
+                    display: flex;
+                    flex-direction: column;
+                    height: min(52vh, 420px);
+                    min-height: 280px;
                 }
-                @media (min-width: 1100px) {
-                    .lhr-merge.has-call {
-                        grid-template-columns: minmax(320px, 0.9fr) minmax(480px, 1.1fr);
-                        grid-template-rows: minmax(560px, 74vh);
-                    }
-                    .lhr-merge-call {
-                        border-bottom: none;
-                        border-right: 1px solid rgba(255, 255, 255, 0.08);
-                        min-height: 560px;
-                    }
-                    .lhr-merge-board {
-                        min-height: 560px;
-                    }
-                }
-                @media (max-width: 980px) {
-                    .lhr-merge.has-call {
-                        grid-template-columns: 1fr;
-                        grid-template-rows: minmax(220px, 30vh) minmax(400px, 1fr);
-                    }
-                    .lhr-merge-call {
-                        border-right: none;
-                        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-                        min-height: 220px;
-                    }
+                .lhr-muted {
+                    color: var(--muted);
+                    padding: 1rem;
                 }
                 .lhr-chat-list {
                     flex: 1;
@@ -529,13 +514,11 @@ export default function LessonHourRoom({
                     max-width: 85%;
                     padding: 0.55rem 0.7rem;
                     border-radius: 12px;
-                    background: rgba(255, 255, 255, 0.06);
-                    border: 1px solid rgba(255, 255, 255, 0.08);
+                    background: rgba(255, 255, 255, 0.05);
                 }
                 .lhr-msg.is-me {
                     align-self: flex-end;
                     background: rgba(57, 255, 20, 0.12);
-                    border-color: rgba(57, 255, 20, 0.28);
                 }
                 .lhr-msg strong {
                     display: block;
@@ -544,7 +527,6 @@ export default function LessonHourRoom({
                 }
                 .lhr-msg p {
                     margin: 0.2rem 0;
-                    font-size: 0.92rem;
                 }
                 .lhr-msg time {
                     font-size: 0.7rem;
@@ -560,64 +542,43 @@ export default function LessonHourRoom({
                     flex: 1;
                     border-radius: 10px;
                     border: 1px solid rgba(255, 255, 255, 0.12);
-                    background: #0a0e13;
-                    color: #e8f0ea;
-                    padding: 0.6rem 0.75rem;
-                    font: inherit;
+                    background: #0a0f0c;
+                    color: #fff;
+                    padding: 0.65rem 0.75rem;
                 }
                 .lhr-btn {
+                    border-radius: 10px;
+                    border: 1px solid rgba(255, 255, 255, 0.14);
+                    background: rgba(255, 255, 255, 0.04);
+                    color: #eef7f0;
+                    font-weight: 800;
+                    padding: 0.42rem 0.7rem;
+                    cursor: pointer;
+                    text-decoration: none;
                     display: inline-flex;
                     align-items: center;
                     justify-content: center;
-                    border: 1px solid var(--line);
-                    background: rgba(57, 255, 20, 0.08);
+                    font-size: 0.84rem;
+                }
+                .lhr-btn-ghost {
+                    border-color: rgba(57, 255, 20, 0.35);
                     color: var(--accent);
-                    font-weight: 700;
-                    padding: 0.55rem 0.95rem;
-                    border-radius: 11px;
-                    cursor: pointer;
-                    text-decoration: none;
-                    font-size: 0.88rem;
-                    transition: transform 0.15s ease, background 0.15s ease, border-color 0.15s ease;
                 }
-                .lhr-btn:hover {
-                    transform: translateY(-1px);
-                }
-                .lhr-btn-primary {
-                    background: linear-gradient(135deg, #39ff14, #b8ff5a);
-                    color: #061008;
+                .lhr-btn-go {
                     border: none;
-                    font-weight: 800;
-                    padding: 0.7rem 1.25rem;
+                    color: #061008;
+                    background: linear-gradient(135deg, #39ff14, #b8ff5a);
                 }
-                .lhr-btn-copy {
-                    border-color: rgba(57, 255, 20, 0.4);
-                    background: rgba(57, 255, 20, 0.12);
+                .lhr-btn-lg {
+                    padding: 0.7rem 1.05rem;
+                    font-size: 0.95rem;
                 }
                 .lhr-btn-end {
-                    border-color: rgba(255, 170, 60, 0.45);
-                    background: rgba(80, 45, 8, 0.45);
-                    color: #ffc46a;
-                }
-                .lhr-btn-exit {
-                    border: 1px solid rgba(255, 90, 90, 0.55);
-                    background: linear-gradient(
-                        135deg,
-                        rgba(120, 20, 28, 0.95),
-                        rgba(70, 12, 18, 0.98)
-                    );
-                    color: #ffd0d0;
-                    font-weight: 800;
-                    padding: 0.55rem 1.1rem;
-                    box-shadow: 0 4px 18px rgba(180, 30, 40, 0.28);
-                }
-                .lhr-btn-exit:hover {
-                    border-color: rgba(255, 120, 120, 0.75);
-                    color: #fff;
-                    background: linear-gradient(135deg, rgba(150, 28, 36, 1), rgba(90, 14, 20, 1));
+                    border-color: rgba(255, 180, 70, 0.55);
+                    color: #ffd59a;
                 }
                 .lhr-btn:disabled {
-                    opacity: 0.45;
+                    opacity: 0.5;
                     cursor: not-allowed;
                 }
             `}</style>

@@ -1,10 +1,11 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, type CSSProperties } from "react";
 import BookingAttachments from "./BookingAttachments";
 import BookingCalendarLinks from "./BookingCalendarLinks";
 import {
     BlockedDay,
     BookingPayload,
     blockedTimesMap,
+    createAdminLessonBooking,
     isAdminCalendarDenied,
     loadAdminCalendarBundle,
     paymentStatusLabel,
@@ -27,9 +28,18 @@ import {
 
 type Props = {
     onChanged?: () => void;
-    /** Naptárból: diák/foglalás kiválasztása után lobby (élő óra) indítása */
+    /** Naptárból: diák/foglalás kiválasztása után élő óra (lobby) indítása */
     onCreateLobby?: (booking: BookingPayload) => void | Promise<void>;
     lobbyBusy?: boolean;
+};
+
+const inputStyle: CSSProperties = {
+    borderRadius: "10px",
+    border: "1px solid rgba(255,255,255,0.15)",
+    background: "#0a0f0c",
+    color: "#fff",
+    padding: "0.55rem 0.7rem",
+    fontSize: "0.92rem",
 };
 
 export default function AdminBookingCalendar({
@@ -57,6 +67,17 @@ export default function AdminBookingCalendar({
     const [busyId, setBusyId] = useState<string | null>(null);
     const [blockBusy, setBlockBusy] = useState(false);
     const [selectedBookingId, setSelectedBookingId] = useState<string | null>(null);
+
+    const [createName, setCreateName] = useState("");
+    const [createEmail, setCreateEmail] = useState("");
+    const [createTimes, setCreateTimes] = useState<string[]>([]);
+    const [createStartTime, setCreateStartTime] = useState("16:00");
+    const [createDurationHours, setCreateDurationHours] = useState(1);
+    const [createType, setCreateType] = useState<"online" | "personal">("online");
+    const [createSubject, setCreateSubject] = useState("Matek óra");
+    const [createBusy, setCreateBusy] = useState(false);
+    const [createMsg, setCreateMsg] = useState("");
+    const [createAlsoLive, setCreateAlsoLive] = useState(true);
 
     const todayKey = toDateKey(new Date());
 
@@ -150,7 +171,9 @@ export default function AdminBookingCalendar({
     const selectedKey = selectedDate ? toDateKey(selectedDate) : "";
     const dayBookings = selectedKey ? bookingsByDate.get(selectedKey) || [] : [];
     const daySlots = selectedDate ? getSlotsForDay(selectedDate, workingHours) : [];
-    const blockedForSelected = selectedKey ? blockedByDate.get(selectedKey) || new Set<string>() : new Set<string>();
+    const blockedForSelected = selectedKey
+        ? blockedByDate.get(selectedKey) || new Set<string>()
+        : new Set<string>();
     const bookedForSelected = useMemo(() => {
         const set = new Set<string>();
         dayBookings.forEach((b) => {
@@ -166,6 +189,100 @@ export default function AdminBookingCalendar({
         const next = new Date(currentMonth);
         next.setMonth(next.getMonth() + delta);
         setCurrentMonth(next);
+    };
+
+    const normalizeTime = (raw: string): string => {
+        const s = String(raw || "").trim();
+        const m = s.match(/^(\d{1,2}):(\d{2})$/);
+        if (!m) return "";
+        const h = Number(m[1]);
+        const min = Number(m[2]);
+        if (h < 0 || h > 23 || min < 0 || min > 59) return "";
+        return `${String(h).padStart(2, "0")}:${String(min).padStart(2, "0")}`;
+    };
+
+    const timesFromStartAndDuration = (startRaw: string, hours: number): string[] => {
+        const start = normalizeTime(startRaw);
+        if (!start) return [];
+        const [hh, mm] = start.split(":").map(Number);
+        const startM = hh * 60 + mm;
+        const n = Math.max(1, Math.min(8, Math.round(hours) || 1));
+        const out: string[] = [];
+        for (let i = 0; i < n; i++) {
+            const mins = startM + i * 60;
+            if (mins >= 24 * 60) break;
+            const h = Math.floor(mins / 60);
+            const m = mins % 60;
+            out.push(`${String(h).padStart(2, "0")}:${String(m).padStart(2, "0")}`);
+        }
+        return out;
+    };
+
+    const applyStartTime = (value: string) => {
+        setCreateStartTime(value);
+        const next = timesFromStartAndDuration(value, createDurationHours);
+        if (next.length) setCreateTimes(next);
+    };
+
+    const applyDuration = (hours: number) => {
+        setCreateDurationHours(hours);
+        const next = timesFromStartAndDuration(createStartTime, hours);
+        if (next.length) setCreateTimes(next);
+    };
+
+    const toggleCreateTime = (slot: string) => {
+        setCreateTimes((prev) => {
+            const next = prev.includes(slot)
+                ? prev.filter((t) => t !== slot)
+                : [...prev, slot].sort();
+            if (next.length > 0) setCreateStartTime(next[0]);
+            setCreateDurationHours(Math.max(1, next.length));
+            return next;
+        });
+    };
+
+    const handleCreateLesson = async () => {
+        if (!selectedKey || createBusy) return;
+        const times =
+            createTimes.length > 0
+                ? createTimes
+                : timesFromStartAndDuration(createStartTime, createDurationHours);
+        if (!times.length) {
+            setCreateMsg("Állítsd be, mikor tartod az órát (kezdés ideje).");
+            return;
+        }
+        setCreateBusy(true);
+        setCreateMsg("");
+        try {
+            const res = await createAdminLessonBooking({
+                date: selectedKey,
+                times,
+                customerName: createName,
+                customerEmail: createEmail,
+                lessonType: createType,
+                selectedSubject: createSubject,
+            });
+            if (!res.ok || !res.booking) {
+                setCreateMsg(res.error || "Mentés sikertelen.");
+                return;
+            }
+            setCreateMsg(
+                `Óra mentve: ${res.booking.customerName} · ${selectedKey} ${times.join(", ")}`
+            );
+            setCreateName("");
+            setCreateEmail("");
+            setCreateTimes([]);
+            setSelectedBookingId(res.booking.id);
+            await refresh();
+            onChanged?.();
+            if (createAlsoLive && onCreateLobby) {
+                await onCreateLobby(res.booking);
+            }
+        } catch (e: any) {
+            setCreateMsg(String(e?.message || e).slice(0, 160));
+        } finally {
+            setCreateBusy(false);
+        }
     };
 
     const handleApprove = async (booking: BookingPayload) => {
@@ -228,9 +345,9 @@ export default function AdminBookingCalendar({
                 📆 Foglalási naptár
             </h2>
             <p className="section-subtitle" style={{ marginBottom: "1.25rem" }}>
-                Válassz napot → kattints a diák foglalására →{" "}
-                <strong style={{ color: "#39ff14" }}>Lobby létrehozása</strong> (link + e-mail a
-                diáknak). Sárga = függőben, zöld = jóváhagyva, piros = blokkolt.
+                Válassz napot → <strong style={{ color: "#39ff14" }}>Óra létrehozása</strong>{" "}
+                (diák + idő), vagy meglévő foglalásnál{" "}
+                <strong style={{ color: "#39ff14" }}>Élő óra</strong> (link + e-mail).
             </p>
 
             <div className="booking-calendar-card" style={{ marginBottom: "1.25rem" }}>
@@ -271,7 +388,9 @@ export default function AdminBookingCalendar({
                     {calendarDays.map(({ date, inMonth }) => {
                         const key = toDateKey(date);
                         const dayList = bookingsByDate.get(key) || [];
-                        const pendingCount = dayList.filter((b) => !b.status || b.status === "pending").length;
+                        const pendingCount = dayList.filter(
+                            (b) => !b.status || b.status === "pending"
+                        ).length;
                         const approvedCount = dayList.filter((b) => b.status === "approved").length;
                         const hasBlocked = (blockedByDate.get(key)?.size || 0) > 0;
                         const isSelected = selectedKey === key;
@@ -295,6 +414,8 @@ export default function AdminBookingCalendar({
                                     d.setHours(0, 0, 0, 0);
                                     setSelectedDate(d);
                                     setSelectedBookingId(null);
+                                    setCreateTimes([]);
+                                    setCreateMsg("");
                                 }}
                                 style={{ position: "relative", minHeight: "3.2rem" }}
                             >
@@ -369,6 +490,313 @@ export default function AdminBookingCalendar({
                 </h3>
 
                 {selectedDate && (
+                    <div
+                        style={{
+                            marginBottom: "1.35rem",
+                            padding: "1rem",
+                            borderRadius: "14px",
+                            border: "1px solid rgba(57,255,20,0.35)",
+                            background: "rgba(57,255,20,0.06)",
+                        }}
+                    >
+                        <h4 style={{ margin: "0 0 0.75rem", color: "#39ff14" }}>Óra létrehozása</h4>
+                        <div
+                            style={{
+                                display: "grid",
+                                gap: "0.65rem",
+                                gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
+                            }}
+                        >
+                            <label
+                                style={{
+                                    display: "grid",
+                                    gap: "0.3rem",
+                                    color: "#ccc",
+                                    fontSize: "0.85rem",
+                                }}
+                            >
+                                Diák neve *
+                                <input
+                                    value={createName}
+                                    onChange={(e) => setCreateName(e.target.value)}
+                                    placeholder="pl. Kovács Anna"
+                                    style={inputStyle}
+                                />
+                            </label>
+                            <label
+                                style={{
+                                    display: "grid",
+                                    gap: "0.3rem",
+                                    color: "#ccc",
+                                    fontSize: "0.85rem",
+                                }}
+                            >
+                                E-mail (élő óra linkhez)
+                                <input
+                                    type="email"
+                                    value={createEmail}
+                                    onChange={(e) => setCreateEmail(e.target.value)}
+                                    placeholder="diak@email.hu"
+                                    style={inputStyle}
+                                />
+                            </label>
+                            <label
+                                style={{
+                                    display: "grid",
+                                    gap: "0.3rem",
+                                    color: "#ccc",
+                                    fontSize: "0.85rem",
+                                }}
+                            >
+                                Téma
+                                <input
+                                    value={createSubject}
+                                    onChange={(e) => setCreateSubject(e.target.value)}
+                                    placeholder="Matek óra"
+                                    style={inputStyle}
+                                />
+                            </label>
+                            <label
+                                style={{
+                                    display: "grid",
+                                    gap: "0.3rem",
+                                    color: "#ccc",
+                                    fontSize: "0.85rem",
+                                }}
+                            >
+                                Típus
+                                <select
+                                    value={createType}
+                                    onChange={(e) =>
+                                        setCreateType(
+                                            e.target.value === "personal" ? "personal" : "online"
+                                        )
+                                    }
+                                    style={inputStyle}
+                                >
+                                    <option value="online">Online</option>
+                                    <option value="personal">Személyes</option>
+                                </select>
+                            </label>
+                        </div>
+
+                        <div
+                            style={{
+                                marginTop: "1rem",
+                                padding: "0.85rem",
+                                borderRadius: "12px",
+                                border: "1px solid rgba(57,255,20,0.28)",
+                                background: "rgba(0,0,0,0.25)",
+                            }}
+                        >
+                            <strong style={{ color: "#39ff14", display: "block", marginBottom: "0.55rem" }}>
+                                Mikor tartod az órát?
+                            </strong>
+                            <p style={{ margin: "0 0 0.65rem", color: "#9eb5a8", fontSize: "0.82rem" }}>
+                                Nap:{" "}
+                                <strong style={{ color: "#eef7f0" }}>
+                                    {selectedDate.toLocaleDateString("hu-HU", {
+                                        year: "numeric",
+                                        month: "long",
+                                        day: "numeric",
+                                        weekday: "long",
+                                    })}
+                                </strong>
+                            </p>
+                            <div
+                                style={{
+                                    display: "grid",
+                                    gap: "0.65rem",
+                                    gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))",
+                                    alignItems: "end",
+                                }}
+                            >
+                                <label
+                                    style={{
+                                        display: "grid",
+                                        gap: "0.3rem",
+                                        color: "#ccc",
+                                        fontSize: "0.85rem",
+                                    }}
+                                >
+                                    Kezdés *
+                                    <input
+                                        type="time"
+                                        value={createStartTime}
+                                        onChange={(e) => applyStartTime(e.target.value)}
+                                        style={inputStyle}
+                                    />
+                                </label>
+                                <label
+                                    style={{
+                                        display: "grid",
+                                        gap: "0.3rem",
+                                        color: "#ccc",
+                                        fontSize: "0.85rem",
+                                    }}
+                                >
+                                    Hossz
+                                    <select
+                                        value={createDurationHours}
+                                        onChange={(e) => applyDuration(Number(e.target.value))}
+                                        style={inputStyle}
+                                    >
+                                        <option value={1}>1 óra</option>
+                                        <option value={2}>2 óra</option>
+                                        <option value={3}>3 óra</option>
+                                        <option value={4}>4 óra</option>
+                                    </select>
+                                </label>
+                            </div>
+                            <p style={{ margin: "0.65rem 0 0", color: "#b7cfc0", fontSize: "0.88rem" }}>
+                                Időpont:{" "}
+                                <strong style={{ color: "#fff" }}>
+                                    {(createTimes.length
+                                        ? createTimes
+                                        : timesFromStartAndDuration(
+                                              createStartTime,
+                                              createDurationHours
+                                          )
+                                    ).join(" → ") || "—"}
+                                </strong>
+                            </p>
+
+                            {daySlots.length > 0 ? (
+                                <>
+                                    <p
+                                        style={{
+                                            margin: "0.85rem 0 0.4rem",
+                                            color: "#888",
+                                            fontSize: "0.8rem",
+                                        }}
+                                    >
+                                        Gyors választás a munkaidőből:
+                                    </p>
+                                    <div className="booking-slots-grid">
+                                        {daySlots.map((slot) => {
+                                            const taken =
+                                                blockedForSelected.has(slot) ||
+                                                bookedForSelected.has(slot);
+                                            const on = createTimes.includes(slot);
+                                            return (
+                                                <button
+                                                    key={`create-${slot}`}
+                                                    type="button"
+                                                    disabled={taken && !on}
+                                                    className={[
+                                                        "booking-slot",
+                                                        on ? "selected" : taken ? "taken" : "free",
+                                                    ]
+                                                        .filter(Boolean)
+                                                        .join(" ")}
+                                                    onClick={() => toggleCreateTime(slot)}
+                                                    title={
+                                                        taken && !on
+                                                            ? "Már foglalt / blokkolt"
+                                                            : slot
+                                                    }
+                                                >
+                                                    {slot}
+                                                    {on ? " ✓" : taken ? " (foglalt)" : ""}
+                                                </button>
+                                            );
+                                        })}
+                                    </div>
+                                </>
+                            ) : null}
+                        </div>
+
+                        <label
+                            style={{
+                                display: "flex",
+                                alignItems: "center",
+                                gap: "0.5rem",
+                                marginTop: "0.85rem",
+                                color: "#ddd",
+                                fontSize: "0.9rem",
+                                cursor: "pointer",
+                            }}
+                        >
+                            <input
+                                type="checkbox"
+                                checked={createAlsoLive}
+                                onChange={(e) => setCreateAlsoLive(e.target.checked)}
+                            />
+                            Mentés után azonnal élő óra (link + e-mail)
+                        </label>
+
+                        <div
+                            style={{
+                                display: "flex",
+                                gap: "0.5rem",
+                                flexWrap: "wrap",
+                                marginTop: "0.85rem",
+                            }}
+                        >
+                            <button
+                                type="button"
+                                disabled={
+                                    createBusy ||
+                                    lobbyBusy ||
+                                    !createName.trim() ||
+                                    (!createTimes.length &&
+                                        !timesFromStartAndDuration(
+                                            createStartTime,
+                                            createDurationHours
+                                        ).length)
+                                }
+                                onClick={() => void handleCreateLesson()}
+                                style={{
+                                    background: "linear-gradient(135deg, #39ff14, #b8ff5a)",
+                                    color: "#061008",
+                                    border: "none",
+                                    borderRadius: "10px",
+                                    padding: "0.65rem 1.15rem",
+                                    fontWeight: 800,
+                                    cursor:
+                                        createBusy ||
+                                        !createName.trim() ||
+                                        (!createTimes.length &&
+                                            !timesFromStartAndDuration(
+                                                createStartTime,
+                                                createDurationHours
+                                            ).length)
+                                            ? "not-allowed"
+                                            : "pointer",
+                                    opacity:
+                                        createBusy ||
+                                        !createName.trim() ||
+                                        (!createTimes.length &&
+                                            !timesFromStartAndDuration(
+                                                createStartTime,
+                                                createDurationHours
+                                            ).length)
+                                            ? 0.55
+                                            : 1,
+                                }}
+                            >
+                                {createBusy || lobbyBusy
+                                    ? "Mentés…"
+                                    : createAlsoLive
+                                      ? "Óra + élő óra"
+                                      : "Óra mentése a naptárba"}
+                            </button>
+                        </div>
+                        {createMsg ? (
+                            <p
+                                style={{
+                                    margin: "0.65rem 0 0",
+                                    color: "#9fd4ff",
+                                    fontSize: "0.88rem",
+                                }}
+                            >
+                                {createMsg}
+                            </p>
+                        ) : null}
+                    </div>
+                )}
+
+                {selectedDate && (
                     <div style={{ marginBottom: "1.5rem" }}>
                         <div
                             style={{
@@ -391,20 +819,26 @@ export default function AdminBookingCalendar({
                                             ? "rgba(57,255,20,0.15)"
                                             : "rgba(255,77,109,0.18)",
                                         color: dayFullyBlocked ? "#39ff14" : "#ff4d6d",
-                                        border: `1px solid ${dayFullyBlocked ? "#39ff14" : "#ff4d6d"}`,
+                                        border: `1px solid ${
+                                            dayFullyBlocked ? "#39ff14" : "#ff4d6d"
+                                        }`,
                                         borderRadius: "10px",
                                         padding: "0.45rem 0.85rem",
                                         fontWeight: 700,
                                         cursor: blockBusy ? "wait" : "pointer",
                                     }}
                                 >
-                                    {dayFullyBlocked ? "Egész nap feloldása" : "Egész nap blokkolása"}
+                                    {dayFullyBlocked
+                                        ? "Egész nap feloldása"
+                                        : "Egész nap blokkolása"}
                                 </button>
                             )}
                         </div>
 
                         {daySlots.length === 0 ? (
-                            <p style={{ color: "#aaa", margin: 0 }}>Ezen a napon nincs munkaidő (pl. vasárnap).</p>
+                            <p style={{ color: "#aaa", margin: 0 }}>
+                                Ezen a napon nincs munkaidő (pl. vasárnap).
+                            </p>
                         ) : (
                             <div className="booking-slots-grid">
                                 {daySlots.map((slot) => {
@@ -434,7 +868,11 @@ export default function AdminBookingCalendar({
                                             }
                                         >
                                             {slot}
-                                            {blocked ? " (blokkolt)" : booked ? " (foglalt)" : ""}
+                                            {blocked
+                                                ? " (blokkolt)"
+                                                : booked
+                                                  ? " (foglalt)"
+                                                  : ""}
                                         </button>
                                     );
                                 })}
@@ -512,87 +950,28 @@ export default function AdminBookingCalendar({
                                             {meta.label}
                                         </span>
                                     </div>
-                                    <p style={{ margin: "0.2rem 0", color: "#ccc", fontSize: "0.95rem" }}>
+                                    <p
+                                        style={{
+                                            margin: "0.2rem 0",
+                                            color: "#ccc",
+                                            fontSize: "0.95rem",
+                                        }}
+                                    >
                                         {b.customerEmail}
                                     </p>
-                                    <p style={{ margin: "0.2rem 0", color: "#bbb", fontSize: "0.9rem" }}>
+                                    <p
+                                        style={{
+                                            margin: "0.2rem 0",
+                                            color: "#bbb",
+                                            fontSize: "0.9rem",
+                                        }}
+                                    >
                                         {b.lessonType === "online" ? "Online" : "Személyes"}
                                         {b.selectedSubject ? ` · ${b.selectedSubject}` : ""}
                                         {typeof b.totalPrice === "number"
                                             ? ` · ${b.totalPrice.toLocaleString("hu-HU")} Ft`
                                             : ""}
                                     </p>
-                                    <p style={{ margin: "0.2rem 0", color: "#ccc", fontSize: "0.9rem" }}>
-                                        Számlázási cím:{" "}
-                                        {[b.postalCode, b.street, b.houseNumber].filter(Boolean).join(" ") ||
-                                            "—"}
-                                    </p>
-                                    <p style={{ margin: "0.35rem 0", fontSize: "0.9rem" }}>
-                                        Fizetés:{" "}
-                                        <span
-                                            style={{
-                                                color:
-                                                    b.paymentStatus === "paid"
-                                                        ? "#39ff14"
-                                                        : b.paymentStatus === "transfer_pending"
-                                                          ? "#ffd166"
-                                                          : "#ff69b4",
-                                                fontWeight: 700,
-                                            }}
-                                        >
-                                            {paymentStatusLabel(b.paymentStatus)}
-                                        </span>
-                                    </p>
-                                    <div
-                                        style={{
-                                            display: "flex",
-                                            gap: "0.4rem",
-                                            flexWrap: "wrap",
-                                            marginBottom: "0.5rem",
-                                        }}
-                                        onClick={(e) => e.stopPropagation()}
-                                    >
-                                        {(
-                                            [
-                                                ["unpaid", "Nincs fizetve"],
-                                                ["transfer_pending", "Utalás…"],
-                                                ["paid", "Fizetve"],
-                                            ] as Array<[PaymentStatus, string]>
-                                        ).map(([value, label]) => (
-                                            <button
-                                                key={value}
-                                                type="button"
-                                                disabled={blockBusy || busyId === b.id}
-                                                onClick={async () => {
-                                                    setBusyId(b.id);
-                                                    try {
-                                                        await updateBookingPaymentStatus(b.id, value);
-                                                        await refresh();
-                                                        onChanged?.();
-                                                    } finally {
-                                                        setBusyId(null);
-                                                    }
-                                                }}
-                                                style={{
-                                                    fontSize: "0.75rem",
-                                                    padding: "0.3rem 0.55rem",
-                                                    borderRadius: "8px",
-                                                    cursor: "pointer",
-                                                    border:
-                                                        (b.paymentStatus || "unpaid") === value
-                                                            ? "1px solid #39ff14"
-                                                            : "1px solid #555",
-                                                    background:
-                                                        (b.paymentStatus || "unpaid") === value
-                                                            ? "rgba(57,255,20,0.15)"
-                                                            : "transparent",
-                                                    color: "#ddd",
-                                                }}
-                                            >
-                                                {label}
-                                            </button>
-                                        ))}
-                                    </div>
                                     <div onClick={(e) => e.stopPropagation()}>
                                         <BookingAttachments files={b.uploadedFiles} />
                                         <BookingCalendarLinks booking={b} forceShow />
@@ -627,8 +1006,8 @@ export default function AdminBookingCalendar({
                                                 }}
                                             >
                                                 {lobbyBusy && selectedBookingId === b.id
-                                                    ? "Lobby…"
-                                                    : "Lobby + e-mail"}
+                                                    ? "Élő óra…"
+                                                    : "Élő óra indítása"}
                                             </button>
                                         </div>
                                     ) : null}
@@ -666,7 +1045,9 @@ export default function AdminBookingCalendar({
                     </div>
                 )}
 
-                {onCreateLobby && selectedBookingId && dayBookings.some((b) => b.id === selectedBookingId) ? (
+                {onCreateLobby &&
+                selectedBookingId &&
+                dayBookings.some((b) => b.id === selectedBookingId) ? (
                     <div
                         style={{
                             marginTop: "1rem",
@@ -708,7 +1089,7 @@ export default function AdminBookingCalendar({
                                 cursor: lobbyBusy ? "wait" : "pointer",
                             }}
                         >
-                            {lobbyBusy ? "Lobby készül…" : "Lobby + e-mail"}
+                            {lobbyBusy ? "Élő óra készül…" : "Élő óra indítása"}
                         </button>
                     </div>
                 ) : null}

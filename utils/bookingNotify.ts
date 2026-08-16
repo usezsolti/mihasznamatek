@@ -547,20 +547,75 @@ export async function saveBookingToFirestore(
             return { ok: false, error: "Firebase nem elérhető" };
         }
         const db = firebase.firestore();
+        const status = (booking.status || "pending") as BookingStatus;
         const doc = {
             ...booking,
-            status: "pending" as BookingStatus,
+            status,
             paymentStatus: booking.paymentStatus || ("unpaid" as PaymentStatus),
             createdAt: firebase.firestore.FieldValue.serverTimestamp(),
             updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
         };
         await db.collection("bookings").doc(booking.id).set(doc);
         await db.collection("pendingBookings").doc(booking.id).set(doc).catch(() => undefined);
+        if (status === "approved") {
+            await db
+                .collection("approvedBookings")
+                .doc(booking.id)
+                .set(doc)
+                .catch(() => undefined);
+        }
         return { ok: true };
     } catch (err: any) {
         console.error("Firestore booking save failed:", err);
         return { ok: false, error: err?.message || "Firestore mentés sikertelen" };
     }
+}
+
+const ADMIN_LESSON_PRICE_PER_HOUR = 11000;
+
+/** Tanár manuálisan felvesz órát a naptárba (jóváhagyott foglalásként). */
+export async function createAdminLessonBooking(params: {
+    date: string;
+    times: string[];
+    customerName: string;
+    customerEmail?: string;
+    lessonType?: "online" | "personal";
+    selectedSubject?: string;
+    totalPrice?: number;
+}): Promise<{ ok: boolean; booking?: BookingPayload; error?: string }> {
+    const name = String(params.customerName || "").trim();
+    const email = String(params.customerEmail || "").trim().toLowerCase();
+    const times = (params.times || []).map((t) => String(t).trim()).filter(Boolean);
+    const date = String(params.date || "").trim();
+
+    if (!name) return { ok: false, error: "Add meg a diák nevét." };
+    if (!date) return { ok: false, error: "Válassz napot." };
+    if (times.length === 0) return { ok: false, error: "Válassz legalább egy órasávot." };
+
+    const booking: BookingPayload = {
+        id: `booking_admin_${Date.now()}`,
+        date,
+        times,
+        customerName: name.slice(0, 80),
+        customerEmail: email.slice(0, 120) || `nincs+${Date.now()}@local.invalid`,
+        lessonType: params.lessonType === "personal" ? "personal" : "online",
+        selectedSubject: (params.selectedSubject || "Matek óra").trim().slice(0, 120),
+        hobby: "—",
+        totalPrice:
+            typeof params.totalPrice === "number"
+                ? params.totalPrice
+                : times.length * ADMIN_LESSON_PRICE_PER_HOUR,
+        submittedAt: new Date().toISOString(),
+        status: "approved",
+        paymentStatus: "unpaid",
+        gdprAccepted: true,
+        gdprAcceptedAt: new Date().toISOString(),
+        gdprVersion: "admin-created",
+    };
+
+    const saved = await saveBookingToFirestore(booking);
+    if (!saved.ok) return { ok: false, error: saved.error };
+    return { ok: true, booking };
 }
 
 export async function updateBookingStatus(

@@ -107,10 +107,11 @@ export default function AdminWorkingHoursEditor({ onSaved }: Props) {
             }}
         >
             <h2 className="section-title" style={{ marginBottom: "0.35rem", fontSize: "1.35rem" }}>
-                🕒 Heti munkaidő
+                🕒 Mikor tartasz órákat? (heti munkaidő)
             </h2>
             <p className="section-subtitle" style={{ marginBottom: "1rem" }}>
-                Ezekből állnak össze a foglalható órasávok. A blokkolt napok / sávok továbbra is felülírják.
+                Itt állítod be, melyik napokon / órákban vagy elérhető. A foglaló oldal és a naptár
+                ezt használja.
             </p>
 
             {loading ? (

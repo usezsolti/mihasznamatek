@@ -10,11 +10,11 @@ import {
     type LessonRoom,
 } from '../../utils/lessonRoom';
 
-function fallbackRoom(roomId: string): LessonRoom {
+function fallbackRoom(roomId: string, createdBy = ''): LessonRoom {
     return {
         id: roomId,
         title: 'Matek óra',
-        createdBy: '',
+        createdBy,
         whiteboardId: '',
         jitsiRoom: lessonCallRoomName(roomId),
         createdAtMs: Date.now(),
@@ -104,7 +104,7 @@ export default function OraPage() {
         const timer = window.setTimeout(() => {
             if (cancelled) return;
             // Ha a Firestore lassú / rules tilt — ne fehér képernyő: helyi fallback óra
-            setRoom((prev) => prev || fallbackRoom(roomId));
+            setRoom((prev) => prev || fallbackRoom(roomId, uid));
             setLoadErr(
                 'Az óra adatai részben helyiek (Firestore lassú vagy rules). A hívás így is megy.'
             );
@@ -119,7 +119,7 @@ export default function OraPage() {
                     setRoom(r);
                     setLoadErr('');
                 } else {
-                    setRoom(fallbackRoom(roomId));
+                    setRoom(fallbackRoom(roomId, uid));
                     setLoadErr(
                         'Az óra nincs a felhőben (publikáld a firestore.rules-t). Helyi óra: hívás + tábla így is elérhető.'
                     );
@@ -129,7 +129,7 @@ export default function OraPage() {
             .catch(() => {
                 if (cancelled) return;
                 window.clearTimeout(timer);
-                setRoom(fallbackRoom(roomId));
+                setRoom(fallbackRoom(roomId, uid));
                 setLoadErr('Óra betöltés hiba — helyi óra módban folytatjuk.');
                 setLoadingRoom(false);
             });
@@ -222,9 +222,10 @@ export default function OraPage() {
 
             <style jsx>{`
                 .ora-page {
-                    min-height: calc(100vh - 72px);
                     color: #e8f0ea;
                     background: #0c1016;
+                    padding-top: 0.25rem;
+                    padding-bottom: 2rem;
                 }
                 .ora-status {
                     text-align: center;

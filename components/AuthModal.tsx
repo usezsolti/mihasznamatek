@@ -164,6 +164,8 @@ export default function AuthModal({
     const [infoMessage, setInfoMessage] = useState("");
     const [awaitingVerification, setAwaitingVerification] = useState(false);
     const [gdprAccepted, setGdprAccepted] = useState(false);
+    const [teacherPassword, setTeacherPassword] = useState("");
+    const [showTeacherLogin, setShowTeacherLogin] = useState(false);
 
     const buildProfile = (): RegistrationProfile => ({
         name: name.trim(),
@@ -812,51 +814,104 @@ export default function AuthModal({
                             </button>
 
                             {mode === "login" && (
-                                <button
-                                    type="button"
-                                    className="auth-admin-login-btn"
-                                    disabled={loading}
-                                    onClick={async () => {
-                                        setLoading(true);
-                                        setError("");
-                                        try {
-                                            const { signInAsAdmin } = await import("../utils/adminLogin");
-                                            await signInAsAdmin();
-                                            const firebase = await waitForFirebaseReady();
-                                            const user = firebase?.auth?.()?.currentUser;
-                                            if (user) {
-                                                await user.getIdToken(true);
-                                                try {
-                                                    await ensureUserDoc(firebase, user, {
-                                                        name: user.displayName || "Tanár",
-                                                    });
-                                                } catch {
-                                                    /* ignore */
-                                                }
-                                            }
-                                            onClose();
-                                            router.push("/dashboard?tab=admin");
-                                        } catch (err: any) {
-                                            setError(err?.message || "Tanári belépés sikertelen.");
-                                        } finally {
-                                            setLoading(false);
-                                        }
-                                    }}
-                                >
-                                    <svg
-                                        className="auth-admin-login-ico"
-                                        viewBox="0 0 24 24"
-                                        width="16"
-                                        height="16"
-                                        aria-hidden
-                                    >
-                                        <path
-                                            fill="currentColor"
-                                            d="M5 16l2-8 3 3 2-5 2 5 3-3 2 8H5zm0 2h14v2H5v-2z"
-                                        />
-                                    </svg>
-                                    {loading ? t("auth.teacherLoggingIn") : t("auth.teacherLogin")}
-                                </button>
+                                <div className="auth-teacher-box">
+                                    {!showTeacherLogin ? (
+                                        <button
+                                            type="button"
+                                            className="auth-admin-login-btn"
+                                            disabled={loading}
+                                            onClick={() => {
+                                                setShowTeacherLogin(true);
+                                                setError("");
+                                            }}
+                                        >
+                                            <svg
+                                                className="auth-admin-login-ico"
+                                                viewBox="0 0 24 24"
+                                                width="16"
+                                                height="16"
+                                                aria-hidden
+                                            >
+                                                <path
+                                                    fill="currentColor"
+                                                    d="M5 16l2-8 3 3 2-5 2 5 3-3 2 8H5zm0 2h14v2H5v-2z"
+                                                />
+                                            </svg>
+                                            {t("auth.teacherLogin")}
+                                        </button>
+                                    ) : (
+                                        <div className="auth-teacher-form">
+                                            <p className="auth-teacher-hint">{t("auth.teacherHint")}</p>
+                                            <label className="auth-teacher-label">
+                                                {t("auth.teacherPassword")}
+                                                <input
+                                                    type="password"
+                                                    autoComplete="current-password"
+                                                    value={teacherPassword}
+                                                    onChange={(e) => setTeacherPassword(e.target.value)}
+                                                    placeholder={t("auth.teacherPasswordPh")}
+                                                    disabled={loading}
+                                                    onKeyDown={(e) => {
+                                                        if (e.key === "Enter") {
+                                                            e.preventDefault();
+                                                            (
+                                                                e.currentTarget
+                                                                    .closest(".auth-teacher-form")
+                                                                    ?.querySelector(
+                                                                        "button[data-teacher-submit]"
+                                                                    ) as HTMLButtonElement | null
+                                                            )?.click();
+                                                        }
+                                                    }}
+                                                />
+                                            </label>
+                                            <button
+                                                type="button"
+                                                data-teacher-submit
+                                                className="auth-admin-login-btn"
+                                                disabled={loading || !teacherPassword.trim()}
+                                                onClick={async () => {
+                                                    setLoading(true);
+                                                    setError("");
+                                                    try {
+                                                        const { signInAsAdmin } = await import(
+                                                            "../utils/adminLogin"
+                                                        );
+                                                        await signInAsAdmin(teacherPassword);
+                                                        const firebase = await waitForFirebaseReady();
+                                                        const user = firebase?.auth?.()?.currentUser;
+                                                        if (user) {
+                                                            await user.getIdToken(true);
+                                                            try {
+                                                                await ensureUserDoc(firebase, user, {
+                                                                    name:
+                                                                        user.displayName || "Tanár",
+                                                                });
+                                                            } catch {
+                                                                /* ignore */
+                                                            }
+                                                        }
+                                                        setTeacherPassword("");
+                                                        setShowTeacherLogin(false);
+                                                        onClose();
+                                                        router.push("/dashboard?tab=admin");
+                                                    } catch (err: any) {
+                                                        setError(
+                                                            err?.message ||
+                                                                "Tanári belépés sikertelen."
+                                                        );
+                                                    } finally {
+                                                        setLoading(false);
+                                                    }
+                                                }}
+                                            >
+                                                {loading
+                                                    ? t("auth.teacherLoggingIn")
+                                                    : t("auth.teacherLogin")}
+                                            </button>
+                                        </div>
+                                    )}
+                                </div>
                             )}
 
                             {mode === "register" && (

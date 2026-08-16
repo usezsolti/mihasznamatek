@@ -589,7 +589,7 @@ export default function AdminTeacherConsole({
                     <p className="atc-platform-kicker">Mihaszna Matek</p>
                     <h1 className="atc-platform-title">Admin platform</h1>
                     <p className="atc-muted" style={{ margin: '0.2rem 0 0' }}>
-                        Élő óra: Naptár → diák → Lobby (link + e-mail). Képernyőmegosztás a hívásban.
+                        Naptár → Óra létrehozása (diák + idő), vagy meglévő foglalás → Élő óra.
                     </p>
                 </button>
                 <div className="atc-tabs" role="tablist" aria-label="Admin eszközök">

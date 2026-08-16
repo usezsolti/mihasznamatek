@@ -134,14 +134,9 @@ export async function requireAdmin(
     const claims = token ? peekIdTokenClaims(token) : null;
     const claimEmail = String(claims?.email || '').toLowerCase();
     const email = (user.email || claimEmail || '').toLowerCase();
-    const claimAdmin = claims?.isAdminAccount === true;
 
-    if (
-        claimAdmin ||
-        isAdminEmail(email) ||
-        (ADMIN_EMAIL && email === ADMIN_EMAIL.toLowerCase())
-    ) {
-        // Alias / claim / gyors admin — emailVerified nem kötelező
+    // Csak a kijelölt admin e-mail — custom claim önmagában nem elég
+    if (isAdminEmail(email) || (ADMIN_EMAIL && email === ADMIN_EMAIL.toLowerCase())) {
         return { ...user, email: email || user.email };
     }
 
