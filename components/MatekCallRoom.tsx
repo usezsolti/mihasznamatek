@@ -226,8 +226,8 @@ export default function MatekCallRoom({
                         {status === 'connecting' ? (
                             <span className="mcr-hint">{t('call.connectHint')}</span>
                         ) : null}
-                        {status === 'error' && /bejelentkezés|401|403/i.test(detail) ? (
-                            <a className="mcr-rules-link" href="/">
+                        {status === 'error' && /rules-setup|firestore|jogosult/i.test(detail) ? (
+                            <a className="mcr-rules-link" href="/rules-setup">
                                 {t('call.rulesLink')}
                             </a>
                         ) : null}

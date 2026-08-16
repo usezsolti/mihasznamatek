@@ -33,6 +33,11 @@ export const WEEKDAY_ORDER = [1, 2, 3, 4, 5, 6, 0] as const;
 
 const SETTINGS_DOC = "workingHours";
 
+function getFirebase(): any | null {
+    if (typeof window === "undefined") return null;
+    return (window as any).firebase || null;
+}
+
 export function cloneWorkingHours(hours?: WorkingHoursMap | null): WorkingHoursMap {
     const src = hours || DEFAULT_WORKING_HOURS;
     const out: WorkingHoursMap = { ...DEFAULT_WORKING_HOURS };
@@ -115,12 +120,13 @@ export function makeSlotsForDateKeyFn(hours: WorkingHoursMap) {
 
 export async function loadWorkingHoursFromFirestore(): Promise<WorkingHoursMap> {
     try {
-        const { apiGet } = await import("./apiClient");
-        const res = await apiGet<{ hours?: WorkingHoursMap }>("/api/settings/working-hours");
-        if (res.ok && res.data?.hours) return normalizeWorkingHours(res.data.hours);
-        return cloneWorkingHours();
-    } catch (err: unknown) {
-        const msg = String(err instanceof Error ? err.message : err || '');
+        const firebase = getFirebase();
+        if (!firebase?.firestore) return cloneWorkingHours();
+        const snap = await firebase.firestore().collection("settings").doc(SETTINGS_DOC).get();
+        if (!snap.exists) return cloneWorkingHours();
+        return normalizeWorkingHours(snap.data());
+    } catch (err: any) {
+        const msg = String(err?.message || err || '');
         if (!/permission|insufficient/i.test(msg)) {
             console.warn('loadWorkingHoursFromFirestore:', msg.slice(0, 120));
         }
@@ -132,20 +138,30 @@ export async function saveWorkingHoursToFirestore(
     hours: WorkingHoursMap
 ): Promise<{ ok: boolean; error?: string }> {
     try {
-        const { apiPutAuth } = await import("./apiClient");
+        const firebase = getFirebase();
+        if (!firebase?.firestore) {
+            return { ok: false, error: "Firebase nem elérhető" };
+        }
         const normalized = normalizeWorkingHours(hours);
-        const res = await apiPutAuth<{ hours?: WorkingHoursMap }>(
-            "/api/settings/working-hours",
-            { hours: normalized }
-        );
-        if (!res.ok) return { ok: false, error: res.error || "Mentés sikertelen" };
+        const payload: Record<string, DayRange> = {};
+        for (let d = 0; d <= 6; d++) {
+            payload[String(d)] = normalized[d];
+        }
+        await firebase
+            .firestore()
+            .collection("settings")
+            .doc(SETTINGS_DOC)
+            .set(
+                {
+                    hours: payload,
+                    updatedAt: new Date().toISOString(),
+                },
+                { merge: true }
+            );
         return { ok: true };
-    } catch (err: unknown) {
+    } catch (err: any) {
         console.error("saveWorkingHoursToFirestore failed:", err);
-        return {
-            ok: false,
-            error: err instanceof Error ? err.message : "Mentés sikertelen",
-        };
+        return { ok: false, error: err?.message || "Mentés sikertelen" };
     }
 }
 

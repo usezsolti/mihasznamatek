@@ -1,6 +1,5 @@
 import Head from 'next/head';
 import Link from 'next/link';
-import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import CommunityAvatar from '../components/community/CommunityAvatar';
@@ -53,7 +52,6 @@ import { useLang } from '../utils/i18n';
 export default function CommunityPage() {
     const router = useRouter();
     const { t } = useLang();
-    const { data: session, status: authStatus } = useSession();
     const [ready, setReady] = useState(false);
     const [uid, setUid] = useState<string | null>(null);
     const [me, setMe] = useState<SocialProfile | null>(null);
@@ -118,35 +116,37 @@ export default function CommunityPage() {
     }, []);
 
     useEffect(() => {
-        if (authStatus === 'loading') return;
-
         let cancelled = false;
-
-        if (!session?.user?.id) {
-            setUid(null);
-            setMe(null);
+        const firebase = (window as any).firebase;
+        if (!firebase?.auth) {
             setReady(true);
             return;
         }
 
-        const userId = session.user.id;
-        (async () => {
+        const unsub = firebase.auth().onAuthStateChanged(async (user: any) => {
+            if (cancelled) return;
+            if (!user) {
+                setUid(null);
+                setMe(null);
+                setReady(true);
+                return;
+            }
             try {
-                setUid(userId);
-                const profile = await apiEnsureProfile(userId);
+                setUid(user.uid);
+                const profile = await apiEnsureProfile(user.uid);
                 if (cancelled) return;
                 setMe(profile);
                 setBioDraft(profile.bio);
                 setUsernameDraft(profile.username);
-                const following = await apiListFollowingIds(userId);
+                const following = await apiListFollowingIds(user.uid);
                 if (cancelled) return;
                 setFollowingIds(following);
-                await refreshFeed(userId, following);
+                await refreshFeed(user.uid, following);
                 if (cancelled) return;
                 const [p, g, c, s, health] = await Promise.all([
                     apiListProfiles(30),
                     apiListGroups(),
-                    apiListConversations(userId),
+                    apiListConversations(user.uid),
                     listMathShorts(20).catch(() => []),
                     backendHealth().catch(() => null),
                 ]);
@@ -185,12 +185,13 @@ export default function CommunityPage() {
             } finally {
                 if (!cancelled) setReady(true);
             }
-        })();
+        });
 
         return () => {
             cancelled = true;
+            unsub?.();
         };
-    }, [refreshFeed, authStatus, session?.user?.id, t]);
+    }, [refreshFeed]);
 
     const openProfile = async (targetUid: string) => {
         if (!uid) return;
@@ -467,7 +468,7 @@ export default function CommunityPage() {
                             <span className="mm-ig-boot-logo">M</span>
                         </div>
                         <h1 className="mm-ig-boot-title">MihaSocial</h1>
-                        <p className="mm-ig-boot-sub">{t('community.loading')}</p>
+                        <p className="mm-ig-boot-sub">{t('community.boot.sub')}</p>
                     </div>
                     <div className="mm-ig-boot-bar" aria-hidden>
                         <span />
@@ -734,7 +735,9 @@ export default function CommunityPage() {
                     </div>
 
                     <div className="mm-ig-suggest-list">
-                        {suggested.length === 0 && <p className="mm-social-muted">{t('community.rail.noSuggestions')}</p>}
+                        {suggested.length === 0 && (
+                            <p className="mm-social-muted">{t('community.rail.noSuggestions')}</p>
+                        )}
                         {suggested.map((p) => (
                             <div key={p.uid} className="mm-ig-suggest-row">
                                 <button

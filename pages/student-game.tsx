@@ -1,8 +1,6 @@
 import { useState, useEffect } from 'react';
-import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
-import { isAdminEmail } from '../utils/admin';
 
 interface Question {
     question: string;
@@ -44,21 +42,8 @@ export default function StudentGame() {
     });
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
-    const { data: session, status: authStatus } = useSession();
-    const isAdmin = Boolean(session?.user?.email && isAdminEmail(session.user.email));
-    const currentUser = session?.user?.id
-        ? {
-              uid: session.user.id,
-              email: session.user.email,
-              displayName: session.user.name,
-          }
-        : null;
-
-    useEffect(() => {
-        if (authStatus !== 'loading') {
-            setLoading(false);
-        }
-    }, [authStatus]);
+    const [currentUser, setCurrentUser] = useState<any>(null);
+    const [isAdmin, setIsAdmin] = useState(false);
 
     // Sample questions for different topics
     const sampleQuestions = {
@@ -155,6 +140,50 @@ export default function StudentGame() {
     };
 
     useEffect(() => {
+        // Admin ellenőrzés
+        const checkAuth = async () => {
+            let attempts = 0;
+            while (!(window as any).firebase && attempts < 50) {
+                await new Promise(resolve => setTimeout(resolve, 100));
+                attempts++;
+            }
+
+            if (!(window as any).firebase) {
+                setLoading(false);
+                return;
+            }
+
+            try {
+                const auth = (window as any).firebase.auth();
+                const unsub = auth.onAuthStateChanged(async (user: any) => {
+                    if (!user) {
+                        // Ha nincs bejelentkezve, engedjük a játékot
+                        setLoading(false);
+                        return;
+                    }
+
+                    setCurrentUser(user);
+
+                    // Admin ellenőrzés - csak usezsolti@gmail.com férhet hozzá a játék módosításhoz
+                    if (user.email === 'usezsolti@gmail.com') {
+                        console.log('Admin hozzáférés engedélyezve:', user.email);
+                        setIsAdmin(true);
+                    } else {
+                        console.log('Felhasználó játékban:', user.email);
+                        setIsAdmin(false);
+                    }
+                    setLoading(false);
+                });
+
+                return () => unsub();
+            } catch (err) {
+                console.error('Auth error:', err);
+                setLoading(false);
+            }
+        };
+
+        checkAuth();
+
         // Ellenőrizzük, hogy vannak-e URL paraméterek (exam-prep-ből jövünk)
         if (router.query.studentId && router.query.studentName) {
             loadCustomTask();
@@ -231,39 +260,60 @@ export default function StudentGame() {
 
     const loadAssignedTasks = async () => {
         try {
-            if (!currentUser?.uid) {
-                if (!router.query.studentId) {
-                    router.push('/');
-                    return;
-                }
+            if (!(window as any).firebase) {
+                setError('Firebase nincs betöltve');
                 setLoading(false);
                 return;
             }
 
-            try {
-                const { loadStudentAssignedTasks } = await import('../utils/assignedTasks');
-                const list = await loadStudentAssignedTasks(currentUser.uid, currentUser.email || undefined);
-                if (list.length) {
-                    const tasks: AssignedTask[] = list.map((task) => ({
-                        id: task.id,
-                        title: task.title,
-                        description: task.description || '',
-                        difficulty: (task.difficulty as AssignedTask['difficulty']) || 'medium',
-                        topic: task.topicTitle || task.topicId || 'Általános',
-                        questions: sampleQuestions[task.title as keyof typeof sampleQuestions] || sampleQuestions['Másodfokú egyenletek'],
-                        timeLimit: task.timeLimit || 30,
-                        completed: task.status === 'completed',
-                        score: 0,
-                    }));
-                    setAssignedTasks(tasks);
-                    setLoading(false);
+            const auth = (window as any).firebase.auth();
+            const user = auth.currentUser;
+
+            if (!user) {
+                // Ha exam-prep-ből jöttünk, ne irányítsunk át
+                if (!router.query.studentId) {
+                    router.push('/');
                     return;
                 }
-            } catch (e) {
-                console.warn('Assigned tasks API load failed:', e);
             }
 
-            setAssignedTasks([]);
+            const db = (window as any).firebase.firestore();
+            const userDoc = await db.collection('users').doc(user.uid).get();
+            const userData = userDoc.data();
+
+            if (userData && userData.assignedTasks) {
+                const tasks: AssignedTask[] = userData.assignedTasks.map((taskId: string) => {
+                    // Find task details (in real app, this would come from a tasks collection)
+                    const taskTitles: { [key: string]: any } = {
+                        'task1': { title: 'Másodfokú egyenletek', description: 'Megoldás, diszkrimináns, gyökök számítása', difficulty: 'medium', topic: 'Algebra', timeLimit: 30 },
+                        'task2': { title: 'Deriválás alapjai', description: 'Hatványfüggvények, szorzat, hányados deriválása', difficulty: 'hard', topic: 'Analízis', timeLimit: 45 },
+                        'task3': { title: 'Trigonometria', description: 'Szögfüggvények, azonosságok, egyenletek', difficulty: 'medium', topic: 'Trigonometria', timeLimit: 35 },
+                        'task4': { title: 'Síkgeometria', description: 'Terület, kerület, hasonlóság', difficulty: 'easy', topic: 'Geometria', timeLimit: 25 },
+                        'task5': { title: 'Integrálás', description: 'Alapintegrálok, helyettesítéses integrálás', difficulty: 'hard', topic: 'Analízis', timeLimit: 60 },
+                        'task6': { title: '2025 Emelt Érettségi', description: 'Komplex feladatok, szöveges problémák, bizonyítások', difficulty: 'hard', topic: 'Emelt szint', timeLimit: 90 },
+                        'task7': { title: 'Hatványozás és Gyökvonás', description: 'Hatványozás, gyökvonás és exponenciális kifejezések gyakorlása', difficulty: 'medium', topic: 'Algebra', timeLimit: 60 },
+                        'task8': { title: 'C Programozás Alapok', description: 'C nyelv alapjai, változók, ciklusok, függvények', difficulty: 'medium', topic: 'Programozás', timeLimit: 90 },
+                        'task9': { title: 'C Programozás Haladó', description: 'Pointerek, tömbök, struktúrák, fájlkezelés', difficulty: 'hard', topic: 'Programozás', timeLimit: 120 }
+                    };
+
+                    const taskInfo = taskTitles[taskId] || { title: 'Ismeretlen feladat', description: '', difficulty: 'medium', topic: 'Általános', timeLimit: 30 };
+
+                    return {
+                        id: taskId,
+                        title: taskInfo.title,
+                        description: taskInfo.description,
+                        difficulty: taskInfo.difficulty,
+                        topic: taskInfo.topic,
+                        questions: sampleQuestions[taskInfo.title as keyof typeof sampleQuestions] || [],
+                        timeLimit: taskInfo.timeLimit,
+                        completed: userData.completedTasks?.includes(taskId) || false,
+                        score: userData.taskScores?.[taskId] || 0
+                    };
+                });
+
+                setAssignedTasks(tasks);
+            }
+
             setLoading(false);
         } catch (error) {
             console.error('Error loading assigned tasks:', error);
@@ -357,11 +407,25 @@ export default function StudentGame() {
 
         const finalScore = Math.round((score / currentTask.questions.length) * 100);
 
-        setAssignedTasks(prev => prev.map(task =>
-            task.id === currentTask.id
-                ? { ...task, completed: true, score: finalScore }
-                : task
-        ));
+        try {
+            const auth = (window as any).firebase.auth();
+            const user = auth.currentUser;
+            const db = (window as any).firebase.firestore();
+
+            await db.collection('users').doc(user.uid).update({
+                [`taskScores.${currentTask.id}`]: finalScore,
+                completedTasks: (window as any).firebase.firestore.FieldValue.arrayUnion(currentTask.id)
+            });
+
+            // Update local state
+            setAssignedTasks(prev => prev.map(task =>
+                task.id === currentTask.id
+                    ? { ...task, completed: true, score: finalScore }
+                    : task
+            ));
+        } catch (error) {
+            console.error('Error saving score:', error);
+        }
     };
 
     const getDifficultyColor = (difficulty: string) => {

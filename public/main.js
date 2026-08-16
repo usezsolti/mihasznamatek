@@ -33,7 +33,43 @@
     sections.forEach((sec) => io.observe(sec));
   }
 
+  // public/main.js
+  document.addEventListener("DOMContentLoaded", () => {
+    if (!window.firebase) {
+      console.error("Firebase nem töltődött be!");
+      return;
+    }
+
+    if (!window.firebase.apps.length) {
+      const firebaseConfig = { /* <-- a konzolból kimásolt HELYES értékek */ };
+      window.firebase.initializeApp(firebaseConfig);
+    }
+
+    // ... a többi kód (auth, firestore használat)
+  });
+
+  // --- Firebase (compat) ---
+  if (window.firebase) {
+    const firebaseConfig = {
+      apiKey: "AIzaSyD1gvtJjjod5J3oJUI-iBPnR6yzU-AldtI",
+      authDomain: "mihasznamatek-c9701.firebaseapp.com",
+      projectId: "mihasznamatek-c9701",
+      storageBucket: "mihasznamatek-c9701.appspot.com",
+      messagingSenderId: "385597107359",
+      appId: "1:385597107359:web:905725ba30245ef75c06aa",
+      measurementId: "G-PCZM48WSFH"
+
+    };
+    if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+
+  }
+
+  // --- EmailJS removed - using dashboard notifications only ---
+  console.log("EmailJS functionality removed - using dashboard notifications");
+
   // Google Maps JS API nincs betöltve a főoldalon (nincs érvényes kulcs / placeholder map).
+  // Ha később NEXT_PUBLIC_GOOGLE_API_KEY + #map elem lesz, itt lehet újra inicializálni.
   window.initMap = function () {
     /* no-op: contact szekció linkeket használ */
   };

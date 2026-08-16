@@ -1,7 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { sendErr, sendOk } from '../../server/http';
-import { prisma } from '../../server/prisma';
-import { blockedSlotToDay, asStringArray } from '../../server/bookingMappers';
+import { getAdminDb } from '../../server/firebaseAdmin';
 import { getClientIp, isAllowedOrigin, rateLimit } from '../../utils/apiSecurity';
 
 export type BusySlotDay = {
@@ -12,7 +11,7 @@ export type BusySlotDay = {
 
 /**
  * Public busy times for the appointment calendar (no names/emails).
- * Includes approved/pending bookings + blockedSlots from Prisma.
+ * Uses Admin SDK when available; otherwise empty (blockedSlots still load client-side).
  */
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     if (req.method !== 'GET') {
@@ -28,33 +27,30 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         return sendErr(res, 'Túl sok kérés.', 429);
     }
 
-    try {
-        const [bookingRows, blockedRows] = await Promise.all([
-            prisma.booking.findMany({
-                where: { status: { in: ['pending', 'approved'] } },
-                select: { date: true, times: true, status: true },
-                take: 1000,
-            }),
-            prisma.blockedSlot.findMany({ take: 500 }),
-        ]);
+    const db = getAdminDb();
+    if (!db) {
+        return sendOk(res, { slots: [] as BusySlotDay[], source: 'none' as const });
+    }
 
+    try {
+        const snap = await db.collection('bookings').get();
         const slots: BusySlotDay[] = [];
-        bookingRows.forEach((row) => {
-            const date = String(row.date || '');
-            const times = asStringArray(row.times);
+        snap.forEach((doc) => {
+            const data = doc.data() || {};
+            const status = String(data.status || 'pending');
+            if (status !== 'pending' && status !== 'approved') return;
+            const date = String(data.date || '');
+            const times = Array.isArray(data.times) ? data.times.map((t: unknown) => String(t)) : [];
             if (!date || times.length === 0) return;
             slots.push({
                 date,
                 times,
-                status: row.status === 'approved' ? 'approved' : 'pending',
+                status: status as 'pending' | 'approved',
             });
         });
-
-        const blocked = blockedRows.map(blockedSlotToDay);
-
-        return sendOk(res, { slots, blocked, source: 'prisma' as const });
+        return sendOk(res, { slots, source: 'admin' as const });
     } catch (e: any) {
         console.warn('public-busy-slots', String(e?.message || e).slice(0, 160));
-        return sendOk(res, { slots: [] as BusySlotDay[], blocked: [], source: 'error' as const });
+        return sendOk(res, { slots: [] as BusySlotDay[], source: 'error' as const });
     }
 }

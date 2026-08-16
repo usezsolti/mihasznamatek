@@ -1,5 +1,4 @@
 ﻿import { useEffect, useState } from "react";
-import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import AdminBookingCalendar from "../components/AdminBookingCalendar";
@@ -8,6 +7,7 @@ import AdminWorkingHoursEditor from "../components/AdminWorkingHoursEditor";
 import BookingAttachments from "../components/BookingAttachments";
 import ProfilePanel from "../components/ProfilePanel";
 import { isAdminEmail } from "../utils/admin";
+import { isTestAuthUser } from "../utils/testLogin";
 import {
     gameUrlForAssignedTask,
     loadStudentAssignedTasks,
@@ -57,7 +57,6 @@ type MathTopic = {
 
 export default function Dashboard() {
     const router = useRouter();
-    const { data: session, status: authStatus } = useSession();
 
     const [loading, setLoading] = useState(true);
     const [me, setMe] = useState<UserDoc | null>(null);
@@ -123,33 +122,87 @@ export default function Dashboard() {
     }, [educationLevel, erettsegiExamLevel]);
 
     useEffect(() => {
-        if (authStatus === 'loading') return;
+        let unsub: (() => void) | undefined;
+        let cancelled = false;
 
-        if (!session?.user?.id) {
-            setMe(null);
-            setIsAdmin(false);
-            setLoading(false);
-            if (router.pathname === '/dashboard') {
-                let justOut = false;
-                try {
-                    justOut = sessionStorage.getItem('mihaszna:justLoggedOut') === '1';
-                    if (justOut) sessionStorage.removeItem('mihaszna:justLoggedOut');
-                } catch {
-                    /* ignore */
-                }
-                router.replace(justOut ? '/' : '/?auth=1');
+        const checkAuth = async () => {
+            let attempts = 0;
+            while (!(window as any).firebase && attempts < 50) {
+                await new Promise((resolve) => setTimeout(resolve, 100));
+                attempts++;
             }
-            return;
-        }
 
-        setMe({
-            uid: session.user.id,
-            name: session.user.name || '',
-            email: session.user.email || '',
-        });
-        setIsAdmin(isAdminEmail(session.user.email));
-        setLoading(false);
-    }, [authStatus, session, router]);
+            if (cancelled) return;
+
+            if (!(window as any).firebase) {
+                setError("Firebase nem elérhető.");
+                setLoading(false);
+                return;
+            }
+
+            try {
+                const auth = (window as any).firebase.auth();
+                unsub = auth.onAuthStateChanged(async (user: any) => {
+                    if (cancelled) return;
+                    if (!user) {
+                        setMe(null);
+                        setIsAdmin(false);
+                        setLoading(false);
+                        if (router.pathname === '/dashboard') {
+                            let justOut = false;
+                            try {
+                                justOut = sessionStorage.getItem('mihaszna:justLoggedOut') === '1';
+                                if (justOut) sessionStorage.removeItem('mihaszna:justLoggedOut');
+                            } catch {
+                                /* ignore */
+                            }
+                            router.replace(justOut ? '/' : '/?auth=1');
+                        }
+                        return;
+                    }
+
+                    // E-mail/jelszó fiókoknál kötelező a megerősített e-mail (teszt fiók kivétel)
+                    const isPasswordUser = (user.providerData || []).some(
+                        (p: any) => p?.providerId === 'password'
+                    );
+                    if (
+                        isPasswordUser &&
+                        !user.emailVerified &&
+                        !isTestAuthUser(user) &&
+                        !isAdminEmail(user.email)
+                    ) {
+                        setMe(null);
+                        setIsAdmin(false);
+                        setLoading(false);
+                        try {
+                            await auth.signOut();
+                        } catch {
+                            /* ignore */
+                        }
+                        router.replace('/?auth=1&verify=1');
+                        return;
+                    }
+
+                    setMe({
+                        uid: user.uid,
+                        name: user.displayName || '',
+                        email: user.email || '',
+                    });
+                    setIsAdmin(isAdminEmail(user.email));
+                    setLoading(false);
+                });
+            } catch (err) {
+                setError("Hiba történt.");
+                setLoading(false);
+            }
+        };
+
+        void checkAuth();
+        return () => {
+            cancelled = true;
+            if (unsub) unsub();
+        };
+    }, [router]);
 
     useEffect(() => {
         if (!me?.uid) {
@@ -210,12 +263,40 @@ export default function Dashboard() {
     };
 
     useEffect(() => {
-        // publicTasks — legacy Firestore collection removed; catalog tasks used elsewhere
-        if (educationLevel === 'erettsegi') {
-            setPublicTasks([]);
-            return;
-        }
-        setPublicTasks([]);
+        // Load public tasks for current education level
+        const loadPublicTasks = async () => {
+            if (!(window as any).firebase) return;
+            if (educationLevel === 'erettsegi') {
+                setPublicTasks([]);
+                return;
+            }
+
+            try {
+                const db = (window as any).firebase.firestore();
+                const snapshot = await db.collection('publicTasks')
+                    .where('educationLevel', '==', educationLevel)
+                    .where('isActive', '==', true)
+                    .get();
+
+                const tasks: any[] = [];
+                snapshot.forEach((doc: any) => {
+                    tasks.push({
+                        id: doc.id,
+                        ...doc.data()
+                    });
+                });
+
+                console.log('Loaded public tasks for', educationLevel, ':', tasks.length);
+                setPublicTasks(tasks);
+            } catch (error: any) {
+                const msg = String(error?.message || error || '');
+                if (!/permission|insufficient/i.test(msg)) {
+                    console.warn('Error loading public tasks:', msg.slice(0, 160));
+                }
+            }
+        };
+
+        loadPublicTasks();
     }, [educationLevel]);
 
 
@@ -229,7 +310,7 @@ export default function Dashboard() {
 
     // Pending foglalások: csak admin API (nincs kliens Firestore / onSnapshot)
     useEffect(() => {
-        if (!isAdmin || authStatus !== 'authenticated' || typeof window === 'undefined') return;
+        if (!isAdmin || typeof window === 'undefined') return;
 
         let unsub: (() => void) | undefined;
         let cancelled = false;
@@ -270,6 +351,25 @@ export default function Dashboard() {
             // Már tudjuk, hogy rules tilt — ne kérdezzük újra (terminál scrollozik)
             if (isPendingBookingsDenied()) return;
 
+            // Várj auth tokenre (különben 401 spam)
+            const fb = (window as any).firebase;
+            const auth = fb?.auth?.();
+            if (auth && !auth.currentUser) {
+                await new Promise<void>((resolve) => {
+                    let unsubAuth: (() => void) | undefined;
+                    const t = setTimeout(() => {
+                        unsubAuth?.();
+                        resolve();
+                    }, 4000);
+                    unsubAuth = auth.onAuthStateChanged((u: unknown) => {
+                        if (!u) return;
+                        clearTimeout(t);
+                        unsubAuth?.();
+                        resolve();
+                    });
+                });
+            }
+
             if (cancelled || isPendingBookingsDenied()) return;
 
             const initial = await loadPendingBookingsFromFirestore();
@@ -300,7 +400,7 @@ export default function Dashboard() {
             cancelled = true;
             if (unsub) unsub();
         };
-    }, [isAdmin, authStatus]);
+    }, [isAdmin]);
 
     useEffect(() => {
         if (!isAdmin) return;
@@ -467,7 +567,12 @@ export default function Dashboard() {
             }));
 
         try {
-            const uid = me?.uid || '';
+            if (!(window as any).firebase) {
+                setMathTopics(zeroed(baseTopics));
+                return;
+            }
+
+            const uid = (window as any).firebase.auth().currentUser?.uid || '';
 
             if (!uid) {
                 setMathTopics(zeroed(baseTopics));

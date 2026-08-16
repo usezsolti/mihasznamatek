@@ -1,5 +1,4 @@
 import { useEffect, useMemo, useState } from "react";
-import { signIn, useSession } from "next-auth/react";
 import Head from "next/head";
 import Link from "next/link";
 import {
@@ -22,8 +21,8 @@ import {
     toDateKey,
 } from "../utils/bookingSlots";
 import { openAuthModal } from "../utils/authModal";
-import { LESSON_SUBJECTS } from "../utils/registrationProfile";
 import { useLang } from "../utils/i18n";
+import { LESSON_SUBJECTS } from "../utils/registrationProfile";
 
 type LessonType = "online" | "personal";
 
@@ -39,7 +38,7 @@ const PRICE_PER_HOUR = 11000;
 
 const SUBJECTS = [...LESSON_SUBJECTS];
 
-const SUBJECT_I18N: Record<(typeof LESSON_SUBJECTS)[number], string> = {
+const SUBJECT_I18N: Record<string, string> = {
     "Általános iskola matek": "booking.subject.elementary",
     "Középiskola / gimnázium": "booking.subject.highschool",
     "Érettségi felkészítés": "booking.subject.exam",
@@ -69,9 +68,9 @@ function loadBookingsLocal(): BookingRequest[] {
 }
 
 export default function BookingPage() {
-    const { data: session, status: authStatus } = useSession();
-    const { lang, t } = useLang();
+    const { t, lang } = useLang();
     const dateLocale = lang === "en" ? "en-US" : "hu-HU";
+
     const today = useMemo(() => {
         const d = new Date();
         d.setHours(0, 0, 0, 0);
@@ -114,17 +113,35 @@ export default function BookingPage() {
     useEffect(() => {
         window.scrollTo({ top: 0, behavior: "auto" });
 
+        let unsub: (() => void) | undefined;
         let cancelled = false;
 
-        if (authStatus !== 'loading' && session?.user?.email) {
-            const email = String(session.user.email).toLowerCase();
-            const name = String(session.user.name || "");
-            setAuthUser({ email, name });
-            setBookingPath("account");
-            setError("");
-        } else if (authStatus !== 'loading') {
-            setAuthUser(null);
-        }
+        (async () => {
+            try {
+                let attempts = 0;
+                while (!(window as any).firebase?.auth && attempts < 50) {
+                    await new Promise((r) => setTimeout(r, 100));
+                    attempts++;
+                }
+                if (cancelled || !(window as any).firebase?.auth) return;
+                const auth = (window as any).firebase.auth();
+                unsub = auth.onAuthStateChanged((user: any) => {
+                    if (cancelled) return;
+                    if (!user) {
+                        setAuthUser(null);
+                        return;
+                    }
+                    const email = String(user.email || "").toLowerCase();
+                    const name = String(user.displayName || "");
+                    setAuthUser({ email, name });
+                    // Foglalási mezőket NEM töltjük ki automatikusan — mindig meg kell adni
+                    setBookingPath("account");
+                    setError("");
+                });
+            } catch (e) {
+                console.warn("booking auth init failed", e);
+            }
+        })();
 
         const refresh = async () => {
             try {
@@ -152,8 +169,9 @@ export default function BookingPage() {
         return () => {
             cancelled = true;
             clearInterval(t);
+            if (unsub) unsub();
         };
-    }, [authStatus, session?.user?.email, session?.user?.name]);
+    }, []);
 
     const handleGoogleForBooking = async () => {
         setError("");
@@ -163,11 +181,42 @@ export default function BookingPage() {
         }
         setAuthLoading(true);
         try {
-            sessionStorage.setItem(
-                'mihaszna:pendingProfile',
-                JSON.stringify({ gdprAccepted: true })
-            );
-            await signIn('google', { callbackUrl: '/booking' });
+            let attempts = 0;
+            while (!(window as any).firebase?.apps?.length && attempts < 40) {
+                await new Promise((r) => setTimeout(r, 100));
+                attempts++;
+            }
+            const firebase = (window as any).firebase;
+            if (!firebase?.apps?.length) {
+                setError(t("auth.errorFirebase"));
+                return;
+            }
+            const provider = new firebase.auth.GoogleAuthProvider();
+            provider.addScope("email");
+            provider.addScope("profile");
+            const result = await firebase.auth().signInWithPopup(provider);
+            const user = result.user;
+            const isNewUser = result.additionalUserInfo?.isNewUser;
+            if (user) {
+                const db = firebase.firestore();
+                const ref = db.collection("users").doc(user.uid);
+                const snap = await ref.get();
+                const gdprFields = {
+                    gdprAccepted: true,
+                    gdprAcceptedAt: firebase.firestore.FieldValue.serverTimestamp(),
+                    gdprVersion: "2026-08-03",
+                };
+                if (!snap.exists) {
+                    await ref.set({
+                        name: user.displayName || "",
+                        email: user.email || "",
+                        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                        ...gdprFields,
+                    });
+                } else if (isNewUser) {
+                    await ref.set(gdprFields, { merge: true });
+                }
+            }
             setGateGdpr(false);
         } catch (err: any) {
             console.error(err);
@@ -188,11 +237,6 @@ export default function BookingPage() {
         year: "numeric",
         month: "long",
     });
-
-    const formatPrice = (amount: number) =>
-        lang === "en"
-            ? `HUF ${amount.toLocaleString("en-US")}`
-            : `${amount.toLocaleString("hu-HU")} Ft`;
 
     const calendarDays = useMemo(() => {
         const year = currentMonth.getFullYear();
@@ -407,9 +451,10 @@ export default function BookingPage() {
                         </Link>
                         <h1>📅 {t("booking.title")}</h1>
                         <p>
-                            {t("booking.intro")} {t("booking.priceLabel")}{" "}
+                            {t("booking.intro")}{" "}
+                            {t("booking.priceLabel")}{" "}
                             <strong>
-                                {formatPrice(PRICE_PER_HOUR)} {t("booking.priceUnit")}
+                                {PRICE_PER_HOUR.toLocaleString(dateLocale)} Ft {t("booking.priceUnit")}
                             </strong>
                         </p>
                     </div>
@@ -725,7 +770,7 @@ export default function BookingPage() {
                                     >
                                         {SUBJECTS.map((s) => (
                                             <option key={s} value={s}>
-                                                {t(SUBJECT_I18N[s])}
+                                                {t(SUBJECT_I18N[s] || s)}
                                             </option>
                                         ))}
                                     </select>
@@ -746,9 +791,7 @@ export default function BookingPage() {
                                         <label>{t("auth.billing")}</label>
                                         <p className="booking-muted" style={{ margin: "0.25rem 0 0.5rem" }}>
                                             {t("booking.billingHint")}
-                                            {lessonType === "personal"
-                                                ? t("booking.billingPersonalExtra")
-                                                : ""}
+                                            {lessonType === "personal" ? t("booking.billingPersonalExtra") : ""}
                                         </p>
                                     </div>
                                     <div className="booking-address-row">
@@ -820,7 +863,7 @@ export default function BookingPage() {
                                     <div>
                                         <span>{t("booking.total")}</span>
                                         <strong className="booking-price">
-                                            {formatPrice(totalPrice)}
+                                            {totalPrice.toLocaleString(dateLocale)} Ft
                                         </strong>
                                     </div>
                                 </div>
@@ -850,9 +893,12 @@ export default function BookingPage() {
                                     <p className="booking-success">
                                         {t("booking.success")}
                                         <br /><br />
-                                        <strong>{t("booking.paymentTitle")}</strong><br />
-                                        {t("booking.paymentPayee")}<br />
-                                        {t("booking.paymentAccount")}<br />
+                                        <strong>{t("booking.paymentTitle")}</strong>
+                                        <br />
+                                        {t("booking.paymentPayee")}
+                                        <br />
+                                        {t("booking.paymentAccount")}
+                                        <br />
                                         {t("booking.paymentNote")}
                                     </p>
                                 )}

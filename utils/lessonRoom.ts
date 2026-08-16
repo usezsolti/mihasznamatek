@@ -1,11 +1,6 @@
-/** Élő óra szoba — nyílt link, WebRTC + whiteboard + chat (Postgres poll). */
+/** Élő óra szoba — nyílt link, Jitsi + whiteboard + chat. */
 
 import { createWhiteboard } from './whiteboardSync';
-import {
-    apiGetAuth,
-    apiPatchAuth,
-    apiPostAuth,
-} from './apiClient';
 
 export type LessonRoom = {
     id: string;
@@ -27,7 +22,20 @@ export type LessonMessage = {
     createdAtMs: number;
 };
 
-const POLL_MS = 1500;
+function getFirebase(): any {
+    if (typeof window === 'undefined') return null;
+    return (window as any).firebase || null;
+}
+
+function db() {
+    const firebase = getFirebase();
+    if (!firebase?.firestore) return null;
+    return firebase.firestore();
+}
+
+function newRoomId(): string {
+    return `ora_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 8)}`;
+}
 
 export function lessonCallRoomName(roomId: string): string {
     const safe = roomId.replace(/[^a-zA-Z0-9-_]/g, '').slice(0, 48) || 'ora';
@@ -82,48 +90,59 @@ export async function createLessonRoom(params: {
     const uid = params.createdBy;
     if (!uid) throw new Error('Nincs felhasználó');
 
-    const res = await apiPostAuth<{ room: Record<string, unknown> }>('/api/lesson/rooms', {
-        title: (params.title || 'Matek óra').trim().slice(0, 120) || 'Matek óra',
-        bookingId: params.bookingId,
-        studentName: params.studentName,
-    });
-
-    if (res.ok) {
-        const room = mapLessonRoom(String(res.data.room.id), res.data.room);
-        return { room };
-    }
-
-    // Fallback: local-only room if API unavailable
+    const id = newRoomId();
     const title = (params.title || 'Matek óra').trim().slice(0, 120) || 'Matek óra';
     const board = await createWhiteboard(uid, `${title} tábla`);
-    const id = `ora_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 8)}`;
+    const jitsiRoom = lessonCallRoomName(id);
     const room: LessonRoom = {
         id,
         title,
         createdBy: uid,
         whiteboardId: board.meta.id,
-        jitsiRoom: lessonCallRoomName(id),
+        jitsiRoom,
         createdAtMs: Date.now(),
         bookingId: params.bookingId,
         studentName: params.studentName,
     };
-    return {
-        room,
-        warning: board.warning || res.error || 'Óra létrehozás helyi módban.',
-    };
+
+    const firestore = db();
+    if (firestore) {
+        try {
+            await firestore.collection('lessonRooms').doc(id).set({
+                title: room.title,
+                createdBy: room.createdBy,
+                whiteboardId: room.whiteboardId,
+                jitsiRoom: room.jitsiRoom,
+                createdAtMs: room.createdAtMs,
+                bookingId: room.bookingId || '',
+                studentName: room.studentName || '',
+            });
+            return { room, warning: board.warning };
+        } catch (err: any) {
+            return {
+                room,
+                warning:
+                    board.warning ||
+                    String(err?.message || 'Óra létrehozás részben helyi.').slice(0, 160),
+            };
+        }
+    }
+
+    return { room, warning: board.warning || 'Nincs Firestore — helyi óra azonosító.' };
 }
 
 export async function loadLessonRoom(roomId: string): Promise<LessonRoom | null> {
     const id = String(roomId || '').trim();
     if (!id) return null;
-
-    const res = await apiGetAuth<{ room: Record<string, unknown> }>(
-        `/api/lesson/rooms?id=${encodeURIComponent(id)}`
-    );
-    if (res.ok) {
-        return mapLessonRoom(String(res.data.room.id || id), res.data.room);
+    const firestore = db();
+    if (!firestore) return null;
+    try {
+        const snap = await firestore.collection('lessonRooms').doc(id).get();
+        if (!snap.exists) return null;
+        return mapLessonRoom(snap.id, snap.data() || {});
+    } catch {
+        return null;
     }
-    return null;
 }
 
 export async function ensureLessonWhiteboard(
@@ -133,29 +152,24 @@ export async function ensureLessonWhiteboard(
     if (room.whiteboardId) {
         return { whiteboardId: room.whiteboardId, room };
     }
-
     const created = await createWhiteboard(uid, `${room.title} tábla`);
     const whiteboardId = created.meta.id;
     const next = { ...room, whiteboardId };
-
-    const res = await apiPatchAuth<{ room: Record<string, unknown> }>('/api/lesson/rooms', {
-        roomId: room.id,
-        whiteboardId,
-    });
-
-    if (res.ok) {
-        return {
-            whiteboardId,
-            room: mapLessonRoom(room.id, res.data.room),
-            warning: created.warning,
-        };
+    const firestore = db();
+    if (firestore) {
+        try {
+            await firestore.collection('lessonRooms').doc(room.id).update({ whiteboardId });
+        } catch (err: any) {
+            return {
+                whiteboardId,
+                room: next,
+                warning:
+                    created.warning ||
+                    String(err?.message || 'Tábla csatolás részben helyi.').slice(0, 160),
+            };
+        }
     }
-
-    return {
-        whiteboardId,
-        room: next,
-        warning: created.warning || res.error || 'Tábla csatolás helyi módban.',
-    };
+    return { whiteboardId, room: next, warning: created.warning };
 }
 
 function localMsgKey(roomId: string) {
@@ -184,55 +198,38 @@ export function subscribeLessonMessages(
     onMessages: (msgs: LessonMessage[]) => void,
     onError?: (err: string) => void
 ): () => void {
-    let stopped = false;
-    let sinceMs = 0;
-    const byId = new Map<string, LessonMessage>();
-
-    const seed = readLocalMsgs(roomId);
-    seed.forEach((m) => byId.set(m.id, m));
-    if (seed.length) {
-        sinceMs = Math.max(...seed.map((m) => m.createdAtMs));
-        onMessages([...byId.values()].sort((a, b) => a.createdAtMs - b.createdAtMs));
-    } else {
-        onMessages([]);
+    const firestore = db();
+    if (!firestore) {
+        onMessages(readLocalMsgs(roomId));
+        return () => undefined;
     }
 
-    const emit = () => {
-        const list = [...byId.values()].sort((a, b) => a.createdAtMs - b.createdAtMs);
-        writeLocalMsgs(roomId, list);
-        onMessages(list);
-    };
-
-    const poll = async () => {
-        if (stopped) return;
-        try {
-            const res = await apiGetAuth<{ messages: LessonMessage[] }>(
-                `/api/lesson/${encodeURIComponent(roomId)}/messages?since=${sinceMs}`
-            );
-            if (!res.ok) {
-                onError?.(res.error);
-                return;
+    const unsub = firestore
+        .collection('lessonRooms')
+        .doc(roomId)
+        .collection('messages')
+        .orderBy('createdAtMs', 'asc')
+        .limit(120)
+        .onSnapshot(
+            (snap: any) => {
+                const msgs = snap.docs.map((doc: any) =>
+                    mapLessonMessage(doc.id, doc.data() || {})
+                );
+                writeLocalMsgs(roomId, msgs);
+                onMessages(msgs);
+            },
+            (err: any) => {
+                onMessages(readLocalMsgs(roomId));
+                onError?.(String(err?.message || err).slice(0, 160));
             }
-            let changed = false;
-            for (const m of res.messages) {
-                if (!byId.has(m.id)) {
-                    byId.set(m.id, m);
-                    changed = true;
-                }
-                sinceMs = Math.max(sinceMs, m.createdAtMs);
-            }
-            if (changed) emit();
-        } catch (err: any) {
-            onError?.(String(err?.message || err).slice(0, 160));
-        }
-    };
-
-    void poll();
-    const timer = setInterval(() => void poll(), POLL_MS);
+        );
 
     return () => {
-        stopped = true;
-        clearInterval(timer);
+        try {
+            unsub();
+        } catch {
+            /* ignore */
+        }
     };
 }
 
@@ -247,17 +244,6 @@ export async function sendLessonMessage(params: {
     if (!cleaned) throw new Error('Üres üzenet');
     if (!params.senderId) throw new Error('Nincs felhasználó');
 
-    const res = await apiPostAuth<{ message: LessonMessage }>(
-        `/api/lesson/${encodeURIComponent(params.roomId)}/messages`,
-        {
-            text: cleaned,
-            senderName: params.senderName || 'Vendég',
-            senderPhoto: params.senderPhoto || '',
-        }
-    );
-
-    if (res.ok) return res.data.message;
-
     const msg: LessonMessage = {
         id: `lm_${Date.now()}_${Math.random().toString(36).slice(2, 7)}`,
         senderId: params.senderId,
@@ -266,6 +252,30 @@ export async function sendLessonMessage(params: {
         text: cleaned,
         createdAtMs: Date.now(),
     };
+
+    const firestore = db();
+    if (firestore) {
+        try {
+            const ref = firestore
+                .collection('lessonRooms')
+                .doc(params.roomId)
+                .collection('messages')
+                .doc();
+            await ref.set({
+                senderId: msg.senderId,
+                senderName: msg.senderName,
+                senderPhoto: msg.senderPhoto,
+                text: msg.text,
+                createdAtMs: msg.createdAtMs,
+            });
+            return { ...msg, id: ref.id };
+        } catch {
+            const next = [...readLocalMsgs(params.roomId), msg];
+            writeLocalMsgs(params.roomId, next);
+            return msg;
+        }
+    }
+
     const next = [...readLocalMsgs(params.roomId), msg];
     writeLocalMsgs(params.roomId, next);
     return msg;

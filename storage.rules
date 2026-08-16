@@ -1,0 +1,63 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    function signedIn() {
+      return request.auth != null;
+    }
+    function emailLower() {
+      return signedIn() && request.auth.token.email is string
+        ? request.auth.token.email.lower()
+        : '';
+    }
+    function isAdmin() {
+      return signedIn() && (
+        request.auth.token.isAdminAccount == true
+        || emailLower().matches('usezsolti.*@gmail[.]com')
+      );
+    }
+    function isImage() {
+      return request.resource.contentType.matches('image/.*');
+    }
+    function isBookingFile() {
+      return request.resource.contentType.matches('image/.*')
+        || request.resource.contentType == 'application/pdf'
+        || request.resource.contentType == 'application/msword'
+        || request.resource.contentType == 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
+    }
+
+    function isSocialMedia() {
+      return request.resource.contentType.matches('image/.*')
+        || request.resource.contentType.matches('video/.*');
+    }
+
+    match /avatars/{userId}.jpg {
+      allow read: if true;
+      allow write: if signedIn()
+        && request.auth.uid == userId
+        && isImage()
+        && request.resource.size < 8 * 1024 * 1024;
+    }
+
+    match /socialPosts/{userId}/{fileName} {
+      allow read: if true;
+      allow write: if signedIn()
+        && request.auth.uid == userId
+        && isSocialMedia()
+        && request.resource.size < 50 * 1024 * 1024;
+      allow delete: if signedIn()
+        && request.auth.uid == userId;
+    }
+
+    match /booking-files/{bookingId}/{fileName} {
+      allow read: if isAdmin() || signedIn();
+      // Vendég foglaláshoz is kellhet csatolmány — típus + méret korlát
+      allow write: if isBookingFile()
+        && request.resource.size < 8 * 1024 * 1024;
+      allow delete: if isAdmin();
+    }
+
+    match /{allPaths=**} {
+      allow read, write: if false;
+    }
+  }
+}

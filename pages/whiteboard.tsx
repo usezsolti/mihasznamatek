@@ -1,16 +1,14 @@
 import Head from 'next/head';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
 import MatekWhiteboard from '../components/whiteboard/MatekWhiteboard';
 
 export default function WhiteboardPage() {
     const router = useRouter();
-    const { data: session, status } = useSession();
-    const ready = status !== 'loading';
-    const uid = String((session?.user as { id?: string } | undefined)?.id || '') || null;
-    const name = String(session?.user?.name || session?.user?.email || 'Felhasználó');
+    const [ready, setReady] = useState(false);
+    const [uid, setUid] = useState<string | null>(null);
+    const [name, setName] = useState('Vendég');
     const [boardFromUrl, setBoardFromUrl] = useState<string | null>(null);
 
     useEffect(() => {
@@ -23,6 +21,29 @@ export default function WhiteboardPage() {
         const b = String(router.query.board || '').trim();
         setBoardFromUrl(b || null);
     }, [router.isReady, router.query.board]);
+
+    useEffect(() => {
+        let cancelled = false;
+        const firebase = (window as any).firebase;
+        if (!firebase?.auth) {
+            setReady(true);
+            return;
+        }
+        const unsub = firebase.auth().onAuthStateChanged((user: any) => {
+            if (cancelled) return;
+            if (user) {
+                setUid(user.uid);
+                setName(String(user.displayName || user.email || 'Felhasználó'));
+            } else {
+                setUid(null);
+            }
+            setReady(true);
+        });
+        return () => {
+            cancelled = true;
+            unsub?.();
+        };
+    }, []);
 
     const onBoardId = (id: string) => {
         if (!router.isReady) return;

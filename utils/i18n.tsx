@@ -358,7 +358,7 @@ const hu: Dict = {
     'community.nav.menu': 'MihaSocial menü',
     'community.rules.title': 'Közösségi adatbázis nem elérhető',
     'community.rules.body':
-        'Ellenőrizd a DATABASE_URL beállítást (Neon Postgres) és az Auth.js munkamenetet. A régi Firestore rules már nem kellenek.',
+        'Firestore jogosultság hiányzik. Publikáld a rules fájlt (/rules-setup), majd frissítsd az oldalt.',
     'community.rules.runDiag': 'Diagnosztika futtatása',
     'community.rail.ariaLabel': 'Javaslatok',
     'community.rail.switch': 'Váltás',
@@ -993,7 +993,7 @@ const en: Dict = {
     'community.nav.menu': 'MihaSocial menu',
     'community.rules.title': 'Community database unavailable',
     'community.rules.body':
-        'Check your DATABASE_URL setting (Neon Postgres) and Auth.js session. Legacy Firestore rules are no longer needed.',
+        'Firestore permission is missing. Publish the rules file (/rules-setup), then refresh the page.',
     'community.rules.runDiag': 'Run diagnostics',
     'community.rail.ariaLabel': 'Suggestions',
     'community.rail.switch': 'Switch',

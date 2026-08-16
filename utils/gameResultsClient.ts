@@ -1,42 +1,52 @@
 /**
- * gameResults kliens — Postgres API.
+ * gameResults kliens olvasás — rules: userId VAGY uid == auth.uid
+ * Permission denied → üres lista (ne dobjon piros overlay-t).
  */
-import { apiGetAuth, apiPostAuth } from './apiClient';
-
 export type GameResultDoc = { id: string; [k: string]: unknown };
+
+function isPermissionError(err: unknown): boolean {
+    const code = String((err as any)?.code || '');
+    const msg = String((err as any)?.message || err || '');
+    return (
+        code.includes('permission-denied') ||
+        /Missing or insufficient permissions/i.test(msg) ||
+        /PERMISSION_DENIED/i.test(msg)
+    );
+}
 
 export async function fetchGameResultsForUser(userId: string): Promise<{
     results: GameResultDoc[];
     source: 'userId' | 'uid' | 'empty';
     permissionDenied: boolean;
 }> {
-    if (!userId) {
+    const db = (window as any).firebase?.firestore?.();
+    if (!db || !userId) {
         return { results: [], source: 'empty', permissionDenied: false };
     }
 
+    const mapSnap = (snap: any): GameResultDoc[] => {
+        const rows: GameResultDoc[] = [];
+        snap.forEach((doc: any) => rows.push({ id: doc.id, ...doc.data() }));
+        return rows;
+    };
+
     try {
-        const path =
-            typeof window !== 'undefined'
-                ? '/api/game-results'
-                : `/api/game-results?userId=${encodeURIComponent(userId)}`;
-        const res = await apiGetAuth<{ results: GameResultDoc[] }>(path);
-        if (!res.ok) {
-            const denied = res.status === 401 || res.status === 403;
-            return { results: [], source: 'empty', permissionDenied: denied };
+        const snap = await db.collection('gameResults').where('userId', '==', userId).get();
+        return { results: mapSnap(snap), source: 'userId', permissionDenied: false };
+    } catch (err) {
+        const denied = isPermissionError(err);
+        try {
+            const snap = await db.collection('gameResults').where('uid', '==', userId).get();
+            return { results: mapSnap(snap), source: 'uid', permissionDenied: false };
+        } catch (err2) {
+            if (!denied && !isPermissionError(err2)) {
+                console.warn('gameResults load failed:', err2);
+            }
+            return {
+                results: [],
+                source: 'empty',
+                permissionDenied: denied || isPermissionError(err2),
+            };
         }
-        return { results: res.data.results || [], source: 'userId', permissionDenied: false };
-    } catch (err) {
-        console.warn('gameResults load failed:', err);
-        return { results: [], source: 'empty', permissionDenied: false };
-    }
-}
-
-export async function saveGameResult(payload: Record<string, unknown>): Promise<{ ok: boolean; error?: string }> {
-    try {
-        const res = await apiPostAuth<{ result: GameResultDoc }>('/api/game-results', payload);
-        if (!res.ok) return { ok: false, error: res.error };
-        return { ok: true };
-    } catch (err) {
-        return { ok: false, error: String((err as Error)?.message || err) };
     }
 }

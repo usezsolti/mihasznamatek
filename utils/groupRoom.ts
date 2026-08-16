@@ -1,6 +1,16 @@
-/** Study group chat — Postgres API + local fallback. */
 import type { GroupMessage, SocialProfile, StudyGroup } from './socialTypes';
 import { createWhiteboard } from './whiteboardSync';
+
+function getFirebase(): any {
+    if (typeof window === 'undefined') return null;
+    return (window as any).firebase || null;
+}
+
+function db() {
+    const firebase = getFirebase();
+    if (!firebase?.firestore) return null;
+    return firebase.firestore();
+}
 
 function localKey(groupId: string) {
     return `mm_group_msgs_${groupId}`;
@@ -34,43 +44,41 @@ export function mapGroupMessage(id: string, d: Record<string, unknown>): GroupMe
     };
 }
 
-async function fetchGroupMessagesApi(groupId: string): Promise<GroupMessage[] | null> {
-    try {
-        const { apiGetAuth } = await import('./apiClient');
-        const res = await apiGetAuth<{ messages: GroupMessage[] }>(
-            `/api/groups/${encodeURIComponent(groupId)}/messages`
-        );
-        if (!res.ok) return null;
-        return res.data.messages || [];
-    } catch {
-        return null;
-    }
-}
-
 export function subscribeGroupMessages(
     groupId: string,
     onMessages: (msgs: GroupMessage[]) => void,
     onError?: (err: string) => void
 ): () => void {
-    let stopped = false;
+    const firestore = db();
+    if (!firestore) {
+        onMessages(readLocal(groupId));
+        return () => undefined;
+    }
 
-    const poll = async () => {
-        if (stopped) return;
-        const remote = await fetchGroupMessagesApi(groupId);
-        if (remote) {
-            writeLocal(groupId, remote);
-            onMessages(remote);
-        } else {
-            onMessages(readLocal(groupId));
-        }
-    };
-
-    void poll();
-    const intervalId = window.setInterval(() => void poll(), 4000);
+    const unsub = firestore
+        .collection('studyGroups')
+        .doc(groupId)
+        .collection('messages')
+        .orderBy('createdAtMs', 'asc')
+        .limit(120)
+        .onSnapshot(
+            (snap: any) => {
+                const msgs = snap.docs.map((doc: any) => mapGroupMessage(doc.id, doc.data() || {}));
+                writeLocal(groupId, msgs);
+                onMessages(msgs);
+            },
+            (err: any) => {
+                onMessages(readLocal(groupId));
+                onError?.(String(err?.message || err).slice(0, 160));
+            }
+        );
 
     return () => {
-        stopped = true;
-        window.clearInterval(intervalId);
+        try {
+            unsub();
+        } catch {
+            /* ignore */
+        }
     };
 }
 
@@ -92,19 +100,23 @@ export async function sendGroupMessage(
         createdAtMs: Date.now(),
     };
 
-    try {
-        const { apiPostAuth } = await import('./apiClient');
-        const res = await apiPostAuth<{ message: GroupMessage }>(
-            `/api/groups/${encodeURIComponent(group.id)}/messages`,
-            { text: cleaned }
-        );
-        if (res.ok && res.data.message) {
-            const next = [...readLocal(group.id), res.data.message];
+    const firestore = db();
+    if (firestore) {
+        try {
+            const ref = firestore.collection('studyGroups').doc(group.id).collection('messages').doc();
+            await ref.set({
+                senderId: msg.senderId,
+                senderName: msg.senderName,
+                senderPhoto: msg.senderPhoto,
+                text: msg.text,
+                createdAtMs: msg.createdAtMs,
+            });
+            return { ...msg, id: ref.id };
+        } catch {
+            const next = [...readLocal(group.id), msg];
             writeLocal(group.id, next);
-            return res.data.message;
+            return msg;
         }
-    } catch {
-        /* fall through to local */
     }
 
     const next = [...readLocal(group.id), msg];
@@ -122,6 +134,21 @@ export async function ensureGroupWhiteboard(
 
     const created = await createWhiteboard(uid, `${group.name} tábla`);
     const whiteboardId = created.meta.id;
+    const firestore = db();
+
+    if (firestore) {
+        try {
+            await firestore.collection('studyGroups').doc(group.id).update({ whiteboardId });
+        } catch (err: any) {
+            return {
+                whiteboardId,
+                group: { ...group, whiteboardId },
+                warning:
+                    created.warning ||
+                    String(err?.message || 'Whiteboard csatolás részben helyi.').slice(0, 160),
+            };
+        }
+    }
 
     return {
         whiteboardId,

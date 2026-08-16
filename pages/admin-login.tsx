@@ -1,23 +1,53 @@
 import Head from 'next/head';
 import Link from 'next/link';
-import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { isAdminEmail } from '../utils/admin';
 import { ADMIN_LOGIN_EMAIL, signInAsAdmin } from '../utils/adminLogin';
 
+async function waitForFirebase(maxMs = 8000): Promise<any | null> {
+    const start = Date.now();
+    while (Date.now() - start < maxMs) {
+        const firebase = (window as any).firebase;
+        if (firebase?.auth && firebase?.apps?.length) return firebase;
+        await new Promise((r) => setTimeout(r, 100));
+    }
+    return (window as any).firebase || null;
+}
+
 export default function AdminLoginPage() {
     const router = useRouter();
-    const { data: session, status } = useSession();
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
+    const [checking, setChecking] = useState(true);
 
     useEffect(() => {
-        if (status !== 'authenticated') return;
-        if (session?.user?.email && isAdminEmail(session.user.email)) {
-            void router.replace('/dashboard?tab=admin');
-        }
-    }, [session, status, router]);
+        let cancelled = false;
+        let unsub: (() => void) | undefined;
+        (async () => {
+            const firebase = await waitForFirebase();
+            if (!firebase?.auth || cancelled) {
+                setChecking(false);
+                return;
+            }
+            unsub = firebase.auth().onAuthStateChanged(async (user: any) => {
+                if (cancelled) return;
+                if (user?.email && isAdminEmail(user.email)) {
+                    await router.replace('/dashboard?tab=admin');
+                    return;
+                }
+                setChecking(false);
+            });
+        })();
+        return () => {
+            cancelled = true;
+            try {
+                unsub?.();
+            } catch {
+                /* ignore */
+            }
+        };
+    }, [router]);
 
     const onQuickLogin = async () => {
         setError('');
@@ -31,8 +61,6 @@ export default function AdminLoginPage() {
             setLoading(false);
         }
     };
-
-    const checking = status === 'loading';
 
     return (
         <>

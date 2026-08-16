@@ -1,5 +1,4 @@
 import { useEffect, useMemo, useState } from 'react';
-import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import TopicPathMap from '../../components/TopicPathMap';
@@ -36,7 +35,6 @@ function parseErettsegiLevel(value: unknown): ErettsegiExamLevel {
 
 export default function TopicStatsPage() {
     const router = useRouter();
-    const { data: session, status: authStatus } = useSession();
     const topicIdParam = typeof router.query.topicId === 'string' ? router.query.topicId : '';
     const educationLevel = parseEducationLevel(router.query.educationLevel);
     const erettsegiLevel = parseErettsegiLevel(router.query.level);
@@ -65,8 +63,9 @@ export default function TopicStatsPage() {
     const topicColor = catalogTopic?.color || '#39ff14';
 
     useEffect(() => {
-        if (!router.isReady || !topicIdParam || authStatus === 'loading') return;
+        if (!router.isReady || !topicIdParam) return;
 
+        let unsub: (() => void) | undefined;
         let cancelled = false;
 
         const loadForUser = async (userId: string | null) => {
@@ -111,12 +110,24 @@ export default function TopicStatsPage() {
             }
         };
 
-        void loadForUser(session?.user?.id || null);
+        const waitForAuth = () => {
+            const firebase = (window as any).firebase;
+            if (!firebase?.auth) {
+                setTimeout(waitForAuth, 100);
+                return;
+            }
+            unsub = firebase.auth().onAuthStateChanged((user: any) => {
+                void loadForUser(user?.uid || null);
+            });
+        };
+
+        waitForAuth();
 
         return () => {
             cancelled = true;
+            if (unsub) unsub();
         };
-    }, [router.isReady, topicIdParam, authStatus, session?.user?.id]);
+    }, [router.isReady, topicIdParam]);
 
     const stats: TopicSessionAggregate = useMemo(
         () => aggregateTopicStats(results),

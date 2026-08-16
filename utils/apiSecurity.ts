@@ -1,13 +1,13 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { getServerSession } from 'next-auth';
 import { ADMIN_EMAIL, isAdminEmail } from './admin';
-import { authOptions } from '../server/auth';
+import { resolveFirebaseWebApiKey } from './firebasePublicConfig';
+
+const FIREBASE_API_KEY = resolveFirebaseWebApiKey();
 
 export type VerifiedUser = {
     uid: string;
     email: string;
     emailVerified: boolean;
-    role?: string;
 };
 
 type RateBucket = { count: number; resetAt: number };
@@ -33,6 +33,8 @@ export function rateLimit(
 }
 
 export function getClientIp(req: NextApiRequest): string {
+    // Vercel / trusted proxy: utolsó megbízható hop helyett az első XFF (kliens)
+    // Spoof ellen: productionben preferáld a platform IP header-t ha van
     const vercelIp = req.headers['x-real-ip'] || req.headers['x-vercel-forwarded-for'];
     if (typeof vercelIp === 'string' && vercelIp.length) {
         return vercelIp.split(',')[0].trim();
@@ -51,28 +53,74 @@ export function extractBearerToken(req: NextApiRequest): string | null {
     return null;
 }
 
-/** @deprecated Firebase token verify — no-op; use Auth.js session. */
-export async function verifyFirebaseIdToken(_idToken: string): Promise<VerifiedUser | null> {
-    return null;
+/** Firebase ID token ellenőrzés (Identity Toolkit REST — Admin SDK nélkül). */
+export async function verifyFirebaseIdToken(idToken: string): Promise<VerifiedUser | null> {
+    if (!idToken || idToken.length < 20 || !FIREBASE_API_KEY) {
+        return null;
+    }
+    try {
+        const res = await fetch(
+            `https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=${encodeURIComponent(FIREBASE_API_KEY)}`,
+            {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ idToken }),
+            }
+        );
+        if (!res.ok) {
+            return null;
+        }
+        const data = await res.json();
+        const user = data?.users?.[0];
+        // Anonim fióknak lehet, hogy nincs email — uid elég a social API-hoz
+        if (!user?.localId) {
+            return null;
+        }
+        const email = user.email ? String(user.email).toLowerCase() : '';
+        return {
+            uid: String(user.localId),
+            email,
+            emailVerified: Boolean(user.emailVerified),
+        };
+    } catch (err) {
+        console.error('verifyFirebaseIdToken failed:', err);
+        return null;
+    }
 }
 
 export async function requireAuth(
     req: NextApiRequest,
     res: NextApiResponse
 ): Promise<VerifiedUser | null> {
-    const session = await getServerSession(req, res, authOptions);
-    const uid = String((session?.user as { id?: string } | undefined)?.id || '');
-    const email = String(session?.user?.email || '').toLowerCase();
-    if (!uid) {
+    const token = extractBearerToken(req);
+    if (!token) {
         res.status(401).json({ ok: false, error: 'Bejelentkezés szükséges.' });
         return null;
     }
-    return {
-        uid,
-        email,
-        emailVerified: true,
-        role: String((session?.user as { role?: string } | undefined)?.role || 'student'),
-    };
+    const user = await verifyFirebaseIdToken(token);
+    if (!user) {
+        res.status(401).json({ ok: false, error: 'Érvénytelen vagy lejárt munkamenet.' });
+        return null;
+    }
+    return user;
+}
+
+/** Firebase ID token payload (claims) — aláírás nélkül, csak requireAuth után. */
+function peekIdTokenClaims(idToken: string): Record<string, unknown> | null {
+    try {
+        const mid = idToken.split('.')[1];
+        if (!mid) return null;
+        const b64 = mid.replace(/-/g, '+').replace(/_/g, '/');
+        const pad = b64 + '='.repeat((4 - (b64.length % 4)) % 4);
+        const json =
+            typeof Buffer !== 'undefined'
+                ? Buffer.from(pad, 'base64').toString('utf8')
+                : '';
+        if (!json) return null;
+        return JSON.parse(json) as Record<string, unknown>;
+    } catch {
+        return null;
+    }
 }
 
 export async function requireAdmin(
@@ -82,13 +130,18 @@ export async function requireAdmin(
     const user = await requireAuth(req, res);
     if (!user) return null;
 
-    const email = (user.email || '').toLowerCase();
-    const roleAdmin = user.role === 'admin';
+    const token = extractBearerToken(req) || '';
+    const claims = token ? peekIdTokenClaims(token) : null;
+    const claimEmail = String(claims?.email || '').toLowerCase();
+    const email = (user.email || claimEmail || '').toLowerCase();
+    const claimAdmin = claims?.isAdminAccount === true;
+
     if (
-        roleAdmin ||
+        claimAdmin ||
         isAdminEmail(email) ||
         (ADMIN_EMAIL && email === ADMIN_EMAIL.toLowerCase())
     ) {
+        // Alias / claim / gyors admin — emailVerified nem kötelező
         return { ...user, email: email || user.email };
     }
 
@@ -141,6 +194,7 @@ export function isAllowedOrigin(req: NextApiRequest): boolean {
         const host = hostnameOf(value);
         if (!host) return false;
         if (allowedHosts.has(host)) return true;
+        // Explicit preview allowlist (nem minden *.vercel.app)
         const extra = String(process.env.ALLOWED_ORIGINS || '')
             .split(',')
             .map((s) => s.trim().toLowerCase())
@@ -151,6 +205,7 @@ export function isAllowedOrigin(req: NextApiRequest): boolean {
 
     if (origin && check(origin)) return true;
     if (referer && check(referer)) return true;
+    // Szerver-szerver / hiányzó Origin — productionben tiltsuk
     if (!origin && !referer) return process.env.NODE_ENV !== 'production';
     return false;
 }

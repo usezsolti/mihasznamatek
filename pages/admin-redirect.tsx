@@ -1,20 +1,30 @@
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { useSession } from 'next-auth/react';
 
 /** Régi /admin-redirect → tanári belépés vagy konzol */
 export default function AdminRedirect() {
     const router = useRouter();
-    const { data: session, status } = useSession();
 
     useEffect(() => {
-        if (status === 'loading') return;
-        if (session?.user) {
-            void router.replace('/dashboard?tab=admin');
-        } else {
-            void router.replace('/admin-login');
-        }
-    }, [router, session, status]);
+        let cancelled = false;
+        (async () => {
+            let attempts = 0;
+            while (!(window as any).firebase?.auth && attempts < 40) {
+                await new Promise((r) => setTimeout(r, 100));
+                attempts++;
+            }
+            if (cancelled) return;
+            const user = (window as any).firebase?.auth?.()?.currentUser;
+            if (user) {
+                void router.replace('/dashboard?tab=admin');
+            } else {
+                void router.replace('/admin-login');
+            }
+        })();
+        return () => {
+            cancelled = true;
+        };
+    }, [router]);
 
     return (
         <div className="dashboard-container dark-theme">

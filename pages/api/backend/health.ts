@@ -1,8 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { BACKEND_FRAMEWORK, BACKEND_NAME, BACKEND_RUNTIME } from '../../../server/config';
+import { BACKEND_FRAMEWORK, BACKEND_NAME, BACKEND_RUNTIME, FIREBASE_PROJECT_ID } from '../../../server/config';
+import { backendMode } from '../../../server/firebaseAdmin';
 import { sendOk } from '../../../server/http';
 import { isLocalSocialStore } from '../../../server/localSocialDb';
-import { usePrismaSocialStore } from '../../../server/socialStore';
 
 /** GET /api/backend/health — productionben minimális válasz. */
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -22,19 +22,20 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
         });
     }
 
-    const socialDataStore = usePrismaSocialStore()
-        ? 'prisma'
-        : isLocalSocialStore()
-          ? 'local'
-          : 'prisma';
-
+    let firestoreMode: string = 'user-token';
+    try {
+        firestoreMode = backendMode();
+    } catch {
+        firestoreMode = 'user-token';
+    }
     return sendOk(res, {
         name: BACKEND_NAME,
         runtime: BACKEND_RUNTIME,
         framework: BACKEND_FRAMEWORK,
         node: process.version,
-        database: usePrismaSocialStore() ? 'postgresql' : 'none',
-        socialDataStore,
+        projectId: FIREBASE_PROJECT_ID,
+        firestoreMode,
+        socialDataStore: isLocalSocialStore() ? 'local' : 'firestore',
         apiOnly: String(process.env.NEXT_PUBLIC_SOCIAL_API_ONLY || '') === '1',
         time: new Date().toISOString(),
     });

@@ -146,7 +146,9 @@ export function useGamePlay({
 
             // Készítünk egy eredmény objektumot
             const topicFromQuery = (router.query.topic as string) || ctx.currentTopic || '';
-            const uid = currentUser?.uid || null;
+            const uid = currentUser?.uid
+                || (window as any).firebase?.auth?.()?.currentUser?.uid
+                || null;
 
             // Path / munkalap progress — localStorage + Firestore (ha van user)
             if (isWorksheetMode) {
@@ -207,14 +209,16 @@ export function useGamePlay({
                 }
             }
 
-            if (!currentUser) return;
+            if (!currentUser || !(window as any).firebase?.firestore) return;
 
-            const resultData: Record<string, unknown> = {
-                userId: currentUser.uid,
-                correct: correctAnswerCount,
-                total: totalQuestions,
-                score: score,
-                xpEarned: sessionXp,
+                const db = (window as any).firebase.firestore();
+            const resultData: any = {
+                    userId: currentUser.uid,
+                    correct: correctAnswerCount,
+                    total: totalQuestions,
+                    score: score,
+                    xpEarned: sessionXp,
+                    completedAt: (window as any).firebase.firestore.FieldValue.serverTimestamp(),
             };
 
             // Ha van selectedTask, akkor azt használjuk
@@ -225,7 +229,7 @@ export function useGamePlay({
             } else {
                 // Egyébként az educationLevel és egyéb információk alapján
                 resultData.educationLevel = ctx.educationLevel;
-
+                
                 // Érettségi mód
                 if (isErettsegiMode) {
                     resultData.gameMode = 'erettsegi';
@@ -264,8 +268,7 @@ export function useGamePlay({
                 }
             }
 
-            const { saveGameResult } = await import('../utils/gameResultsClient');
-            await saveGameResult(resultData);
+            await db.collection('gameResults').add(resultData);
             } catch (error) {
                 console.error('Error saving game results:', error);
         }

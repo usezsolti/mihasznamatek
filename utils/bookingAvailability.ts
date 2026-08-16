@@ -1,10 +1,10 @@
 /**
  * Server-side free-slot lookup for MihAIy / booking helpers.
- * Uses Prisma for bookings, blocked slots, and working hours.
+ * Uses Admin SDK when available; otherwise public settings + blockedSlots.
  */
-import { prisma } from '../server/prisma';
-import { asStringArray } from '../server/bookingMappers';
-import { parseJsonField } from '../server/jsonField';
+import { getAdminDb } from '../server/firebaseAdmin';
+import { FIRESTORE_DOCS_BASE } from '../server/config';
+import { resolveFirebaseWebApiKey } from './firebasePublicConfig';
 import {
     DEFAULT_WORKING_HOURS,
     getSlotsForDateKey,
@@ -48,51 +48,117 @@ function weekdayForDateKey(dateKey: string): string {
     return WEEKDAY_HU[d.getDay()] || '';
 }
 
+function firestoreValue(field: any): any {
+    if (!field || typeof field !== 'object') return undefined;
+    if ('stringValue' in field) return field.stringValue;
+    if ('booleanValue' in field) return field.booleanValue;
+    if ('integerValue' in field) return Number(field.integerValue);
+    if ('arrayValue' in field) {
+        return (field.arrayValue?.values || []).map(firestoreValue);
+    }
+    if ('mapValue' in field) {
+        const out: Record<string, any> = {};
+        const fields = field.mapValue?.fields || {};
+        for (const [k, v] of Object.entries(fields)) out[k] = firestoreValue(v);
+        return out;
+    }
+    if ('nullValue' in field) return null;
+    return undefined;
+}
+
+async function fetchFirestoreDoc(path: string): Promise<Record<string, any> | null> {
+    const key = resolveFirebaseWebApiKey();
+    const url = `${FIRESTORE_DOCS_BASE}/${path}?key=${encodeURIComponent(key)}`;
+    const res = await fetch(url);
+    if (!res.ok) return null;
+    const data = await res.json();
+    const fields = data?.fields || {};
+    const out: Record<string, any> = {};
+    for (const [k, v] of Object.entries(fields)) out[k] = firestoreValue(v);
+    return out;
+}
+
+async function listFirestoreCollection(collectionId: string): Promise<Array<{ id: string; data: Record<string, any> }>> {
+    const key = resolveFirebaseWebApiKey();
+    const url = `${FIRESTORE_DOCS_BASE}/${collectionId}?key=${encodeURIComponent(key)}&pageSize=300`;
+    const res = await fetch(url);
+    if (!res.ok) return [];
+    const data = await res.json();
+    const docs = Array.isArray(data?.documents) ? data.documents : [];
+    return docs.map((doc: any) => {
+        const name = String(doc.name || '');
+        const id = name.split('/').pop() || '';
+        const fields = doc.fields || {};
+        const out: Record<string, any> = {};
+        for (const [k, v] of Object.entries(fields)) out[k] = firestoreValue(v);
+        return { id, data: out };
+    });
+}
+
 async function loadWorkingHours(): Promise<WorkingHoursMap> {
-    try {
-        const row = await prisma.setting.findUnique({ where: { id: 'workingHours' } });
-        if (row?.value) {
-            return normalizeWorkingHours(parseJsonField(row.value, { hours: DEFAULT_WORKING_HOURS }));
+    const db = getAdminDb();
+    if (db) {
+        try {
+            const snap = await db.collection('settings').doc('workingHours').get();
+            if (snap.exists) return normalizeWorkingHours(snap.data());
+        } catch (e) {
+            console.warn('admin workingHours failed', e);
         }
+    }
+    try {
+        const doc = await fetchFirestoreDoc('settings/workingHours');
+        if (doc) return normalizeWorkingHours(doc);
     } catch (e) {
-        console.warn('workingHours load failed', e);
+        console.warn('public workingHours failed', e);
     }
     return normalizeWorkingHours(DEFAULT_WORKING_HOURS);
 }
 
-async function loadTakenTimes(
-    dateKey: string,
-    workingSlots: string[]
-): Promise<{ taken: Set<string>; source: 'admin' | 'public-partial' }> {
+async function loadTakenTimes(dateKey: string, workingSlots: string[]): Promise<{ taken: Set<string>; source: 'admin' | 'public-partial' }> {
     const taken = new Set<string>();
+    const db = getAdminDb();
 
+    // Blocked slots (public)
     try {
-        const blocked = await prisma.blockedSlot.findUnique({ where: { date: dateKey } });
-        if (blocked) {
-            if (blocked.allDay) workingSlots.forEach((t) => taken.add(t));
-            else asStringArray(blocked.times).forEach((t) => taken.add(t));
+        if (db) {
+            const blocked = await db.collection('blockedSlots').doc(dateKey).get();
+            if (blocked.exists) {
+                const data = blocked.data() || {};
+                if (data.allDay) workingSlots.forEach((t) => taken.add(t));
+                else if (Array.isArray(data.times)) data.times.forEach((t: any) => taken.add(String(t)));
+            }
+        } else {
+            const doc = await fetchFirestoreDoc(`blockedSlots/${dateKey}`);
+            if (doc) {
+                if (doc.allDay) workingSlots.forEach((t) => taken.add(t));
+                else if (Array.isArray(doc.times)) doc.times.forEach((t: any) => taken.add(String(t)));
+            }
         }
     } catch (e) {
         console.warn('blockedSlots load failed', e);
     }
 
-    try {
-        const bookings = await prisma.booking.findMany({
-            where: {
-                date: dateKey,
-                status: { in: ['pending', 'approved'] },
-            },
-            select: { times: true },
-        });
-        bookings.forEach((row) => {
-            asStringArray(row.times).forEach((t) => taken.add(t));
-        });
-        return { taken, source: 'admin' };
-    } catch (e) {
-        console.warn('bookings load failed', e);
+    // Bookings (admin only — rules hide others' bookings from public)
+    if (db) {
+        try {
+            const snap = await db.collection('bookings').where('date', '==', dateKey).get();
+            snap.forEach((doc) => {
+                const data = doc.data() || {};
+                const status = String(data.status || 'pending');
+                if (status === 'cancelled' || status === 'rejected') return;
+                const times = Array.isArray(data.times) ? data.times : [];
+                times.forEach((t: any) => taken.add(String(t)));
+            });
+            return { taken, source: 'admin' };
+        } catch (e) {
+            console.warn('admin bookings load failed', e);
+        }
     }
 
-    return { taken, source: 'public-partial' };
+    return {
+        taken,
+        source: 'public-partial',
+    };
 }
 
 /** Parse "ma/today/holnap/tomorrow/YYYY-MM-DD" from chat text. */
@@ -107,6 +173,7 @@ export function parseRequestedDateKey(message: string): string | null {
     const iso = message.match(/\b(20\d{2})-(\d{2})-(\d{2})\b/);
     if (iso) return `${iso[1]}-${iso[2]}-${iso[3]}`;
 
+    // "augusztus 12" style — current year Budapest
     const huMonth: Record<string, number> = {
         januar: 1,
         februar: 2,
@@ -142,6 +209,7 @@ export function isAvailabilityIntent(message: string): boolean {
         .normalize('NFD')
         .replace(/[\u0300-\u036f]/g, '');
 
+    // Avoid false friends: foglalkozás, szabadság, etc.
     if (/\bfoglalkoz/.test(m)) return false;
 
     const bookingVerb =
@@ -154,9 +222,7 @@ export function isAvailabilityIntent(message: string): boolean {
             m
         ) || /\bmikor\s+(van|erhet).*?(szabad|ora|idopont)/.test(m);
 
-    const zsoltiSchedule =
-        /\bzsolti\b/.test(m) &&
-        /\b(szabad|ora|idopont|foglal|book|available|mikor|today|ma|holnap)\b/.test(m);
+    const zsoltiSchedule = /\bzsolti\b/.test(m) && /\b(szabad|ora|idopont|foglal|book|available|mikor|today|ma|holnap)\b/.test(m);
 
     return bookingVerb || freeSlot || zsoltiSchedule;
 }

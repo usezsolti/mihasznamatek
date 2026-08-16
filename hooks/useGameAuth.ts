@@ -1,56 +1,73 @@
-import { useSession } from 'next-auth/react';
 import { useState, useEffect } from 'react';
 import { loadUserPracticeProgress } from '../utils/practiceProgress';
 import { isAdminEmail } from '../utils/admin';
 
-export type GameAuthUser = {
-    uid: string;
-    email: string | null;
-    displayName: string | null;
-    photoURL: string | null;
-};
-
 export function useGameAuth() {
-    const { data: session, status } = useSession();
+    const [currentUser, setCurrentUser] = useState<any>(null);
+    const [isAdmin, setIsAdmin] = useState(false);
+    const [loading, setLoading] = useState(true);
     const [totalXp, setTotalXp] = useState(0);
     const [avatarLevel, setAvatarLevel] = useState(1);
 
-    const currentUser: GameAuthUser | null = session?.user?.id
-        ? {
-              uid: session.user.id,
-              email: session.user.email || null,
-              displayName: session.user.name || null,
-              photoURL: session.user.image || null,
-          }
-        : null;
-
-    const isAdmin = Boolean(
-        currentUser?.email && isAdminEmail(currentUser.email)
-    );
-    const loading = status === 'loading';
-
     useEffect(() => {
-        if (!currentUser?.uid) {
-            setTotalXp(0);
-            setAvatarLevel(1);
-            return;
-        }
+        let unsub: (() => void) | undefined;
         let cancelled = false;
-        (async () => {
-            try {
-                const prog = await loadUserPracticeProgress(currentUser.uid);
-                if (!cancelled) {
-                    setTotalXp(prog.xp);
-                    setAvatarLevel(prog.rankLevel);
-                }
-            } catch (e) {
-                console.error('Progress load error:', e);
+
+        const checkAuth = async () => {
+            let attempts = 0;
+            while (!(window as any).firebase && attempts < 50) {
+                await new Promise(resolve => setTimeout(resolve, 100));
+                attempts++;
             }
-        })();
+
+            if (cancelled) return;
+
+            if (!(window as any).firebase) {
+                setLoading(false);
+                return;
+            }
+
+            try {
+                const auth = (window as any).firebase.auth();
+                unsub = auth.onAuthStateChanged(async (user: any) => {
+                    if (!user) {
+                        // Ha nincs bejelentkezve, engedjük a játékot
+                        setLoading(false);
+                        return;
+                    }
+
+                    setCurrentUser(user);
+
+                    // Admin ellenőrzés - csak admin email férhet hozzá a játék módosításhoz
+                    if (isAdminEmail(user.email)) {
+                        console.log('Admin hozzáférés engedélyezve:', user.email);
+                        setIsAdmin(true);
+                    } else {
+                        console.log('Felhasználó játékban:', user.email);
+                        setIsAdmin(false);
+                    }
+                    try {
+                        const prog = await loadUserPracticeProgress(user.uid);
+                        setTotalXp(prog.xp);
+                        setAvatarLevel(prog.rankLevel);
+                    } catch (e) {
+                        console.error('Progress load error:', e);
+                    }
+                    setLoading(false);
+                });
+            } catch (err) {
+                console.error('Auth error:', err);
+                setLoading(false);
+            }
+        };
+
+        void checkAuth();
+
         return () => {
             cancelled = true;
+            unsub?.();
         };
-    }, [currentUser?.uid]);
+    }, []);
 
     return {
         currentUser,

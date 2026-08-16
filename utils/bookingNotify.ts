@@ -460,6 +460,10 @@ export async function sendBookingAdminEmail(booking: BookingPayload): Promise<bo
     return r.ok;
 }
 
+function getFirebase(): any | null {
+    if (typeof window === "undefined") return null;
+    return (window as any).firebase || null;
+}
 
 const BOOKING_FILE_MAX_BYTES = 8 * 1024 * 1024;
 const BOOKING_FILE_MAX_COUNT = 5;
@@ -470,7 +474,7 @@ function sanitizeFileName(name: string): string {
     return name.replace(/[^\w.\-()\u00C0-\u024F ]+/g, "_").slice(0, 120) || "file";
 }
 
-/** Foglaláshoz csatolt fájlok feltöltése Vercel Blob-ba (/api/upload). */
+/** Foglaláshoz csatolt fájlok feltöltése Firebase Storage-ba. */
 export async function uploadBookingAttachments(
     bookingId: string,
     files: File[]
@@ -501,30 +505,35 @@ export async function uploadBookingAttachments(
         }
     }
 
-    const { uploadFileViaApi } = await import('./clientUpload');
+    const firebase = getFirebase();
+    if (!firebase?.storage) {
+        return {
+            ok: false,
+            files: [],
+            error: "A fájlfeltöltés most nem elérhető (Storage). Próbáld fájl nélkül, vagy később.",
+        };
+    }
+
     const uploaded: BookingAttachment[] = [];
     try {
         for (let i = 0; i < files.length; i++) {
             const file = files[i];
             const safe = sanitizeFileName(file.name);
             const path = `booking-files/${bookingId}/${Date.now()}_${i}_${safe}`;
-            const url = await uploadFileViaApi(
-                file,
-                safe,
-                file.type || 'application/octet-stream',
-                path
-            );
+            const ref = firebase.storage().ref(path);
+            await ref.put(file, { contentType: file.type || "application/octet-stream" });
+            const url = await ref.getDownloadURL();
             uploaded.push({ name: file.name, url });
         }
         return { ok: true, files: uploaded };
-    } catch (err: unknown) {
-        console.error('uploadBookingAttachments failed:', err);
+    } catch (err: any) {
+        console.error("uploadBookingAttachments failed:", err);
         return {
             ok: false,
             files: uploaded,
             error:
-                (err instanceof Error ? err.message : null) ||
-                'Fájlfeltöltés sikertelen. Próbáld fájl nélkül, vagy később.',
+                err?.message ||
+                "Fájlfeltöltés sikertelen. Ellenőrizd a Firebase Storage szabályokat, vagy küldd fájl nélkül.",
         };
     }
 }
@@ -533,49 +542,97 @@ export async function saveBookingToFirestore(
     booking: BookingPayload
 ): Promise<{ ok: boolean; error?: string }> {
     try {
-        const { apiPost } = await import('./apiClient');
-        const res = await apiPost<{ booking?: BookingPayload }>('/api/bookings/create', booking);
-        if (!res.ok) return { ok: false, error: res.error || 'Mentés sikertelen' };
-        return { ok: true };
-    } catch (err: unknown) {
-        console.error('Booking save failed:', err);
-        return {
-            ok: false,
-            error: err instanceof Error ? err.message : 'Mentés sikertelen',
+        const firebase = getFirebase();
+        if (!firebase?.firestore) {
+            return { ok: false, error: "Firebase nem elérhető" };
+        }
+        const db = firebase.firestore();
+        const doc = {
+            ...booking,
+            status: "pending" as BookingStatus,
+            paymentStatus: booking.paymentStatus || ("unpaid" as PaymentStatus),
+            createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+            updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
         };
-    }
-}
-
-async function patchBooking(bookingId: string, patch: Record<string, unknown>): Promise<boolean> {
-    try {
-        const { apiPatchAuth } = await import('./apiClient');
-        const res = await apiPatchAuth<{ booking?: BookingPayload }>(
-            `/api/bookings/${encodeURIComponent(bookingId)}`,
-            patch
-        );
-        return res.ok;
-    } catch {
-        return false;
+        await db.collection("bookings").doc(booking.id).set(doc);
+        await db.collection("pendingBookings").doc(booking.id).set(doc).catch(() => undefined);
+        return { ok: true };
+    } catch (err: any) {
+        console.error("Firestore booking save failed:", err);
+        return { ok: false, error: err?.message || "Firestore mentés sikertelen" };
     }
 }
 
 export async function updateBookingStatus(
     bookingId: string,
     status: "approved" | "rejected" | "cancelled",
-    _booking?: BookingPayload
+    booking?: BookingPayload
 ): Promise<boolean> {
-    return patchBooking(bookingId, { status });
+    try {
+        const firebase = getFirebase();
+        if (!firebase?.firestore) return false;
+        const db = firebase.firestore();
+        const stamp =
+            status === "approved"
+                ? { approvedAt: new Date().toISOString() }
+                : status === "rejected"
+                  ? { rejectedAt: new Date().toISOString() }
+                  : { cancelledAt: new Date().toISOString() };
+        const patch = {
+            status,
+            ...stamp,
+            updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+        };
+        await db.collection("bookings").doc(bookingId).set(patch, { merge: true });
+        await db
+            .collection("pendingBookings")
+            .doc(bookingId)
+            .set(patch, { merge: true })
+            .catch(() => undefined);
+        if (status === "approved" && booking) {
+            await db
+                .collection("approvedBookings")
+                .doc(bookingId)
+                .set({ ...booking, ...patch })
+                .catch(() => undefined);
+        }
+        if (status === "cancelled" || status === "rejected") {
+            await db
+                .collection("approvedBookings")
+                .doc(bookingId)
+                .set(patch, { merge: true })
+                .catch(() => undefined);
+        }
+        return true;
+    } catch (err) {
+        console.error("updateBookingStatus failed:", err);
+        return false;
+    }
 }
 
 export async function updateBookingPaymentStatus(
     bookingId: string,
     paymentStatus: PaymentStatus
 ): Promise<boolean> {
-    const patch: Record<string, unknown> = { paymentStatus };
-    if (paymentStatus === 'paid') {
-        patch.paidAt = new Date().toISOString();
+    try {
+        const firebase = getFirebase();
+        if (!firebase?.firestore || !bookingId) return false;
+        const patch: Record<string, unknown> = {
+            paymentStatus,
+            updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+        };
+        if (paymentStatus === "paid") {
+            patch.paidAt = new Date().toISOString();
+        }
+        const db = firebase.firestore();
+        await db.collection("bookings").doc(bookingId).set(patch, { merge: true });
+        await db.collection("pendingBookings").doc(bookingId).set(patch, { merge: true }).catch(() => undefined);
+        await db.collection("approvedBookings").doc(bookingId).set(patch, { merge: true }).catch(() => undefined);
+        return true;
+    } catch (err) {
+        console.error("updateBookingPaymentStatus failed:", err);
+        return false;
     }
-    return patchBooking(bookingId, patch);
 }
 
 export function paymentStatusLabel(status?: PaymentStatus | string): string {
@@ -585,8 +642,23 @@ export function paymentStatusLabel(status?: PaymentStatus | string): string {
 }
 
 export async function markReminderSent(bookingId: string): Promise<boolean> {
-    if (!bookingId) return false;
-    return patchBooking(bookingId, { reminderSentAt: new Date().toISOString() });
+    try {
+        const firebase = getFirebase();
+        if (!firebase?.firestore || !bookingId) return false;
+        const stamp = new Date().toISOString();
+        const patch = {
+            reminderSentAt: stamp,
+            updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+        };
+        const db = firebase.firestore();
+        await db.collection("bookings").doc(bookingId).set(patch, { merge: true });
+        await db.collection("approvedBookings").doc(bookingId).set(patch, { merge: true }).catch(() => undefined);
+        await db.collection("pendingBookings").doc(bookingId).set(patch, { merge: true }).catch(() => undefined);
+        return true;
+    } catch (err) {
+        console.error("markReminderSent failed:", err);
+        return false;
+    }
 }
 
 /** Holnapi jóváhagyott órák, amikhez még nem ment emlékeztető. */
@@ -595,14 +667,41 @@ export async function loadReminderCandidatesFromFirestore(
 ): Promise<BookingPayload[]> {
     const target = dateKey || getBudapestDateKeyOffset(1);
     try {
-        const { apiGetAuth } = await import('./apiClient');
-        const res = await apiGetAuth<{ bookings?: BookingPayload[] }>(
-            `/api/bookings/list?status=approved&date=${encodeURIComponent(target)}&reminderPending=1`
-        );
-        if (!res.ok || !Array.isArray(res.data?.bookings)) return [];
-        return res.data.bookings;
+        const firebase = getFirebase();
+        if (!firebase?.firestore) return [];
+        const db = firebase.firestore();
+        const map = new Map<string, BookingPayload>();
+
+        const merge = (snap: any) => {
+            snap.forEach((doc: any) => {
+                const data = doc.data() || {};
+                if (String(data.date || "") !== target) return;
+                if (data.status !== "approved") return;
+                if (data.reminderSentAt) return;
+                map.set(doc.id, { id: doc.id, ...data });
+            });
+        };
+
+        try {
+            const byDate = await db
+                .collection("bookings")
+                .where("date", "==", target)
+                .where("status", "==", "approved")
+                .get();
+            merge(byDate);
+        } catch (err) {
+            console.warn("reminder bookings query failed:", err);
+        }
+
+        try {
+            merge(await db.collection("approvedBookings").get());
+        } catch {
+            // ignore
+        }
+
+        return Array.from(map.values());
     } catch (err) {
-        console.error('loadReminderCandidatesFromFirestore failed:', err);
+        console.error("loadReminderCandidatesFromFirestore failed:", err);
         return [];
     }
 }
@@ -643,7 +742,7 @@ export async function processLessonReminders(dateKey?: string): Promise<Reminder
     return result;
 }
 
-/** Diák lemondása: API + e-mail (admin + diák). */
+/** Diák lemondása: Firestore + e-mail (admin + diák). */
 export async function cancelBookingByStudent(
     booking: BookingPayload
 ): Promise<{ ok: boolean; error?: string }> {
@@ -676,11 +775,13 @@ export async function cancelBookingByStudent(
 }
 
 export async function loadActiveBookingsFromFirestore(): Promise<BookingPayload[]> {
+    // Public calendar must NOT query bookings.* from the client — rules only allow
+    // admin or own-email reads, so a full collection get throws permission-denied.
     try {
         const res = await fetch('/api/public-busy-slots', {
             method: 'GET',
             headers: { Accept: 'application/json' },
-            credentials: 'include',
+            credentials: 'same-origin',
         });
         if (!res.ok) return [];
         const json = await res.json();
@@ -698,8 +799,8 @@ export async function loadActiveBookingsFromFirestore(): Promise<BookingPayload[
             submittedAt: '',
             status: (s.status === 'approved' ? 'approved' : 'pending') as BookingStatus,
         }));
-    } catch (err: unknown) {
-        const msg = String(err instanceof Error ? err.message : err || '');
+    } catch (err: any) {
+        const msg = String(err?.message || err || '');
         if (!/permission|insufficient/i.test(msg)) {
             console.warn('loadActiveBookingsFromFirestore:', msg.slice(0, 120));
         }
@@ -723,7 +824,9 @@ export async function loadAdminCalendarBundle(): Promise<{
     }
 
     try {
-        const { apiGetAuth } = await import("./apiClient");
+        const { apiGetAuth, getIdToken } = await import("./apiClient");
+        const token = await getIdToken();
+        if (!token) return { bookings: [], blocked: [] };
 
         const res = await apiGetAuth<{
             bookings?: BookingPayload[];
@@ -779,7 +882,12 @@ export async function loadPendingBookingsFromFirestore(): Promise<BookingPayload
     if (pendingBookingsDenied || isAdminFirestoreDenied()) return [];
 
     try {
-        const { apiGetAuth } = await import("./apiClient");
+        const { apiGetAuth, getIdToken } = await import("./apiClient");
+        const token = await getIdToken();
+        if (!token) {
+            // Auth még nincs kész — ne 401-spam; a dashboard újra fogja próbálni auth után.
+            return [];
+        }
 
         const res = await apiGetAuth<{
             pending?: BookingPayload[];
@@ -825,29 +933,50 @@ export async function loadPendingBookingsFromFirestore(): Promise<BookingPayload
 export async function loadStudentBookingsFromFirestore(
     customerEmail: string
 ): Promise<BookingPayload[]> {
-    const email = (customerEmail || '').trim().toLowerCase();
+    const email = (customerEmail || "").trim().toLowerCase();
     if (!email) return [];
 
     try {
-        const { apiGetAuth } = await import('./apiClient');
-        const res = await apiGetAuth<{ bookings?: BookingPayload[] }>(
-            `/api/bookings/list?email=${encodeURIComponent(email)}`
+        const firebase = getFirebase();
+        if (!firebase?.firestore) return [];
+        const db = firebase.firestore();
+        const map = new Map<string, BookingPayload>();
+
+        const mergeSnap = (snap: any) => {
+            snap.docs.forEach((doc: any) => {
+                const data = doc.data() || {};
+                const docEmail = String(data.customerEmail || "").trim().toLowerCase();
+                if (docEmail && docEmail !== email) return;
+                map.set(doc.id, { id: doc.id, ...data });
+            });
+        };
+
+        // Csak saját e-mail query — teljes pending/approved scan diákoknak tiltva van
+        const emailVariants = Array.from(
+            new Set([customerEmail.trim(), email].filter(Boolean))
         );
-        if (!res.ok || !Array.isArray(res.data?.bookings)) return [];
-        return sortBookings(res.data.bookings);
+        for (const variant of emailVariants) {
+            try {
+                const byEmail = await db
+                    .collection("bookings")
+                    .where("customerEmail", "==", variant)
+                    .get();
+                mergeSnap(byEmail);
+            } catch (err) {
+                console.warn("bookings by email query failed:", err);
+            }
+        }
+
+        return Array.from(map.values()).sort((a, b) => {
+            const da = a.date || "";
+            const db_ = b.date || "";
+            if (da !== db_) return db_.localeCompare(da);
+            return String(b.submittedAt || "").localeCompare(String(a.submittedAt || ""));
+        });
     } catch (err) {
-        console.error('loadStudentBookingsFromFirestore failed:', err);
+        console.error("loadStudentBookingsFromFirestore failed:", err);
         return [];
     }
-}
-
-function sortBookings(list: BookingPayload[]): BookingPayload[] {
-    return [...list].sort((a, b) => {
-        const da = a.date || '';
-        const db_ = b.date || '';
-        if (da !== db_) return db_.localeCompare(da);
-        return String(b.submittedAt || '').localeCompare(String(a.submittedAt || ''));
-    });
 }
 
 /** Admin által manuálisan blokkolt nap / órasávok. */
@@ -861,14 +990,25 @@ export type BlockedDay = {
 
 export async function loadBlockedDaysFromFirestore(): Promise<BlockedDay[]> {
     try {
-        const { apiGet } = await import('./apiClient');
-        const res = await apiGet<{ blocked?: BlockedDay[] }>('/api/blocked-slots');
-        if (!res.ok || !Array.isArray(res.data?.blocked)) return [];
-        return res.data.blocked;
-    } catch (err: unknown) {
-        const msg = String(err instanceof Error ? err.message : err || '');
+        const firebase = getFirebase();
+        if (!firebase?.firestore) return [];
+        const snap = await firebase.firestore().collection("blockedSlots").get();
+        const list: BlockedDay[] = [];
+        snap.forEach((doc: any) => {
+            const data = doc.data() || {};
+            list.push({
+                date: String(data.date || doc.id),
+                times: Array.isArray(data.times) ? data.times.map(String) : [],
+                allDay: Boolean(data.allDay),
+                note: data.note ? String(data.note) : undefined,
+                updatedAt: data.updatedAt ? String(data.updatedAt) : undefined,
+            });
+        });
+        return list;
+    } catch (err: any) {
+        const msg = String(err?.message || err || "");
         if (!/permission|insufficient/i.test(msg)) {
-            console.warn('loadBlockedDaysFromFirestore:', msg.slice(0, 120));
+            console.warn("loadBlockedDaysFromFirestore:", msg.slice(0, 120));
         }
         return [];
     }
@@ -895,11 +1035,27 @@ export function blockedTimesMap(
 
 export async function saveBlockedDay(day: BlockedDay): Promise<boolean> {
     try {
-        const { apiPostAuth } = await import('./apiClient');
-        const res = await apiPostAuth<{ blocked?: BlockedDay | null }>('/api/blocked-slots', day);
-        return res.ok;
+        const firebase = getFirebase();
+        if (!firebase?.firestore) return false;
+        const db = firebase.firestore();
+        const times = Array.from(new Set(day.times || [])).sort();
+        const allDay = Boolean(day.allDay);
+
+        if (!allDay && times.length === 0) {
+            await db.collection("blockedSlots").doc(day.date).delete().catch(() => undefined);
+            return true;
+        }
+
+        await db.collection("blockedSlots").doc(day.date).set({
+            date: day.date,
+            times,
+            allDay,
+            note: day.note || "",
+            updatedAt: new Date().toISOString(),
+        });
+        return true;
     } catch (err) {
-        console.error('saveBlockedDay failed:', err);
+        console.error("saveBlockedDay failed:", err);
         return false;
     }
 }

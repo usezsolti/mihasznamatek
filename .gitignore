@@ -38,12 +38,6 @@ yarn-error.log*
 .env.local
 .env.*.local
 !.env.local.example
-
-# local SQLite database
-/prisma/*.db
-/prisma/*.db-journal
-*.db
-*.db-journal
 !.env.example
 
 # vercel
@@ -58,3 +52,8 @@ next-env.d.ts
 debug-*.log
 .cursor/
 
+
+/prisma/*.db
+/prisma/*.db-journal
+*.db
+*.db-journal

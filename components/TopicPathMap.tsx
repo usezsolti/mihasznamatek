@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useMemo, useState, type CSSProperties } from 'react';
-import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import {
     claimPathChest,
@@ -50,7 +49,6 @@ export default function TopicPathMap({
     onBack,
 }: Props) {
     const router = useRouter();
-    const { data: session, status: authStatus } = useSession();
     const educationLevel = educationLevelProp || 'erettsegi';
     const erettsegiLevel = erettsegiLevelProp || level || 'emelt';
     const [progress, setProgress] = useState<UserPracticeProgress | null>(null);
@@ -72,25 +70,37 @@ export default function TopicPathMap({
 
     const reload = useCallback(async () => {
         try {
-            const userId = session?.user?.id || null;
-            const label = userId
-                ? session?.user?.email ||
-                  session?.user?.name ||
-                  'Bejelentkezve'
+            let attempts = 0;
+            while (!(window as any).firebase?.auth && attempts < 20) {
+                await new Promise((r) => setTimeout(r, 100));
+                attempts++;
+            }
+            const user = (window as any).firebase?.auth?.()?.currentUser || null;
+            const label = user
+                ? (user.email || user.displayName || (user.isAnonymous ? 'Teszt vendég (anonim)' : 'Bejelentkezve'))
                 : null;
             setLoggedInEmail(label);
-            setProgress(await loadUserPracticeProgress(userId));
+            setProgress(await loadUserPracticeProgress(user?.uid || null));
         } catch (e) {
             console.error('Path progress load:', e);
             setLoggedInEmail(null);
             setProgress(await loadUserPracticeProgress(null));
         }
-    }, [session?.user?.email, session?.user?.id, session?.user?.name]);
+    }, []);
 
     useEffect(() => {
-        if (authStatus === 'loading') return;
-        void reload();
-    }, [reload, topicId, authStatus]);
+        reload();
+        const auth = (window as any).firebase?.auth?.();
+        if (!auth) return;
+        const unsub = auth.onAuthStateChanged((user: any) => {
+            const label = user
+                ? (user.email || user.displayName || (user.isAnonymous ? 'Teszt vendég (anonim)' : 'Bejelentkezve'))
+                : null;
+            setLoggedInEmail(label);
+            void reload();
+        });
+        return () => unsub?.();
+    }, [reload, topicId]);
 
     const showToast = (msg: string) => {
         setToast(msg);
@@ -147,7 +157,7 @@ export default function TopicPathMap({
             showToast('Ezt a kincset már begyűjtötted.');
             return;
         }
-        const uid = (session?.user as { id?: string } | undefined)?.id || null;
+        const uid = (window as any).firebase?.auth?.()?.currentUser?.uid || null;
         setClaiming(true);
         try {
             const result = await claimPathChest(uid, topicId, chest);

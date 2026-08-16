@@ -1,12 +1,26 @@
 import type { WbBoardMeta, WbStroke } from './whiteboardTypes';
-import {
-    apiDeleteAuth,
-    apiGetAuth,
-    apiPatchAuth,
-    apiPostAuth,
-} from './apiClient';
+import { newBoardId } from './whiteboardTypes';
 
-const POLL_MS = 1500;
+function getFirebase(): any {
+    if (typeof window === 'undefined') return null;
+    return (window as any).firebase || null;
+}
+
+function db() {
+    const firebase = getFirebase();
+    if (!firebase?.firestore) return null;
+    return firebase.firestore();
+}
+
+function isPermissionError(err: any): boolean {
+    const code = String(err?.code || '');
+    const msg = String(err?.message || err || '');
+    return (
+        code.includes('permission-denied') ||
+        /Missing or insufficient permissions/i.test(msg) ||
+        /PERMISSION_DENIED/i.test(msg)
+    );
+}
 
 function markBoardMode(boardId: string, mode: 'cloud' | 'local') {
     if (typeof localStorage === 'undefined') return;
@@ -38,42 +52,53 @@ export async function createWhiteboard(
     uid: string,
     title = 'Matek tábla'
 ): Promise<CreateWhiteboardResult> {
-    const res = await apiPostAuth<{ meta: WbBoardMeta }>('/api/whiteboard/create', {
-        title: title.trim().slice(0, 60) || 'Matek tábla',
-    });
+    const firestore = db();
+    const id = newBoardId();
+    const meta: WbBoardMeta = {
+        id,
+        title,
+        createdBy: uid,
+        createdAtMs: Date.now(),
+        updatedAtMs: Date.now(),
+    };
 
-    if (res.ok) {
-        const meta = res.data.meta;
-        markBoardMode(meta.id, 'cloud');
-        saveMetaLocal(meta);
-        return { meta, mode: 'cloud' };
+    if (firestore) {
+        try {
+            await firestore.collection('whiteboards').doc(id).set(meta);
+            markBoardMode(id, 'cloud');
+            saveMetaLocal(meta);
+            return { meta, mode: 'cloud' };
+        } catch (err: any) {
+            // Rules not published yet → still usable on this device
+            saveMetaLocal(meta);
+            markBoardMode(id, 'local');
+            const warning = isPermissionError(err)
+                ? 'Firestore rules hiányoznak a whiteboards gyűjteményhez. Helyi tábla készült — Publish: /rules-setup'
+                : String(err?.message || err).slice(0, 160);
+            return { meta, mode: 'local', warning };
+        }
     }
 
-    const now = Date.now();
-    const meta: WbBoardMeta = {
-        id: `wb_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 7)}`,
-        title: title.trim().slice(0, 60) || 'Matek tábla',
-        createdBy: uid,
-        createdAtMs: now,
-        updatedAtMs: now,
-    };
     saveMetaLocal(meta);
-    markBoardMode(meta.id, 'local');
-    return { meta, mode: 'local', warning: res.error || 'Helyi tábla készült.' };
+    markBoardMode(id, 'local');
+    return { meta, mode: 'local', warning: 'Firebase nincs betöltve — helyi tábla.' };
 }
 
 export async function loadWhiteboardMeta(boardId: string): Promise<WbBoardMeta | null> {
     if (getBoardMode(boardId) !== 'local') {
-        const res = await apiGetAuth<{ meta: WbBoardMeta }>(
-            `/api/whiteboard/create?id=${encodeURIComponent(boardId)}`
-        );
-        if (res.ok) {
-            markBoardMode(boardId, 'cloud');
-            saveMetaLocal(res.data.meta);
-            return res.data.meta;
+        const firestore = db();
+        if (firestore) {
+            try {
+                const snap = await firestore.collection('whiteboards').doc(boardId).get();
+                if (snap.exists) {
+                    markBoardMode(boardId, 'cloud');
+                    return { id: snap.id, ...snap.data() } as WbBoardMeta;
+                }
+            } catch (err) {
+                if (!isPermissionError(err)) console.warn('loadWhiteboardMeta', err);
+            }
         }
     }
-
     if (typeof localStorage !== 'undefined') {
         const raw = localStorage.getItem(`wb_meta_${boardId}`);
         return raw ? (JSON.parse(raw) as WbBoardMeta) : null;
@@ -84,6 +109,7 @@ export async function loadWhiteboardMeta(boardId: string): Promise<WbBoardMeta |
 export async function renameWhiteboard(boardId: string, title: string): Promise<void> {
     const nextTitle = title.trim().slice(0, 60) || 'Matek tábla';
     const preferLocal = getBoardMode(boardId) === 'local';
+    const firestore = db();
     const updatedAtMs = Date.now();
 
     const saveLocal = () => {
@@ -100,17 +126,23 @@ export async function renameWhiteboard(boardId: string, title: string): Promise<
         saveMetaLocal(meta);
     };
 
-    if (!preferLocal) {
-        const res = await apiPatchAuth<{ meta: WbBoardMeta }>('/api/whiteboard/create', {
-            id: boardId,
-            title: nextTitle,
-        });
-        if (res.ok) {
+    if (!preferLocal && firestore) {
+        try {
+            await firestore.collection('whiteboards').doc(boardId).set(
+                { title: nextTitle, updatedAtMs },
+                { merge: true }
+            );
             markBoardMode(boardId, 'cloud');
             saveLocal();
             return;
+        } catch (err: any) {
+            if (isPermissionError(err)) {
+                markBoardMode(boardId, 'local');
+                saveLocal();
+                return;
+            }
+            throw err;
         }
-        markBoardMode(boardId, 'local');
     }
 
     saveLocal();
@@ -118,6 +150,7 @@ export async function renameWhiteboard(boardId: string, title: string): Promise<
 
 export async function pushStroke(boardId: string, stroke: WbStroke): Promise<void> {
     const preferLocal = getBoardMode(boardId) === 'local';
+    const firestore = db();
 
     const pushLocal = () => {
         if (typeof localStorage === 'undefined') return;
@@ -128,17 +161,29 @@ export async function pushStroke(boardId: string, stroke: WbStroke): Promise<voi
         window.dispatchEvent(new CustomEvent('wb:local-stroke', { detail: { boardId, stroke } }));
     };
 
-    if (!preferLocal) {
-        const res = await apiPostAuth<{ stroke: WbStroke }>(
-            `/api/whiteboard/${encodeURIComponent(boardId)}/strokes`,
-            { stroke }
-        );
-        if (res.ok) {
+    if (!preferLocal && firestore) {
+        try {
+            await firestore
+                .collection('whiteboards')
+                .doc(boardId)
+                .collection('strokes')
+                .doc(stroke.id)
+                .set(stroke);
+            await firestore.collection('whiteboards').doc(boardId).set(
+                { updatedAtMs: Date.now() },
+                { merge: true }
+            );
             markBoardMode(boardId, 'cloud');
-            pushLocal();
+            pushLocal(); // mirror for offline reopen
             return;
+        } catch (err: any) {
+            if (isPermissionError(err)) {
+                markBoardMode(boardId, 'local');
+                pushLocal();
+                return;
+            }
+            throw err;
         }
-        markBoardMode(boardId, 'local');
     }
 
     pushLocal();
@@ -146,6 +191,7 @@ export async function pushStroke(boardId: string, stroke: WbStroke): Promise<voi
 
 export async function clearWhiteboardStrokes(boardId: string): Promise<void> {
     const preferLocal = getBoardMode(boardId) === 'local';
+    const firestore = db();
 
     const clearLocal = () => {
         if (typeof localStorage === 'undefined') return;
@@ -153,21 +199,40 @@ export async function clearWhiteboardStrokes(boardId: string): Promise<void> {
         window.dispatchEvent(new CustomEvent('wb:local-clear', { detail: { boardId } }));
     };
 
-    if (!preferLocal) {
-        const res = await apiDeleteAuth<{ ok: boolean }>(
-            `/api/whiteboard/${encodeURIComponent(boardId)}/strokes`
-        );
-        if (res.ok) {
+    if (!preferLocal && firestore) {
+        try {
+            const snap = await firestore
+                .collection('whiteboards')
+                .doc(boardId)
+                .collection('strokes')
+                .get();
+            const docs = snap.docs as any[];
+            // Firestore batch limit is 500
+            for (let i = 0; i < docs.length; i += 400) {
+                const batch = firestore.batch();
+                docs.slice(i, i + 400).forEach((d: any) => batch.delete(d.ref));
+                await batch.commit();
+            }
+            await firestore.collection('whiteboards').doc(boardId).set(
+                { updatedAtMs: Date.now() },
+                { merge: true }
+            );
             clearLocal();
             return;
+        } catch (err: any) {
+            if (isPermissionError(err)) {
+                markBoardMode(boardId, 'local');
+                clearLocal();
+                return;
+            }
+            throw err;
         }
-        markBoardMode(boardId, 'local');
     }
 
     clearLocal();
 }
 
-/** Live stroke list via short polling. Returns unsubscribe. */
+/** Live stroke list. Returns unsubscribe. */
 export function subscribeStrokes(
     boardId: string,
     onChange: (strokes: WbStroke[]) => void
@@ -201,58 +266,31 @@ export function subscribeStrokes(
         return attachLocal();
     }
 
-    let stopped = false;
-    let sinceMs = 0;
-    let loaded = false;
-    const byId = new Map<string, WbStroke>();
-    let localUnsub: (() => void) | null = null;
-
-    const emit = () => {
-        const list = [...byId.values()].sort((a, b) => a.createdAtMs - b.createdAtMs);
-        if (typeof localStorage !== 'undefined') {
-            localStorage.setItem(`wb_strokes_${boardId}`, JSON.stringify(list));
-        }
-        onChange(list);
-    };
-
-    const poll = async () => {
-        if (stopped) return;
-        try {
-            const res = await apiGetAuth<{ strokes: WbStroke[]; board?: WbBoardMeta }>(
-                `/api/whiteboard/${encodeURIComponent(boardId)}/strokes?since=${sinceMs}`
-            );
-            if (!res.ok) {
-                markBoardMode(boardId, 'local');
-                if (!localUnsub) localUnsub = attachLocal();
-                return;
-            }
-            markBoardMode(boardId, 'cloud');
-            if (res.data.board) saveMetaLocal(res.data.board);
-            let changed = false;
-            for (const s of res.data.strokes) {
-                if (!byId.has(s.id)) {
-                    byId.set(s.id, s);
-                    changed = true;
+    const firestore = db();
+    if (firestore) {
+        let localUnsub: (() => void) | null = null;
+        const remoteUnsub = firestore
+            .collection('whiteboards')
+            .doc(boardId)
+            .collection('strokes')
+            .orderBy('createdAtMs', 'asc')
+            .onSnapshot(
+                (snap: any) => {
+                    markBoardMode(boardId, 'cloud');
+                    const list: WbStroke[] = [];
+                    snap.forEach((doc: any) => list.push({ id: doc.id, ...doc.data() }));
+                    onChange(list);
+                },
+                () => {
+                    markBoardMode(boardId, 'local');
+                    if (!localUnsub) localUnsub = attachLocal();
                 }
-                sinceMs = Math.max(sinceMs, s.createdAtMs);
-            }
-            if (changed) emit();
-            else if (!loaded) {
-                loaded = true;
-                emit();
-            }
-        } catch {
-            markBoardMode(boardId, 'local');
-            if (!localUnsub) localUnsub = attachLocal();
-        }
-    };
+            );
+        return () => {
+            remoteUnsub?.();
+            localUnsub?.();
+        };
+    }
 
-    void poll();
-    const timer = setInterval(() => void poll(), POLL_MS);
-
-    return () => {
-        stopped = true;
-        clearInterval(timer);
-        localUnsub?.();
-    };
+    return attachLocal();
 }

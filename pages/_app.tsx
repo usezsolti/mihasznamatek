@@ -12,18 +12,56 @@ import type { AppProps } from "next/app";
 import Head from "next/head";
 import Script from "next/script";
 import { useRouter } from "next/router";
+import { useEffect } from "react";
 import Navbar from "../components/Navbar";
-import AuthSessionProvider from "../components/AuthSessionProvider";
 import { LanguageProvider } from "../utils/i18n";
+
+function isFirestorePermissionNoise(reason: unknown): boolean {
+    const code = String((reason as any)?.code || "");
+    const msg = String((reason as any)?.message || reason || "");
+    return (
+        code.includes("permission-denied") ||
+        /Missing or insufficient permissions/i.test(msg) ||
+        /PERMISSION_DENIED/i.test(msg)
+    );
+}
 
 export default function App({ Component, pageProps }: AppProps) {
     const router = useRouter();
     const isGame = router.pathname === "/game";
     const isUniBoostGame = router.pathname === "/uniboost-game";
 
+    // Next overlay ne legyen piros Firestore rules hibáktól (catch után is előjön néha)
+    useEffect(() => {
+        let warned = false;
+        const onRejection = (event: PromiseRejectionEvent) => {
+            if (!isFirestorePermissionNoise(event.reason)) return;
+            event.preventDefault();
+            if (warned) return;
+            warned = true;
+            console.warn(
+                "Firestore permission denied — publikáld a firestore.rules-t (/rules-setup). További ismétlődések elnyomva."
+            );
+        };
+        const onError = (event: ErrorEvent) => {
+            if (!isFirestorePermissionNoise(event.error || event.message)) return;
+            event.preventDefault();
+            if (warned) return;
+            warned = true;
+            console.warn(
+                "Firestore permission denied — publikáld a firestore.rules-t (/rules-setup). További ismétlődések elnyomva."
+            );
+        };
+        window.addEventListener("unhandledrejection", onRejection);
+        window.addEventListener("error", onError);
+        return () => {
+            window.removeEventListener("unhandledrejection", onRejection);
+            window.removeEventListener("error", onError);
+        };
+    }, []);
+
     return (
         <LanguageProvider>
-        <AuthSessionProvider>
         <div suppressHydrationWarning>
             <>
                 <Head>
@@ -81,13 +119,29 @@ export default function App({ Component, pageProps }: AppProps) {
                     `}
                 </Script>
 
+                <Script
+                    src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"
+                    strategy="beforeInteractive"
+                />
+                <Script
+                    src="https://www.gstatic.com/firebasejs/9.22.1/firebase-auth-compat.js"
+                    strategy="beforeInteractive"
+                />
+                <Script
+                    src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"
+                    strategy="beforeInteractive"
+                />
+                <Script
+                    src="https://www.gstatic.com/firebasejs/9.22.1/firebase-storage-compat.js"
+                    strategy="beforeInteractive"
+                />
+                <Script src="/firebase-init.js" strategy="beforeInteractive" />
                 <Script src="/main.js" strategy="afterInteractive" />
 
                 {!isGame && !isUniBoostGame && <Navbar />}
                 <Component {...pageProps} />
             </>
         </div>
-        </AuthSessionProvider>
         </LanguageProvider>
     );
 }

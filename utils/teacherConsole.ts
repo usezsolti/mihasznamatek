@@ -124,6 +124,11 @@ const TOPIC_TITLE: Record<string, string> = {
     fuggvenyek: 'Függvények',
 };
 
+function getFirebase(): any | null {
+    if (typeof window === 'undefined') return null;
+    return (window as any).firebase || null;
+}
+
 function catalogTitle(id: string): string {
     const all = [
         ...elementaryTopics,
@@ -240,7 +245,16 @@ export async function loadTeacherStudents(): Promise<{
 
     // Csak admin API — ne listázzuk a users kollekciót a kliensről (rules zaj).
     try {
-        const { apiGetAuth } = await import('./apiClient');
+        const { apiGetAuth, getIdToken } = await import('./apiClient');
+        const token = await getIdToken();
+        if (!token) {
+            return {
+                students: [],
+                permissionDenied: false,
+                setupHint: 'Nincs Firebase session — jelentkezz be újra (Tanári belépés).',
+            };
+        }
+
         const res = await apiGetAuth<{
             students?: TeacherStudent[];
             permissionDenied?: boolean;
@@ -441,83 +455,103 @@ export async function loadStudentProfileDetail(
         nextLesson: null,
     };
 
-    if (!student.uid) return empty;
+    const firebase = getFirebase();
+    const db = firebase?.firestore?.();
+    if (!db || !student.uid) return empty;
+
+    let userData: Record<string, unknown> = {};
+    let socialData: Record<string, unknown> = {};
 
     try {
-        const { apiGetAuth } = await import('./apiClient');
-        const profileRes = await apiGetAuth<{
-            photoURL?: string;
-            displayName?: string;
-            email?: string;
-            educationLevel?: string;
-            username?: string;
-            bio?: string;
-            createdAtMs?: number;
-            updatedAtMs?: number;
-            teacherAdmin?: unknown;
-        }>(`/api/admin/students/${encodeURIComponent(student.uid)}`);
-
-        let bookings: BookingPayload[] = [];
-        try {
-            const { loadStudentBookingsFromFirestore } = await import('./bookingNotify');
-            bookings = student.email
-                ? await loadStudentBookingsFromFirestore(student.email)
-                : [];
-        } catch {
-            bookings = [];
-        }
-
-        if (!profileRes.ok) {
-            return { ...empty, bookings, nextLesson: pickNextLesson(bookings) };
-        }
-
-        const p = profileRes.data || {};
-        const teacherAdmin = readTeacherAdmin(p.teacherAdmin);
-
-        return {
-            photoURL: String(p.photoURL || student.photoURL || '').trim(),
-            displayName: String(p.displayName || student.name || '').trim(),
-            email: String(p.email || student.email || '').trim(),
-            educationLevel: String(p.educationLevel || student.educationLevel || '').trim(),
-            phone: '',
-            username: String(p.username || '').trim(),
-            bio: String(p.bio || '').trim(),
-            createdAtMs: Number(p.createdAtMs) || 0,
-            lastLoginMs: 0,
-            updatedAtMs: Number(p.updatedAtMs) || student.lastSeenMs || 0,
-            followerCount: 0,
-            followingCount: 0,
-            postCount: 0,
-            socialXp: 0,
-            socialRank: '',
-            extraFields: [],
-            bookings,
-            teacherAdmin,
-            nextLesson: pickNextLesson(bookings),
-        };
+        const snap = await db.collection('users').doc(student.uid).get();
+        if (snap.exists) userData = snap.data() || {};
     } catch {
-        return empty;
+        /* rules / missing */
     }
+
+    try {
+        const snap = await db.collection('socialProfiles').doc(student.uid).get();
+        if (snap.exists) socialData = snap.data() || {};
+    } catch {
+        /* ignore */
+    }
+
+    let bookings: BookingPayload[] = [];
+    try {
+        const { loadStudentBookingsFromFirestore } = await import('./bookingNotify');
+        bookings = await loadStudentBookingsFromFirestore(student.email);
+    } catch {
+        bookings = [];
+    }
+
+    const extraFields: Array<{ key: string; value: string }> = [];
+    for (const [key, value] of Object.entries(userData)) {
+        if (USER_DOC_SKIP.has(key)) continue;
+        if (key.toLowerCase().includes('token') || key.toLowerCase().includes('secret')) continue;
+        const formatted = formatFieldValue(value);
+        if (formatted) extraFields.push({ key, value: formatted.slice(0, 240) });
+    }
+    extraFields.sort((a, b) => a.key.localeCompare(b.key));
+
+    const photoURL =
+        String(userData.photoURL || socialData.photoURL || student.photoURL || '').trim();
+    const displayName = String(
+        userData.name ||
+            userData.displayName ||
+            socialData.displayName ||
+            student.name ||
+            ''
+    ).trim();
+    const email = String(userData.email || student.email || '').trim();
+
+    return {
+        photoURL,
+        displayName,
+        email,
+        educationLevel: String(userData.educationLevel || student.educationLevel || '').trim(),
+        phone: String(userData.phone || userData.phoneNumber || '').trim(),
+        username: String(socialData.username || '').trim(),
+        bio: String(socialData.bio || userData.bio || '').trim(),
+        createdAtMs: toMs(userData.createdAt),
+        lastLoginMs: toMs(userData.lastLogin),
+        updatedAtMs: toMs(userData.updatedAt) || student.lastSeenMs || 0,
+        followerCount: Number(socialData.followerCount) || 0,
+        followingCount: Number(socialData.followingCount) || 0,
+        postCount: Number(socialData.postCount) || 0,
+        socialXp: Number(socialData.xp) || 0,
+        socialRank: String(socialData.rank || '').trim(),
+        extraFields,
+        bookings,
+        teacherAdmin: readTeacherAdmin(userData.teacherAdmin),
+        nextLesson: pickNextLesson(bookings),
+    };
 }
 
 export async function saveTeacherAdminMeta(
     studentId: string,
     meta: TeacherAdminMeta,
-    _teacherUid?: string
+    teacherUid?: string
 ): Promise<{ ok: boolean; error?: string }> {
-    if (!studentId) return { ok: false, error: 'Hiányzó diák' };
+    const firebase = getFirebase();
+    if (!firebase?.firestore || !studentId) return { ok: false, error: 'Nincs Firestore' };
     try {
-        const { apiPatchAuth } = await import('./apiClient');
-        const res = await apiPatchAuth(`/api/admin/students/${encodeURIComponent(studentId)}`, {
-            teacherAdmin: meta,
-        });
-        if (!res.ok) return { ok: false, error: res.error || 'Mentés sikertelen' };
+        await firebase.firestore().collection('users').doc(studentId).set(
+            {
+                teacherAdmin: {
+                    paymentStatus: meta.paymentStatus || '',
+                    paymentNote: String(meta.paymentNote || '').slice(0, 500),
+                    attendanceStatus: meta.attendanceStatus || 'unknown',
+                    attendanceNote: String(meta.attendanceNote || '').slice(0, 500),
+                    updatedBy: teacherUid || '',
+                    updatedAtMs: Date.now(),
+                },
+                updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+            },
+            { merge: true }
+        );
         return { ok: true };
-    } catch (err: unknown) {
-        return {
-            ok: false,
-            error: String(err instanceof Error ? err.message : err).slice(0, 160),
-        };
+    } catch (err: any) {
+        return { ok: false, error: String(err?.message || err).slice(0, 160) };
     }
 }
 
@@ -625,13 +659,11 @@ export async function loadStudentDossier(student: TeacherStudent): Promise<Stude
 }
 
 export async function loadTeacherNote(studentId: string): Promise<string> {
-    if (!studentId) return '';
+    const firebase = getFirebase();
+    if (!firebase?.firestore || !studentId) return '';
     try {
-        const { apiGetAuth } = await import('./apiClient');
-        const res = await apiGetAuth<{ text?: string }>(
-            `/api/admin/teacher-notes/${encodeURIComponent(studentId)}`
-        );
-        return res.ok ? String(res.data?.text || '') : '';
+        const snap = await firebase.firestore().collection('teacherNotes').doc(studentId).get();
+        return String(snap.data()?.text || '');
     } catch {
         return '';
     }
@@ -640,45 +672,53 @@ export async function loadTeacherNote(studentId: string): Promise<string> {
 export async function saveTeacherNote(
     studentId: string,
     text: string,
-    _teacherUid?: string
+    teacherUid?: string
 ): Promise<{ ok: boolean; error?: string }> {
-    if (!studentId) return { ok: false, error: 'Hiányzó diák' };
+    const firebase = getFirebase();
+    if (!firebase?.firestore || !studentId) return { ok: false, error: 'Nincs Firestore' };
     try {
-        const { apiPutAuth } = await import('./apiClient');
-        const res = await apiPutAuth(`/api/admin/teacher-notes/${encodeURIComponent(studentId)}`, {
-            text: text.slice(0, 8000),
-        });
-        if (!res.ok) return { ok: false, error: res.error || 'Mentés sikertelen' };
+        await firebase.firestore().collection('teacherNotes').doc(studentId).set(
+            {
+                text: text.slice(0, 8000),
+                studentId,
+                updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+                updatedBy: teacherUid || '',
+            },
+            { merge: true }
+        );
         return { ok: true };
-    } catch (err: unknown) {
-        return { ok: false, error: err instanceof Error ? err.message : 'Mentés sikertelen' };
+    } catch (err: any) {
+        return { ok: false, error: err?.message || 'Mentés sikertelen' };
     }
 }
 
-/** Mai (vagy offset) órák a naptárból — admin API / bookings list. */
+/** Mai (vagy offset) órák a naptárból — e-mail alapján diákhoz kötve. */
 export async function loadLessonDayBookings(
     dayOffset = 0
 ): Promise<Array<BookingPayload & { dateKey: string }>> {
     const dateKey = getBudapestDateKeyOffset(dayOffset);
+    const firebase = getFirebase();
+    if (!firebase?.firestore) return [];
+    const db = firebase.firestore();
+    const map = new Map<string, BookingPayload & { dateKey: string }>();
+    const merge = (snap: any) => {
+        snap.forEach((doc: any) => {
+            const data = doc.data() || {};
+            const status = String(data.status || '');
+            if (status !== 'approved' && status !== 'pending') return;
+            if (String(data.date || '') !== dateKey) return;
+            map.set(doc.id, { id: doc.id, ...data, dateKey });
+        });
+    };
     try {
-        const { apiGetAuth } = await import('./apiClient');
-        const res = await apiGetAuth<{ bookings?: BookingPayload[] }>(
-            `/api/bookings/list?date=${encodeURIComponent(dateKey)}`
-        );
-        if (!res.ok || !Array.isArray(res.data?.bookings)) return [];
-        return res.data.bookings
-            .filter((b) => {
-                const st = String(b.status || '');
-                return st === 'approved' || st === 'pending';
-            })
-            .map((b) => ({ ...b, dateKey }))
-            .sort((a, b) =>
-                String(a.times?.[0] || '').localeCompare(String(b.times?.[0] || ''))
-            );
+        const byDate = await db.collection('bookings').where('date', '==', dateKey).get();
+        merge(byDate);
     } catch (err) {
         console.warn('lesson day bookings failed:', err);
-        return [];
     }
+    return Array.from(map.values()).sort((a, b) =>
+        String(a.times?.[0] || '').localeCompare(String(b.times?.[0] || ''))
+    );
 }
 
 export function findStudentForBooking(
