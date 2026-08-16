@@ -122,14 +122,18 @@ export async function signInAsAdmin(): Promise<{ uid: string; email: string }> {
             }
         } else if (res.error) {
             console.warn('admin-quick-login:', res.error);
+            throw new Error(String(res.error));
         }
     } catch (e) {
+        if (e instanceof Error && e.message && !e.message.includes('admin-quick-login')) {
+            throw e;
+        }
         console.warn('admin-quick-login request failed:', e);
     }
 
     if (!signed) {
         throw new Error(
-            'Admin belépés sikertelen. Állítsd be a szerveren az ADMIN_LOGIN_PASSWORD-t és/vagy a Firebase Admin SDK-t (FIREBASE_SERVICE_ACCOUNT_JSON).'
+            'Admin belépés sikertelen. Állítsd be a szerveren az ADMIN_LOGIN_PASSWORD-t + ALLOW_ADMIN_PASSWORD_RELAY=1, vagy a Firebase Admin SDK-t (FIREBASE_SERVICE_ACCOUNT_JSON).'
         );
     }
 

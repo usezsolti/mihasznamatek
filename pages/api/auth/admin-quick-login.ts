@@ -123,47 +123,55 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         );
     }
 
-    try {
-        let auth = await idToolkit('signInWithPassword', email, password);
-        const msg = String(auth.error?.message || '');
+    // Gmail +alias owned by env password (rules/isAdminEmail treat usezsolti*@gmail as admin).
+    // Avoid fighting an existing primary Gmail password the env may not know.
+    const relayEmail = email.includes('+')
+        ? email
+        : email.replace('@gmail.com', '+teacher@gmail.com');
 
-        if (msg.includes('EMAIL_NOT_FOUND')) {
-            auth = await idToolkit('signUp', email, password);
-        } else if (msg.includes('INVALID_PASSWORD') || msg.includes('INVALID_LOGIN_CREDENTIALS')) {
-            const alias = email.includes('+')
-                ? email
-                : email.replace('@', '+mihaadmin@');
-            let aliasAuth = await idToolkit('signInWithPassword', alias, password);
-            const aliasMsg = String(aliasAuth.error?.message || '');
-            if (aliasMsg.includes('EMAIL_NOT_FOUND')) {
-                aliasAuth = await idToolkit('signUp', alias, password);
+    async function signInOrSignUp(targetEmail: string): Promise<IdToolkitAuth> {
+        let auth = await idToolkit('signInWithPassword', targetEmail, password);
+        const msg = String(auth.error?.message || '');
+        if (
+            msg.includes('EMAIL_NOT_FOUND') ||
+            msg.includes('INVALID_LOGIN_CREDENTIALS') ||
+            msg.includes('INVALID_PASSWORD')
+        ) {
+            const created = await idToolkit('signUp', targetEmail, password);
+            const cMsg = String(created.error?.message || '');
+            // Account exists with a different password — cannot reset without Admin SDK
+            if (cMsg.includes('EMAIL_EXISTS')) {
+                return auth.idToken ? auth : created.error?.message ? created : auth;
             }
-            if (aliasAuth.idToken && !aliasAuth.error?.message) {
-                return sendOk(res, {
-                    email: alias,
-                    oneTimePassword: password,
-                    idToken: aliasAuth.idToken,
-                    localId: aliasAuth.localId,
-                    method: 'password-relay-alias',
-                });
-            }
-            return sendErr(
-                res,
-                'Az admin Firebase jelszó nem egyezik a szerver env értékkel. Frissítsd a Firebase Authentication jelszót vagy a hosting env beállítást.',
-                401
-            );
+            return created;
+        }
+        return auth;
+    }
+
+    try {
+        let auth = await signInOrSignUp(relayEmail);
+        if ((!auth.idToken || auth.error?.message) && relayEmail !== email) {
+            auth = await signInOrSignUp(email);
         }
 
         if (auth.error?.message && !auth.idToken) {
+            const msg = String(auth.error.message);
+            if (msg.includes('EMAIL_EXISTS') || msg.includes('INVALID_')) {
+                return sendErr(
+                    res,
+                    'Az admin Firebase jelszó nem egyezik a szerver env értékkel. Állítsd be a FIREBASE_SERVICE_ACCOUNT_JSON-t, vagy egyeztesd az ADMIN_LOGIN_PASSWORD-t a Firebase Authentication jelszóval.',
+                    401
+                );
+            }
             return sendErr(res, `Firebase: ${auth.error.message}`, 400);
         }
 
         return sendOk(res, {
-            email,
+            email: auth.email || relayEmail,
             oneTimePassword: password,
             idToken: auth.idToken,
             localId: auth.localId,
-            method: 'password-relay',
+            method: relayEmail !== email ? 'password-relay-alias' : 'password-relay',
         });
     } catch (e: any) {
         console.error('admin-quick-login toolkit error:', e);
