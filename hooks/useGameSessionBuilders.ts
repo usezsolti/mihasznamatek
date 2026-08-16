@@ -132,43 +132,40 @@ export function useGameSessionBuilders(p: UseGameSessionBuildersParams) {
 
     const loadTaskQuestions = async (taskId: string) => {
         try {
-            if (!(window as any).firebase) {
-                return;
-            }
+            const { apiGetAuth } = await import('../utils/apiClient');
+            const res = await apiGetAuth<{ tasks: Array<Record<string, unknown>> }>('/api/tasks/custom');
+            if (!res.ok) return;
 
-            const db = (window as any).firebase.firestore();
+            const taskData = (res.data.tasks || []).find(
+                (t) => String(t.id) === taskId || String(t.id) === taskId.replace(/^custom-/, '')
+            );
+            if (!taskData) return;
 
-            const snapshot = await db.collection('customTasks')
-                .where('id', '==', taskId)
-                .get();
+            setSelectedTask(taskData);
 
-            if (!snapshot.empty) {
-                const taskDoc = snapshot.docs[0];
-                const taskData = taskDoc.data();
-
-                setSelectedTask(taskData);
-
-                if (taskData.customQuestions && taskData.customQuestions.length > 0) {
-                    const taskLevel = taskData.educationLevel || 'university';
-                    if (taskLevel === 'elementary' || taskLevel === 'highschool' || taskLevel === 'university') {
-                        p.setEducationLevel(taskLevel);
-                    }
-                    const questions = taskData.customQuestions.map((q: any, index: number) => ({
-                        id: `task_${taskId}_${index}`,
-                        question: q.question || `Feladat ${index + 1}`,
-                        answer: q.answer || 0,
-                        expression: q.expression || '',
-                        level: taskLevel
-                    }));
-                    setTaskQuestions(questions);
-                    p.setGameActive(true);
-                    p.setScore(0);
-                    p.setLevel(1);
-                    p.setLives(3);
-                    p.setCurrentQuestion(0);
-                } else {
-                    setTaskQuestions([]);
+            const customQuestions = Array.isArray(taskData.customQuestions)
+                ? taskData.customQuestions
+                : [];
+            if (customQuestions.length > 0) {
+                const taskLevel = String(taskData.educationLevel || 'university');
+                if (taskLevel === 'elementary' || taskLevel === 'highschool' || taskLevel === 'university') {
+                    p.setEducationLevel(taskLevel);
                 }
+                const questions = customQuestions.map((q: Record<string, unknown>, index: number) => ({
+                    id: `task_${taskId}_${index}`,
+                    question: String(q.question || `Feladat ${index + 1}`),
+                    answer: Number(q.answer) || 0,
+                    expression: String(q.expression || ''),
+                    level: taskLevel,
+                }));
+                setTaskQuestions(questions);
+                p.setGameActive(true);
+                p.setScore(0);
+                p.setLevel(1);
+                p.setLives(3);
+                p.setCurrentQuestion(0);
+            } else {
+                setTaskQuestions([]);
             }
         } catch (error) {
             console.error('Error loading task questions:', error);
@@ -638,22 +635,14 @@ export function useGameSessionBuilders(p: UseGameSessionBuildersParams) {
 
     const loadAssignedTasks = async () => {
         try {
-            if (!(window as any).firebase) {
-                return;
-            }
-
-            const db = (window as any).firebase.firestore();
-            const snapshot = await db.collection('assignedTasks')
-                .where('userId', '==', p.currentUser?.uid || '')
-                .where('topicId', '==', p.currentTopic)
-                .get();
-
-            const tasks: any[] = [];
-            snapshot.forEach((doc: any) => {
-                tasks.push({ id: doc.id, ...doc.data() });
-            });
-
-            setAssignedTasks(tasks);
+            const uid = p.currentUser?.uid;
+            if (!uid) return;
+            const { loadStudentAssignedTasks } = await import('../utils/assignedTasks');
+            const tasks = await loadStudentAssignedTasks(uid);
+            const filtered = tasks.filter(
+                (t) => !p.currentTopic || t.topicId === p.currentTopic
+            );
+            setAssignedTasks(filtered);
         } catch (error) {
             console.error('Error loading assigned tasks:', error);
         }

@@ -10,12 +10,8 @@ export function isTestLoginAllowed(): boolean {
     return true;
 }
 
-export function isTestAuthUser(user: any): boolean {
+export function isTestAuthUser(user: { email?: string | null } | null | undefined): boolean {
     if (!user) return false;
     const email = String(user.email || '').trim().toLowerCase();
-    if (email && email === TEST_LOGIN_EMAIL.toLowerCase()) return true;
-    if (user.isAnonymous && String(user.displayName || '').toLowerCase().includes('teszt')) {
-        return true;
-    }
-    return false;
+    return email === TEST_LOGIN_EMAIL.toLowerCase();
 }

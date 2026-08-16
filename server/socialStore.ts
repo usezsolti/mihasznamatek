@@ -1,5 +1,5 @@
 /**
- * Egységes social store — local JSON és Firestore ugyanazzal az API-val.
+ * Egységes social store — Prisma (PostgreSQL), local JSON fallback.
  * A route csak action-öket dispatch-el; nincs dupla switch.
  */
 import type {
@@ -11,7 +11,7 @@ import type {
     StudyGroup,
 } from '../utils/socialTypes';
 import { isLocalSocialStore, localSocial } from './localSocialDb';
-import * as firestoreSocial from './services/socialService';
+import { prismaSocial } from './prismaSocialDb';
 
 export type ProfileHints = { name?: string; photoURL?: string };
 export type ProfilePatch = {
@@ -21,7 +21,7 @@ export type ProfilePatch = {
     showXp?: boolean;
 };
 
-/** Közös szerződés a két adattár között (async, hogy a Firestore is illeszkedjen). */
+/** Közös szerződés az adattárak között. */
 export type SocialStore = {
     ensureProfile(uid: string, hints?: ProfileHints): Promise<SocialProfile>;
     getProfile(uid: string): Promise<SocialProfile | null>;
@@ -90,35 +90,44 @@ const localStore: SocialStore = {
     listMessages: async (conversationId) => localSocial.listMessages(conversationId),
 };
 
-function firestoreStore(token: string): SocialStore {
-    return {
-        ensureProfile: (uid, hints) => firestoreSocial.ensureProfile(token, uid, hints),
-        getProfile: (uid) => firestoreSocial.getProfile(token, uid),
-        updateProfile: (uid, patch) => firestoreSocial.updateProfile(token, uid, patch),
-        listProfiles: (limit) => firestoreSocial.listProfiles(token, limit),
-        listFeed: (limit) => firestoreSocial.listFeed(token, limit),
-        createPost: (author, text, media) => firestoreSocial.createPost(token, author, text, media),
-        toggleLike: (postId, uid) => firestoreSocial.toggleLike(token, postId, uid),
-        hasLiked: (postId, uid) => firestoreSocial.hasLiked(token, postId, uid),
-        addComment: (postId, author, text) => firestoreSocial.addComment(token, postId, author, text),
-        listComments: (postId) => firestoreSocial.listComments(token, postId),
-        follow: (a, b) => firestoreSocial.follow(token, a, b),
-        unfollow: (a, b) => firestoreSocial.unfollow(token, a, b),
-        isFollowing: (a, b) => firestoreSocial.isFollowing(token, a, b),
-        listFollowingIds: (uid) => firestoreSocial.listFollowingIds(token, uid),
-        createGroup: (owner, name, description, topic) =>
-            firestoreSocial.createGroup(token, owner, name, description, topic),
-        listGroups: () => firestoreSocial.listGroups(token),
-        joinGroup: (groupId, uid) => firestoreSocial.joinGroup(token, groupId, uid),
-        leaveGroup: (groupId, uid) => firestoreSocial.leaveGroup(token, groupId, uid),
-        sendMessage: (from, to, text) => firestoreSocial.sendMessage(token, from, to, text),
-        listConversations: (uid) => firestoreSocial.listConversations(token, uid),
-        listMessages: (conversationId) => firestoreSocial.listMessages(token, conversationId),
-    };
+const prismaStore: SocialStore = {
+    ensureProfile: (uid, hints) => prismaSocial.ensureProfile(uid, hints),
+    getProfile: (uid) => prismaSocial.getProfile(uid),
+    updateProfile: (uid, patch) => prismaSocial.updateProfile(uid, patch),
+    listProfiles: (limit) => prismaSocial.listProfiles(limit),
+    listFeed: (limit) => prismaSocial.listFeed(limit),
+    createPost: (author, text, media) => prismaSocial.createPost(author, text, media),
+    toggleLike: (postId, uid) => prismaSocial.toggleLike(postId, uid),
+    hasLiked: (postId, uid) => prismaSocial.hasLiked(postId, uid),
+    addComment: (postId, author, text) => prismaSocial.addComment(postId, author, text),
+    listComments: (postId) => prismaSocial.listComments(postId),
+    follow: (a, b) => prismaSocial.follow(a, b),
+    unfollow: (a, b) => prismaSocial.unfollow(a, b),
+    isFollowing: (a, b) => prismaSocial.isFollowing(a, b),
+    listFollowingIds: (uid) => prismaSocial.listFollowingIds(uid),
+    createGroup: (owner, name, description, topic) =>
+        prismaSocial.createGroup(owner, name, description, topic),
+    listGroups: () => prismaSocial.listGroups(),
+    joinGroup: (groupId, uid) => prismaSocial.joinGroup(groupId, uid),
+    leaveGroup: (groupId, uid) => prismaSocial.leaveGroup(groupId, uid),
+    sendMessage: (from, to, text) => prismaSocial.sendMessage(from, to, text),
+    listConversations: (uid) => prismaSocial.listConversations(uid),
+    listMessages: (conversationId) => prismaSocial.listMessages(conversationId),
+};
+
+export function usePrismaSocialStore(): boolean {
+    return !!String(process.env.DATABASE_URL || '').trim();
 }
 
-export function createSocialStore(token: string): SocialStore {
-    return isLocalSocialStore() ? localStore : firestoreStore(token);
+export function useLocalSocialStoreOnly(): boolean {
+    return isLocalSocialStore() && !usePrismaSocialStore();
+}
+
+/** @deprecated token ignored — Auth.js session used at route layer */
+export function createSocialStore(_token?: string): SocialStore {
+    if (usePrismaSocialStore()) return prismaStore;
+    if (useLocalSocialStoreOnly()) return localStore;
+    return localStore;
 }
 
 export type SocialActionResult = { data: unknown; status?: number };

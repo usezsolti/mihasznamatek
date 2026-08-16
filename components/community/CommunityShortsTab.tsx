@@ -1,4 +1,5 @@
 import type { MathShort } from '../../utils/socialTypes';
+import { useLang } from '../../utils/i18n';
 
 type CommunityShortsTabProps = {
     shortTopic: string;
@@ -23,16 +24,17 @@ export default function CommunityShortsTab({
     onPrev,
     onNext,
 }: CommunityShortsTabProps) {
+    const { t } = useLang();
     return (
         <div className="mm-social-panel mm-social-shorts-panel">
             <div className="mm-social-shorts-toolbar">
                 <input
                     value={shortTopic}
                     onChange={(e) => onShortTopicChange(e.target.value)}
-                    placeholder="Téma (pl. deriválás)"
+                    placeholder={t('community.shorts.topicPlaceholder')}
                 />
                 <button type="button" className="mm-social-primary" onClick={onGenerateShort} disabled={busy}>
-                    AI short
+                    {t('community.shorts.generate')}
                 </button>
             </div>
             {currentShort ? (
@@ -44,22 +46,22 @@ export default function CommunityShortsTab({
                         <h2>{currentShort.title}</h2>
                         <p className="mm-social-short-hook">{currentShort.hook}</p>
                         <p className="mm-social-short-body">{currentShort.body}</p>
-                        <p className="mm-social-short-tip">Tipp: {currentShort.tip}</p>
+                        <p className="mm-social-short-tip">{t('community.shorts.tip', { tip: currentShort.tip })}</p>
                     </div>
                     <div className="mm-social-short-nav">
                         <button type="button" disabled={shortIndex <= 0} onClick={onPrev}>
-                            ↑ Előző
+                            {t('community.shorts.prev')}
                         </button>
                         <span>
                             {shortIndex + 1}/{shortsLength || 1}
                         </span>
                         <button type="button" disabled={shortIndex >= shortsLength - 1} onClick={onNext}>
-                            Következő ↓
+                            {t('community.shorts.next')}
                         </button>
                     </div>
                 </div>
             ) : (
-                <p className="mm-social-empty">Generálj egy AI matek shortot — függőleges, Instagram-szerű kártya.</p>
+                <p className="mm-social-empty">{t('community.shorts.empty')}</p>
             )}
         </div>
     );

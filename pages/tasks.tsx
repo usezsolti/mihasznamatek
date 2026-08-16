@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import Head from "next/head";
 import Link from "next/link";
@@ -32,44 +33,25 @@ type UserDoc = {
     course?: string;
 };
 
-// Firebase inicializálási hook
-const useFirebase = () => {
-    const [isFirebaseReady, setIsFirebaseReady] = useState(false);
-    const [firebaseError, setFirebaseError] = useState<string | null>(null);
-
-    useEffect(() => {
-        const checkFirebase = async () => {
-            let attempts = 0;
-            const maxAttempts = 150;
-
-            while (attempts < maxAttempts) {
-                if (window.firebase && window.firebase.apps.length > 0) {
-                    setIsFirebaseReady(true);
-                    return;
-                }
-
-                await new Promise(resolve => setTimeout(resolve, 100));
-                attempts++;
-            }
-
-            setFirebaseError("Firebase nem töltődött be időben.");
-        };
-
-        checkFirebase();
-    }, []);
-
-    return { isFirebaseReady, firebaseError };
+// Session-based auth (Auth.js) — no Firebase client
+const useAuthReady = () => {
+    const { status } = useSession();
+    return {
+        isReady: status !== 'loading',
+        authError: null as string | null,
+    };
 };
 
 export default function Tasks() {
     const router = useRouter();
+    const { data: session } = useSession();
     const [loading, setLoading] = useState(true);
     const [user, setUser] = useState<UserDoc | null>(null);
     const [tasks, setTasks] = useState<Task[]>([]);
     const [filter, setFilter] = useState<'all' | 'pending' | 'completed'>('all');
     const [error, setError] = useState<string | null>(null);
 
-    const { isFirebaseReady, firebaseError } = useFirebase();
+    const { isReady: isAuthReady, authError } = useAuthReady();
 
     useEffect(() => {
         // Admin panelből betöltött feladatok - felhasználó-specifikus
@@ -189,38 +171,20 @@ export default function Tasks() {
             });
         }, 3000); // 3 másodpercenként frissít
 
-        // Firebase inicializálás háttérben (opcionális)
-        if (isFirebaseReady && window.firebase) {
-            try {
-                const auth = window.firebase.auth();
-                const db = window.firebase.firestore();
-
-                const unsub = auth.onAuthStateChanged(async (user: { uid: string; email?: string; displayName?: string }) => {
-                    if (user) {
-                        try {
-                            const userSnap = await db.collection("users").doc(user.uid).get();
-                            const userData: UserDoc = (userSnap.exists ? (userSnap.data() as UserDoc) : {}) || {};
-                            userData.uid = user.uid;
-                            if (!userData.email) userData.email = user.email ?? "";
-                            if (!userData.name) userData.name = user.displayName ?? "";
-                            setUser(userData);
-                        } catch (err) {
-                            console.warn("Felhasználói adatok betöltése nem sikerült:", err);
-                        }
-                    }
-                });
-
-                return () => unsub();
-            } catch (err) {
-                console.warn("Firebase inicializálás nem sikerült:", err);
-            }
+        // Session alapú felhasználó (Auth.js)
+        if (session?.user?.id) {
+            setUser({
+                uid: session.user.id,
+                email: session.user.email || '',
+                name: session.user.name || '',
+            });
         }
 
         return () => {
             clearInterval(interval);
             clearTimeout(initialLoadTimeout);
         };
-    }, [isFirebaseReady]);
+    }, [isAuthReady, session?.user?.id, session?.user?.email, session?.user?.name]);
 
     const toggleTaskCompletion = async (taskId: string) => {
         // Lokális állapot frissítése azonnal
@@ -246,24 +210,17 @@ export default function Tasks() {
             console.warn("Admin panel frissítés nem sikerült:", error);
         }
 
-        // Firebase frissítés háttérben (ha elérhető)
-        if (window.firebase && taskId.startsWith('demo-') === false) {
+        if (taskId.startsWith('demo-') === false) {
             try {
-                const auth = window.firebase.auth();
-                const db = window.firebase.firestore();
-
-                const taskRef = db.collection("tasks").doc(taskId);
-                const taskDoc = await taskRef.get();
-
-                if (taskDoc.exists) {
-                    const currentStatus = taskDoc.data()?.completed || false;
-                    await taskRef.update({
-                        completed: !currentStatus,
-                        completedDate: !currentStatus ? new Date().toISOString() : null
-                    });
-                }
+                const { apiPatchAuth } = await import('../utils/apiClient');
+                const prev = tasks.find((t) => t.id === taskId);
+                const nextCompleted = !Boolean(prev?.completed);
+                await apiPatchAuth('/api/tasks/assigned', {
+                    id: taskId,
+                    status: nextCompleted ? 'completed' : 'assigned',
+                });
             } catch (err: unknown) {
-                console.warn("Firebase frissítés nem sikerült:", err);
+                console.warn('Feladat státusz frissítés nem sikerült:', err);
             }
         }
     };

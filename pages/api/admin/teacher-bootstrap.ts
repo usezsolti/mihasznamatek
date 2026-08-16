@@ -1,17 +1,13 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { sendErr, sendOk } from '../../../server/http';
-import { getAdminDb } from '../../../server/firebaseAdmin';
-import { listCollection, runQuery } from '../../../server/firestoreRest';
+import { prisma } from '../../../server/prisma';
+import { bookingToPayload } from '../../../server/bookingMappers';
+import { parseJsonField } from '../../../server/jsonField';import { isAdminEmail } from '../../../utils/admin';
 import { requireAdmin } from '../../../utils/apiSecurity';
-import { isAdminEmail } from '../../../utils/admin';
-
-let warnedUsersOnce = false;
-let warnedPendingOnce = false;
 
 /**
  * GET /api/admin/teacher-bootstrap
- * Diáklista + pending foglalások — Admin SDK ha van, különben user token + rules.
- * Rules tiltás esetén 200 + permissionDenied (ne 403 spam / kliens fallback).
+ * Diáklista + pending foglalások + teacher notes + assigned tasks (Prisma).
  */
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     if (req.method !== 'GET') {
@@ -23,127 +19,79 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const adminUser = await requireAdmin(req, res);
     if (!adminUser) return;
 
-    const authHeader = String(req.headers.authorization || '');
-    const token = authHeader.startsWith('Bearer ') ? authHeader.slice(7).trim() : '';
-
-    const db = getAdminDb();
-
     try {
-        let students: Array<{
-            uid: string;
-            name: string;
-            email: string;
-            educationLevel?: string;
-            photoURL?: string;
-            lastSeenMs?: number;
-        }> = [];
-        let pending: Array<Record<string, unknown>> = [];
-        let source: 'admin-sdk' | 'user-token' = 'user-token';
-        let permissionDenied = false;
-        let setupHint = '';
+        const [users, pendingRows, notes, tasks] = await Promise.all([
+            prisma.user.findMany({
+                where: { role: { not: 'admin' } },
+                orderBy: { updatedAt: 'desc' },
+                take: 200,
+                select: {
+                    id: true,
+                    name: true,
+                    email: true,
+                    educationLevel: true,
+                    image: true,
+                    updatedAt: true,
+                    createdAt: true,
+                },
+            }),
+            prisma.booking.findMany({
+                where: { status: 'pending' },
+                orderBy: { submittedAt: 'desc' },
+                take: 100,
+            }),
+            prisma.teacherNote.findMany({ take: 200 }),
+            prisma.assignedTask.findMany({
+                orderBy: { updatedAt: 'desc' },
+                take: 300,
+            }),
+        ]);
 
-        if (db) {
-            source = 'admin-sdk';
-            const usersSnap = await db.collection('users').limit(200).get();
-            usersSnap.forEach((doc) => {
-                const data = doc.data() || {};
-                const email = String(data.email || '').trim();
-                if (email && isAdminEmail(email)) return;
-                students.push({
-                    uid: doc.id,
-                    name: String(data.name || data.displayName || email.split('@')[0] || 'Diák'),
-                    email,
-                    educationLevel: String(data.educationLevel || ''),
-                    photoURL: String(data.photoURL || ''),
-                    lastSeenMs: toMs(data.updatedAt || data.lastLogin || data.createdAt),
-                });
-            });
-            students.sort((a, b) => (b.lastSeenMs || 0) - (a.lastSeenMs || 0));
+        const students = users
+            .filter((u) => {
+                const email = String(u.email || '').trim().toLowerCase();
+                return email && !isAdminEmail(email);
+            })
+            .map((u) => ({
+                uid: u.id,
+                name: String(u.name || u.email?.split('@')[0] || 'Diák'),
+                email: String(u.email || ''),
+                educationLevel: String(u.educationLevel || ''),
+                photoURL: String(u.image || ''),
+                lastSeenMs: u.updatedAt.getTime() || u.createdAt.getTime(),
+            }))
+            .sort((a, b) => (b.lastSeenMs || 0) - (a.lastSeenMs || 0));
 
-            const pendingSnap = await db.collection('bookings').where('status', '==', 'pending').get();
-            pendingSnap.forEach((doc) => {
-                pending.push({ id: doc.id, ...doc.data() });
-            });
-        } else if (token) {
-            try {
-                const docs = await listCollection('users', token, { pageSize: 200 });
-                students = docs
-                    .map((d) => {
-                        const email = String(d.email || '').trim();
-                        return {
-                            uid: String(d.__id || ''),
-                            name: String(d.name || d.displayName || email.split('@')[0] || 'Diák'),
-                            email,
-                            educationLevel: String(d.educationLevel || ''),
-                            photoURL: String(d.photoURL || ''),
-                            lastSeenMs: toMs(d.updatedAt || d.lastLogin || d.createdAt),
-                        };
-                    })
-                    .filter((s) => s.uid && !(s.email && isAdminEmail(s.email)))
-                    .sort((a, b) => (b.lastSeenMs || 0) - (a.lastSeenMs || 0));
-            } catch (e: any) {
-                permissionDenied = true;
-                setupHint =
-                    'Firestore rules tiltja a users olvasást. Publikáld a firestore.rules-t: /rules-setup → Másolás → Firebase Console → Publish. Vagy állíts be FIREBASE_SERVICE_ACCOUNT_JSON-t a .env.local-ban.';
-                if (!warnedUsersOnce) {
-                    warnedUsersOnce = true;
-                    console.warn(
-                        'teacher-bootstrap users: Missing or insufficient permissions (logged once — publish firestore.rules)'
-                    );
-                }
-            }
+        const pending = pendingRows.map(bookingToPayload);
 
-            if (!permissionDenied) {
-                try {
-                    const rows = await runQuery(token, {
-                        from: [{ collectionId: 'bookings' }],
-                        where: {
-                            fieldFilter: {
-                                field: { fieldPath: 'status' },
-                                op: 'EQUAL',
-                                value: { stringValue: 'pending' },
-                            },
-                        },
-                        limit: 100,
-                    });
-                    pending = rows.map((d) => ({ id: d.__id, ...d }));
-                } catch (e: any) {
-                    if (!warnedPendingOnce) {
-                        warnedPendingOnce = true;
-                        console.warn(
-                            'teacher-bootstrap pending: Missing or insufficient permissions (logged once)'
-                        );
-                    }
-                }
-            }
-        } else {
-            return sendErr(res, 'Nincs auth token.', 401);
-        }
+        const teacherNotes: Record<string, string> = {};
+        notes.forEach((n) => {
+            teacherNotes[n.studentId] = n.text;
+        });
 
-        pending.sort(
-            (a, b) =>
-                new Date(String(b.submittedAt || 0)).getTime() -
-                new Date(String(a.submittedAt || 0)).getTime()
-        );
+        const assignedTasks = tasks.map((t) => ({
+            id: t.id,
+            studentId: t.studentId,
+            studentEmail: t.studentEmail || '',
+            title: t.title,
+            topicTitle: t.topicTitle || '',
+            status: t.status,
+            payload: parseJsonField(t.payload, {}),
+            createdAt: t.createdAt.toISOString(),
+            updatedAt: t.updatedAt.toISOString(),
+        }));
 
         return sendOk(res, {
             students,
             pending,
-            source,
-            permissionDenied,
-            setupHint: setupHint || undefined,
-            hasAdminSdk: Boolean(db),
+            teacherNotes,
+            assignedTasks,
+            source: 'prisma' as const,
+            permissionDenied: false,
+            hasAdminSdk: false,
         });
     } catch (e: any) {
+        console.error('admin/teacher-bootstrap', e);
         return sendErr(res, String(e?.message || e), 500);
     }
-}
-
-function toMs(value: any): number {
-    if (!value) return 0;
-    if (typeof value?.toMillis === 'function') return value.toMillis();
-    if (typeof value?.seconds === 'number') return value.seconds * 1000;
-    if (typeof value === 'string' && /^\d+$/.test(value)) return Number(value);
-    const t = new Date(value).getTime();
-    return Number.isFinite(t) ? t : 0;
 }

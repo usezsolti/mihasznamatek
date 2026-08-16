@@ -378,40 +378,41 @@ export const SAMPLE_EXAM_TASKS: ExamTaskBankItem[] = [
 ];
 
 export async function loadExamTaskBank(): Promise<ExamTaskBankItem[]> {
-    const firebase = typeof window !== 'undefined' ? (window as any).firebase : null;
     const custom: ExamTaskBankItem[] = [];
-    if (firebase?.firestore) {
+    if (typeof window !== 'undefined') {
         try {
-            const snap = await firebase.firestore().collection('customTasks').get();
-            snap.forEach((doc: any) => {
-                const d = doc.data() || {};
-                const id = String(d.id || doc.id);
-                const level = String(d.educationLevel || 'highschool');
-                const educationLevel: ExamEducationLevel =
-                    level === 'elementary' ||
-                    level === 'highschool' ||
-                    level === 'university' ||
-                    level === 'erettsegi'
-                        ? level
-                        : 'highschool';
-                custom.push({
-                    id,
-                    title: String(d.title || 'Feladat'),
-                    description: String(d.description || ''),
-                    difficulty: (d.difficulty as ExamTaskBankItem['difficulty']) || 'medium',
-                    topic: String(d.topic || d.topicTitle || ''),
-                    topicId: d.topicId ? String(d.topicId) : undefined,
-                    educationLevel,
-                    erettsegiLevel:
-                        d.erettsegiLevel === 'kozep' || d.erettsegiLevel === 'emelt'
-                            ? d.erettsegiLevel
-                            : undefined,
-                    subjectId: d.subjectId ? String(d.subjectId) : undefined,
-                    questions: Number(d.questions) || 10,
-                    timeLimit: Number(d.timeLimit) || 30,
-                    customQuestions: Array.isArray(d.customQuestions) ? d.customQuestions : undefined,
-                });
-            });
+            const { apiGetAuth } = await import('./apiClient');
+            const res = await apiGetAuth<{ tasks: Array<Record<string, unknown>> }>('/api/tasks/custom');
+            if (res.ok && Array.isArray(res.data.tasks)) {
+                for (const d of res.data.tasks) {
+                    const id = String(d.id || '');
+                    const level = String(d.educationLevel || 'highschool');
+                    const educationLevel: ExamEducationLevel =
+                        level === 'elementary' ||
+                        level === 'highschool' ||
+                        level === 'university' ||
+                        level === 'erettsegi'
+                            ? level
+                            : 'highschool';
+                    custom.push({
+                        id,
+                        title: String(d.title || 'Feladat'),
+                        description: String(d.description || ''),
+                        difficulty: (d.difficulty as ExamTaskBankItem['difficulty']) || 'medium',
+                        topic: String(d.topic || d.topicTitle || ''),
+                        topicId: d.topicId ? String(d.topicId) : undefined,
+                        educationLevel,
+                        erettsegiLevel:
+                            d.erettsegiLevel === 'kozep' || d.erettsegiLevel === 'emelt'
+                                ? d.erettsegiLevel
+                                : undefined,
+                        subjectId: d.subjectId ? String(d.subjectId) : undefined,
+                        questions: Number(d.questions) || 10,
+                        timeLimit: Number(d.timeLimit) || 30,
+                        customQuestions: Array.isArray(d.customQuestions) ? d.customQuestions : undefined,
+                    });
+                }
+            }
         } catch (err) {
             console.warn('customTasks load failed:', err);
         }
@@ -467,8 +468,6 @@ export async function saveCustomExamTask(
     task: ExamTaskBankItem
 ): Promise<{ ok: boolean; id?: string; error?: string }> {
     try {
-        const firebase = typeof window !== 'undefined' ? (window as any).firebase : null;
-        if (!firebase?.firestore) return { ok: false, error: 'Firebase nem elérhető' };
         const id = task.id || `custom-${Date.now()}`;
         const payload = {
             id,
@@ -483,13 +482,15 @@ export async function saveCustomExamTask(
             questions: task.customQuestions?.length || task.questions || 1,
             timeLimit: task.timeLimit || 30,
             customQuestions: task.customQuestions || [],
-            updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
-            createdAt: firebase.firestore.FieldValue.serverTimestamp(),
         };
-        await firebase.firestore().collection('customTasks').doc(id).set(payload, { merge: true });
-        return { ok: true, id };
-    } catch (err: any) {
-        return { ok: false, error: String(err?.message || err).slice(0, 160) };
+        const { apiPostAuth, apiPutAuth } = await import('./apiClient');
+        const res = task.id
+            ? await apiPutAuth<{ task: { id: string } }>('/api/tasks/custom', payload)
+            : await apiPostAuth<{ task: { id: string } }>('/api/tasks/custom', payload);
+        if (!res.ok) return { ok: false, error: res.error };
+        return { ok: true, id: res.data.task?.id || id };
+    } catch (err: unknown) {
+        return { ok: false, error: String((err as Error)?.message || err).slice(0, 160) };
     }
 }
 
@@ -497,27 +498,14 @@ export async function deleteCustomExamTask(
     taskId: string
 ): Promise<{ ok: boolean; error?: string }> {
     try {
-        const firebase = typeof window !== 'undefined' ? (window as any).firebase : null;
-        if (!firebase?.firestore) return { ok: false, error: 'Firebase nem elérhető' };
         const id = String(taskId || '').trim();
         if (!id || id.startsWith('cat-')) return { ok: false, error: 'Alapfeladat nem törölhető' };
-        await firebase.firestore().collection('customTasks').doc(id).delete();
-        try {
-            const snap = await firebase
-                .firestore()
-                .collection('customTasks')
-                .where('id', '==', id)
-                .limit(5)
-                .get();
-            for (const doc of snap.docs) {
-                if (doc.id !== id) await doc.ref.delete();
-            }
-        } catch {
-            /* optional legacy */
-        }
+        const { apiDeleteAuth } = await import('./apiClient');
+        const res = await apiDeleteAuth<{ deleted: boolean }>(`/api/tasks/custom?id=${encodeURIComponent(id)}`);
+        if (!res.ok) return { ok: false, error: res.error };
         return { ok: true };
-    } catch (err: any) {
-        return { ok: false, error: String(err?.message || err).slice(0, 160) };
+    } catch (err: unknown) {
+        return { ok: false, error: String((err as Error)?.message || err).slice(0, 160) };
     }
 }
 

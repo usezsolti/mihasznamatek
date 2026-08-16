@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import type { SocialProfile, StudyGroup } from '../../utils/socialTypes';
+import { useLang } from '../../utils/i18n';
 import CommunityGroupRoom from './CommunityGroupRoom';
 
 type CommunityGroupsTabProps = {
@@ -35,6 +36,7 @@ export default function CommunityGroupsTab({
     onToast,
     busy,
 }: CommunityGroupsTabProps) {
+    const { t } = useLang();
     const [active, setActive] = useState<StudyGroup | null>(null);
 
     if (active && active.memberIds.includes(uid)) {
@@ -55,31 +57,31 @@ export default function CommunityGroupsTab({
     return (
         <div className="mm-social-panel">
             <div className="mm-social-compose mm-social-compose-stack">
-                <h2>Új tanulócsoport</h2>
+                <h2>{t('community.groups.newTitle')}</h2>
                 <p className="mm-social-muted" style={{ margin: 0 }}>
-                    A csoportban: csevegés, közös tábla, csoportos hívás.
+                    {t('community.groups.newHint')}
                 </p>
                 <input
                     value={groupName}
                     onChange={(e) => onGroupNameChange(e.target.value)}
-                    placeholder="Csoport neve"
+                    placeholder={t('community.groups.namePlaceholder')}
                     maxLength={60}
                 />
                 <input
                     value={groupTopic}
                     onChange={(e) => onGroupTopicChange(e.target.value)}
-                    placeholder="Téma (pl. érettségi)"
+                    placeholder={t('community.groups.topicPlaceholder')}
                     maxLength={60}
                 />
                 <textarea
                     value={groupDesc}
                     onChange={(e) => onGroupDescChange(e.target.value)}
-                    placeholder="Rövid leírás"
+                    placeholder={t('community.groups.descPlaceholder')}
                     maxLength={200}
                     rows={2}
                 />
                 <button type="button" className="mm-social-primary" onClick={onCreateGroup} disabled={busy}>
-                    Létrehozás
+                    {t('community.groups.create')}
                 </button>
             </div>
             <div className="mm-social-groups">
@@ -88,9 +90,13 @@ export default function CommunityGroupsTab({
                     return (
                         <article key={g.id} className="mm-social-group">
                             <h3>{g.name}</h3>
-                            <p>{g.description || 'Nincs leírás'}</p>
+                            <p>{g.description || t('community.groups.noDesc')}</p>
                             <small>
-                                {g.topic || 'Általános'} · {g.memberCount} tag · {g.ownerName}
+                                {t('community.groups.members', {
+                                    topic: g.topic || t('community.groups.general'),
+                                    count: String(g.memberCount),
+                                    owner: g.ownerName,
+                                })}
                             </small>
                             <div className="mm-social-group-actions">
                                 {isMember && (
@@ -99,7 +105,7 @@ export default function CommunityGroupsTab({
                                         className="mm-ig-btn is-primary"
                                         onClick={() => setActive(g)}
                                     >
-                                        Belépés a szobába
+                                        {t('community.groups.enterRoom')}
                                     </button>
                                 )}
                                 <button
@@ -110,9 +116,9 @@ export default function CommunityGroupsTab({
                                 >
                                     {isMember
                                         ? g.ownerId === uid
-                                            ? 'Tulajdonos'
-                                            : 'Kilépés'
-                                        : 'Csatlakozás'}
+                                            ? t('community.groups.owner')
+                                            : t('community.groups.leave')
+                                        : t('community.groups.join')}
                                 </button>
                             </div>
                         </article>

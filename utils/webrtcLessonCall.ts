@@ -1,4 +1,11 @@
-/** Saját 1:1 WebRTC hívás — Firebase signaling az óra szobához. */
+/** Saját 1:1 WebRTC hívás — Postgres poll signaling az óra szobához. */
+
+import {
+    apiDeleteAuth,
+    apiGetAuth,
+    apiPostAuth,
+    apiPutAuth,
+} from './apiClient';
 
 export type CallStatus =
     | 'idle'
@@ -30,6 +37,7 @@ export type LessonCallControls = {
 };
 
 type SignalDoc = {
+    id?: string;
     type: 'offer' | 'answer' | 'ice' | 'hangup';
     fromUid: string;
     sdp?: string;
@@ -37,15 +45,19 @@ type SignalDoc = {
     createdAtMs: number;
 };
 
-function getFirebase(): any | null {
-    if (typeof window === 'undefined') return null;
-    return (window as any).firebase || null;
-}
+type ParticipantDoc = {
+    uid: string;
+    displayName: string;
+    role: CallPeerRole | string;
+    sharingScreen: boolean;
+    joinedAtMs: number;
+};
 
-function db() {
-    const firebase = getFirebase();
-    if (!firebase?.firestore) return null;
-    return firebase.firestore();
+const PARTICIPANT_POLL_MS = 1500;
+const SIGNAL_POLL_MS = 1000;
+
+function apiPath(roomId: string, segment: string) {
+    return `/api/lesson/${encodeURIComponent(roomId)}/${segment}`;
 }
 
 function iceServers(): RTCIceServer[] {
@@ -91,11 +103,6 @@ export async function startLessonCall(opts: {
     onStatus: (status: CallStatus, detail?: string) => void;
     onShareState?: (state: CallShareState) => void;
 }): Promise<LessonCallControls> {
-    const firestore = db();
-    if (!firestore) {
-        opts.onStatus('error', 'Nincs Firestore');
-        throw new Error('Nincs Firestore');
-    }
     if (!navigator.mediaDevices?.getUserMedia) {
         opts.onStatus('error', 'A böngésző nem támogatja a kamerát/mikrofont');
         throw new Error('getUserMedia hiányzik');
@@ -103,8 +110,6 @@ export async function startLessonCall(opts: {
 
     const { roomId, uid, displayName, localVideo, remoteVideo, onStatus } = opts;
     const role: CallPeerRole = opts.role === 'teacher' ? 'teacher' : 'student';
-    const participantsRef = firestore.collection('lessonRooms').doc(roomId).collection('callParticipants');
-    const signalsRef = firestore.collection('lessonRooms').doc(roomId).collection('callSignals');
 
     let pc: RTCPeerConnection | null = null;
     let localStream: MediaStream | null = null;
@@ -122,8 +127,9 @@ export async function startLessonCall(opts: {
     let offerSent = false;
     const polite = true;
     const pendingIce: RTCIceCandidateInit[] = [];
-    const unsubs: Array<() => void> = [];
+    const timers: ReturnType<typeof setInterval>[] = [];
     const processedSignalIds = new Set<string>();
+    let signalSinceMs = Date.now() - 5000;
 
     const publishShareState = () => {
         opts.onShareState?.({
@@ -134,19 +140,21 @@ export async function startLessonCall(opts: {
         });
     };
 
+    const postSignal = async (doc: Omit<SignalDoc, 'id'>) => {
+        await apiPostAuth(apiPath(roomId, 'signals'), doc);
+    };
+
     const writeShareFlag = async (on: boolean) => {
         sharingScreen = on;
         publishShareState();
         try {
-            await participantsRef.doc(uid).set(
-                {
-                    sharingScreen: on,
-                    shareUpdatedAtMs: Date.now(),
-                },
-                { merge: true }
-            );
+            await apiPutAuth(apiPath(roomId, 'participants'), {
+                displayName: displayName.slice(0, 80),
+                role,
+                sharingScreen: on,
+            });
         } catch {
-            /* rules / offline — UI still updates locally */
+            /* offline — UI still updates locally */
         }
     };
 
@@ -271,10 +279,7 @@ export async function startLessonCall(opts: {
 
     const cleanupSignals = async () => {
         try {
-            const snap = await signalsRef.where('fromUid', '==', uid).get();
-            const batch = firestore.batch();
-            snap.docs.forEach((d: any) => batch.delete(d.ref));
-            if (!snap.empty) await batch.commit();
+            await apiDeleteAuth(apiPath(roomId, 'signals'));
         } catch {
             /* ignore */
         }
@@ -284,25 +289,19 @@ export async function startLessonCall(opts: {
         if (stopped) return;
         stopped = true;
         onStatus('ended');
-        unsubs.forEach((u) => {
-            try {
-                u();
-            } catch {
-                /* ignore */
-            }
-        });
-        unsubs.length = 0;
+        timers.forEach((t) => clearInterval(t));
+        timers.length = 0;
         try {
-            await signalsRef.add({
+            await postSignal({
                 type: 'hangup',
                 fromUid: uid,
                 createdAtMs: Date.now(),
-            } satisfies SignalDoc);
+            });
         } catch {
             /* ignore */
         }
         try {
-            await participantsRef.doc(uid).delete();
+            await apiDeleteAuth(apiPath(roomId, 'participants'));
         } catch {
             /* ignore */
         }
@@ -335,12 +334,12 @@ export async function startLessonCall(opts: {
 
         pc.onicecandidate = (ev) => {
             if (!ev.candidate || stopped) return;
-            void signalsRef.add({
+            void postSignal({
                 type: 'ice',
                 fromUid: uid,
                 candidate: JSON.stringify(ev.candidate.toJSON()),
                 createdAtMs: Date.now(),
-            } satisfies SignalDoc);
+            });
         };
 
         pc.ontrack = (ev) => {
@@ -363,9 +362,6 @@ export async function startLessonCall(opts: {
                     };
                     sniff();
                     vt.addEventListener('unmute', sniff);
-                    vt.addEventListener('ended', () => {
-                        // Firestore flag is source of truth; soft hint only
-                    });
                 }
             }
             onStatus('connected', 'Kapcsolat él');
@@ -394,16 +390,95 @@ export async function startLessonCall(opts: {
             onStatus('connecting', 'Ajánlat küldése…');
             const offer = await conn.createOffer({ offerToReceiveAudio: true, offerToReceiveVideo: true });
             await conn.setLocalDescription(offer);
-            await signalsRef.add({
+            await postSignal({
                 type: 'offer',
                 fromUid: uid,
                 sdp: conn.localDescription?.sdp || offer.sdp || '',
                 createdAtMs: Date.now(),
-            } satisfies SignalDoc);
+            });
         } catch (err: any) {
             onStatus('error', String(err?.message || err).slice(0, 140));
         } finally {
             makingOffer = false;
+        }
+    };
+
+    const handleParticipants = async (participants: ParticipantDoc[]) => {
+        if (stopped) return;
+        const others = participants.filter((p) => p.uid !== uid);
+
+        if (others.length === 0) {
+            remoteSharing = false;
+            remoteName = '';
+            remoteRole = '';
+            publishShareState();
+            onStatus('waiting', 'Várjuk a másik felet…');
+            offerSent = false;
+            return;
+        }
+
+        const peer = others.sort((a, b) => a.uid.localeCompare(b.uid))[0];
+        remoteName = String(peer.displayName || '').slice(0, 80);
+        remoteRole =
+            peer.role === 'teacher' || peer.role === 'student' ? peer.role : '';
+        remoteSharing = !!peer.sharingScreen;
+        publishShareState();
+
+        const remoteId = peer.uid;
+        if (uid > remoteId && pc && !pc.currentRemoteDescription && !makingOffer && !offerSent) {
+            offerSent = true;
+            await makeOffer();
+        } else if (uid <= remoteId && pc?.connectionState !== 'connected') {
+            onStatus('waiting', 'Várjuk a másik fél ajánlatát…');
+        }
+    };
+
+    const handleSignal = async (data: SignalDoc) => {
+        if (!data || data.fromUid === uid) return;
+
+        const conn = ensurePc();
+        try {
+            if (data.type === 'hangup') {
+                remoteVideo.srcObject = null;
+                onStatus('waiting', 'A másik fél kilépett — várakozás…');
+                return;
+            }
+
+            if (data.type === 'offer' && data.sdp) {
+                const offerCollision = makingOffer || conn.signalingState !== 'stable';
+                ignoreOffer = !polite && offerCollision;
+                if (ignoreOffer) return;
+                onStatus('connecting', 'Ajánlat fogadása…');
+                await conn.setRemoteDescription({ type: 'offer', sdp: data.sdp });
+                await flushIce(conn);
+                const answer = await conn.createAnswer();
+                await conn.setLocalDescription(answer);
+                await postSignal({
+                    type: 'answer',
+                    fromUid: uid,
+                    sdp: conn.localDescription?.sdp || answer.sdp || '',
+                    createdAtMs: Date.now(),
+                });
+            } else if (data.type === 'answer' && data.sdp) {
+                if (conn.signalingState === 'have-local-offer') {
+                    await conn.setRemoteDescription({ type: 'answer', sdp: data.sdp });
+                    await flushIce(conn);
+                    onStatus('connecting', 'Válasz fogadva…');
+                }
+            } else if (data.type === 'ice' && data.candidate) {
+                try {
+                    const c = JSON.parse(data.candidate) as RTCIceCandidateInit;
+                    if (conn.remoteDescription) {
+                        await conn.addIceCandidate(c);
+                    } else {
+                        pendingIce.push(c);
+                    }
+                } catch {
+                    /* ignore */
+                }
+            }
+        } catch (err: any) {
+            onStatus('error', String(err?.message || err).slice(0, 140));
         }
     };
 
@@ -424,24 +499,19 @@ export async function startLessonCall(opts: {
     cameraTrack = localStream.getVideoTracks()[0] || null;
     ensurePc();
 
-    const permHint =
-        'Firestore jogosultság hiányzik a híváshoz. Publikáld a firestore.rules-t: /rules-setup (lessonRooms → callParticipants / callSignals).';
+    const permHint = 'Bejelentkezés szükséges a híváshoz.';
 
-    try {
-        await participantsRef.doc(uid).set({
-            uid,
+    const joinRes = await apiPutAuth<{ participant: ParticipantDoc }>(
+        apiPath(roomId, 'participants'),
+        {
             displayName: displayName.slice(0, 80),
             role,
             sharingScreen: false,
-            joinedAtMs: Date.now(),
-        });
-    } catch (err: any) {
-        const raw = String(err?.message || err || '');
-        onStatus(
-            'error',
-            /permission|insufficient|Missing/i.test(raw) ? permHint : raw.slice(0, 160)
-        );
-        // Helyi kép megy; távoli félhez rules kell. Controls visszaadása a mic/cam gombokhoz.
+        }
+    );
+
+    if (!joinRes.ok) {
+        onStatus('error', /401|403|Bejelentkezés/i.test(joinRes.error) ? permHint : joinRes.error.slice(0, 160));
         return {
             stop,
             setMuted: (m: boolean) => {
@@ -466,131 +536,42 @@ export async function startLessonCall(opts: {
         };
     }
 
-    // Régi saját jelek törlése
     await cleanupSignals();
 
-    const peerSnapUnsub = participantsRef.onSnapshot(
-        async (snap: any) => {
-            if (stopped) return;
-            const others = snap.docs
-                .map((d: any) => ({ id: d.id as string, data: d.data() || {} }))
-                .filter((p: { id: string }) => p.id !== uid);
-
-            if (others.length === 0) {
-                remoteSharing = false;
-                remoteName = '';
-                remoteRole = '';
-                publishShareState();
-                onStatus('waiting', 'Várjuk a másik felet…');
-                offerSent = false;
-                return;
-            }
-
-            const peer = others.sort((a: { id: string }, b: { id: string }) =>
-                a.id.localeCompare(b.id)
-            )[0];
-            remoteName = String(peer.data.displayName || '').slice(0, 80);
-            remoteRole =
-                peer.data.role === 'teacher' || peer.data.role === 'student'
-                    ? peer.data.role
-                    : '';
-            remoteSharing = !!peer.data.sharingScreen;
-            publishShareState();
-
-            const remoteId = peer.id;
-            if (uid > remoteId && pc && !pc.currentRemoteDescription && !makingOffer && !offerSent) {
-                offerSent = true;
-                await makeOffer();
-            } else if (uid <= remoteId && pc?.connectionState !== 'connected') {
-                onStatus('waiting', 'Várjuk a másik fél ajánlatát…');
-            }
-        },
-        (err: any) => {
-            const raw = String(err?.message || err || '');
-            onStatus(
-                'error',
-                /permission|insufficient|Missing/i.test(raw) ? permHint : raw.slice(0, 160)
-            );
-        }
-    );
-    unsubs.push(() => peerSnapUnsub());
-
-    const signalUnsub = signalsRef
-        .orderBy('createdAtMs', 'asc')
-        .limit(80)
-        .onSnapshot(
-            async (snap: any) => {
-                if (stopped) return;
-                for (const change of snap.docChanges()) {
-                    if (change.type !== 'added') continue;
-                    const id = change.doc.id as string;
-                    if (processedSignalIds.has(id)) continue;
-                    processedSignalIds.add(id);
-                    const data = change.doc.data() as SignalDoc;
-                    if (!data || data.fromUid === uid) continue;
-
-                    const conn = ensurePc();
-                    try {
-                        if (data.type === 'hangup') {
-                            remoteVideo.srcObject = null;
-                            onStatus('waiting', 'A másik fél kilépett — várakozás…');
-                            continue;
-                        }
-
-                        if (data.type === 'offer' && data.sdp) {
-                            const offerCollision =
-                                makingOffer || conn.signalingState !== 'stable';
-                            ignoreOffer = !polite && offerCollision;
-                            if (ignoreOffer) continue;
-                            onStatus('connecting', 'Ajánlat fogadása…');
-                            await conn.setRemoteDescription({ type: 'offer', sdp: data.sdp });
-                            await flushIce(conn);
-                            const answer = await conn.createAnswer();
-                            await conn.setLocalDescription(answer);
-                            await signalsRef.add({
-                                type: 'answer',
-                                fromUid: uid,
-                                sdp: conn.localDescription?.sdp || answer.sdp || '',
-                                createdAtMs: Date.now(),
-                            } satisfies SignalDoc);
-                        } else if (data.type === 'answer' && data.sdp) {
-                            if (conn.signalingState === 'have-local-offer') {
-                                await conn.setRemoteDescription({ type: 'answer', sdp: data.sdp });
-                                await flushIce(conn);
-                                onStatus('connecting', 'Válasz fogadva…');
-                            }
-                        } else if (data.type === 'ice' && data.candidate) {
-                            try {
-                                const c = JSON.parse(data.candidate) as RTCIceCandidateInit;
-                                if (conn.remoteDescription) {
-                                    await conn.addIceCandidate(c);
-                                } else {
-                                    pendingIce.push(c);
-                                }
-                            } catch {
-                                /* ignore */
-                            }
-                        }
-                    } catch (err: any) {
-                        const raw = String(err?.message || err || '');
-                        onStatus(
-                            'error',
-                            /permission|insufficient|Missing/i.test(raw)
-                                ? permHint
-                                : raw.slice(0, 140)
-                        );
-                    }
-                }
-            },
-            (err: any) => {
-                const raw = String(err?.message || err || '');
-                onStatus(
-                    'error',
-                    /permission|insufficient|Missing/i.test(raw) ? permHint : raw.slice(0, 160)
-                );
-            }
+    const pollParticipants = async () => {
+        if (stopped) return;
+        const res = await apiGetAuth<{ participants: ParticipantDoc[] }>(
+            apiPath(roomId, 'participants')
         );
-    unsubs.push(() => signalUnsub());
+        if (res.ok) {
+            await handleParticipants(res.participants);
+        } else if (/401|403|Bejelentkezés/i.test(res.error)) {
+            onStatus('error', permHint);
+        }
+    };
+
+    const pollSignals = async () => {
+        if (stopped) return;
+        const res = await apiGetAuth<{ signals: SignalDoc[] }>(
+            `${apiPath(roomId, 'signals')}?since=${signalSinceMs}`
+        );
+        if (!res.ok) {
+            if (/401|403|Bejelentkezés/i.test(res.error)) onStatus('error', permHint);
+            return;
+        }
+        for (const data of res.signals) {
+            const id = data.id || `${data.fromUid}_${data.createdAtMs}_${data.type}`;
+            if (processedSignalIds.has(id)) continue;
+            processedSignalIds.add(id);
+            signalSinceMs = Math.max(signalSinceMs, data.createdAtMs);
+            await handleSignal(data);
+        }
+    };
+
+    void pollParticipants();
+    void pollSignals();
+    timers.push(setInterval(() => void pollParticipants(), PARTICIPANT_POLL_MS));
+    timers.push(setInterval(() => void pollSignals(), SIGNAL_POLL_MS));
 
     onStatus('waiting', 'Várjuk a másik felet…');
 

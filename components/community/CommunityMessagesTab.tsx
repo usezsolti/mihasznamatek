@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import type { ConversationPreview, DirectMessage, SocialProfile } from '../../utils/socialTypes';
+import { useLang, type Lang } from '../../utils/i18n';
 import CommunityAvatar from './CommunityAvatar';
 
 type CommunityMessagesTabProps = {
@@ -16,20 +17,21 @@ type CommunityMessagesTabProps = {
     busy: boolean;
 };
 
-function formatListTime(ms: number): string {
+function formatListTime(ms: number, lang: Lang, t: (key: string, vars?: Record<string, string>) => string): string {
     if (!ms) return '';
     const diff = Date.now() - ms;
     const m = Math.floor(diff / 60000);
-    if (m < 1) return 'most';
-    if (m < 60) return `${m}p`;
+    if (m < 1) return t('community.time.now');
+    if (m < 60) return t('community.time.minutes', { n: String(m) });
     const h = Math.floor(m / 60);
-    if (h < 24) return `${h}ó`;
+    if (h < 24) return t('community.time.hours', { n: String(h) });
     const d = Math.floor(h / 24);
-    if (d < 7) return `${d}n`;
-    return new Date(ms).toLocaleDateString('hu-HU', { month: 'short', day: 'numeric' });
+    if (d < 7) return t('community.time.days', { n: String(d) });
+    const locale = lang === 'en' ? 'en-US' : 'hu-HU';
+    return new Date(ms).toLocaleDateString(locale, { month: 'short', day: 'numeric' });
 }
 
-function formatMsgTime(ms: number): string {
+function formatMsgTime(ms: number, lang: Lang): string {
     if (!ms) return '';
     const d = new Date(ms);
     const now = new Date();
@@ -37,10 +39,11 @@ function formatMsgTime(ms: number): string {
         d.getFullYear() === now.getFullYear() &&
         d.getMonth() === now.getMonth() &&
         d.getDate() === now.getDate();
+    const locale = lang === 'en' ? 'en-US' : 'hu-HU';
     if (sameDay) {
-        return d.toLocaleTimeString('hu-HU', { hour: '2-digit', minute: '2-digit' });
+        return d.toLocaleTimeString(locale, { hour: '2-digit', minute: '2-digit' });
     }
-    return d.toLocaleDateString('hu-HU', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+    return d.toLocaleDateString(locale, { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
 }
 
 export default function CommunityMessagesTab({
@@ -56,6 +59,7 @@ export default function CommunityMessagesTab({
     onSendMsg,
     busy,
 }: CommunityMessagesTabProps) {
+    const { lang, t } = useLang();
     const listRef = useRef<HTMLDivElement>(null);
     const inputRef = useRef<HTMLInputElement>(null);
     const [query, setQuery] = useState('');
@@ -82,7 +86,7 @@ export default function CommunityMessagesTab({
 
     return (
         <div className={`mm-dm${activeChat ? ' has-thread' : ''}`}>
-            <aside className="mm-dm-inbox" aria-label="Beszélgetések">
+            <aside className="mm-dm-inbox" aria-label={t('community.messages.conversations')}>
                 <div className="mm-dm-inbox-top">
                     <button type="button" className="mm-dm-user-menu" title={me.displayName}>
                         <span>{me.username || me.displayName}</span>
@@ -90,20 +94,20 @@ export default function CommunityMessagesTab({
                             ▾
                         </span>
                     </button>
-                    <span className="mm-dm-compose-ico" title="Új üzenet" aria-hidden>
+                    <span className="mm-dm-compose-ico" title={t('community.messages.newMessage')} aria-hidden>
                         ✎
                     </span>
                 </div>
 
                 <div className="mm-dm-tabs" role="tablist">
                     <button type="button" className="is-on" role="tab" aria-selected>
-                        Elsődleges
+                        {t('community.messages.primary')}
                     </button>
-                    <button type="button" role="tab" aria-selected={false} disabled title="Hamarosan">
-                        Általános
+                    <button type="button" role="tab" aria-selected={false} disabled title={t('community.messages.comingSoon')}>
+                        {t('community.messages.general')}
                     </button>
-                    <button type="button" role="tab" aria-selected={false} disabled title="Hamarosan">
-                        Kérések
+                    <button type="button" role="tab" aria-selected={false} disabled title={t('community.messages.comingSoon')}>
+                        {t('community.messages.requests')}
                     </button>
                 </div>
 
@@ -114,23 +118,23 @@ export default function CommunityMessagesTab({
                     <input
                         value={query}
                         onChange={(e) => setQuery(e.target.value)}
-                        placeholder="Keresés"
-                        aria-label="Beszélgetés keresése"
+                        placeholder={t('community.messages.search')}
+                        aria-label={t('community.messages.searchLabel')}
                     />
                 </label>
 
                 <div className="mm-dm-note">
                     <CommunityAvatar url={me.photoURL} name={me.displayName} size={56} />
-                    <span className="mm-dm-note-bubble">Your turn…</span>
-                    <span className="mm-dm-note-label">Jegyzeted</span>
+                    <span className="mm-dm-note-bubble">{t('community.messages.noteBubble')}</span>
+                    <span className="mm-dm-note-label">{t('community.messages.noteLabel')}</span>
                 </div>
 
                 <div className="mm-dm-inbox-list">
                     {filtered.length === 0 && (
                         <p className="mm-dm-empty">
                             {conversations.length === 0
-                                ? 'Még nincs beszélgetés — írj valakinek a feedről.'
-                                : 'Nincs találat.'}
+                                ? t('community.messages.emptyInbox')
+                                : t('community.messages.noResults')}
                         </p>
                     )}
                     {filtered.map((c) => (
@@ -143,9 +147,9 @@ export default function CommunityMessagesTab({
                             <CommunityAvatar url={c.otherPhoto} name={c.otherName} size={56} />
                             <span className="mm-dm-row-meta">
                                 <strong>{c.otherName}</strong>
-                                <small>{c.lastMessage || 'Új chat'}</small>
+                                <small>{c.lastMessage || t('community.messages.newChat')}</small>
                             </span>
-                            <time className="mm-dm-row-time">{formatListTime(c.updatedAtMs)}</time>
+                            <time className="mm-dm-row-time">{formatListTime(c.updatedAtMs, lang, t)}</time>
                         </button>
                     ))}
                 </div>
@@ -159,7 +163,7 @@ export default function CommunityMessagesTab({
                                 type="button"
                                 className="mm-dm-back"
                                 onClick={onBackToInbox}
-                                aria-label="Vissza"
+                                aria-label={t('community.messages.back')}
                             >
                                 ←
                             </button>
@@ -173,9 +177,9 @@ export default function CommunityMessagesTab({
                                 <small>MihaSocial</small>
                             </div>
                             <div className="mm-dm-thread-actions" aria-hidden>
-                                <span title="Hívás">☎</span>
-                                <span title="Videó">◎</span>
-                                <span title="Infó">ℹ</span>
+                                <span title={t('community.messages.call')}>☎</span>
+                                <span title={t('community.messages.video')}>◎</span>
+                                <span title={t('community.messages.info')}>ℹ</span>
                             </div>
                         </header>
 
@@ -188,7 +192,7 @@ export default function CommunityMessagesTab({
                                         size={72}
                                     />
                                     <strong>{activeChat.otherName}</strong>
-                                    <p>MihaSocial · Írd meg az első üzenetet</p>
+                                    <p>{t('community.messages.threadEmpty')}</p>
                                 </div>
                             )}
                             {messages.map((m, i) => {
@@ -217,7 +221,7 @@ export default function CommunityMessagesTab({
                                         <div className="mm-dm-bubble">
                                             <span>{m.text}</span>
                                             <time dateTime={new Date(m.createdAtMs).toISOString()}>
-                                                {formatMsgTime(m.createdAtMs)}
+                                                {formatMsgTime(m.createdAtMs, lang)}
                                             </time>
                                         </div>
                                     </div>
@@ -240,13 +244,13 @@ export default function CommunityMessagesTab({
                                     ref={inputRef}
                                     value={msgDraft}
                                     onChange={(e) => onMsgDraftChange(e.target.value)}
-                                    placeholder="Üzenet…"
+                                    placeholder={t('community.messages.placeholder')}
                                     maxLength={500}
                                     autoComplete="off"
                                 />
                                 {msgDraft.trim() ? (
                                     <button type="submit" className="mm-dm-send" disabled={busy}>
-                                        Küldés
+                                        {t('common.send')}
                                     </button>
                                 ) : (
                                     <span className="mm-dm-compose-tools" aria-hidden>
@@ -263,8 +267,8 @@ export default function CommunityMessagesTab({
                         <div className="mm-dm-placeholder-icon" aria-hidden>
                             ✉
                         </div>
-                        <h3>Üzeneteid</h3>
-                        <p>Küldj üzenetet egy diáknak — válassz beszélgetést bal oldalon.</p>
+                        <h3>{t('community.messages.title')}</h3>
+                        <p>{t('community.messages.subtitle')}</p>
                     </div>
                 )}
             </section>

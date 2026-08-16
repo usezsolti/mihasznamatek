@@ -10,21 +10,14 @@ export { parseApiEnvelope };
 /** @deprecated alias — használd ApiResult */
 export type BackendResponse<T> = { ok: true; data: T } | { ok: false; error: string };
 
+/** Auth.js cookie session — nincs Firebase ID token. */
 export async function getIdToken(): Promise<string | null> {
-    try {
-        const user = (window as any).firebase?.auth?.()?.currentUser;
-        if (!user?.getIdToken) return null;
-        return (await user.getIdToken()) || null;
-    } catch {
-        return null;
-    }
+    return null;
 }
 
 export async function authHeaders(extra?: Record<string, string>): Promise<Record<string, string>> {
-    const token = await getIdToken();
     return {
         'Content-Type': 'application/json',
-        ...(token ? { Authorization: `Bearer ${token}` } : {}),
         ...(extra || {}),
     };
 }
@@ -34,7 +27,10 @@ export async function apiRequest<T>(
     init?: RequestInit
 ): Promise<ApiResult<T>> {
     try {
-        const res = await fetch(path, init);
+        const res = await fetch(path, {
+            credentials: 'include',
+            ...init,
+        });
         const json = await res.json().catch(() => ({}));
         return parseApiEnvelope<T>(res.status, json);
     } catch (e: any) {
@@ -52,15 +48,16 @@ export async function apiPost<T>(
         method: 'POST',
         headers: { 'Content-Type': 'application/json', ...(initHeaders as Record<string, string>) },
         body: body !== undefined ? JSON.stringify(body) : undefined,
+        credentials: 'include',
         ...rest,
     });
 }
 
 export async function apiGet<T>(path: string, init?: RequestInit): Promise<ApiResult<T>> {
-    return apiRequest<T>(path, { method: 'GET', ...init });
+    return apiRequest<T>(path, { method: 'GET', credentials: 'include', ...init });
 }
 
-/** Auth-os POST (Bearer + JSON). */
+/** Auth-os POST (session cookie + JSON). */
 export async function apiPostAuth<T>(path: string, body?: unknown): Promise<ApiResult<T>> {
     return apiPost<T>(path, body, { headers: await authHeaders() });
 }
@@ -68,6 +65,52 @@ export async function apiPostAuth<T>(path: string, body?: unknown): Promise<ApiR
 /** Auth-os GET. */
 export async function apiGetAuth<T>(path: string): Promise<ApiResult<T>> {
     return apiGet<T>(path, { headers: await authHeaders() });
+}
+
+export async function apiPut<T>(
+    path: string,
+    body?: unknown,
+    init?: RequestInit
+): Promise<ApiResult<T>> {
+    const { headers: initHeaders, body: _ignored, method: _m, ...rest } = init || {};
+    return apiRequest<T>(path, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json', ...(initHeaders as Record<string, string>) },
+        body: body !== undefined ? JSON.stringify(body) : undefined,
+        credentials: 'include',
+        ...rest,
+    });
+}
+
+export async function apiPutAuth<T>(path: string, body?: unknown): Promise<ApiResult<T>> {
+    return apiPut<T>(path, body, { headers: await authHeaders() });
+}
+
+export async function apiDelete<T>(path: string, init?: RequestInit): Promise<ApiResult<T>> {
+    return apiRequest<T>(path, { method: 'DELETE', credentials: 'include', ...init });
+}
+
+export async function apiDeleteAuth<T>(path: string): Promise<ApiResult<T>> {
+    return apiDelete<T>(path, { headers: await authHeaders() });
+}
+
+export async function apiPatch<T>(
+    path: string,
+    body?: unknown,
+    init?: RequestInit
+): Promise<ApiResult<T>> {
+    const { headers: initHeaders, body: _ignored, method: _m, ...rest } = init || {};
+    return apiRequest<T>(path, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json', ...(initHeaders as Record<string, string>) },
+        body: body !== undefined ? JSON.stringify(body) : undefined,
+        credentials: 'include',
+        ...rest,
+    });
+}
+
+export async function apiPatchAuth<T>(path: string, body?: unknown): Promise<ApiResult<T>> {
+    return apiPatch<T>(path, body, { headers: await authHeaders() });
 }
 
 // ---- Domain helpers (egy helyen) ----
@@ -109,12 +152,10 @@ export async function apiGenerateMathShort(topic: string, difficulty = 'közepes
 
 export async function apiTestLogin() {
     return apiPost<{
-        customToken?: string;
+        uid?: string;
         email?: string;
-        localId?: string;
         method?: string;
-        oneTimePassword?: string;
-    }>('/api/auth/test-login', {});
+    }>('/api/auth/test-session-login', {});
 }
 
 export async function apiAdminLogin() {
@@ -148,12 +189,9 @@ export async function apiSocialDiag() {
     }>('/api/backend/social-diag', {});
 }
 
+/** @deprecated Firebase rules removed. */
 export async function apiFirestoreRulesText() {
-    // Dev: auth nélkül is megy a rules export
-    if (process.env.NODE_ENV !== 'production') {
-        return apiGet<{ rules: string }>('/api/backend/firestore-rules-text');
-    }
-    return apiGetAuth<{ rules: string }>('/api/backend/firestore-rules-text');
+    return { ok: false as const, error: 'Firestore rules removed — Postgres + Auth.js in use.', status: 410 };
 }
 
 export async function apiEmailStatus() {

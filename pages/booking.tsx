@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import { signIn, useSession } from "next-auth/react";
 import Head from "next/head";
 import Link from "next/link";
 import {
@@ -22,6 +23,7 @@ import {
 } from "../utils/bookingSlots";
 import { openAuthModal } from "../utils/authModal";
 import { LESSON_SUBJECTS } from "../utils/registrationProfile";
+import { useLang } from "../utils/i18n";
 
 type LessonType = "online" | "personal";
 
@@ -37,6 +39,24 @@ const PRICE_PER_HOUR = 11000;
 
 const SUBJECTS = [...LESSON_SUBJECTS];
 
+const SUBJECT_I18N: Record<(typeof LESSON_SUBJECTS)[number], string> = {
+    "Általános iskola matek": "booking.subject.elementary",
+    "Középiskola / gimnázium": "booking.subject.highschool",
+    "Érettségi felkészítés": "booking.subject.exam",
+    Egyetem: "booking.subject.university",
+    Egyéb: "booking.subject.other",
+};
+
+const WEEKDAY_KEYS = [
+    "booking.weekday.mon",
+    "booking.weekday.tue",
+    "booking.weekday.wed",
+    "booking.weekday.thu",
+    "booking.weekday.fri",
+    "booking.weekday.sat",
+    "booking.weekday.sun",
+] as const;
+
 function loadBookingsLocal(): BookingRequest[] {
     if (typeof window === "undefined") return [];
     try {
@@ -49,6 +69,9 @@ function loadBookingsLocal(): BookingRequest[] {
 }
 
 export default function BookingPage() {
+    const { data: session, status: authStatus } = useSession();
+    const { lang, t } = useLang();
+    const dateLocale = lang === "en" ? "en-US" : "hu-HU";
     const today = useMemo(() => {
         const d = new Date();
         d.setHours(0, 0, 0, 0);
@@ -91,35 +114,17 @@ export default function BookingPage() {
     useEffect(() => {
         window.scrollTo({ top: 0, behavior: "auto" });
 
-        let unsub: (() => void) | undefined;
         let cancelled = false;
 
-        (async () => {
-            try {
-                let attempts = 0;
-                while (!(window as any).firebase?.auth && attempts < 50) {
-                    await new Promise((r) => setTimeout(r, 100));
-                    attempts++;
-                }
-                if (cancelled || !(window as any).firebase?.auth) return;
-                const auth = (window as any).firebase.auth();
-                unsub = auth.onAuthStateChanged((user: any) => {
-                    if (cancelled) return;
-                    if (!user) {
-                        setAuthUser(null);
-                        return;
-                    }
-                    const email = String(user.email || "").toLowerCase();
-                    const name = String(user.displayName || "");
-                    setAuthUser({ email, name });
-                    // Foglalási mezőket NEM töltjük ki automatikusan — mindig meg kell adni
-                    setBookingPath("account");
-                    setError("");
-                });
-            } catch (e) {
-                console.warn("booking auth init failed", e);
-            }
-        })();
+        if (authStatus !== 'loading' && session?.user?.email) {
+            const email = String(session.user.email).toLowerCase();
+            const name = String(session.user.name || "");
+            setAuthUser({ email, name });
+            setBookingPath("account");
+            setError("");
+        } else if (authStatus !== 'loading') {
+            setAuthUser(null);
+        }
 
         const refresh = async () => {
             try {
@@ -147,74 +152,47 @@ export default function BookingPage() {
         return () => {
             cancelled = true;
             clearInterval(t);
-            if (unsub) unsub();
         };
-    }, []);
+    }, [authStatus, session?.user?.email, session?.user?.name]);
 
     const handleGoogleForBooking = async () => {
         setError("");
         if (!gateGdpr) {
-            setError("Fogadd el az adatkezelési tájékoztatót a belépéshez / regisztrációhoz.");
+            setError(t("booking.error.gdprGate"));
             return;
         }
         setAuthLoading(true);
         try {
-            let attempts = 0;
-            while (!(window as any).firebase?.apps?.length && attempts < 40) {
-                await new Promise((r) => setTimeout(r, 100));
-                attempts++;
-            }
-            const firebase = (window as any).firebase;
-            if (!firebase?.apps?.length) {
-                setError("A Firebase nem töltődött be. Frissítsd az oldalt.");
-                return;
-            }
-            const provider = new firebase.auth.GoogleAuthProvider();
-            provider.addScope("email");
-            provider.addScope("profile");
-            const result = await firebase.auth().signInWithPopup(provider);
-            const user = result.user;
-            const isNewUser = result.additionalUserInfo?.isNewUser;
-            if (user) {
-                const db = firebase.firestore();
-                const ref = db.collection("users").doc(user.uid);
-                const snap = await ref.get();
-                const gdprFields = {
-                    gdprAccepted: true,
-                    gdprAcceptedAt: firebase.firestore.FieldValue.serverTimestamp(),
-                    gdprVersion: "2026-08-03",
-                };
-                if (!snap.exists) {
-                    await ref.set({
-                        name: user.displayName || "",
-                        email: user.email || "",
-                        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-                        ...gdprFields,
-                    });
-                } else if (isNewUser) {
-                    await ref.set(gdprFields, { merge: true });
-                }
-            }
+            sessionStorage.setItem(
+                'mihaszna:pendingProfile',
+                JSON.stringify({ gdprAccepted: true })
+            );
+            await signIn('google', { callbackUrl: '/booking' });
             setGateGdpr(false);
         } catch (err: any) {
             console.error(err);
             const code = err?.code || "";
             if (code === "auth/popup-closed-by-user") {
-                setError("A Google ablak bezáródott. Próbáld újra.");
+                setError(t("booking.error.googleClosed"));
             } else if (code === "auth/unauthorized-domain") {
-                setError("Ez a domain nincs engedélyezve a Firebase-ben (Authorized domains).");
+                setError(t("booking.error.googleDomain"));
             } else {
-                setError("Google belépés sikertelen. Próbáld újra.");
+                setError(t("booking.error.googleFailed"));
             }
         } finally {
             setAuthLoading(false);
         }
     };
 
-    const monthLabel = currentMonth.toLocaleDateString("hu-HU", {
+    const monthLabel = currentMonth.toLocaleDateString(dateLocale, {
         year: "numeric",
         month: "long",
     });
+
+    const formatPrice = (amount: number) =>
+        lang === "en"
+            ? `HUF ${amount.toLocaleString("en-US")}`
+            : `${amount.toLocaleString("hu-HU")} Ft`;
 
     const calendarDays = useMemo(() => {
         const year = currentMonth.getFullYear();
@@ -294,27 +272,27 @@ export default function BookingPage() {
         setSuccess(false);
 
         if (!selectedDate || selectedTimes.length === 0) {
-            setError("Válassz dátumot és legalább egy időpontot!");
+            setError(t("booking.error.needDateTime"));
             return;
         }
         if (!customerName.trim() || !customerEmail.trim()) {
-            setError("A név és az e-mail megadása kötelező.");
+            setError(t("booking.error.needNameEmail"));
             return;
         }
         if (authUser?.email && customerEmail.trim().toLowerCase() !== authUser.email) {
-            setError("A foglalási e-mailnek egyeznie kell a bejelentkezett fiókkal.");
+            setError(t("booking.error.emailMismatch"));
             return;
         }
         if (!authUser && bookingPath !== "guest") {
-            setError("Válaszd a belépést vagy a regisztráció nélküli foglalást.");
+            setError(t("booking.error.needPath"));
             return;
         }
         if (!gdprAccepted) {
-            setError("A foglaláshoz el kell fogadnod az adatkezelési tájékoztatót.");
+            setError(t("booking.error.needGdpr"));
             return;
         }
         if (!postalCode.trim() || !street.trim() || !houseNumber.trim()) {
-            setError("A számlázási cím megadása kötelező (irányítószám, utca, házszám).");
+            setError(t("booking.error.needAddress"));
             return;
         }
 
@@ -338,7 +316,7 @@ export default function BookingPage() {
 
             const conflict = selectedTimes.filter((t) => taken.has(t));
             if (conflict.length > 0) {
-                setError(`Ezek az időpontok már nem elérhetők: ${conflict.join(", ")}. Válassz másikat.`);
+                setError(t("booking.error.conflict", { times: conflict.join(", ") }));
                 setSelectedTimes((prev) => prev.filter((t) => !taken.has(t)));
                 setSubmitting(false);
                 return;
@@ -349,7 +327,7 @@ export default function BookingPage() {
             if (selectedFiles.length > 0) {
                 const up = await uploadBookingAttachments(bookingId, selectedFiles);
                 if (!up.ok) {
-                    setError(up.error || "Fájlfeltöltés sikertelen.");
+                    setError(up.error || t("booking.error.uploadFailed"));
                     setSubmitting(false);
                     return;
                 }
@@ -400,17 +378,15 @@ export default function BookingPage() {
             if (!emailed.ok) {
                 setError(
                     emailed.needsActivation
-                        ? emailed.error ||
-                          "A foglalás elmentve. Az admin e-mailhez FormSubmit aktiválás vagy Gmail App Password kell."
-                        : emailed.error ||
-                          "A foglalás elmentve, de az értesítő e-mail nem ment el. Hamarosan így is jelentkezünk."
+                        ? emailed.error || t("booking.error.emailNeedsActivation")
+                        : emailed.error || t("booking.error.emailFailed")
                 );
             } else if (emailed.warning) {
                 setError(emailed.warning);
             }
         } catch (err) {
             console.error(err);
-            setError("Nem sikerült elküldeni a foglalást. Próbáld újra.");
+            setError(t("booking.error.submitFailed"));
         } finally {
             setSubmitting(false);
         }
@@ -419,33 +395,29 @@ export default function BookingPage() {
     return (
         <>
             <Head>
-                <title>Időpontfoglalás - Mihaszna Matek</title>
-                <meta
-                    name="description"
-                    content="Foglalj matekórát online vagy személyesen. Válassz időpontot a naptárból."
-                />
+                <title>{t("booking.pageTitle")}</title>
+                <meta name="description" content={t("booking.metaDescription")} />
             </Head>
 
             <div className="booking-page">
                 <div className="booking-page-inner">
                     <div className="booking-page-header">
                         <Link href="/" className="booking-back-link">
-                            ← Vissza a főoldalra
+                            ← {t("booking.backHome")}
                         </Link>
-                        <h1>📅 Időpontfoglalás</h1>
+                        <h1>📅 {t("booking.title")}</h1>
                         <p>
-                            Válassz napot és időpontot, majd küldd el a foglalási kérelmed.
-                            Az ár: <strong>{PRICE_PER_HOUR.toLocaleString("hu-HU")} Ft / 60 perc</strong>
+                            {t("booking.intro")} {t("booking.priceLabel")}{" "}
+                            <strong>
+                                {formatPrice(PRICE_PER_HOUR)} {t("booking.priceUnit")}
+                            </strong>
                         </p>
                     </div>
 
                     {!authUser && bookingPath === null ? (
                         <section className="booking-auth-gate">
-                            <h2>Hogyan szeretnél foglalni?</h2>
-                            <p>
-                                Mindkét esetben ugyanazokat az adatokat kell megadnod (név, e-mail,
-                                cím, időpont). A különbség: fiókkal később is látod a foglalásaidat.
-                            </p>
+                            <h2>{t("booking.pathTitle")}</h2>
+                            <p>{t("booking.pathBody")}</p>
 
                             <div className="booking-path-options">
                                 <button
@@ -456,8 +428,8 @@ export default function BookingPage() {
                                         setBookingPath("account");
                                     }}
                                 >
-                                    Regisztrálok / bejelentkezem
-                                    <small>Google vagy e-mail — ajánlott, ha visszajársz</small>
+                                    {t("booking.pathAccount")}
+                                    <small>{t("booking.pathAccountHint")}</small>
                                 </button>
                                 <button
                                     type="button"
@@ -467,8 +439,8 @@ export default function BookingPage() {
                                         setBookingPath("guest");
                                     }}
                                 >
-                                    Nem regisztrálok — foglalok így
-                                    <small>Csak a foglalási adatok megadása</small>
+                                    {t("booking.pathGuest")}
+                                    <small>{t("booking.pathGuestHint")}</small>
                                 </button>
                             </div>
                         </section>
@@ -483,12 +455,10 @@ export default function BookingPage() {
                                     setError("");
                                 }}
                             >
-                                ← Vissza a választáshoz
+                                ← {t("booking.backChoice")}
                             </button>
-                            <h2>Belépés / regisztráció</h2>
-                            <p>
-                                Jelentkezz be vagy regisztrálj, majd add meg a foglalási adatokat.
-                            </p>
+                            <h2>{t("booking.accountTitle")}</h2>
+                            <p>{t("booking.accountBody")}</p>
 
                             <label className="gdpr-consent booking-gdpr">
                                 <input
@@ -497,15 +467,15 @@ export default function BookingPage() {
                                     onChange={(e) => setGateGdpr(e.target.checked)}
                                 />
                                 <span>
-                                    Elolvastam és elfogadom az{" "}
+                                    {t("auth.gdprPrefix")}{" "}
                                     <a
                                         href="/adatkezelesi-tajekoztato"
                                         target="_blank"
                                         rel="noopener noreferrer"
                                     >
-                                        adatkezelési tájékoztatót
+                                        {t("auth.gdprLink")}
                                     </a>{" "}
-                                    (GDPR). *
+                                    {t("booking.gdprGateSuffix")}
                                 </span>
                             </label>
 
@@ -535,7 +505,7 @@ export default function BookingPage() {
                                         d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"
                                     />
                                 </svg>
-                                {authLoading ? "Belépés…" : "Folytatás Google-lal"}
+                                {authLoading ? t("auth.loggingIn") : t("booking.googleLogin")}
                             </button>
 
                             <p className="booking-muted" style={{ marginTop: "1.25rem" }}>
@@ -546,7 +516,7 @@ export default function BookingPage() {
                                         openAuthModal({ mode: "login", redirectTo: false })
                                     }
                                 >
-                                    Bejelentkezés e-maillel
+                                    {t("booking.emailLogin")}
                                 </button>
                                 {" · "}
                                 <button
@@ -556,7 +526,7 @@ export default function BookingPage() {
                                         openAuthModal({ mode: "register", redirectTo: false })
                                     }
                                 >
-                                    Regisztráció e-maillel
+                                    {t("booking.emailRegister")}
                                 </button>
                             </p>
                         </section>
@@ -564,7 +534,7 @@ export default function BookingPage() {
                     <div className="booking-layout">
                         {!authUser && bookingPath === "guest" && (
                             <p className="booking-muted" style={{ gridColumn: "1 / -1", marginBottom: "0.5rem" }}>
-                                Regisztráció nélküli foglalás.{" "}
+                                {t("booking.guest")}{" "}
                                 <button
                                     type="button"
                                     className="booking-text-btn"
@@ -573,7 +543,7 @@ export default function BookingPage() {
                                         setError("");
                                     }}
                                 >
-                                    Vissza a választáshoz
+                                    {t("booking.backChoice")}
                                 </button>
                             </p>
                         )}
@@ -596,14 +566,14 @@ export default function BookingPage() {
                                         setCurrentMonth(d);
                                     }}
                                 >
-                                    Ma
+                                    {t("booking.today")}
                                 </button>
                             </div>
 
                             <div className="booking-weekdays">
-                                {["H", "K", "Sze", "Cs", "P", "Szo", "V"].map((d) => (
-                                    <div key={d} className="booking-weekday">
-                                        {d}
+                                {WEEKDAY_KEYS.map((key) => (
+                                    <div key={key} className="booking-weekday">
+                                        {t(key)}
                                     </div>
                                 ))}
                             </div>
@@ -644,8 +614,8 @@ export default function BookingPage() {
                             {selectedDate && (
                                 <div className="booking-slots">
                                     <h3>
-                                        Időpontok —{" "}
-                                        {selectedDate.toLocaleDateString("hu-HU", {
+                                        {t("booking.slotsTitle")}{" "}
+                                        {selectedDate.toLocaleDateString(dateLocale, {
                                             year: "numeric",
                                             month: "long",
                                             day: "numeric",
@@ -653,7 +623,7 @@ export default function BookingPage() {
                                         })}
                                     </h3>
                                     {availableSlots.length === 0 ? (
-                                        <p className="booking-muted">Ezen a napon nincs elérhető óra.</p>
+                                        <p className="booking-muted">{t("booking.noSlots")}</p>
                                     ) : (
                                         <div className="booking-slots-grid">
                                             {availableSlots.map((slot) => {
@@ -679,9 +649,9 @@ export default function BookingPage() {
                                                     >
                                                         {slot}
                                                         {adminBlocked
-                                                            ? " (nem elérhető)"
+                                                            ? t("booking.unavailable")
                                                             : taken
-                                                              ? " (foglalt)"
+                                                              ? t("booking.taken")
                                                               : ""}
                                                     </button>
                                                 );
@@ -693,61 +663,61 @@ export default function BookingPage() {
                         </section>
 
                         <section className="booking-form-card">
-                            <h2>Foglalási adatok</h2>
+                            <h2>{t("booking.formTitle")}</h2>
                             {authUser && (
                                 <p className="booking-muted" style={{ marginBottom: "1rem" }}>
-                                    Bejelentkezve: <strong style={{ color: "#39ff14" }}>{authUser.email}</strong>.
-                                    A foglaláshoz add meg az alábbi adatokat (az e-mailnek a fiókoddal
-                                    egyeznie kell).
+                                    {t("booking.signedIn")}{" "}
+                                    <strong style={{ color: "#39ff14" }}>{authUser.email}</strong>.{" "}
+                                    {t("booking.signedInHint")}
                                 </p>
                             )}
                             <form onSubmit={handleSubmit} className="booking-form-fields">
                                 <div className="booking-field">
-                                    <label htmlFor="booking-name">Név *</label>
+                                    <label htmlFor="booking-name">{t("auth.name")}</label>
                                     <input
                                         id="booking-name"
                                         value={customerName}
                                         onChange={(e) => setCustomerName(e.target.value)}
-                                        placeholder="Teljes neved"
+                                        placeholder={t("auth.namePlaceholder")}
                                         required
                                         autoComplete="name"
                                     />
                                 </div>
                                 <div className="booking-field">
-                                    <label htmlFor="booking-email">E-mail *</label>
+                                    <label htmlFor="booking-email">{t("auth.email")}</label>
                                     <input
                                         id="booking-email"
                                         type="email"
                                         value={customerEmail}
                                         onChange={(e) => setCustomerEmail(e.target.value)}
-                                        placeholder="pelda@email.hu"
+                                        placeholder={t("booking.emailPlaceholder")}
                                         required
                                         autoComplete="email"
                                     />
                                 </div>
 
                                 <div className="booking-field">
-                                    <label>Óra típusa *</label>
+                                    <label>{t("auth.lessonType")}</label>
                                     <div className="booking-toggle">
                                         <button
                                             type="button"
                                             className={lessonType === "online" ? "active" : ""}
                                             onClick={() => setLessonType("online")}
                                         >
-                                            💻 Online
+                                            {t("booking.online")}
                                         </button>
                                         <button
                                             type="button"
                                             className={lessonType === "personal" ? "active" : ""}
                                             onClick={() => setLessonType("personal")}
                                         >
-                                            🏠 Személyes (Fót)
+                                            {t("booking.personal")}
                                         </button>
                                     </div>
                                 </div>
 
                                 <div className="booking-field">
-                                    <label htmlFor="booking-subject">Témakör / szint *</label>
+                                    <label htmlFor="booking-subject">{t("auth.subject")}</label>
                                     <select
                                         id="booking-subject"
                                         value={selectedSubject}
@@ -755,35 +725,35 @@ export default function BookingPage() {
                                     >
                                         {SUBJECTS.map((s) => (
                                             <option key={s} value={s}>
-                                                {s}
+                                                {t(SUBJECT_I18N[s])}
                                             </option>
                                         ))}
                                     </select>
                                 </div>
 
                                 <div className="booking-field">
-                                    <label htmlFor="booking-hobby">Hobby / megjegyzés</label>
+                                    <label htmlFor="booking-hobby">{t("auth.hobby")}</label>
                                     <input
                                         id="booking-hobby"
                                         value={hobby}
                                         onChange={(e) => setHobby(e.target.value)}
-                                        placeholder="Pl. sport, érdeklődés, cél"
+                                        placeholder={t("auth.hobbyPlaceholder")}
                                     />
                                 </div>
 
                                 <div className="booking-address-block">
                                     <div className="booking-field" style={{ marginBottom: "0.35rem" }}>
-                                        <label>Számlázási cím *</label>
+                                        <label>{t("auth.billing")}</label>
                                         <p className="booking-muted" style={{ margin: "0.25rem 0 0.5rem" }}>
-                                            A címet a számlázáshoz kérjük — online és személyes óránál is kötelező.
+                                            {t("booking.billingHint")}
                                             {lessonType === "personal"
-                                                ? " Személyes óránál ez egyben a foglalkozás címe is lehet."
+                                                ? t("booking.billingPersonalExtra")
                                                 : ""}
                                         </p>
                                     </div>
                                     <div className="booking-address-row">
                                         <div className="booking-field">
-                                            <label htmlFor="booking-zip">Irányítószám *</label>
+                                            <label htmlFor="booking-zip">{t("auth.postalCode")}</label>
                                             <input
                                                 id="booking-zip"
                                                 value={postalCode}
@@ -794,18 +764,18 @@ export default function BookingPage() {
                                             />
                                         </div>
                                         <div className="booking-field">
-                                            <label htmlFor="booking-street">Utca *</label>
+                                            <label htmlFor="booking-street">{t("auth.street")}</label>
                                             <input
                                                 id="booking-street"
                                                 value={street}
                                                 onChange={(e) => setStreet(e.target.value)}
-                                                placeholder="Szent Imre utca"
+                                                placeholder={t("booking.streetPlaceholder")}
                                                 required
                                                 autoComplete="street-address"
                                             />
                                         </div>
                                         <div className="booking-field">
-                                            <label htmlFor="booking-house">Házszám *</label>
+                                            <label htmlFor="booking-house">{t("auth.houseNumber")}</label>
                                             <input
                                                 id="booking-house"
                                                 value={houseNumber}
@@ -818,7 +788,7 @@ export default function BookingPage() {
                                 </div>
 
                                 <div className="booking-field">
-                                    <label htmlFor="booking-files">Feladat / anyag csatolása (opcionális)</label>
+                                    <label htmlFor="booking-files">{t("booking.files")}</label>
                                     <input
                                         id="booking-files"
                                         type="file"
@@ -827,18 +797,20 @@ export default function BookingPage() {
                                         onChange={handleFileChange}
                                     />
                                     <p className="booking-muted" style={{ marginTop: "0.35rem" }}>
-                                        Max. 5 fájl, egyenként 8 MB — PDF, JPG, PNG, DOC, DOCX.
+                                        {t("booking.filesHint")}
                                     </p>
                                     {selectedFiles.length > 0 && (
                                         <p className="booking-muted">
-                                            Kiválasztva: {selectedFiles.map((f) => f.name).join(", ")}
+                                            {t("booking.filesSelected", {
+                                                names: selectedFiles.map((f) => f.name).join(", "),
+                                            })}
                                         </p>
                                     )}
                                 </div>
 
                                 <div className="booking-summary">
                                     <div>
-                                        <span>Kiválasztott órák:</span>
+                                        <span>{t("booking.selectedLessons")}</span>
                                         <strong>
                                             {selectedTimes.length > 0
                                                 ? selectedTimes.join(", ")
@@ -846,9 +818,9 @@ export default function BookingPage() {
                                         </strong>
                                     </div>
                                     <div>
-                                        <span>Összesen:</span>
+                                        <span>{t("booking.total")}</span>
                                         <strong className="booking-price">
-                                            {totalPrice.toLocaleString("hu-HU")} Ft
+                                            {formatPrice(totalPrice)}
                                         </strong>
                                     </div>
                                 </div>
@@ -861,29 +833,27 @@ export default function BookingPage() {
                                         required
                                     />
                                     <span>
-                                        Elolvastam és elfogadom az{" "}
+                                        {t("auth.gdprPrefix")}{" "}
                                         <a
                                             href="/adatkezelesi-tajekoztato"
                                             target="_blank"
                                             rel="noopener noreferrer"
                                         >
-                                            adatkezelési tájékoztatót
+                                            {t("auth.gdprLink")}
                                         </a>{" "}
-                                        (GDPR), és hozzájárulok a foglaláshoz szükséges
-                                        személyes adatok kezeléséhez. *
+                                        {t("booking.gdprFormSuffix")}
                                     </span>
                                 </label>
 
                                 {error && <p className="booking-error">{error}</p>}
                                 {success && (
                                     <p className="booking-success">
-                                        Köszönjük! A foglalásod elmentve. E-mail értesítést küldtünk, és hamarosan
-                                        visszajelzünk a megadott címre.
+                                        {t("booking.success")}
                                         <br /><br />
-                                        <strong>Fizetés (készpénz vagy utalás):</strong><br />
-                                        Kedvezményezett: Lieszkofszki Zsolt<br />
-                                        Számlaszám: 10401000-86765086-50861000<br />
-                                        Közlemény: neved + foglalás dátuma
+                                        <strong>{t("booking.paymentTitle")}</strong><br />
+                                        {t("booking.paymentPayee")}<br />
+                                        {t("booking.paymentAccount")}<br />
+                                        {t("booking.paymentNote")}
                                     </p>
                                 )}
 
@@ -892,7 +862,7 @@ export default function BookingPage() {
                                     className="booking-submit"
                                     disabled={submitting}
                                 >
-                                    {submitting ? "Küldés..." : "Foglalás elküldése"}
+                                    {submitting ? t("booking.submitting") : t("booking.submit")}
                                 </button>
                             </form>
                         </section>

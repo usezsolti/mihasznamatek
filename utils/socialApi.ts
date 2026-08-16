@@ -1,7 +1,6 @@
-/** Community adatréteg: Next.js backend. Kliens Firestore csak explicit opt-in fallback. */
+/** Community adatréteg: Next.js backend only (no client Firestore). */
 
 import { backendSocial } from './backendClient';
-import * as clientSocial from './social';
 import type {
     ConversationPreview,
     DirectMessage,
@@ -11,60 +10,47 @@ import type {
     StudyGroup,
 } from './socialTypes';
 
-/** true = soha ne essünk vissza kliens Firestore-ra (local store / clean path). */
-function isApiOnly(): boolean {
-    return String(process.env.NEXT_PUBLIC_SOCIAL_API_ONLY || '') === '1';
-}
-
-async function viaBackend<T>(
-    action: string,
-    body: Record<string, unknown>,
-    fallback: () => Promise<T>
-): Promise<T> {
-    try {
-        return await backendSocial<T>(action, body);
-    } catch (e) {
-        const msg = String((e as any)?.message || e || '');
-        const rateLimited = /429|Túl sok kérés/i.test(msg);
-        if (rateLimited || isApiOnly()) throw e;
-        console.warn(`backend ${action} failed, falling back to client:`, e);
-        return fallback();
-    }
+async function viaBackend<T>(action: string, body: Record<string, unknown> = {}): Promise<T> {
+    return backendSocial<T>(action, body);
 }
 
 export async function apiEnsureProfile(
     uid: string,
     hints?: { name?: string; photoURL?: string }
 ): Promise<SocialProfile> {
-    return viaBackend('ensureProfile', { ...hints }, () => clientSocial.ensureSocialProfile(uid));
+    return viaBackend('ensureProfile', { ...hints });
 }
 
 export async function apiGetProfile(uid: string): Promise<SocialProfile | null> {
-    return viaBackend('getProfile', { uid }, () => clientSocial.getSocialProfile(uid));
+    return viaBackend('getProfile', { uid });
 }
 
 export async function apiUpdateProfile(
     uid: string,
     patch: Partial<Pick<SocialProfile, 'username' | 'bio' | 'displayName' | 'showXp'>>
 ): Promise<void> {
-    await viaBackend('updateProfile', { ...patch }, async () => {
-        await clientSocial.updateSocialProfile(uid, patch);
-    });
+    await viaBackend('updateProfile', { ...patch });
 }
 
 export async function apiSyncSocialIdentity(
     uid: string,
     patch: { photoURL?: string; displayName?: string }
 ): Promise<void> {
-    await clientSocial.syncSocialIdentity(uid, patch);
+    await viaBackend('ensureProfile', {
+        name: patch.displayName,
+        photoURL: patch.photoURL,
+    });
+    if (patch.displayName) {
+        await viaBackend('updateProfile', { displayName: patch.displayName });
+    }
 }
 
 export async function apiListProfiles(limit = 30): Promise<SocialProfile[]> {
-    return viaBackend('listProfiles', { limit }, () => clientSocial.listProfiles(limit));
+    return viaBackend('listProfiles', { limit });
 }
 
 export async function apiListFeed(limit = 40): Promise<SocialPost[]> {
-    return viaBackend('listFeed', { limit }, () => clientSocial.listFeedPosts({ limit }));
+    return viaBackend('listFeed', { limit });
 }
 
 export async function apiCreatePost(
@@ -72,25 +58,20 @@ export async function apiCreatePost(
     text: string,
     media?: { imageUrl?: string | null; videoUrl?: string | null }
 ): Promise<SocialPost> {
-    return viaBackend(
-        'createPost',
-        {
-            text,
-            imageUrl: media?.imageUrl || null,
-            videoUrl: media?.videoUrl || null,
-        },
-        () => clientSocial.createPost(author, text, media?.imageUrl, media?.videoUrl)
-    );
+    return viaBackend('createPost', {
+        text,
+        imageUrl: media?.imageUrl || null,
+        videoUrl: media?.videoUrl || null,
+    });
 }
 
 export async function apiToggleLike(postId: string, uid: string) {
-    return viaBackend('toggleLike', { postId }, () => clientSocial.toggleLike(postId, uid));
+    return viaBackend('toggleLike', { postId });
 }
 
 export async function apiHasLiked(postId: string, uid: string): Promise<boolean> {
-    return viaBackend('hasLiked', { postId }, async () => clientSocial.hasLiked(postId, uid)).then(
-        (r: any) => (typeof r === 'boolean' ? r : !!r?.liked)
-    );
+    const r: any = await viaBackend('hasLiked', { postId });
+    return typeof r === 'boolean' ? r : !!r?.liked;
 }
 
 export async function apiAddComment(
@@ -98,33 +79,28 @@ export async function apiAddComment(
     author: SocialProfile,
     text: string
 ): Promise<SocialComment> {
-    return viaBackend('addComment', { postId, text }, () => clientSocial.addComment(postId, author, text));
+    return viaBackend('addComment', { postId, text });
 }
 
 export async function apiListComments(postId: string): Promise<SocialComment[]> {
-    return viaBackend('listComments', { postId }, () => clientSocial.listComments(postId));
+    return viaBackend('listComments', { postId });
 }
 
 export async function apiFollow(followerId: string, followingId: string): Promise<void> {
-    await viaBackend('follow', { uid: followingId }, () => clientSocial.followUser(followerId, followingId));
+    await viaBackend('follow', { uid: followingId });
 }
 
 export async function apiUnfollow(followerId: string, followingId: string): Promise<void> {
-    await viaBackend('unfollow', { uid: followingId }, () =>
-        clientSocial.unfollowUser(followerId, followingId)
-    );
+    await viaBackend('unfollow', { uid: followingId });
 }
 
 export async function apiIsFollowing(followerId: string, followingId: string): Promise<boolean> {
-    return viaBackend(
-        'isFollowing',
-        { uid: followingId },
-        async () => clientSocial.isFollowing(followerId, followingId)
-    ).then((r: any) => (typeof r === 'boolean' ? r : !!r?.following));
+    const r: any = await viaBackend('isFollowing', { uid: followingId });
+    return typeof r === 'boolean' ? r : !!r?.following;
 }
 
 export async function apiListFollowingIds(uid: string): Promise<string[]> {
-    return viaBackend('listFollowingIds', {}, () => clientSocial.listFollowingIds(uid));
+    return viaBackend('listFollowingIds', {});
 }
 
 export async function apiCreateGroup(
@@ -133,41 +109,35 @@ export async function apiCreateGroup(
     description: string,
     topic: string
 ): Promise<StudyGroup> {
-    return viaBackend('createGroup', { name, description, topic }, () =>
-        clientSocial.createStudyGroup(owner, name, description, topic)
-    );
+    return viaBackend('createGroup', { name, description, topic });
 }
 
 export async function apiListGroups(): Promise<StudyGroup[]> {
-    return viaBackend('listGroups', {}, () => clientSocial.listStudyGroups());
+    return viaBackend('listGroups', {});
 }
 
 export async function apiJoinGroup(groupId: string, uid: string): Promise<void> {
-    await viaBackend('joinGroup', { groupId }, () => clientSocial.joinStudyGroup(groupId, uid));
+    await viaBackend('joinGroup', { groupId });
 }
 
 export async function apiLeaveGroup(groupId: string, uid: string): Promise<void> {
-    await viaBackend('leaveGroup', { groupId }, () => clientSocial.leaveStudyGroup(groupId, uid));
+    await viaBackend('leaveGroup', { groupId });
 }
 
 export async function apiSendMessage(
     fromUid: string,
     toUid: string,
     text: string,
-    from: SocialProfile,
-    to: SocialProfile
+    _from: SocialProfile,
+    _to: SocialProfile
 ): Promise<void> {
-    await viaBackend('sendMessage', { toUid, text }, () =>
-        clientSocial.sendDirectMessage(fromUid, toUid, text, from, to)
-    );
+    await viaBackend('sendMessage', { toUid, text });
 }
 
 export async function apiListConversations(uid: string): Promise<ConversationPreview[]> {
-    return viaBackend('listConversations', {}, () => clientSocial.listConversations(uid));
+    return viaBackend('listConversations', {});
 }
 
 export async function apiListMessages(conversationId: string): Promise<DirectMessage[]> {
-    return viaBackend('listMessages', { conversationId }, () => clientSocial.listMessages(conversationId));
+    return viaBackend('listMessages', { conversationId });
 }
-
-export { clientSocial };

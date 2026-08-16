@@ -1,4 +1,4 @@
-﻿// frontend/pages/index.tsx
+// frontend/pages/index.tsx
 // Homepage — scroll reveal + marketing sections
 import React, { useEffect } from 'react';
 import Head from 'next/head';
@@ -371,31 +371,31 @@ export default function Home() {
                             <h3>🎓 {t('home.cv.studies')}</h3>
                             <div className="cv-item">
                                 <span className="cv-year">2016-2021</span>
-                                <span className="cv-details">Óbudai Egyetem Bánki Donát Gépész és Biztonságtechnikai Kar, Budapest - <strong>Mechatronikai Mérnök</strong></span>
+                                <span className="cv-details">{t('home.cv.edu1')}</span>
                             </div>
                             <div className="cv-item">
                                 <span className="cv-year">2021</span>
-                                <span className="cv-details">Erasmus Laplan University - <strong>Mechanical Engineer</strong></span>
+                                <span className="cv-details">{t('home.cv.edu2')}</span>
                             </div>
                             <div className="cv-item">
                                 <span className="cv-year">2021</span>
-                                <span className="cv-details">Óbudai Egyetem Neumann János Informatika Kar - <strong>Applied Mathematics</strong></span>
+                                <span className="cv-details">{t('home.cv.edu3')}</span>
                             </div>
                             <div className="cv-item">
                                 <span className="cv-year">2022-2024</span>
-                                <span className="cv-details">Óbudai Egyetem Neumann János Informatikai Kar - <strong>Mérnökinformatikus MSc</strong></span>
+                                <span className="cv-details">{t('home.cv.edu4')}</span>
                             </div>
                             <div className="cv-item">
                                 <span className="cv-year">2025</span>
-                                <span className="cv-details"><span style={{ color: '#ffffff' }}>Profession Fitness</span> - <strong>Sportoktató Testépítés-fitness sportágban</strong></span>
+                                <span className="cv-details">{t('home.cv.edu5')}</span>
                             </div>
                             <div className="cv-item">
-                                <span className="cv-year">Angol</span>
-                                <span className="cv-details">Haladó szint</span>
+                                <span className="cv-year">{t('home.cv.lang.en')}</span>
+                                <span className="cv-details">{t('home.cv.lang.advanced')}</span>
                             </div>
                             <div className="cv-item">
-                                <span className="cv-year">Német</span>
-                                <span className="cv-details">Középszint</span>
+                                <span className="cv-year">{t('home.cv.lang.de')}</span>
+                                <span className="cv-details">{t('home.cv.lang.intermediate')}</span>
                             </div>
                         </div>
 
@@ -403,19 +403,19 @@ export default function Home() {
                             <h3>💼 {t('home.cv.work')}</h3>
                             <div className="cv-item">
                                 <span className="cv-year">2020</span>
-                                <span className="cv-details">Vaskapu Generálkivitelező Kft. - <strong>Segédmérnök</strong></span>
+                                <span className="cv-details">{t('home.cv.work1')}</span>
                             </div>
                             <div className="cv-item">
-                                <span className="cv-year">2021-Remélem életem végéig</span>
-                                <span className="cv-details"><strong>&nbsp;&nbsp;&nbsp;&nbsp;Magán Matektanár</strong></span>
+                                <span className="cv-year">{t('home.cv.work2.year')}</span>
+                                <span className="cv-details"><strong>&nbsp;&nbsp;&nbsp;&nbsp;{t('home.cv.work2')}</strong></span>
                             </div>
                             <div className="cv-item">
                                 <span className="cv-year">2021-2022</span>
-                                <span className="cv-details">Óbudai Egyetem Neumann János Informatikai Kar - <strong>C# programozási nyelv oktatása demonstrátorként</strong></span>
+                                <span className="cv-details">{t('home.cv.work3')}</span>
                             </div>
                             <div className="cv-item">
                                 <span className="cv-year">2022</span>
-                                <span className="cv-details">BBraun - <strong>Szoftverfejlesztő gyakornok</strong></span>
+                                <span className="cv-details">{t('home.cv.work4')}</span>
                             </div>
                         </div>
 
@@ -423,7 +423,7 @@ export default function Home() {
                             <h3>🛠️ {t('home.cv.skills')}</h3>
                             <div className="skills-container">
                                 <div className="skills-category">
-                                    <h4>💻 Programozási nyelvek & eszközök</h4>
+                                    <h4>💻 {t('home.cv.skills.langs')}</h4>
                                     <div className="tech-logos">
                                         <div className="tech-logo" data-tech="python">
 
@@ -540,7 +540,7 @@ export default function Home() {
                                     </div>
                                 </div>
                                 <div className="skills-category">
-                                    <h4>⚛️ Framework-ek & Könyvtárak</h4>
+                                    <h4>⚛️ {t('home.cv.skills.frameworks')}</h4>
                                     <div className="tech-logos">
                                         <div className="tech-logo" data-tech="react">
 
@@ -622,7 +622,7 @@ export default function Home() {
                                     </div>
                                 </div>
                                 <div className="skills-category">
-                                    <h4>🗄️ Adatbázisok & Cloud</h4>
+                                    <h4>🗄️ {t('home.cv.skills.db')}</h4>
                                     <div className="tech-logos">
                                         <div className="tech-logo" data-tech="postgresql">
 
@@ -679,7 +679,7 @@ export default function Home() {
                                     </div>
                                 </div>
                                 <div className="skills-category">
-                                    <h4>🔧 Szoftver & Hardver</h4>
+                                    <h4>🔧 {t('home.cv.skills.software')}</h4>
                                     <div className="tech-logos">
                                         <div className="tech-logo" data-tech="unreal">
 
@@ -723,28 +723,28 @@ export default function Home() {
                         </div>
 
                         <div className="cv-section">
-                            <h3>🏆 Tanulmányi eredmények</h3>
+                            <h3>🏆 {t('home.cv.achievements')}</h3>
                             <div className="cv-item">
                                 <span className="cv-year">2019</span>
-                                <span className="cv-details">Óbudai Egyetem; Tudományos Diákköri Konferencia Gyártástechnológiai Szekció II. helyezés - "Alkatrész gyártási idő becslése neurális hálók segítségével" projekt</span>
+                                <span className="cv-details">{t('home.cv.achievement1')}</span>
                             </div>
                             <div className="cv-item">
                                 <span className="cv-year">2021</span>
-                                <span className="cv-details">Óbudai Egyetem, Országos tudományos diákköri konferencia</span>
+                                <span className="cv-details">{t('home.cv.achievement2')}</span>
                             </div>
 
-                            <h3>🥋 Sport készségek</h3>
+                            <h3>🥋 {t('home.cv.sport')}</h3>
                             <div className="sport-image">
-                                <img src="/workout.png" alt="Sport készségek" />
+                                <img src="/workout.png" alt={t('home.cv.sport.alt')} />
                             </div>
                             <div className="sport-skills">
-                                <span>Kempo (3 év)</span>
-                                <span>Brazil Jiu-Jitsu (5 év)</span>
-                                <span>Testépítés</span>
-                                <span>Box csoportos edzés</span>
-                                <span>Személyi edzés tapasztalat</span>
-                                <span>Súlyemelés (2 év)</span>
-                                <span>Crossfit (2 év)</span>
+                                <span>{t('home.cv.sport.kempo')}</span>
+                                <span>{t('home.cv.sport.bjj')}</span>
+                                <span>{t('home.cv.sport.bodybuilding')}</span>
+                                <span>{t('home.cv.sport.boxing')}</span>
+                                <span>{t('home.cv.sport.personal')}</span>
+                                <span>{t('home.cv.sport.weightlifting')}</span>
+                                <span>{t('home.cv.sport.crossfit')}</span>
                             </div>
                         </div>
                     </div>
@@ -840,66 +840,66 @@ export default function Home() {
             <section id="pricing" className="section">
                 <div className="section-content">
                     <h2 className="section-title">💰 {t('home.pricing')}</h2>
-                    <p className="section-subtitle">Délutáni és délelőtti időpontokban is elérhetőek az órák</p>
+                    <p className="section-subtitle">{t('home.pricingSub')}</p>
 
                     <div className="pricing-container">
                         <div className="pricing-card glass-card">
                             <div className="pricing-header">
                                 <span className="calendar-icon">📅</span>
-                                <h3>Foglalási információk</h3>
+                                <h3>{t('home.pricing.infoTitle')}</h3>
                             </div>
                             
                             <div className="pricing-info">
                                 <div className="info-group">
-                                    <h4>Munkaidő (Hétfő - Szombat)</h4>
+                                    <h4>{t('home.pricing.hoursTitle')}</h4>
                                     <ul className="working-hours">
-                                        <li><span className="info-key">Hétfő:</span> <span className="info-value">11:00 - 20:00</span></li>
-                                        <li><span className="info-key">Kedd:</span> <span className="info-value">16:00 - 22:00</span></li>
-                                        <li><span className="info-key">Szerda:</span> <span className="info-value">08:00 - 20:00</span></li>
-                                        <li><span className="info-key">Csütörtök:</span> <span className="info-value">11:00 - 20:00</span></li>
-                                        <li><span className="info-key">Péntek:</span> <span className="info-value">11:00 - 18:00</span></li>
-                                        <li><span className="info-key">Szombat:</span> <span className="info-value">09:00 - 15:00</span></li>
+                                        <li><span className="info-key">{t('weekday.mon')}:</span> <span className="info-value">11:00 - 20:00</span></li>
+                                        <li><span className="info-key">{t('weekday.tue')}:</span> <span className="info-value">16:00 - 22:00</span></li>
+                                        <li><span className="info-key">{t('weekday.wed')}:</span> <span className="info-value">08:00 - 20:00</span></li>
+                                        <li><span className="info-key">{t('weekday.thu')}:</span> <span className="info-value">11:00 - 20:00</span></li>
+                                        <li><span className="info-key">{t('weekday.fri')}:</span> <span className="info-value">11:00 - 18:00</span></li>
+                                        <li><span className="info-key">{t('weekday.sat')}:</span> <span className="info-value">09:00 - 15:00</span></li>
                                     </ul>
                                 </div>
 
                                 <div className="info-divider"></div>
 
                                 <div className="info-group">
-                                    <h4>Ár</h4>
-                                    <p className="price-value">11.000 Ft/60 perc</p>
+                                    <h4>{t('home.pricing.priceTitle')}</h4>
+                                    <p className="price-value">{t('home.pricing.priceValue')}</p>
                                 </div>
 
                                 <div className="info-divider"></div>
 
                                 <div className="info-group">
-                                    <h4>Helyszín</h4>
-                                    <p className="info-value">Online Teams-en keresztül vagy élőben Fóton</p>
+                                    <h4>{t('home.pricing.locationTitle')}</h4>
+                                    <p className="info-value">{t('home.pricing.location')}</p>
                                 </div>
 
                                 <div className="info-divider"></div>
 
                                 <div className="info-group">
-                                    <h4>Fizetés</h4>
-                                    <p className="info-value">Készpénzzel vagy utalással</p>
+                                    <h4>{t('home.pricing.paymentTitle')}</h4>
+                                    <p className="info-value">{t('home.pricing.payment')}</p>
                                 </div>
 
                                 <div className="info-divider"></div>
 
                                 <div className="info-group">
-                                    <h4>Banki adatok</h4>
+                                    <h4>{t('home.pricing.bankTitle')}</h4>
                                     <div className="bank-details">
-                                        <p><span className="info-key">Utalás:</span> <span className="info-value">Lieszkofszki Zsolt</span></p>
-                                        <p><span className="info-key">Számlaszám:</span> <span className="info-value">10401000-86765086-50861000</span></p>
-                                        <p><span className="info-key">Közlemény:</span> <span className="info-value">Számla sorszáma</span></p>
+                                        <p><span className="info-key">{t('home.pricing.transfer')}:</span> <span className="info-value">Lieszkofszki Zsolt</span></p>
+                                        <p><span className="info-key">{t('home.pricing.account')}:</span> <span className="info-value">10401000-86765086-50861000</span></p>
+                                        <p><span className="info-key">{t('home.pricing.note')}:</span> <span className="info-value">{t('home.pricing.invoiceNumber')}</span></p>
                                     </div>
                                 </div>
 
                                 <div className="info-divider"></div>
 
                                 <div className="info-group cancellation-policy">
-                                    <h4>Lemondási szabály</h4>
+                                    <h4>{t('home.pricing.cancelTitle')}</h4>
                                     <p className="cancellation-text">
-                                        <span className="info-key">24 órával előtte lemondható, különben</span> <span className="info-value highlight">teljes díj</span>
+                                        <span className="info-key">{t('home.pricing.cancelPolicy')}</span> <span className="info-value highlight">{t('home.pricing.fullFee')}</span>
                                     </p>
                                 </div>
 
@@ -917,7 +917,7 @@ export default function Home() {
                                             fontWeight: 800,
                                         }}
                                     >
-                                        📅 Időpontfoglalás
+                                        📅 {t('home.pricing.book')}
                                     </Link>
                                 </div>
                             </div>
@@ -930,14 +930,13 @@ export default function Home() {
             <section id="contact" className="section contact-section">
                 <div className="section-content">
                     <h2 className="section-title">{t('home.contact')}</h2>
-                    <p className="section-subtitle">Ha szükséged van egy MIHASZNA tanára keress bátran!</p>
+                    <p className="section-subtitle">{t('home.contactSub')}</p>
 
                     <div className="contact-grid">
-                        {/* Kapcsolat információk */}
                         <div className="contact-info">
                             <div className="contact-card">
                                 <div className="contact-icon">📍</div>
-                                <h3>Címek</h3>
+                                <h3>{t('home.contact.addresses')}</h3>
                                 <p>2151 Fót, Szent Imre utca 18</p>
                                 <p>1047 Budapest, Attila u. 4</p>
                                 <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', marginTop: '0.5rem' }}>
@@ -945,13 +944,13 @@ export default function Home() {
                                         target="_blank"
                                         rel="noopener noreferrer"
                                         className="contact-link">
-                                        Fót - Google Maps
+                                        {t('home.contact.mapFot')}
                                     </a>
                                     <a href="https://maps.google.com/?q=1047+Budapest,+Attila+u.+4"
                                         target="_blank"
                                         rel="noopener noreferrer"
                                         className="contact-link">
-                                        Budapest - Google Maps
+                                        {t('home.contact.mapBudapest')}
                                     </a>
                                 </div>
                             </div>
@@ -960,17 +959,17 @@ export default function Home() {
 
                             <div className="contact-card">
                                 <div className="contact-icon">✉️</div>
-                                <h3>Email</h3>
+                                <h3>{t('home.contact.emailLabel')}</h3>
                                 <p>usezsolti@gmail.com</p>
                                 <a href="mailto:usezsolti@gmail.com" className="contact-link" onClick={trackContactConversion}>
-                                    Email írása
+                                    {t('home.contact.emailWrite')}
                                 </a>
                             </div>
 
                             <div className="contact-card">
                                 <div className="contact-icon">💬</div>
-                                <h3>Social Media</h3>
-                                <p>Kövess be mindenhol!</p>
+                                <h3>{t('home.contact.social')}</h3>
+                                <p>{t('home.contact.follow')}</p>
                                 <div className="social-links">
                                     <a href="https://www.facebook.com/profile.php?id=100075272401924"
                                         target="_blank"
@@ -1010,12 +1009,12 @@ export default function Home() {
 
                         {/* Térkép */}
                         <div className="contact-map">
-                            <h3>Helyszín</h3>
+                            <h3>{t('home.contact.location')}</h3>
                             <div className="map-container">
                                 <div className="map-placeholder">
                                     <div className="map-content">
                                         <div className="map-icon">📍</div>
-                                        <h4>Tanítási helyszínek</h4>
+                                        <h4>{t('home.contact.locations')}</h4>
                                         <p><strong>2151 Fót, Szent Imre utca 18</strong></p>
                                         <p><strong>1047 Budapest, Attila u. 4</strong></p>
                                         <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', marginTop: '0.5rem' }}>
@@ -1025,7 +1024,7 @@ export default function Home() {
                                                 rel="noopener noreferrer"
                                                 className="map-link"
                                             >
-                                                Fót - Google Maps
+                                                {t('home.contact.mapFot')}
                                             </a>
                                             <a
                                                 href="https://maps.google.com/?q=1047+Budapest,+Attila+u.+4"
@@ -1033,35 +1032,34 @@ export default function Home() {
                                                 rel="noopener noreferrer"
                                                 className="map-link"
                                             >
-                                                Budapest - Google Maps
+                                                {t('home.contact.mapBudapest')}
                                             </a>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div className="map-info">
-                                <p><strong>Megközelítés:</strong></p>
+                                <p><strong>{t('home.contact.access')}:</strong></p>
                                 <ul>
-                                    <li>🚂 S71-es vonattal: Nyugatiból 30 perc</li>
-                                    <li>🚗 Autóval: Ingyenes parkolás az utcán</li>
+                                    <li>{t('home.contact.directions.train')}</li>
+                                    <li>{t('home.contact.directions.parking')}</li>
                                 </ul>
                             </div>
                         </div>
 
-                        {/* Telefon Mockup */}
                         <div className="contact-phone">
-                            <h3>Hívás</h3>
+                            <h3>{t('home.contact.call')}</h3>
                             <div className="phone-mockup">
                                 <img
                                     src="/hivas.png"
-                                    alt="MIHASZNA MATEK hívás képernyő"
+                                    alt={t('home.contact.phoneAlt')}
                                     className="phone-screen"
                                 />
                                 <div className="phone-frame"></div>
                             </div>
                             <div className="phone-info">
-                                <h4>📞 Hívj bátran!</h4>
-                                <p>Professzionális matek tanítás, személyre szabott módszerekkel</p>
+                                <h4>📞 {t('home.contact.callMe')}</h4>
+                                <p>{t('home.contact.callHint')}</p>
                                 <a href="tel:+36308935495" className="call-button" onClick={trackContactConversion}>
                                     <span>+36 30 893 5495</span>
                                     <span className="call-icon">📞</span>
@@ -1077,7 +1075,7 @@ export default function Home() {
                 <div className="section-content">
                     <h2 className="section-title">{t('home.account')}</h2>
                     <p className="section-subtitle">
-                        Belépés után a Dashboardon látod a foglalásaidat és a tanulási előrehaladásodat.
+                        {t('home.accountSub')}
                     </p>
 
                     <div className="home-auth-wrapper">
@@ -1090,7 +1088,7 @@ export default function Home() {
                 <div className="site-legal-footer__inner">
                     <p className="site-legal-footer__brand">Mihaszna Matek</p>
                     <div className="site-legal-footer__links">
-                        <Link href="/adatkezelesi-tajekoztato">Adatkezelési tájékoztató</Link>
+                        <Link href="/adatkezelesi-tajekoztato">{t('home.footer.privacy')}</Link>
                     </div>
                 </div>
             </footer>

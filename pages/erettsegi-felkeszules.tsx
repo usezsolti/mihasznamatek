@@ -62,12 +62,9 @@ export default function ErettsegiFelkeszules() {
         let cancelled = false;
         const load = async () => {
             try {
-                let attempts = 0;
-                while (!(window as any).firebase?.auth && attempts < 40) {
-                    await new Promise((r) => setTimeout(r, 100));
-                    attempts++;
-                }
-                const uid = (window as any).firebase?.auth?.()?.currentUser?.uid || null;
+                const { getSession } = await import('next-auth/react');
+                const session = await getSession();
+                const uid = String((session?.user as { id?: string } | undefined)?.id || '') || null;
                 const prog: UserPracticeProgress = await loadUserPracticeProgress(uid);
                 if (!cancelled) setTopicProgressMap(prog.topics || {});
             } catch (e) {

@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState, type ChangeEvent } from 'react';
 import type { SocialPost, SocialProfile } from '../../utils/socialTypes';
+import { useLang } from '../../utils/i18n';
 import CommunityAvatar from './CommunityAvatar';
 import CommunityPostCard from './CommunityPostCard';
 
@@ -36,6 +37,7 @@ export default function CommunityFeedTab({
     onMessage,
     onPostChanged,
 }: CommunityFeedTabProps) {
+    const { t } = useLang();
     const [feedMode, setFeedMode] = useState<'foryou' | 'following'>('foryou');
     const [previewUrl, setPreviewUrl] = useState<string | null>(null);
     const fileRef = useRef<HTMLInputElement>(null);
@@ -75,7 +77,7 @@ export default function CommunityFeedTab({
                     aria-selected={feedMode === 'foryou'}
                     onClick={() => setFeedMode('foryou')}
                 >
-                    Neked
+                    {t('community.feed.forYou')}
                 </button>
                 <button
                     type="button"
@@ -84,16 +86,16 @@ export default function CommunityFeedTab({
                     aria-selected={feedMode === 'following'}
                     onClick={() => setFeedMode('following')}
                 >
-                    Követés
+                    {t('community.feed.following')}
                 </button>
             </div>
 
-            <div className="mm-ig-stories" aria-label="Sztorik">
+            <div className="mm-ig-stories" aria-label={t('community.feed.stories')}>
                 <button type="button" className="mm-ig-story is-self" onClick={() => onOpenProfile(me.uid)}>
                     <span className="mm-ig-story-ring">
                         <CommunityAvatar url={me.photoURL} name={me.displayName} size={56} />
                     </span>
-                    <span className="mm-ig-story-name">Te</span>
+                    <span className="mm-ig-story-name">{t('community.feed.you')}</span>
                 </button>
                 {safeStories.map((p) => (
                     <button
@@ -116,7 +118,7 @@ export default function CommunityFeedTab({
                     <textarea
                         value={postText}
                         onChange={(e) => onPostTextChange(e.target.value)}
-                        placeholder="Mi a matek hangulat ma? Írj, vagy tölts fel képet/videót."
+                        placeholder={t('community.feed.composePlaceholder')}
                         maxLength={500}
                         rows={2}
                     />
@@ -127,14 +129,14 @@ export default function CommunityFeedTab({
                                 <video src={previewUrl} controls playsInline />
                             ) : (
                                 // eslint-disable-next-line @next/next/no-img-element
-                                <img src={previewUrl} alt="Előnézet" />
+                                <img src={previewUrl} alt={t('community.feed.previewAlt')} />
                             )}
                             <button
                                 type="button"
                                 className="mm-social-ghost mm-social-btn-sm"
                                 onClick={() => onMediaFileChange(null)}
                             >
-                                Média törlése
+                                {t('community.feed.removeMedia')}
                             </button>
                         </div>
                     )}
@@ -152,7 +154,7 @@ export default function CommunityFeedTab({
                             onClick={() => fileRef.current?.click()}
                             disabled={busy}
                         >
-                            Kép / videó
+                            {t('community.feed.mediaButton')}
                         </button>
                         <button
                             type="button"
@@ -160,7 +162,7 @@ export default function CommunityFeedTab({
                             onClick={onCreatePost}
                             disabled={busy || (!postText.trim() && !mediaFile)}
                         >
-                            Megosztás
+                            {t('community.feed.share')}
                         </button>
                     </div>
                 </div>
@@ -169,8 +171,8 @@ export default function CommunityFeedTab({
                 {visiblePosts.length === 0 && (
                     <p className="mm-social-empty">
                         {feedMode === 'following'
-                            ? 'Még nincs poszt a követettjeidtől — fedezz fel diákokat a Felfedezésben.'
-                            : 'Még nincs poszt a feedben — írj be valamit, vagy tölts fel képet/videót.'}
+                            ? t('community.feed.emptyFollowing')
+                            : t('community.feed.emptyForYou')}
                     </p>
                 )}
                 {visiblePosts.map((p) => (

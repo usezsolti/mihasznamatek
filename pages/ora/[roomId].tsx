@@ -1,6 +1,7 @@
 import Head from 'next/head';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
 import AuthModal from '../../components/AuthModal';
 import LessonHourRoom from '../../components/LessonHourRoom';
@@ -21,30 +22,15 @@ function fallbackRoom(roomId: string): LessonRoom {
     };
 }
 
-async function waitForFirebase(maxAttempts = 50): Promise<any | null> {
-    for (let i = 0; i < maxAttempts; i++) {
-        const firebase = (window as any).firebase;
-        if (firebase?.apps?.length > 0 && firebase.auth) return firebase;
-        if (firebase && !firebase.apps?.length && (window as any).__FIREBASE_CONFIG__) {
-            try {
-                firebase.initializeApp((window as any).__FIREBASE_CONFIG__);
-            } catch {
-                /* ignore */
-            }
-        }
-        await new Promise((r) => setTimeout(r, 100));
-    }
-    return (window as any).firebase?.auth ? (window as any).firebase : null;
-}
-
 export default function OraPage() {
     const router = useRouter();
     const roomId = String(router.query.roomId || '').trim();
+    const { data: session, status } = useSession();
 
-    const [ready, setReady] = useState(false);
-    const [uid, setUid] = useState<string | null>(null);
-    const [name, setName] = useState('Vendég');
-    const [photoURL, setPhotoURL] = useState('');
+    const ready = status !== 'loading';
+    const uid = String((session?.user as { id?: string } | undefined)?.id || '') || null;
+    const name = String(session?.user?.name || session?.user?.email || 'Felhasználó');
+    const photoURL = String(session?.user?.image || '');
     const [room, setRoom] = useState<LessonRoom | null>(null);
     const [loadErr, setLoadErr] = useState('');
     const [loadingRoom, setLoadingRoom] = useState(false);
@@ -57,40 +43,8 @@ export default function OraPage() {
     }, []);
 
     useEffect(() => {
-        let cancelled = false;
-        let unsub: (() => void) | undefined;
-
-        void (async () => {
-            const firebase = await waitForFirebase();
-            if (cancelled) return;
-            if (!firebase?.auth) {
-                setReady(true);
-                return;
-            }
-            unsub = firebase.auth().onAuthStateChanged((user: any) => {
-                if (cancelled) return;
-                if (user) {
-                    setUid(user.uid);
-                    setName(String(user.displayName || user.email || 'Felhasználó'));
-                    setPhotoURL(String(user.photoURL || ''));
-                    setAuthOpen(false);
-                } else {
-                    setUid(null);
-                    setRoom(null);
-                }
-                setReady(true);
-            });
-        })();
-
-        return () => {
-            cancelled = true;
-            try {
-                unsub?.();
-            } catch {
-                /* ignore */
-            }
-        };
-    }, []);
+        if (uid) setAuthOpen(false);
+    }, [uid]);
 
     useEffect(() => {
         if (!router.isReady || !roomId || !uid) {
@@ -103,10 +57,10 @@ export default function OraPage() {
 
         const timer = window.setTimeout(() => {
             if (cancelled) return;
-            // Ha a Firestore lassú / rules tilt — ne fehér képernyő: helyi fallback óra
+            // Ha az API lassú — ne fehér képernyő: helyi fallback óra
             setRoom((prev) => prev || fallbackRoom(roomId));
             setLoadErr(
-                'Az óra adatai részben helyiek (Firestore lassú vagy rules). A hívás így is megy.'
+                'Az óra adatai részben helyiek (API lassú). A hívás így is megy.'
             );
             setLoadingRoom(false);
         }, 8000);
@@ -121,7 +75,7 @@ export default function OraPage() {
                 } else {
                     setRoom(fallbackRoom(roomId));
                     setLoadErr(
-                        'Az óra nincs a felhőben (publikáld a firestore.rules-t). Helyi óra: hívás + tábla így is elérhető.'
+                        'Az óra nincs a szerveren. Helyi óra: hívás + tábla így is elérhető.'
                     );
                 }
                 setLoadingRoom(false);

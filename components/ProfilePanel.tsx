@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
+import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 import Link from 'next/link';
@@ -98,9 +99,14 @@ function blobToDataUrl(blob: Blob): Promise<string> {
 
 export default function ProfilePanel({ embedded = false }: { embedded?: boolean }) {
     const router = useRouter();
+    const { data: session, status: authStatus } = useSession();
     const fileInputRef = useRef<HTMLInputElement>(null);
     const [loading, setLoading] = useState(true);
-    const [currentUser, setCurrentUser] = useState<any>(null);
+    const [currentUser, setCurrentUser] = useState<{
+        uid: string;
+        email: string | null;
+        displayName: string | null;
+    } | null>(null);
     const [photoURL, setPhotoURL] = useState<string | null>(null);
     const [uploadingAvatar, setUploadingAvatar] = useState(false);
     const [avatarMessage, setAvatarMessage] = useState('');
@@ -128,97 +134,82 @@ export default function ProfilePanel({ embedded = false }: { embedded?: boolean 
     const [socialPosts, setSocialPosts] = useState(0);
 
     useEffect(() => {
-        const checkAuth = async () => {
-            let attempts = 0;
-            while (!(window as any).firebase?.apps?.length && attempts < 50) {
-                await new Promise(resolve => setTimeout(resolve, 100));
-                attempts++;
+        if (authStatus === 'loading') return;
+
+        if (!session?.user?.id) {
+            if (!embedded) {
+                router.replace('/');
             }
+            setCurrentUser(null);
+            setLoading(false);
+            return;
+        }
 
-            if (!(window as any).firebase) {
-                setLoading(false);
-                return;
-            }
-
-            try {
-                const auth = (window as any).firebase.auth();
-                const unsub = auth.onAuthStateChanged(async (user: any) => {
-                    if (!user) {
-                        if (!embedded) {
-                            router.replace('/');
-                        }
-                        setCurrentUser(null);
-                        setLoading(false);
-                        return;
-                    }
-
-                    setCurrentUser(user);
-                    setPhotoURL(user.photoURL || null);
-                    try {
-                        await user.getIdToken(true);
-                    } catch {
-                        /* ignore */
-                    }
-
-                    try {
-                        const snap = await (window as any).firebase.firestore().collection('users').doc(user.uid).get();
-                        if (snap.exists) {
-                            const data = snap.data();
-                            if (data?.photoURL) {
-                                setPhotoURL(data.photoURL);
-                            }
-                        }
-                    } catch (err) {
-                        console.warn('Profilkép betöltési hiba:', err);
-                    }
-
-                    await loadGameResults(user.uid);
-                    try {
-                        const { apiEnsureProfile } = await import('../utils/socialApi');
-                        const social = await apiEnsureProfile(user.uid, {
-                            name: user.displayName || undefined,
-                            photoURL: user.photoURL || undefined,
-                        });
-                        setSocialUsername(social.username || '');
-                        setSocialBio(social.bio || '');
-                        setSocialFollowers(Number(social.followerCount || 0));
-                        setSocialFollowing(Number(social.followingCount || 0));
-                        setSocialPosts(Number(social.postCount || 0));
-                        if (social.photoURL) {
-                            setPhotoURL((prev) => prev || social.photoURL);
-                        }
-                    } catch (e) {
-                        console.warn('MihaSocial profil betöltési hiba:', e);
-                    }
-                    try {
-                        const prog = await loadUserPracticeProgress(user.uid);
-                        setPracticeProgress(prog);
-                    } catch (e) {
-                        console.error('Practice progress load error:', e);
-                    }
-                    setBookingsLoading(true);
-                    try {
-                        if (user.email) {
-                            const list = await loadStudentBookingsFromFirestore(user.email);
-                            setMyBookings(list);
-                        } else {
-                            setMyBookings([]);
-                        }
-                    } finally {
-                        setBookingsLoading(false);
-                    }
-                    setLoading(false);
-                });
-
-                return () => unsub();
-            } catch (err) {
-                console.error('Auth error:', err);
-                setLoading(false);
-            }
+        const user = {
+            uid: session.user.id,
+            email: session.user.email || null,
+            displayName: session.user.name || null,
         };
+        setCurrentUser(user);
+        setPhotoURL(session.user.image || null);
 
-        checkAuth();
-    }, [router, embedded]);
+        let cancelled = false;
+        (async () => {
+            try {
+                const { apiGetAuth } = await import('../utils/apiClient');
+                const profileRes = await apiGetAuth<{ image?: string | null; name?: string | null }>(
+                    '/api/user/profile'
+                );
+                if (!cancelled && profileRes.ok && profileRes.data?.image) {
+                    setPhotoURL(profileRes.data.image);
+                }
+            } catch (err) {
+                console.warn('Profilkép betöltési hiba:', err);
+            }
+
+            await loadGameResults(user.uid);
+            try {
+                const { apiEnsureProfile } = await import('../utils/socialApi');
+                const social = await apiEnsureProfile(user.uid, {
+                    name: user.displayName || undefined,
+                    photoURL: session.user?.image || undefined,
+                });
+                if (cancelled) return;
+                setSocialUsername(social.username || '');
+                setSocialBio(social.bio || '');
+                setSocialFollowers(Number(social.followerCount || 0));
+                setSocialFollowing(Number(social.followingCount || 0));
+                setSocialPosts(Number(social.postCount || 0));
+                if (social.photoURL) {
+                    setPhotoURL((prev) => prev || social.photoURL);
+                }
+            } catch (e) {
+                console.warn('MihaSocial profil betöltési hiba:', e);
+            }
+            try {
+                const prog = await loadUserPracticeProgress(user.uid);
+                if (!cancelled) setPracticeProgress(prog);
+            } catch (e) {
+                console.error('Practice progress load error:', e);
+            }
+            setBookingsLoading(true);
+            try {
+                if (user.email) {
+                    const list = await loadStudentBookingsFromFirestore(user.email);
+                    if (!cancelled) setMyBookings(list);
+                } else if (!cancelled) {
+                    setMyBookings([]);
+                }
+            } finally {
+                if (!cancelled) setBookingsLoading(false);
+            }
+            if (!cancelled) setLoading(false);
+        })();
+
+        return () => {
+            cancelled = true;
+        };
+    }, [authStatus, session, router, embedded]);
 
     const handleAvatarClick = () => {
         if (uploadingAvatar) return;
@@ -244,22 +235,25 @@ export default function ProfilePanel({ embedded = false }: { embedded?: boolean 
 
         setUploadingAvatar(true);
         try {
-            const firebase = (window as any).firebase;
             const blob = await compressImage(file);
             let url: string | null = null;
 
-            // Elsődleges: Firebase Storage
-            try {
-                if (firebase.storage) {
-                    const storageRef = firebase.storage().ref(`avatars/${currentUser.uid}.jpg`);
-                    await storageRef.put(blob, { contentType: 'image/jpeg' });
-                    url = await storageRef.getDownloadURL();
-                }
-            } catch (storageErr) {
-                console.warn('Storage feltöltés sikertelen, Firestore fallback:', storageErr);
+            const arrayBuffer = await blob.arrayBuffer();
+            const bytes = new Uint8Array(arrayBuffer);
+            let binary = '';
+            for (let i = 0; i < bytes.length; i++) binary += String.fromCharCode(bytes[i]);
+            const dataBase64 = btoa(binary);
+
+            const { apiPostAuth } = await import('../utils/apiClient');
+            const uploadRes = await apiPostAuth<{ url?: string }>('/api/upload', {
+                filename: `avatars/${currentUser.uid}.jpg`,
+                contentType: 'image/jpeg',
+                dataBase64,
+            });
+            if (uploadRes.ok && uploadRes.data?.url) {
+                url = uploadRes.data.url;
             }
 
-            // Fallback: tömörített data URL a Firestore-ba (ha a Storage nincs beállítva)
             if (!url) {
                 url = await blobToDataUrl(blob);
                 if (url.length > 900_000) {
@@ -267,24 +261,7 @@ export default function ProfilePanel({ embedded = false }: { embedded?: boolean 
                 }
             }
 
-            try {
-                await currentUser.updateProfile({ photoURL: url.startsWith('http') ? url : null });
-            } catch {
-                // A data URL-es photoURL az Auth-ban nem mindig támogatott
-            }
-
-            await firebase.firestore().collection('users').doc(currentUser.uid).set(
-                {
-                    photoURL: url,
-                    updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
-                },
-                { merge: true }
-            );
-
-            if (url.startsWith('http')) {
-                await currentUser.reload();
-                setCurrentUser(firebase.auth().currentUser);
-            }
+            await apiPostAuth('/api/user/profile', { image: url });
 
             setPhotoURL(url);
             setAvatarMessage('Profilkép sikeresen frissítve!');

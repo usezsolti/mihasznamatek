@@ -1,13 +1,16 @@
 import assert from 'node:assert/strict';
 import { describe, it } from 'node:test';
-import { resolveFirebaseWebApiKey } from '../../utils/firebasePublicConfig';
 import { parseApiEnvelope } from '../../utils/apiEnvelope';
 
-describe('firebasePublicConfig', () => {
-    it('resolves a non-empty web API key', () => {
-        const key = resolveFirebaseWebApiKey();
-        assert.ok(key.length > 20);
-        assert.match(key, /^AIza/);
+describe('auth secret hygiene', () => {
+    it('AUTH_SECRET or NEXTAUTH_SECRET should be documented in env example', async () => {
+        const fs = await import('node:fs/promises');
+        const path = await import('node:path');
+        const examplePath = path.join(process.cwd(), '.env.local.example');
+        const text = await fs.readFile(examplePath, 'utf8');
+        assert.match(text, /AUTH_SECRET=/);
+        assert.match(text, /NEXTAUTH_SECRET=/);
+        assert.match(text, /DATABASE_URL=/);
     });
 });
 

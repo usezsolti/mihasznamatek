@@ -669,14 +669,10 @@ export default function MatekWhiteboard({
         if (!mine || !boardId) return;
         setStrokes((prev) => prev.filter((s) => s.id !== mine.id));
         try {
-            const firebase = (window as any).firebase;
-            await firebase
-                ?.firestore?.()
-                ?.collection('whiteboards')
-                ?.doc(boardId)
-                ?.collection('strokes')
-                ?.doc(mine.id)
-                ?.delete?.();
+            const { apiDeleteAuth } = await import('../../utils/apiClient');
+            await apiDeleteAuth(
+                `/api/whiteboard/${encodeURIComponent(boardId)}/strokes?strokeId=${encodeURIComponent(mine.id)}`
+            );
         } catch {
             /* local-only undo fallback */
         }

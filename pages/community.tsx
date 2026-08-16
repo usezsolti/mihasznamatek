@@ -1,5 +1,6 @@
 import Head from 'next/head';
 import Link from 'next/link';
+import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import CommunityAvatar from '../components/community/CommunityAvatar';
@@ -47,9 +48,12 @@ import {
     type StudyGroup,
 } from '../utils/socialTypes';
 import { backendHealth } from '../utils/backendClient';
+import { useLang } from '../utils/i18n';
 
 export default function CommunityPage() {
     const router = useRouter();
+    const { t } = useLang();
+    const { data: session, status: authStatus } = useSession();
     const [ready, setReady] = useState(false);
     const [uid, setUid] = useState<string | null>(null);
     const [me, setMe] = useState<SocialProfile | null>(null);
@@ -114,37 +118,35 @@ export default function CommunityPage() {
     }, []);
 
     useEffect(() => {
+        if (authStatus === 'loading') return;
+
         let cancelled = false;
-        const firebase = (window as any).firebase;
-        if (!firebase?.auth) {
+
+        if (!session?.user?.id) {
+            setUid(null);
+            setMe(null);
             setReady(true);
             return;
         }
 
-        const unsub = firebase.auth().onAuthStateChanged(async (user: any) => {
-            if (cancelled) return;
-            if (!user) {
-                setUid(null);
-                setMe(null);
-                setReady(true);
-                return;
-            }
+        const userId = session.user.id;
+        (async () => {
             try {
-                setUid(user.uid);
-                const profile = await apiEnsureProfile(user.uid);
+                setUid(userId);
+                const profile = await apiEnsureProfile(userId);
                 if (cancelled) return;
                 setMe(profile);
                 setBioDraft(profile.bio);
                 setUsernameDraft(profile.username);
-                const following = await apiListFollowingIds(user.uid);
+                const following = await apiListFollowingIds(userId);
                 if (cancelled) return;
                 setFollowingIds(following);
-                await refreshFeed(user.uid, following);
+                await refreshFeed(userId, following);
                 if (cancelled) return;
                 const [p, g, c, s, health] = await Promise.all([
                     apiListProfiles(30),
                     apiListGroups(),
-                    apiListConversations(user.uid),
+                    apiListConversations(userId),
                     listMathShorts(20).catch(() => []),
                     backendHealth().catch(() => null),
                 ]);
@@ -171,32 +173,31 @@ export default function CommunityPage() {
                 const msg = String(e?.message || e || '');
                 if (/permission|insufficient|PERMISSION_DENIED|403/i.test(msg)) {
                     setRulesBlocked(true);
-                    showToast('Firestore jogosultság hiányzik — telepítsd a rules fájlt.');
+                    showToast(t('community.toast.rulesMissing'));
                     try {
                         await apiSocialDiag();
                     } catch {
                         /* diag best-effort */
                     }
                 } else {
-                    showToast('Nem sikerült betölteni a MihaSocialt.');
+                    showToast(t('community.toast.loadFailed'));
                 }
             } finally {
                 if (!cancelled) setReady(true);
             }
-        });
+        })();
 
         return () => {
             cancelled = true;
-            unsub?.();
         };
-    }, [refreshFeed]);
+    }, [refreshFeed, authStatus, session?.user?.id, t]);
 
     const openProfile = async (targetUid: string) => {
         if (!uid) return;
         let p = profiles.find((x) => x.uid === targetUid) || null;
         if (!p) p = await apiGetProfile(targetUid);
         if (!p) {
-            showToast('Profil nem található.');
+            showToast(t('community.toast.profileNotFound'));
             return;
         }
         setViewProfile(p);
@@ -208,7 +209,7 @@ export default function CommunityPage() {
         if (!me || !uid || targetUid === uid) return;
         let other = profiles.find((p) => p.uid === targetUid) || (await apiGetProfile(targetUid));
         if (!other) {
-            showToast('Felhasználó nem található.');
+            showToast(t('community.toast.userNotFound'));
             return;
         }
         const cid = conversationIdFor(uid, targetUid);
@@ -231,7 +232,7 @@ export default function CommunityPage() {
     const onCreatePost = async () => {
         if (!me || busy) return;
         if (!postText.trim() && !mediaFile) {
-            showToast('Írj szöveget, vagy válassz képet/videót.');
+            showToast(t('community.toast.postNeedsContent'));
             return;
         }
         setBusy(true);
@@ -239,7 +240,7 @@ export default function CommunityPage() {
             let imageUrl: string | null = null;
             let videoUrl: string | null = null;
             if (mediaFile) {
-                showToast('Média feltöltése…');
+                showToast(t('community.toast.mediaUploading'));
                 const { uploadSocialMedia } = await import('../utils/socialMediaUpload');
                 const uploaded = await uploadSocialMedia(mediaFile, me.uid);
                 if (uploaded.kind === 'video') videoUrl = uploaded.url;
@@ -249,9 +250,9 @@ export default function CommunityPage() {
             setPostText('');
             setMediaFile(null);
             setPosts((prev) => [p, ...prev]);
-            showToast('Poszt kint van!');
+            showToast(t('community.toast.postPublished'));
         } catch (e: any) {
-            showToast(e?.message || 'Poszt hiba');
+            showToast(e?.message || t('community.toast.postError'));
         } finally {
             setBusy(false);
         }
@@ -266,18 +267,18 @@ export default function CommunityPage() {
                 await apiUnfollow(uid, target.uid);
                 setFollowingIds((ids) => ids.filter((id) => id !== target.uid));
                 setFollowingView(false);
-                showToast('Követés leállítva');
+                showToast(t('community.toast.unfollowed'));
             } else {
                 await apiFollow(uid, target.uid);
                 setFollowingIds((ids) => [...ids, target.uid]);
                 setFollowingView(true);
-                showToast(`Követed: @${target.username}`);
+                showToast(t('community.toast.followingUser', { username: target.username }));
             }
             const fresh = await apiEnsureProfile(uid);
             setMe(fresh);
             setProfiles(await apiListProfiles(30));
         } catch (e: any) {
-            showToast(e?.message || 'Követés hiba');
+            showToast(e?.message || t('community.toast.followError'));
         } finally {
             setBusy(false);
         }
@@ -292,9 +293,9 @@ export default function CommunityPage() {
             setGroupName('');
             setGroupDesc('');
             setGroupTopic('');
-            showToast('Tanulócsoport létrehozva!');
+            showToast(t('community.toast.groupCreated'));
         } catch (e: any) {
-            showToast(e?.message || 'Csoport hiba');
+            showToast(e?.message || t('community.toast.groupError'));
         } finally {
             setBusy(false);
         }
@@ -306,14 +307,14 @@ export default function CommunityPage() {
         try {
             if (g.memberIds.includes(uid)) {
                 await apiLeaveGroup(g.id, uid);
-                showToast('Kiléptél a csoportból');
+                showToast(t('community.toast.leftGroup'));
             } else {
                 await apiJoinGroup(g.id, uid);
-                showToast('Csatlakoztál!');
+                showToast(t('community.toast.joinedGroup'));
             }
             setGroups(await apiListGroups());
         } catch (e: any) {
-            showToast(e?.message || 'Csoport művelet hiba');
+            showToast(e?.message || t('community.toast.groupActionError'));
         } finally {
             setBusy(false);
         }
@@ -326,13 +327,13 @@ export default function CommunityPage() {
             let other =
                 profiles.find((p) => p.uid === activeChat.otherUid) ||
                 (await apiGetProfile(activeChat.otherUid));
-            if (!other) throw new Error('Címzett hiányzik');
+            if (!other) throw new Error(t('community.toast.recipientMissing'));
             await apiSendMessage(uid, activeChat.otherUid, msgDraft, me, other);
             setMsgDraft('');
             setMessages(await apiListMessages(activeChat.id));
             setConversations(await apiListConversations(uid));
         } catch (e: any) {
-            showToast(e?.message || 'Üzenet hiba');
+            showToast(e?.message || t('community.toast.messageError'));
         } finally {
             setBusy(false);
         }
@@ -378,9 +379,9 @@ export default function CommunityPage() {
             });
             const fresh = await apiEnsureProfile(me.uid);
             setMe(fresh);
-            showToast('Profil mentve');
+            showToast(t('community.toast.profileSaved'));
         } catch (e: any) {
-            showToast(e?.message || 'Profil hiba');
+            showToast(e?.message || t('community.toast.profileError'));
         } finally {
             setBusy(false);
         }
@@ -391,7 +392,7 @@ export default function CommunityPage() {
         setBusy(true);
         try {
             const res = await apiGenerateMathShort(shortTopic, 'közepes');
-            if (!res.ok) throw new Error(res.error || 'Generálás sikertelen');
+            if (!res.ok) throw new Error(res.error || t('community.toast.generateFailed'));
             const shortPayload = res.data;
             const short: MathShort = {
                 id: `local-${Date.now()}`,
@@ -419,9 +420,9 @@ export default function CommunityPage() {
                 setShorts((prev) => [short, ...prev]);
                 setShortIndex(0);
             }
-            showToast('Új AI matek short kész!');
+            showToast(t('community.toast.shortCreated'));
         } catch (e: any) {
-            showToast(e?.message || 'Short hiba');
+            showToast(e?.message || t('community.toast.shortError'));
         } finally {
             setBusy(false);
         }
@@ -466,7 +467,7 @@ export default function CommunityPage() {
                             <span className="mm-ig-boot-logo">M</span>
                         </div>
                         <h1 className="mm-ig-boot-title">MihaSocial</h1>
-                        <p className="mm-ig-boot-sub">Matek közösség betöltése</p>
+                        <p className="mm-ig-boot-sub">{t('community.loading')}</p>
                     </div>
                     <div className="mm-ig-boot-bar" aria-hidden>
                         <span />
@@ -489,7 +490,7 @@ export default function CommunityPage() {
                 </Head>
                 <div className="mm-social-gate">
                     <h1 className="mm-ig-wordmark">MihaSocial</h1>
-                    <p>Matek közösség: posztok, követés, csoportok, üzenetek, AI shorts.</p>
+                    <p>{t('community.gate.desc')}</p>
                     <button
                         type="button"
                         className="mm-social-primary"
@@ -505,9 +506,9 @@ export default function CommunityPage() {
                             }
                         }}
                     >
-                        Belépés
+                        {t('community.gate.login')}
                     </button>
-                    <Link href="/dashboard">Vissza a dashboardra</Link>
+                    <Link href="/dashboard">{t('community.gate.backDashboard')}</Link>
                 </div>
             </div>
         );
@@ -517,12 +518,12 @@ export default function CommunityPage() {
         tab === 'profile' ? (viewProfile && viewProfile.uid !== me.uid ? viewProfile : me) : null;
 
     const navItems = [
-        ['feed', 'Kezdőlap'],
-        ['explore', 'Keresés'],
-        ['shorts', 'Shorts'],
-        ['messages', 'Üzenetek'],
-        ['groups', 'Csoportok'],
-        ['profile', 'Profil'],
+        ['feed', t('community.tab.feed')],
+        ['explore', t('community.tab.explore')],
+        ['shorts', t('community.tab.shorts')],
+        ['messages', t('community.tab.messages')],
+        ['groups', t('community.tab.groups')],
+        ['profile', t('community.tab.profile')],
     ] as const;
 
     return (
@@ -535,7 +536,7 @@ export default function CommunityPage() {
                 <title>MihaSocial | Mihaszna Matek</title>
             </Head>
 
-            <aside className="mm-ig-nav" aria-label="MihaSocial navigáció">
+            <aside className="mm-ig-nav" aria-label={t('community.nav.ariaLabel')}>
                 <div className="mm-ig-nav-brand">
                     <span className="mm-ig-wordmark">MihaSocial</span>
                 </div>
@@ -557,20 +558,15 @@ export default function CommunityPage() {
                 </nav>
                 <Link href="/dashboard" className="mm-ig-nav-item mm-ig-nav-dash">
                     <span className="mm-ig-ico mm-ig-ico--more" aria-hidden />
-                    <span className="mm-ig-nav-label">Dashboard</span>
+                    <span className="mm-ig-nav-label">{t('community.nav.dashboard')}</span>
                 </Link>
             </aside>
 
             <div className="mm-ig-center">
                 {rulesBlocked && (
                     <div className="mm-social-rules-banner" role="alert">
-                        <strong>Firestore rules nincs telepítve (vagy hibás)</strong>
-                        <p>
-                            A MihaSocial <code>socialProfiles</code> / <code>posts</code> gyűjteményeihez
-                            Publish kell.{' '}
-                            <a href="/rules-setup">Nyisd meg a Rules setup oldalt</a>, majd Firebase Console →{' '}
-                            <strong>Publish</strong>.
-                        </p>
+                        <strong>{t('community.rules.title')}</strong>
+                        <p>{t('community.rules.body')}</p>
                         <button
                             type="button"
                             className="mm-social-ghost"
@@ -579,24 +575,27 @@ export default function CommunityPage() {
                                 try {
                                     const res = await apiSocialDiag();
                                     if (!res.ok) {
-                                        showToast(res.error || 'Diag hiba');
+                                        showToast(res.error || t('community.toast.diagError'));
                                         return;
                                     }
                                     showToast(
                                         res.data?.ok
-                                            ? 'Diag OK — rules rendben'
-                                            : `Diag FAIL (${res.data?.step}): ${String(res.data?.error || '').slice(0, 120)}`
+                                            ? t('community.toast.diagOk')
+                                            : t('community.toast.diagFail', {
+                                                  step: String(res.data?.step || ''),
+                                                  error: String(res.data?.error || '').slice(0, 120),
+                                              })
                                     );
                                     if (res.data?.ok) {
                                         setRulesBlocked(false);
                                         window.location.reload();
                                     }
                                 } catch (e: any) {
-                                    showToast(e?.message || 'Diag hiba');
+                                    showToast(e?.message || t('community.toast.diagError'));
                                 }
                             }}
                         >
-                            Rules diagnosztika futtatása
+                            {t('community.rules.runDiag')}
                         </button>
                     </div>
                 )}
@@ -713,7 +712,7 @@ export default function CommunityPage() {
             </div>
 
             {tab === 'feed' && (
-                <aside className="mm-ig-rail" aria-label="Javaslatok">
+                <aside className="mm-ig-rail" aria-label={t('community.rail.ariaLabel')}>
                     <div className="mm-ig-rail-me">
                         <button type="button" className="mm-social-userbtn" onClick={() => openProfile(me.uid)}>
                             <CommunityAvatar url={me.photoURL} name={me.displayName} size={44} />
@@ -723,19 +722,19 @@ export default function CommunityPage() {
                             </span>
                         </button>
                         <Link href="/dashboard" className="mm-ig-link">
-                            Váltás
+                            {t('community.rail.switch')}
                         </Link>
                     </div>
 
                     <div className="mm-ig-rail-head">
-                        <span>Ajánlott neked</span>
+                        <span>{t('community.rail.suggested')}</span>
                         <button type="button" className="mm-ig-link" onClick={() => setTab('explore')}>
-                            Összes
+                            {t('community.rail.seeAll')}
                         </button>
                     </div>
 
                     <div className="mm-ig-suggest-list">
-                        {suggested.length === 0 && <p className="mm-social-muted">Nincs új javaslat.</p>}
+                        {suggested.length === 0 && <p className="mm-social-muted">{t('community.rail.noSuggestions')}</p>}
                         {suggested.map((p) => (
                             <div key={p.uid} className="mm-ig-suggest-row">
                                 <button
@@ -746,7 +745,7 @@ export default function CommunityPage() {
                                     <CommunityAvatar url={p.photoURL} name={p.displayName} size={36} />
                                     <span>
                                         <strong>{p.username || p.displayName}</strong>
-                                        <small>{p.rank || 'Diák'}</small>
+                                        <small>{p.rank || t('community.rank.student')}</small>
                                     </span>
                                 </button>
                                 <button
@@ -755,17 +754,17 @@ export default function CommunityPage() {
                                     disabled={busy}
                                     onClick={() => onToggleFollow(p)}
                                 >
-                                    Követés
+                                    {t('community.rail.follow')}
                                 </button>
                             </div>
                         ))}
                     </div>
 
-                    <p className="mm-ig-rail-foot">© Mihaszna Matek · MihaSocial</p>
+                    <p className="mm-ig-rail-foot">{t('community.rail.footer')}</p>
                 </aside>
             )}
 
-            <nav className="mm-social-tabs mm-ig-bottom" role="navigation" aria-label="MihaSocial menü">
+            <nav className="mm-social-tabs mm-ig-bottom" role="navigation" aria-label={t('community.nav.menu')}>
                 {navItems.map(([id, label]) => (
                     <button
                         key={id}

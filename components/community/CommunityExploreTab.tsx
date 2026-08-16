@@ -1,4 +1,5 @@
 import type { SocialProfile } from '../../utils/socialTypes';
+import { useLang } from '../../utils/i18n';
 import CommunityAvatar from './CommunityAvatar';
 
 type CommunityExploreTabProps = {
@@ -22,10 +23,11 @@ export default function CommunityExploreTab({
     onToggleFollow,
     onMessage,
 }: CommunityExploreTabProps) {
+    const { t } = useLang();
     return (
         <div className="mm-social-panel">
-            <h2 className="mm-social-section-title">XP ranglista</h2>
-            <p className="mm-social-muted">Lásd egymás pontjait — aki megosztja az XP-jét.</p>
+            <h2 className="mm-social-section-title">{t('community.explore.leaderboard')}</h2>
+            <p className="mm-social-muted">{t('community.explore.leaderboardHint')}</p>
             <div className="mm-social-leaderboard">
                 {leaderboard.map((p, i) => (
                     <button
@@ -47,7 +49,7 @@ export default function CommunityExploreTab({
                 ))}
             </div>
 
-            <h2 className="mm-social-section-title">Diákok</h2>
+            <h2 className="mm-social-section-title">{t('community.explore.students')}</h2>
             <div className="mm-social-people-grid">
                 {profiles.map((p) => (
                     <div key={p.uid} className="mm-social-person-card">
@@ -69,14 +71,14 @@ export default function CommunityExploreTab({
                                     onClick={() => onToggleFollow(p)}
                                     disabled={busy}
                                 >
-                                    {followingIds.includes(p.uid) ? 'Követed' : 'Követés'}
+                                    {followingIds.includes(p.uid) ? t('community.explore.following') : t('community.explore.follow')}
                                 </button>
                                 <button
                                     type="button"
                                     className="mm-social-ghost mm-social-btn-sm"
                                     onClick={() => onMessage(p.uid)}
                                 >
-                                    Üzenet
+                                    {t('community.explore.message')}
                                 </button>
                             </div>
                         )}

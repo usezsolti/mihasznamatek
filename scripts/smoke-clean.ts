@@ -93,7 +93,7 @@ function runSecurityHygieneChecks(): Record<string, unknown> {
         /ALLOW_DEV_ADMIN_FALLBACK/.test(adminSrc);
     const apiSec = read('utils/apiSecurity.ts');
     const noHardcodedServerKey = !/AIzaSy[A-Za-z0-9_-]+/.test(apiSec);
-    const publicKeyModule = fs.existsSync(path.join(root, 'utils/firebasePublicConfig.ts'));
+    const publicKeyModule = !fs.existsSync(path.join(root, 'utils/firebasePublicConfig.ts'));
     logDebug('H4 admin/api key hygiene', { adminFailClosed, noHardcodedServerKey, publicKeyModule }, 'H4');
 
     // H5: password-relay gated

@@ -6,6 +6,7 @@ import {
     sendGroupMessage,
     subscribeGroupMessages,
 } from '../../utils/groupRoom';
+import { useLang } from '../../utils/i18n';
 import CommunityAvatar from './CommunityAvatar';
 
 type RoomTab = 'chat' | 'call' | 'board';
@@ -25,6 +26,7 @@ export default function CommunityGroupRoom({
     onGroupUpdated,
     onToast,
 }: CommunityGroupRoomProps) {
+    const { t } = useLang();
     const [tab, setTab] = useState<RoomTab>('chat');
     const [messages, setMessages] = useState<GroupMessage[]>([]);
     const [draft, setDraft] = useState('');
@@ -48,7 +50,7 @@ export default function CommunityGroupRoom({
             setDraft('');
             await sendGroupMessage(group, me, text);
         } catch (e: any) {
-            onToast(e?.message || 'Üzenet hiba');
+            onToast(e?.message || t('community.toast.messageError'));
         } finally {
             setBusy(false);
         }
@@ -63,7 +65,7 @@ export default function CommunityGroupRoom({
             if (res.warning) onToast(res.warning);
             window.open(`/whiteboard?board=${encodeURIComponent(res.whiteboardId)}`, '_blank');
         } catch (e: any) {
-            onToast(e?.message || 'Tábla hiba');
+            onToast(e?.message || t('community.groupRoom.boardError'));
         } finally {
             setBusy(false);
         }
@@ -78,19 +80,20 @@ export default function CommunityGroupRoom({
         <div className="mm-group-room">
             <div className="mm-group-room-head">
                 <button type="button" className="mm-ig-btn" onClick={onBack}>
-                    ← Vissza
+                    {t('community.groupRoom.back')}
                 </button>
                 <div className="mm-group-room-title">
                     <h2>{group.name}</h2>
                     <p>
-                        {group.topic || 'Tanulócsoport'} · {group.memberCount} tag
+                        {t('community.groupRoom.members', {
+                            topic: group.topic || t('community.groupRoom.studyGroup'),
+                            count: String(group.memberCount),
+                        })}
                     </p>
                 </div>
             </div>
 
-            <p className="mm-group-room-hint">
-                Itt tudtok írni egymásnak, közös táblán számolni, és csoportos hívást indítani.
-            </p>
+            <p className="mm-group-room-hint">{t('community.groupRoom.hint')}</p>
 
             <div className="mm-group-room-tabs" role="tablist">
                 <button
@@ -98,10 +101,10 @@ export default function CommunityGroupRoom({
                     className={tab === 'chat' ? 'is-on' : ''}
                     onClick={() => setTab('chat')}
                 >
-                    Csevegés
+                    {t('community.groupRoom.chat')}
                 </button>
                 <button type="button" className={tab === 'call' ? 'is-on' : ''} onClick={startCall}>
-                    Hívás
+                    {t('community.groupRoom.call')}
                 </button>
                 <button
                     type="button"
@@ -110,7 +113,7 @@ export default function CommunityGroupRoom({
                         setTab('board');
                     }}
                 >
-                    Tábla
+                    {t('community.groupRoom.board')}
                 </button>
             </div>
 
@@ -118,7 +121,7 @@ export default function CommunityGroupRoom({
                 <div className="mm-group-chat">
                     <div className="mm-group-chat-list">
                         {messages.length === 0 && (
-                            <p className="mm-social-muted">Még nincs üzenet — írjatok valamit!</p>
+                            <p className="mm-social-muted">{t('community.groupRoom.emptyChat')}</p>
                         )}
                         {messages.map((m) => {
                             const mine = m.senderId === me.uid;
@@ -147,7 +150,7 @@ export default function CommunityGroupRoom({
                         <input
                             value={draft}
                             onChange={(e) => setDraft(e.target.value)}
-                            placeholder="Üzenet a csoportnak…"
+                            placeholder={t('community.groupRoom.placeholder')}
                             maxLength={1000}
                             onKeyDown={(e) => {
                                 if (e.key === 'Enter' && !e.shiftKey) {
@@ -162,7 +165,7 @@ export default function CommunityGroupRoom({
                             onClick={() => void send()}
                             disabled={busy || !draft.trim()}
                         >
-                            Küldés
+                            {t('common.send')}
                         </button>
                     </div>
                 </div>
@@ -172,9 +175,9 @@ export default function CommunityGroupRoom({
                 <div className="mm-group-call">
                     {!callOpen ? (
                         <div className="mm-group-call-start">
-                            <p>Csoportos hang-/videóhívás (Jitsi Meet).</p>
+                            <p>{t('community.groupRoom.callDesc')}</p>
                             <button type="button" className="mm-ig-btn is-primary" onClick={startCall}>
-                                Hívás indítása / csatlakozás
+                                {t('community.groupRoom.startCall')}
                             </button>
                             <a
                                 className="mm-ig-link"
@@ -182,24 +185,24 @@ export default function CommunityGroupRoom({
                                 target="_blank"
                                 rel="noreferrer"
                             >
-                                Megnyitás új lapon
+                                {t('community.groupRoom.openNewTab')}
                             </a>
                         </div>
                     ) : (
                         <>
                             <div className="mm-group-call-bar">
-                                <span>Élő hívás</span>
+                                <span>{t('community.groupRoom.liveCall')}</span>
                                 <button
                                     type="button"
                                     className="mm-ig-btn"
                                     onClick={() => setCallOpen(false)}
                                 >
-                                    Hívás bezárása
+                                    {t('community.groupRoom.closeCall')}
                                 </button>
                             </div>
                             <iframe
                                 className="mm-group-call-frame"
-                                title={`${group.name} hívás`}
+                                title={t('community.groupRoom.callTitle', { name: group.name })}
                                 allow="camera; microphone; fullscreen; display-capture; autoplay"
                                 src={`${groupCallUrl(group.id)}#config.prejoinPageEnabled=true`}
                             />
@@ -210,21 +213,18 @@ export default function CommunityGroupRoom({
 
             {tab === 'board' && (
                 <div className="mm-group-board">
-                    <p>
-                        Közös matek tábla a csoportnak. Mindenki ugyanazt a táblát látja és rajzolhat
-                        rá.
-                    </p>
+                    <p>{t('community.groupRoom.boardDesc')}</p>
                     <button
                         type="button"
                         className="mm-ig-btn is-primary"
                         onClick={() => void openBoard()}
                         disabled={busy}
                     >
-                        {group.whiteboardId ? 'Tábla megnyitása' : 'Tábla létrehozása és megnyitás'}
+                        {group.whiteboardId ? t('community.groupRoom.openBoard') : t('community.groupRoom.createBoard')}
                     </button>
                     {group.whiteboardId && (
                         <p className="mm-social-muted">
-                            Board ID: <code>{group.whiteboardId}</code>
+                            {t('community.groupRoom.boardId')} <code>{group.whiteboardId}</code>
                         </p>
                     )}
                 </div>

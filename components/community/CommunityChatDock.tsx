@@ -1,5 +1,6 @@
-import { useEffect, useRef, useState } from 'react';
-import type { DirectMessage, SocialProfile } from '../../utils/socialTypes';
+import { useEffect, useRef } from 'react';
+import type { DirectMessage } from '../../utils/socialTypes';
+import { useLang } from '../../utils/i18n';
 import CommunityAvatar from './CommunityAvatar';
 
 type CommunityChatDockProps = {
@@ -29,6 +30,7 @@ export default function CommunityChatDock({
     onExpand,
     busy,
 }: CommunityChatDockProps) {
+    const { t } = useLang();
     const listRef = useRef<HTMLDivElement>(null);
     const inputRef = useRef<HTMLInputElement>(null);
 
@@ -48,10 +50,10 @@ export default function CommunityChatDock({
                 <CommunityAvatar url={peer.otherPhoto} name={peer.otherName} size={28} />
                 <strong>{peer.otherName}</strong>
                 <div className="mm-chat-dock-actions">
-                    <button type="button" title="Teljes üzenetek" onClick={onExpand} aria-label="Kibontás">
+                    <button type="button" title={t('community.chat.expandTitle')} onClick={onExpand} aria-label={t('community.chat.expand')}>
                         ⤢
                     </button>
-                    <button type="button" title="Bezárás" onClick={onClose} aria-label="Bezárás">
+                    <button type="button" title={t('common.close')} onClick={onClose} aria-label={t('common.close')}>
                         ×
                     </button>
                 </div>
@@ -59,7 +61,7 @@ export default function CommunityChatDock({
 
             <div className="mm-chat-dock-list" ref={listRef}>
                 {messages.length === 0 && (
-                    <p className="mm-chat-dock-empty">Írd meg az első üzenetet…</p>
+                    <p className="mm-chat-dock-empty">{t('community.chat.empty')}</p>
                 )}
                 {messages.map((m) => {
                     const mine = m.senderId === uid;
@@ -86,13 +88,13 @@ export default function CommunityChatDock({
                     ref={inputRef}
                     value={msgDraft}
                     onChange={(e) => onMsgDraftChange(e.target.value)}
-                    placeholder="Üzenet…"
+                    placeholder={t('community.chat.placeholder')}
                     maxLength={500}
                     autoComplete="off"
                 />
                 {msgDraft.trim() ? (
                     <button type="submit" disabled={busy}>
-                        Küldés
+                        {t('common.send')}
                     </button>
                 ) : (
                     <span className="mm-chat-dock-tools" aria-hidden>

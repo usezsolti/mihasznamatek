@@ -1,16 +1,16 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { sendErr, sendOk, withBackendAuth } from '../../../server/http';
 import { isLocalSocialStore } from '../../../server/localSocialDb';
-import { createSocialStore, runSocialAction } from '../../../server/socialStore';
+import { createSocialStore, runSocialAction, usePrismaSocialStore } from '../../../server/socialStore';
 
 /**
  * POST /api/backend/social
  * Body: { action: string, ...params }
  * Auth: Bearer Firebase ID token
- * SOCIAL_DATA_STORE=local → fájl store; egyébként Firestore
+ * SOCIAL_DATA_STORE=local + nincs DATABASE_URL → fájl store; egyébként Prisma
  */
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-    const useLocal = isLocalSocialStore();
+    const useLocal = isLocalSocialStore() && !usePrismaSocialStore();
     const auth = await withBackendAuth(req, res, {
         methods: ['POST'],
         rateKey: useLocal ? 'social-local' : 'social-v2',

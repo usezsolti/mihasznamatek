@@ -1900,6 +1900,38 @@ h1 {
   height: 28px;
 }
 
+/* Language toggle (HU | EN) */
+.lang-toggle {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid rgba(57, 255, 20, 0.35);
+  border-radius: 999px;
+  overflow: hidden;
+  background: rgba(0, 0, 0, 0.35);
+  flex-shrink: 0;
+}
+
+.lang-toggle button {
+  border: none;
+  background: transparent;
+  color: #9aa89f;
+  font-weight: 800;
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  padding: 0.35rem 0.55rem;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.lang-toggle button.is-on {
+  background: linear-gradient(135deg, #39ff14, #b8ff5a);
+  color: #061008;
+}
+
+.lang-toggle button:not(.is-on):hover {
+  color: #e8f0ea;
+}
+
 /* Navbar auth block — mindig kattintható, ne csússzon le a sáv végéről */
 .nav-lang-desktop {
   display: flex;
@@ -1916,6 +1948,7 @@ h1 {
 .nav-auth {
   display: flex;
   align-items: center;
+  gap: 0.5rem;
   flex-shrink: 0;
   margin-left: 0.5rem;
   padding-left: 0.75rem;
@@ -1925,12 +1958,28 @@ h1 {
 }
 
 .nav-logout-btn,
-.nav-login-btn {
+.nav-login-btn,
+.nav-admin-enter-btn {
   flex-shrink: 0;
   cursor: pointer;
   pointer-events: auto;
   position: relative;
   z-index: 6;
+}
+
+.nav-admin-enter-btn {
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  background: transparent;
+  border: 1px solid rgba(57, 255, 20, 0.45);
+  color: #39ff14;
+}
+
+.nav-admin-enter-btn:hover {
+  background: rgba(57, 255, 20, 0.12);
+  border-color: #39ff14;
+  color: #39ff14;
 }
 
 .nav-user {

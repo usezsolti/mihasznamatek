@@ -114,12 +114,9 @@ export function useGameRouteBootstrap({
                         : 1;
                     if (Number.isFinite(nodeParsed) && nodeParsed > 1) {
                         try {
-                            let attempts = 0;
-                            while (!(window as any).firebase?.auth && attempts < 30) {
-                                await new Promise((r) => setTimeout(r, 100));
-                                attempts++;
-                            }
-                            const uid = (window as any).firebase?.auth?.()?.currentUser?.uid || null;
+                            const { getSession } = await import('next-auth/react');
+                            const session = await getSession();
+                            const uid = String((session?.user as { id?: string } | undefined)?.id || '') || null;
                             const prog = await loadUserPracticeProgress(uid);
                             const key = resolveProgressStorageKey(topicParam);
                             const tp = prog.topics[key];
@@ -173,12 +170,9 @@ export function useGameRouteBootstrap({
             const run = async () => {
                 if (Number.isFinite(nodeParsed) && nodeParsed > 1) {
                     try {
-                        let attempts = 0;
-                        while (!(window as any).firebase?.auth && attempts < 30) {
-                            await new Promise((r) => setTimeout(r, 100));
-                            attempts++;
-                        }
-                        const uid = (window as any).firebase?.auth?.()?.currentUser?.uid || null;
+                        const { getSession } = await import('next-auth/react');
+                        const session = await getSession();
+                        const uid = String((session?.user as { id?: string } | undefined)?.id || '') || null;
                         const prog = await loadUserPracticeProgress(uid);
                         const key = resolveProgressStorageKey(topicId);
                         const tp = prog.topics[key];

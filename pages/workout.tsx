@@ -2,8 +2,10 @@ import React, { useEffect } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 import { trackContactConversion } from '../utils/gtag';
+import { useLang } from '../utils/i18n';
 
 export default function PersonalTrainer() {
+    const { t } = useLang();
     useEffect(() => {
         if (typeof window !== 'undefined') {
             window.scrollTo({ top: 0, behavior: 'auto' });
@@ -13,8 +15,8 @@ export default function PersonalTrainer() {
     return (
         <>
             <Head>
-                <title>Személyi Edzés - Mihaszna Matek</title>
-                <meta name="description" content="Személyi edzés - Professzionális személyi edző, edzésprogramok és kondicionálás" />
+                <title>{t('workout.pageTitle')}</title>
+                <meta name="description" content={t('workout.metaDescription')} />
             </Head>
 
             <div className="workout-page">
@@ -24,171 +26,159 @@ export default function PersonalTrainer() {
                             💪 MIHASZNA WORKOUT
                         </h1>
                         <p className="workout-subtitle">
-                            So useful workout for your body
+                            {t('workout.subtitle')}
                         </p>
                     </div>
 
                     <div className="workout-content">
-                        {/* Bemutatkozás szekció */}
                         <section className="workout-section profile-section-trainer">
                             <div className="trainer-profile">
                                 <div className="trainer-image">
-                                    <img src="/workout profile.png" alt="Személyi Edző" />
+                                    <img src="/workout profile.png" alt={t('workout.trainerAlt')} />
                                 </div>
                                 <div className="trainer-info">
-                                    <h2 className="section-title-workout">Rólam</h2>
+                                    <h2 className="section-title-workout">{t('workout.about')}</h2>
                                     <p className="trainer-intro">
-                                        Sziasztok csajok/srácok! Zsolti vagyok az új személyi edzőtök, mármint remélem. 
-                                        Célom, hogy segítsek elérni az edzési céljaidat, akár erősítésről, 
-                                        kondíció javításról, testsúly kezelésről vagy egészséges életmód 
-                                        kialakításáról van szó. De ha leszámítjuk a  sablon szöveget a lényeg, 
-                                        hogy jó hangulatban együtt nevetve sírva éljük át élményként az edzéseket. 
-                                        A mai világ tele van stresszel és mindenkinek meg van a maga problémája, 
-                                        azt szeretném edzés közben ezt mindenki elengedhesse és átéljük együtt a MIHASZNA vibe-ot.
+                                        {t('workout.aboutIntro1')}
                                     </p>
                                     <p className="trainer-intro">
-                                        Minden edzésem személyre szabott, figyelembe veszem a jelenlegi 
-                                        kondíciód, a korlátaid és a céljaid. Rugalmas időbeosztásban 
-                                        dolgozom, hogy könnyen illeszkedjek az életedbe.
+                                        {t('workout.aboutIntro2')}
                                     </p>
                                 </div>
                             </div>
                         </section>
 
-                        {/* Szolgáltatások */}
                         <section className="workout-section">
                             <h2 className="section-title-workout">
-                                🏋️ Szolgáltatásaim
+                                {t('workout.servicesTitle')}
                             </h2>
                             <div className="workout-grid">
                                 <div className="workout-card">
                                     <div className="workout-card-icon">🥊</div>
-                                    <h3>CrossFight</h3>
-                                    <p>Harcművészeti elemekkel kombinált funkcionális edzés erőre és állóképességre.</p>
+                                    <h3>{t('workout.services.crossfight.title')}</h3>
+                                    <p>{t('workout.services.crossfight.body')}</p>
                                 </div>
 
                                 <div className="workout-card">
                                     <div className="workout-card-icon">📋</div>
-                                    <h3>Személyre szabott edzésterv</h3>
-                                    <p>Egyéni célokra, időbeosztásra és edzettségi szintre szabott komplett program.</p>
+                                    <h3>{t('workout.services.plan.title')}</h3>
+                                    <p>{t('workout.services.plan.body')}</p>
                                 </div>
 
                                 <div className="workout-card">
                                     <div className="workout-card-icon">🏃</div>
-                                    <h3>Kardio</h3>
-                                    <p>Futás, evezés, bicikli és intervall kardio a szív- és érrendszer fejlesztéséért.</p>
+                                    <h3>{t('workout.services.cardio.title')}</h3>
+                                    <p>{t('workout.services.cardio.body')}</p>
                                 </div>
 
                                 <div className="workout-card">
                                     <div className="workout-card-icon">⚡</div>
-                                    <h3>HIIT</h3>
-                                    <p>Magas intenzitású intervallum edzés gyors zsírégetéssel és kondíciójavítással.</p>
+                                    <h3>{t('workout.services.hiit.title')}</h3>
+                                    <p>{t('workout.services.hiit.body')}</p>
                                 </div>
 
                                 <div className="workout-card">
                                     <div className="workout-card-icon">🏋️</div>
-                                    <h3>CrossFit</h3>
-                                    <p>Komplex, funkcionális mozgások súlyemeléssel és saját testsúllyal, időre és ismétlésre.</p>
+                                    <h3>{t('workout.services.crossfit.title')}</h3>
+                                    <p>{t('workout.services.crossfit.body')}</p>
                                 </div>
 
                                 <div className="workout-card">
                                     <div className="workout-card-icon">🍑</div>
-                                    <h3>Farizom-fókuszú női edzések</h3>
-                                    <p>Célzott far- és alsótest erősítés formás izomzatért és stabil törzsért.</p>
+                                    <h3>{t('workout.services.glutes.title')}</h3>
+                                    <p>{t('workout.services.glutes.body')}</p>
                                 </div>
 
                                 <div className="workout-card">
                                     <div className="workout-card-icon">🏗️</div>
-                                    <h3>Powerbuilding</h3>
-                                    <p>Erőemelés és testépítés ötvözete: nagy súlyok, izomtömeg és erő fejlesztése.</p>
+                                    <h3>{t('workout.services.powerbuilding.title')}</h3>
+                                    <p>{t('workout.services.powerbuilding.body')}</p>
                                 </div>
 
                                 <div className="workout-card">
                                     <div className="workout-card-icon">🧘</div>
-                                    <h3>Mobilitás- és tartásjavító edzés</h3>
-                                    <p>Ízületi mozgástartomány növelése, stabilitás és testtartás javítása.</p>
+                                    <h3>{t('workout.services.mobility.title')}</h3>
+                                    <p>{t('workout.services.mobility.body')}</p>
                                 </div>
 
                                 <div className="workout-card">
                                     <div className="workout-card-icon">👥</div>
-                                    <h3>Couple / Friend Workout</h3>
-                                    <p>Páros vagy barátos edzések közös motivációval, egymást húzva a célok felé.</p>
+                                    <h3>{t('workout.services.couple.title')}</h3>
+                                    <p>{t('workout.services.couple.body')}</p>
                                 </div>
 
                                 <div className="workout-card">
                                     <div className="workout-card-icon">🏥</div>
-                                    <h3>Rehabilitáció</h3>
-                                    <p>Sérülések utáni helyreállítás, mozgásszervi problémák kezelése és funkcionális helyreállítás személyre szabott programmal.</p>
+                                    <h3>{t('workout.services.rehab.title')}</h3>
+                                    <p>{t('workout.services.rehab.body')}</p>
                                 </div>
                             </div>
                         </section>
 
-                        {/* Csomagok és árak */}
                         <section className="workout-section pricing-section">
-                            <h2 className="section-title-workout">💰 Csomagok és árak</h2>
+                            <h2 className="section-title-workout">{t('workout.pricingTitle')}</h2>
                             <div className="pricing-grid">
                                 <div className="pricing-card">
-                                    <div className="pricing-badge">Standard</div>
-                                    <h3>1 alkalom</h3>
-                                    <p className="price">12 000 Ft / 60 perc</p>
+                                    <div className="pricing-badge">{t('workout.pricing.standard.badge')}</div>
+                                    <h3>{t('workout.pricing.standard.title')}</h3>
+                                    <p className="price">{t('workout.pricing.standard.price')}</p>
                                     <ul className="pricing-features">
-                                        <li>Egyéni edzés</li>
-                                        <li>Technika javítás</li>
-                                        <li>Rövid bemelegítés + levezetés</li>
+                                        <li>{t('workout.pricing.standard.f1')}</li>
+                                        <li>{t('workout.pricing.standard.f2')}</li>
+                                        <li>{t('workout.pricing.standard.f3')}</li>
                                     </ul>
                                 </div>
 
                                 <div className="pricing-card highlight">
-                                    <div className="pricing-badge best">StandardPlus</div>
-                                    <h3>5 alkalmas bérlet</h3>
-                                    <p className="price">55 000 Ft</p>
-                                    <p className="sub">11 000 Ft / alkalom</p>
+                                    <div className="pricing-badge best">{t('workout.pricing.standardPlus.badge')}</div>
+                                    <h3>{t('workout.pricing.standardPlus.title')}</h3>
+                                    <p className="price">{t('workout.pricing.standardPlus.price')}</p>
+                                    <p className="sub">{t('workout.pricing.standardPlus.sub')}</p>
                                     <ul className="pricing-features">
-                                        <li>5× 60 perces edzés</li>
-                                        <li>Személyre szabott terv</li>
-                                        <li>Fejlődéskövetés</li>
-                                        <li>Technikai javítás</li>
+                                        <li>{t('workout.pricing.standardPlus.f1')}</li>
+                                        <li>{t('workout.pricing.standardPlus.f2')}</li>
+                                        <li>{t('workout.pricing.standardPlus.f3')}</li>
+                                        <li>{t('workout.pricing.standardPlus.f4')}</li>
                                     </ul>
                                 </div>
 
                                 <div className="pricing-card">
-                                    <div className="pricing-badge">Legnépszerűbb</div>
-                                    <h3>10 alkalmas bérlet</h3>
-                                    <p className="price">100 000 Ft</p>
+                                    <div className="pricing-badge">{t('workout.pricing.popular.badge')}</div>
+                                    <h3>{t('workout.pricing.popular.title')}</h3>
+                                    <p className="price">{t('workout.pricing.popular.price')}</p>
                                     <ul className="pricing-features">
-                                        <li>10 × 60 perces edzés</li>
-                                        <li>Részletes edzésterv</li>
-                                        <li>Fejlődéskövetés</li>
-                                        <li>Technikai javítás</li>
+                                        <li>{t('workout.pricing.popular.f1')}</li>
+                                        <li>{t('workout.pricing.popular.f2')}</li>
+                                        <li>{t('workout.pricing.popular.f3')}</li>
+                                        <li>{t('workout.pricing.popular.f4')}</li>
                                     </ul>
                                 </div>
 
                                 <div className="pricing-card">
-                                    <div className="pricing-badge">Páros</div>
-                                    <h3>Couple / Friend Workout</h3>
-                                    <p className="price">20 000 Ft / 60 perc / 2 fő</p>
+                                    <div className="pricing-badge">{t('workout.pricing.couple.badge')}</div>
+                                    <h3>{t('workout.pricing.couple.title')}</h3>
+                                    <p className="price">{t('workout.pricing.couple.price')}</p>
                                     <ul className="pricing-features">
-                                        <li>Közös motiváció</li>
-                                        <li>Partner gyakorlatok</li>
-                                        <li>Rugalmas időpontok</li>
+                                        <li>{t('workout.pricing.couple.f1')}</li>
+                                        <li>{t('workout.pricing.couple.f2')}</li>
+                                        <li>{t('workout.pricing.couple.f3')}</li>
                                     </ul>
                                 </div>
                             </div>
 
-                            <p className="pricing-note">Az árak tájékoztató jellegűek. A bérletek 8 hétig érvényesek.</p>
+                            <p className="pricing-note">{t('workout.pricing.note')}</p>
                         </section>
 
-                        {/* Kapcsolat és helyszín */}
                         <section className="workout-section contact-pt">
-                            <h2 className="section-title-workout">📍 Kapcsolat és helyszín</h2>
+                            <h2 className="section-title-workout">{t('workout.contactTitle')}</h2>
                             <div className="contact-pt-grid">
                                 <div className="contact-pt-info">
-                                    <p className="contact-line"><span className="contact-key">Helyszín:</span> <span className="contact-val">Struve Fitness Prime — 1133 Budapest, Bessenyei utca 1-3.</span></p>
-                                    <p className="contact-line"><span className="contact-key">Edzések:</span> <span className="contact-val">egyéni és páros alkalmak előre egyeztetett időpontban</span></p>
-                                    <p className="contact-line"><span className="contact-key">Telefon:</span> <a className="contact-val link" href="tel:+36308935495" onClick={trackContactConversion}>+36 30 893 5495</a></p>
-                                    <p className="contact-line"><span className="contact-key">E‑mail:</span> <a className="contact-val link" href="mailto:usezsolti@gmail.com" onClick={trackContactConversion}>usezsolti@gmail.com</a></p>
+                                    <p className="contact-line"><span className="contact-key">{t('workout.contact.locationLabel')}</span> <span className="contact-val">{t('workout.contact.location')}</span></p>
+                                    <p className="contact-line"><span className="contact-key">{t('workout.contact.sessionsLabel')}</span> <span className="contact-val">{t('workout.contact.sessions')}</span></p>
+                                    <p className="contact-line"><span className="contact-key">{t('workout.contact.phoneLabel')}</span> <a className="contact-val link" href="tel:+36308935495" onClick={trackContactConversion}>+36 30 893 5495</a></p>
+                                    <p className="contact-line"><span className="contact-key">{t('workout.contact.emailLabel')}</span> <a className="contact-val link" href="mailto:usezsolti@gmail.com" onClick={trackContactConversion}>usezsolti@gmail.com</a></p>
                                     <div className="contact-actions">
-                                        <a className="contact-btn" href="https://www.google.com/maps?q=1133+Budapest,+Bessenyei+utca+1-3&hl=hu" target="_blank" rel="noopener noreferrer">Megnyitás Google Térképen</a>
+                                        <a className="contact-btn" href="https://www.google.com/maps?q=1133+Budapest,+Bessenyei+utca+1-3&hl=hu" target="_blank" rel="noopener noreferrer">{t('workout.contact.openMaps')}</a>
                                     </div>
 
                                     <div className="contact-socials">
@@ -201,7 +191,7 @@ export default function PersonalTrainer() {
                                 <div className="contact-pt-map">
                                     <div className="map-wrapper">
                                         <iframe
-                                            title="Struve Fitness Prime - 1133 Budapest, Bessenyei utca 1-3"
+                                            title={t('workout.contact.mapTitle')}
                                             src="https://www.google.com/maps?q=1133+Budapest,+Bessenyei+utca+1-3&output=embed"
                                             loading="lazy"
                                             referrerPolicy="no-referrer-when-downgrade"
@@ -211,51 +201,46 @@ export default function PersonalTrainer() {
                             </div>
                         </section>
 
-                        {/* Edzési módszerek */}
                         <section className="workout-section">
                             <h2 className="section-title-workout">
-                                🎯 Hogyan dolgozom?
+                                {t('workout.methodsTitle')}
                             </h2>
                             <div className="method-list">
                                 <div className="method-item">
                                     <span className="method-icon">1️⃣</span>
                                     <div className="method-content">
-                                        <h3>Kezdeti értékelés</h3>
-                                        <p>Először megbeszéljük a céljaidat, a jelenlegi kondíciód és a korlátaidat.</p>
+                                        <h3>{t('workout.methods.step1.title')}</h3>
+                                        <p>{t('workout.methods.step1.body')}</p>
                                     </div>
                                 </div>
                                 <div className="method-item">
                                     <span className="method-icon">2️⃣</span>
                                     <div className="method-content">
-                                        <h3>Egyedi edzési terv</h3>
-                                        <p>Készítek neked egy személyre szabott edzési tervet, ami illeszkedik az életedhez.</p>
+                                        <h3>{t('workout.methods.step2.title')}</h3>
+                                        <p>{t('workout.methods.step2.body')}</p>
                                     </div>
                                 </div>
                                 <div className="method-item">
                                     <span className="method-icon">3️⃣</span>
                                     <div className="method-content">
-                                        <h3>Közös edzések</h3>
-                                        <p>Részletes instrukciókkal vezetlek az edzésen, biztosítva a helyes technikát és biztonságot.</p>
+                                        <h3>{t('workout.methods.step3.title')}</h3>
+                                        <p>{t('workout.methods.step3.body')}</p>
                                     </div>
                                 </div>
                                 <div className="method-item">
                                     <span className="method-icon">4️⃣</span>
                                     <div className="method-content">
-                                        <h3>Folyamatos követés</h3>
-                                        <p>Követjük a fejlődésedet és szükség szerint módosítjuk az edzési tervet.</p>
+                                        <h3>{t('workout.methods.step4.title')}</h3>
+                                        <p>{t('workout.methods.step4.body')}</p>
                                     </div>
                                 </div>
                             </div>
                         </section>
-
-                        
-
-                        
                     </div>
 
                     <div className="workout-footer">
                         <Link href="/" className="workout-back-link">
-                            ← Vissza a főoldalra
+                            {t('workout.backHome')}
                         </Link>
                     </div>
                 </div>

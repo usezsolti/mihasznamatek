@@ -38,11 +38,7 @@ export async function withBackendAuth(
     const user = await requireAuth(req, res);
     if (!user) return null;
 
-    const token = extractBearerToken(req);
-    if (!token) {
-        sendErr(res, 'Bejelentkezés szükséges.', 401);
-        return null;
-    }
+    const token = extractBearerToken(req) || '';
 
     const ip = getClientIp(req);
     const key = `${opts?.rateKey || 'backend'}:${ip}:${user.uid}`;

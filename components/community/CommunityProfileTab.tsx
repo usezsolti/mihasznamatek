@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import type { SocialPost, SocialProfile } from '../../utils/socialTypes';
+import { useLang } from '../../utils/i18n';
 import CommunityAvatar from './CommunityAvatar';
 import CommunityPostCard from './CommunityPostCard';
 
@@ -42,6 +43,7 @@ export default function CommunityProfileTab({
     onMessage,
     onPostChanged,
 }: CommunityProfileTabProps) {
+    const { t } = useLang();
     const isSelf = profileShown.uid === me.uid;
     const [editing, setEditing] = useState(false);
     const [view, setView] = useState<ProfileView>('grid');
@@ -74,13 +76,13 @@ export default function CommunityProfileTab({
 
                     <div className="mm-ig-profile-stats">
                         <span>
-                            <strong>{posts.length || profileShown.postCount}</strong> posts
+                            <strong>{posts.length || profileShown.postCount}</strong> {t('community.profile.posts')}
                         </span>
                         <span>
-                            <strong>{profileShown.followerCount}</strong> followers
+                            <strong>{profileShown.followerCount}</strong> {t('community.profile.followers')}
                         </span>
                         <span>
-                            <strong>{profileShown.followingCount}</strong> following
+                            <strong>{profileShown.followingCount}</strong> {t('community.profile.following')}
                         </span>
                     </div>
 
@@ -88,7 +90,7 @@ export default function CommunityProfileTab({
                         {bioCategory ? (
                             <p className="mm-ig-profile-category">{bioCategory}</p>
                         ) : (
-                            !editing && <p className="mm-ig-profile-bio-empty">Még nincs bio.</p>
+                            !editing && <p className="mm-ig-profile-bio-empty">{t('community.profile.noBio')}</p>
                         )}
                         {bioRest.map((line) => (
                             <p key={line} className="mm-ig-profile-bio-line">
@@ -112,10 +114,10 @@ export default function CommunityProfileTab({
                             className="mm-ig-btn mm-ig-btn-wide"
                             onClick={() => setEditing((v) => !v)}
                         >
-                            {editing ? 'Bezárás' : 'Edit profile'}
+                            {editing ? t('common.close') : t('community.profile.editProfile')}
                         </button>
                         <a href="/dashboard" className="mm-ig-btn mm-ig-btn-wide" style={{ textAlign: 'center', textDecoration: 'none' }}>
-                            Fiók &amp; órák
+                            {t('community.profile.accountLessons')}
                         </a>
                     </>
                 ) : (
@@ -126,14 +128,14 @@ export default function CommunityProfileTab({
                             onClick={() => onToggleFollow(profileShown)}
                             disabled={busy}
                         >
-                            {followingView ? 'Following' : 'Follow'}
+                            {followingView ? t('community.profile.followingBtn') : t('community.profile.followBtn')}
                         </button>
                         <button
                             type="button"
                             className="mm-ig-btn mm-ig-btn-wide"
                             onClick={() => onStartMessage(profileShown.uid)}
                         >
-                            Message
+                            {t('community.profile.messageBtn')}
                         </button>
                     </>
                 )}
@@ -144,13 +146,13 @@ export default function CommunityProfileTab({
                     <input
                         value={usernameDraft}
                         onChange={(e) => onUsernameDraftChange(e.target.value)}
-                        placeholder="Felhasználónév"
+                        placeholder={t('community.profile.usernamePlaceholder')}
                         maxLength={20}
                     />
                     <textarea
                         value={bioDraft}
                         onChange={(e) => onBioDraftChange(e.target.value)}
-                        placeholder={'Első sor: kategória\nTöbbi sor: bio'}
+                        placeholder={t('community.profile.bioPlaceholder')}
                         maxLength={160}
                         rows={4}
                     />
@@ -163,25 +165,25 @@ export default function CommunityProfileTab({
                         }}
                         disabled={busy}
                     >
-                        Mentés
+                        {t('community.profile.save')}
                     </button>
                 </div>
             )}
 
-            <div className="mm-ig-highlights" aria-label="Kiemelések">
-                <button type="button" className="mm-ig-highlight is-new" disabled title="Hamarosan">
+            <div className="mm-ig-highlights" aria-label={t('community.profile.highlights')}>
+                <button type="button" className="mm-ig-highlight is-new" disabled title={t('community.messages.comingSoon')}>
                     <span>+</span>
-                    <small>New</small>
+                    <small>{t('community.profile.new')}</small>
                 </button>
             </div>
 
             <div className="mm-ig-profile-tabs" role="tablist">
                 {(
                     [
-                        ['grid', '▦', 'Posztok'],
-                        ['reels', '▶', 'Shorts'],
-                        ['saved', '🔖', 'Mentett'],
-                        ['tagged', '👤', 'Címkézett'],
+                        ['grid', '▦', t('community.profile.tabPosts')],
+                        ['reels', '▶', t('community.profile.tabShorts')],
+                        ['saved', '🔖', t('community.profile.tabSaved')],
+                        ['tagged', '👤', t('community.profile.tabTagged')],
                     ] as const
                 ).map(([id, icon, label]) => (
                     <button
@@ -200,7 +202,7 @@ export default function CommunityProfileTab({
             {view === 'grid' && (
                 <div className="mm-ig-post-grid">
                     {posts.length === 0 && (
-                        <p className="mm-ig-profile-empty">Még nincs poszt ezen a profilon.</p>
+                        <p className="mm-ig-profile-empty">{t('community.profile.emptyPosts')}</p>
                     )}
                     {posts.map((p) => (
                         <button
@@ -231,10 +233,10 @@ export default function CommunityProfileTab({
             {view !== 'grid' && (
                 <p className="mm-ig-profile-empty">
                     {view === 'reels'
-                        ? 'A Shorts hamarosan a profilon is megjelenik.'
+                        ? t('community.profile.comingShorts')
                         : view === 'saved'
-                          ? 'Mentett posztok hamarosan.'
-                          : 'Címkézett posztok hamarosan.'}
+                          ? t('community.profile.comingSaved')
+                          : t('community.profile.comingTagged')}
                 </p>
             )}
 
@@ -244,7 +246,7 @@ export default function CommunityProfileTab({
                         type="button"
                         className="mm-ig-lightbox-close"
                         onClick={() => setLightbox(null)}
-                        aria-label="Bezárás"
+                        aria-label={t('common.close')}
                     >
                         ×
                     </button>

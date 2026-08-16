@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import type { SocialComment, SocialPost, SocialProfile } from '../../utils/socialTypes';
 import { apiAddComment, apiHasLiked, apiListComments, apiToggleLike } from '../../utils/socialApi';
+import { useLang } from '../../utils/i18n';
 import CommunityAvatar from './CommunityAvatar';
 
 type CommunityPostCardProps = {
@@ -13,6 +14,7 @@ type CommunityPostCardProps = {
 };
 
 export default function CommunityPostCard({ post, me, liked: likedProp, onOpenProfile, onMessage, onChanged }: CommunityPostCardProps) {
+    const { t } = useLang();
     const [liked, setLiked] = useState(likedProp);
     const [likeCount, setLikeCount] = useState(post.likeCount);
     const [comments, setComments] = useState<SocialComment[]>([]);
@@ -58,7 +60,7 @@ export default function CommunityPostCard({ post, me, liked: likedProp, onOpenPr
             setDraft('');
             onChanged({ ...post, commentCount: post.commentCount + 1, likeCount });
         } catch (e: any) {
-            alert(e?.message || 'Komment hiba');
+            alert(e?.message || t('community.post.commentError'));
         } finally {
             setBusy(false);
         }
@@ -67,12 +69,12 @@ export default function CommunityPostCard({ post, me, liked: likedProp, onOpenPr
     const timeLabel = useMemo(() => {
         const diff = Date.now() - post.createdAtMs;
         const m = Math.floor(diff / 60000);
-        if (m < 1) return 'most';
-        if (m < 60) return `${m} p`;
+        if (m < 1) return t('community.time.now');
+        if (m < 60) return t('community.time.minutesLong', { n: String(m) });
         const h = Math.floor(m / 60);
-        if (h < 24) return `${h} ó`;
-        return `${Math.floor(h / 24)} n`;
-    }, [post.createdAtMs]);
+        if (h < 24) return t('community.time.hoursLong', { n: String(h) });
+        return t('community.time.daysLong', { n: String(Math.floor(h / 24)) });
+    }, [post.createdAtMs, t]);
 
     return (
         <div className="mm-social-post">
@@ -88,7 +90,7 @@ export default function CommunityPostCard({ post, me, liked: likedProp, onOpenPr
                 </button>
                 {post.authorId !== me.uid && (
                     <button type="button" className="mm-social-ghost" onClick={() => onMessage(post.authorId)}>
-                        Üzenet
+                        {t('community.post.message')}
                     </button>
                 )}
             </div>
@@ -110,7 +112,7 @@ export default function CommunityPostCard({ post, me, liked: likedProp, onOpenPr
                 </button>
                 {post.authorId !== me.uid && (
                     <button type="button" onClick={() => onMessage(post.authorId)}>
-                        ✉ Üzenet
+                        ✉ {t('community.post.message')}
                     </button>
                 )}
             </div>
@@ -129,14 +131,14 @@ export default function CommunityPostCard({ post, me, liked: likedProp, onOpenPr
                         <input
                             value={draft}
                             onChange={(e) => setDraft(e.target.value)}
-                            placeholder="Komment…"
+                            placeholder={t('community.post.commentPlaceholder')}
                             maxLength={300}
                             onKeyDown={(e) => {
                                 if (e.key === 'Enter') onSubmitComment();
                             }}
                         />
                         <button type="button" onClick={onSubmitComment} disabled={busy || !draft.trim()}>
-                            Küld
+                            {t('community.post.send')}
                         </button>
                     </div>
                 </div>

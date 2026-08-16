@@ -1,56 +1,15 @@
 /**
- * Firebase Admin (opcionális).
- * Ha van FIREBASE_SERVICE_ACCOUNT_JSON, Admin SDK-val megy a Firestore.
- * Enélkül a backend a user ID tokennel (Firestore REST) dolgozik.
+ * Firebase Admin — removed. Stubs for backward-compatible imports.
  */
-import admin from 'firebase-admin';
-import { FIREBASE_PROJECT_ID } from './config';
 
-let initTried = false;
-
-export function getFirebaseAdmin(): typeof admin | null {
-    try {
-        if (admin?.apps?.length) return admin;
-    } catch {
-        return null;
-    }
-
-    if (initTried) {
-        try {
-            return admin?.apps?.length ? admin : null;
-        } catch {
-            return null;
-        }
-    }
-    initTried = true;
-
-    try {
-        const raw = process.env.FIREBASE_SERVICE_ACCOUNT_JSON;
-        if (raw) {
-            const cred = JSON.parse(raw);
-            admin.initializeApp({
-                credential: admin.credential.cert(cred),
-                projectId: cred.project_id || FIREBASE_PROJECT_ID,
-            });
-            return admin;
-        }
-
-        // Vercel / GCP ADC (ha be van állítva)
-        if (process.env.GOOGLE_APPLICATION_CREDENTIALS || process.env.FIREBASE_ADMIN_SDK === '1') {
-            admin.initializeApp({ projectId: FIREBASE_PROJECT_ID });
-            return admin;
-        }
-    } catch (e) {
-        console.error('firebase-admin init failed:', e);
-    }
+export function getFirebaseAdmin(): null {
     return null;
 }
 
-export function getAdminDb() {
-    const a = getFirebaseAdmin();
-    return a ? a.firestore() : null;
+export function getAdminDb(): null {
+    return null;
 }
 
-export function backendMode(): 'admin' | 'user-token' {
-    return getAdminDb() ? 'admin' : 'user-token';
+export function backendMode(): 'prisma' {
+    return 'prisma';
 }

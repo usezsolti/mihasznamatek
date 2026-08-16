@@ -318,29 +318,25 @@ function mergeProgress(local: UserPracticeProgress, remote: UserPracticeProgress
 
 async function persistProgress(uid: string | null | undefined, next: UserPracticeProgress) {
     saveLocalProgress(next);
-    const firebase = (window as any).firebase;
-    if (uid && firebase?.firestore) {
-        const db = firebase.firestore();
-        await db.collection('users').doc(uid).collection('progress').doc('summary').set(
-            {
-                ...next,
-                updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
-            },
-            { merge: true }
-        );
+    if (!uid || typeof window === 'undefined') return;
+    try {
+        const { apiPutAuth } = await import('./apiClient');
+        await apiPutAuth('/api/progress/practice', { progress: next });
+    } catch {
+        /* offline / guest — local only */
     }
 }
 
 export async function loadUserPracticeProgress(uid?: string | null): Promise<UserPracticeProgress> {
     const local = loadLocalProgress();
-    const firebase = (window as any).firebase;
-    if (!uid || !firebase?.firestore) return local;
+    if (!uid || typeof window === 'undefined') return local;
 
     try {
-        const db = firebase.firestore();
-        const snap = await db.collection('users').doc(uid).collection('progress').doc('summary').get();
-        if (!snap.exists) return local;
-        const data = snap.data() || {};
+        const { apiGetAuth } = await import('./apiClient');
+        const res = await apiGetAuth<{ progress: UserPracticeProgress }>('/api/progress/practice');
+        if (!res.ok) return local;
+        const data = res.data.progress;
+        if (!data) return local;
         const xp = Number(data.xp) || 0;
         const rankLevel = Number(data.rankLevel) || xpToRankLevel(xp);
         const rawTopics = data.topics || {};
@@ -364,20 +360,17 @@ export async function loadUserPracticeProgress(uid?: string | null): Promise<Use
     }
 }
 
-/** Csak Firestore — tanári dossziéhoz (ne keverje az admin lokális progressét). */
+/** Szerver progress — tanári dossziéhoz (ne keverje az admin lokális progressét). */
 export async function loadRemotePracticeProgress(uid: string): Promise<UserPracticeProgress> {
-    const firebase = (window as any).firebase;
-    if (!uid || !firebase?.firestore) return emptyProgress();
+    if (!uid || typeof window === 'undefined') return emptyProgress();
     try {
-        const snap = await firebase
-            .firestore()
-            .collection('users')
-            .doc(uid)
-            .collection('progress')
-            .doc('summary')
-            .get();
-        if (!snap.exists) return emptyProgress();
-        const data = snap.data() || {};
+        const { apiGetAuth } = await import('./apiClient');
+        const res = await apiGetAuth<{ progress: UserPracticeProgress }>(
+            `/api/progress/practice?userId=${encodeURIComponent(uid)}`
+        );
+        if (!res.ok) return emptyProgress();
+        const data = res.data.progress;
+        if (!data) return emptyProgress();
         const xp = Number(data.xp) || 0;
         const rankLevel = Number(data.rankLevel) || xpToRankLevel(xp);
         const rawTopics = data.topics || {};
