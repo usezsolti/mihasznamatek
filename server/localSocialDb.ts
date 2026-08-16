@@ -192,28 +192,6 @@ export const localSocial = {
 
         }
 
-        // Üres feed → egy üdvözlő poszt (új és meglévő profilnál is)
-
-        if (db.posts.length === 0) {
-
-            const fields = buildPostFields(
-
-                profile,
-
-                'Üdv a MihaSocialban! Írj egy tippet, kérdést vagy sikert — ez a te első feeded.',
-
-                Date.now()
-
-            );
-
-            db.posts.push({ id: `p_welcome_${Date.now()}`, ...fields });
-
-            profile.postCount = Math.max(1, profile.postCount || 0);
-
-            db.profiles[uid] = profile;
-
-        }
-
         writeDb(db);
 
         return profile;

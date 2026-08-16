@@ -1,52 +1,71 @@
-import type { MathShort } from '../../utils/socialTypes';
+import { useEffect, useRef } from 'react';
+import type { SocialPost } from '../../utils/socialTypes';
 import { useLang } from '../../utils/i18n';
+import CommunityAvatar from './CommunityAvatar';
 
 type CommunityShortsTabProps = {
-    shortTopic: string;
-    onShortTopicChange: (value: string) => void;
-    onGenerateShort: () => void;
-    busy: boolean;
-    currentShort: MathShort | null;
+    currentShort: SocialPost | null;
     shortIndex: number;
     shortsLength: number;
     onPrev: () => void;
     onNext: () => void;
+    onOpenProfile: (uid: string) => void;
 };
 
 export default function CommunityShortsTab({
-    shortTopic,
-    onShortTopicChange,
-    onGenerateShort,
-    busy,
     currentShort,
     shortIndex,
     shortsLength,
     onPrev,
     onNext,
+    onOpenProfile,
 }: CommunityShortsTabProps) {
     const { t } = useLang();
+    const videoRef = useRef<HTMLVideoElement>(null);
+
+    useEffect(() => {
+        const el = videoRef.current;
+        if (!el || !currentShort?.videoUrl) return;
+        el.load();
+        const play = el.play();
+        if (play && typeof play.catch === 'function') play.catch(() => undefined);
+        return () => {
+            el.pause();
+        };
+    }, [currentShort?.id, currentShort?.videoUrl]);
+
     return (
         <div className="mm-social-panel mm-social-shorts-panel">
-            <div className="mm-social-shorts-toolbar">
-                <input
-                    value={shortTopic}
-                    onChange={(e) => onShortTopicChange(e.target.value)}
-                    placeholder={t('community.shorts.topicPlaceholder')}
-                />
-                <button type="button" className="mm-social-primary" onClick={onGenerateShort} disabled={busy}>
-                    {t('community.shorts.generate')}
-                </button>
-            </div>
-            {currentShort ? (
-                <div className="mm-social-short-stage">
-                    <div className="mm-social-short-card ig">
-                        <p className="mm-social-short-topic">
-                            {currentShort.topic} · {currentShort.difficulty}
-                        </p>
-                        <h2>{currentShort.title}</h2>
-                        <p className="mm-social-short-hook">{currentShort.hook}</p>
-                        <p className="mm-social-short-body">{currentShort.body}</p>
-                        <p className="mm-social-short-tip">{t('community.shorts.tip', { tip: currentShort.tip })}</p>
+            {currentShort?.videoUrl ? (
+                <div className="mm-social-short-stage mm-social-short-stage--video">
+                    <div className="mm-social-short-card ig mm-social-short-card--video">
+                        <video
+                            ref={videoRef}
+                            className="mm-social-short-video"
+                            src={currentShort.videoUrl}
+                            controls
+                            playsInline
+                            loop
+                            muted
+                            preload="metadata"
+                        />
+                        <div className="mm-social-short-meta">
+                            <button
+                                type="button"
+                                className="mm-social-userbtn"
+                                onClick={() => {
+                                    if (currentShort.authorId.startsWith('mihasocial')) return;
+                                    onOpenProfile(currentShort.authorId);
+                                }}
+                            >
+                                <CommunityAvatar url={currentShort.authorPhoto} name={currentShort.authorName} />
+                                <span>
+                                    <strong>{currentShort.authorName}</strong>
+                                    <small>@{currentShort.authorUsername}</small>
+                                </span>
+                            </button>
+                            {currentShort.text ? <p className="mm-social-short-caption">{currentShort.text}</p> : null}
+                        </div>
                     </div>
                     <div className="mm-social-short-nav">
                         <button type="button" disabled={shortIndex <= 0} onClick={onPrev}>

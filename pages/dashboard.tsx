@@ -32,6 +32,7 @@ import {
     lookupBestSessionForTopic,
     type RawGameResult,
 } from "../utils/topicStats";
+import { useLang } from "../utils/i18n";
 
 type DashboardTab = "tanulas" | "profil" | "admin";
 
@@ -57,6 +58,20 @@ type MathTopic = {
 
 export default function Dashboard() {
     const router = useRouter();
+    const { t } = useLang();
+
+    const topicLabel = (id: string, fallback: string) => {
+        const key = `dashboard.topic.${id}`;
+        const translated = t(key);
+        if (translated !== key) return translated;
+        const base = id.replace(/-emelt$/, '');
+        if (base !== id) {
+            const baseKey = `dashboard.topic.${base}`;
+            const baseTranslated = t(baseKey);
+            if (baseTranslated !== baseKey) return baseTranslated;
+        }
+        return fallback;
+    };
 
     const [loading, setLoading] = useState(true);
     const [me, setMe] = useState<UserDoc | null>(null);
@@ -728,7 +743,7 @@ export default function Dashboard() {
             <div className="dashboard-container modern-theme">
                 <div className="loading-screen">
                     <div className="loading-spinner"></div>
-                    <p>Betöltés...</p>
+                    <p>{t('dashboard.loading')}</p>
                 </div>
             </div>
         );
@@ -738,7 +753,7 @@ export default function Dashboard() {
         return (
             <div className="dashboard-container modern-theme">
                 <div className="error-screen">
-                    <h2>Hiba történt</h2>
+                    <h2>{t('dashboard.error')}</h2>
                     <p>{error}</p>
                 </div>
             </div>
@@ -895,7 +910,7 @@ export default function Dashboard() {
                 {/* Education Level Selector — first so the 4 categories are visible */}
                 <section className="education-level-section">
                     <h3 className="level-title">
-                        Válassz kategóriát:
+                        {t('dashboard.chooseCategory')}
                     </h3>
                     <div className="level-selector" style={{ flexWrap: 'wrap' }}>
                         {EDUCATION_LEVELS.map((level) => (
@@ -908,9 +923,9 @@ export default function Dashboard() {
                                 }}
                             >
                                 <span style={{ display: 'block', fontSize: '1.35rem' }}>{level.emoji}</span>
-                                {level.name}
+                                {t(`dashboard.level.${level.id}`)}
                                 <span style={{ display: 'block', fontSize: '0.8rem', opacity: 0.75, fontWeight: 500 }}>
-                                    {level.desc}
+                                    {t(`dashboard.level.${level.id}Desc`)}
                                 </span>
                             </button>
                         ))}
@@ -924,7 +939,7 @@ export default function Dashboard() {
                                     localStorage.setItem('erettsegiExamLevel', 'kozep');
                                 }}
                             >
-                                📝 Közép szint
+                                {t('dashboard.exam.kozep')}
                             </button>
                             <button
                                 className={`level-btn ${erettsegiExamLevel === 'emelt' ? 'active' : ''}`}
@@ -933,7 +948,7 @@ export default function Dashboard() {
                                     localStorage.setItem('erettsegiExamLevel', 'emelt');
                                 }}
                             >
-                                ⭐ Emelt szint
+                                {t('dashboard.exam.emelt')}
                             </button>
                         </div>
                     )}
@@ -956,7 +971,7 @@ export default function Dashboard() {
                         }}
                     >
                         <span style={{ color: '#cfe9d4' }}>
-                            Diák nézet — az admin platformon látod a diákokat.
+                            {t('dashboard.studentViewHint')}
                         </span>
                         <button
                             type="button"
@@ -971,52 +986,36 @@ export default function Dashboard() {
                                 color: '#061008',
                             }}
                         >
-                            Admin platform
+                            {t('dashboard.adminPlatform')}
                         </button>
                     </div>
                 ) : (
                     <>
-                        <section className="profile-embedded-section" style={{ padding: '0.5rem 0 1.5rem' }}>
+                        <section className="profile-embedded-section dash-profile-embed">
                             <ProfilePanel embedded />
                         </section>
 
-                        <section className="attendance-section" style={{ marginBottom: '1.5rem' }}>
-                            <div className="mm-social-dash-card">
-                                <div>
-                                    <h2 className="section-title" style={{ marginBottom: '0.35rem' }}>
-                                        MihaSocial profil
-                                    </h2>
-                                    <p className="section-subtitle" style={{ margin: 0 }}>
-                                        A közösségi profilod egyben a nyilvános profilod — bio, posztok, üzenetek,
-                                        csoportok. A fenti profilkép mindkét helyen érvényes.
-                                    </p>
-                                </div>
-                                <Link
-                                    href="/community?tab=profile"
-                                    className="mm-social-primary"
-                                    style={{ textDecoration: 'none' }}
-                                >
-                                    Profil megnyitása
+                        <section className="dash-tools" aria-label={t('dashboard.tools')}>
+                            <div className="dash-tools-grid">
+                                <Link href="/community?tab=profile" className="dash-tool-card">
+                                    <span className="dash-tool-icon" aria-hidden>
+                                        M
+                                    </span>
+                                    <span className="dash-tool-copy">
+                                        <strong>{t('dashboard.socialTitle')}</strong>
+                                        <small>{t('dashboard.socialShort')}</small>
+                                    </span>
+                                    <span className="dash-tool-cta">{t('dashboard.open')}</span>
                                 </Link>
-                            </div>
-                        </section>
-
-                        <section className="attendance-section" style={{ marginBottom: '1.5rem' }}>
-                            <div className="mm-social-dash-card">
-                                <div>
-                                    <h2 className="section-title" style={{ marginBottom: '0.35rem' }}>
-                                        Whiteboard
-                                    </h2>
-                                    <p className="section-subtitle" style={{ margin: 0 }}>
-                                        Közös tábla neked és a diákoknak — toll, kiemelő, radír, alakzatok, szöveg.
-                                    </p>
-                                </div>
-                                <Link
-                                    href="/whiteboard"
-                                    className="mm-social-primary"
-                                    style={{ textDecoration: 'none' }}
-                                >
-                                    Megnyitás
+                                <Link href="/whiteboard" className="dash-tool-card">
+                                    <span className="dash-tool-icon dash-tool-icon--wb" aria-hidden>
+                                        ✎
+                                    </span>
+                                    <span className="dash-tool-copy">
+                                        <strong>{t('dashboard.whiteboardTitle')}</strong>
+                                        <small>{t('dashboard.whiteboardShort')}</small>
+                                    </span>
+                                    <span className="dash-tool-cta">{t('dashboard.open')}</span>
                                 </Link>
                             </div>
                         </section>
@@ -1024,39 +1023,31 @@ export default function Dashboard() {
                 )}
 
                 {/* Mathematical Topics Section */}
-                <section className="attendance-section">
-                    <h2 className="section-title">
-                        {educationLevel === 'elementary' && '🏫 Általános iskolai témakörök'}
-                        {educationLevel === 'highschool' && '🎒 Középiskolai témakörök'}
-                        {educationLevel === 'university' && '🎓 Egyetemi tantárgyak'}
-                        {educationLevel === 'erettsegi' &&
-                            (erettsegiExamLevel === 'emelt'
-                                ? '⭐ Emelt érettségi témakörök'
-                                : '📝 Középszintű érettségi témakörök')}
-                    </h2>
-                    <p className="section-subtitle">
-                        {educationLevel === 'elementary' && '1-8. osztály — ugyanazok a témák, mint a játékban'}
-                        {educationLevel === 'highschool' && '9-12. osztály — ugyanazok a témák, mint a játékban'}
-                        {educationLevel === 'university' && 'Analízis I–III. — ugyanaz, mint a játék kezdőképernyőjén'}
-                        {educationLevel === 'erettsegi' && 'Válassz témakört — Duolingo-szerű útvonal és feladatok'}
-                    </p>
-
-                    <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '1.25rem' }}>
+                <section className="dash-learn attendance-section">
+                    <div className="dash-learn-head">
+                        <div className="dash-learn-titles">
+                            <h2 className="section-title">
+                                {educationLevel === 'elementary' && t('dashboard.topics.elementary')}
+                                {educationLevel === 'highschool' && t('dashboard.topics.highschool')}
+                                {educationLevel === 'university' && t('dashboard.topics.university')}
+                                {educationLevel === 'erettsegi' &&
+                                    (erettsegiExamLevel === 'emelt'
+                                        ? t('dashboard.topics.erettsegiEmelt')
+                                        : t('dashboard.topics.erettsegiKozep'))}
+                            </h2>
+                            <p className="section-subtitle">
+                                {educationLevel === 'elementary' && t('dashboard.topicsSub.elementary')}
+                                {educationLevel === 'highschool' && t('dashboard.topicsSub.highschool')}
+                                {educationLevel === 'university' && t('dashboard.topicsSub.university')}
+                                {educationLevel === 'erettsegi' && t('dashboard.topicsSub.erettsegi')}
+                            </p>
+                        </div>
                         <button
                             type="button"
+                            className="dash-daily-btn"
                             onClick={() => router.push(buildDailyPracticeHref(educationLevel))}
-                            style={{
-                                background: 'linear-gradient(90deg, #39ff14, #ffd700)',
-                                color: '#111',
-                                border: 'none',
-                                borderRadius: 12,
-                                padding: '0.75rem 1.35rem',
-                                fontWeight: 800,
-                                cursor: 'pointer',
-                                fontSize: '0.95rem',
-                            }}
                         >
-                            🎲 Napi vegyes gyakorlás
+                            {t('dashboard.daily')}
                         </button>
                     </div>
 
@@ -1083,7 +1074,7 @@ export default function Dashboard() {
                                             {topic.icon}
                                         </div>
                                         <div className="topic-info">
-                                            <h3 className="topic-title">{topic.title}</h3>
+                                            <h3 className="topic-title">{topicLabel(topic.id, topic.title)}</h3>
                                         </div>
                                     </div>
 
@@ -1178,7 +1169,12 @@ export default function Dashboard() {
                                             </svg>
 
                                             <div className="speedometer-display">
-                                                <div className="progress-percentage">{topic.correctAnswers}/{topic.totalAnswers} helyes</div>
+                                                <div className="progress-percentage">
+                                                    {t('dashboard.correct', {
+                                                        a: String(topic.correctAnswers),
+                                                        b: String(topic.totalAnswers),
+                                                    })}
+                                                </div>
                                                 <div
                                                     className="progress-percentage"
                                                     style={{
@@ -1188,8 +1184,11 @@ export default function Dashboard() {
                                                     }}
                                                 >
                                                     {topic.pathCompleted
-                                                        ? '✓ Út kész'
-                                                        : `${lessonsDone}/${PATH_LESSON_COUNT} lecke`}
+                                                        ? t('dashboard.pathDone')
+                                                        : t('dashboard.lessons', {
+                                                              a: String(lessonsDone),
+                                                              b: String(PATH_LESSON_COUNT),
+                                                          })}
                                                 </div>
                                             </div>
                                         </div>
@@ -1204,7 +1203,7 @@ export default function Dashboard() {
 
                 {/* Overall Progress Summary */}
                 <section className="overall-progress-section">
-                    <h2 className="section-title">📊 Összesített Állapot</h2>
+                    <h2 className="section-title">{t('dashboard.overall')}</h2>
                     <div className="overall-speedometer-container">
                         {(() => {
                             const totalCorrect = mathTopics.reduce((sum, topic) => sum + topic.correctAnswers, 0);
@@ -1298,7 +1297,12 @@ export default function Dashboard() {
                                             </g>
                                         </svg>
                                         <div className="speedometer-display">
-                                            <div className="progress-percentage">{totalCorrect}/{totalAnswers} helyes</div>
+                                            <div className="progress-percentage">
+                                                {t('dashboard.correct', {
+                                                    a: String(totalCorrect),
+                                                    b: String(totalAnswers),
+                                                })}
+                                            </div>
                                         </div>
                                     </div>
                                 </>
@@ -1309,24 +1313,30 @@ export default function Dashboard() {
 
                  {assignedTasks.length > 0 && (
                      <section className="public-tasks-section" style={{ marginBottom: "2rem" }}>
-                         <h2 className="section-title">🎯 Neked kiosztott feladatok</h2>
-                         <p className="section-subtitle">Az oktató által hozzád rendelt gyakorló feladatok</p>
+                         <h2 className="section-title">{t('dashboard.assignedTitle')}</h2>
+                         <p className="section-subtitle">{t('dashboard.assignedSub')}</p>
                          <div className="public-tasks-grid">
                              {assignedTasks.map((task) => (
                                  <div key={task.id} className="public-task-card">
                                      <div className="task-header">
                                          <h3>{task.title}</h3>
                                          <span className="task-badge">
-                                             {task.status === "completed" ? "Kész" : "Kiosztva"}
+                                             {task.status === "completed"
+                                                 ? t('dashboard.statusDone')
+                                                 : t('dashboard.statusAssigned')}
                                          </span>
                                      </div>
                                      <div className="task-content">
                                          {task.topicTitle && (
-                                             <p><strong>Témakör:</strong> {task.topicTitle}</p>
+                                             <p>
+                                                 <strong>{t('dashboard.topicLabel')}</strong> {task.topicTitle}
+                                             </p>
                                          )}
                                          {task.description && <p>{task.description}</p>}
                                          <p style={{ color: "#aaa", fontSize: "0.9rem" }}>
-                                             {task.questions ? `${task.questions} kérdés` : ""}
+                                             {task.questions
+                                                 ? t('dashboard.questions', { n: String(task.questions) })
+                                                 : ""}
                                              {task.difficulty ? ` · ${task.difficulty}` : ""}
                                          </p>
                                          <Link
@@ -1339,7 +1349,7 @@ export default function Dashboard() {
                                                  padding: "0.65rem 1rem",
                                              }}
                                          >
-                                             🎮 Feladat indítása
+                                             {t('dashboard.startTask')}
                                          </Link>
                                      </div>
                                  </div>
@@ -1351,38 +1361,40 @@ export default function Dashboard() {
                  {/* Public Tasks Section */}
                  {publicTasks.length > 0 && (
                      <section className="public-tasks-section">
-                         <h2 className="section-title">📚 Aktuális Feladatok</h2>
-                         <p className="section-subtitle">Az adminisztrátor által kiadott feladatok</p>
+                         <h2 className="section-title">{t('dashboard.publicTitle')}</h2>
+                         <p className="section-subtitle">{t('dashboard.publicSub')}</p>
 
                          <div className="public-tasks-grid">
                              {publicTasks.map(task => (
                                  <div key={task.id} className="public-task-card">
                                      <div className="task-header">
                                          <h3>{task.topicTitle || task.topicId}</h3>
-                                         <span className="task-badge">Új Feladat</span>
+                                         <span className="task-badge">{t('dashboard.newTask')}</span>
                                      </div>
                                      <div className="task-content">
-                                         <p><strong>Feladat:</strong> {task.taskDescription}</p>
+                                         <p>
+                                             <strong>{t('dashboard.taskLabel')}</strong> {task.taskDescription}
+                                         </p>
                                          <div className="task-input-section">
                                              <input
                                                  type="text"
-                                                 placeholder="Add meg a válaszodat..."
+                                                 placeholder={t('dashboard.answerPlaceholder')}
                                                  className="task-answer-input"
                                                  onKeyPress={(e) => {
                                                      if (e.key === 'Enter') {
                                                          const userAnswer = (e.target as HTMLInputElement).value;
                                                          if (userAnswer.trim() === task.correctAnswer.trim()) {
-                                                             alert('🎉 Helyes válasz! Szuper munka!');
+                                                             alert(t('dashboard.answerCorrect'));
                                                              updateTopicProgress(task.topicId);
                                                          } else {
-                                                             alert('❌ Hibás válasz. Próbáld újra!');
+                                                             alert(t('dashboard.answerWrong'));
                                                          }
                                                          (e.target as HTMLInputElement).value = '';
                                                      }
                                                  }}
                                              />
                                              <div className="task-hint">
-                                                 Nyomj Enter-t a válasz elküldéséhez
+                                                 {t('dashboard.answerHint')}
                                              </div>
                                          </div>
                                      </div>
@@ -1393,77 +1405,68 @@ export default function Dashboard() {
                  )}
 
                  {/* Contact Section */}
-                 <section className="contact-section">
-                     <h2 className="section-title">📞 Kapcsolat</h2>
-                     <p className="section-subtitle">Vedd fel velem a kapcsolatot bármikor</p>
+                 <section className="dash-contact" aria-labelledby="dash-contact-title">
+                     <header className="dash-contact-head">
+                         <h2 id="dash-contact-title" className="section-title">
+                             {t('dashboard.contact')}
+                         </h2>
+                         <p className="section-subtitle">{t('dashboard.contactSub')}</p>
+                     </header>
 
-                     <div className="contact-grid">
-                         <div className="contact-info-card">
-                             <div className="contact-header">
-                                 <h3>📞 Telefon</h3>
-                             </div>
-                             <div className="contact-content">
-                                 <a href="tel:+36308935495" className="contact-link">
-                                     <span className="contact-icon">📞</span>
-                                     <span className="contact-text">+36 30 893 5495</span>
+                     <div className="dash-contact-grid">
+                         <a href="tel:+36308935495" className="dash-contact-tile dash-contact-tile--link">
+                             <span className="dash-contact-label">{t('dashboard.phone')}</span>
+                             <strong className="dash-contact-value">+36 30 893 5495</strong>
+                             <span className="dash-contact-hint">{t('dashboard.callAnytime')}</span>
+                         </a>
+
+                         <a href="mailto:usezsolti@gmail.com" className="dash-contact-tile dash-contact-tile--link">
+                             <span className="dash-contact-label">{t('dashboard.email')}</span>
+                             <strong className="dash-contact-value">usezsolti@gmail.com</strong>
+                             <span className="dash-contact-hint">{t('dashboard.writeAnytime')}</span>
+                         </a>
+
+                         <div className="dash-contact-tile">
+                             <span className="dash-contact-label">{t('dashboard.address')}</span>
+                             <strong className="dash-contact-value">
+                                 2151 Fót
+                                 <br />
+                                 Szent Imre utca 18
+                             </strong>
+                             <span className="dash-contact-hint">{t('dashboard.inPersonOk')}</span>
+                         </div>
+
+                         <div className="dash-contact-tile">
+                             <span className="dash-contact-label">{t('dashboard.social')}</span>
+                             <div className="dash-contact-social">
+                                 <a
+                                     href="https://www.facebook.com/profile.php?id=100075272401924"
+                                     target="_blank"
+                                     rel="noopener noreferrer"
+                                 >
+                                     Facebook
                                  </a>
-                                 <p className="contact-description">Hívj bármikor, szívesen segítek!</p>
-                             </div>
-                         </div>
-
-                         <div className="contact-info-card">
-                             <div className="contact-header">
-                                 <h3>📧 Email</h3>
-                             </div>
-                             <div className="contact-content">
-                                <a href="mailto:usezsolti@gmail.com" className="contact-link">
-                                    <span className="contact-icon">📧</span>
-                                    <span className="contact-text">usezsolti@gmail.com</span>
-                                </a>
-                                 <p className="contact-description">Írj emailt, hamarosan válaszolok!</p>
-                             </div>
-                         </div>
-
-                         <div className="contact-info-card">
-                             <div className="contact-header">
-                                 <h3>📍 Cím</h3>
-                             </div>
-                             <div className="contact-content">
-                                 <div className="contact-address">
-                                     <span className="contact-icon">📍</span>
-                                     <div className="address-text">
-                                         <p>2151 Fót</p>
-                                         <p>Szent Imre utca 18</p>
-                                     </div>
-                                 </div>
-                                 <p className="contact-description">Személyes órák is lehetségesek!</p>
-                             </div>
-                         </div>
-
-                         <div className="contact-info-card">
-                             <div className="contact-header">
-                                 <h3>🌐 Social Media</h3>
-                             </div>
-                             <div className="contact-content">
-                                <div className="social-links">
-                                    <a href="https://www.facebook.com/profile.php?id=100075272401924" target="_blank" rel="noopener noreferrer" className="social-link facebook">
-                                        <span className="social-icon">📘</span>
-                                        <span>Facebook</span>
-                                    </a>
-                                    <a href="https://www.instagram.com/mihaszna__/" target="_blank" rel="noopener noreferrer" className="social-link instagram">
-                                        <span className="social-icon">📷</span>
-                                        <span>Instagram</span>
-                                    </a>
-                                    <a href="https://www.youtube.com/@Mihasznamatek" target="_blank" rel="noopener noreferrer" className="social-link youtube">
-                                        <span className="social-icon">📺</span>
-                                        <span>YouTube</span>
-                                    </a>
-                                    <a href="https://tiktok.com/@mihasznamatek" target="_blank" rel="noopener noreferrer" className="social-link tiktok">
-                                        <span className="social-icon">🎵</span>
-                                        <span>TikTok</span>
-                                    </a>
-                                </div>
-                                 <p className="contact-description">Kövess be a social médián!</p>
+                                 <a
+                                     href="https://www.instagram.com/mihaszna__/"
+                                     target="_blank"
+                                     rel="noopener noreferrer"
+                                 >
+                                     Instagram
+                                 </a>
+                                 <a
+                                     href="https://www.youtube.com/@Mihasznamatek"
+                                     target="_blank"
+                                     rel="noopener noreferrer"
+                                 >
+                                     YouTube
+                                 </a>
+                                 <a
+                                     href="https://tiktok.com/@mihasznamatek"
+                                     target="_blank"
+                                     rel="noopener noreferrer"
+                                 >
+                                     TikTok
+                                 </a>
                              </div>
                          </div>
                      </div>

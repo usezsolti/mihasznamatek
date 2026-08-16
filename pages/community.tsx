@@ -31,17 +31,11 @@ import {
     apiUnfollow,
     apiUpdateProfile,
 } from '../utils/socialApi';
-import { apiGenerateMathShort, apiSocialDiag } from '../utils/apiClient';
-import {
-    FALLBACK_MATH_SHORTS,
-    listMathShorts,
-    saveMathShort,
-} from '../utils/social';
+import { apiSocialDiag } from '../utils/apiClient';
 import {
     conversationIdFor,
     type ConversationPreview,
     type DirectMessage,
-    type MathShort,
     type SocialPost,
     type SocialProfile,
     type StudyGroup,
@@ -49,6 +43,12 @@ import {
 import { backendHealth } from '../utils/backendClient';
 import { useLang } from '../utils/i18n';
 
+/** Shorts = csak valódi feltöltött videók; mindenki ugyanazt a nyilvános listát látja. */
+function buildVideoShorts(posts: SocialPost[]): SocialPost[] {
+    return posts
+        .filter((p) => !!p.videoUrl)
+        .sort((a, b) => b.createdAtMs - a.createdAtMs);
+}
 export default function CommunityPage() {
     const router = useRouter();
     const { t } = useLang();
@@ -66,7 +66,6 @@ export default function CommunityPage() {
     const [activeChat, setActiveChat] = useState<ConversationPreview | null>(null);
     const [chatDockOpen, setChatDockOpen] = useState(false);
     const [messages, setMessages] = useState<DirectMessage[]>([]);
-    const [shorts, setShorts] = useState<MathShort[]>([]);
     const [shortIndex, setShortIndex] = useState(0);
     const [viewProfile, setViewProfile] = useState<SocialProfile | null>(null);
     const [followingView, setFollowingView] = useState(false);
@@ -81,7 +80,6 @@ export default function CommunityPage() {
     const [msgDraft, setMsgDraft] = useState('');
     const [bioDraft, setBioDraft] = useState('');
     const [usernameDraft, setUsernameDraft] = useState('');
-    const [shortTopic, setShortTopic] = useState('egyenletek');
 
     const showToast = (t: string) => {
         setToast(t);
@@ -96,8 +94,8 @@ export default function CommunityPage() {
     }, [router.query.tab]);
 
     const refreshFeed = useCallback(async (userId: string, following: string[]) => {
-        const list = await apiListFeed(50);
-        // Követettek előre
+        // Teljes nyilvános feed — videós shortokat mindenki látja
+        const list = await apiListFeed(80);
         if (following.length) {
             const set = new Set([...following, userId]);
             const followed = list.filter((p) => set.has(p.authorId));
@@ -143,11 +141,10 @@ export default function CommunityPage() {
                 setFollowingIds(following);
                 await refreshFeed(user.uid, following);
                 if (cancelled) return;
-                const [p, g, c, s, health] = await Promise.all([
+                const [p, g, c, health] = await Promise.all([
                     apiListProfiles(30),
                     apiListGroups(),
                     apiListConversations(user.uid),
-                    listMathShorts(20).catch(() => []),
                     backendHealth().catch(() => null),
                 ]);
                 if (cancelled) return;
@@ -157,16 +154,6 @@ export default function CommunityPage() {
                 setProfiles(p);
                 setGroups(g);
                 setConversations(c);
-                if (s.length) {
-                    setShorts(s);
-                } else {
-                    setShorts(
-                        FALLBACK_MATH_SHORTS.map((x, i) => ({
-                            ...x,
-                            id: `fallback-${i}`,
-                        }))
-                    );
-                }
             } catch (e: any) {
                 if (cancelled) return;
                 console.error(e);
@@ -251,7 +238,12 @@ export default function CommunityPage() {
             setPostText('');
             setMediaFile(null);
             setPosts((prev) => [p, ...prev]);
-            showToast(t('community.toast.postPublished'));
+            if (videoUrl) {
+                setShortIndex(0);
+                showToast(t('community.toast.videoShortPublished'));
+            } else {
+                showToast(t('community.toast.postPublished'));
+            }
         } catch (e: any) {
             showToast(e?.message || t('community.toast.postError'));
         } finally {
@@ -370,6 +362,27 @@ export default function CommunityPage() {
         };
     }, [tab, uid, activeChat?.id, chatDockOpen]);
 
+    // Live feed/shorts: új videók mindenkihez eljutnak
+    useEffect(() => {
+        if (!uid) return;
+        if (tab !== 'shorts' && tab !== 'feed') return;
+        let cancelled = false;
+        const tick = async () => {
+            try {
+                await refreshFeed(uid, followingIds);
+            } catch {
+                /* ignore */
+            }
+            if (cancelled) return;
+        };
+        void tick();
+        const id = window.setInterval(tick, 5000);
+        return () => {
+            cancelled = true;
+            window.clearInterval(id);
+        };
+    }, [tab, uid, followingIds, refreshFeed]);
+
     const onSaveProfile = async () => {
         if (!me || busy) return;
         setBusy(true);
@@ -383,47 +396,6 @@ export default function CommunityPage() {
             showToast(t('community.toast.profileSaved'));
         } catch (e: any) {
             showToast(e?.message || t('community.toast.profileError'));
-        } finally {
-            setBusy(false);
-        }
-    };
-
-    const onGenerateShort = async () => {
-        if (!uid || busy) return;
-        setBusy(true);
-        try {
-            const res = await apiGenerateMathShort(shortTopic, 'közepes');
-            if (!res.ok) throw new Error(res.error || t('community.toast.generateFailed'));
-            const shortPayload = res.data;
-            const short: MathShort = {
-                id: `local-${Date.now()}`,
-                topic: shortPayload.topic,
-                title: shortPayload.title,
-                hook: shortPayload.hook,
-                body: shortPayload.body,
-                tip: shortPayload.tip,
-                difficulty: shortPayload.difficulty || 'közepes',
-                createdAtMs: shortPayload.createdAtMs || Date.now(),
-            };
-            try {
-                const saved = await saveMathShort({
-                    topic: short.topic,
-                    title: short.title,
-                    hook: short.hook,
-                    body: short.body,
-                    tip: short.tip,
-                    difficulty: short.difficulty,
-                    createdAtMs: short.createdAtMs,
-                });
-                setShorts((prev) => [saved, ...prev]);
-                setShortIndex(0);
-            } catch {
-                setShorts((prev) => [short, ...prev]);
-                setShortIndex(0);
-            }
-            showToast(t('community.toast.shortCreated'));
-        } catch (e: any) {
-            showToast(e?.message || t('community.toast.shortError'));
         } finally {
             setBusy(false);
         }
@@ -448,7 +420,8 @@ export default function CommunityPage() {
         return profiles.filter((p) => p.uid !== myUid && !followingIds.includes(p.uid)).slice(0, 5);
     }, [profiles, followingIds, me?.uid]);
 
-    const currentShort = shorts[shortIndex] || null;
+    const videoShorts = useMemo(() => buildVideoShorts(posts), [posts]);
+    const currentShort = videoShorts[Math.min(shortIndex, Math.max(0, videoShorts.length - 1))] || null;
 
     if (!ready) {
         return (
@@ -625,15 +598,12 @@ export default function CommunityPage() {
 
                     {tab === 'shorts' && (
                         <CommunityShortsTab
-                            shortTopic={shortTopic}
-                            onShortTopicChange={setShortTopic}
-                            onGenerateShort={onGenerateShort}
-                            busy={busy}
                             currentShort={currentShort}
-                            shortIndex={shortIndex}
-                            shortsLength={shorts.length}
+                            shortIndex={Math.min(shortIndex, Math.max(0, videoShorts.length - 1))}
+                            shortsLength={videoShorts.length}
                             onPrev={() => setShortIndex((i) => Math.max(0, i - 1))}
-                            onNext={() => setShortIndex((i) => Math.min(shorts.length - 1, i + 1))}
+                            onNext={() => setShortIndex((i) => Math.min(videoShorts.length - 1, i + 1))}
+                            onOpenProfile={openProfile}
                         />
                     )}
 

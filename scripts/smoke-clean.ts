@@ -273,13 +273,28 @@ async function main() {
     ];
 
     const store = createSocialStore('smoke');
-    const created = await runSocialAction(store, 'ensureProfile', 'dry-uid', {
-        name: 'Dry Tester',
-    });
-    const feed = await runSocialAction(store, 'listFeed', 'dry-uid', { limit: 3 });
-    const post = await runSocialAction(store, 'createPost', 'dry-uid', {
-        text: 'DRY smoke post',
-    });
+    const dbPath = path.join(process.cwd(), 'data', 'social-local.json');
+    const hadDb = fs.existsSync(dbPath);
+    const dbBackup = hadDb ? fs.readFileSync(dbPath, 'utf8') : null;
+    let profileOk = false;
+    let feedN = -1;
+    let postOk = false;
+    try {
+        const created = await runSocialAction(store, 'ensureProfile', 'dry-uid', { name: 'Dry Tester' });
+        const feed = await runSocialAction(store, 'listFeed', 'dry-uid', { limit: 3 });
+        const post = await runSocialAction(store, 'createPost', 'dry-uid', { text: 'DRY smoke post' });
+        profileOk = !!(created.data as any)?.username;
+        feedN = Array.isArray(feed.data) ? feed.data.length : -1;
+        postOk = !!(post.data as any)?.text;
+    } finally {
+        if (dbBackup != null) fs.writeFileSync(dbPath, dbBackup);
+        else if (fs.existsSync(dbPath)) {
+            fs.writeFileSync(
+                dbPath,
+                '{"profiles":{},"posts":[],"likes":{},"comments":{},"follows":[],"groups":[],"conversations":{}}\n'
+            );
+        }
+    }
 
     const gameLines = fs.readFileSync(path.join(process.cwd(), 'pages/game.tsx'), 'utf8').split(/\r?\n/).length;
     if (gameLines > 600) throw new Error(`game.tsx too large for SRP: ${gameLines}`);
@@ -308,9 +323,9 @@ async function main() {
         layerOk,
         banks: banks.map((b) => b.length),
         szigorlatN: szigorlatQuestions.length,
-        profileOk: !!(created.data as any)?.username,
-        feedN: Array.isArray(feed.data) ? feed.data.length : -1,
-        postOk: !!(post.data as any)?.text,
+        profileOk,
+        feedN,
+        postOk,
         socialDomain: true,
         randomHelpers: true,
         namingScoreTarget: 10,

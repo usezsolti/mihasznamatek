@@ -2,8 +2,6 @@
 
 
 
-import { FALLBACK_MATH_SHORTS } from './mathShortFallbacks';
-
 import { loadUserPracticeProgress } from './practiceProgress';
 
 import {
@@ -70,7 +68,7 @@ import {
 
 
 
-export { FALLBACK_MATH_SHORTS } from './mathShortFallbacks';
+export { FALLBACK_MATH_SHORTS, SAMPLE_VIDEO_SHORTS } from './mathShortFallbacks';
 
 
 
