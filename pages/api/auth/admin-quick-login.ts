@@ -4,7 +4,7 @@ import { sendErr } from '../../../server/http';
 /**
  * POST /api/auth/admin-quick-login
  * Kikapcsolva: a nyilvános egykattintásos tanári belépés bárkit beengedett.
- * Használd a kliens oldali jelszavas belépést usezsolti@gmail.com-mal.
+ * Használd a kliens oldali jelszavas tanári belépést.
  */
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     if (req.method !== 'POST') {
@@ -12,7 +12,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
     return sendErr(
         res,
-        'A gyors tanári belépés ki van kapcsolva. Jelentkezz be usezsolti@gmail.com + jelszóval.',
+        'A gyors tanári belépés ki van kapcsolva. Használd a jelszavas tanári belépést.',
         403
     );
 }

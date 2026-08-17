@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { isAdminEmail } from '../utils/admin';
-import { ADMIN_LOGIN_EMAIL, signInAsAdmin } from '../utils/adminLogin';
+import { signInAsAdmin } from '../utils/adminLogin';
 
 async function waitForFirebase(maxMs = 8000): Promise<any | null> {
     const start = Date.now();
@@ -74,7 +74,7 @@ export default function AdminLoginPage() {
                     <p className="mm-admin-login-kicker">Mihaszna Matek</p>
                     <h1>Tanári belépés</h1>
                     <p className="mm-admin-login-sub">
-                        Csak <strong>{ADMIN_LOGIN_EMAIL}</strong> — add meg a fiók jelszavát.
+                        Add meg a tanári fiók jelszavát.
                     </p>
 
                     {checking ? (
