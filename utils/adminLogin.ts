@@ -1,6 +1,6 @@
 /** Tanári belépés — csak usezsolti@gmail.com + saját jelszó (nincs nyilvános egykattintás). */
 
-export { ADMIN_LOGIN_EMAIL } from './adminLoginShared';
+export { ADMIN_LOGIN_EMAIL, ADMIN_GATE_PATH } from './adminLoginShared';
 import { ADMIN_LOGIN_EMAIL } from './adminLoginShared';
 import { isAdminEmail } from './admin';
 

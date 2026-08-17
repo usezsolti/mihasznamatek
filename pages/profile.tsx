@@ -1,12 +1,12 @@
 import { useEffect } from "react";
 import { useRouter } from "next/router";
 
-/** Régi /profile útvonal → egyesített dashboard profil fül */
+/** Régi /profile útvonal → dashboard tanulás / profil nézet */
 export default function ProfileRedirect() {
     const router = useRouter();
 
     useEffect(() => {
-        router.replace("/dashboard");
+        void router.replace("/dashboard?tab=tanulas");
     }, [router]);
 
     return (

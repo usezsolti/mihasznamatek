@@ -1,17 +1,11 @@
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 
-/** Régi /admin → tanári konzol */
-export default function AdminPageRedirect() {
+/** Régi nyilvános admin URL — ne árulja el a titkos belépőt. */
+export default function DeadAdminPath() {
     const router = useRouter();
     useEffect(() => {
-        void router.replace('/dashboard?tab=admin');
+        void router.replace('/');
     }, [router]);
-    return (
-        <div className="dashboard-container dark-theme">
-            <div className="loading-screen">
-                <p>Átirányítás a tanári konzolra…</p>
-            </div>
-        </div>
-    );
+    return null;
 }

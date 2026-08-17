@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
 import {
     LESSON_SUBJECTS,
@@ -164,6 +164,9 @@ export default function AuthModal({
     const [infoMessage, setInfoMessage] = useState("");
     const [awaitingVerification, setAwaitingVerification] = useState(false);
     const [gdprAccepted, setGdprAccepted] = useState(false);
+    const wasOpenRef = useRef(false);
+    const onCloseRef = useRef(onClose);
+    onCloseRef.current = onClose;
 
     const buildProfile = (): RegistrationProfile => ({
         name: name.trim(),
@@ -208,27 +211,35 @@ export default function AuthModal({
         setAwaitingVerification(false);
     };
 
+    // Csak nyitáskor inicializál — ne állítsa vissza a regisztrációt Navbar újrarendernél
     useEffect(() => {
         if (!isOpen) {
-            setLoading(false);
-            resetForm();
+            if (wasOpenRef.current) {
+                setLoading(false);
+                resetForm();
+            }
+            wasOpenRef.current = false;
             return;
         }
-        setMode(initialMode);
-        setGdprAccepted(false);
-        setError("");
+
+        const justOpened = !wasOpenRef.current;
+        wasOpenRef.current = true;
+        if (justOpened) {
+            setMode(initialMode);
+            setGdprAccepted(false);
+            setError("");
+            setInfoMessage("");
+            setAwaitingVerification(false);
+        }
+
         const onKey = (e: KeyboardEvent) => {
-            if (e.key === "Escape") onClose();
+            if (e.key === "Escape") onCloseRef.current();
         };
         window.addEventListener("keydown", onKey);
         return () => window.removeEventListener("keydown", onKey);
+        // initialMode only applied on open transition
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isOpen, onClose, initialMode]);
-
-    // Ha a Navbar átállítja az initialMode-ot nyitva tartás közben is
-    useEffect(() => {
-        if (isOpen) setMode(initialMode);
-    }, [initialMode, isOpen]);
+    }, [isOpen]);
 
     const switchMode = (next: AuthMode) => {
         setMode(next);
@@ -448,6 +459,8 @@ export default function AuthModal({
             aria-modal="true"
             aria-labelledby="auth-modal-title"
             onClick={(e) => {
+                // Ne zárjon véletlen háttérkattintásra űrlap kitöltés közben
+                if (mode === "register" || awaitingVerification) return;
                 if (e.target === e.currentTarget) onClose();
             }}
         >

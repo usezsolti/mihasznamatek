@@ -245,12 +245,12 @@ export default function Dashboard() {
             setActiveTab('admin');
             return;
         }
-        if (tab === 'tanulas') {
+        if (tab === 'tanulas' || tab === 'profil') {
             setActiveTab('tanulas');
             return;
         }
-        // Admin alapból a tanári konzolra érkezik (ne a diák nézetre)
-        if (isAdmin && (tab === undefined || tab === '' || tab === 'profil')) {
+        // Admin alapból a tanári konzolra érkezik (üres tab)
+        if (isAdmin && (tab === undefined || tab === '')) {
             setActiveTab('admin');
             void router.replace(
                 { pathname: '/dashboard', query: { tab: 'admin' } },

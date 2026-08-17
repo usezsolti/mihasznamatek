@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useRouter } from "next/router";
 import { FaYoutube, FaFacebook, FaInstagram, FaTiktok } from "react-icons/fa";
 import AuthModal from "./AuthModal";
@@ -188,6 +188,11 @@ export default function Navbar() {
         setAuthRedirectTo(redirectTo);
         setAuthModalOpen(true);
     };
+
+    const closeAuthModal = useCallback(() => {
+        setAuthModalOpen(false);
+        setAuthRedirectTo(undefined);
+    }, []);
 
     // Bárhonnan nyitható (Fiókom szekció, /#auth, ?auth=1)
     useEffect(() => {
@@ -492,10 +497,7 @@ export default function Navbar() {
                 isOpen={authModalOpen}
                 initialMode={authModalMode}
                 redirectTo={authRedirectTo}
-                onClose={() => {
-                    setAuthModalOpen(false);
-                    setAuthRedirectTo(undefined);
-                }}
+                onClose={closeAuthModal}
             />
         </>
     );
