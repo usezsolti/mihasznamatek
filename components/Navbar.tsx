@@ -329,22 +329,6 @@ export default function Navbar() {
                                 ✕
                             </button>
                         </li>
-                        {isClient && currentUser && isAdminEmail(currentUser.email) && (
-                            <li>
-                                <Link
-                                    href="/dashboard?tab=admin"
-                                    className={
-                                        router.pathname === "/dashboard" &&
-                                        router.query.tab === "admin"
-                                            ? "nav-link-active"
-                                            : undefined
-                                    }
-                                    onClick={toggleMenu}
-                                >
-                                    {t('nav.admin')}
-                                </Link>
-                            </li>
-                        )}
                         <li>
                             <a href="/#about" onClick={handleAnchorClick("#about")}>
                                 {t('nav.about')}

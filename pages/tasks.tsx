@@ -351,12 +351,6 @@ export default function Tasks() {
                                 <span className="nav-icon">👤</span>
                                 <span className="nav-text">Profil</span>
                             </Link>
-                            {user?.uid === "4lUUn5fX4sZ79pVoy5y4t3hJFpF3" && (
-                                <Link href="/admin" className="nav-item">
-                                    <span className="nav-icon">⚙️</span>
-                                    <span className="nav-text">Admin</span>
-                                </Link>
-                            )}
                         </div>
 
                     </div>
