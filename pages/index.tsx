@@ -854,11 +854,12 @@ export default function Home() {
                                     <h4>{t('home.pricing.hoursTitle')}</h4>
                                     <ul className="working-hours">
                                         <li><span className="info-key">{t('weekday.mon')}:</span> <span className="info-value">11:00 - 20:00</span></li>
-                                        <li><span className="info-key">{t('weekday.tue')}:</span> <span className="info-value">16:00 - 22:00</span></li>
+                                        <li><span className="info-key">{t('weekday.tue')}:</span> <span className="info-value">{t('home.pricing.hoursClosed')}</span></li>
                                         <li><span className="info-key">{t('weekday.wed')}:</span> <span className="info-value">08:00 - 20:00</span></li>
                                         <li><span className="info-key">{t('weekday.thu')}:</span> <span className="info-value">11:00 - 20:00</span></li>
                                         <li><span className="info-key">{t('weekday.fri')}:</span> <span className="info-value">11:00 - 18:00</span></li>
-                                        <li><span className="info-key">{t('weekday.sat')}:</span> <span className="info-value">09:00 - 15:00</span></li>
+                                        <li><span className="info-key">{t('weekday.sat')}:</span> <span className="info-value">08:00 - 14:00</span></li>
+                                        <li><span className="info-key">{t('weekday.sun')}:</span> <span className="info-value">{t('home.pricing.hoursSundayOdd')}</span></li>
                                     </ul>
                                 </div>
 

@@ -6,14 +6,17 @@ export type DayRange = [string, string] | null;
 export type WorkingHoursMap = Record<number, DayRange>;
 
 export const DEFAULT_WORKING_HOURS: WorkingHoursMap = {
-    0: null, // vasárnap
+    0: null, // vasárnap — páros héten zárva; páratlan héten lásd ODD_WEEK_SUNDAY_HOURS
     1: ["11:00", "20:00"],
-    2: ["16:00", "22:00"],
+    2: null, // kedd — nem tartok órát
     3: ["08:00", "20:00"],
     4: ["11:00", "20:00"],
     5: ["11:00", "18:00"],
-    6: ["09:00", "15:00"],
+    6: ["08:00", "14:00"],
 };
+
+/** Vasárnap csak páratlan ISO-héten (1, 3, 5…), 08:00–14:00. */
+export const ODD_WEEK_SUNDAY_HOURS: [string, string] = ["08:00", "14:00"];
 
 /** @deprecated használd: DEFAULT_WORKING_HOURS */
 export const WORKING_HOURS = DEFAULT_WORKING_HOURS;
@@ -93,8 +96,28 @@ export function formatTime(mins: number): string {
     return `${String(h).padStart(2, "0")}:${String(m).padStart(2, "0")}`;
 }
 
+/** ISO 8601 hét száma (hétfővel kezdődik). */
+export function getIsoWeekNumber(date: Date): number {
+    const utc = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
+    const dayNum = utc.getUTCDay() || 7;
+    utc.setUTCDate(utc.getUTCDate() + 4 - dayNum);
+    const yearStart = new Date(Date.UTC(utc.getUTCFullYear(), 0, 1));
+    return Math.ceil(((utc.getTime() - yearStart.getTime()) / 86400000 + 1) / 7);
+}
+
+export function isOddIsoWeek(date: Date): boolean {
+    return getIsoWeekNumber(date) % 2 === 1;
+}
+
+function rangeForDay(date: Date, hours: WorkingHoursMap): DayRange {
+    if (date.getDay() === 0) {
+        return isOddIsoWeek(date) ? ODD_WEEK_SUNDAY_HOURS : null;
+    }
+    return hours[date.getDay()] ?? null;
+}
+
 export function getSlotsForDay(date: Date, hours: WorkingHoursMap = DEFAULT_WORKING_HOURS): string[] {
-    const range = hours[date.getDay()];
+    const range = rangeForDay(date, hours);
     if (!range) return [];
     const [start, end] = range;
     const startM = parseTime(start);

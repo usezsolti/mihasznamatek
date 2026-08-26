@@ -144,6 +144,11 @@ export default function AdminWorkingHoursEditor({ onSaved }: Props) {
                                         alignItems: "center",
                                     }}
                                 >
+                                    {day === 0 ? (
+                                        <span style={{ color: "#bbb", fontSize: "0.9rem" }}>
+                                            Páratlan héten 08:00–14:00, páros héten zárva
+                                        </span>
+                                    ) : (
                                     <label
                                         style={{
                                             display: "inline-flex",
@@ -161,7 +166,8 @@ export default function AdminWorkingHoursEditor({ onSaved }: Props) {
                                         />
                                         Zárva
                                     </label>
-                                    {!closed && range && (
+                                    )}
+                                    {day !== 0 && !closed && range && (
                                         <>
                                             <select
                                                 value={range[0]}
