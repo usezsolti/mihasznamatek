@@ -4,6 +4,7 @@ import {
     PATH_CHEST_XP,
     PATH_LESSON_COUNT,
     PATH_LESSON_XP,
+    PATH_QUESTIONS_PER_LESSON,
     PATH_TOTAL_QUESTIONS,
     computeHighestUnlocked,
     lessonToStage,
@@ -11,7 +12,7 @@ import {
     starsFromWrongCount,
 } from './topicPath';
 
-export type PracticeStage = 1 | 2 | 3;
+export type PracticeStage = 1 | 2 | 3 | 4 | 5 | 6;
 
 export type BadgeId =
     | 'parameter_kesz'
@@ -19,6 +20,7 @@ export type BadgeId =
     | 'absroot_kesz'
     | 'bizonyitas_kesz'
     | 'fuggveny_kesz'
+    | 'halmazok_kesz'
     | 'ut_bejart'
     | 'mester_szakasz'
     | 'hibatlan_5'
@@ -26,7 +28,7 @@ export type BadgeId =
     | 'xp_1000';
 
 /** Régi munkalap kulcsok — badge mappinghez */
-export type TopicProgressKey = 'parameter' | 'explog' | 'absroot' | 'bizonyitas' | 'egyenletek' | 'fuggvenyek';
+export type TopicProgressKey = 'parameter' | 'explog' | 'absroot' | 'bizonyitas' | 'egyenletek' | 'fuggvenyek' | 'halmazok';
 
 export interface BadgeDef {
     id: BadgeId;
@@ -79,17 +81,21 @@ export const BADGE_DEFS: BadgeDef[] = [
     { id: 'absroot_kesz', title: 'Abszolútérték–gyök mester', description: 'Abszolútérték/gyök munkalap teljesítve', icon: '|√' },
     { id: 'bizonyitas_kesz', title: 'Bizonyítás mester', description: 'Bizonyítási munkalap teljesítve', icon: '✓' },
     { id: 'fuggveny_kesz', title: 'Függvény mester', description: 'Függvények–analízis munkalap teljesítve', icon: '📈' },
+    { id: 'halmazok_kesz', title: 'Halmazok mester', description: 'Halmazok munkalap teljesítve', icon: '{}' },
     { id: 'ut_bejart', title: 'Út bejárva', description: 'Egy teljes témakör-út (6 lecke) kész', icon: '🗺️' },
-    { id: 'mester_szakasz', title: 'Mester szakasz', description: 'Bármely munkalap 3. szakasza kész', icon: '🏆' },
+    { id: 'mester_szakasz', title: 'Mester szakasz', description: 'Bármely munkalap 6. szintje kész', icon: '🏆' },
     { id: 'hibatlan_5', title: '5 hibátlan', description: '5 helyes válasz egymás után', icon: '🔥' },
     { id: 'xp_500', title: '500 XP', description: 'Elérted az 500 XP-t', icon: '⭐' },
     { id: 'xp_1000', title: '1000 XP', description: 'Elérted az 1000 XP-t', icon: '👑' },
 ];
 
 export const STAGE_LABELS: Record<PracticeStage, string> = {
-    1: 'Alap',
-    2: 'Közép',
-    3: 'Mester',
+    1: '1. szint',
+    2: '2. szint',
+    3: '3. szint',
+    4: '4. szint',
+    5: '5. szint',
+    6: '6. szint',
 };
 
 /** XP küszöbök → avatar szint (1+) */
@@ -149,14 +155,21 @@ export function assignStagesToQuestions<T extends { stage?: PracticeStage; quest
 ): (T & { stage: PracticeStage })[] {
     const n = list.length;
     if (n === 0) return [];
-    const t1 = Math.max(1, Math.ceil(n / 3));
-    const t2 = Math.max(t1 + 1, Math.ceil((2 * n) / 3));
+    const hasExplicit = list.some((q) => typeof q.stage === 'number' && q.stage >= 1 && q.stage <= 6);
+    if (hasExplicit) {
+        return list
+            .map((q) => {
+                const stage = (q.stage && q.stage >= 1 && q.stage <= 6 ? q.stage : 1) as PracticeStage;
+                return { ...q, stage };
+            })
+            .sort((a, b) => a.stage - b.stage);
+    }
+    // 6 egyenlő sáv, ha nincs előre jelölt stage
     return list.map((q, i) => {
-        let stage: PracticeStage = 1;
-        if (i >= t2) stage = 3;
-        else if (i >= t1) stage = 2;
-        if (q.question && /mesterfok|főgonosz|Mihaszna-mester/i.test(q.question)) {
-            stage = 3;
+        const band = Math.min(5, Math.floor((i * 6) / Math.max(1, n)));
+        let stage = (band + 1) as PracticeStage;
+        if (q.question && /mesterfok|főgonosz|Mihaszna-mester|szintzáró|6\. szint/i.test(q.question)) {
+            stage = 6;
         }
         return { ...q, stage };
     }).sort((a, b) => a.stage - b.stage);
@@ -170,6 +183,7 @@ export function resolveTopicProgressKey(topicId: string): TopicProgressKey | nul
     if (t.includes('bizonyitas')) return 'bizonyitas';
     if (t.includes('egyenletek') || t.includes('egyenlotlenseg')) return 'egyenletek';
     if (t.includes('fuggveny') || t.includes('analizis')) return 'fuggvenyek';
+    if (t.includes('halmaz')) return 'halmazok';
     return null;
 }
 
@@ -189,6 +203,7 @@ export function topicCompletionBadge(key: string): BadgeId | null {
         case 'egyenletek':
             return 'bizonyitas_kesz';
         case 'fuggvenyek': return 'fuggveny_kesz';
+        case 'halmazok': return 'halmazok_kesz';
         default: return null;
     }
 }
@@ -320,14 +335,42 @@ async function persistProgress(uid: string | null | undefined, next: UserPractic
     saveLocalProgress(next);
     const firebase = (window as any).firebase;
     if (uid && firebase?.firestore) {
-        const db = firebase.firestore();
-        await db.collection('users').doc(uid).collection('progress').doc('summary').set(
-            {
-                ...next,
-                updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
-            },
-            { merge: true }
-        );
+        try {
+            const db = firebase.firestore();
+            await db.collection('users').doc(uid).collection('progress').doc('summary').set(
+                {
+                    ...next,
+                    updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+                },
+                { merge: true }
+            );
+            // #region agent log
+            const { agentDebugLog } = await import('./agentDebugLog');
+            agentDebugLog({
+                hypothesisId: 'P3',
+                location: 'practiceProgress.ts:persistProgress',
+                message: 'progress write ok',
+                data: { uidLen: String(uid).length },
+                runId: 'firestore-perms',
+            });
+            // #endregion
+        } catch (err: any) {
+            // #region agent log
+            const { agentDebugLog } = await import('./agentDebugLog');
+            agentDebugLog({
+                hypothesisId: 'P2-P3',
+                location: 'practiceProgress.ts:persistProgress',
+                message: 'progress write failed',
+                data: {
+                    code: String(err?.code || '').slice(0, 80),
+                    msg: String(err?.message || err).slice(0, 160),
+                },
+                runId: 'firestore-perms',
+            });
+            // #endregion
+            // Lokális progress megmarad — ne dőljön el a játék unpublished rules miatt
+            console.warn('persistProgress firestore:', err?.code || err);
+        }
     }
 }
 
@@ -359,7 +402,20 @@ export async function loadUserPracticeProgress(uid?: string | null): Promise<Use
         const merged = mergeProgress(local, remote);
         saveLocalProgress(merged);
         return merged;
-    } catch {
+    } catch (err: any) {
+        // #region agent log
+        const { agentDebugLog } = await import('./agentDebugLog');
+        agentDebugLog({
+            hypothesisId: 'P3',
+            location: 'practiceProgress.ts:loadUserPracticeProgress',
+            message: 'progress read failed',
+            data: {
+                code: String(err?.code || '').slice(0, 80),
+                msg: String(err?.message || err).slice(0, 160),
+            },
+            runId: 'firestore-perms',
+        });
+        // #endregion
         return local;
     }
 }
@@ -473,8 +529,8 @@ export async function applyAndSaveProgress(
             && Array.from({ length: PATH_LESSON_COUNT }, (_, i) => i + 1).every((n) => lessonsCompleted.includes(n));
 
         const correctTotal = Math.max(prevTopic.bestCorrect || 0, input.correctCount);
-        // Path: bestCorrect = kész leckék × 3
-        const pathBest = lessonsCompleted.length * 3;
+        // Path: bestCorrect = kész leckék × feladatok/lecke
+        const pathBest = lessonsCompleted.length * PATH_QUESTIONS_PER_LESSON;
         const bestCorrect = input.lessonJustCompleted
             ? Math.max(prevTopic.bestCorrect || 0, pathBest)
             : correctTotal;
@@ -520,7 +576,7 @@ export async function applyAndSaveProgress(
                 if (lb) unlock(lb);
             }
         }
-        if ((topics[storageKey]!.stagesCompleted || []).includes(3)) {
+        if ((topics[storageKey]!.stagesCompleted || []).includes(6)) {
             unlock('mester_szakasz');
         }
 

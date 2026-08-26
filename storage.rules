@@ -46,9 +46,18 @@ service firebase.storage {
     }
 
     match /booking-files/{bookingId}/{fileName} {
-      allow read: if isAdmin() || signedIn();
-      // Vendég foglaláshoz is kellhet csatolmány — típus + méret korlát
-      allow write: if isBookingFile()
+      // Olvasás: tanár VAGY a foglalás tulajdonosa (e-mail egyezés)
+      allow read: if isAdmin()
+        || (
+          signedIn()
+          && firestore.exists(/databases/(default)/documents/bookings/$(bookingId))
+          && firestore.get(/databases/(default)/documents/bookings/$(bookingId)).data.customerEmail is string
+          && firestore.get(/databases/(default)/documents/bookings/$(bookingId)).data.customerEmail.lower()
+               == emailLower()
+        );
+      // Írás: csak bejelentkezve (vendég fájl nélkül foglalhat)
+      allow write: if signedIn()
+        && isBookingFile()
         && request.resource.size < 8 * 1024 * 1024;
       allow delete: if isAdmin();
     }

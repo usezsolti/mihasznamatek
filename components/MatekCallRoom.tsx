@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { useLang } from '../utils/i18n';
+import { agentDebugLog } from '../utils/agentDebugLog';
 import {
     startLessonCall,
     type CallPeerRole,
@@ -66,7 +67,18 @@ export default function MatekCallRoom({
         setRemoteRole('');
 
         const run = async () => {
-            if (!localRef.current || !remoteRef.current) return;
+            if (!localRef.current || !remoteRef.current) {
+                // #region agent log
+                agentDebugLog({
+                    hypothesisId: 'A',
+                    location: 'MatekCallRoom.tsx:start',
+                    message: 'video refs missing — call not started',
+                    data: { roomId, role, hasLocal: !!localRef.current, hasRemote: !!remoteRef.current },
+                    runId: 'wb-call',
+                });
+                // #endregion
+                return;
+            }
             setBusy(true);
             try {
                 const controls = await startLessonCall({

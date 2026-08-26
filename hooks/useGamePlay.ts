@@ -21,6 +21,9 @@ import {
 import { buildTopicPracticeHref } from '../utils/topicStats';
 import type { EducationLevelId } from '../utils/mathTopicsCatalog';
 import type { Question } from '../utils/game';
+import { parseStudentNumber } from '../utils/parseStudentNumber';
+import { studentSetMatches } from '../utils/parseStudentSet';
+import { agentDebugLog } from '../utils/agentDebugLog';
 
 export type GameSessionBridge = {
     educationLevel: 'elementary' | 'highschool' | 'university' | null;
@@ -161,7 +164,7 @@ export function useGamePlay({
                         : undefined;
                 const perfectRun = wrongIds.length === 0 && correctAnswerCount >= totalQuestions;
                 const answerXpOnly = correctIds.length * 10;
-                const allStages: PracticeStage[] = [1, 2, 3];
+                const allStages: PracticeStage[] = [1, 2, 3, 4, 5, 6];
                 const cleared = [...stagesCleared];
                 for (const st of allStages) {
                     const stageQs = baseList.filter((q) => q.stage === st);
@@ -269,7 +272,35 @@ export function useGamePlay({
             }
 
             await db.collection('gameResults').add(resultData);
-            } catch (error) {
+            // #region agent log
+            {
+                const { agentDebugLog } = await import('../utils/agentDebugLog');
+                agentDebugLog({
+                    hypothesisId: 'P1',
+                    location: 'useGamePlay.ts:saveGameResults',
+                    message: 'gameResults write ok',
+                    data: { hasUser: Boolean(currentUser?.uid) },
+                    runId: 'firestore-perms',
+                });
+            }
+            // #endregion
+            } catch (error: any) {
+                // #region agent log
+                {
+                    const { agentDebugLog } = await import('../utils/agentDebugLog');
+                    agentDebugLog({
+                        hypothesisId: 'P1-P2',
+                        location: 'useGamePlay.ts:saveGameResults',
+                        message: 'gameResults write failed',
+                        data: {
+                            code: String(error?.code || '').slice(0, 80),
+                            msg: String(error?.message || error).slice(0, 160),
+                            hasUser: Boolean(currentUser?.uid),
+                        },
+                        runId: 'firestore-perms',
+                    });
+                }
+                // #endregion
                 console.error('Error saving game results:', error);
         }
     };
@@ -387,7 +418,7 @@ export function useGamePlay({
             
             if (subQ.answer !== 0 && subQ.answer !== undefined) {
                 // Számérték ellenőrzés
-                const userAns = parseFloat(userAnswer);
+                const userAns = parseStudentNumber(userAnswer);
                 if (isNaN(userAns) || Math.abs(userAns - subQ.answer) >= 0.01) {
                     console.log(`Hibás válasz részfeladat ${index + 1}: várt ${subQ.answer}, kapott ${userAns}`);
                     allCorrect = false;
@@ -471,14 +502,32 @@ export function useGamePlay({
         }
 
         let correct = false;
-        
-        if (hasFourth) {
+        const expectedSet = currentQ.expectedSet;
+
+        if (Array.isArray(expectedSet)) {
+            correct = studentSetMatches(userAnswer, expectedSet);
+            // #region agent log
+            agentDebugLog({
+                hypothesisId: 'S',
+                location: 'useGamePlay.ts:submitAnswer',
+                message: 'set answer graded',
+                data: {
+                    rawLen: userAnswer.trim().length,
+                    expectedN: expectedSet.length,
+                    correct,
+                    hasBraces: userAnswer.includes('{'),
+                    hasSemi: userAnswer.includes(';'),
+                },
+                runId: 'set-ans',
+            });
+            // #endregion
+        } else if (hasFourth) {
             // Négy mezőből olvassuk a válaszokat
             const nums = [
-                parseFloat(userAnswer),
-                parseFloat(userAnswer2),
-                parseFloat(userAnswer3),
-                parseFloat(userAnswer4)
+                parseStudentNumber(userAnswer),
+                parseStudentNumber(userAnswer2),
+                parseStudentNumber(userAnswer3),
+                parseStudentNumber(userAnswer4)
             ];
             
             if (nums.some(n => isNaN(n))) {
@@ -498,9 +547,9 @@ export function useGamePlay({
         } else if (hasThird) {
             // Három mezőből olvassuk a válaszokat
             const nums = [
-                parseFloat(userAnswer),
-                parseFloat(userAnswer2),
-                parseFloat(userAnswer3)
+                parseStudentNumber(userAnswer),
+                parseStudentNumber(userAnswer2),
+                parseStudentNumber(userAnswer3)
             ];
             
             if (nums.some(n => isNaN(n))) {
@@ -517,8 +566,8 @@ export function useGamePlay({
             correct = sortedAnswers.every((ans, idx) => Math.abs(ans - sortedUserAnswers[idx]) < 0.01);
         } else if (hasAlternative) {
             // Két külön mezőből olvassuk a válaszokat
-            const num1 = parseFloat(userAnswer);
-            const num2 = parseFloat(userAnswer2);
+            const num1 = parseStudentNumber(userAnswer);
+            const num2 = parseStudentNumber(userAnswer2);
             
             if (isNaN(num1) || isNaN(num2)) {
                 setMessage('Kérjük, adj meg érvényes számokat mindkét mezőben!');
@@ -531,7 +580,7 @@ export function useGamePlay({
             correct = hasAnswer1 || hasAnswer2;
         } else {
             // Nincs alternatív válasz, csak az első mezőt ellenőrizzük
-            const userNum = parseFloat(userAnswer);
+            const userNum = parseStudentNumber(userAnswer);
             if (!isNaN(userNum)) {
                 correct = Math.abs(userNum - currentQ.answer) < 0.01;
             }

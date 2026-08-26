@@ -22,6 +22,9 @@ import {
 } from "../../utils/apiSecurity";
 import { sendErr, sendOk } from "../../server/http";
 import { isAdminEmail } from "../../utils/admin";
+import { getAdminDb } from "../../server/firebaseAdmin";
+import { agentDebugLog } from "../../utils/agentDebugLog";
+import { emailFromHeader } from "../../utils/emailFrom";
 
 type Body = {
     type?: BookingEmailType;
@@ -89,7 +92,8 @@ function sanitizeBooking(raw: any): BookingPayload | null {
 
 async function sendViaGmail(mails: MailItem[]): Promise<EmailSendResult> {
     const user = process.env.GMAIL_USER || ADMIN_BOOKING_EMAIL;
-    const pass = process.env.GMAIL_APP_PASSWORD;
+    // Google gyakran szóközökkel mutatja az app jelszót — nodemailernek egyben kell
+    const pass = String(process.env.GMAIL_APP_PASSWORD || '').replace(/\s+/g, '');
     if (!pass) return { ok: false, error: "Nincs GMAIL_APP_PASSWORD beállítva" };
 
     const transporter = nodemailer.createTransport({
@@ -100,7 +104,7 @@ async function sendViaGmail(mails: MailItem[]): Promise<EmailSendResult> {
     try {
         for (const mail of mails) {
             await transporter.sendMail({
-                from: `"Mihaszna Matek" <${user}>`,
+                from: emailFromHeader(),
                 to: mail.to,
                 cc: mail.cc,
                 replyTo: mail.replyTo,
@@ -196,6 +200,16 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         return sendErr(res, "Érvénytelen e-mail típus", 400);
     }
 
+    // #region agent log
+    agentDebugLog({
+        hypothesisId: 'R1',
+        location: 'api/send-booking-email.ts:entry',
+        message: 'booking email API hit',
+        data: { type, hasBookingId: Boolean(rawBooking?.id) },
+        runId: 'phase1-refactor',
+    });
+    // #endregion
+
     const booking = sanitizeBooking(rawBooking);
     if (!booking) {
         return sendErr(res, "Érvénytelen foglalási adat", 400);
@@ -244,6 +258,22 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 );
             }
         }
+        // Spam ellen: csak létező Firestore foglalásra küldünk (Admin SDK ha elérhető)
+        const db = getAdminDb();
+        if (db && booking.id) {
+            try {
+                const snap = await db.collection("bookings").doc(booking.id).get();
+                if (!snap.exists) {
+                    return sendErr(res, "A foglalás nem található. Mentés után próbáld újra.", 409);
+                }
+                const email = String(snap.data()?.customerEmail || "").toLowerCase();
+                if (email && email !== booking.customerEmail.toLowerCase()) {
+                    return sendErr(res, "A foglalási adatok nem egyeznek.", 403);
+                }
+            } catch (err) {
+                console.warn("admin_new booking verify skipped:", err);
+            }
+        }
     }
 
     // Lemondás: admin VAGY a foglaló diák (e-mail egyezés)
@@ -262,14 +292,51 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     try {
         if (process.env.GMAIL_APP_PASSWORD) {
             const gmailResult = await sendViaGmail(mails);
+            // #region agent log
+            agentDebugLog({
+                hypothesisId: 'E1',
+                location: 'api/send-booking-email.ts:gmail',
+                message: 'gmail attempt',
+                data: {
+                    ok: gmailResult.ok,
+                    err: String(gmailResult.error || '').slice(0, 160),
+                    type,
+                    mailCount: mails.length,
+                },
+                runId: 'email-debug',
+            });
+            // #endregion
             if (gmailResult.ok) return emailOk(res, gmailResult);
             console.warn("Gmail failed, trying fallbacks:", gmailResult.error);
         }
         if (process.env.WEB3FORMS_ACCESS_KEY) {
             const w3 = await sendViaWeb3Forms(mails);
+            // #region agent log
+            agentDebugLog({
+                hypothesisId: 'E2',
+                location: 'api/send-booking-email.ts:web3',
+                message: 'web3forms attempt',
+                data: { ok: w3.ok, err: String(w3.error || '').slice(0, 120), type },
+                runId: 'email-debug',
+            });
+            // #endregion
             if (w3.ok) return emailOk(res, w3);
         }
         const fsResult = await sendViaFormSubmitAll(type, mails, baseOrigin);
+        // #region agent log
+        agentDebugLog({
+            hypothesisId: 'E3',
+            location: 'api/send-booking-email.ts:formsubmit',
+            message: 'formsubmit attempt',
+            data: {
+                ok: fsResult.ok,
+                err: String(fsResult.error || '').slice(0, 160),
+                needsActivation: !!fsResult.needsActivation,
+                type,
+            },
+            runId: 'email-debug',
+        });
+        // #endregion
         if (fsResult.ok) return emailOk(res, fsResult);
         return emailFail(res, fsResult, 502);
     } catch (err: any) {

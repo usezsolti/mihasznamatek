@@ -12,6 +12,7 @@ export interface Question {
     id?: string; // Opcionális ID a feladatok azonosításához
     level?: string; // Opcionális szint információ
     stage?: PracticeStage; // Munkalap nehézségi szakasz
+    expectedSet?: string[]; // Halmaz elemei — sorrend nem számít
     subQuestions?: Array<{ // Részfeladatok külön válaszmezőkkel
         question: string;
         rubric: string;

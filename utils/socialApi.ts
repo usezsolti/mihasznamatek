@@ -56,7 +56,13 @@ export async function apiSyncSocialIdentity(
     uid: string,
     patch: { photoURL?: string; displayName?: string }
 ): Promise<void> {
-    await clientSocial.syncSocialIdentity(uid, patch);
+    await viaBackend(
+        'ensureProfile',
+        { name: patch.displayName, photoURL: patch.photoURL },
+        async () => {
+            await clientSocial.syncSocialIdentity(uid, patch);
+        }
+    );
 }
 
 export async function apiListProfiles(limit = 30): Promise<SocialProfile[]> {

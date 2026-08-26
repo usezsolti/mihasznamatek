@@ -1,4 +1,4 @@
-﻿import { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import AdminBookingCalendar from "../components/AdminBookingCalendar";
@@ -8,6 +8,7 @@ import BookingAttachments from "../components/BookingAttachments";
 import ProfilePanel from "../components/ProfilePanel";
 import { isAdminEmail } from "../utils/admin";
 import { isTestAuthUser } from "../utils/testLogin";
+import { checkAppEmailVerified, skipEmailVerification } from "../utils/authUserDoc";
 import {
     gameUrlForAssignedTask,
     loadStudentAssignedTasks,
@@ -182,20 +183,25 @@ export default function Dashboard() {
                     );
                     if (
                         isPasswordUser &&
-                        !user.emailVerified &&
+                        !skipEmailVerification() &&
                         !isTestAuthUser(user) &&
                         !isAdminEmail(user.email)
                     ) {
-                        setMe(null);
-                        setIsAdmin(false);
-                        setLoading(false);
-                        try {
-                            await auth.signOut();
-                        } catch {
-                            /* ignore */
+                        const verified =
+                            Boolean(user.emailVerified) ||
+                            (await checkAppEmailVerified(user));
+                        if (!verified) {
+                            setMe(null);
+                            setIsAdmin(false);
+                            setLoading(false);
+                            try {
+                                await auth.signOut();
+                            } catch {
+                                /* ignore */
+                            }
+                            router.replace('/?auth=1&verify=1');
+                            return;
                         }
-                        router.replace('/?auth=1&verify=1');
-                        return;
                     }
 
                     setMe({

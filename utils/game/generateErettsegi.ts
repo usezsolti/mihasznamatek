@@ -5,6 +5,8 @@ import {
     getAbsoluteRootPracticeQuestions,
     getFunctionsPracticeQuestions,
     getProofPracticeQuestions,
+    getEquationsPracticeQuestions,
+    getHalmazPracticeQuestions,
 } from './practiceBanks';
 import {
     generateAlgebraQuestion,
@@ -21,9 +23,9 @@ export const generateErettsegiQuestionByTopicId = (topicId: string, level: strin
         const list = getAbsoluteRootPracticeQuestions();
         return list[Math.floor(Math.random() * list.length)];
     }
-    // Egyenletek, egyenlőtlenségek — munkalap (bizonyítási feladatsor 1–21)
+    // Egyenletek, egyenlőtlenségek — 6×20 bank
     else if (topicIdLower.includes('egyenletek') || topicIdLower.includes('egyenlotlenseg')) {
-        const list = getProofPracticeQuestions();
+        const list = getEquationsPracticeQuestions();
         return list[Math.floor(Math.random() * list.length)];
     }
     // Egyszerűsítések, átalakítások
@@ -62,32 +64,10 @@ export const generateErettsegiQuestionByTopicId = (topicId: string, level: strin
         const list = getFunctionsPracticeQuestions();
         return list[Math.floor(Math.random() * list.length)];
     }
-    // Halmazok
+    // Halmazok — 6×20 bank
     else if (topicIdLower.includes('halmaz')) {
-        const levelLower = level.toLowerCase();
-        if (levelLower.includes('emelt')) {
-            // Emelt szint: halmazműveletek
-            const a = Math.floor(Math.random() * 5) + 3;
-            const b = Math.floor(Math.random() * 5) + 3;
-            const intersection = Math.floor(Math.random() * Math.min(a, b)) + 1;
-            // |A ∪ B| = |A| + |B| - |A ∩ B|
-            const answer = a + b - intersection;
-            return {
-                question: `|A| = ${a}, |B| = ${b}, |A ∩ B| = ${intersection}. Mennyi |A ∪ B|?`,
-                answer: answer,
-                type: 'addition',
-                expression: `|A ∪ B| = |A| + |B| - |A ∩ B| = ${a} + ${b} - ${intersection} = ${answer}`
-            };
-        }
-        const a = Math.floor(Math.random() * 10) + 1;
-        const b = Math.floor(Math.random() * 10) + 1;
-        const answer = a + b;
-        return {
-            question: `A = {1, 2, ..., ${a}}, B = {${a}, ${a+1}, ..., ${a+b}}. |A ∪ B| = ?`,
-            answer: answer,
-            type: 'addition',
-            expression: `|A ∪ B| = ${answer}`
-        };
+        const list = getHalmazPracticeQuestions();
+        return list[Math.floor(Math.random() * list.length)];
     }
     // Kombinatorika
     else if (topicIdLower.includes('kombinatorika')) {

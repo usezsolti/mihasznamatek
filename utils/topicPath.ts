@@ -1,9 +1,11 @@
-/** Duolingo-s témakör út: 6 lecke + 3 kincs, növekvő nehézség */
+/** Duolingo-s témakör út: 6 lecke = 6 nehézségi szint (szintenként 20 feladat) + 3 kincs */
 
-export type PathStage = 1 | 2 | 3;
+import { agentDebugLog } from './agentDebugLog';
+
+export type PathStage = 1 | 2 | 3 | 4 | 5 | 6;
 
 export const PATH_LESSON_COUNT = 6;
-export const PATH_QUESTIONS_PER_LESSON = 3;
+export const PATH_QUESTIONS_PER_LESSON = 20;
 export const PATH_TOTAL_QUESTIONS = PATH_LESSON_COUNT * PATH_QUESTIONS_PER_LESSON;
 export const PATH_LESSON_XP = 30;
 export const PATH_CHEST_XP: Record<1 | 2 | 3, number> = {
@@ -36,11 +38,20 @@ export function normalizeTopicId(topicId: string): string {
     return topicId.toLowerCase().replace(/-emelt$/, '');
 }
 
+/** 1 lecke = 1 szint (1…6) */
 export function lessonToStage(lesson: number): PathStage {
-    if (lesson <= 2) return 1;
-    if (lesson <= 4) return 2;
-    return 3;
+    const n = Math.min(6, Math.max(1, Math.floor(lesson)));
+    return n as PathStage;
 }
+
+export const PATH_STAGE_LABELS: Record<PathStage, string> = {
+    1: '1. szint',
+    2: '2. szint',
+    3: '3. szint',
+    4: '4. szint',
+    5: '5. szint',
+    6: '6. szint',
+};
 
 /** Kincs feloldható, ha az adott páros lecke (2/4/6) kész */
 export function isChestUnlockable(chest: 1 | 2 | 3, lessonsCompleted: number[]): boolean {
@@ -59,12 +70,11 @@ export function buildPathNodes(): PathNode[] {
     const nodes: PathNode[] = [];
     for (let lesson = 1; lesson <= PATH_LESSON_COUNT; lesson++) {
         const stage = lessonToStage(lesson);
-        const stageLabel = stage === 1 ? 'Alap' : stage === 2 ? 'Közép' : 'Mester';
         nodes.push({
             kind: 'lesson',
             lesson,
             stage,
-            label: `Lecke ${lesson} · ${stageLabel}`,
+            label: `Lecke ${lesson} · ${PATH_STAGE_LABELS[stage]}`,
         });
         const chest = chestAfterLesson(lesson);
         if (chest) {
@@ -280,17 +290,20 @@ export function starsFromWrongCount(wrongCount: number): 1 | 2 | 3 {
 }
 
 /**
- * Stagelő listából 18 kérdés bank lecke-sorrendben (L1…L6 × 3).
- * Ha egy szakaszban kevés a feladat, ciklusosan ismétel (új id-vel).
+ * Stagelő listából 120 kérdés bank lecke-sorrendben (L1…L6 × 20).
+ * 1 lecke = 1 szint. Ha egy szintben kevés a feladat, ciklusosan ismétel.
  */
 export function buildPathQuestionBank<T extends { id?: string; stage: PathStage; question?: string }>(
     staged: T[]
 ): (T & { pathLesson: number })[] {
-    const byStage: Record<PathStage, T[]> = { 1: [], 2: [], 3: [] };
-    staged.forEach((q) => byStage[q.stage].push(q));
+    const byStage: Record<PathStage, T[]> = { 1: [], 2: [], 3: [], 4: [], 5: [], 6: [] };
+    staged.forEach((q) => {
+        const s = q.stage;
+        if (s >= 1 && s <= 6) byStage[s as PathStage].push(q);
+    });
 
     const fallback = staged.length ? staged : [];
-    ([1, 2, 3] as PathStage[]).forEach((s) => {
+    ([1, 2, 3, 4, 5, 6] as PathStage[]).forEach((s) => {
         if (byStage[s].length === 0 && fallback.length) {
             byStage[s] = fallback.map((q) => ({ ...q, stage: s }));
         }
@@ -301,9 +314,8 @@ export function buildPathQuestionBank<T extends { id?: string; stage: PathStage;
         const stage = lessonToStage(lesson);
         const pool = byStage[stage].length ? byStage[stage] : fallback;
         if (!pool.length) continue;
-        const half = lesson % 2 === 1 ? 0 : PATH_QUESTIONS_PER_LESSON;
         for (let i = 0; i < PATH_QUESTIONS_PER_LESSON; i++) {
-            const src = pool[(half + i) % pool.length];
+            const src = pool[i % pool.length];
             out.push({
                 ...src,
                 stage,
@@ -312,6 +324,26 @@ export function buildPathQuestionBank<T extends { id?: string; stage: PathStage;
             });
         }
     }
+    // #region agent log
+    agentDebugLog({
+        hypothesisId: 'A',
+        location: 'topicPath.ts:buildPathQuestionBank',
+        message: 'path bank built',
+        data: {
+            perLesson: PATH_QUESTIONS_PER_LESSON,
+            bankLen: out.length,
+            byStageLens: {
+                1: byStage[1].length,
+                2: byStage[2].length,
+                3: byStage[3].length,
+                4: byStage[4].length,
+                5: byStage[5].length,
+                6: byStage[6].length,
+            },
+        },
+        runId: 'path-20q',
+    });
+    // #endregion
     return out;
 }
 
@@ -320,9 +352,27 @@ export function getLessonQuestions<T extends { pathLesson?: number }>(
     lesson: number
 ): T[] {
     const fromFlag = bank.filter((q) => q.pathLesson === lesson);
-    if (fromFlag.length) return fromFlag.slice(0, PATH_QUESTIONS_PER_LESSON);
-    const start = (lesson - 1) * PATH_QUESTIONS_PER_LESSON;
-    return bank.slice(start, start + PATH_QUESTIONS_PER_LESSON);
+    const picked = fromFlag.length
+        ? fromFlag.slice(0, PATH_QUESTIONS_PER_LESSON)
+        : bank.slice(
+              (lesson - 1) * PATH_QUESTIONS_PER_LESSON,
+              lesson * PATH_QUESTIONS_PER_LESSON
+          );
+    // #region agent log
+    agentDebugLog({
+        hypothesisId: 'A',
+        location: 'topicPath.ts:getLessonQuestions',
+        message: 'lesson questions picked',
+        data: {
+            lesson,
+            count: picked.length,
+            expected: PATH_QUESTIONS_PER_LESSON,
+            bankLen: bank.length,
+        },
+        runId: 'path-20q',
+    });
+    // #endregion
+    return picked;
 }
 
 export function isWorksheetTopicId(topicId: string): boolean {
@@ -338,6 +388,7 @@ export function isWorksheetTopicId(topicId: string): boolean {
         t.includes('egyenletek') ||
         t.includes('egyenlotlenseg') ||
         t.includes('fuggveny') ||
-        t.includes('analizis')
+        t.includes('analizis') ||
+        t.includes('halmaz')
     );
 }

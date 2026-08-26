@@ -2,6 +2,8 @@
  * Megbízható kijelentkezés — Firebase session + UI állapot.
  */
 
+import { safeAppPath } from './safePath';
+
 export const AUTH_LOGOUT_EVENT = 'mihaszna:auth-logout';
 
 export async function signOutUser(opts?: { redirectTo?: string }): Promise<void> {
@@ -25,7 +27,7 @@ export async function signOutUser(opts?: { redirectTo?: string }): Promise<void>
         console.warn('signOut failed:', String((err as any)?.message || err).slice(0, 120));
     }
 
-    const dest = opts?.redirectTo ?? '/';
+    const dest = safeAppPath(opts?.redirectTo) || '/';
     try {
         // Hard navigáció — tiszta állapot (dashboard admin state is eldobódik)
         window.location.assign(dest);

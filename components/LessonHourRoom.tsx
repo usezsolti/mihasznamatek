@@ -11,6 +11,7 @@ import {
     type LessonMessage,
     type LessonRoom,
 } from '../utils/lessonRoom';
+import { agentDebugLog } from '../utils/agentDebugLog';
 
 type LessonTab = 'call' | 'board' | 'chat';
 
@@ -119,10 +120,38 @@ export default function LessonHourRoom({
     }, [ensureBoard]);
 
     useEffect(() => {
+        // #region agent log
+        agentDebugLog({
+            hypothesisId: 'B',
+            location: 'LessonHourRoom.tsx:role',
+            message: 'lesson room role',
+            data: {
+                roomId: room.id,
+                isTeacher,
+                callOpen,
+                createdByTail: String(room.createdBy || '').slice(-6),
+                uidTail: uid.slice(-6),
+                hasStudentName: Boolean(room.studentName),
+            },
+            runId: 'wb-call',
+        });
+        // #endregion
+    }, [room.id, room.createdBy, room.studentName, isTeacher, callOpen, uid]);
+
+    useEffect(() => {
         if (!isTeacher || autoStarted.current) return;
         autoStarted.current = true;
+        // #region agent log
+        agentDebugLog({
+            hypothesisId: 'A',
+            location: 'LessonHourRoom.tsx:autoStart',
+            message: 'teacher auto-start call',
+            data: { roomId: room.id, isTeacher },
+            runId: 'wb-call',
+        });
+        // #endregion
         void startCall();
-    }, [isTeacher, startCall]);
+    }, [isTeacher, startCall, room.id]);
 
     const openBoard = () => {
         setTab('board');

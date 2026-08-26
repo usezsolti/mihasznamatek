@@ -11,6 +11,7 @@ import {
     secureSiteOrigin,
 } from '../../../utils/apiSecurity';
 import { sendErr, sendOk } from '../../../server/http';
+import { emailFromHeader } from '../../../utils/emailFrom';
 
 /**
  * POST /api/admin/notify-student
@@ -20,7 +21,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     if (req.method !== 'POST') return sendErr(res, 'Method not allowed', 405);
 
     const ip = getClientIp(req);
-    if (!rateLimit(`notify-student:${ip}`, 30, 60_000)) {
+    const rl = rateLimit(`notify-student:${ip}`, 30, 60_000);
+    if (!rl.ok) {
         return sendErr(res, 'Túl sok kérés', 429);
     }
     if (!isAllowedOrigin(req)) return sendErr(res, 'Origin nem engedélyezett', 403);
@@ -53,7 +55,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     };
 
     const gmailUser = process.env.GMAIL_USER || ADMIN_BOOKING_EMAIL;
-    const gmailPass = process.env.GMAIL_APP_PASSWORD;
+    const gmailPass = String(process.env.GMAIL_APP_PASSWORD || '').replace(/\s+/g, '');
     if (gmailPass) {
         try {
             const transporter = nodemailer.createTransport({
@@ -61,7 +63,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 auth: { user: gmailUser, pass: gmailPass },
             });
             await transporter.sendMail({
-                from: `"Mihaszna Matek" <${gmailUser}>`,
+                from: emailFromHeader(),
                 to: mail.to,
                 cc: mail.cc,
                 replyTo: mail.replyTo,

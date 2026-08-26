@@ -13,7 +13,18 @@ import {
     isTestLoginAllowed,
 } from "../utils/testLogin";
 import { isAdminEmail } from "../utils/admin";
+import {
+    checkAppEmailVerified,
+    ensureUserDoc,
+    isEmailPasswordUser,
+    mapFirebaseAuthError,
+    sendVerificationEmail,
+    skipEmailVerification,
+} from "../utils/authUserDoc";
+import { waitForFirebase } from "../utils/firebaseReady";
 import { useLang } from "../utils/i18n";
+import { safeAppPath } from "../utils/safePath";
+import { agentDebugLog } from "../utils/agentDebugLog";
 
 type AuthMode = "login" | "register";
 
@@ -22,114 +33,6 @@ interface AuthModalProps {
     onClose: () => void;
     initialMode?: "login" | "register";
     redirectTo?: string | false;
-}
-
-function mapFirebaseError(code?: string): string {
-    switch (code) {
-        case "auth/email-already-in-use":
-            return "Ez az e-mail cím már regisztrálva van. Próbálj bejelentkezni!";
-        case "auth/invalid-email":
-            return "Érvénytelen e-mail cím.";
-        case "auth/weak-password":
-            return "A jelszónak legalább 6 karakter hosszúnak kell lennie.";
-        case "auth/wrong-password":
-        case "auth/invalid-credential":
-            return "Hibás e-mail cím vagy jelszó.";
-        case "auth/user-not-found":
-            return "Nincs ilyen felhasználó. Regisztrálj előbb!";
-        case "auth/too-many-requests":
-            return "Túl sok próbálkozás történt. Kérjük, próbáld újra később.";
-        case "auth/popup-closed-by-user":
-            return "A bejelentkezési ablak bezáródott, mielőtt befejeződött volna.";
-        case "auth/popup-blocked":
-            return "A böngésző blokkolta a bejelentkezési ablakot. Engedd meg a felugró ablakokat.";
-        case "auth/account-exists-with-different-credential":
-            return "Ez az e-mail cím már egy másik bejelentkezési móddal van regisztrálva.";
-        case "auth/operation-not-allowed":
-            return "Ez a bejelentkezési mód ki van kapcsolva. Firebase Console → Authentication → Sign-in method: kapcsold be az Email/Password (és/vagy Anonymous) opciót.";
-        case "auth/unauthorized-domain":
-            return "Ez a domain nincs engedélyezve a Firebase-ben (Authorized domains).";
-        case "auth/network-request-failed":
-            return "Hálózati hiba — ellenőrizd az internetet / adblokkolót.";
-        case "auth/invalid-login-credentials":
-            return "Hibás e-mail cím vagy jelszó.";
-        default:
-            return code ? `Hiba történt (${code}).` : "Hiba történt. Kérjük, próbáld újra.";
-    }
-}
-
-async function waitForFirebaseReady(maxAttempts = 50): Promise<any | null> {
-    for (let i = 0; i < maxAttempts; i++) {
-        const firebase = (window as any).firebase;
-        if (firebase?.apps?.length > 0) return firebase;
-        if (firebase && !firebase.apps.length && (window as any).__FIREBASE_CONFIG__) {
-            try {
-                firebase.initializeApp((window as any).__FIREBASE_CONFIG__);
-                return firebase;
-            } catch {
-                // init folyamatban
-            }
-        }
-        await new Promise((r) => setTimeout(r, 100));
-    }
-    return (window as any).firebase?.apps?.length ? (window as any).firebase : null;
-}
-
-async function ensureUserDoc(
-    firebase: any,
-    user: any,
-    options?: {
-        name?: string;
-        gdprAccepted?: boolean;
-        profile?: RegistrationProfile;
-    }
-) {
-    if (!user) return;
-    const db = firebase.firestore();
-    const ref = db.collection("users").doc(user.uid);
-    const snap = await ref.get();
-    const gdprFields = options?.gdprAccepted
-        ? {
-              gdprAccepted: true,
-              gdprAcceptedAt: firebase.firestore.FieldValue.serverTimestamp(),
-              gdprVersion: "2026-08-03",
-          }
-        : {};
-    const profileFields = options?.profile
-        ? {
-              name: options.profile.name,
-              preferredLessonType: options.profile.preferredLessonType,
-              preferredSubject: options.profile.preferredSubject,
-              hobby: options.profile.hobby || "",
-              postalCode: options.profile.postalCode,
-              street: options.profile.street,
-              houseNumber: options.profile.houseNumber,
-              profileCompletedAt: firebase.firestore.FieldValue.serverTimestamp(),
-          }
-        : { name: options?.name || user.displayName || "" };
-
-    if (!snap.exists) {
-        await ref.set({
-            email: user.email || "",
-            createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-            ...profileFields,
-            ...gdprFields,
-        });
-    } else {
-        await ref.set(
-            {
-                ...profileFields,
-                ...gdprFields,
-                email: user.email || snap.data()?.email || "",
-            },
-            { merge: true }
-        );
-    }
-}
-
-function isEmailPasswordUser(user: any): boolean {
-    const providers = user?.providerData || [];
-    return providers.some((p: any) => p?.providerId === "password");
 }
 
 const emptyProfile = () => ({
@@ -148,7 +51,7 @@ export default function AuthModal({
     redirectTo,
 }: AuthModalProps) {
     const router = useRouter();
-    const { t } = useLang();
+    const { t, lang } = useLang();
     const [mode, setMode] = useState<AuthMode>(initialMode);
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
@@ -163,10 +66,23 @@ export default function AuthModal({
     const [error, setError] = useState("");
     const [infoMessage, setInfoMessage] = useState("");
     const [awaitingVerification, setAwaitingVerification] = useState(false);
+    const [verifyLink, setVerifyLink] = useState("");
     const [gdprAccepted, setGdprAccepted] = useState(false);
     const wasOpenRef = useRef(false);
     const onCloseRef = useRef(onClose);
     onCloseRef.current = onClose;
+
+    useEffect(() => {
+        if (!isOpen) return;
+        // #region agent log
+        agentDebugLog({
+            hypothesisId: 'R2',
+            location: 'AuthModal.tsx:open',
+            message: 'auth modal opened after refactor',
+            data: { mode: initialMode, hasRedirect: redirectTo !== false && !!redirectTo },
+        });
+        // #endregion
+    }, [isOpen, initialMode, redirectTo]);
 
     const buildProfile = (): RegistrationProfile => ({
         name: name.trim(),
@@ -181,14 +97,15 @@ export default function AuthModal({
     const finishAuthSuccess = () => {
         onClose();
         if (redirectTo === false) return;
-        if (typeof redirectTo === "string" && redirectTo) {
+        const safe = typeof redirectTo === "string" ? safeAppPath(redirectTo) : null;
+        if (safe) {
             const here =
                 typeof window !== "undefined"
                     ? `${window.location.pathname}${window.location.search}`
                     : "";
             // Ne navigáljunk újra ugyanarra az URL-re (üres / fehér flash).
-            if (here === redirectTo || router.asPath === redirectTo) return;
-            void router.push(redirectTo);
+            if (here === safe || router.asPath === safe) return;
+            void router.push(safe);
             return;
         }
         void router.push("/dashboard");
@@ -252,12 +169,14 @@ export default function AuthModal({
         setError("");
         setLoading(true);
         try {
-            const firebase = await waitForFirebaseReady();
+            const firebase = await waitForFirebase();
             if (!firebase) {
                 setError(t("auth.errorFirebase"));
                 return;
             }
             const auth = firebase.auth();
+            // Firebase a kiválasztott nyelven küldi a saját e-mail sablonját.
+            auth.languageCode = lang;
 
             if (mode === "login") {
                 const cred = await auth.signInWithEmailAndPassword(email.trim(), password);
@@ -265,13 +184,22 @@ export default function AuthModal({
                 const isTestEmail =
                     email.trim().toLowerCase() === TEST_LOGIN_EMAIL.toLowerCase();
                 // Teszt fióknál ne blokkoljon az e-mail megerősítés
-                if (user && isEmailPasswordUser(user) && !user.emailVerified && !isTestEmail && !isAdminEmail(user.email)) {
-                    setAwaitingVerification(true);
-                    setInfoMessage(
-                        t("auth.verifyLoginInfo")
-                    );
-                    setPassword("");
-                    return;
+                if (
+                    user &&
+                    isEmailPasswordUser(user) &&
+                    !skipEmailVerification() &&
+                    !isTestEmail &&
+                    !isAdminEmail(user.email)
+                ) {
+                    const verified =
+                        Boolean(user.emailVerified) ||
+                        (await checkAppEmailVerified(user));
+                    if (!verified) {
+                        setAwaitingVerification(true);
+                        setInfoMessage(t("auth.verifyLoginInfo"));
+                        setPassword("");
+                        return;
+                    }
                 }
                 try {
                     await ensureUserDoc(firebase, user, { name: user?.displayName || undefined });
@@ -306,14 +234,28 @@ export default function AuthModal({
                         console.warn("ensureUserDoc after register:", docErr);
                     }
                     try {
-                        await user.sendEmailVerification();
+                        const sent = await sendVerificationEmail(user);
+                        setAwaitingVerification(true);
+                        setVerifyLink(sent.verifyLink || "");
+                        setInfoMessage(
+                            sent.provider === 'gmail'
+                                ? 'Regisztráció kész! Küldtünk megerősítő e-mailt a Mihaszna Matek feladóval. Erősítsd meg, majd jelentkezz be.'
+                                : t("auth.verifyRegisteredInfo")
+                        );
                     } catch (verErr) {
                         console.warn("Verification email failed:", verErr);
+                        setAwaitingVerification(true);
+                        setInfoMessage(t("auth.verifySendFailed"));
+                        setError(
+                            String((verErr as any)?.message || '').includes('Gmail') ||
+                            String((verErr as any)?.message || '').includes('megerősítő')
+                                ? String((verErr as any).message)
+                                : mapFirebaseAuthError((verErr as any)?.code) ||
+                                      formatAuthError(verErr)
+                        );
+                        setPassword("");
+                        return;
                     }
-                    setAwaitingVerification(true);
-                    setInfoMessage(
-                        t("auth.verifyRegisteredInfo")
-                    );
                     setPassword("");
                     return;
                 }
@@ -322,7 +264,37 @@ export default function AuthModal({
             finishAuthSuccess();
         } catch (err: any) {
             console.error(err);
-            setError(formatAuthError(err) || mapFirebaseError(err?.code));
+            // #region agent log
+            let methods: string[] = [];
+            try {
+                const firebase = await waitForFirebase();
+                if (firebase?.auth && email.trim()) {
+                    methods = await firebase.auth().fetchSignInMethodsForEmail(email.trim());
+                }
+            } catch {
+                /* ignore */
+            }
+            agentDebugLog({
+                hypothesisId: 'L1',
+                location: 'AuthModal.tsx:handleEmailSubmit',
+                message: 'email login/register failed',
+                data: {
+                    mode,
+                    code: String(err?.code || '').slice(0, 80),
+                    methods,
+                    hasPasswordProvider: methods.includes('password'),
+                    emailDomain: email.includes('@') ? email.trim().split('@')[1] : '',
+                },
+                runId: 'login-debug',
+            });
+            // #endregion
+            if (mode === 'login' && methods.length && !methods.includes('password')) {
+                setError(
+                    'Ehhez az e-mailhez nincs jelszó — használd a Google gombot, vagy állíts be jelszót a Firebase-ben.'
+                );
+            } else {
+                setError(formatAuthError(err) || mapFirebaseAuthError(err?.code));
+            }
         } finally {
             setLoading(false);
         }
@@ -335,21 +307,10 @@ export default function AuthModal({
             const result = await signInAsTestUser();
             setPassword("");
             setEmail(result.email.includes("@") ? result.email : TEST_LOGIN_EMAIL);
-            onClose();
-            if (redirectTo === false) return;
-            if (typeof redirectTo === "string" && redirectTo) {
-                const here =
-                    typeof window !== "undefined"
-                        ? `${window.location.pathname}${window.location.search}`
-                        : "";
-                if (here === redirectTo || router.asPath === redirectTo) return;
-                void router.push(redirectTo);
-                return;
-            }
-            void router.push("/dashboard");
+            finishAuthSuccess();
         } catch (err: any) {
             console.error(err);
-            setError(formatAuthError(err) || mapFirebaseError(err?.code));
+            setError(formatAuthError(err) || mapFirebaseAuthError(err?.code));
         } finally {
             setLoading(false);
         }
@@ -370,7 +331,7 @@ export default function AuthModal({
         }
         setLoading(true);
         try {
-            const firebase = await waitForFirebaseReady();
+            const firebase = await waitForFirebase();
             if (!firebase) {
                 setError(t("auth.errorFirebase"));
                 return;
@@ -444,7 +405,7 @@ export default function AuthModal({
             finishAuthSuccess();
         } catch (err: any) {
             console.error(err);
-            setError(formatAuthError(err) || mapFirebaseError(err?.code));
+            setError(formatAuthError(err) || mapFirebaseAuthError(err?.code));
         } finally {
             setLoading(false);
         }
@@ -497,6 +458,22 @@ export default function AuthModal({
                         <p style={{ color: "#aaa", fontSize: "0.95rem", marginBottom: "1rem" }}>
                             {t("auth.verifyAddress")}: <strong style={{ color: "#eee" }}>{email}</strong>
                         </p>
+                        <p style={{ color: "#888", fontSize: "0.85rem", marginBottom: "1rem", lineHeight: 1.45 }}>
+                            {t("auth.verifySpamHint")}
+                        </p>
+                        {verifyLink ? (
+                            <p style={{ marginBottom: "1rem" }}>
+                                <a
+                                    href={verifyLink}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="submit-btn"
+                                    style={{ display: "inline-block", textAlign: "center", textDecoration: "none" }}
+                                >
+                                    Megerősítés most (link)
+                                </a>
+                            </p>
+                        ) : null}
                         <button
                             type="button"
                             className="submit-btn"
@@ -505,11 +482,14 @@ export default function AuthModal({
                                 setLoading(true);
                                 setError("");
                                 try {
-                                    const firebase = await waitForFirebaseReady();
+                                    const firebase = await waitForFirebase();
                                     const user = firebase?.auth()?.currentUser;
                                     if (user) {
                                         await user.reload();
-                                        if (user.emailVerified) {
+                                        const verified =
+                                            Boolean(user.emailVerified) ||
+                                            (await checkAppEmailVerified(user));
+                                        if (verified) {
                                             finishAuthSuccess();
                                             return;
                                         }
@@ -518,7 +498,7 @@ export default function AuthModal({
                                         t("auth.verifyMissing")
                                     );
                                 } catch (err: any) {
-                                    setError(mapFirebaseError(err?.code));
+                                    setError(mapFirebaseAuthError(err?.code));
                                 } finally {
                                     setLoading(false);
                                 }
@@ -535,12 +515,32 @@ export default function AuthModal({
                                 setLoading(true);
                                 setError("");
                                 try {
-                                    const firebase = await waitForFirebaseReady();
+                                    const firebase = await waitForFirebase();
                                     const user = firebase?.auth()?.currentUser;
-                                    if (user) await user.sendEmailVerification();
+                                    if (user) {
+                                        await sendVerificationEmail(user);
+                                        // #region agent log
+                                        agentDebugLog({
+                                            hypothesisId: 'V1',
+                                            location: 'AuthModal.tsx:resendVerification',
+                                            message: 'verification email resent ok',
+                                            data: { hasEmail: Boolean(user.email) },
+                                            runId: 'verify-email',
+                                        });
+                                        // #endregion
+                                    }
                                     setInfoMessage(t("auth.verifyResent"));
                                 } catch (err: any) {
-                                    setError(mapFirebaseError(err?.code));
+                                    // #region agent log
+                                    agentDebugLog({
+                                        hypothesisId: 'V1',
+                                        location: 'AuthModal.tsx:resendVerification:err',
+                                        message: 'verification resend failed',
+                                        data: { code: String(err?.code || '').slice(0, 80) },
+                                        runId: 'verify-email',
+                                    });
+                                    // #endregion
+                                    setError(mapFirebaseAuthError(err?.code) || formatAuthError(err));
                                 } finally {
                                     setLoading(false);
                                 }

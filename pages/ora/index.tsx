@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import AuthModal from '../../components/AuthModal';
 import { isAdminEmail } from '../../utils/admin';
+import { waitForFirebase } from '../../utils/firebaseReady';
 import { useLang } from '../../utils/i18n';
 import { createLessonRoom, lessonJoinPath } from '../../utils/lessonRoom';
 
@@ -46,15 +47,6 @@ function parseRoomInput(raw: string): string {
     const m = s.match(/ora\/([^/?#]+)/i);
     if (m?.[1]) return decodeURIComponent(m[1]);
     return s.replace(/^\/+/, '').split(/[/?#]/)[0];
-}
-
-async function waitForFirebase(maxAttempts = 50): Promise<any | null> {
-    for (let i = 0; i < maxAttempts; i++) {
-        const firebase = (window as any).firebase;
-        if (firebase?.apps?.length > 0 && firebase.auth) return firebase;
-        await new Promise((r) => setTimeout(r, 100));
-    }
-    return (window as any).firebase?.auth ? (window as any).firebase : null;
 }
 
 /** /ora hub — tanár: új óra; diák: kód/link */

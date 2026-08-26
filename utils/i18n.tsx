@@ -97,8 +97,11 @@ const hu: Dict = {
     'auth.googleRegisterHint': 'Google regisztrációnál is töltsd ki előbb a fenti adatokat (cím, témakör, GDPR).',
     'auth.verifyLoginInfo': 'Erősítsd meg az e-mail címed a belépéshez. Nézd a postaládát (és a Spam mappát).',
     'auth.verifyRegisteredInfo': 'Regisztráció kész! Küldtünk egy megerősítő e-mailt. Erősítsd meg, majd jelentkezz be.',
+    'auth.verifySendFailed': 'A fiók létrejött, de a megerősítő levelet nem sikerült elküldeni. Próbáld meg az újraküldés gombbal.',
     'auth.verifyMissing': 'Még nincs megerősítve. Kattints a levélben a linkre, majd ide.',
     'auth.verifyResent': 'Újra elküldtük a megerősítő levelet.',
+    'auth.verifySpamHint':
+        'Ha nem a Beérkezőben van: nézd a Spam / Promóciók mappát → „Nem spam” / „Nem kéretlen”. Feladó: Mihaszna Matek (Gmail). Egyszer jelöld meg megbízhatónak — utána általában a Beérkezőbe kerül.',
     'auth.errorGeneric': 'Hiba történt. Kérjük, próbáld újra.',
     'auth.errorFirebase': 'A Firebase nem töltődött be. Frissítsd az oldalt.',
     'auth.errorGdpr': 'A regisztrációhoz el kell fogadnod az adatkezelési tájékoztatót.',
@@ -837,8 +840,11 @@ const en: Dict = {
     'auth.googleRegisterHint': 'For Google registration, first complete the details above (address, subject, GDPR).',
     'auth.verifyLoginInfo': 'Verify your email address to sign in. Check your inbox (and Spam folder).',
     'auth.verifyRegisteredInfo': 'Registration complete! We sent a verification email. Verify it, then sign in.',
+    'auth.verifySendFailed': 'Your account was created, but the verification email could not be sent. Try the resend button.',
     'auth.verifyMissing': 'Not verified yet. Click the link in the email, then return here.',
     'auth.verifyResent': 'We resent the verification email.',
+    'auth.verifySpamHint':
+        'If it’s not in Inbox: check Spam / Promotions → “Report not spam”. Sender: Mihaszna Matek (Gmail). Mark it once as safe — later messages usually land in Inbox.',
     'auth.errorGeneric': 'Something went wrong. Please try again.',
     'auth.errorFirebase': 'Firebase did not load. Refresh the page.',
     'auth.errorGdpr': 'You must accept the privacy notice to register.',

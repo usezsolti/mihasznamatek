@@ -1,25 +1,28 @@
 /**
  * Admin e-mail — csak a kijelölt cím(ek). Nincs Gmail +alias wildcard.
+ * Extra adminok: szerveroldali ADMIN_EMAILS / ADMIN_EMAIL (nem NEXT_PUBLIC_*).
  */
 import { ADMIN_LOGIN_EMAIL } from './adminLoginShared';
 
 const FALLBACK_ADMIN = ADMIN_LOGIN_EMAIL;
 
 function parseAdminEmails(): string[] {
-    const raw =
-        process.env.NEXT_PUBLIC_ADMIN_EMAILS ||
-        process.env.ADMIN_EMAILS ||
-        process.env.ADMIN_EMAIL ||
-        '';
-    const fromEnv = raw
-        .split(',')
-        .map((s) => s.trim().toLowerCase())
-        .filter(Boolean);
-
     const primary = FALLBACK_ADMIN.toLowerCase();
     const set = new Set<string>();
     if (primary) set.add(primary);
-    for (const e of fromEnv) set.add(e);
+
+    // Kliens bundle-ben ne legyen bővíthető allowlist (NEXT_PUBLIC leak + rules mismatch)
+    const raw =
+        typeof window === 'undefined'
+            ? process.env.ADMIN_EMAILS || process.env.ADMIN_EMAIL || ''
+            : '';
+
+    for (const e of raw
+        .split(',')
+        .map((s) => s.trim().toLowerCase())
+        .filter(Boolean)) {
+        set.add(e);
+    }
     return [...set];
 }
 

@@ -7,9 +7,18 @@ export {
 } from './testLoginShared';
 
 import { TEST_LOGIN_EMAIL, isTestLoginAllowed } from './testLoginShared';
+import { waitForFirebase } from './firebaseReady';
+
+/** Normalize Firebase auth error codes from .code or message text. */
+export function authErrorCode(err: any): string {
+    const raw = String(err?.code || '').trim().toLowerCase();
+    if (raw.startsWith('auth/')) return raw;
+    const fromMsg = String(err?.message || '').match(/auth\/[a-z0-9-]+/i);
+    return (fromMsg?.[0] || raw).toLowerCase();
+}
 
 export function formatAuthError(err: any): string {
-    const code = err?.code || '';
+    const code = authErrorCode(err);
     switch (code) {
         case 'auth/operation-not-allowed':
             return 'Ez a belépési mód ki van kapcsolva a Firebase-ben.';
@@ -18,28 +27,25 @@ export function formatAuthError(err: any): string {
         case 'auth/network-request-failed':
             return 'Hálózati hiba — ellenőrizd az internetet / adblokkolót.';
         case 'auth/too-many-requests':
-            return 'Túl sok próbálkozás. Várj egy kicsit.';
+            return 'Túl sok próbálkozás (Firebase limit). Várj 15–60 percet, nézd a Spam mappát. A megerősítő levelet a Firebase küldi — nem a Gmail App Password.';
+        case 'auth/invalid-login-credentials':
+        case 'auth/invalid-credential':
+        case 'auth/wrong-password':
+        case 'auth/user-not-found':
+            return 'Hibás e-mail cím vagy jelszó. Ha Google-lal regisztráltál, használd a „Google” gombot, vagy állíts be jelszót: Firebase Console → Authentication → Users.';
+        case 'auth/email-already-in-use':
+            return 'Ez az e-mail már regisztrálva van — próbálj bejelentkezni.';
+        case 'auth/weak-password':
+            return 'A jelszónak legalább 6 karakter hosszúnak kell lennie.';
+        case 'auth/invalid-email':
+            return 'Érvénytelen e-mail cím.';
         default:
+            if (code.includes('invalid-login') || code.includes('invalid-credential')) {
+                return 'Hibás e-mail cím vagy jelszó. Ha Google-lal regisztráltál, használd a „Google” gombot.';
+            }
             if (code) return `Hiba: ${code}`;
             return err?.message || 'Ismeretlen hiba a belépésnél.';
     }
-}
-
-async function waitForFirebase(maxAttempts = 50): Promise<any | null> {
-    for (let i = 0; i < maxAttempts; i++) {
-        const firebase = (window as any).firebase;
-        if (firebase?.apps?.length > 0) return firebase;
-        if (firebase && !firebase.apps?.length && (window as any).__FIREBASE_CONFIG__) {
-            try {
-                firebase.initializeApp((window as any).__FIREBASE_CONFIG__);
-                return firebase;
-            } catch {
-                /* init */
-            }
-        }
-        await new Promise((r) => setTimeout(r, 100));
-    }
-    return (window as any).firebase?.apps?.length ? (window as any).firebase : null;
 }
 
 async function ensureAuthPersistence(auth: any, firebase: any) {

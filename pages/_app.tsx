@@ -34,29 +34,57 @@ export default function App({ Component, pageProps }: AppProps) {
     // Next overlay ne legyen piros Firestore rules hibáktól (catch után is előjön néha)
     useEffect(() => {
         let warned = false;
+        const logOnce = (reason: unknown) => {
+            if (warned) return;
+            warned = true;
+            // #region agent log
+            fetch('/api/debug-session-log', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    sessionId: 'c04d6a',
+                    runId: 'firestore-perms',
+                    hypothesisId: 'P2',
+                    location: 'pages/_app.tsx:permission',
+                    message: 'firestore permission noise suppressed',
+                    data: {
+                        code: String((reason as any)?.code || '').slice(0, 80),
+                        msg: String((reason as any)?.message || reason || '').slice(0, 160),
+                        path: typeof window !== 'undefined' ? window.location.pathname : '',
+                    },
+                    timestamp: Date.now(),
+                }),
+            }).catch(() => {});
+            // #endregion
+            console.warn(
+                'Firestore permission denied — publikáld a firestore.rules-t (/rules-setup). További ismétlődések elnyomva.'
+            );
+        };
         const onRejection = (event: PromiseRejectionEvent) => {
             if (!isFirestorePermissionNoise(event.reason)) return;
             event.preventDefault();
-            if (warned) return;
-            warned = true;
-            console.warn(
-                "Firestore permission denied — publikáld a firestore.rules-t (/rules-setup). További ismétlődések elnyomva."
-            );
+            logOnce(event.reason);
         };
         const onError = (event: ErrorEvent) => {
             if (!isFirestorePermissionNoise(event.error || event.message)) return;
             event.preventDefault();
-            if (warned) return;
-            warned = true;
-            console.warn(
-                "Firestore permission denied — publikáld a firestore.rules-t (/rules-setup). További ismétlődések elnyomva."
-            );
+            logOnce(event.error || event.message);
         };
-        window.addEventListener("unhandledrejection", onRejection);
-        window.addEventListener("error", onError);
+        // Next néha console.error-rel dobja fel a már elkapott FirebaseError-t
+        const origError = console.error;
+        console.error = (...args: unknown[]) => {
+            if (args.some((a) => isFirestorePermissionNoise(a))) {
+                logOnce(args.find((a) => isFirestorePermissionNoise(a)));
+                return;
+            }
+            origError.apply(console, args as []);
+        };
+        window.addEventListener('unhandledrejection', onRejection);
+        window.addEventListener('error', onError);
         return () => {
-            window.removeEventListener("unhandledrejection", onRejection);
-            window.removeEventListener("error", onError);
+            console.error = origError;
+            window.removeEventListener('unhandledrejection', onRejection);
+            window.removeEventListener('error', onError);
         };
     }, []);
 

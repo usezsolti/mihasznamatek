@@ -1,12 +1,29 @@
 /**
  * Firebase Admin (opcionális).
- * Ha van FIREBASE_SERVICE_ACCOUNT_JSON, Admin SDK-val megy a Firestore.
- * Enélkül a backend a user ID tokennel (Firestore REST) dolgozik.
+ * Beállítás (egyik elég):
+ * - FIREBASE_SERVICE_ACCOUNT_JSON=...egysoros JSON...
+ * - FIREBASE_SERVICE_ACCOUNT_PATH=./secrets/firebase-admin.json
+ * - GOOGLE_APPLICATION_CREDENTIALS=... (ugyanaz fájlút)
  */
+import fs from 'fs';
+import path from 'path';
 import admin from 'firebase-admin';
 import { FIREBASE_PROJECT_ID } from './config';
 
 let initTried = false;
+
+function loadServiceAccount(): Record<string, unknown> | null {
+    const raw = process.env.FIREBASE_SERVICE_ACCOUNT_JSON;
+    if (raw) {
+        return JSON.parse(raw);
+    }
+    const filePath =
+        process.env.FIREBASE_SERVICE_ACCOUNT_PATH ||
+        process.env.GOOGLE_APPLICATION_CREDENTIALS;
+    if (!filePath) return null;
+    const abs = path.isAbsolute(filePath) ? filePath : path.join(process.cwd(), filePath);
+    return JSON.parse(fs.readFileSync(abs, 'utf8'));
+}
 
 export function getFirebaseAdmin(): typeof admin | null {
     try {
@@ -25,18 +42,17 @@ export function getFirebaseAdmin(): typeof admin | null {
     initTried = true;
 
     try {
-        const raw = process.env.FIREBASE_SERVICE_ACCOUNT_JSON;
-        if (raw) {
-            const cred = JSON.parse(raw);
+        const cred = loadServiceAccount();
+        if (cred) {
             admin.initializeApp({
-                credential: admin.credential.cert(cred),
-                projectId: cred.project_id || FIREBASE_PROJECT_ID,
+                credential: admin.credential.cert(cred as admin.ServiceAccount),
+                projectId: String(cred.project_id || FIREBASE_PROJECT_ID),
             });
             return admin;
         }
 
-        // Vercel / GCP ADC (ha be van állítva)
-        if (process.env.GOOGLE_APPLICATION_CREDENTIALS || process.env.FIREBASE_ADMIN_SDK === '1') {
+        // GCP / Vercel ADC (ha a környezet ad credentialt)
+        if (process.env.FIREBASE_ADMIN_SDK === '1') {
             admin.initializeApp({ projectId: FIREBASE_PROJECT_ID });
             return admin;
         }

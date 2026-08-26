@@ -306,9 +306,12 @@ export async function listProfiles(limit = 24): Promise<SocialProfile[]> {
 
     } catch {
 
-        const snap = await db().collection('socialProfiles').limit(limit).get();
-
-        return snap.docs.map(mapDoc).sort((a, b) => b.xp - a.xp);
+        try {
+            const snap = await db().collection('socialProfiles').limit(limit).get();
+            return snap.docs.map(mapDoc).sort((a, b) => b.xp - a.xp);
+        } catch {
+            return [];
+        }
 
     }
 

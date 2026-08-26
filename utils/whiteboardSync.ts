@@ -22,6 +22,11 @@ function isPermissionError(err: any): boolean {
     );
 }
 
+/** Firestore .set() rejects undefined; JSON clone drops those keys. */
+function cloneStroke(stroke: WbStroke): WbStroke {
+    return JSON.parse(JSON.stringify(stroke)) as WbStroke;
+}
+
 function markBoardMode(boardId: string, mode: 'cloud' | 'local') {
     if (typeof localStorage === 'undefined') return;
     localStorage.setItem(`wb_mode_${boardId}`, mode);
@@ -151,14 +156,17 @@ export async function renameWhiteboard(boardId: string, title: string): Promise<
 export async function pushStroke(boardId: string, stroke: WbStroke): Promise<void> {
     const preferLocal = getBoardMode(boardId) === 'local';
     const firestore = db();
+    const safe = cloneStroke(stroke);
 
     const pushLocal = () => {
         if (typeof localStorage === 'undefined') return;
         const key = `wb_strokes_${boardId}`;
         const list: WbStroke[] = JSON.parse(localStorage.getItem(key) || '[]');
-        if (!list.some((s) => s.id === stroke.id)) list.push(stroke);
+        const idx = list.findIndex((s) => s.id === safe.id);
+        if (idx >= 0) list[idx] = safe;
+        else list.push(safe);
         localStorage.setItem(key, JSON.stringify(list));
-        window.dispatchEvent(new CustomEvent('wb:local-stroke', { detail: { boardId, stroke } }));
+        window.dispatchEvent(new CustomEvent('wb:local-stroke', { detail: { boardId, stroke: safe } }));
     };
 
     if (!preferLocal && firestore) {
@@ -167,21 +175,19 @@ export async function pushStroke(boardId: string, stroke: WbStroke): Promise<voi
                 .collection('whiteboards')
                 .doc(boardId)
                 .collection('strokes')
-                .doc(stroke.id)
-                .set(stroke);
+                .doc(safe.id)
+                .set(safe);
             await firestore.collection('whiteboards').doc(boardId).set(
                 { updatedAtMs: Date.now() },
                 { merge: true }
             );
             markBoardMode(boardId, 'cloud');
-            pushLocal(); // mirror for offline reopen
+            pushLocal();
             return;
         } catch (err: any) {
-            if (isPermissionError(err)) {
-                markBoardMode(boardId, 'local');
-                pushLocal();
-                return;
-            }
+            if (isPermissionError(err)) markBoardMode(boardId, 'local');
+            pushLocal();
+            if (isPermissionError(err)) return;
             throw err;
         }
     }

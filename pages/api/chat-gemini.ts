@@ -69,7 +69,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
 
     const ip = getClientIp(req);
-    const rl = rateLimit(`chat-gemini:${ip}`, 40, 60 * 60 * 1000);
+    const rl = rateLimit(`chat-gemini:${ip}`, 20, 60 * 60 * 1000);
     if (!rl.ok) {
         return sendErr(res, 'Túl sok üzenet. Próbáld később.', 429);
     }
@@ -79,35 +79,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         return sendErr(res, 'Üres üzenet.', 400);
     }
 
-    const started = Date.now();
-
     // Live Zsolti free hours (before FAQ / Gemini — never invent slots)
     const availIntent = isAvailabilityIntent(message);
-    // #region agent log
-    try {
-        const fs = await import('fs');
-        const path = await import('path');
-        fs.appendFileSync(
-            path.join(process.cwd(), 'debug-c04d6a.log'),
-            JSON.stringify({
-                sessionId: 'c04d6a',
-                runId: 'avail-pre',
-                hypothesisId: 'A_INTENT',
-                location: 'pages/api/chat-gemini.ts:avail-check',
-                message: 'availability intent check',
-                data: {
-                    availIntent,
-                    msgLen: message.length,
-                    parsedDate: parseRequestedDateKey(message),
-                    en: looksEnglish(message),
-                },
-                timestamp: Date.now(),
-            }) + '\n'
-        );
-    } catch {
-        /* ignore */
-    }
-    // #endregion
 
     if (availIntent) {
         const dateKey = parseRequestedDateKey(message) || getBudapestDateKeyOffset(0);
@@ -115,34 +88,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             const avail = await getDayAvailability(dateKey);
             const lang = looksEnglish(message) ? 'en' : 'hu';
             const reply = formatAvailabilityReply(avail, lang);
-            // #region agent log
-            try {
-                const fs = await import('fs');
-                const path = await import('path');
-                fs.appendFileSync(
-                    path.join(process.cwd(), 'debug-c04d6a.log'),
-                    JSON.stringify({
-                        sessionId: 'c04d6a',
-                        runId: 'avail-ok',
-                        hypothesisId: 'B_SLOTS',
-                        location: 'pages/api/chat-gemini.ts:avail-reply',
-                        message: 'availability reply ready',
-                        data: {
-                            dateKey,
-                            freeCount: avail.freeSlots.length,
-                            workingCount: avail.workingSlots.length,
-                            source: avail.source,
-                            ms: Date.now() - started,
-                            replyLen: reply.length,
-                            sampleFree: avail.freeSlots.slice(0, 4),
-                        },
-                        timestamp: Date.now(),
-                    }) + '\n'
-                );
-            } catch {
-                /* ignore */
-            }
-            // #endregion
             return sendOk(res, {
                 reply,
                 source: 'booking-availability',
@@ -151,30 +96,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 freeSlots: avail.freeSlots,
             });
         } catch (err: any) {
-            // #region agent log
-            try {
-                const fs = await import('fs');
-                const path = await import('path');
-                fs.appendFileSync(
-                    path.join(process.cwd(), 'debug-c04d6a.log'),
-                    JSON.stringify({
-                        sessionId: 'c04d6a',
-                        runId: 'avail-err',
-                        hypothesisId: 'C_LOAD_FAIL',
-                        location: 'pages/api/chat-gemini.ts:avail-error',
-                        message: 'availability load failed',
-                        data: {
-                            dateKey,
-                            err: String(err?.message || err).slice(0, 120),
-                            ms: Date.now() - started,
-                        },
-                        timestamp: Date.now(),
-                    }) + '\n'
-                );
-            } catch {
-                /* ignore */
-            }
-            // #endregion
+            console.error('chat-gemini availability', err?.message || err);
             const en = looksEnglish(message);
             return sendOk(res, {
                 reply: en
@@ -268,33 +190,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 ? 'Could you rephrase that? I am happy to help with math, lessons, or anything else.'
                 : 'Átfogalmaznád? Szívesen segítek matekban, órákban, vagy bármiben.');
         const finishReason = String(data?.candidates?.[0]?.finishReason || '');
-
-        // #region agent log
-        try {
-            const fs = await import('fs');
-            const path = await import('path');
-            fs.appendFileSync(
-                path.join(process.cwd(), 'debug-c04d6a.log'),
-                JSON.stringify({
-                    sessionId: 'c04d6a',
-                    runId: 'chat-speed',
-                    hypothesisId: 'FAST_GEMINI',
-                    location: 'pages/api/chat-gemini.ts',
-                    message: 'gemini reply timing',
-                    data: {
-                        model: usedModel,
-                        ms: Date.now() - started,
-                        replyLen: reply.length,
-                        finishReason,
-                        maxOut: 1024,
-                    },
-                    timestamp: Date.now(),
-                }) + '\n'
-            );
-        } catch {
-            /* ignore */
-        }
-        // #endregion
 
         return sendOk(res, { reply, source: 'gemini', hasKey: true, model: usedModel, finishReason });
     } catch (e: any) {

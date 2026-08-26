@@ -1,4 +1,4 @@
-import type { Question } from './types';
+﻿import type { Question } from './types';
 
 // Paraméteres egyenletek gyakorló feladatai (munkalap 1–12)
 export const getParameterPracticeQuestions = (): Question[] => [
@@ -211,108 +211,53 @@ export const getExponentialLogPracticeQuestions = (): Question[] => [
     }
 ];
 
-// Abszolútértékes és gyökös kifejezések (emelt algebra munkalap 1–11)
-export const getAbsoluteRootPracticeQuestions = (): Question[] => [
-    {
-        question: `1. Értelmezési tartomány\n\nAdd meg a valós számok halmazának azt a legbővebb részhalmazát, amelyen az alábbi kifejezések értelmezhetők!\n\na) √(5 − 2x)\nb) 1 / √(3x + 6)\nc) √((x − 1)/(x + 4))\nd) √(x + 5) / (x² − 9)\n\nAdd meg:\n1) a) felső határát (zárt), 3 tizedesjegyre;\n2) b) alsó határát (nyílt);\n3) d) pozitív kizárt pontját!`,
-        answer: 2.5,
-        alternativeAnswer: -2,
-        thirdAnswer: 3,
-        type: 'multiplication',
-        expression: `a) x ≤ 5/2 = 2,5\nb) x > −2\nc) (−∞, −4) ∪ [1, ∞)\nd) x ≥ −5, x ≠ ±3`
-    },
-    {
-        question: `2. Egyszerű gyökös egyenletek\n\nOldd meg a valós számok halmazán!\n\na) √(x + 6) = x\nb) √(8 − 2x) = x + 1\nc) √(3x + 4) = x + 2\n\nAdd meg a), b) megoldását 3 tizedesjegyre, majd c) nagyobbik megoldását!`,
-        answer: 3,
-        alternativeAnswer: 1.317,
-        thirdAnswer: 0,
-        type: 'multiplication',
-        expression: `a) x = 3\nb) x = −2 + √11 ≈ 1,317\nc) x = −1 vagy x = 0`
-    },
-    {
-        question: `3. Két gyökös tagot tartalmazó egyenlet\n\nOldd meg a valós számok halmazán!\n\n√(2x + 9) − √(x + 1) = 2\n\nA megoldás során minden négyzetre emelés előtt írd fel az ekvivalens átalakításhoz szükséges feltételeket!\n\nAdd meg a két megoldást (tetszőleges sorrendben)!`,
-        answer: 0,
-        alternativeAnswer: 8,
-        type: 'multiplication',
-        expression: `√(2x+9) = 2 + √(x+1) → négyzetre emelés után x = 0 vagy x = 8`
-    },
-    {
-        question: `4. Gyökös egyenlőtlenségek\n\nOldd meg a valós számok halmazán!\n\na) √(3x − 2) ≤ 4\nb) √(x + 5) > x − 1\nc) Hány egész szám elégíti ki: √(20 − 2x) ≥ 2? — add meg inkább a megoldás felső határát (x ≤ …)!\n\nAdd meg a) alsó és felső határát 3 tizedesjegyre, majd c) felső határát!`,
-        answer: 0.667,
-        alternativeAnswer: 6,
-        thirdAnswer: 8,
-        type: 'multiplication',
-        expression: `a) 2/3 ≤ x ≤ 6\nb) −5 ≤ x < 4\nc) x ≤ 8`
-    },
-    {
-        question: `5. Abszolútértékes egyenletek\n\nOldd meg a valós számok halmazán!\n\na) |2x − 3| = x + 4\nb) |x + 2| = 3x − 1\nc) |x − 4| + |x + 1| = 11\n\nAdd meg a) két megoldását 3 tizedesjegyre, majd b) megoldását!`,
-        answer: 7,
-        alternativeAnswer: -0.333,
-        thirdAnswer: 1.5,
-        type: 'multiplication',
-        expression: `a) x = 7 vagy x = −1/3\nb) x = 3/2\nc) x = −4 vagy x = 7`
-    },
-    {
-        question: `5c. Abszolútértékes egyenlet\n\nOldd meg a valós számok halmazán!\n\n|x − 4| + |x + 1| = 11\n\nAdd meg a két megoldást (tetszőleges sorrendben)!`,
-        answer: -4,
-        alternativeAnswer: 7,
-        type: 'multiplication',
-        expression: `Esetszétválasztás: x = −4 vagy x = 7`
-    },
-    {
-        question: `6. Abszolútértékes egyenlőtlenségek\n\nOldd meg a valós számok halmazán!\n\na) |3x − 2| < 7\nb) |2x + 5| ≥ 9\nc) |x − 3| ≤ |x + 5|\n\nAdd meg a) alsó és felső határát 3 tizedesjegyre (nyílt), majd c) alsó határát (zárt)!`,
-        answer: -1.667,
-        alternativeAnswer: 3,
-        thirdAnswer: -1,
-        type: 'multiplication',
-        expression: `a) −5/3 < x < 3\nb) x ≤ −7 vagy x ≥ 2\nc) x ≥ −1`
-    },
-    {
-        question: `7. Esetszétválasztás\n\nOldd meg a valós számok halmazán!\n\n3|x| = 2x + 5\n\nA megoldást az alábbi két eset vizsgálatával végezd el: x ≥ 0 és x < 0.\n\nAdd meg a két megoldást (tetszőleges sorrendben)!`,
-        answer: 5,
-        alternativeAnswer: -1,
-        type: 'multiplication',
-        expression: `x ≥ 0: x = 5\nx < 0: x = −1`
-    },
-    {
-        question: `8. Másodfokú kifejezés abszolútértékben\n\nOldd meg a valós számok halmazán!\n\n|x² − 4x + 1| = 5\n\nAdd meg a két megoldást 3 tizedesjegyre (tetszőleges sorrendben)!`,
-        answer: 4.828,
-        alternativeAnswer: -0.828,
-        type: 'multiplication',
-        expression: `x² − 4x + 1 = ±5 → x = 2 ± 2√2 ≈ 4,828 és −0,828`
-    },
-    {
-        question: `9. Gyökös kifejezés és abszolútérték\n\nOldd meg a valós számok halmazán!\n\n√(x + 4) = |x − 2|\n\nElőször határozd meg az értelmezési tartományt, majd a négyzetre emelés után ellenőrizd a gyököket!\n\nAdd meg a két megoldást (tetszőleges sorrendben)!`,
-        answer: 0,
-        alternativeAnswer: 5,
-        type: 'multiplication',
-        expression: `x ≥ −4 → x = 0 vagy x = 5 (ellenőrzés: mindkettő jó)`
-    },
-    {
-        question: `10. Halmazok gyökös feltétellel\n\nH: pozitív egészek, amelyekre √(18 − x) ≥ 3.\nB: pozitív egészek b, amelyekre log_b 81 pozitív egész.\n\na) Határozd meg H-t!\nb) Határozd meg B-t!\nc) H ∩ B\nd) B ∖ H\n\nAdd meg |H|, |B|, |H ∩ B| értékét!`,
-        answer: 9,
-        alternativeAnswer: 3,
-        thirdAnswer: 2,
-        type: 'multiplication',
-        expression: `H = {1,…,9}, B = {3,9,81}\nH ∩ B = {3,9}, B ∖ H = {81}`
-    },
-    {
-        question: `11. Mihaszna-mesterfok\n\nOldd meg a valós számok halmazán!\n\na) √(x + 7) + √(11 − x) = 6\nb) |x + 1| = √(3x + 7)\n\nAdd meg a) megoldását, majd b) két megoldását (tetszőleges sorrendben)!`,
-        answer: 2,
-        alternativeAnswer: 3,
-        thirdAnswer: -2,
-        type: 'multiplication',
-        expression: `a) x = 2\nb) x = 3 vagy x = −2`
-    },
-    {
-        question: `11c–d. Mihaszna-mesterfok\n\nOldd meg a valós számok halmazán!\n\nc) √(x² − 4x + 7) = x − 1\nd) |x − 2| + |2x + 1| = 8\n\nAdd meg c) megoldását, majd d) két megoldását 3 tizedesjegyre!`,
-        answer: 3,
-        alternativeAnswer: -2.333,
-        thirdAnswer: 3,
-        type: 'multiplication',
-        expression: `c) x = 3\nd) x = −7/3 ≈ −2,333 vagy x = 3`
-    }
-];
+
+// Abszolútértékes és gyökös kifejezések — 6×20 (lásd absrootLevels.ts)
+import { getAbsoluteRootPracticeQuestions as getAbsRootRaw } from './absrootLevels';
+import { agentDebugLog } from '../agentDebugLog';
+
+export const getAbsoluteRootPracticeQuestions = (): Question[] => {
+    const list = getAbsRootRaw().map((q) => {
+        // Egy válasz / kártya — ne legyen több mező
+        const cleaned: Question = {
+            ...q,
+            question: String(q.question || '')
+                .replace(/^\s*\d+\.\s*szint\s*[·•\-–—]\s*[^\n]+\n+/i, '')
+                .trim(),
+        };
+        delete (cleaned as { alternativeAnswer?: number }).alternativeAnswer;
+        delete (cleaned as { thirdAnswer?: number }).thirdAnswer;
+        delete (cleaned as { fourthAnswer?: number }).fourthAnswer;
+        return cleaned;
+    });
+    // #region agent log
+    const byStage: Record<number, number> = {};
+    let multiAnswer = 0;
+    let withHeader = 0;
+    list.forEach((q) => {
+        const s = q.stage ?? 0;
+        byStage[s] = (byStage[s] || 0) + 1;
+        if ((q as Question).alternativeAnswer !== undefined || (q as Question).thirdAnswer !== undefined) {
+            multiAnswer += 1;
+        }
+        if (/^\d+\.\s*szint/i.test(String(q.question || ''))) withHeader += 1;
+    });
+    agentDebugLog({
+        hypothesisId: 'B',
+        location: 'practiceBanks.ts:getAbsoluteRootPracticeQuestions',
+        message: 'absroot single-answer bank loaded',
+        data: {
+            total: list.length,
+            byStage,
+            multiAnswer,
+            withHeader,
+            sample: String(list[0]?.question || '').slice(0, 80),
+        },
+        runId: 'single-q',
+    });
+    // #endregion
+    return list;
+};
 
 // Függvények és analízis (emelt munkalap 1–10) — numerikus ellenőrző kérdések
 export const getFunctionsPracticeQuestions = (): Question[] => [
@@ -401,138 +346,105 @@ export const getFunctionsPracticeQuestions = (): Question[] => [
     }
 ];
 
-// Bizonyítási feladatok (emelt munkalap 1–21) — numerikus ellenőrző kérdések
-export const getProofPracticeQuestions = (): Question[] => [
-    {
-        question: `1. Algebrai azonosság\n\nIgazold, hogy tetszőleges a, b ∈ ℝ esetén\n(a + b)⁴ − (a − b)⁴ = 8ab(a² + b²).\n\nEllenőrzésként: ha a = 2 és b = 1, mennyi a bal (és a jobb) oldal?`,
-        answer: 80,
-        type: 'multiplication',
-        expression: `Bal: 3⁴ − 1⁴ = 81 − 1 = 80\nJobb: 8·2·1·(4+1) = 80`
-    },
-    {
-        question: `2. Algebrai egyenlőtlenség\n\nBizonyítsd be, hogy tetszőleges pozitív a, b esetén\na/b + b/a ≥ 2.\nHatározd meg, mikor áll fenn egyenlőség!\n\nAdd meg:\n1) a minimum értékét;\n2) az a/b arányt egyenlőség esetén!`,
-        answer: 2,
-        alternativeAnswer: 1,
-        type: 'multiplication',
-        expression: `(√(a/b) − √(b/a))² ≥ 0 → a/b + b/a ≥ 2\nEgyenlőség ⇔ a = b ⇔ a/b = 1`
-    },
-    {
-        question: `3. Nemnegatív kifejezés\n\nIgazold, hogy minden x ∈ ℝ esetén\nx⁴ − 4x³ + 8x² − 8x + 4 ≥ 0.\nHatározd meg azokat az x értékeket is, amelyekre egyenlőség áll fenn!\n\nHány valós x-re áll fenn egyenlőség?`,
-        answer: 0,
-        type: 'multiplication',
-        expression: `= (x² − 2x + 2)² ≥ 0\nx² − 2x + 2 = 0 diszkriminánsa 4 − 8 < 0 → nincs valós gyök → egyenlőség soha`
-    },
-    {
-        question: `4. Oszthatósági bizonyítás\n\nBizonyítsd be, hogy minden pozitív egész n esetén n³ − n osztható 6-tal!\n\nEllenőrzés: n = 5 esetén (n³ − n) / 6 = ?`,
-        answer: 20,
-        type: 'multiplication',
-        expression: `n³ − n = n(n−1)(n+1) — három egymást követő egész → osztható 2-vel és 3-mal\nn = 5: 125 − 5 = 120, 120/6 = 20`
-    },
-    {
-        question: `5. Maradékosztályos gondolkodás\n\nBizonyítsd be, hogy minden páratlan egész szám négyzete 8-cal osztva 1 maradékot ad!\n\nEllenőrzés: 9² = 81. Mennyi 81 mod 8?`,
-        answer: 1,
-        type: 'multiplication',
-        expression: `(2k+1)² = 4k(k+1) + 1, és k(k+1) páros → 4k(k+1) osztható 8-cal\n81 = 10·8 + 1`
-    },
-    {
-        question: `6. Indirekt bizonyítás\n\nBizonyítsd be indirekt módszerrel, hogy √3 irracionális!\n\nHa √3 = p/q (legkisebb pozitív egészek, lnko=1), akkor p² = 3q². Mivel 3 prímszám, p osztható 3-mal. Igaz-e, hogy √3 racionális? (1 = igen, 0 = nem)`,
-        answer: 0,
-        type: 'multiplication',
-        expression: `Indirekt: √3 = p/q → p² = 3q² → 3 | p → p = 3r → 9r² = 3q² → 3 | q → ellentmondás az lnko=1-nek\nTehát √3 irracionális (nem racionális)`
-    },
-    {
-        question: `7. Egész megoldás nem létezik\n\nBizonyítsd be, hogy nincs olyan egész n, amelyre n² + 2 osztható 4-gyel!\n\nAdd meg:\n1) n páros esetén (n² + 2) mod 4 értékét;\n2) n páratlan esetén (n² + 2) mod 4 értékét!`,
-        answer: 2,
-        alternativeAnswer: 3,
-        type: 'multiplication',
-        expression: `Páros: (2k)² + 2 ≡ 2 (mod 4)\nPáratlan: (2k+1)² + 2 ≡ 1 + 2 ≡ 3 (mod 4)\nEgyik sem 0`
-    },
-    {
-        question: `8. Megfordítás és ellenpélda\n\nÁllítás: Ha egy pozitív egész osztható 12-vel, akkor osztható 4-gyel és 6-tal is.\n\na) Bizonyítsd be!\nb) Fogalmazd meg a megfordítást!\nc) A megfordítás igaz vagy hamis?\n\nAdd meg: az állítás igaz-e (1/0), majd a megfordítás igaz-e (1/0)!`,
-        answer: 1,
-        alternativeAnswer: 1,
-        type: 'multiplication',
-        expression: `12 | n ⇒ 4 | n és 6 | n (igaz)\nMegfordítás: 4 | n és 6 | n ⇒ 12 | n — szintén igaz, mert lnko(4,6)=2, lnko szerinti: lnko helyett lnko… valójában lcm(4,6)=12`
-    },
-    {
-        question: `9. Teljes indukció\n\nBizonyítsd be teljes indukcióval:\n1 + 3 + 5 + … + (2n − 1) = n².\n\nEllenőrzés: n = 10 esetén a jobb oldal mennyi?`,
-        answer: 100,
-        type: 'multiplication',
-        expression: `n = 1: 1 = 1²\nIndukció: összeg + (2n+1) = n² + 2n + 1 = (n+1)²\nn = 10 → 10² = 100`
-    },
-    {
-        question: `10. Indukció és oszthatóság\n\nBizonyítsd be teljes indukcióval, hogy minden pozitív egész n esetén 5ⁿ − 1 osztható 4-gyel!\n\nEllenőrzés: n = 3 esetén (5³ − 1) / 4 = ?`,
-        answer: 31,
-        type: 'multiplication',
-        expression: `5 ≡ 1 (mod 4) → 5ⁿ ≡ 1ⁿ ≡ 1 (mod 4)\n125 − 1 = 124, 124/4 = 31`
-    },
-    {
-        question: `11. Négyzetösszeg\n\nBizonyítsd be teljes indukcióval:\n1² + 2² + … + n² = n(n+1)(2n+1)/6.\n\nEllenőrzés: n = 5 esetén az összeg mennyi?`,
-        answer: 55,
-        type: 'multiplication',
-        expression: `5·6·11/6 = 55\n(1+4+9+16+25 = 55)`
-    },
-    {
-        question: `12. Sorozat vizsgálata\n\naₙ = (2n + 3)/(3n + 4), n ∈ ℕ⁺.\nBizonyítsd be, hogy {aₙ}:\na) szigorúan monoton csökkenő;\nb) alulról korlátos;\nc) felülről korlátos.\n\nAdd meg lim aₙ értékét 3 tizedesjegyre, majd a₁ értékét 3 tizedesjegyre!`,
-        answer: 0.667,
-        alternativeAnswer: 0.714,
-        type: 'multiplication',
-        expression: `lim = 2/3 ≈ 0,667 (alsó korlát)\na₁ = 5/7 ≈ 0,714 (felső korlát)\naₙ − aₙ₊₁ > 0 → szigorúan csökkenő`
-    },
-    {
-        question: `13. Paraméteres állítás\n\nx² − (2p + 3)x + p² + 3p + 1 = 0, p ∈ ℝ.\nBizonyítsd be, hogy minden p-re két különböző valós gyök van!\n\nAdd meg a diszkrimináns értékét (konstans)!`,
-        answer: 5,
-        type: 'multiplication',
-        expression: `D = (2p+3)² − 4(p²+3p+1) = 4p² + 12p + 9 − 4p² − 12p − 4 = 5 > 0`
-    },
-    {
-        question: `14. Háromszög magasságai\n\nEgy háromszög két magassága egyenlő hosszúságú. Bizonyítsd be, hogy a háromszög egyenlő szárú!\n\nHa hₐ = hᵦ, akkor az a/b oldalarány mennyi?`,
-        answer: 1,
-        type: 'multiplication',
-        expression: `T = a·hₐ/2 = b·hᵦ/2 → a·hₐ = b·hᵦ → hₐ = hᵦ ⇒ a = b`
-    },
-    {
-        question: `15. Geometriai egyenlőtlenség\n\nHáromszög oldalai a, b, c. Bizonyítsd be:\n(a + b − c)(a − b + c)(−a + b + c) > 0.\n\nEllenőrzés egyenlő oldalú a = b = c = 2 esetén a szorzat mennyi?`,
-        answer: 8,
-        type: 'multiplication',
-        expression: `Háromszög-egyenlőtlenségek: a+b>c, a+c>b, b+c>a → mindhárom tényező pozitív\na=b=c=2: 2·2·2 = 8`
-    },
-    {
-        question: `16. Húrnégyszög\n\nEgy konvex négyszög két szemközti szögének összege 180°. Bizonyítsd be, hogy a négyszög húrnégyszög!\n\nAdd meg a szemközti szögek összegét fokban (a feltétel szerint)!`,
-        answer: 180,
-        type: 'multiplication',
-        expression: `Konvex négyszög húrnégyszög ⇔ szemközti szögek összege 180° (karakterizáció)`
-    },
-    {
-        question: `17. Skatulyaelv\n\nEgy osztályban 31 tanuló van. Bizonyítsd be, hogy van legalább három olyan tanuló, akik ugyanabban a hónapban születtek!\n\nA skatulyaelv szerint legalább hány tanuló született ugyanabban a hónapban?`,
-        answer: 3,
-        type: 'multiplication',
-        expression: `12 hónap (skatulyák), 31 tanuló\n⌈31/12⌉ = 3`
-    },
-    {
-        question: `18. Gráfelméleti bizonyítás\n\nBizonyítsd be, hogy egy véges gráfban a páratlan fokszámú csúcsok száma páros!\n\nLétezhet-e gráf pontosan 1 páratlan fokszámú csúccsal? (1 = igen, 0 = nem)`,
-        answer: 0,
-        type: 'multiplication',
-        expression: `∑ deg(v) = 2|E| páros → a páratlan fokú csúcsok száma páros\nTehát 1 páratlan fokú csúcs lehetetlen`
-    },
-    {
-        question: `19. Binomiális együtthatók\n\nBizonyítsd be: C(n,0)+…+C(n,n) = 2ⁿ.\nAdj algebrai és kombinatorikus bizonyítást is!\n\nEllenőrzés: n = 6 esetén a jobb oldal mennyi?`,
-        answer: 64,
-        type: 'multiplication',
-        expression: `(1+1)ⁿ = 2ⁿ\nKombinatorika: n elemű halmaz összes részhalmaza\n2⁶ = 64`
-    },
-    {
-        question: `20. Mihaszna-mesterfok\n\nPozitív a, b, c. Bizonyítsd be:\n(a+b+c)(1/a + 1/b + 1/c) ≥ 9.\nHatározd meg, mikor áll fenn egyenlőség!\n\nAdd meg a minimumot, majd az a/b arányt egyenlőség esetén!`,
-        answer: 9,
-        alternativeAnswer: 1,
-        type: 'multiplication',
-        expression: `AM-HM / Cauchy: egyenlőség ⇔ a = b = c ⇔ a/b = 1\nMinimum = 9`
-    },
-    {
-        question: `21. Mihaszna-főgonosz\n\nn oldalú konvex sokszög éleit/átlóit pirosra vagy kékre színezzük. Bizonyítsd be: ha n ≥ 6, akkor van egyszínű háromszög a csúcsok között!\n\nAdd meg a feladatban szereplő alsó korlátot (n ≥ …)!`,
-        answer: 6,
-        type: 'multiplication',
-        expression: `Ramsey R(3,3) = 6: 6 pont 2-színezésénél van egyszínű háromszög\nn ≥ 6 elegendő`
-    }
-];
+// Bizonyítási feladatok — 6×20 (lásd proofLevels.ts)
+import { getProofPracticeQuestions as getProofRaw } from './proofLevels';
 
+export const getProofPracticeQuestions = (): Question[] => {
+    const list = getProofRaw().map((q) => {
+        const cleaned: Question = {
+            ...q,
+            question: String(q.question || '')
+                .replace(/^\s*\d+\.\s*szint\s*[·•\-–—]\s*[^\n]+\n+/i, '')
+                .trim(),
+        };
+        delete (cleaned as { alternativeAnswer?: number }).alternativeAnswer;
+        delete (cleaned as { thirdAnswer?: number }).thirdAnswer;
+        delete (cleaned as { fourthAnswer?: number }).fourthAnswer;
+        return cleaned;
+    });
+    // #region agent log
+    const byStage: Record<number, number> = {};
+    list.forEach((q) => {
+        const s = q.stage ?? 0;
+        byStage[s] = (byStage[s] || 0) + 1;
+    });
+    agentDebugLog({
+        hypothesisId: 'P',
+        location: 'practiceBanks.ts:getProofPracticeQuestions',
+        message: 'proof bank loaded',
+        data: { total: list.length, byStage },
+        runId: 'proof-120',
+    });
+    // #endregion
+    return list;
+};
+
+// Egyenletek, egyenletrendszerek, egyenlőtlenségek — 6×20 (lásd eqLevels.ts)
+import { getEquationsPracticeQuestions as getEquationsRaw } from './eqLevels';
+
+export const getEquationsPracticeQuestions = (): Question[] => {
+    const list = getEquationsRaw().map((q) => {
+        const cleaned: Question = {
+            ...q,
+            question: String(q.question || '')
+                .replace(/^\s*\d+\.\s*szint\s*[·•\-–—]\s*[^\n]+\n+/i, '')
+                .trim(),
+        };
+        delete (cleaned as { alternativeAnswer?: number }).alternativeAnswer;
+        delete (cleaned as { thirdAnswer?: number }).thirdAnswer;
+        delete (cleaned as { fourthAnswer?: number }).fourthAnswer;
+        return cleaned;
+    });
+    // #region agent log
+    const byStage: Record<number, number> = {};
+    let multiAnswer = 0;
+    list.forEach((q) => {
+        const s = q.stage ?? 0;
+        byStage[s] = (byStage[s] || 0) + 1;
+        if ((q as Question).alternativeAnswer !== undefined) multiAnswer += 1;
+    });
+    agentDebugLog({
+        hypothesisId: 'E',
+        location: 'practiceBanks.ts:getEquationsPracticeQuestions',
+        message: 'equations bank loaded',
+        data: { total: list.length, byStage, multiAnswer },
+        runId: 'eq-120',
+    });
+    // #endregion
+    return list;
+};
+
+// Halmazok — 6×20 (lásd halmazLevels.ts)
+import { getHalmazPracticeQuestions as getHalmazRaw } from './halmazLevels';
+
+export const getHalmazPracticeQuestions = (): Question[] => {
+    const list = getHalmazRaw().map((q) => {
+        const cleaned: Question = {
+            ...q,
+            question: String(q.question || '')
+                .replace(/^\s*\d+\.\s*szint\s*[·•\-–—]\s*[^\n]+\n+/i, '')
+                .trim(),
+        };
+        delete (cleaned as { alternativeAnswer?: number }).alternativeAnswer;
+        delete (cleaned as { thirdAnswer?: number }).thirdAnswer;
+        delete (cleaned as { fourthAnswer?: number }).fourthAnswer;
+        return cleaned;
+    });
+    // #region agent log
+    const byStage: Record<number, number> = {};
+    let multiAnswer = 0;
+    list.forEach((q) => {
+        const s = q.stage ?? 0;
+        byStage[s] = (byStage[s] || 0) + 1;
+        if ((q as Question).alternativeAnswer !== undefined) multiAnswer += 1;
+    });
+    agentDebugLog({
+        hypothesisId: 'H',
+        location: 'practiceBanks.ts:getHalmazPracticeQuestions',
+        message: 'halmazok bank loaded',
+        data: { total: list.length, byStage, multiAnswer },
+        runId: 'halmaz-120',
+    });
+    // #endregion
+    return list;
+};

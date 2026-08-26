@@ -21,11 +21,24 @@ service cloud.firestore {
     function isOwner(uid) {
       return signedIn() && request.auth.uid == uid;
     }
+    // Diák saját profil — ne írhat privileged mezőket (assignedTasks / teacherAdmin)
+    function ownerUserWritableKeys() {
+      return [
+        'email', 'name', 'photoURL', 'createdAt', 'updatedAt',
+        'preferredLessonType', 'preferredSubject', 'hobby',
+        'postalCode', 'street', 'houseNumber', 'profileCompletedAt',
+        'gdprAccepted', 'gdprAcceptedAt', 'gdprVersion',
+        'taskScores', 'completedTasks', 'isTestAccount'
+      ];
+    }
 
     match /users/{userId} {
       allow read: if isOwner(userId) || isAdmin();
-      allow create: if isOwner(userId);
-      allow update: if isOwner(userId)
+      allow create: if isOwner(userId)
+        && request.resource.data.keys().hasOnly(ownerUserWritableKeys());
+      allow update: if (isOwner(userId)
+            && request.resource.data.diff(resource.data).affectedKeys()
+                 .hasOnly(ownerUserWritableKeys()))
         || (isAdmin() && request.resource.data.diff(resource.data).affectedKeys()
               .hasOnly(['assignedTasks', 'updatedAt', 'teacherAdmin']));
       allow delete: if isAdmin();
@@ -76,7 +89,15 @@ service cloud.firestore {
       allow read: if signedIn();
       allow create: if signedIn()
         && request.resource.data.createdBy == request.auth.uid;
-      allow update: if signedIn();
+      // createdBy megváltoztathatatlan; kollaborátor csak meta / cím
+      allow update: if signedIn()
+        && request.resource.data.createdBy == resource.data.createdBy
+        && (
+          isAdmin()
+          || resource.data.createdBy == request.auth.uid
+          || request.resource.data.diff(resource.data).affectedKeys()
+               .hasOnly(['updatedAtMs', 'title'])
+        );
       allow delete: if isAdmin()
         || (signedIn() && resource.data.createdBy == request.auth.uid);
 
@@ -89,10 +110,10 @@ service cloud.firestore {
       }
     }
 
-    // Élő óra — nyílt link: bejelentkezett bárki olvashat / cseveghet
+    // Élő óra — olvasás: bejelentkezett (linkkel); létrehozás: csak tanár
     match /lessonRooms/{roomId} {
       allow read: if signedIn();
-      allow create: if signedIn()
+      allow create: if isAdmin()
         && request.resource.data.createdBy == request.auth.uid
         && request.resource.data.keys().hasAll(['title', 'createdBy', 'whiteboardId', 'jitsiRoom', 'createdAtMs']);
       allow update: if isAdmin()
@@ -173,7 +194,7 @@ service cloud.firestore {
     match /socialProfiles/{userId} {
       allow read: if signedIn();
       allow create: if isOwner(userId);
-      // Számlálók is csak owner / backend (Admin) — ne lehessen más XP/név/countert bűvölni
+      // Megjegyzés: XP/counter írás a social API user-tokennel megy — claim/Admin SDK kell a szigorításhoz
       allow update: if isOwner(userId);
       allow delete: if isAdmin();
     }
@@ -192,8 +213,11 @@ service cloud.firestore {
       allow read: if signedIn();
       allow create: if signedIn()
         && request.resource.data.authorId == request.auth.uid
-        && request.resource.data.text is string;
-      allow update: if signedIn() && resource.data.authorId == request.auth.uid;
+        && request.resource.data.text is string
+        && request.resource.data.text.size() <= 2000;
+      allow update: if signedIn() && resource.data.authorId == request.auth.uid
+        && request.resource.data.text is string
+        && request.resource.data.text.size() <= 2000;
       allow delete: if isAdmin() || (signedIn() && resource.data.authorId == request.auth.uid);
 
       match /likes/{likeUid} {
@@ -205,7 +229,9 @@ service cloud.firestore {
         allow read: if signedIn();
         allow create: if signedIn()
           && request.resource.data.authorId == request.auth.uid
-          && request.resource.data.text is string;
+          && request.resource.data.text is string
+          && request.resource.data.text.size() > 0
+          && request.resource.data.text.size() <= 1000;
         allow update: if false;
         allow delete: if isAdmin()
           || (signedIn() && resource.data.authorId == request.auth.uid);

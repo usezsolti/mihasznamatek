@@ -3,6 +3,8 @@ import Link from "next/link";
 import { openAuthModal } from "../utils/authModal";
 import { isTestAuthUser } from "../utils/testLogin";
 import { isAdminEmail } from "../utils/admin";
+import { waitForFirebase } from "../utils/firebaseReady";
+import { checkAppEmailVerified, skipEmailVerification } from "../utils/authUserDoc";
 import { useLang } from "../utils/i18n";
 
 interface CurrentUser {
@@ -10,23 +12,6 @@ interface CurrentUser {
     displayName: string | null;
     email: string | null;
     photoURL: string | null;
-}
-
-async function waitForFirebaseReady(maxAttempts = 50): Promise<any | null> {
-    for (let i = 0; i < maxAttempts; i++) {
-        const firebase = (window as any).firebase;
-        if (firebase?.apps?.length > 0) return firebase;
-        if (firebase && !firebase.apps.length && (window as any).__FIREBASE_CONFIG__) {
-            try {
-                firebase.initializeApp((window as any).__FIREBASE_CONFIG__);
-                return firebase;
-            } catch {
-                // init folyamatban
-            }
-        }
-        await new Promise((r) => setTimeout(r, 100));
-    }
-    return (window as any).firebase?.apps?.length ? (window as any).firebase : null;
 }
 
 /**
@@ -45,32 +30,44 @@ export default function AuthSection() {
         let cancelled = false;
 
         (async () => {
-            const firebase = await waitForFirebaseReady();
+            const firebase = await waitForFirebase();
             if (cancelled || !firebase) {
                 setCheckingAuth(false);
                 return;
             }
             unsub = firebase.auth().onAuthStateChanged((user: any) => {
-                if (!user) {
-                    setCurrentUser(null);
+                void (async () => {
+                    if (!user) {
+                        setCurrentUser(null);
+                        setCheckingAuth(false);
+                        return;
+                    }
+                    const isPassword = (user.providerData || []).some(
+                        (p: any) => p?.providerId === "password"
+                    );
+                    if (
+                        isPassword &&
+                        !skipEmailVerification() &&
+                        !isTestAuthUser(user) &&
+                        !isAdminEmail(user.email)
+                    ) {
+                        const verified =
+                            Boolean(user.emailVerified) ||
+                            (await checkAppEmailVerified(user));
+                        if (!verified) {
+                            setCurrentUser(null);
+                            setCheckingAuth(false);
+                            return;
+                        }
+                    }
+                    setCurrentUser({
+                        uid: user.uid,
+                        displayName: user.displayName,
+                        email: user.email,
+                        photoURL: user.photoURL || null,
+                    });
                     setCheckingAuth(false);
-                    return;
-                }
-                const isPassword = (user.providerData || []).some(
-                    (p: any) => p?.providerId === "password"
-                );
-                if (isPassword && !user.emailVerified && !isTestAuthUser(user) && !isAdminEmail(user.email)) {
-                    setCurrentUser(null);
-                    setCheckingAuth(false);
-                    return;
-                }
-                setCurrentUser({
-                    uid: user.uid,
-                    displayName: user.displayName,
-                    email: user.email,
-                    photoURL: user.photoURL || null,
-                });
-                setCheckingAuth(false);
+                })();
             });
         })();
 

@@ -3,15 +3,8 @@
 export { ADMIN_LOGIN_EMAIL, ADMIN_GATE_PATH } from './adminLoginShared';
 import { ADMIN_LOGIN_EMAIL } from './adminLoginShared';
 import { isAdminEmail } from './admin';
-
-async function waitForFirebase(maxAttempts = 50): Promise<any | null> {
-    for (let i = 0; i < maxAttempts; i++) {
-        const firebase = (window as any).firebase;
-        if (firebase?.apps?.length > 0) return firebase;
-        await new Promise((r) => setTimeout(r, 100));
-    }
-    return (window as any).firebase?.apps?.length ? (window as any).firebase : null;
-}
+import { waitForFirebase } from './firebaseReady';
+import { formatAuthError, authErrorCode } from './testLogin';
 
 async function ensureAdminUserDoc(
     firebase: any,
@@ -41,8 +34,12 @@ async function ensureAdminUserDoc(
 /**
  * Csak a kijelölt admin e-mail + jelszó. Nem hoz létre fiókot, nem használ
  * szerveres jelszó-relayt (az bárkit beengedne).
+ * Opcionális email: ha megadod, csak admin e-mail fogadható el.
  */
-export async function signInAsAdmin(password: string): Promise<{ uid: string; email: string }> {
+export async function signInAsAdmin(
+    password: string,
+    emailOverride?: string
+): Promise<{ uid: string; email: string }> {
     const pwd = String(password || '').trim();
     if (!pwd) {
         throw new Error('Add meg a tanári jelszót.');
@@ -62,23 +59,59 @@ export async function signInAsAdmin(password: string): Promise<{ uid: string; em
         /* ignore */
     }
 
-    const email = ADMIN_LOGIN_EMAIL.toLowerCase();
+    const email = String(emailOverride || ADMIN_LOGIN_EMAIL)
+        .trim()
+        .toLowerCase();
+    if (!isAdminEmail(email)) {
+        throw new Error('Ez az e-mail nem tanári fiók.');
+    }
+
     let cred: any;
     try {
         cred = await auth.signInWithEmailAndPassword(email, pwd);
     } catch (err: any) {
-        const code = String(err?.code || '');
-        if (code.includes('user-not-found')) {
-            throw new Error('Nincs tanári fiók ezzel az e-maillel a Firebase-ben.');
+        const code = authErrorCode(err);
+        // #region agent log
+        let methods: string[] = [];
+        try {
+            methods = await auth.fetchSignInMethodsForEmail(email);
+        } catch {
+            /* ignore */
+        }
+        const { agentDebugLog } = await import('./agentDebugLog');
+        agentDebugLog({
+            hypothesisId: 'L2',
+            location: 'adminLogin.ts:signInAsAdmin',
+            message: 'teacher sign-in failed',
+            data: {
+                code,
+                methods,
+                emailIsPrimary: email === ADMIN_LOGIN_EMAIL,
+            },
+            runId: 'login-debug',
+        });
+        // #endregion
+
+        if (methods.length && !methods.includes('password')) {
+            throw new Error(
+                'Ehhez az e-mailhez nincs jelszavas belépés (csak Google). Firebase Console → Authentication → Users → állíts be jelszót, vagy használd a Google-belépést a főoldalon.'
+            );
+        }
+        if (code.includes('user-not-found') || (methods.length === 0 && code.includes('invalid-login'))) {
+            throw new Error(
+                'Nincs ilyen e-mail/jelszó fiók. Firebase Console → Authentication → Users: hozd létre / állíts jelszót a usezsolti@gmail.com fiókra. (A Gmail App Password az e-mailküldéshez van — azzal nem lehet belépni.)'
+            );
         }
         if (
             code.includes('wrong-password') ||
             code.includes('invalid-credential') ||
             code.includes('invalid-login-credentials')
         ) {
-            throw new Error('Hibás tanári jelszó.');
+            throw new Error(
+                'Hibás jelszó. Használd a Firebase Authentication jelszót — NEM a Gmail webes jelszót, és NEM a GMAIL_APP_PASSWORD-öt (.env.local).'
+            );
         }
-        throw new Error(err?.message || 'Tanári belépés sikertelen.');
+        throw new Error(formatAuthError(err) || err?.message || 'Tanári belépés sikertelen.');
     }
 
     const signedEmail = String(cred.user?.email || email).toLowerCase();

@@ -3,17 +3,10 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { isAdminEmail } from '../utils/admin';
-import { signInAsAdmin } from '../utils/adminLogin';
-
-async function waitForFirebase(maxMs = 8000): Promise<any | null> {
-    const start = Date.now();
-    while (Date.now() - start < maxMs) {
-        const firebase = (window as any).firebase;
-        if (firebase?.auth && firebase?.apps?.length) return firebase;
-        await new Promise((r) => setTimeout(r, 100));
-    }
-    return (window as any).firebase || null;
-}
+import { ADMIN_LOGIN_EMAIL, signInAsAdmin } from '../utils/adminLogin';
+import { waitForFirebase } from '../utils/firebaseReady';
+import { formatAuthError } from '../utils/testLogin';
+import { agentDebugLog } from '../utils/agentDebugLog';
 
 /** Titkos belépő — URL: ADMIN_GATE_PATH */
 export default function SigmaDeskGatePage() {
@@ -21,6 +14,7 @@ export default function SigmaDeskGatePage() {
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
     const [checking, setChecking] = useState(true);
+    const [email, setEmail] = useState(ADMIN_LOGIN_EMAIL);
     const [password, setPassword] = useState('');
 
     useEffect(() => {
@@ -28,7 +22,8 @@ export default function SigmaDeskGatePage() {
         let unsub: (() => void) | undefined;
         (async () => {
             const firebase = await waitForFirebase();
-            if (!firebase?.auth || cancelled) {
+            if (cancelled) return;
+            if (!firebase?.auth) {
                 setChecking(false);
                 return;
             }
@@ -55,11 +50,23 @@ export default function SigmaDeskGatePage() {
         setError('');
         setLoading(true);
         try {
-            await signInAsAdmin(password);
+            await signInAsAdmin(password, email);
             setPassword('');
             await router.replace('/dashboard?tab=admin');
         } catch (err: any) {
-            setError(err?.message || 'Belépés sikertelen.');
+            // #region agent log
+            agentDebugLog({
+                hypothesisId: 'L2',
+                location: 'sigma-desk-m9k2.tsx:onLogin',
+                message: 'teacher gate login failed',
+                data: {
+                    code: String(err?.code || '').slice(0, 80),
+                    msgSlice: String(err?.message || '').slice(0, 120),
+                },
+                runId: 'login-debug',
+            });
+            // #endregion
+            setError(formatAuthError(err) || err?.message || 'Belépés sikertelen.');
         } finally {
             setLoading(false);
         }
@@ -75,12 +82,26 @@ export default function SigmaDeskGatePage() {
                 <div className="mm-gate-card">
                     <p className="mm-gate-kicker">Mihaszna Matek</p>
                     <h1>Belépés</h1>
-                    <p className="mm-gate-sub">Add meg a jelszót.</p>
+                    <p className="mm-gate-sub">
+                        Firebase e-mail + jelszó a <strong>usezsolti@gmail.com</strong> fiókhoz.
+                        Nem a Gmail webes jelszó, és nem a GMAIL_APP_PASSWORD (az csak levelezéshez kell).
+                    </p>
 
                     {checking ? (
                         <p className="mm-gate-status">Ellenőrzés…</p>
                     ) : (
                         <>
+                            <label className="mm-gate-label">
+                                E-mail
+                                <input
+                                    type="email"
+                                    autoComplete="username"
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                    placeholder="E-mail"
+                                    disabled={loading}
+                                />
+                            </label>
                             <label className="mm-gate-label">
                                 Jelszó
                                 <input
@@ -101,7 +122,7 @@ export default function SigmaDeskGatePage() {
                             <button
                                 type="button"
                                 className="mm-gate-btn"
-                                disabled={loading || !password.trim()}
+                                disabled={loading || !password.trim() || !email.trim()}
                                 onClick={() => void onLogin()}
                             >
                                 {loading ? 'Belépés…' : 'Belépés'}

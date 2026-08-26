@@ -14,7 +14,8 @@ import {
     type WbStroke,
     type WbTool,
 } from '../../utils/whiteboardTypes';
-import { correctInkStroke, polygonLabel } from '../../utils/whiteboardInkToShape';
+import { correctInkStroke, lastInkCorrectionDebug, polygonLabel } from '../../utils/whiteboardInkToShape';
+import { agentDebugLog } from '../../utils/agentDebugLog';
 
 type MatekWhiteboardProps = {
     uid: string;
@@ -343,6 +344,11 @@ export default function MatekWhiteboard({
     const pan = useRef({ x: 0, y: 0, active: false, lastX: 0, lastY: 0 });
     const scale = useRef(1);
     const localUndo = useRef<WbStroke[]>([]);
+    const strokesRef = useRef<WbStroke[]>([]);
+    const pendingIds = useRef(new Set<string>());
+    const explicitClear = useRef(false);
+    const onBoardIdRef = useRef(onBoardId);
+    onBoardIdRef.current = onBoardId;
 
     const inkActive = tool === 'pen' || tool === 'highlighter' || tool === 'eraser';
     const shapeActive = tool === 'line' || tool === 'rect' || tool === 'ellipse';
@@ -378,39 +384,137 @@ export default function MatekWhiteboard({
         }
         ctx.restore();
 
+        const list = strokesRef.current;
         ctx.setTransform(scale.current, 0, 0, scale.current, pan.current.x * scale.current, pan.current.y * scale.current);
-        for (const s of strokes) drawStroke(ctx, s);
+        for (const s of list) drawStroke(ctx, s);
         if (current.current) drawStroke(ctx, current.current);
-    }, [strokes]);
+        // #region agent log
+        if (!drawing.current || !current.current || current.current.points.length <= 2) {
+            agentDebugLog({
+                hypothesisId: 'B',
+                location: 'MatekWhiteboard.tsx:redraw',
+                message: 'redraw',
+                data: {
+                    strokesN: list.length,
+                    hasCurrent: !!current.current,
+                    drawing: drawing.current,
+                    canvasW: canvas.width,
+                    canvasH: canvas.height,
+                },
+                runId: 'wb-erase-fix',
+            });
+        }
+        // #endregion
+    }, []);
 
     const resize = useCallback(() => {
         const canvas = canvasRef.current;
         const wrap = wrapRef.current;
         if (!canvas || !wrap) return;
-        const w = Math.max(320, wrap.clientWidth);
-        const h = Math.max(360, wrap.clientHeight || window.innerHeight - 120);
-        canvas.width = w;
-        canvas.height = h;
+        const box = wrap.getBoundingClientRect();
+        const w = Math.max(320, Math.round(box.width));
+        const h = Math.max(360, Math.round(box.height) || window.innerHeight - 120);
+        const sameSize = canvas.width === w && canvas.height === h;
+        // #region agent log
+        agentDebugLog({
+            hypothesisId: 'B',
+            location: 'MatekWhiteboard.tsx:resize',
+            message: 'canvas buffer write',
+            data: {
+                w,
+                h,
+                prevW: canvas.width,
+                prevH: canvas.height,
+                sameSize,
+                skipped: sameSize,
+                strokesN: strokesRef.current.length,
+                drawing: drawing.current,
+            },
+            runId: 'wb-erase-fix',
+        });
+        // #endregion
+        if (!sameSize) {
+            canvas.width = w;
+            canvas.height = h;
+        }
         redraw();
     }, [redraw]);
 
     useEffect(() => {
         resize();
+        const wrap = wrapRef.current;
+        const ro = typeof ResizeObserver !== 'undefined' && wrap ? new ResizeObserver(() => resize()) : null;
+        if (wrap && ro) ro.observe(wrap);
         window.addEventListener('resize', resize);
-        return () => window.removeEventListener('resize', resize);
+        return () => {
+            ro?.disconnect();
+            window.removeEventListener('resize', resize);
+        };
     }, [resize]);
 
     useEffect(() => {
+        strokesRef.current = strokes;
         redraw();
     }, [redraw, strokes]);
 
     useEffect(() => {
         if (!boardId) return;
-        onBoardId(boardId);
+        // #region agent log
+        agentDebugLog({
+            hypothesisId: 'C',
+            location: 'MatekWhiteboard.tsx:subscribeEffect',
+            message: 'subscribe mount',
+            data: { boardId, localN: strokesRef.current.length },
+            runId: 'wb-erase',
+        });
+        // #endregion
+        onBoardIdRef.current(boardId);
         const origin = typeof window !== 'undefined' ? window.location.origin : '';
         setShareUrl(`${origin}/whiteboard?board=${encodeURIComponent(boardId)}`);
         const unsub = subscribeStrokes(boardId, (list) => {
-            setStrokes(list);
+            const prev = strokesRef.current;
+            const nextIds = new Set(list.map((s) => s.id));
+            const dropped = prev.filter((s) => !nextIds.has(s.id)).map((s) => s.id);
+            const ignoreEmpty = list.length === 0 && prev.length > 0 && !explicitClear.current;
+            const merged = new Map(list.map((s) => [s.id, s] as const));
+            let keptOptimistic = 0;
+            if (!ignoreEmpty) {
+                for (const s of prev) {
+                    if (!merged.has(s.id) && pendingIds.current.has(s.id)) {
+                        merged.set(s.id, s);
+                        keptOptimistic += 1;
+                    }
+                }
+                for (const id of [...pendingIds.current]) {
+                    if (merged.has(id) && list.some((s) => s.id === id)) {
+                        pendingIds.current.delete(id);
+                    }
+                }
+            }
+            // #region agent log
+            agentDebugLog({
+                hypothesisId: 'A',
+                location: 'MatekWhiteboard.tsx:subscribeStrokes',
+                message: 'snapshot applied',
+                data: {
+                    prevN: prev.length,
+                    nextN: list.length,
+                    droppedN: dropped.length,
+                    dropped: dropped.slice(0, 8),
+                    drawing: drawing.current,
+                    hasCurrent: !!current.current,
+                    ignoreEmpty,
+                    keptOptimistic,
+                    mergedN: ignoreEmpty ? prev.length : merged.size,
+                },
+                runId: 'wb-erase-fix',
+            });
+            // #endregion
+            if (ignoreEmpty) return;
+            explicitClear.current = false;
+            const next = [...merged.values()].sort((a, b) => a.createdAtMs - b.createdAtMs);
+            strokesRef.current = next;
+            setStrokes(next);
         });
         loadWhiteboardMeta(boardId).then((m) => {
             if (m?.title) {
@@ -418,8 +522,19 @@ export default function MatekWhiteboard({
                 savedTitle.current = m.title;
             }
         });
-        return unsub;
-    }, [boardId, onBoardId]);
+        return () => {
+            // #region agent log
+            agentDebugLog({
+                hypothesisId: 'C',
+                location: 'MatekWhiteboard.tsx:subscribeEffect',
+                message: 'subscribe unmount',
+                data: { boardId, localN: strokesRef.current.length },
+                runId: 'wb-erase',
+            });
+            // #endregion
+            unsub();
+        };
+    }, [boardId]);
 
     useEffect(() => {
         if (boardId) document.body.classList.add('wb-board-open');
@@ -446,15 +561,22 @@ export default function MatekWhiteboard({
     const toWorld = (clientX: number, clientY: number): WbPoint => {
         const canvas = canvasRef.current!;
         const rect = canvas.getBoundingClientRect();
-        const x = (clientX - rect.left) / scale.current - pan.current.x;
-        const y = (clientY - rect.top) / scale.current - pan.current.y;
+        const sx = rect.width ? canvas.width / rect.width : 1;
+        const sy = rect.height ? canvas.height / rect.height : 1;
+        const x = ((clientX - rect.left) * sx) / scale.current - pan.current.x;
+        const y = ((clientY - rect.top) * sy) / scale.current - pan.current.y;
         return { x, y };
     };
 
     const commitStroke = async (stroke: WbStroke) => {
         if (!boardId) return;
         localUndo.current.push(stroke);
-        setStrokes((prev) => [...prev, stroke]);
+        pendingIds.current.add(stroke.id);
+        if (!strokesRef.current.some((s) => s.id === stroke.id)) {
+            strokesRef.current = [...strokesRef.current, stroke];
+        }
+        setStrokes(strokesRef.current);
+        redraw();
         try {
             await pushStroke(boardId, stroke);
         } catch (e: any) {
@@ -468,6 +590,30 @@ export default function MatekWhiteboard({
         if (!canvas) return;
         canvas.setPointerCapture(e.pointerId);
         const p = toWorld(e.clientX, e.clientY);
+        // #region agent log
+        {
+            const rect = canvas.getBoundingClientRect();
+            agentDebugLog({
+                hypothesisId: 'F',
+                location: 'MatekWhiteboard.tsx:onPointerDown',
+                message: 'pointer down',
+                data: {
+                    strokesN: strokesRef.current.length,
+                    tool,
+                    buttons: e.buttons,
+                    canvasW: canvas.width,
+                    canvasH: canvas.height,
+                    rectW: Math.round(rect.width),
+                    rectH: Math.round(rect.height),
+                    sx: rect.width ? Number((canvas.width / rect.width).toFixed(3)) : 1,
+                    sy: rect.height ? Number((canvas.height / rect.height).toFixed(3)) : 1,
+                    worldX: Math.round(p.x),
+                    worldY: Math.round(p.y),
+                },
+                runId: 'wb-erase-fix',
+            });
+        }
+        // #endregion
 
         if (tool === 'pan' || e.button === 1 || e.buttons === 4) {
             pan.current.active = true;
@@ -548,7 +694,28 @@ export default function MatekWhiteboard({
         current.current = null;
         if (shapeAssist) {
             const before = s.tool;
+            const nPts = s.points.length;
             s = correctInkStroke(s);
+            // #region agent log
+            agentDebugLog({
+                hypothesisId: 'T',
+                location: 'MatekWhiteboard.tsx:shapeAssist',
+                message: 'ink correction',
+                data: {
+                    before,
+                    after: s.tool,
+                    nPts,
+                    afterPts: s.points.length,
+                    changed: s.tool !== before,
+                    polyLabel:
+                        s.tool === 'polygon' && s.points.length >= 3
+                            ? polygonLabel(s.points)
+                            : null,
+                    ...(lastInkCorrectionDebug || {}),
+                },
+                runId: 'wb-shape',
+            });
+            // #endregion
             if (s.tool !== before && (before === 'pen' || before === 'highlighter')) {
                 const polyMsg =
                     s.tool === 'polygon' && s.points.length >= 3
@@ -566,8 +733,21 @@ export default function MatekWhiteboard({
                 );
             }
         }
+        // #region agent log
+        agentDebugLog({
+            hypothesisId: 'D',
+            location: 'MatekWhiteboard.tsx:onPointerUp',
+            message: 'pointer up before commit',
+            data: {
+                strokesN: strokes.length,
+                points: s.points.length,
+                tool: s.tool,
+                id: s.id,
+            },
+            runId: 'wb-erase',
+        });
+        // #endregion
         void commitStroke(s);
-        redraw();
     };
 
     const onWheel = (e: React.WheelEvent) => {
@@ -586,6 +766,7 @@ export default function MatekWhiteboard({
             if (gen !== createGen.current) return;
             setManualGate(false);
             setBoardId(res.meta.id);
+            strokesRef.current = [];
             setStrokes([]);
             savedTitle.current = res.meta.title;
             setTitle(res.meta.title);
@@ -653,6 +834,9 @@ export default function MatekWhiteboard({
         setStatus('Tábla ürítése…');
         try {
             await clearWhiteboardStrokes(boardId);
+            explicitClear.current = true;
+            pendingIds.current.clear();
+            strokesRef.current = [];
             setStrokes([]);
             localUndo.current = [];
             current.current = null;
@@ -665,9 +849,11 @@ export default function MatekWhiteboard({
     };
 
     const handleUndoLocal = async () => {
-        const mine = [...strokes].reverse().find((s) => s.authorId === uid);
+        const mine = [...strokesRef.current].reverse().find((s) => s.authorId === uid);
         if (!mine || !boardId) return;
-        setStrokes((prev) => prev.filter((s) => s.id !== mine.id));
+        strokesRef.current = strokesRef.current.filter((s) => s.id !== mine.id);
+        setStrokes(strokesRef.current);
+        redraw();
         try {
             const firebase = (window as any).firebase;
             await firebase

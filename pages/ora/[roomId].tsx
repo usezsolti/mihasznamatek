@@ -4,11 +4,13 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import AuthModal from '../../components/AuthModal';
 import LessonHourRoom from '../../components/LessonHourRoom';
+import { waitForFirebase } from '../../utils/firebaseReady';
 import {
     lessonCallRoomName,
     loadLessonRoom,
     type LessonRoom,
 } from '../../utils/lessonRoom';
+import { agentDebugLog } from '../../utils/agentDebugLog';
 
 function fallbackRoom(roomId: string, createdBy = ''): LessonRoom {
     return {
@@ -19,22 +21,6 @@ function fallbackRoom(roomId: string, createdBy = ''): LessonRoom {
         jitsiRoom: lessonCallRoomName(roomId),
         createdAtMs: Date.now(),
     };
-}
-
-async function waitForFirebase(maxAttempts = 50): Promise<any | null> {
-    for (let i = 0; i < maxAttempts; i++) {
-        const firebase = (window as any).firebase;
-        if (firebase?.apps?.length > 0 && firebase.auth) return firebase;
-        if (firebase && !firebase.apps?.length && (window as any).__FIREBASE_CONFIG__) {
-            try {
-                firebase.initializeApp((window as any).__FIREBASE_CONFIG__);
-            } catch {
-                /* ignore */
-            }
-        }
-        await new Promise((r) => setTimeout(r, 100));
-    }
-    return (window as any).firebase?.auth ? (window as any).firebase : null;
 }
 
 export default function OraPage() {
@@ -118,11 +104,34 @@ export default function OraPage() {
                 if (r) {
                     setRoom(r);
                     setLoadErr('');
+                    // #region agent log
+                    agentDebugLog({
+                        hypothesisId: 'B',
+                        location: 'ora/[roomId].tsx:load',
+                        message: 'room from firestore',
+                        data: {
+                            roomId,
+                            uidTail: uid.slice(-6),
+                            createdByTail: String(r.createdBy || '').slice(-6),
+                            isTeacherGuess: r.createdBy === uid,
+                        },
+                        runId: 'wb-call',
+                    });
+                    // #endregion
                 } else {
                     setRoom(fallbackRoom(roomId, uid));
                     setLoadErr(
                         'Az óra nincs a felhőben (publikáld a firestore.rules-t). Helyi óra: hívás + tábla így is elérhető.'
                     );
+                    // #region agent log
+                    agentDebugLog({
+                        hypothesisId: 'B',
+                        location: 'ora/[roomId].tsx:load',
+                        message: 'room fallback (no firestore doc)',
+                        data: { roomId, uidTail: uid.slice(-6), usedFallback: true },
+                        runId: 'wb-call',
+                    });
+                    // #endregion
                 }
                 setLoadingRoom(false);
             })

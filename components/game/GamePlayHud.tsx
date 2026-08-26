@@ -124,7 +124,7 @@ export default function GamePlayHud({
                 }}>
                     {isPathMode && pathLesson
                         ? `Lecke ${pathLesson}/6 · ${STAGE_LABELS[currentStage]}`
-                        : `Szakasz ${currentStage}/3 · ${STAGE_LABELS[currentStage]}`}
+                        : `Szint ${currentStage}/6 · ${STAGE_LABELS[currentStage]}`}
                     {sessionXp > 0 ? ` · +${sessionXp} XP ebben a futásban` : ''}
                 </div>
             )}

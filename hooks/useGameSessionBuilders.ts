@@ -386,6 +386,23 @@ export function useGameSessionBuilders(p: UseGameSessionBuildersParams) {
         setErettsegiQuestions(questions);
         setTaskQuestions(questions);
 
+        // #region agent log
+        void import('../utils/agentDebugLog').then(({ agentDebugLog }) => {
+            agentDebugLog({
+                hypothesisId: 'A',
+                location: 'useGameSessionBuilders.ts:beginPathOrWorksheetRun',
+                message: 'path/worksheet run started',
+                data: {
+                    pathMode,
+                    lesson: opts.lessonNode,
+                    questionsLength: questions.length,
+                    topicId: opts.topicId,
+                },
+                runId: 'path-20q',
+            });
+        });
+        // #endregion
+
         if (questions.length > 0) {
             p.setGameActive(true);
             p.setScore(0);
@@ -421,10 +438,10 @@ export function useGameSessionBuilders(p: UseGameSessionBuildersParams) {
                 }))
             );
         } else {
-            for (let band = 0; band < 3; band++) {
+            for (let band = 0; band < 6; band++) {
                 const stage = (band + 1) as PracticeStage;
-                const difficulty = band * 2;
-                for (let i = 0; i < 10; i++) {
+                const difficulty = Math.min(4, Math.floor(band * 0.8));
+                for (let i = 0; i < 8; i++) {
                     let question: Question | null = null;
                     if (eduLevel === 'elementary') {
                         question = generateElementaryQuestionByTopic(topicId, grade, difficulty);
@@ -541,9 +558,9 @@ export function useGameSessionBuilders(p: UseGameSessionBuildersParams) {
                 }))
             );
         } else {
-            for (let band = 0; band < 3; band++) {
+            for (let band = 0; band < 6; band++) {
                 const stage = (band + 1) as PracticeStage;
-                for (let i = 0; i < 10; i++) {
+                for (let i = 0; i < 8; i++) {
                     const question = generateErettsegiQuestionByTopicId(topicId, level);
                     if (question) {
                         stagedSource.push({
@@ -563,7 +580,7 @@ export function useGameSessionBuilders(p: UseGameSessionBuildersParams) {
                             ...question,
                             id: `erettsegi_${topicId}_${i}`,
                             level: qLevel,
-                            stage: lessonToStage(Math.floor(i / 3) + 1) as PracticeStage,
+                            stage: lessonToStage(Math.floor(i / 20) + 1) as PracticeStage,
                         });
                     }
                 }
@@ -644,7 +661,7 @@ export function useGameSessionBuilders(p: UseGameSessionBuildersParams) {
 
             const db = (window as any).firebase.firestore();
             const snapshot = await db.collection('assignedTasks')
-                .where('userId', '==', p.currentUser?.uid || '')
+                .where('studentId', '==', p.currentUser?.uid || '')
                 .where('topicId', '==', p.currentTopic)
                 .get();
 
@@ -654,8 +671,11 @@ export function useGameSessionBuilders(p: UseGameSessionBuildersParams) {
             });
 
             setAssignedTasks(tasks);
-        } catch (error) {
-            console.error('Error loading assigned tasks:', error);
+        } catch (error: any) {
+            const msg = String(error?.message || error || '');
+            if (!/permission|insufficient/i.test(msg)) {
+                console.warn('Error loading assigned tasks:', msg.slice(0, 160));
+            }
         }
     };
 

@@ -1,4 +1,4 @@
-import MathInputToolbar from '../MathInputToolbar';
+import MathTemplateInput from '../MathTemplateInput';
 import type { Question } from '../../utils/game';
 
 export type GameQuestionCardProps = {
@@ -87,47 +87,18 @@ export default function GameQuestionCard({
                                 </div>
                             )}
                             <div className="answer-section" style={{ marginTop: '1rem' }}>
-                                <input
-                                    type="text"
+                                <MathTemplateInput
+                                    id={`math-input-${index}`}
                                     value={subQuestionAnswers[index] || ''}
-                                    onChange={(e) => {
+                                    disabled={showSolutions}
+                                    autoFocus={index === 0}
+                                    placeholder="Válasz"
+                                    onChange={(text) => {
                                         const newAnswers = { ...subQuestionAnswers };
-                                        newAnswers[index] = e.target.value;
+                                        newAnswers[index] = text;
                                         setSubQuestionAnswers(newAnswers);
                                     }}
-                                    className="answer-input"
-                                    placeholder="Válasz"
-                                    autoFocus={index === 0}
-                                    disabled={showSolutions}
-                                    id={`math-input-${index}`}
-                                    style={{
-                                        width: '100%',
-                                        opacity: showSolutions ? 0.6 : 1
-                                    }}
                                 />
-                                {!showSolutions && (
-                                    <MathInputToolbar
-                                        onInsert={(text) => {
-                                            const newAnswers = { ...subQuestionAnswers };
-                                            const currentValue = newAnswers[index] || '';
-                                            const input = document.getElementById(`math-input-${index}`) as HTMLInputElement;
-                                            if (input) {
-                                                const start = input.selectionStart || 0;
-                                                const end = input.selectionEnd || 0;
-                                                const value = input.value;
-                                                newAnswers[index] = value.substring(0, start) + text + value.substring(end);
-                                                setSubQuestionAnswers(newAnswers);
-                                                setTimeout(() => {
-                                                    input.setSelectionRange(start + text.length, start + text.length);
-                                                    input.focus();
-                                                }, 0);
-                                            } else {
-                                                newAnswers[index] = currentValue + text;
-                                                setSubQuestionAnswers(newAnswers);
-                                            }
-                                        }}
-                                    />
-                                )}
                             </div>
                         </div>
                     ))}
@@ -305,14 +276,16 @@ export default function GameQuestionCard({
                                 />
                             </>
                         ) : (
-                            <input
-                                type="number"
+                            <MathTemplateInput
                                 value={userAnswer}
-                                onChange={(e) => setUserAnswer(e.target.value)}
-                                onKeyPress={(e) => e.key === 'Enter' && submitAnswer()}
-                                className="answer-input"
-                                placeholder="Írd be a választ..."
                                 autoFocus
+                                placeholder={
+                                    question?.expectedSet
+                                        ? 'Halmaz, pl. {1; 2; 3} vagy ∅'
+                                        : 'Írd be a választ…'
+                                }
+                                onChange={setUserAnswer}
+                                onSubmit={submitAnswer}
                             />
                         )}
                         <div className="answer-buttons">

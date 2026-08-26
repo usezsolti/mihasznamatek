@@ -127,7 +127,7 @@ export default function ErettsegiFelkeszules() {
             title: 'Halmazok',
             icon: '{}',
             color: '#39ff14',
-            description: 'Halmazműveletek, Venn-diagramok'
+            description: 'MIHASZNAMATEK 6×20: halmazelmélet, Venn, inklúzió–kizárás'
         },
         {
             id: 'kombinatorika',
@@ -264,7 +264,7 @@ export default function ErettsegiFelkeszules() {
             title: 'Halmazok',
             icon: '{}',
             color: '#ffd700',
-            description: 'Haladó halmazműveletek, Venn-diagramok'
+            description: 'MIHASZNAMATEK 6×20: emelt halmazok, paraméter, bizonyítás'
         },
         {
             id: 'kombinatorika-emelt',

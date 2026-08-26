@@ -127,6 +127,11 @@ export async function requireAdmin(
     req: NextApiRequest,
     res: NextApiResponse
 ): Promise<VerifiedUser | null> {
+    if (!isAllowedOrigin(req)) {
+        res.status(403).json({ ok: false, error: 'Origin nem engedélyezett.' });
+        return null;
+    }
+
     const user = await requireAuth(req, res);
     if (!user) return null;
 

@@ -122,6 +122,7 @@ const TOPIC_TITLE: Record<string, string> = {
     bizonyitas: 'Bizonyítás',
     egyenletek: 'Egyenletek',
     fuggvenyek: 'Függvények',
+    halmazok: 'Halmazok',
 };
 
 function getFirebase(): any | null {

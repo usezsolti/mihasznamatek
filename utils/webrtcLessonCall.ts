@@ -1,5 +1,7 @@
 /** Saját 1:1 WebRTC hívás — Firebase signaling az óra szobához. */
 
+import { agentDebugLog } from './agentDebugLog';
+
 export type CallStatus =
     | 'idle'
     | 'media'
@@ -373,6 +375,21 @@ export async function startLessonCall(opts: {
 
         pc.onconnectionstatechange = () => {
             const state = pc?.connectionState;
+            // #region agent log
+            agentDebugLog({
+                hypothesisId: 'E',
+                location: 'webrtcLessonCall.ts:pc',
+                message: 'connection state',
+                data: {
+                    roomId,
+                    role,
+                    conn: state || '',
+                    ice: pc?.iceConnectionState || '',
+                    signaling: pc?.signalingState || '',
+                },
+                runId: 'wb-call',
+            });
+            // #endregion
             if (state === 'connected') onStatus('connected');
             if (state === 'failed') onStatus('error', 'Kapcsolat sikertelen (NAT/firewall). TURN kellhet.');
             if (state === 'disconnected') onStatus('connecting', 'Újracsatlakozás…');
@@ -408,12 +425,39 @@ export async function startLessonCall(opts: {
     };
 
     onStatus('media', 'Kamera / mikrofon…');
+    // #region agent log
+    agentDebugLog({
+        hypothesisId: 'D',
+        location: 'webrtcLessonCall.ts:start',
+        message: 'call start',
+        data: { roomId, role, uidTail: uid.slice(-6), polite },
+        runId: 'wb-call',
+    });
+    // #endregion
     try {
         localStream = await getLocalStream();
+        // #region agent log
+        agentDebugLog({
+            hypothesisId: 'D',
+            location: 'webrtcLessonCall.ts:media',
+            message: 'getUserMedia ok',
+            data: { roomId, role, tracks: localStream.getTracks().map((t) => t.kind) },
+            runId: 'wb-call',
+        });
+        // #endregion
     } catch (err: any) {
         const msg = /Permission|NotAllowed/i.test(String(err?.name || err?.message || ''))
             ? 'Engedélyezd a kamerát és a mikrofont a böngészőben.'
             : String(err?.message || err).slice(0, 140);
+        // #region agent log
+        agentDebugLog({
+            hypothesisId: 'D',
+            location: 'webrtcLessonCall.ts:media',
+            message: 'getUserMedia fail',
+            data: { roomId, role, errName: String(err?.name || ''), errMsg: String(err?.message || '').slice(0, 80) },
+            runId: 'wb-call',
+        });
+        // #endregion
         onStatus('error', msg);
         throw err;
     }
@@ -435,8 +479,26 @@ export async function startLessonCall(opts: {
             sharingScreen: false,
             joinedAtMs: Date.now(),
         });
+        // #region agent log
+        agentDebugLog({
+            hypothesisId: 'C',
+            location: 'webrtcLessonCall.ts:join',
+            message: 'participant write ok',
+            data: { roomId, role, uidTail: uid.slice(-6) },
+            runId: 'wb-call',
+        });
+        // #endregion
     } catch (err: any) {
         const raw = String(err?.message || err || '');
+        // #region agent log
+        agentDebugLog({
+            hypothesisId: 'C',
+            location: 'webrtcLessonCall.ts:join',
+            message: 'participant write fail',
+            data: { roomId, role, err: raw.slice(0, 120) },
+            runId: 'wb-call',
+        });
+        // #endregion
         onStatus(
             'error',
             /permission|insufficient|Missing/i.test(raw) ? permHint : raw.slice(0, 160)
@@ -483,6 +545,15 @@ export async function startLessonCall(opts: {
                 publishShareState();
                 onStatus('waiting', 'Várjuk a másik felet…');
                 offerSent = false;
+                // #region agent log
+                agentDebugLog({
+                    hypothesisId: 'A',
+                    location: 'webrtcLessonCall.ts:peers',
+                    message: 'no remote peer',
+                    data: { roomId, role, uidTail: uid.slice(-6) },
+                    runId: 'wb-call',
+                });
+                // #endregion
                 return;
             }
 
@@ -498,7 +569,30 @@ export async function startLessonCall(opts: {
             publishShareState();
 
             const remoteId = peer.id;
-            if (uid > remoteId && pc && !pc.currentRemoteDescription && !makingOffer && !offerSent) {
+            const willOffer =
+                uid > remoteId && pc && !pc.currentRemoteDescription && !makingOffer && !offerSent;
+            // #region agent log
+            agentDebugLog({
+                hypothesisId: 'C',
+                location: 'webrtcLessonCall.ts:peers',
+                message: 'peer visible',
+                data: {
+                    roomId,
+                    role,
+                    uidTail: uid.slice(-6),
+                    remoteTail: remoteId.slice(-6),
+                    remoteRole,
+                    othersN: others.length,
+                    willOffer: !!willOffer,
+                    offerSent,
+                    signaling: pc?.signalingState || '',
+                    ice: pc?.iceConnectionState || '',
+                    conn: pc?.connectionState || '',
+                },
+                runId: 'wb-call',
+            });
+            // #endregion
+            if (willOffer) {
                 offerSent = true;
                 await makeOffer();
             } else if (uid <= remoteId && pc?.connectionState !== 'connected') {
@@ -528,6 +622,23 @@ export async function startLessonCall(opts: {
                     processedSignalIds.add(id);
                     const data = change.doc.data() as SignalDoc;
                     if (!data || data.fromUid === uid) continue;
+
+                    // #region agent log
+                    agentDebugLog({
+                        hypothesisId: 'C',
+                        location: 'webrtcLessonCall.ts:signal',
+                        message: 'got signal',
+                        data: {
+                            roomId,
+                            role,
+                            type: data.type,
+                            fromTail: String(data.fromUid || '').slice(-6),
+                            hasSdp: !!data.sdp,
+                            signaling: pc?.signalingState || '',
+                        },
+                        runId: 'wb-call',
+                    });
+                    // #endregion
 
                     const conn = ensurePc();
                     try {

@@ -6,6 +6,8 @@ export {
     getAbsoluteRootPracticeQuestions,
     getFunctionsPracticeQuestions,
     getProofPracticeQuestions,
+    getEquationsPracticeQuestions,
+    getHalmazPracticeQuestions,
 } from './practiceBanks';
 
 export {

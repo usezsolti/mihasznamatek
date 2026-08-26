@@ -23,6 +23,7 @@
 # misc
 .DS_Store
 *.pem
+/secrets/
 
 # local social store (SOCIAL_DATA_STORE=local)
 /data/
