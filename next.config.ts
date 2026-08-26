@@ -11,6 +11,9 @@ const nextConfig: NextConfig = {
   experimental: {
     // Remove any deprecated options
   },
+  async redirects() {
+    return [{ source: '/workout', destination: '/', permanent: true }];
+  },
   // Firebase Google Auth popup + alap security headerek
   async headers() {
     return [

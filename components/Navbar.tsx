@@ -385,11 +385,6 @@ export default function Navbar() {
                                 {t('nav.contact')}
                             </a>
                         </li>
-                        <li>
-                            <Link href="/workout" onClick={toggleMenu}>
-                                {t('nav.workout')}
-                            </Link>
-                        </li>
                         <li className="nav-lang-mobile">
                             <LanguageToggle />
                         </li>

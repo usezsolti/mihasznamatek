@@ -6,7 +6,7 @@ import { useLang } from '../utils/i18n';
 const NEAR_BOTTOM_PX = 80;
 
 const SITE_PATHS =
-    /(?:https?:\/\/(?:www\.)?mihasznamatek\.hu)?(\/(?:booking|community|dashboard|workout|game|adatkezelesi-tajekoztato)(?:[?#][^\s]*)?|\/#[\w-]+)/gi;
+    /(?:https?:\/\/(?:www\.)?mihasznamatek\.hu)?(\/(?:booking|community|dashboard|game|adatkezelesi-tajekoztato)(?:[?#][^\s]*)?|\/#[\w-]+)/gi;
 
 /** Turn site URLs / paths into in-app links (same origin — works on localhost & production). */
 function linkifyMessage(

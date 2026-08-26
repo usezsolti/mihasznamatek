@@ -742,7 +742,6 @@ export default function Home() {
                                 <span>{t('home.cv.sport.bjj')}</span>
                                 <span>{t('home.cv.sport.bodybuilding')}</span>
                                 <span>{t('home.cv.sport.boxing')}</span>
-                                <span>{t('home.cv.sport.personal')}</span>
                                 <span>{t('home.cv.sport.weightlifting')}</span>
                                 <span>{t('home.cv.sport.crossfit')}</span>
                             </div>
