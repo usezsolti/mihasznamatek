@@ -9,8 +9,8 @@ export const DEFAULT_WORKING_HOURS: WorkingHoursMap = {
     0: null, // vasárnap — páros héten zárva; páratlan héten lásd ODD_WEEK_SUNDAY_HOURS
     1: ["12:00", "20:00"],
     2: null, // kedd — nem tartok órát
-    3: ["08:00", "20:00"],
-    4: ["12:00", "20:00"],
+    3: ["12:00", "20:00"],
+    4: ["08:00", "20:00"],
     5: ["12:00", "18:00"],
     6: ["08:00", "14:00"],
 };
