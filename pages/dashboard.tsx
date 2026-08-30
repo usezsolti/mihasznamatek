@@ -34,6 +34,8 @@ import {
     type RawGameResult,
 } from "../utils/topicStats";
 import { useLang } from "../utils/i18n";
+import { waitForFirebase } from "../utils/firebaseReady";
+import { agentDebugLog } from "../utils/agentDebugLog";
 
 type DashboardTab = "tanulas" | "profil" | "admin";
 
@@ -142,25 +144,29 @@ export default function Dashboard() {
         let cancelled = false;
 
         const checkAuth = async () => {
-            let attempts = 0;
-            while (!(window as any).firebase && attempts < 50) {
-                await new Promise((resolve) => setTimeout(resolve, 100));
-                attempts++;
-            }
-
+            const firebase = await waitForFirebase();
             if (cancelled) return;
 
-            if (!(window as any).firebase) {
+            if (!firebase) {
                 setError("Firebase nem elérhető.");
                 setLoading(false);
                 return;
             }
 
             try {
-                const auth = (window as any).firebase.auth();
+                const auth = firebase.auth();
                 unsub = auth.onAuthStateChanged(async (user: any) => {
                     if (cancelled) return;
                     if (!user) {
+                        // #region agent log
+                        agentDebugLog({
+                            hypothesisId: 'D',
+                            location: 'dashboard.tsx:auth-null',
+                            message: 'dashboard auth null',
+                            data: { path: router.pathname, queryTab: String(router.query.tab || '') },
+                            runId: 'social-login',
+                        });
+                        // #endregion
                         setMe(null);
                         setIsAdmin(false);
                         setLoading(false);
@@ -191,6 +197,15 @@ export default function Dashboard() {
                             Boolean(user.emailVerified) ||
                             (await checkAppEmailVerified(user));
                         if (!verified) {
+                            // #region agent log
+                            agentDebugLog({
+                                hypothesisId: 'E',
+                                location: 'dashboard.tsx:unverified',
+                                message: 'dashboard signed out unverified',
+                                data: { uid: user.uid },
+                                runId: 'social-login',
+                            });
+                            // #endregion
                             setMe(null);
                             setIsAdmin(false);
                             setLoading(false);

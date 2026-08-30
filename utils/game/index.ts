@@ -8,6 +8,7 @@ export {
     getProofPracticeQuestions,
     getEquationsPracticeQuestions,
     getHalmazPracticeQuestions,
+    getKombinatorikaPracticeQuestions,
 } from './practiceBanks';
 
 export {

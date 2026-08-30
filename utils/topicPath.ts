@@ -389,6 +389,7 @@ export function isWorksheetTopicId(topicId: string): boolean {
         t.includes('egyenlotlenseg') ||
         t.includes('fuggveny') ||
         t.includes('analizis') ||
-        t.includes('halmaz')
+        t.includes('halmaz') ||
+        t.includes('kombinatorika')
     );
 }

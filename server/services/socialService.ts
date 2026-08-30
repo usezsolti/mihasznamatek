@@ -58,6 +58,8 @@ import {
 
     participantMetaFromProfile,
 
+    publicSocialProfiles,
+
 } from '../../utils/socialDomain';
 
 import {
@@ -286,17 +288,18 @@ export async function listProfiles(token: string, limit = 30): Promise<SocialPro
 
         });
 
-        return rows.map((d) => mapSocialProfile(String(d.__id), d));
+        return publicSocialProfiles(rows.map((d) => mapSocialProfile(String(d.__id), d)), limit);
 
     } catch {
 
         const rows = await listCollection('socialProfiles', token, { pageSize: limit });
 
-        return rows
-
-            .map((d) => mapSocialProfile(String(d.__id), d))
-
-            .sort((a, b) => b.xp - a.xp);
+        return publicSocialProfiles(
+            rows
+                .map((d) => mapSocialProfile(String(d.__id), d))
+                .sort((a, b) => b.xp - a.xp),
+            limit
+        );
 
     }
 

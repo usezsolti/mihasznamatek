@@ -28,6 +28,36 @@ export function mapSocialProfile(uid: string, d: Record<string, unknown>): Socia
     };
 }
 
+/** Teszt / üres placeholder fiókok — ne jelenjenek meg a MihaSocial listákban. */
+export function isPlaceholderSocialProfile(p: {
+    displayName?: string;
+    username?: string;
+    photoURL?: string;
+    bio?: string;
+    postCount?: number;
+}): boolean {
+    const name = String(p.displayName || '').trim().toLowerCase();
+    const username = String(p.username || '').trim().toLowerCase();
+    if (name === 'teszt felhasználó' || name.includes('teszt felhasznál')) return true;
+    if (username.startsWith('tesztfelhasznalo')) return true;
+    if (name === 'diák' || name === 'diak') {
+        const empty =
+            !String(p.photoURL || '').trim() &&
+            !String(p.bio || '').trim() &&
+            !Number(p.postCount || 0);
+        return empty;
+    }
+    return false;
+}
+
+export function publicSocialProfiles<T extends Parameters<typeof isPlaceholderSocialProfile>[0]>(
+    profiles: T[],
+    limit?: number
+): T[] {
+    const out = profiles.filter((p) => !isPlaceholderSocialProfile(p));
+    return typeof limit === 'number' ? out.slice(0, limit) : out;
+}
+
 export function createBlankSocialProfile(
     uid: string,
     hints?: { displayName?: string; photoURL?: string; xp?: number; rank?: string }

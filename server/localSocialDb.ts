@@ -56,6 +56,8 @@ import {
 
     participantMetaFromProfile,
 
+    publicSocialProfiles,
+
 } from '../utils/socialDomain';
 
 
@@ -246,11 +248,10 @@ export const localSocial = {
 
     listProfiles(limit = 30): SocialProfile[] {
 
-        return Object.values(readDb().profiles)
-
-            .sort((a, b) => b.xp - a.xp)
-
-            .slice(0, limit);
+        return publicSocialProfiles(
+            Object.values(readDb().profiles).sort((a, b) => b.xp - a.xp),
+            limit
+        );
 
     },
 

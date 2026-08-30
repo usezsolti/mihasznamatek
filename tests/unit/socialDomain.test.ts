@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import { describe, it } from 'node:test';
 import {
     createBlankSocialProfile,
+    isPlaceholderSocialProfile,
     mapSocialProfile,
     normalizePostText,
     normalizeUsernameOrThrow,
@@ -34,5 +35,20 @@ describe('socialDomain', () => {
         assert.equal(mapped.username, 'alice');
         assert.equal(mapped.xp, 42);
         assert.equal(mapped.showXp, false);
+    });
+
+    it('isPlaceholderSocialProfile hides test and empty Diák accounts', () => {
+        assert.equal(
+            isPlaceholderSocialProfile({ displayName: 'Teszt Felhasználó', username: 'tesztfelhasznaloXq0C' }),
+            true
+        );
+        assert.equal(
+            isPlaceholderSocialProfile({ displayName: 'Diák', username: 'diakhlFh', photoURL: '', bio: '', postCount: 0 }),
+            true
+        );
+        assert.equal(
+            isPlaceholderSocialProfile({ displayName: 'Zsolti', username: 'zsolti', photoURL: '', bio: '', postCount: 0 }),
+            false
+        );
     });
 });

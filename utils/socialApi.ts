@@ -2,6 +2,7 @@
 
 import { backendSocial } from './backendClient';
 import * as clientSocial from './social';
+import { agentDebugLog } from './agentDebugLog';
 import type {
     ConversationPreview,
     DirectMessage,
@@ -25,6 +26,15 @@ async function viaBackend<T>(
         return await backendSocial<T>(action, body);
     } catch (e) {
         const msg = String((e as any)?.message || e || '');
+        // #region agent log
+        agentDebugLog({
+            hypothesisId: 'B',
+            location: 'socialApi.ts:viaBackend',
+            message: 'backend social failed',
+            data: { action, err: msg.slice(0, 180), apiOnly: isApiOnly() },
+            runId: 'social-login',
+        });
+        // #endregion
         const rateLimited = /429|Túl sok kérés/i.test(msg);
         if (rateLimited || isApiOnly()) throw e;
         console.warn(`backend ${action} failed, falling back to client:`, e);

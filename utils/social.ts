@@ -64,6 +64,8 @@ import {
 
     participantMetaFromProfile,
 
+    publicSocialProfiles,
+
 } from './socialDomain';
 
 
@@ -302,13 +304,13 @@ export async function listProfiles(limit = 24): Promise<SocialProfile[]> {
 
             .get();
 
-        return snap.docs.map(mapDoc);
+        return publicSocialProfiles(snap.docs.map(mapDoc), limit);
 
     } catch {
 
         try {
             const snap = await db().collection('socialProfiles').limit(limit).get();
-            return snap.docs.map(mapDoc).sort((a, b) => b.xp - a.xp);
+            return publicSocialProfiles(snap.docs.map(mapDoc).sort((a, b) => b.xp - a.xp), limit);
         } catch {
             return [];
         }

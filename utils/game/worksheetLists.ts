@@ -9,6 +9,7 @@ import {
     getProofPracticeQuestions,
     getEquationsPracticeQuestions,
     getHalmazPracticeQuestions,
+    getKombinatorikaPracticeQuestions,
 } from './practiceBanks';
 
 export const getWorksheetListForTopic = (topicId: string): { list: Question[]; prefix: string } | null => {
@@ -50,6 +51,9 @@ export const getWorksheetListForTopic = (topicId: string): { list: Question[]; p
     }
     if (topicLower.includes('halmaz')) {
         return { list: getHalmazPracticeQuestions(), prefix: 'erettsegi_halmazok' };
+    }
+    if (topicLower.includes('kombinatorika')) {
+        return { list: getKombinatorikaPracticeQuestions(), prefix: 'erettsegi_kombinatorika' };
     }
     return null;
 };

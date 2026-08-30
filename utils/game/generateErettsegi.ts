@@ -7,6 +7,7 @@ import {
     getProofPracticeQuestions,
     getEquationsPracticeQuestions,
     getHalmazPracticeQuestions,
+    getKombinatorikaPracticeQuestions,
 } from './practiceBanks';
 import {
     generateAlgebraQuestion,
@@ -69,30 +70,10 @@ export const generateErettsegiQuestionByTopicId = (topicId: string, level: strin
         const list = getHalmazPracticeQuestions();
         return list[Math.floor(Math.random() * list.length)];
     }
-    // Kombinatorika
+    // Kombinatorika — 6×20 bank
     else if (topicIdLower.includes('kombinatorika')) {
-        const levelLower = level.toLowerCase();
-        if (levelLower.includes('emelt')) {
-            // Emelt szint: valódi kombináció számítás
-            const n = Math.floor(Math.random() * 5) + 5;
-            const k = 2; // Egyszerűsítés: k=2 esetén C(n,2) = n*(n-1)/2
-            const answer = (n * (n - 1)) / 2;
-            return {
-                question: `${n} elem közül hányféleképpen választhatunk ki ${k} elemet?`,
-                answer: answer,
-                type: 'multiplication',
-                expression: `C(${n},${k}) = ${n}! / (${k}!(${n}-${k})!) = ${n} × ${n-1} / 2 = ${answer}`
-            };
-        }
-        const n = Math.floor(Math.random() * 5) + 3;
-        const k = Math.floor(Math.random() * (n - 1)) + 1;
-        const answer = n * (n - 1) / 2;
-        return {
-            question: `${n} elem közül hányféleképpen választhatunk ki ${k} elemet? (Egyszerűsített)`,
-            answer: Math.round(answer),
-            type: 'multiplication',
-            expression: `C(${n},${k}) ≈ ${Math.round(answer)}`
-        };
+        const list = getKombinatorikaPracticeQuestions();
+        return list[Math.floor(Math.random() * list.length)];
     }
     // Koordinátageometria
     else if (topicIdLower.includes('koordinatageometria') || topicIdLower.includes('koordinata')) {

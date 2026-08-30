@@ -448,3 +448,22 @@ export const getHalmazPracticeQuestions = (): Question[] => {
     // #endregion
     return list;
 };
+
+// Kombinatorika — 6×20 (lásd kombinatorikaLevels.ts)
+import { getKombinatorikaPracticeQuestions as getKombinatorikaRaw } from './kombinatorikaLevels';
+
+export const getKombinatorikaPracticeQuestions = (): Question[] => {
+    const list = getKombinatorikaRaw().map((q) => {
+        const cleaned: Question = {
+            ...q,
+            question: String(q.question || '')
+                .replace(/^\s*\d+\.\s*szint\s*[·•\-–—]\s*[^\n]+\n+/i, '')
+                .trim(),
+        };
+        delete (cleaned as { alternativeAnswer?: number }).alternativeAnswer;
+        delete (cleaned as { thirdAnswer?: number }).thirdAnswer;
+        delete (cleaned as { fourthAnswer?: number }).fourthAnswer;
+        return cleaned;
+    });
+    return list;
+};

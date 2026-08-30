@@ -41,6 +41,8 @@ import {
     type StudyGroup,
 } from '../utils/socialTypes';
 import { backendHealth } from '../utils/backendClient';
+import { waitForFirebase } from '../utils/firebaseReady';
+import { agentDebugLog } from '../utils/agentDebugLog';
 import { useLang } from '../utils/i18n';
 
 /** Shorts = csak valódi feltöltött videók; mindenki ugyanazt a nyilvános listát látja. */
@@ -115,68 +117,131 @@ export default function CommunityPage() {
 
     useEffect(() => {
         let cancelled = false;
-        const firebase = (window as any).firebase;
-        if (!firebase?.auth) {
-            setReady(true);
-            return;
-        }
+        // #region agent log
+        agentDebugLog({
+            hypothesisId: 'A',
+            location: 'community.tsx:auth-effect-start',
+            message: 'community auth effect start',
+            data: {
+                hasFirebase: !!(typeof window !== 'undefined' && (window as any).firebase),
+                hasAuth: !!(typeof window !== 'undefined' && (window as any).firebase?.auth),
+                apps: typeof window !== 'undefined' ? Number((window as any).firebase?.apps?.length || 0) : 0,
+            },
+            runId: 'social-login',
+        });
+        // #endregion
 
-        const unsub = firebase.auth().onAuthStateChanged(async (user: any) => {
+        const unsubHolder: { fn?: () => void } = {};
+
+        (async () => {
+            const firebase = await waitForFirebase();
             if (cancelled) return;
-            if (!user) {
-                setUid(null);
-                setMe(null);
+            // #region agent log
+            agentDebugLog({
+                hypothesisId: 'A',
+                location: 'community.tsx:after-waitForFirebase',
+                message: 'firebase wait result',
+                data: {
+                    hasFirebase: !!firebase,
+                    apps: Number(firebase?.apps?.length || 0),
+                    hasAuth: !!firebase?.auth,
+                    currentUid: firebase?.auth?.()?.currentUser?.uid || null,
+                },
+                runId: 'social-login',
+            });
+            // #endregion
+            if (!firebase?.auth) {
                 setReady(true);
                 return;
             }
-            try {
-                setUid(user.uid);
-                const profile = await apiEnsureProfile(user.uid);
+
+            unsubHolder.fn = firebase.auth().onAuthStateChanged(async (user: any) => {
                 if (cancelled) return;
-                setMe(profile);
-                setBioDraft(profile.bio);
-                setUsernameDraft(profile.username);
-                const following = await apiListFollowingIds(user.uid);
-                if (cancelled) return;
-                setFollowingIds(following);
-                await refreshFeed(user.uid, following);
-                if (cancelled) return;
-                const [p, g, c, health] = await Promise.all([
-                    apiListProfiles(30),
-                    apiListGroups(),
-                    apiListConversations(user.uid),
-                    backendHealth().catch(() => null),
-                ]);
-                if (cancelled) return;
-                if (health && (health as any).ok) {
-                    console.info('backend health', (health as any).data);
+                if (!user) {
+                    // #region agent log
+                    agentDebugLog({
+                        hypothesisId: 'C',
+                        location: 'community.tsx:auth-null',
+                        message: 'onAuthStateChanged null',
+                        data: {},
+                        runId: 'social-login',
+                    });
+                    // #endregion
+                    setUid(null);
+                    setMe(null);
+                    setReady(true);
+                    return;
                 }
-                setProfiles(p);
-                setGroups(g);
-                setConversations(c);
-            } catch (e: any) {
-                if (cancelled) return;
-                console.error(e);
-                const msg = String(e?.message || e || '');
-                if (/permission|insufficient|PERMISSION_DENIED|403/i.test(msg)) {
-                    setRulesBlocked(true);
-                    showToast(t('community.toast.rulesMissing'));
-                    try {
-                        await apiSocialDiag();
-                    } catch {
-                        /* diag best-effort */
+                try {
+                    setUid(user.uid);
+                    const profile = await apiEnsureProfile(user.uid, {
+                        name: user.displayName || undefined,
+                        photoURL: user.photoURL || undefined,
+                    });
+                    if (cancelled) return;
+                    // #region agent log
+                    agentDebugLog({
+                        hypothesisId: 'B',
+                        location: 'community.tsx:profile-ok',
+                        message: 'ensureProfile ok',
+                        data: { uid: user.uid, username: profile?.username || null },
+                        runId: 'social-login',
+                    });
+                    // #endregion
+                    setMe(profile);
+                    setBioDraft(profile.bio);
+                    setUsernameDraft(profile.username);
+                    const following = await apiListFollowingIds(user.uid);
+                    if (cancelled) return;
+                    setFollowingIds(following);
+                    await refreshFeed(user.uid, following);
+                    if (cancelled) return;
+                    const [p, g, c, health] = await Promise.all([
+                        apiListProfiles(30),
+                        apiListGroups(),
+                        apiListConversations(user.uid),
+                        backendHealth().catch(() => null),
+                    ]);
+                    if (cancelled) return;
+                    if (health && (health as any).ok) {
+                        console.info('backend health', (health as any).data);
                     }
-                } else {
-                    showToast(t('community.toast.loadFailed'));
+                    setProfiles(p);
+                    setGroups(g);
+                    setConversations(c);
+                } catch (e: any) {
+                    if (cancelled) return;
+                    const msg = String(e?.message || e || '');
+                    // #region agent log
+                    agentDebugLog({
+                        hypothesisId: 'B',
+                        location: 'community.tsx:profile-error',
+                        message: 'community load failed',
+                        data: { uid: user.uid, err: msg.slice(0, 180) },
+                        runId: 'social-login',
+                    });
+                    // #endregion
+                    console.error(e);
+                    if (/permission|insufficient|PERMISSION_DENIED|403/i.test(msg)) {
+                        setRulesBlocked(true);
+                        showToast(t('community.toast.rulesMissing'));
+                        try {
+                            await apiSocialDiag();
+                        } catch {
+                            /* diag best-effort */
+                        }
+                    } else {
+                        showToast(t('community.toast.loadFailed'));
+                    }
+                } finally {
+                    if (!cancelled) setReady(true);
                 }
-            } finally {
-                if (!cancelled) setReady(true);
-            }
-        });
+            });
+        })();
 
         return () => {
             cancelled = true;
-            unsub?.();
+            unsubHolder.fn?.();
         };
     }, [refreshFeed]);
 

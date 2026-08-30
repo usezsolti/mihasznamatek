@@ -123,6 +123,7 @@ const TOPIC_TITLE: Record<string, string> = {
     egyenletek: 'Egyenletek',
     fuggvenyek: 'Függvények',
     halmazok: 'Halmazok',
+    kombinatorika: 'Kombinatorika',
 };
 
 function getFirebase(): any | null {

@@ -134,7 +134,7 @@ export default function ErettsegiFelkeszules() {
             title: 'Kombinatorika',
             icon: '🔢',
             color: '#39ff14',
-            description: 'Permutáció, kombináció, variáció'
+            description: 'MIHASZNAMATEK 6×20: összeszámlálás, variáció, kombináció'
         },
         {
             id: 'koordinatageometria',
@@ -271,7 +271,7 @@ export default function ErettsegiFelkeszules() {
             title: 'Kombinatorika',
             icon: '🔢',
             color: '#ffd700',
-            description: 'Haladó permutáció, kombináció, variáció feladatok'
+            description: 'MIHASZNAMATEK 6×20: elosztás, derangement, mesterfok'
         },
         {
             id: 'parameter',

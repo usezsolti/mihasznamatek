@@ -19,6 +19,7 @@ import {
     getProofPracticeQuestions,
     getEquationsPracticeQuestions,
     getHalmazPracticeQuestions,
+    getKombinatorikaPracticeQuestions,
     generateQuadraticQuestion,
     generatePointDistanceQuestion,
     pick,
@@ -283,6 +284,7 @@ async function main() {
         getProofPracticeQuestions(),
         getEquationsPracticeQuestions(),
         getHalmazPracticeQuestions(),
+        getKombinatorikaPracticeQuestions(),
     ];
 
     const store = createSocialStore('smoke');
