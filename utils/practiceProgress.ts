@@ -22,6 +22,15 @@ export type BadgeId =
     | 'fuggveny_kesz'
     | 'halmazok_kesz'
     | 'kombinatorika_kesz'
+    | 'koordinatageometria_kesz'
+    | 'grafok_kesz'
+    | 'sorozatok_kesz'
+    | 'statisztika_kesz'
+    | 'szamelmelet_kesz'
+    | 'szoveges_kesz'
+    | 'tergeometria_kesz'
+    | 'trigonometria_kesz'
+    | 'valoszinuseg_kesz'
     | 'ut_bejart'
     | 'mester_szakasz'
     | 'hibatlan_5'
@@ -29,7 +38,7 @@ export type BadgeId =
     | 'xp_1000';
 
 /** Régi munkalap kulcsok — badge mappinghez */
-export type TopicProgressKey = 'parameter' | 'explog' | 'absroot' | 'bizonyitas' | 'egyenletek' | 'fuggvenyek' | 'halmazok' | 'kombinatorika';
+export type TopicProgressKey = 'parameter' | 'explog' | 'absroot' | 'bizonyitas' | 'egyenletek' | 'fuggvenyek' | 'halmazok' | 'kombinatorika' | 'koordinatageometria' | 'grafok' | 'sorozatok' | 'statisztika' | 'szamelmelet' | 'szoveges' | 'tergeometria' | 'trigonometria' | 'valoszinuseg';
 
 export interface BadgeDef {
     id: BadgeId;
@@ -84,6 +93,15 @@ export const BADGE_DEFS: BadgeDef[] = [
     { id: 'fuggveny_kesz', title: 'Függvény mester', description: 'Függvények–analízis munkalap teljesítve', icon: '📈' },
     { id: 'halmazok_kesz', title: 'Halmazok mester', description: 'Halmazok munkalap teljesítve', icon: '{}' },
     { id: 'kombinatorika_kesz', title: 'Kombinatorika mester', description: 'Kombinatorika munkalap teljesítve', icon: '🔢' },
+    { id: 'koordinatageometria_kesz', title: 'Koordinátageometria mester', description: 'Koordinátageometria munkalap teljesítve', icon: '📍' },
+    { id: 'grafok_kesz', title: 'Gráfok mester', description: 'Logika, gráfok munkalap teljesítve', icon: '🕸️' },
+    { id: 'sorozatok_kesz', title: 'Sorozatok mester', description: 'Sorozatok munkalap teljesítve', icon: '∞' },
+    { id: 'statisztika_kesz', title: 'Statisztika mester', description: 'Statisztika munkalap teljesítve', icon: '📊' },
+    { id: 'szamelmelet_kesz', title: 'Számelmélet mester', description: 'Számelmélet munkalap teljesítve', icon: '🔢' },
+    { id: 'szoveges_kesz', title: 'Szöveges mester', description: 'Szöveges feladatok munkalap teljesítve', icon: '📝' },
+    { id: 'tergeometria_kesz', title: 'Térgeometria mester', description: 'Térgeometria munkalap teljesítve', icon: '📦' },
+    { id: 'trigonometria_kesz', title: 'Trigonometria mester', description: 'Trigonometria munkalap teljesítve', icon: '📐' },
+    { id: 'valoszinuseg_kesz', title: 'Valószínűség mester', description: 'Valószínűségszámítás munkalap teljesítve', icon: '🎲' },
     { id: 'ut_bejart', title: 'Út bejárva', description: 'Egy teljes témakör-út (6 lecke) kész', icon: '🗺️' },
     { id: 'mester_szakasz', title: 'Mester szakasz', description: 'Bármely munkalap 6. szintje kész', icon: '🏆' },
     { id: 'hibatlan_5', title: '5 hibátlan', description: '5 helyes válasz egymás után', icon: '🔥' },
@@ -187,6 +205,15 @@ export function resolveTopicProgressKey(topicId: string): TopicProgressKey | nul
     if (t.includes('fuggveny') || t.includes('analizis')) return 'fuggvenyek';
     if (t.includes('halmaz')) return 'halmazok';
     if (t.includes('kombinatorika')) return 'kombinatorika';
+    if (t.includes('koordinatageometria') || t.includes('koordinata')) return 'koordinatageometria';
+    if (t.includes('logika') || t.includes('grafok')) return 'grafok';
+    if (t.includes('sorozat')) return 'sorozatok';
+    if (t.includes('statisztika')) return 'statisztika';
+    if (t.includes('szamelmelet')) return 'szamelmelet';
+    if (t.includes('szoveges')) return 'szoveges';
+    if (t.includes('tergeometria')) return 'tergeometria';
+    if (t.includes('trigonometria')) return 'trigonometria';
+    if (t.includes('valoszinuseg')) return 'valoszinuseg';
     return null;
 }
 
@@ -208,6 +235,15 @@ export function topicCompletionBadge(key: string): BadgeId | null {
         case 'fuggvenyek': return 'fuggveny_kesz';
         case 'halmazok': return 'halmazok_kesz';
         case 'kombinatorika': return 'kombinatorika_kesz';
+        case 'koordinatageometria': return 'koordinatageometria_kesz';
+        case 'grafok': return 'grafok_kesz';
+        case 'sorozatok': return 'sorozatok_kesz';
+        case 'statisztika': return 'statisztika_kesz';
+        case 'szamelmelet': return 'szamelmelet_kesz';
+        case 'szoveges': return 'szoveges_kesz';
+        case 'tergeometria': return 'tergeometria_kesz';
+        case 'trigonometria': return 'trigonometria_kesz';
+        case 'valoszinuseg': return 'valoszinuseg_kesz';
         default: return null;
     }
 }

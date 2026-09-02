@@ -390,6 +390,17 @@ export function isWorksheetTopicId(topicId: string): boolean {
         t.includes('fuggveny') ||
         t.includes('analizis') ||
         t.includes('halmaz') ||
-        t.includes('kombinatorika')
+        t.includes('kombinatorika') ||
+        t.includes('koordinatageometria') ||
+        t.includes('koordinata') ||
+        t.includes('logika') ||
+        t.includes('grafok') ||
+        t.includes('sorozat') ||
+        t.includes('statisztika') ||
+        t.includes('szamelmelet') ||
+        t.includes('szoveges') ||
+        t.includes('tergeometria') ||
+        t.includes('trigonometria') ||
+        t.includes('valoszinuseg')
     );
 }

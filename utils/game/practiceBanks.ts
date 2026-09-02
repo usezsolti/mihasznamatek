@@ -1,96 +1,23 @@
 ﻿import type { Question } from './types';
 
-// Paraméteres egyenletek gyakorló feladatai (munkalap 1–12)
-export const getParameterPracticeQuestions = (): Question[] => [
-    {
-        question: `1. Adott gyök\n\nAdott az x² − (p + 5)x + 3p + 2 = 0 egyenlet, ahol p valós paraméter.\n\na) Határozd meg p értékét úgy, hogy az egyenlet egyik gyöke 2 legyen!\nb) Határozd meg ebben az esetben az egyenlet másik gyökét!\n\nAdd meg: p, majd a másik gyököt!`,
-        answer: 4,
-        alternativeAnswer: 7,
-        type: 'multiplication',
-        expression: `a) x=2 behelyettesítve: 4 − 2(p+5) + 3p + 2 = 0 → p − 4 = 0 → p = 4\nb) Gyökök összege: p+5 = 9 → 2 + x₂ = 9 → x₂ = 7`
-    },
-    {
-        question: `2. Két különböző valós gyök\n\nHatározd meg az m valós paraméter összes lehetséges értékét úgy, hogy az\nx² − (2m − 1)x + m + 2 = 0\negyenletnek pontosan két különböző valós gyöke legyen!\n\nAdd meg a D = 0 határértékeit (kisebb, majd nagyobb), 3 tizedesjegyre!\n(A megoldás: m < kisebb vagy m > nagyobb.)`,
-        answer: -0.658,
-        alternativeAnswer: 2.658,
-        type: 'multiplication',
-        expression: `D = (2m−1)² − 4(m+2) = 4m² − 8m − 7\nD > 0 ⇔ m < (2−√11)/2 ≈ −0,658 vagy m > (2+√11)/2 ≈ 2,658`
-    },
-    {
-        question: `3. Pontosan egy valós megoldás\n\nHatározd meg a p paraméter összes lehetséges értékét úgy, hogy a\n(p − 1)x² − 2(p + 1)x + p + 5 = 0\negyenletnek pontosan egy valós megoldása legyen!\n\nFigyelem: külön vizsgáld meg, amikor az egyenlet nem másodfokú!\n\nAdd meg a két p értéket (tetszőleges sorrendben)!`,
-        answer: 1,
-        alternativeAnswer: 3,
-        type: 'multiplication',
-        expression: `p = 1 (lineáris): −4x + 6 = 0 → x = 3/2 (egy megoldás)\nMásodfokú (p ≠ 1): D = 0 → p = 3\nTehát p = 1 vagy p = 3`
-    },
-    {
-        question: `4. Nincs valós gyök\n\nHatározd meg a p valós paraméter értékeit úgy, hogy az\nx² + 2px + p + 5 = 0\negyenletnek ne legyen valós gyöke!\n\nAdd meg a D = 0 határértékeit (kisebb, majd nagyobb), 3 tizedesjegyre!\n(A megoldás: kisebb < p < nagyobb.)`,
-        answer: -1.791,
-        alternativeAnswer: 2.791,
-        type: 'multiplication',
-        expression: `D = 4p² − 4(p+5) = 4(p² − p − 5)\nD < 0 ⇔ (1−√21)/2 < p < (1+√21)/2 ≈ −1,791 < p < 2,791`
-    },
-    {
-        question: `5. A gyökök négyzetösszege\n\nAz x² − (p + 2)x + 2p = 0 egyenlet valós gyökei x₁ és x₂.\nHatározd meg p értékét úgy, hogy x₁² + x₂² = 10 teljesüljön!\n\nAdd meg a két p értéket 3 tizedesjegyre (tetszőleges sorrendben)!`,
-        answer: 2.449,
-        alternativeAnswer: -2.449,
-        type: 'multiplication',
-        expression: `x₁² + x₂² = (x₁+x₂)² − 2x₁x₂ = (p+2)² − 4p = p² + 4 = 10\np² = 6 → p = ±√6 ≈ ±2,449\n(D ≥ 0 mindkét esetben teljesül)`
-    },
-    {
-        question: `6. A gyökök különbsége\n\nAz x² − (m + 1)x + m − 2 = 0 egyenlet két valós gyöke x₁ és x₂.\nHatározd meg m értékét úgy, hogy |x₁ − x₂| = 4 legyen!\n\nAdd meg a két m értéket 3 tizedesjegyre (tetszőleges sorrendben)!`,
-        answer: 3.828,
-        alternativeAnswer: -1.828,
-        type: 'multiplication',
-        expression: `|x₁−x₂| = √((m+1)² − 4(m−2)) = √(m² − 2m + 9) = 4\nm² − 2m − 7 = 0 → m = 1 ± 2√2 ≈ 3,828 és −1,828`
-    },
-    {
-        question: `7. Lineáris paraméteres egyenlet\n\nVizsgáld meg a p paraméter értékétől függően az (p − 2)x = p + 2 egyenletet!\nHatározd meg, hogy mely p értékek esetén van:\n1. pontosan egy megoldás;\n2. nincs megoldás;\n3. végtelen sok megoldás.\nHa egyetlen megoldás van, add meg azt is!\n\nAdd meg:\n1) az x megoldást, ha p = 6 (egy megoldás esete);\n2) a p értéket, amikor nincs megoldás;\n3) van-e p, ahol végtelen sok megoldás van? (1 = igen, 0 = nem)`,
-        answer: 2,
-        alternativeAnswer: 2,
-        thirdAnswer: 0,
-        type: 'multiplication',
-        expression: `p ≠ 2: pontosan egy megoldás, x = (p+2)/(p−2)\npl. p = 6 → x = 8/4 = 2\np = 2: 0·x = 4 → nincs megoldás\nVégtelen sok megoldás: soha (0 = 0 soha nem áll fenn)`
-    },
-    {
-        question: `8. Abszolútértékes paraméteres egyenlet\n\nVizsgáld meg a p valós paraméter függvényében a |2x − 5| = p − 1 egyenlet megoldásainak számát!\nHatározd meg, hogy mely p értékek esetén van:\n• nulla valós megoldás;\n• egy valós megoldás;\n• két valós megoldás.\n\nAdd meg:\n1) a p értéket, amikor pontosan egy megoldás van;\n2) a megoldások számát, ha p = 4 (két megoldás esete);\n3) a megoldások számát, ha p = 0 (nulla megoldás esete).`,
-        answer: 1,
-        alternativeAnswer: 2,
-        thirdAnswer: 0,
-        type: 'multiplication',
-        expression: `p < 1: jobb oldal negatív → 0 megoldás (pl. p = 0)\np = 1: |2x−5| = 0 → egy megoldás (x = 5/2)\np > 1: két megoldás (pl. p = 4)`
-    },
-    {
-        question: `9. Paraméteres harmadfokú függvény\n\nLegyen fₚ(x) = −x³ + (p + 1)x² + (p² − 4)x − 2.\n\na) Határozd meg p értékét úgy, hogy x = 1 az fₚ zérushelye legyen!\nb) Határozd meg p értékeit úgy, hogy fₚ'(1) > 0 teljesüljön!\n\nAdd meg a) két p értékét, majd b) két határértékét 3 tizedesjegyre!`,
-        answer: 2,
-        alternativeAnswer: -3,
-        thirdAnswer: -3.449,
-        fourthAnswer: 1.449,
-        type: 'multiplication',
-        expression: `a) f(1) = 0 → p² + p − 6 = 0 → (p+3)(p−2) = 0 → p = 2 vagy p = −3\nb) f'(1) = p² + 2p − 5 > 0 → p < −1−√6 ≈ −3,449 vagy p > −1+√6 ≈ 1,449`
-    },
-    {
-        question: `10. Egyenes érinti a parabolát\n\nAdott az y = x² − 4x + 1 parabola és az y = mx − 3 egyenes.\nHatározd meg az m paraméter értékét úgy, hogy az egyenes érintse a parabolát!\nHatározd meg az érintési pontok x-koordinátáit is!\n\nAdd meg a két m értéket, majd a két érintési pont x-ét (tetszőleges sorrendben)!`,
-        answer: 0,
-        alternativeAnswer: -8,
-        thirdAnswer: 2,
-        fourthAnswer: -2,
-        type: 'multiplication',
-        expression: `x² − (4+m)x + 4 = 0, D = 0 → m = 0 vagy m = −8\nm = 0: érintési pont (2, −3)\nm = −8: érintési pont (−2, 13)`
-    },
-    {
-        question: `11. Egyenes és kör helyzete\n\nAdott az x² + y² − 8x + 12 = 0 egyenletű kör és az y = mx egyenes.\nHatározd meg az m valós paraméter összes lehetséges értékét úgy, hogy az egyenesnek és a körnek ne legyen közös pontja!\n\nAdd meg a pozitív határértéket 3 tizedesjegyre!\n(A megoldás: |m| > ez az érték.)`,
-        answer: 0.577,
-        type: 'multiplication',
-        expression: `Kör: (x−4)² + y² = 4, középpont (4,0), r = 2\nTávolság > r: |4m|/√(m²+1) > 2 → |m| > 1/√3 ≈ 0,577`
-    },
-    {
-        question: `12. Szöveges paraméteres feladat\n\nEgy webáruház egy termék árát p%-kal csökkenti. Ennek hatására az eladott darabszám 3p%-kal nő.\nA modell csak 0 < p < 30 esetén használható.\nHány százalékkal csökkentették a termék árát, ha az árbevétel 12%-kal nőtt?\n\nAdd meg p értékét 3 tizedesjegyre!`,
-        answer: 6.667,
-        type: 'multiplication',
-        expression: `(1 − p/100)(1 + 3p/100) = 1,12\n3p² − 200p + 1200 = 0 → p = 60 (nem engedett) vagy p = 20/3 ≈ 6,667`
-    }
-];
+// Paraméteres egyenletek — 6×20 (lásd parameterLevels.ts)
+import { getParameterPracticeQuestions as getParameterRaw } from './parameterLevels';
+
+export const getParameterPracticeQuestions = (): Question[] => {
+    const list = getParameterRaw().map((q) => {
+        const cleaned: Question = {
+            ...q,
+            question: String(q.question || '')
+                .replace(/^\s*\d+\.\s*szint\s*[·•\-–—]\s*[^\n]+\n+/i, '')
+                .trim(),
+        };
+        delete (cleaned as { alternativeAnswer?: number }).alternativeAnswer;
+        delete (cleaned as { thirdAnswer?: number }).thirdAnswer;
+        delete (cleaned as { fourthAnswer?: number }).fourthAnswer;
+        return cleaned;
+    });
+    return list;
+};
 
 // Exponenciális és logaritmusos gyakorló feladatok (emelt algebra munkalap 1–16)
 export const getExponentialLogPracticeQuestions = (): Question[] => [
@@ -454,6 +381,177 @@ import { getKombinatorikaPracticeQuestions as getKombinatorikaRaw } from './komb
 
 export const getKombinatorikaPracticeQuestions = (): Question[] => {
     const list = getKombinatorikaRaw().map((q) => {
+        const cleaned: Question = {
+            ...q,
+            question: String(q.question || '')
+                .replace(/^\s*\d+\.\s*szint\s*[·•\-–—]\s*[^\n]+\n+/i, '')
+                .trim(),
+        };
+        delete (cleaned as { alternativeAnswer?: number }).alternativeAnswer;
+        delete (cleaned as { thirdAnswer?: number }).thirdAnswer;
+        delete (cleaned as { fourthAnswer?: number }).fourthAnswer;
+        return cleaned;
+    });
+    return list;
+};
+
+// Koordinátageometria — 6×20 (lásd koordinatageometriaLevels.ts)
+import { getKoordinatageometriaPracticeQuestions as getKoordRaw } from './koordinatageometriaLevels';
+
+export const getKoordinatageometriaPracticeQuestions = (): Question[] => {
+    const list = getKoordRaw().map((q) => {
+        const cleaned: Question = {
+            ...q,
+            question: String(q.question || '')
+                .replace(/^\s*\d+\.\s*szint\s*[·•\-–—]\s*[^\n]+\n+/i, '')
+                .trim(),
+        };
+        delete (cleaned as { alternativeAnswer?: number }).alternativeAnswer;
+        delete (cleaned as { thirdAnswer?: number }).thirdAnswer;
+        delete (cleaned as { fourthAnswer?: number }).fourthAnswer;
+        return cleaned;
+    });
+    return list;
+};
+
+// Logika, gráfok — 6×20 (lásd grafokLevels.ts)
+import { getGrafokPracticeQuestions as getGrafokRaw } from './grafokLevels';
+
+export const getGrafokPracticeQuestions = (): Question[] => {
+    const list = getGrafokRaw().map((q) => {
+        const cleaned: Question = {
+            ...q,
+            question: String(q.question || '')
+                .replace(/^\s*\d+\.\s*szint\s*[·•\-–—]\s*[^\n]+\n+/i, '')
+                .trim(),
+        };
+        delete (cleaned as { alternativeAnswer?: number }).alternativeAnswer;
+        delete (cleaned as { thirdAnswer?: number }).thirdAnswer;
+        delete (cleaned as { fourthAnswer?: number }).fourthAnswer;
+        return cleaned;
+    });
+    return list;
+};
+
+// Sorozatok — 6×20 (lásd sorozatokLevels.ts)
+import { getSorozatokPracticeQuestions as getSorozatokRaw } from './sorozatokLevels';
+
+export const getSorozatokPracticeQuestions = (): Question[] => {
+    const list = getSorozatokRaw().map((q) => {
+        const cleaned: Question = {
+            ...q,
+            question: String(q.question || '')
+                .replace(/^\s*\d+\.\s*szint\s*[·•\-–—]\s*[^\n]+\n+/i, '')
+                .trim(),
+        };
+        delete (cleaned as { alternativeAnswer?: number }).alternativeAnswer;
+        delete (cleaned as { thirdAnswer?: number }).thirdAnswer;
+        delete (cleaned as { fourthAnswer?: number }).fourthAnswer;
+        return cleaned;
+    });
+    return list;
+};
+
+// Statisztika — 6×20 (lásd statisztikaLevels.ts)
+import { getStatisztikaPracticeQuestions as getStatisztikaRaw } from './statisztikaLevels';
+
+export const getStatisztikaPracticeQuestions = (): Question[] => {
+    const list = getStatisztikaRaw().map((q) => {
+        const cleaned: Question = {
+            ...q,
+            question: String(q.question || '')
+                .replace(/^\s*\d+\.\s*szint\s*[·•\-–—]\s*[^\n]+\n+/i, '')
+                .trim(),
+        };
+        delete (cleaned as { alternativeAnswer?: number }).alternativeAnswer;
+        delete (cleaned as { thirdAnswer?: number }).thirdAnswer;
+        delete (cleaned as { fourthAnswer?: number }).fourthAnswer;
+        return cleaned;
+    });
+    return list;
+};
+
+// Számelmélet — 6×20 (lásd szamelmeletLevels.ts)
+import { getSzamelmeletPracticeQuestions as getSzamelmeletRaw } from './szamelmeletLevels';
+
+export const getSzamelmeletPracticeQuestions = (): Question[] => {
+    const list = getSzamelmeletRaw().map((q) => {
+        const cleaned: Question = {
+            ...q,
+            question: String(q.question || '')
+                .replace(/^\s*\d+\.\s*szint\s*[·•\-–—]\s*[^\n]+\n+/i, '')
+                .trim(),
+        };
+        delete (cleaned as { alternativeAnswer?: number }).alternativeAnswer;
+        delete (cleaned as { thirdAnswer?: number }).thirdAnswer;
+        delete (cleaned as { fourthAnswer?: number }).fourthAnswer;
+        return cleaned;
+    });
+    return list;
+};
+
+// Szöveges feladatok — 6×20 (lásd szovegesLevels.ts)
+import { getSzovegesPracticeQuestions as getSzovegesRaw } from './szovegesLevels';
+
+export const getSzovegesPracticeQuestions = (): Question[] => {
+    const list = getSzovegesRaw().map((q) => {
+        const cleaned: Question = {
+            ...q,
+            question: String(q.question || '')
+                .replace(/^\s*\d+\.\s*szint\s*[·•\-–—]\s*[^\n]+\n+/i, '')
+                .trim(),
+        };
+        delete (cleaned as { alternativeAnswer?: number }).alternativeAnswer;
+        delete (cleaned as { thirdAnswer?: number }).thirdAnswer;
+        delete (cleaned as { fourthAnswer?: number }).fourthAnswer;
+        return cleaned;
+    });
+    return list;
+};
+
+// Térgeometria — 6×20 (lásd tergeometriaLevels.ts)
+import { getTergeometriaPracticeQuestions as getTergeometriaRaw } from './tergeometriaLevels';
+
+export const getTergeometriaPracticeQuestions = (): Question[] => {
+    const list = getTergeometriaRaw().map((q) => {
+        const cleaned: Question = {
+            ...q,
+            question: String(q.question || '')
+                .replace(/^\s*\d+\.\s*szint\s*[·•\-–—]\s*[^\n]+\n+/i, '')
+                .trim(),
+        };
+        delete (cleaned as { alternativeAnswer?: number }).alternativeAnswer;
+        delete (cleaned as { thirdAnswer?: number }).thirdAnswer;
+        delete (cleaned as { fourthAnswer?: number }).fourthAnswer;
+        return cleaned;
+    });
+    return list;
+};
+
+// Valószínűségszámítás — 6×20 (lásd valoszinusegLevels.ts)
+import { getValoszinusegPracticeQuestions as getValoszinusegRaw } from './valoszinusegLevels';
+
+export const getValoszinusegPracticeQuestions = (): Question[] => {
+    const list = getValoszinusegRaw().map((q) => {
+        const cleaned: Question = {
+            ...q,
+            question: String(q.question || '')
+                .replace(/^\s*\d+\.\s*szint\s*[·•\-–—]\s*[^\n]+\n+/i, '')
+                .trim(),
+        };
+        delete (cleaned as { alternativeAnswer?: number }).alternativeAnswer;
+        delete (cleaned as { thirdAnswer?: number }).thirdAnswer;
+        delete (cleaned as { fourthAnswer?: number }).fourthAnswer;
+        return cleaned;
+    });
+    return list;
+};
+
+// Trigonometria — 6×20 (lásd trigonometriaLevels.ts)
+import { getTrigonometriaPracticeQuestions as getTrigonometriaRaw } from './trigonometriaLevels';
+
+export const getTrigonometriaPracticeQuestions = (): Question[] => {
+    const list = getTrigonometriaRaw().map((q) => {
         const cleaned: Question = {
             ...q,
             question: String(q.question || '')

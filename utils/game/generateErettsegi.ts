@@ -8,11 +8,19 @@ import {
     getEquationsPracticeQuestions,
     getHalmazPracticeQuestions,
     getKombinatorikaPracticeQuestions,
+    getKoordinatageometriaPracticeQuestions,
+    getGrafokPracticeQuestions,
+    getSorozatokPracticeQuestions,
+    getStatisztikaPracticeQuestions,
+    getSzamelmeletPracticeQuestions,
+    getSzovegesPracticeQuestions,
+    getTergeometriaPracticeQuestions,
+    getTrigonometriaPracticeQuestions,
+    getValoszinusegPracticeQuestions,
 } from './practiceBanks';
 import {
     generateAlgebraQuestion,
     generateGeometryQuestion,
-    generateTrigonometryQuestion,
 } from './generateHelpers';
 
 export const generateErettsegiQuestionByTopicId = (topicId: string, level: string): Question | null => {
@@ -75,168 +83,64 @@ export const generateErettsegiQuestionByTopicId = (topicId: string, level: strin
         const list = getKombinatorikaPracticeQuestions();
         return list[Math.floor(Math.random() * list.length)];
     }
-    // Koordinátageometria
+    // Koordinátageometria — 6×20 bank
     else if (topicIdLower.includes('koordinatageometria') || topicIdLower.includes('koordinata')) {
-        const x1 = Math.floor(Math.random() * 10);
-        const y1 = Math.floor(Math.random() * 10);
-        const x2 = Math.floor(Math.random() * 10);
-        const y2 = Math.floor(Math.random() * 10);
-        const answer = Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
-        return {
-            question: `A(${x1}, ${y1}) és B(${x2}, ${y2}) pontok távolsága?`,
-            answer: Math.round(answer * 10) / 10,
-            type: 'multiplication',
-            expression: `d = √((${x2}-${x1})² + (${y2}-${y1})²) = ${Math.round(answer * 10) / 10}`
-        };
+        const list = getKoordinatageometriaPracticeQuestions();
+        return list[Math.floor(Math.random() * list.length)];
     }
     // Síkgeometria
     else if (topicIdLower.includes('sikgeometria') || topicIdLower.includes('sik')) {
         return generateGeometryQuestion();
     }
-    // Sorozatok
+    // Sorozatok — 6×20 bank
     else if (topicIdLower.includes('sorozat')) {
-        const levelLower = level.toLowerCase();
-        if (levelLower.includes('emelt')) {
-            // Emelt szint: geometriai sorozat
-            const a1 = Math.floor(Math.random() * 5) + 2;
-            const q = Math.floor(Math.random() * 3) + 2;
-            const n = 4;
-            const answer = a1 * Math.pow(q, n - 1);
-            return {
-                question: `Geometriai sorozat: a₁ = ${a1}, q = ${q}. Mennyi a₄?\n\nVálaszaidat 3 tizedesjegyre add meg!`,
-                answer: Math.round(answer * 1000) / 1000,
-                type: 'multiplication',
-                expression: `a₄ = a₁ · q³ = ${a1} · ${q}³ = ${a1} · ${Math.pow(q, 3)} = ${Math.round(answer * 1000) / 1000}`
-            };
-        }
-        const a1 = Math.floor(Math.random() * 10) + 1;
-        const d = Math.floor(Math.random() * 5) + 1;
-        const n = 5;
-        const answer = a1 + (n - 1) * d;
-        return {
-            question: `Számtani sorozat: a₁ = ${a1}, d = ${d}. Mennyi a₅?`,
-            answer: answer,
-            type: 'addition',
-            expression: `a₅ = a₁ + 4d = ${a1} + 4·${d} = ${answer}`
-        };
+        const list = getSorozatokPracticeQuestions();
+        return list[Math.floor(Math.random() * list.length)];
     }
-    // Statisztika
+    // Statisztika — 6×20 bank
     else if (topicIdLower.includes('statisztika')) {
-        const nums = [1, 2, 3, 4, 5];
-        const answer = nums.reduce((a, b) => a + b, 0) / nums.length;
-        return {
-            question: `Adatok: ${nums.join(', ')}. Átlag?`,
-            answer: answer,
-            type: 'multiplication',
-            expression: `Átlag = (${nums.join(' + ')}) / ${nums.length} = ${answer}`
-        };
+        const list = getStatisztikaPracticeQuestions();
+        return list[Math.floor(Math.random() * list.length)];
     }
-    // Számelmélet
-    else if (topicIdLower.includes('szamelmelet') || topicIdLower.includes('szam')) {
-        const levelLower = level.toLowerCase();
-        if (levelLower.includes('emelt')) {
-            // Emelt szint: LKKT számítás
-            const a = Math.floor(Math.random() * 5) + 4;
-            const b = Math.floor(Math.random() * 5) + 4;
-            const gcd = (x: number, y: number): number => y === 0 ? x : gcd(y, x % y);
-            const lcm = (a * b) / gcd(a, b);
-            return {
-                question: `LKKT(${a}, ${b}) = ?`,
-                answer: lcm,
-                type: 'multiplication',
-                expression: `LKKT(${a}, ${b}) = (${a} × ${b}) / LNKO(${a}, ${b}) = ${lcm}`
-            };
-        }
-        const a = Math.floor(Math.random() * 20) + 10;
-        const b = Math.floor(Math.random() * 20) + 10;
-        const gcd = (x: number, y: number): number => y === 0 ? x : gcd(y, x % y);
-        const answer = gcd(a, b);
-        return {
-            question: `LNKO(${a}, ${b}) = ?`,
-            answer: answer,
-            type: 'multiplication',
-            expression: `LNKO(${a}, ${b}) = ${answer}`
-        };
+    // Számelmélet — 6×20 bank
+    else if (topicIdLower.includes('szamelmelet')) {
+        const list = getSzamelmeletPracticeQuestions();
+        return list[Math.floor(Math.random() * list.length)];
     }
-    // Szöveges feladatok
+    // Szöveges feladatok — 6×20 bank
     else if (topicIdLower.includes('szoveges')) {
-        const levelLower = level.toLowerCase();
-        if (levelLower.includes('emelt')) {
-            // Emelt szint: összetett szöveges feladat
-            const b = Math.floor(Math.random() * 5) + 3;
-            const pali = b;
-            const kati = 2 * pali;
-            return {
-                question: `Kati kétszer annyi almát szedett, mint Pali. Ha Pali ${pali} almát szedett, hány almát szedett Kati?`,
-                answer: kati,
-                type: 'multiplication',
-                expression: `Kati = 2 × Pali = 2 × ${pali} = ${kati}`
-            };
-        }
-        const a = Math.floor(Math.random() * 10) + 1;
-        const b = Math.floor(Math.random() * 10) + 1;
-        const answer = a + b;
-        return {
-            question: `Kati ${a} almát, Pali ${b} almát szedett. Összesen hány alma?`,
-            answer: answer,
-            type: 'addition',
-            expression: `${a} + ${b} = ${answer}`
-        };
+        const list = getSzovegesPracticeQuestions();
+        return list[Math.floor(Math.random() * list.length)];
     }
     // Paraméter — ELŐBB, mert a "parameter" id tartalmazza a "ter" szócskát
     else if (topicIdLower.includes('parameter') || topicIdLower.includes('paramet')) {
         const list = getParameterPracticeQuestions();
         return list[Math.floor(Math.random() * list.length)];
     }
-    // Térgeometria (ne használj includes('ter') — elkapná a parameter témát is!)
+    // Térgeometria — 6×20 bank (ne használj includes('ter') — elkapná a parameter témát is!)
     else if (topicIdLower.includes('tergeometria')) {
-        const levelLower = level.toLowerCase();
-        if (levelLower.includes('emelt')) {
-            // Emelt szint: gömb térfogata
-            const r = Math.floor(Math.random() * 5) + 2;
-            const volume = (4 / 3) * Math.PI * Math.pow(r, 3);
-            return {
-                question: `Gömb sugara ${r} cm. Térfogat? (π ≈ 3.14, egész szám)`,
-                answer: Math.round(volume),
-                type: 'multiplication',
-                expression: `V = (4/3)πr³ = (4/3) × 3.14 × ${r}³ = ${Math.round(volume)} cm³`
-            };
-        }
-        const a = Math.floor(Math.random() * 5) + 2;
-        const answer = Math.pow(a, 3);
-        return {
-            question: `Kocka éle ${a} cm. Térfogat?`,
-            answer: answer,
-            type: 'multiplication',
-            expression: `V = a³ = ${a}³ = ${answer} cm³`
-        };
+        const list = getTergeometriaPracticeQuestions();
+        return list[Math.floor(Math.random() * list.length)];
     }
-    // Trigonometria
-    else if (topicIdLower.includes('trigonometria') || topicIdLower.includes('trigonometri')) {
-        return generateTrigonometryQuestion();
+    // Trigonometria — 6×20 bank
+    else if (topicIdLower.includes('trigonometria')) {
+        const list = getTrigonometriaPracticeQuestions();
+        return list[Math.floor(Math.random() * list.length)];
     }
-    // Valószínűségszámítás
+    // Valószínűségszámítás — 6×20 bank
     else if (topicIdLower.includes('valoszinuseg')) {
-        return {
-            question: 'Egy kockával dobva, mi a valószínűsége, hogy 3-nál nagyobb számot dobunk?',
-            answer: 0.5,
-            type: 'multiplication',
-            expression: 'Kedvező: 4,5,6 (3 db), Összes: 6, P = 3/6 = 0.5'
-        };
+        const list = getValoszinusegPracticeQuestions();
+        return list[Math.floor(Math.random() * list.length)];
     }
     // Bizonyítások — munkalap feladatok
     else if (topicIdLower.includes('bizonyitas')) {
         const list = getProofPracticeQuestions();
         return list[Math.floor(Math.random() * list.length)];
     }
-    // Logika, gráfok
-    else if (topicIdLower.includes('logika') || topicIdLower.includes('graf')) {
-        return {
-            question: 'Logikai művelet: (1 ÉS 0) VAGY 1 = ?',
-            answer: 1,
-            type: 'multiplication',
-            expression: '(1 ÉS 0) = 0, 0 VAGY 1 = 1'
-        };
+    // Logika, gráfok — 6×20 bank
+    else if (topicIdLower.includes('logika') || topicIdLower.includes('grafok') || topicIdLower.includes('graf')) {
+        const list = getGrafokPracticeQuestions();
+        return list[Math.floor(Math.random() * list.length)];
     }
     // Értelmezési tartomány, értékkészlet
     else if (topicIdLower.includes('ertelmezesi') || topicIdLower.includes('tartomany') || topicIdLower.includes('ertekkeszlet')) {

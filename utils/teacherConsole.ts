@@ -124,6 +124,15 @@ const TOPIC_TITLE: Record<string, string> = {
     fuggvenyek: 'Függvények',
     halmazok: 'Halmazok',
     kombinatorika: 'Kombinatorika',
+    koordinatageometria: 'Koordinátageometria',
+    grafok: 'Logika, gráfok',
+    sorozatok: 'Sorozatok',
+    statisztika: 'Statisztika',
+    szamelmelet: 'Számelmélet',
+    szoveges: 'Szöveges feladatok',
+    tergeometria: 'Térgeometria',
+    trigonometria: 'Trigonometria',
+    valoszinuseg: 'Valószínűségszámítás',
 };
 
 function getFirebase(): any | null {

@@ -1,5 +1,6 @@
 import MathTemplateInput from '../MathTemplateInput';
 import type { Question } from '../../utils/game';
+import GameQuestionFigure from './GameQuestionFigure';
 
 export type GameQuestionCardProps = {
     question: Question | undefined;
@@ -62,6 +63,7 @@ export default function GameQuestionCard({
                     <h2 className="question-text" style={{ whiteSpace: 'pre-line', marginBottom: '2rem' }}>
                         {question?.question}
                     </h2>
+                    <GameQuestionFigure question={question} />
                     {question.subQuestions!.map((subQ, index) => (
                         <div key={index} style={{
                             marginBottom: '2rem',
@@ -183,6 +185,7 @@ export default function GameQuestionCard({
                     <h2 className="question-text" style={{ whiteSpace: 'pre-line' }}>
                         {question?.question}
                     </h2>
+                    <GameQuestionFigure question={question} />
 
                     <div className="answer-section">
                         {question?.fourthAnswer !== undefined ? (

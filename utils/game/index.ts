@@ -1,4 +1,7 @@
 export type { Question } from './types';
+export type { GraphFigure } from './graphFigure';
+export type { DrawFigure, DrawPrimitive, QuestionFigure } from './questionFigure';
+export { drawFigure, figuresOf, graphFigure, imageFigure } from './questionFigure';
 
 export {
     getParameterPracticeQuestions,
@@ -9,6 +12,15 @@ export {
     getEquationsPracticeQuestions,
     getHalmazPracticeQuestions,
     getKombinatorikaPracticeQuestions,
+    getKoordinatageometriaPracticeQuestions,
+    getGrafokPracticeQuestions,
+    getSorozatokPracticeQuestions,
+    getStatisztikaPracticeQuestions,
+    getSzamelmeletPracticeQuestions,
+    getSzovegesPracticeQuestions,
+    getTergeometriaPracticeQuestions,
+    getTrigonometriaPracticeQuestions,
+    getValoszinusegPracticeQuestions,
 } from './practiceBanks';
 
 export {
