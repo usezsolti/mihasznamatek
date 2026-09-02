@@ -401,6 +401,9 @@ export function isWorksheetTopicId(topicId: string): boolean {
         t.includes('szoveges') ||
         t.includes('tergeometria') ||
         t.includes('trigonometria') ||
-        t.includes('valoszinuseg')
+        t.includes('valoszinuseg') ||
+        t.includes('egyszerusites') ||
+        t.includes('ertelmezesi') ||
+        t.includes('sikgeometria')
     );
 }

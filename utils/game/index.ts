@@ -21,6 +21,9 @@ export {
     getTergeometriaPracticeQuestions,
     getTrigonometriaPracticeQuestions,
     getValoszinusegPracticeQuestions,
+    getEgyszerusitesPracticeQuestions,
+    getErtelmezesiPracticeQuestions,
+    getSikgeometriaPracticeQuestions,
 } from './practiceBanks';
 
 export {

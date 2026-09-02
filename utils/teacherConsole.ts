@@ -133,6 +133,9 @@ const TOPIC_TITLE: Record<string, string> = {
     tergeometria: 'Térgeometria',
     trigonometria: 'Trigonometria',
     valoszinuseg: 'Valószínűségszámítás',
+    egyszerusites: 'Egyszerűsítések',
+    ertelmezesi: 'Értelmezési tartomány',
+    sikgeometria: 'Síkgeometria',
 };
 
 function getFirebase(): any | null {

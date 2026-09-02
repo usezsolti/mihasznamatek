@@ -19,6 +19,9 @@ import {
     getTergeometriaPracticeQuestions,
     getTrigonometriaPracticeQuestions,
     getValoszinusegPracticeQuestions,
+    getEgyszerusitesPracticeQuestions,
+    getErtelmezesiPracticeQuestions,
+    getSikgeometriaPracticeQuestions,
 } from './practiceBanks';
 
 export const getWorksheetListForTopic = (topicId: string): { list: Question[]; prefix: string } | null => {
@@ -53,10 +56,45 @@ export const getWorksheetListForTopic = (topicId: string): { list: Question[]; p
         return { list, prefix: 'erettsegi_egyenletek' };
     }
     if (topicLower.includes('fuggveny') || topicLower.includes('analizis')) {
-        return { list: getFunctionsPracticeQuestions(), prefix: 'erettsegi_fuggvenyek' };
+        const list = getFunctionsPracticeQuestions();
+        // #region agent log
+        agentDebugLog({
+            hypothesisId: 'C',
+            location: 'worksheetLists.ts:getWorksheetListForTopic',
+            message: 'functions topic routed',
+            data: {
+                topicId,
+                prefix: 'erettsegi_fuggvenyek',
+                total: list.length,
+                stages: [1, 2, 3, 4, 5, 6].map((s) => list.filter((q) => q.stage === s).length),
+                setCards: list.filter((q) => Array.isArray((q as { expectedSet?: string[] }).expectedSet)).length,
+                firstHasStage: list[0]?.stage ?? null,
+                firstQ: String(list[0]?.question || '').slice(0, 50),
+            },
+            runId: 'fugg-120',
+        });
+        // #endregion
+        return { list, prefix: 'erettsegi_fuggvenyek' };
     }
     if (topicLower.includes('exponencialis') || topicLower.includes('logaritmus')) {
-        return { list: getExponentialLogPracticeQuestions(), prefix: 'erettsegi_explog' };
+        const list = getExponentialLogPracticeQuestions();
+        // #region agent log
+        agentDebugLog({
+            hypothesisId: 'B',
+            location: 'worksheetLists.ts:getWorksheetListForTopic',
+            message: 'explog topic routed',
+            data: {
+                topicId,
+                prefix: 'erettsegi_explog',
+                total: list.length,
+                stages: [1, 2, 3, 4, 5, 6].map((s) => list.filter((q) => q.stage === s).length),
+                setCards: list.filter((q) => Array.isArray((q as { expectedSet?: string[] }).expectedSet)).length,
+                firstHasStage: list[0]?.stage ?? null,
+            },
+            runId: 'explog-120',
+        });
+        // #endregion
+        return { list, prefix: 'erettsegi_explog' };
     }
     if (topicLower.includes('halmaz')) {
         return { list: getHalmazPracticeQuestions(), prefix: 'erettsegi_halmazok' };
@@ -196,6 +234,60 @@ export const getWorksheetListForTopic = (topicId: string): { list: Question[]; p
         });
         // #endregion
         return { list, prefix: 'erettsegi_valoszinuseg' };
+    }
+    if (topicLower.includes('egyszerusites')) {
+        const list = getEgyszerusitesPracticeQuestions();
+        // #region agent log
+        agentDebugLog({
+            hypothesisId: 'B',
+            location: 'worksheetLists.ts:getWorksheetListForTopic',
+            message: 'egyszerusites topic routed',
+            data: {
+                topicId,
+                prefix: 'erettsegi_egyszerusites',
+                total: list.length,
+                stages: [1, 2, 3, 4, 5, 6].map((s) => list.filter((q) => q.stage === s).length),
+            },
+            runId: 'egys-120',
+        });
+        // #endregion
+        return { list, prefix: 'erettsegi_egyszerusites' };
+    }
+    if (topicLower.includes('ertelmezesi')) {
+        const list = getErtelmezesiPracticeQuestions();
+        // #region agent log
+        agentDebugLog({
+            hypothesisId: 'B',
+            location: 'worksheetLists.ts:getWorksheetListForTopic',
+            message: 'ertelmezesi topic routed',
+            data: {
+                topicId,
+                prefix: 'erettsegi_ertelmezesi',
+                total: list.length,
+                stages: [1, 2, 3, 4, 5, 6].map((s) => list.filter((q) => q.stage === s).length),
+            },
+            runId: 'ert-120',
+        });
+        // #endregion
+        return { list, prefix: 'erettsegi_ertelmezesi' };
+    }
+    if (topicLower.includes('sikgeometria')) {
+        const list = getSikgeometriaPracticeQuestions();
+        // #region agent log
+        agentDebugLog({
+            hypothesisId: 'B',
+            location: 'worksheetLists.ts:getWorksheetListForTopic',
+            message: 'sikgeometria topic routed',
+            data: {
+                topicId,
+                prefix: 'erettsegi_sikgeometria',
+                total: list.length,
+                stages: [1, 2, 3, 4, 5, 6].map((s) => list.filter((q) => q.stage === s).length),
+            },
+            runId: 'sik-120',
+        });
+        // #endregion
+        return { list, prefix: 'erettsegi_sikgeometria' };
     }
     return null;
 };

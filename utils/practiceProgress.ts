@@ -31,6 +31,9 @@ export type BadgeId =
     | 'tergeometria_kesz'
     | 'trigonometria_kesz'
     | 'valoszinuseg_kesz'
+    | 'egyszerusites_kesz'
+    | 'ertelmezesi_kesz'
+    | 'sikgeometria_kesz'
     | 'ut_bejart'
     | 'mester_szakasz'
     | 'hibatlan_5'
@@ -38,7 +41,7 @@ export type BadgeId =
     | 'xp_1000';
 
 /** Régi munkalap kulcsok — badge mappinghez */
-export type TopicProgressKey = 'parameter' | 'explog' | 'absroot' | 'bizonyitas' | 'egyenletek' | 'fuggvenyek' | 'halmazok' | 'kombinatorika' | 'koordinatageometria' | 'grafok' | 'sorozatok' | 'statisztika' | 'szamelmelet' | 'szoveges' | 'tergeometria' | 'trigonometria' | 'valoszinuseg';
+export type TopicProgressKey = 'parameter' | 'explog' | 'absroot' | 'bizonyitas' | 'egyenletek' | 'fuggvenyek' | 'halmazok' | 'kombinatorika' | 'koordinatageometria' | 'grafok' | 'sorozatok' | 'statisztika' | 'szamelmelet' | 'szoveges' | 'tergeometria' | 'trigonometria' | 'valoszinuseg' | 'egyszerusites' | 'ertelmezesi' | 'sikgeometria';
 
 export interface BadgeDef {
     id: BadgeId;
@@ -102,6 +105,9 @@ export const BADGE_DEFS: BadgeDef[] = [
     { id: 'tergeometria_kesz', title: 'Térgeometria mester', description: 'Térgeometria munkalap teljesítve', icon: '📦' },
     { id: 'trigonometria_kesz', title: 'Trigonometria mester', description: 'Trigonometria munkalap teljesítve', icon: '📐' },
     { id: 'valoszinuseg_kesz', title: 'Valószínűség mester', description: 'Valószínűségszámítás munkalap teljesítve', icon: '🎲' },
+    { id: 'egyszerusites_kesz', title: 'Egyszerűsítés mester', description: 'Egyszerűsítések munkalap teljesítve', icon: '↔️' },
+    { id: 'ertelmezesi_kesz', title: 'Értelmezési tartomány mester', description: 'Értelmezési tartomány munkalap teljesítve', icon: '📊' },
+    { id: 'sikgeometria_kesz', title: 'Síkgeometria mester', description: 'Síkgeometria munkalap teljesítve', icon: '📐' },
     { id: 'ut_bejart', title: 'Út bejárva', description: 'Egy teljes témakör-út (6 lecke) kész', icon: '🗺️' },
     { id: 'mester_szakasz', title: 'Mester szakasz', description: 'Bármely munkalap 6. szintje kész', icon: '🏆' },
     { id: 'hibatlan_5', title: '5 hibátlan', description: '5 helyes válasz egymás után', icon: '🔥' },
@@ -214,6 +220,9 @@ export function resolveTopicProgressKey(topicId: string): TopicProgressKey | nul
     if (t.includes('tergeometria')) return 'tergeometria';
     if (t.includes('trigonometria')) return 'trigonometria';
     if (t.includes('valoszinuseg')) return 'valoszinuseg';
+    if (t.includes('egyszerusites')) return 'egyszerusites';
+    if (t.includes('ertelmezesi')) return 'ertelmezesi';
+    if (t.includes('sikgeometria')) return 'sikgeometria';
     return null;
 }
 
@@ -244,6 +253,9 @@ export function topicCompletionBadge(key: string): BadgeId | null {
         case 'tergeometria': return 'tergeometria_kesz';
         case 'trigonometria': return 'trigonometria_kesz';
         case 'valoszinuseg': return 'valoszinuseg_kesz';
+        case 'egyszerusites': return 'egyszerusites_kesz';
+        case 'ertelmezesi': return 'ertelmezesi_kesz';
+        case 'sikgeometria': return 'sikgeometria_kesz';
         default: return null;
     }
 }

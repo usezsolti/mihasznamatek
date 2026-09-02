@@ -29,6 +29,9 @@ import {
     getTergeometriaPracticeQuestions,
     getTrigonometriaPracticeQuestions,
     getValoszinusegPracticeQuestions,
+    getEgyszerusitesPracticeQuestions,
+    getErtelmezesiPracticeQuestions,
+    getSikgeometriaPracticeQuestions,
     generateQuadraticQuestion,
     generatePointDistanceQuestion,
     pick,
@@ -303,6 +306,9 @@ async function main() {
         getTergeometriaPracticeQuestions(),
         getTrigonometriaPracticeQuestions(),
         getValoszinusegPracticeQuestions(),
+        getEgyszerusitesPracticeQuestions(),
+        getErtelmezesiPracticeQuestions(),
+        getSikgeometriaPracticeQuestions(),
     ];
 
     const store = createSocialStore('smoke');

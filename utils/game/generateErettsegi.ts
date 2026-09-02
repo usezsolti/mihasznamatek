@@ -17,10 +17,12 @@ import {
     getTergeometriaPracticeQuestions,
     getTrigonometriaPracticeQuestions,
     getValoszinusegPracticeQuestions,
+    getEgyszerusitesPracticeQuestions,
+    getErtelmezesiPracticeQuestions,
+    getSikgeometriaPracticeQuestions,
 } from './practiceBanks';
 import {
     generateAlgebraQuestion,
-    generateGeometryQuestion,
 } from './generateHelpers';
 
 export const generateErettsegiQuestionByTopicId = (topicId: string, level: string): Question | null => {
@@ -37,31 +39,10 @@ export const generateErettsegiQuestionByTopicId = (topicId: string, level: strin
         const list = getEquationsPracticeQuestions();
         return list[Math.floor(Math.random() * list.length)];
     }
-    // Egyszerűsítések, átalakítások
+    // Egyszerűsítések, átalakítások — 6×20 bank
     else if (topicIdLower.includes('egyszerusites') || topicIdLower.includes('atalakitas')) {
-        const levelLower = level.toLowerCase();
-        if (levelLower.includes('emelt')) {
-            // Emelt szint: összetett algebrai kifejezések
-            const a = Math.floor(Math.random() * 5) + 2;
-            const b = Math.floor(Math.random() * 5) + 2;
-            // (a² - b²) / (a - b) = a + b
-            const answer = a + b;
-            return {
-                question: `Egyszerűsítsd: (${a}² - ${b}²) / (${a} - ${b}) = ?`,
-                answer: answer,
-                type: 'multiplication',
-                expression: `(${a}² - ${b}²) / (${a} - ${b}) = (${a} - ${b})(${a} + ${b}) / (${a} - ${b}) = ${a} + ${b} = ${answer}`
-            };
-        }
-        const a = Math.floor(Math.random() * 10) + 1;
-        const b = Math.floor(Math.random() * 10) + 1;
-        const answer = a * b;
-        return {
-            question: `${a} × ${b} = ?`,
-            answer: answer,
-            type: 'multiplication',
-            expression: `${a} × ${b} = ${answer}`
-        };
+        const list = getEgyszerusitesPracticeQuestions();
+        return list[Math.floor(Math.random() * list.length)];
     }
     // Exponenciális és logaritmusos — munkalap feladatok
     else if (topicIdLower.includes('exponencialis') || topicIdLower.includes('logaritmus')) {
@@ -88,9 +69,10 @@ export const generateErettsegiQuestionByTopicId = (topicId: string, level: strin
         const list = getKoordinatageometriaPracticeQuestions();
         return list[Math.floor(Math.random() * list.length)];
     }
-    // Síkgeometria
-    else if (topicIdLower.includes('sikgeometria') || topicIdLower.includes('sik')) {
-        return generateGeometryQuestion();
+    // Síkgeometria — 6×20 bank (ne használj includes('sik') — túl tág)
+    else if (topicIdLower.includes('sikgeometria')) {
+        const list = getSikgeometriaPracticeQuestions();
+        return list[Math.floor(Math.random() * list.length)];
     }
     // Sorozatok — 6×20 bank
     else if (topicIdLower.includes('sorozat')) {
@@ -142,27 +124,10 @@ export const generateErettsegiQuestionByTopicId = (topicId: string, level: strin
         const list = getGrafokPracticeQuestions();
         return list[Math.floor(Math.random() * list.length)];
     }
-    // Értelmezési tartomány, értékkészlet
+    // Értelmezési tartomány, értékkészlet — 6×20 bank
     else if (topicIdLower.includes('ertelmezesi') || topicIdLower.includes('tartomany') || topicIdLower.includes('ertekkeszlet')) {
-        const levelLower = level.toLowerCase();
-        if (levelLower.includes('emelt')) {
-            // Emelt szint: összetett függvény értelmezési tartománya
-            const a = Math.floor(Math.random() * 5) + 3;
-            // f(x) = √(x-2) + 1/(x-a), értelmezési tartomány: x ≥ 2 ÉS x ≠ a
-            const minValue = Math.max(2, a + 1);
-            return {
-                question: `f(x) = √(x-2) + 1/(x-${a}) értelmezési tartománya? (Add meg a legkisebb egész számot)`,
-                answer: minValue,
-                type: 'multiplication',
-                expression: `x - 2 ≥ 0 → x ≥ 2, és x ≠ ${a}, legkisebb egész: ${minValue}`
-            };
-        }
-        return {
-            question: 'f(x) = √(x-2) értelmezési tartománya? (Add meg a legkisebb egész számot)',
-            answer: 2,
-            type: 'multiplication',
-            expression: 'x - 2 ≥ 0 → x ≥ 2, legkisebb egész: 2'
-        };
+        const list = getErtelmezesiPracticeQuestions();
+        return list[Math.floor(Math.random() * list.length)];
     }
 
     // Alapértelmezett
