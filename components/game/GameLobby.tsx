@@ -325,7 +325,7 @@ export default function GameLobby({
                     </button>
                     <h2 className="level-title">Szigorlat Felkészülés</h2>
                     <p style={{ color: '#ccc', marginBottom: '2rem', textAlign: 'center' }}>
-                        Analízis I., II. és III. tantárgyakból vegyes feladatok
+                        Analízis és lineáris algebra tantárgyakból vegyes feladatok
                     </p>
                     <div className="elementary-topics-grid">
                         <div

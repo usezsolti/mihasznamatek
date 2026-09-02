@@ -24,6 +24,12 @@ export {
     getEgyszerusitesPracticeQuestions,
     getErtelmezesiPracticeQuestions,
     getSikgeometriaPracticeQuestions,
+    getAnalizis1PracticeQuestions,
+    ANALIZIS1_TOPIC_IDS,
+    getAnalizis2PracticeQuestions,
+    ANALIZIS2_TOPIC_IDS,
+    getLinearisPracticeQuestions,
+    LINEARIS_TOPIC_IDS,
 } from './practiceBanks';
 
 export {

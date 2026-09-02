@@ -203,12 +203,15 @@ export function assignStagesToQuestions<T extends { stage?: PracticeStage; quest
 
 export function resolveTopicProgressKey(topicId: string): TopicProgressKey | null {
     const t = topicId.toLowerCase();
+    if (t.startsWith('a1-') || t.startsWith('a2-') || t.startsWith('a3-') || /^la[1-4]-/.test(t)) return null;
     if (t.includes('parameter') || t.includes('paramet')) return 'parameter';
     if (t.includes('abszolutertek') || (t.includes('gyok') && !t.includes('bizony'))) return 'absroot';
     if (t.includes('exponencialis') || t.includes('logaritmus')) return 'explog';
     if (t.includes('bizonyitas')) return 'bizonyitas';
     if (t.includes('egyenletek') || t.includes('egyenlotlenseg')) return 'egyenletek';
-    if (t.includes('fuggveny') || t.includes('analizis')) return 'fuggvenyek';
+    if (t.includes('fuggvenyek-analizis') || (t.includes('fuggveny') && !t.startsWith('a1-'))) {
+        return 'fuggvenyek';
+    }
     if (t.includes('halmaz')) return 'halmazok';
     if (t.includes('kombinatorika')) return 'kombinatorika';
     if (t.includes('koordinatageometria') || t.includes('koordinata')) return 'koordinatageometria';

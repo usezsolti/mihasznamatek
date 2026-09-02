@@ -2,6 +2,8 @@
 
 import {
     getTopicsForEducationLevel,
+    getUniversitySubjectById,
+    findUniversityTopic,
     type CatalogTopic,
     type EducationLevelId,
     type ErettsegiExamLevel,
@@ -174,6 +176,20 @@ export function findCatalogTopic(
     educationLevel?: EducationLevelId,
     erettsegiLevel: ErettsegiExamLevel = 'emelt'
 ): CatalogTopic | null {
+    const uniSubject = getUniversitySubjectById(topicId);
+    if (uniSubject && (!educationLevel || educationLevel === 'university')) {
+        return { id: uniSubject.id, title: uniSubject.title, icon: uniSubject.icon, color: uniSubject.color };
+    }
+    const nested = findUniversityTopic(topicId);
+    if (nested && (!educationLevel || educationLevel === 'university')) {
+        return {
+            id: nested.topic.id,
+            title: nested.topic.title,
+            icon: nested.topic.icon,
+            color: nested.subject.color,
+        };
+    }
+
     if (educationLevel) {
         const list = getTopicsForEducationLevel(educationLevel, erettsegiLevel);
         const hit = list.find((t) => topicKeysMatch(t.id, topicId));

@@ -50,7 +50,7 @@ export const generateErettsegiQuestionByTopicId = (topicId: string, level: strin
         return list[Math.floor(Math.random() * list.length)];
     }
     // Függvények, analízis — munkalap feladatok
-    else if (topicIdLower.includes('fuggveny') || topicIdLower.includes('analizis')) {
+    else if (topicIdLower.includes('fuggvenyek-analizis')) {
         const list = getFunctionsPracticeQuestions();
         return list[Math.floor(Math.random() * list.length)];
     }

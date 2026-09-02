@@ -56,14 +56,18 @@ export const universitySubjects: UniversitySubject[] = [
         icon: '∫',
         color: '#39ff14',
         topics: [
-            { id: 'komplex-szamok', title: 'Komplex számok', icon: 'ℂ' },
-            { id: 'sorozatok', title: 'Sorozatok', icon: 'Σ' },
-            { id: 'egyvaltozos-fuggvenyek', title: 'Egyváltozós függvények', icon: 'f(x)' },
-            { id: 'fuggvenyvizsgalat', title: 'Függvényvizsgálat', icon: 'f(x)' },
-            { id: 'differencialszamitas', title: 'Differenciálszámítás', icon: 'd/dx' },
-            { id: 'kozeperteketelek', title: 'Középérték tételek', icon: 'MVT' },
-            { id: 'parametereesen-adott-gorbek', title: 'Paraméteresen adott görbék', icon: 'r(t)' },
-            { id: 'integralas', title: 'Integrálás', icon: '∫' },
+            { id: 'a1-valos-szamok', title: 'Valós számok és rendezési tulajdonságok', icon: 'ℝ' },
+            { id: 'a1-komplex', title: 'Komplex számok', icon: 'ℂ' },
+            { id: 'a1-szamsorozatok', title: 'Számsorozatok', icon: 'aₙ' },
+            { id: 'a1-seq-hatarertek', title: 'Sorozatok határértéke', icon: 'lim' },
+            { id: 'a1-cauchy', title: 'Cauchy-sorozatok', icon: 'ε' },
+            { id: 'a1-numerikus-sorok', title: 'Numerikus sorok', icon: 'Σ' },
+            { id: 'a1-konv-kriteriumok', title: 'Konvergenciakritériumok', icon: 'ρ' },
+            { id: 'a1-absz-felteteles', title: 'Abszolút és feltételes konvergencia', icon: '|Σ|' },
+            { id: 'a1-fv-hatarertek', title: 'Függvények határértéke', icon: '→' },
+            { id: 'a1-nevezetes-lim', title: 'Nevezetes határértékek', icon: '★' },
+            { id: 'a1-folytonossag', title: 'Folytonosság', icon: 'C⁰' },
+            { id: 'a1-folytonos-tetelek', title: 'Folytonos függvények fontos tételei', icon: 'IVT' },
         ],
     },
     {
@@ -72,14 +76,18 @@ export const universitySubjects: UniversitySubject[] = [
         icon: '∂',
         color: '#39ff14',
         topics: [
-            { id: 'matrix-muveletek', title: 'Mátrix műveletek', icon: '[]' },
-            { id: 'linearis-transzformaciok', title: 'Lineáris transzformációk', icon: 'T' },
-            { id: 'numerikus-sorok', title: 'Numerikus sorok', icon: 'Σ' },
-            { id: 'sorok', title: 'Sorok', icon: 'Σ' },
-            { id: 'fourier-sorok', title: 'Fourier-sorok', icon: 'ℱ' },
-            { id: 'taylor-sorok', title: 'Taylor-sorok', icon: 'T' },
-            { id: 'ketvaltozos-fuggvenyek', title: 'Kétváltozós függvények', icon: 'f(x,y)' },
-            { id: 'tobbvaltozos-fuggvenyek', title: 'Többváltozós függvények', icon: 'f(x,y,z)' },
+            { id: 'a2-diffhat', title: 'Differenciálhatóság', icon: "f'" },
+            { id: 'a2-szabalyok', title: 'Deriválási szabályok', icon: 'd' },
+            { id: 'a2-elemi-der', title: 'Elemi függvények deriváltjai', icon: '∂' },
+            { id: 'a2-magasabb', title: 'Magasabb rendű deriváltak', icon: "fⁿ" },
+            { id: 'a2-mvt', title: 'Középértéktételek', icon: 'MVT' },
+            { id: 'a2-monoton', title: 'Monotonitás', icon: '↗' },
+            { id: 'a2-szelso', title: 'Szélsőérték', icon: 'min' },
+            { id: 'a2-konvex', title: 'Konvexitás és konkávitás', icon: '∪' },
+            { id: 'a2-lhospital', title: 'L’Hospital-szabály', icon: 'H' },
+            { id: 'a2-aszimptota', title: 'Aszimptoták', icon: '∕' },
+            { id: 'a2-vizsgalat', title: 'Teljes függvényvizsgálat', icon: '📈' },
+            { id: 'a2-taylor', title: 'Taylor-polinom', icon: 'Tₙ' },
         ],
     },
     {
@@ -90,6 +98,62 @@ export const universitySubjects: UniversitySubject[] = [
         topics: [
             { id: 'vektoranalizis', title: 'Vektoranalízis', icon: '→' },
             { id: 'differencialegyenletek', title: 'Differenciálegyenletek', icon: 'dy/dx' },
+        ],
+    },
+    {
+        id: 'linearis1',
+        title: 'Lineáris algebra I.',
+        icon: '[]',
+        color: '#39ff14',
+        topics: [
+            { id: 'la1-vektorok', title: 'Vektorok és alapműveletek', icon: 'v' },
+            { id: 'la1-mx-muveletek', title: 'Mátrixműveletek', icon: 'AB' },
+            { id: 'la1-gauss', title: 'Lineáris egyenletrendszerek és Gauss-elimináció', icon: 'Ax' },
+            { id: 'la1-det', title: 'Determinánsok', icon: 'det' },
+            { id: 'la1-inverz', title: 'Inverz mátrix és Cramer-szabály', icon: 'A⁻¹' },
+            { id: 'la1-rang', title: 'Rang és összetett egyenletrendszerek', icon: 'rk' },
+        ],
+    },
+    {
+        id: 'linearis2',
+        title: 'Lineáris algebra II.',
+        icon: 'V',
+        color: '#39ff14',
+        topics: [
+            { id: 'la2-vektorter', title: 'Vektortér és altér', icon: 'V' },
+            { id: 'la2-span', title: 'Lineáris kombináció és generált tér', icon: '⟨⟩' },
+            { id: 'la2-fuggetlenseg', title: 'Lineáris függetlenség', icon: '∥' },
+            { id: 'la2-bazis', title: 'Bázis és koordináták', icon: 'eᵢ' },
+            { id: 'la2-dimenzio', title: 'Dimenzió és báziscsere', icon: 'dim' },
+            { id: 'la2-lekepezes', title: 'Lineáris leképezések, magtér és képtér', icon: 'T' },
+        ],
+    },
+    {
+        id: 'linearis3',
+        title: 'Lineáris algebra III.',
+        icon: 'λ',
+        color: '#39ff14',
+        topics: [
+            { id: 'la3-sajatvektor', title: 'Sajátérték és sajátvektor', icon: 'λv' },
+            { id: 'la3-karpolinom', title: 'Karakterisztikus polinom és sajátalterek', icon: 'p' },
+            { id: 'la3-multiplicitas', title: 'Multiplicitások', icon: 'm' },
+            { id: 'la3-diagonal', title: 'Diagonalizálás és Cayley–Hamilton-tétel', icon: 'PDP' },
+            { id: 'la3-gramschmidt', title: 'Belső szorzat és Gram–Schmidt', icon: '⟨,⟩' },
+            { id: 'la3-spektral', title: 'Spektráltétel és ortogonális diagonalizálás', icon: 'QDQ' },
+        ],
+    },
+    {
+        id: 'linearis4',
+        title: 'Lineáris algebra IV.',
+        icon: 'Σσ',
+        color: '#39ff14',
+        topics: [
+            { id: 'la4-kvadratikus', title: 'Bilineáris és kvadratikus formák', icon: 'xᵀAx' },
+            { id: 'la4-lu-qr', title: 'LU- és QR-felbontás', icon: 'LU' },
+            { id: 'la4-householder', title: 'Householder- és Givens-transzformáció', icon: 'H' },
+            { id: 'la4-svd', title: 'SVD és pszeudoinverz', icon: 'Σ' },
+            { id: 'la4-jordan', title: 'Jordan- és Schur-felbontás', icon: 'J' },
+            { id: 'la4-normak', title: 'Mátrixnormák, kondíciószám és alkalmazások', icon: 'κ' },
         ],
     },
 ];
@@ -152,4 +216,19 @@ export function getTopicsForEducationLevel(
         return erettsegiLevel === 'kozep' ? erettsegiKozepTopics : erettsegiEmeltTopics;
     }
     return universitySubjects.map(({ id, title, icon, color }) => ({ id, title, icon, color }));
+}
+
+export function getUniversitySubjectById(subjectId: string): UniversitySubject | undefined {
+    return universitySubjects.find((s) => s.id === subjectId);
+}
+
+export function findUniversityTopic(
+    topicId: string
+): { subject: UniversitySubject; topic: { id: string; title: string; icon: string } } | null {
+    const id = topicId.toLowerCase();
+    for (const subject of universitySubjects) {
+        const topic = subject.topics.find((t) => t.id === id);
+        if (topic) return { subject, topic };
+    }
+    return null;
 }

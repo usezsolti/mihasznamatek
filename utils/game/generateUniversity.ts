@@ -1,16 +1,100 @@
 import type { Question } from './types';
+import { agentDebugLog } from '../agentDebugLog';
+import { getAnalizis1PracticeQuestions } from './analizis1Levels';
+import { getAnalizis2PracticeQuestions } from './analizis2Levels';
+import { getLinearisPracticeQuestions } from './linearisAlgebra';
 import {
     generateDerivativeQuestion,
     generateIntegralQuestion,
 } from './generateHelpers';
 
-export const generateUniversityQuestionByTopic = (subjectId: string, topicId: string, difficulty: number = 0): Question | null => {
+export const generateUniversityQuestionByTopic = (subjectId: string, topicId: string, _difficulty: number = 0): Question | null => {
     const topicIdLower = topicId.toLowerCase();
     const subjectIdLower = subjectId.toLowerCase();
+
+    if (topicIdLower.startsWith('a1-')) {
+        const list = getAnalizis1PracticeQuestions(topicIdLower);
+        if (list && list.length) {
+            const q = list[Math.floor(Math.random() * list.length)];
+            // #region agent log
+            agentDebugLog({
+                hypothesisId: 'D',
+                location: 'generateUniversity.ts:a1-bank',
+                message: 'a1 topic served from practice bank',
+                data: {
+                    topicId: topicIdLower,
+                    total: list.length,
+                    usedStub: false,
+                    firstQ: String(list[0]?.question || '').slice(0, 40),
+                    firstAnswer: list[0]?.answer,
+                    pickedQ: String(q.question || '').slice(0, 40),
+                },
+                runId: 'a1-komplex',
+            });
+            // #endregion
+            return q;
+        }
+    }
+
+    if (topicIdLower.startsWith('a2-')) {
+        const list = getAnalizis2PracticeQuestions(topicIdLower);
+        if (list && list.length) {
+            const q = list[Math.floor(Math.random() * list.length)];
+            // #region agent log
+            agentDebugLog({
+                hypothesisId: 'D',
+                location: 'generateUniversity.ts:a2-bank',
+                message: 'analizis2 topic served from practice bank',
+                data: {
+                    topicId: topicIdLower,
+                    total: list.length,
+                    firstQ: String(list[0]?.question || '').slice(0, 40),
+                    firstAnswer: list[0]?.answer,
+                    usedOldStub: false,
+                },
+                runId: 'a2-topics',
+            });
+            // #endregion
+            return q;
+        }
+    }
+
+    if (/^la[1-4]-/.test(topicIdLower)) {
+        const list = getLinearisPracticeQuestions(topicIdLower);
+        if (list && list.length) {
+            const q = list[Math.floor(Math.random() * list.length)];
+            // #region agent log
+            agentDebugLog({
+                hypothesisId: 'D',
+                location: 'generateUniversity.ts:la-bank',
+                message: 'linearis topic served from practice bank',
+                data: {
+                    topicId: topicIdLower,
+                    total: list.length,
+                    firstQ: String(list[0]?.question || '').slice(0, 40),
+                    firstAnswer: list[0]?.answer,
+                    pickedQ: String(q.question || '').slice(0, 40),
+                    usedMatrixStub: false,
+                },
+                runId: 'la-topics',
+            });
+            // #endregion
+            return q;
+        }
+    }
 
     // Analízis I témakörök
     if (subjectIdLower.includes('analizis1') || subjectIdLower.includes('analizis-1')) {
         if (topicIdLower.includes('komplex') || topicIdLower.includes('komplex')) {
+            // #region agent log
+            agentDebugLog({
+                hypothesisId: 'D',
+                location: 'generateUniversity.ts:komplex-stub',
+                message: 'fell through to komplex stub',
+                data: { topicId: topicIdLower, usedStub: true },
+                runId: 'a1-komplex',
+            });
+            // #endregion
             return {
                 question: 'i² = ? (ahol i a komplex egyseg)',
                 answer: -1,

@@ -32,6 +32,12 @@ import {
     getEgyszerusitesPracticeQuestions,
     getErtelmezesiPracticeQuestions,
     getSikgeometriaPracticeQuestions,
+    getAnalizis1PracticeQuestions,
+    ANALIZIS1_TOPIC_IDS,
+    getAnalizis2PracticeQuestions,
+    ANALIZIS2_TOPIC_IDS,
+    getLinearisPracticeQuestions,
+    LINEARIS_TOPIC_IDS,
     generateQuadraticQuestion,
     generatePointDistanceQuestion,
     pick,
@@ -309,6 +315,9 @@ async function main() {
         getEgyszerusitesPracticeQuestions(),
         getErtelmezesiPracticeQuestions(),
         getSikgeometriaPracticeQuestions(),
+        ...ANALIZIS1_TOPIC_IDS.map((id) => getAnalizis1PracticeQuestions(id) || []),
+        ...ANALIZIS2_TOPIC_IDS.map((id) => getAnalizis2PracticeQuestions(id) || []),
+        ...LINEARIS_TOPIC_IDS.map((id) => getLinearisPracticeQuestions(id) || []),
     ];
 
     const store = createSocialStore('smoke');

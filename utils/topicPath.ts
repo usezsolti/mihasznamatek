@@ -378,6 +378,9 @@ export function getLessonQuestions<T extends { pathLesson?: number }>(
 export function isWorksheetTopicId(topicId: string): boolean {
     const t = topicId.toLowerCase();
     return (
+        t.startsWith('a1-') ||
+        t.startsWith('a2-') ||
+        /^la[1-4]-/.test(t) ||
         t.includes('parameter') ||
         t.includes('paramet') ||
         t.includes('exponencialis') ||
@@ -388,7 +391,7 @@ export function isWorksheetTopicId(topicId: string): boolean {
         t.includes('egyenletek') ||
         t.includes('egyenlotlenseg') ||
         t.includes('fuggveny') ||
-        t.includes('analizis') ||
+        t.includes('fuggvenyek-analizis') ||
         t.includes('halmaz') ||
         t.includes('kombinatorika') ||
         t.includes('koordinatageometria') ||

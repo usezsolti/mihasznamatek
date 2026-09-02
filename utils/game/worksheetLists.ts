@@ -22,19 +22,121 @@ import {
     getEgyszerusitesPracticeQuestions,
     getErtelmezesiPracticeQuestions,
     getSikgeometriaPracticeQuestions,
+    getAnalizis1PracticeQuestions,
+    getAnalizis2PracticeQuestions,
+    getLinearisPracticeQuestions,
 } from './practiceBanks';
 
 export const getWorksheetListForTopic = (topicId: string): { list: Question[]; prefix: string } | null => {
     const topicLower = topicId.toLowerCase();
     if (!isWorksheetTopicId(topicId)) return null;
+    if (topicLower.startsWith('a1-')) {
+        const list = getAnalizis1PracticeQuestions(topicId);
+        if (!list) return null;
+        // #region agent log
+        agentDebugLog({
+            hypothesisId: 'A',
+            location: 'worksheetLists.ts:getWorksheetListForTopic',
+            message: 'analizis1 topic routed',
+            data: {
+                topicId,
+                prefix: `uni_${topicLower}`,
+                total: list.length,
+                stages: [1, 2, 3, 4, 5, 6].map((s) => list.filter((q) => q.stage === s).length),
+                firstQ: String(list[0]?.question || '').slice(0, 60),
+                firstAnswer: list[0]?.answer,
+                isKomplex: topicLower === 'a1-komplex',
+            },
+            runId: 'a1-komplex',
+        });
+        // #endregion
+        return { list, prefix: `uni_${topicLower}` };
+    }
+    if (topicLower.startsWith('a2-')) {
+        const list = getAnalizis2PracticeQuestions(topicId);
+        if (!list) return null;
+        // #region agent log
+        agentDebugLog({
+            hypothesisId: 'A',
+            location: 'worksheetLists.ts:getWorksheetListForTopic',
+            message: 'analizis2 topic routed',
+            data: {
+                topicId,
+                prefix: `uni_${topicLower}`,
+                total: list.length,
+                stages: [1, 2, 3, 4, 5, 6].map((s) => list.filter((q) => q.stage === s).length),
+                firstQ: String(list[0]?.question || '').slice(0, 60),
+                firstAnswer: list[0]?.answer,
+            },
+            runId: 'a2-topics',
+        });
+        // #endregion
+        return { list, prefix: `uni_${topicLower}` };
+    }
+    if (/^la[1-4]-/.test(topicLower)) {
+        const list = getLinearisPracticeQuestions(topicId);
+        if (!list) return null;
+        // #region agent log
+        agentDebugLog({
+            hypothesisId: 'A',
+            location: 'worksheetLists.ts:getWorksheetListForTopic',
+            message: 'linearis algebra topic routed',
+            data: {
+                topicId,
+                prefix: `uni_${topicLower}`,
+                total: list.length,
+                stages: [1, 2, 3, 4, 5, 6].map((s) => list.filter((q) => q.stage === s).length),
+                firstQ: String(list[0]?.question || '').slice(0, 60),
+                firstAnswer: list[0]?.answer,
+                collidedEgyenletek: topicLower.includes('egyenletek'),
+            },
+            runId: 'la-topics',
+        });
+        // #endregion
+        return { list, prefix: `uni_${topicLower}` };
+    }
     if (topicLower.includes('parameter') || topicLower.includes('paramet')) {
         return { list: getParameterPracticeQuestions(), prefix: 'erettsegi_parameter' };
     }
     if (topicLower.includes('abszolutertek') || topicLower.includes('gyok')) {
-        return { list: getAbsoluteRootPracticeQuestions(), prefix: 'erettsegi_absroot' };
+        const list = getAbsoluteRootPracticeQuestions();
+        // #region agent log
+        agentDebugLog({
+            hypothesisId: 'C',
+            location: 'worksheetLists.ts:getWorksheetListForTopic',
+            message: 'absroot topic routed',
+            data: {
+                topicId,
+                prefix: 'erettsegi_absroot',
+                total: list.length,
+                stages: [1, 2, 3, 4, 5, 6].map((s) => list.filter((q) => q.stage === s).length),
+                secondQ: String(list[1]?.question || '').slice(0, 50),
+                secondAnswer: list[1]?.answer,
+            },
+            runId: 'absroot-pdf-120',
+        });
+        // #endregion
+        return { list, prefix: 'erettsegi_absroot' };
     }
     if (topicLower.includes('bizonyitas')) {
-        return { list: getProofPracticeQuestions(), prefix: 'erettsegi_proof' };
+        const list = getProofPracticeQuestions();
+        // #region agent log
+        agentDebugLog({
+            hypothesisId: 'C',
+            location: 'worksheetLists.ts:getWorksheetListForTopic',
+            message: 'proof topic routed',
+            data: {
+                topicId,
+                prefix: 'erettsegi_proof',
+                total: list.length,
+                stages: [1, 2, 3, 4, 5, 6].map((s) => list.filter((q) => q.stage === s).length),
+                firstQ: String(list[0]?.question || '').slice(0, 70),
+                firstAnswer: list[0]?.answer,
+            },
+            runId: 'proof-pdf-120',
+        });
+        // #endregion
+        return { list, prefix: 'erettsegi_proof' };
     }
     if (topicLower.includes('egyenletek') || topicLower.includes('egyenlotlenseg')) {
         const list = getEquationsPracticeQuestions();
@@ -47,10 +149,11 @@ export const getWorksheetListForTopic = (topicId: string): { list: Question[]; p
                 topicId,
                 prefix: 'erettsegi_egyenletek',
                 total: list.length,
-                firstStage: list[0]?.stage ?? null,
-                usesProof: false,
+                stages: [1, 2, 3, 4, 5, 6].map((s) => list.filter((q) => q.stage === s).length),
+                firstQ: String(list[0]?.question || '').slice(0, 50),
+                firstAnswer: list[0]?.answer,
             },
-            runId: 'eq-120',
+            runId: 'eq-pdf-120',
         });
         // #endregion
         return { list, prefix: 'erettsegi_egyenletek' };

@@ -84,15 +84,18 @@ export const getAbsoluteRootPracticeQuestions = (): Question[] => {
     agentDebugLog({
         hypothesisId: 'B',
         location: 'practiceBanks.ts:getAbsoluteRootPracticeQuestions',
-        message: 'absroot single-answer bank loaded',
+        message: 'absroot pdf bank loaded',
         data: {
             total: list.length,
             byStage,
             multiAnswer,
             withHeader,
-            sample: String(list[0]?.question || '').slice(0, 80),
+            firstQ: String(list[0]?.question || '').slice(0, 40),
+            secondQ: String(list[1]?.question || '').slice(0, 50),
+            secondAnswer: list[1]?.answer,
+            oldSecond: String(list[1]?.question || '').includes('|12|'),
         },
-        runId: 'single-q',
+        runId: 'absroot-pdf-120',
     });
     // #endregion
     return list;
@@ -158,8 +161,14 @@ export const getProofPracticeQuestions = (): Question[] => {
         hypothesisId: 'P',
         location: 'practiceBanks.ts:getProofPracticeQuestions',
         message: 'proof bank loaded',
-        data: { total: list.length, byStage },
-        runId: 'proof-120',
+        data: {
+            total: list.length,
+            byStage,
+            firstQ: String(list[0]?.question || '').slice(0, 70),
+            firstAnswer: list[0]?.answer,
+            oldFirst: String(list[0]?.question || '').includes('Igazold numerikusan'),
+        },
+        runId: 'proof-pdf-120',
     });
     // #endregion
     return list;
@@ -192,9 +201,16 @@ export const getEquationsPracticeQuestions = (): Question[] => {
     agentDebugLog({
         hypothesisId: 'E',
         location: 'practiceBanks.ts:getEquationsPracticeQuestions',
-        message: 'equations bank loaded',
-        data: { total: list.length, byStage, multiAnswer },
-        runId: 'eq-120',
+        message: 'equations pdf bank loaded',
+        data: {
+            total: list.length,
+            byStage,
+            multiAnswer,
+            firstQ: String(list[0]?.question || '').slice(0, 50),
+            firstAnswer: list[0]?.answer,
+            oldFirst: String(list[0]?.question || '').includes('5x − 8'),
+        },
+        runId: 'eq-pdf-120',
     });
     // #endregion
     return list;
@@ -479,5 +495,75 @@ export const getTrigonometriaPracticeQuestions = (): Question[] => {
         delete (cleaned as { fourthAnswer?: number }).fourthAnswer;
         return cleaned;
     });
+    return list;
+};
+
+import { getAnalizis1PracticeQuestions as getAnalizis1Raw } from './analizis1Levels';
+export { ANALIZIS1_TOPIC_IDS } from './analizis1Levels';
+
+export const getAnalizis1PracticeQuestions = (topicId: string): Question[] | null => {
+    const list = getAnalizis1Raw(topicId);
+    if (!list) return null;
+    // #region agent log
+    agentDebugLog({
+        hypothesisId: 'C',
+        location: 'practiceBanks.ts:getAnalizis1PracticeQuestions',
+        message: 'analizis1 bank loaded',
+        data: {
+            topicId,
+            total: list.length,
+            byStage: [1, 2, 3, 4, 5, 6].map((s) => list.filter((q) => q.stage === s).length),
+            firstQ: String(list[0]?.question || '').slice(0, 60),
+            isKomplex: topicId.toLowerCase() === 'a1-komplex',
+        },
+        runId: 'a1-komplex',
+    });
+    // #endregion
+    return list;
+};
+
+import { getAnalizis2PracticeQuestions as getAnalizis2Raw, ANALIZIS2_TOPIC_IDS } from './analizis2Levels';
+export { ANALIZIS2_TOPIC_IDS };
+
+export const getAnalizis2PracticeQuestions = (topicId: string): Question[] | null => {
+    const list = getAnalizis2Raw(topicId);
+    if (!list) return null;
+    // #region agent log
+    agentDebugLog({
+        hypothesisId: 'C',
+        location: 'practiceBanks.ts:getAnalizis2PracticeQuestions',
+        message: 'analizis2 bank loaded',
+        data: {
+            topicId,
+            total: list.length,
+            byStage: [1, 2, 3, 4, 5, 6].map((s) => list.filter((q) => q.stage === s).length),
+            firstQ: String(list[0]?.question || '').slice(0, 60),
+        },
+        runId: 'a2-topics',
+    });
+    // #endregion
+    return list;
+};
+
+import { getLinearisPracticeQuestions as getLinearisRaw, LINEARIS_TOPIC_IDS } from './linearisAlgebra';
+export { LINEARIS_TOPIC_IDS };
+
+export const getLinearisPracticeQuestions = (topicId: string): Question[] | null => {
+    const list = getLinearisRaw(topicId);
+    if (!list) return null;
+    // #region agent log
+    agentDebugLog({
+        hypothesisId: 'C',
+        location: 'practiceBanks.ts:getLinearisPracticeQuestions',
+        message: 'linearis bank loaded',
+        data: {
+            topicId,
+            total: list.length,
+            byStage: [1, 2, 3, 4, 5, 6].map((s) => list.filter((q) => q.stage === s).length),
+            firstQ: String(list[0]?.question || '').slice(0, 60),
+        },
+        runId: 'la-topics',
+    });
+    // #endregion
     return list;
 };

@@ -5,7 +5,7 @@ import {
     resolveProgressStorageKey,
 } from '../utils/practiceProgress';
 import { isLessonUnlocked } from '../utils/topicPath';
-import { type EducationLevelId } from '../utils/mathTopicsCatalog';
+import { type EducationLevelId, getUniversitySubjectById } from '../utils/mathTopicsCatalog';
 import { buildTopicPracticeHref } from '../utils/topicStats';
 import type { GameEducationLevel } from './useGameSessionBuilders';
 
@@ -152,7 +152,7 @@ export function useGameRouteBootstrap({
                 setSelectedHighschoolTopic(topicParam);
                 generateHighschoolQuestionsByTopic(topicParam, grade);
             } else if (resolvedLevel === 'university' && topicParam && !gameActive) {
-                const knownSubject = ['analizis1', 'analizis2', 'analizis3'].includes(topicParam);
+                const knownSubject = Boolean(getUniversitySubjectById(topicParam));
                 if (knownSubject) {
                     setSelectedUniversitySubject(topicParam);
                 } else {

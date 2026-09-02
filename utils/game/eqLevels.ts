@@ -1,1252 +1,1014 @@
 import type { Question } from './types';
 
 /**
- * Egyenletek, egyenletrendszerek, egyenlőtlenségek — 6 szint × 20 feladat.
- * 1 Algebrai rutin → 2 Feltételek → 3 Szerkezet → 4 Összetett → 5 Emelt → 6 Mesterfok.
- * Egy kártya = egy feladat = egy válasz.
+ * Egyenletek, egyenletrendszerek, egyenlőtlenségek — 6×20
+ * (Egyenletek__egyenletrendszerek__egyenlőtlenségek.pdf / TeX).
+ * 1 Algebrai alapok → 2 Egyenletrendszerek → 3 Speciális egyenletek →
+ * 4 Egyenlőtlenségek → 5 Helyettesítés / exp-log-trig → 6 Mesterfok.
+ * Egy kártya = egy szám vagy halmaz. Igaz/hamis: 1 / 0.
  */
 export const getEquationsPracticeQuestions = (): Question[] => [
+    // —— 1. szint ——
     {
         stage: 1,
-        question: `Oldd meg!
-
-5x − 8 = 3x + 10
-
-Add meg x-et!`,
-        answer: 9,
+        question: `Oldd meg: 3x − 7 = 11.`,
+        answer: 6,
         type: 'multiplication',
-        expression: `2x = 18 → x = 9`,
+        expression: `x = 6`,
     },
     {
         stage: 1,
-        question: `Oldd meg!
-
-3(x − 2) − 2(x + 4) = 7
-
-Add meg x-et!`,
-        answer: 21,
+        question: `Oldd meg: 5 − 2(x − 3) = 13.`,
+        answer: -1,
         type: 'multiplication',
-        expression: `x − 14 = 7 → x = 21`,
+        expression: `x = −1`,
     },
     {
         stage: 1,
-        question: `Oldd meg!
-
-x² − 7x + 12 = 0
-
-Add meg a nagyobb gyököt!`,
-        answer: 4,
+        question: `Oldd meg: (x − 2)/3 + (x + 1)/2 = 4.`,
+        answer: 5,
         type: 'multiplication',
-        expression: `(x − 3)(x − 4) = 0`,
+        expression: `x = 5`,
     },
     {
         stage: 1,
-        question: `Oldd meg!
-
-x³ − 5x² + 6x = 0
-
-Add meg a legnagyobb gyököt!`,
+        question: `Oldd meg: 4(2x − 1) − 3(x + 2) = 5.`,
         answer: 3,
         type: 'multiplication',
-        expression: `x(x − 2)(x − 3) = 0`,
+        expression: `x = 3`,
     },
     {
         stage: 1,
-        question: `Oldd meg!
-
-(x − 3)(2x + 5) = 0
-
-Add meg a nagyobb gyököt!`,
+        question: `Oldd meg: x² − 9 = 0.
+Add meg a két gyököt!`,
+        answer: 2,
+        expectedSet: ['-3', '3'],
+        type: 'multiplication',
+        expression: `x = ±3`,
+    },
+    {
+        stage: 1,
+        question: `Oldd meg: x² − 7x + 12 = 0.
+Add meg a két gyököt!`,
+        answer: 2,
+        expectedSet: ['3', '4'],
+        type: 'multiplication',
+        expression: `x = 3 vagy 4`,
+    },
+    {
+        stage: 1,
+        question: `Oldd meg: 2x² − 5x − 3 = 0.
+Add meg a két gyököt!`,
+        answer: 2,
+        expectedSet: ['-0.5', '3'],
+        type: 'multiplication',
+        expression: `x = −1/2 vagy 3`,
+    },
+    {
+        stage: 1,
+        question: `Oldd meg: 3x² + 6x = 0.
+Add meg a két gyököt!`,
+        answer: 2,
+        expectedSet: ['-2', '0'],
+        type: 'multiplication',
+        expression: `x = 0 vagy −2`,
+    },
+    {
+        stage: 1,
+        question: `Oldd meg: (x − 4)(2x + 3) = 0.
+Add meg a két gyököt!`,
+        answer: 2,
+        expectedSet: ['-1.5', '4'],
+        type: 'multiplication',
+        expression: `x = 4 vagy −3/2`,
+    },
+    {
+        stage: 1,
+        question: `Oldd meg: x³ − 4x = 0.
+Add meg a három gyököt!`,
         answer: 3,
+        expectedSet: ['-2', '0', '2'],
         type: 'multiplication',
-        expression: `x = 3 vagy x = −5/2`,
+        expression: `x = 0, ±2`,
     },
     {
         stage: 1,
-        question: `Oldd meg!
-
-|x − 5| = 3
-
-Add meg a nagyobb megoldást!`,
-        answer: 8,
-        type: 'multiplication',
-        expression: `x = 8 vagy x = 2`,
-    },
-    {
-        stage: 1,
-        question: `Oldd meg!
-
-2x − 3 < 7
-
-Add meg a felső határt (nyílt)!`,
-        answer: 5,
-        type: 'multiplication',
-        expression: `x < 5`,
-    },
-    {
-        stage: 1,
-        question: `Oldd meg!
-
-x + y = 11
-2x − y = 4
-
-Add meg x-et!`,
-        answer: 5,
-        type: 'multiplication',
-        expression: `(x, y) = (5, 6)`,
-    },
-    {
-        stage: 1,
-        question: `Oldd meg!
-
-6x + 1 = 2x + 13
-
-Add meg x-et!`,
+        question: `Oldd meg: x³ − 5x² + 6x = 0.
+Add meg a három gyököt!`,
         answer: 3,
+        expectedSet: ['0', '2', '3'],
         type: 'multiplication',
-        expression: `4x = 12 → x = 3`,
+        expression: `x = 0, 2, 3`,
     },
     {
         stage: 1,
-        question: `Oldd meg!
-
-4(x − 1) − (x + 5) = 6
-
-Add meg x-et!`,
-        answer: 5,
-        type: 'multiplication',
-        expression: `3x − 9 = 6 → x = 5`,
-    },
-    {
-        stage: 1,
-        question: `Oldd meg!
-
-x² − 9x + 20 = 0
-
-Add meg a nagyobb gyököt!`,
-        answer: 5,
-        type: 'multiplication',
-        expression: `(x − 4)(x − 5) = 0`,
-    },
-    {
-        stage: 1,
-        question: `Oldd meg!
-
-x² − 25 = 0
-
-Add meg a pozitív gyököt!`,
-        answer: 5,
-        type: 'multiplication',
-        expression: `x = ±5`,
-    },
-    {
-        stage: 1,
-        question: `Oldd meg!
-
-x³ − x² − 6x = 0
-
-Add meg a legnagyobb gyököt!`,
+        question: `Oldd meg: 2x³ + x² − 8x − 4 = 0.
+Add meg a három gyököt!`,
         answer: 3,
+        expectedSet: ['-2', '-0.5', '2'],
+        type: 'multiplication',
+        expression: `(x² − 4)(2x + 1) = 0`,
+    },
+    {
+        stage: 1,
+        question: `Oldd meg, ahol értelmezett: (x + 3)/(x − 2) = 2.`,
+        answer: 7,
+        type: 'multiplication',
+        expression: `x = 7`,
+    },
+    {
+        stage: 1,
+        question: `Oldd meg, ahol értelmezett: (2x − 1)/(x + 1) = 3.`,
+        answer: -4,
+        type: 'multiplication',
+        expression: `x = −4`,
+    },
+    {
+        stage: 1,
+        question: `Oldd meg: x/4 − (x − 3)/6 = 2.`,
+        answer: 18,
+        type: 'multiplication',
+        expression: `x = 18`,
+    },
+    {
+        stage: 1,
+        question: `Oldd meg: (x + 1)² = 16.
+Add meg a két gyököt!`,
+        answer: 2,
+        expectedSet: ['-5', '3'],
+        type: 'multiplication',
+        expression: `x = 3 vagy −5`,
+    },
+    {
+        stage: 1,
+        question: `Oldd meg: (x − 2)² = 3x + 4.
+Add meg a két gyököt!`,
+        answer: 2,
+        expectedSet: ['0', '7'],
+        type: 'multiplication',
+        expression: `x = 0 vagy 7`,
+    },
+    {
+        stage: 1,
+        question: `Oldd meg: 2(x + 3)² = 8.
+Add meg a két gyököt!`,
+        answer: 2,
+        expectedSet: ['-5', '-1'],
+        type: 'multiplication',
+        expression: `x = −1 vagy −5`,
+    },
+    {
+        stage: 1,
+        question: `Oldd meg: x³ + x² − 6x = 0.
+Add meg a három gyököt!`,
+        answer: 3,
+        expectedSet: ['-3', '0', '2'],
+        type: 'multiplication',
+        expression: `x = −3, 0, 2`,
+    },
+    {
+        stage: 1,
+        question: `Igazold, hogy −2, 0 és 3 gyöke x³ − x² − 6x = 0-nak.
+Add meg a három gyököt!`,
+        answer: 3,
+        expectedSet: ['-2', '0', '3'],
         type: 'multiplication',
         expression: `x(x − 3)(x + 2) = 0`,
     },
-    {
-        stage: 1,
-        question: `Oldd meg!
 
-(x + 6)(x − 2) = 0
-
-Add meg a nagyobb gyököt!`,
-        answer: 2,
-        type: 'multiplication',
-        expression: `x = −6 vagy x = 2`,
-    },
-    {
-        stage: 1,
-        question: `Oldd meg!
-
-|x + 3| = 7
-
-Add meg a nagyobb megoldást!`,
-        answer: 4,
-        type: 'multiplication',
-        expression: `x = 4 vagy x = −10`,
-    },
-    {
-        stage: 1,
-        question: `Oldd meg!
-
-5x + 2 ≤ 17
-
-Add meg a felső határt (zárt)!`,
-        answer: 3,
-        type: 'multiplication',
-        expression: `x ≤ 3`,
-    },
-    {
-        stage: 1,
-        question: `Oldd meg!
-
-x + y = 15
-x − y = 3
-
-Add meg x-et!`,
-        answer: 9,
-        type: 'multiplication',
-        expression: `(x, y) = (9, 6)`,
-    },
-    {
-        stage: 1,
-        question: `Oldd meg!
-
-3x − 7 = 8
-
-Add meg x-et!`,
-        answer: 5,
-        type: 'multiplication',
-        expression: `3x = 15 → x = 5`,
-    },
-    {
-        stage: 1,
-        question: `Oldd meg!
-
-|2x − 1| = 5
-
-Add meg a nagyobb megoldást!`,
-        answer: 3,
-        type: 'multiplication',
-        expression: `x = 3 vagy x = −2`,
-    },
-    {
-        stage: 1,
-        question: `Oldd meg!
-
-4x + 5 > 13
-
-Add meg az alsó határt (nyílt)!`,
-        answer: 2,
-        type: 'multiplication',
-        expression: `x > 2`,
-    },
+    // —— 2. szint ——
     {
         stage: 2,
-        question: `Oldd meg!
-
-(x + 3)/(x − 2) = 2
-
+        question: `Oldd meg: x + y = 11, x − y = 3.
 Add meg x-et!`,
         answer: 7,
         type: 'multiplication',
-        expression: `x + 3 = 2x − 4 → x = 7 (x ≠ 2)`,
+        expression: `(7, 4)`,
     },
     {
         stage: 2,
-        question: `Oldd meg!
-
-|2x − 3| = 5
-
-Add meg a nagyobb megoldást!`,
-        answer: 4,
+        question: `Oldd meg: 2x + 3y = 13, 3x − y = 7.
+Add meg x-et 3 tizedesjeggyel!`,
+        answer: 3.091,
         type: 'multiplication',
-        expression: `x = 4 vagy x = −1`,
+        expression: `x = 34/11`,
     },
     {
         stage: 2,
-        question: `Oldd meg!
-
-|x − 4| = x + 2
-
-Add meg a megoldást!`,
-        answer: 1,
+        question: `Oldd meg: 4x − y = 9, 2x + 5y = 1.
+Add meg x-et 3 tizedesjeggyel!`,
+        answer: 2.091,
         type: 'multiplication',
-        expression: `x = 1 (a másik eset hamis)`,
+        expression: `x = 23/11`,
     },
     {
         stage: 2,
-        question: `Oldd meg!
-
-√(x + 5) = x − 1
-
-Add meg a megoldást!`,
-        answer: 4,
+        question: `Oldd meg: (x + 1)/2 + (y − 1)/3 = 4, x − y = 1.
+Add meg x-et!`,
+        answer: 5,
         type: 'multiplication',
-        expression: `x = 4 (x = −1 hamis gyök)`,
+        expression: `(5, 4)`,
     },
     {
         stage: 2,
-        question: `Oldd meg!
-
-√(3x + 4) = x + 2
-
-Add meg a nagyobb megoldást!`,
-        answer: 0,
+        question: `Oldd meg: x/3 + y/2 = 4, x + y = 10.
+Add meg x-et!`,
+        answer: 6,
         type: 'multiplication',
-        expression: `x = 0 vagy x = −1`,
+        expression: `(6, 4)`,
     },
     {
         stage: 2,
-        question: `Oldd meg!
-
-(x − 1)/(x + 2) ≤ 0
-
-Add meg a felső határt (zárt)!`,
-        answer: 1,
-        type: 'multiplication',
-        expression: `−2 < x ≤ 1`,
-    },
-    {
-        stage: 2,
-        question: `Oldd meg!
-
-x⁴ − 10x² + 9 = 0
-
-Add meg a legnagyobb megoldást!`,
-        answer: 3,
-        type: 'multiplication',
-        expression: `x = ±1, ±3`,
-    },
-    {
-        stage: 2,
-        question: `Oldd meg!
-
-x + y = 7
-xy = 12
-
-Add meg a nagyobb számot!`,
-        answer: 4,
+        question: `Oldd meg: x + y = 7, xy = 12.
+Add meg a két lehetséges x-et!`,
+        answer: 2,
+        expectedSet: ['3', '4'],
         type: 'multiplication',
         expression: `(3, 4) vagy (4, 3)`,
     },
     {
         stage: 2,
-        question: `Oldd meg!
-
-(x − 4)/(x + 1) = 3
-
-Add meg x-et!`,
-        answer: -3.5,
-        type: 'multiplication',
-        expression: `x − 4 = 3x + 3 → x = −3,5`,
-    },
-    {
-        stage: 2,
-        question: `Oldd meg!
-
-|3x + 1| = 7
-
-Add meg a nagyobb megoldást!`,
+        question: `Oldd meg: x − y = 1, xy = 6.
+Add meg a két lehetséges x-et!`,
         answer: 2,
+        expectedSet: ['-2', '3'],
         type: 'multiplication',
-        expression: `x = 2 vagy x = −8/3`,
+        expression: `(3, 2) vagy (−2, −3)`,
     },
     {
         stage: 2,
-        question: `Oldd meg!
-
-|x + 5| = 2x − 1
-
-Add meg a megoldást!`,
-        answer: 6,
+        question: `Oldd meg: x² + y² = 25, x + y = 7.
+Add meg a két lehetséges x-et!`,
+        answer: 2,
+        expectedSet: ['3', '4'],
         type: 'multiplication',
-        expression: `x = 6 (ellenőrzés: |11| = 11)`,
+        expression: `(3, 4) vagy (4, 3)`,
     },
     {
         stage: 2,
-        question: `Oldd meg!
-
-√(x + 12) = x
-
-Add meg a megoldást!`,
+        question: `Oldd meg: x² − y² = 15, x − y = 3.
+Add meg x-et!`,
         answer: 4,
         type: 'multiplication',
-        expression: `x = 4 (x = −3 hamis)`,
+        expression: `(4, 1)`,
     },
     {
         stage: 2,
-        question: `Oldd meg!
-
-√(4x + 5) = x + 1
-
-Add meg a megoldást 3 tizedesjeggyel!`,
-        answer: 3.236,
-        type: 'multiplication',
-        expression: `x = 1 + √5 ≈ 3,236`,
-    },
-    {
-        stage: 2,
-        question: `Oldd meg!
-
-(x + 1)/(x − 4) ≤ 0
-
-Add meg a felső határt (nyílt)!`,
+        question: `Oldd meg: y = 2√x, x + y = 8 (x ≥ 0).
+Add meg x-et!`,
         answer: 4,
         type: 'multiplication',
-        expression: `−1 ≤ x < 4`,
+        expression: `(4, 4)`,
     },
     {
         stage: 2,
-        question: `Oldd meg!
-
-x⁴ − 13x² + 36 = 0
-
-Add meg a legnagyobb megoldást!`,
-        answer: 3,
-        type: 'multiplication',
-        expression: `x² = 4 vagy x² = 9`,
-    },
-    {
-        stage: 2,
-        question: `Oldd meg!
-
-x + y = 9
-xy = 20
-
-Add meg a nagyobb számot!`,
-        answer: 5,
-        type: 'multiplication',
-        expression: `(4, 5) vagy (5, 4)`,
-    },
-    {
-        stage: 2,
-        question: `Oldd meg!
-
-(3x − 1)/(x − 2) = 4
-
+        question: `Oldd meg: y = √(x + 5), y = x − 1.
 Add meg x-et!`,
-        answer: 7,
+        answer: 4,
         type: 'multiplication',
-        expression: `3x − 1 = 4x − 8 → x = 7`,
+        expression: `(4, 3)`,
     },
     {
         stage: 2,
-        question: `Oldd meg!
-
-|x − 3| = |2x + 1|
-
-Add meg a nagyobb megoldást 3 tizedesjeggyel!`,
-        answer: 0.667,
-        type: 'multiplication',
-        expression: `x = 2/3 vagy x = −4`,
-    },
-    {
-        stage: 2,
-        question: `Oldd meg!
-
-√(x − 1) + 2 = x
-
-Add meg a megoldást 3 tizedesjeggyel!`,
-        answer: 3.618,
-        type: 'multiplication',
-        expression: `x = (5 + √5)/2 ≈ 3,618`,
-    },
-    {
-        stage: 2,
-        question: `Oldd meg!
-
-|4 − x| = 6
-
-Add meg a nagyobb megoldást!`,
-        answer: 10,
-        type: 'multiplication',
-        expression: `x = 10 vagy x = −2`,
-    },
-    {
-        stage: 3,
-        question: `Oldd meg!
-
-2^{2x} − 5 · 2^x + 4 = 0
-
-Add meg a nagyobb megoldást!`,
+        question: `Oldd meg: 1/x + 1/y = 5/6, x + y = 5.
+Add meg a két lehetséges x-et!`,
         answer: 2,
-        type: 'multiplication',
-        expression: `t = 2^x → t = 4 vagy 1 → x = 2 vagy 0`,
-    },
-    {
-        stage: 3,
-        question: `Oldd meg!
-
-3^{2x} − 10 · 3^x + 9 = 0
-
-Add meg a nagyobb megoldást!`,
-        answer: 2,
-        type: 'multiplication',
-        expression: `t = 3^x → t = 9 vagy 1 → x = 2 vagy 0`,
-    },
-    {
-        stage: 3,
-        question: `Oldd meg!
-
-√(x + 8) − √(x − 1) = 1
-
-Add meg a megoldást!`,
-        answer: 17,
-        type: 'multiplication',
-        expression: `√(x − 1) = 4 → x = 17`,
-    },
-    {
-        stage: 3,
-        question: `Oldd meg!
-
-|x − 2| + |x + 3| = 7
-
-Add meg a nagyobb megoldást!`,
-        answer: 3,
-        type: 'multiplication',
-        expression: `x = 3 vagy x = −4`,
-    },
-    {
-        stage: 3,
-        question: `Oldd meg!
-
-(x − 3)/(x + 1) > 1
-
-Add meg a felső határt (nyílt)!`,
-        answer: -1,
-        type: 'multiplication',
-        expression: `x < −1`,
-    },
-    {
-        stage: 3,
-        question: `Oldd meg!
-
-log₂(x − 1) + log₂(x + 2) = 2
-
-Add meg a megoldást!`,
-        answer: 2,
-        type: 'multiplication',
-        expression: `(x − 1)(x + 2) = 4 → x = 2`,
-    },
-    {
-        stage: 3,
-        question: `Oldd meg!
-
-2 sin² x − 3 sin x + 1 = 0
-
-Hány megoldás van a [0; 2π) intervallumon?`,
-        answer: 3,
-        type: 'multiplication',
-        expression: `sin x = 1 vagy 1/2 → 3 megoldás`,
-    },
-    {
-        stage: 3,
-        question: `Oldd meg!
-
-x + y = 5
-x² + y² = 13
-
-Add meg a nagyobb számot!`,
-        answer: 3,
+        expectedSet: ['2', '3'],
         type: 'multiplication',
         expression: `(2, 3) vagy (3, 2)`,
     },
     {
-        stage: 3,
-        question: `Oldd meg!
-
-4^x − 6 · 2^x + 8 = 0
-
-Add meg a nagyobb megoldást!`,
-        answer: 2,
-        type: 'multiplication',
-        expression: `t = 2^x → t = 4 vagy 2 → x = 2 vagy 1`,
-    },
-    {
-        stage: 3,
-        question: `Oldd meg!
-
-5^{2x} − 26 · 5^x + 25 = 0
-
-Add meg a nagyobb megoldást!`,
-        answer: 2,
-        type: 'multiplication',
-        expression: `t = 5^x → t = 25 vagy 1 → x = 2 vagy 0`,
-    },
-    {
-        stage: 3,
-        question: `Oldd meg!
-
-√(x + 5) − √(x − 2) = 1
-
-Add meg a megoldást!`,
-        answer: 11,
-        type: 'multiplication',
-        expression: `√(x − 2) = 3 → x = 11`,
-    },
-    {
-        stage: 3,
-        question: `Oldd meg!
-
-|x| + |x − 6| = 10
-
-Add meg a nagyobb megoldást!`,
-        answer: 8,
-        type: 'multiplication',
-        expression: `x = 8 vagy x = −2`,
-    },
-    {
-        stage: 3,
-        question: `Oldd meg!
-
-(x + 2)/(x − 3) > 1
-
-Add meg az alsó határt (nyílt)!`,
-        answer: 3,
-        type: 'multiplication',
-        expression: `x > 3`,
-    },
-    {
-        stage: 3,
-        question: `Oldd meg!
-
-log₃ x + log₃(x + 8) = 2
-
-Add meg a megoldást!`,
-        answer: 1,
-        type: 'multiplication',
-        expression: `x(x + 8) = 9 → x = 1`,
-    },
-    {
-        stage: 3,
-        question: `Oldd meg!
-
-2 cos² x − 3 cos x + 1 = 0
-
-Hány megoldás van a [0; 2π) intervallumon?`,
-        answer: 3,
-        type: 'multiplication',
-        expression: `cos x = 1 vagy 1/2 → 3 megoldás`,
-    },
-    {
-        stage: 3,
-        question: `Oldd meg!
-
-x + y = 6
-x² + y² = 20
-
-Add meg a nagyobb számot!`,
-        answer: 4,
-        type: 'multiplication',
-        expression: `(2, 4) vagy (4, 2)`,
-    },
-    {
-        stage: 3,
-        question: `Oldd meg!
-
-log₂(x − 3) = 3
-
+        stage: 2,
+        question: `Oldd meg: (x + 1)/(x − 1) = 3, y = 2x + 1.
 Add meg x-et!`,
-        answer: 11,
+        answer: 2,
         type: 'multiplication',
-        expression: `x − 3 = 8 → x = 11`,
+        expression: `(2, 5)`,
     },
     {
-        stage: 3,
-        question: `Oldd meg!
-
-2^{2x} − 9 · 2^x + 8 = 0
-
-Add meg a nagyobb megoldást!`,
-        answer: 3,
+        stage: 2,
+        question: `Oldd meg: 2x − y = 1, x² + y² = 13.
+Add meg a két lehetséges x-et!`,
+        answer: 2,
+        expectedSet: ['-1.2', '2'],
         type: 'multiplication',
-        expression: `t = 2^x → t = 8 vagy 1 → x = 3 vagy 0`,
+        expression: `x = 2 vagy −6/5`,
     },
     {
-        stage: 3,
-        question: `Oldd meg!
-
-|x − 1| + |x − 4| = 5
-
-Add meg a nagyobb megoldást!`,
-        answer: 5,
-        type: 'multiplication',
-        expression: `x = 5 vagy x = 0`,
-    },
-    {
-        stage: 3,
-        question: `Oldd meg!
-
-x + y = 4
-xy = 3
-
-Add meg a nagyobb számot!`,
-        answer: 3,
+        stage: 2,
+        question: `Oldd meg: x + y = 4, x² + y² = 10.
+Add meg a két lehetséges x-et!`,
+        answer: 2,
+        expectedSet: ['1', '3'],
         type: 'multiplication',
         expression: `(1, 3) vagy (3, 1)`,
     },
     {
-        stage: 4,
-        question: `Oldd meg!
-
-√(2x + 3) + √(x − 1) = 4
-
-Add meg a megoldást 3 tizedesjeggyel!`,
-        answer: 2.431,
+        stage: 2,
+        question: `Oldd meg pozitív x, y-ra: x + y = 10, √x + √y = √18.
+Add meg a két lehetséges x-et!`,
+        answer: 2,
+        expectedSet: ['2', '8'],
         type: 'multiplication',
-        expression: `x = 44 − 24√3 ≈ 2,431`,
+        expression: `(2, 8) vagy (8, 2)`,
     },
     {
-        stage: 4,
-        question: `Oldd meg!
-
-√(x + 5) = |x − 1|
-
-Add meg a nagyobb megoldást!`,
-        answer: 4,
+        stage: 2,
+        question: `Oldd meg: x + y = 6, √x + √y = √10 (x, y ≥ 0).
+Add meg a két lehetséges x-et 3 tizedesjeggyel!`,
+        answer: 2,
+        expectedSet: ['0.764', '5.236'],
         type: 'multiplication',
-        expression: `x = 4 vagy x = −1`,
+        expression: `3 ± √5`,
     },
     {
-        stage: 4,
-        question: `Oldd meg!
-
-|x² − 5x + 4| = 2
-
-Add meg a legnagyobb megoldást 3 tizedesjeggyel!`,
-        answer: 4.562,
+        stage: 2,
+        question: `Határozd meg x/y értékét, ha (3x + 2y)/(5x + 2y) = 5/7.`,
+        answer: 1,
         type: 'multiplication',
-        expression: `(5 + √17)/2 ≈ 4,562`,
+        expression: `x/y = 1`,
     },
     {
-        stage: 4,
-        question: `Oldd meg!
-
-(x − 4)/(x − 6) ≤ −1
-
-Add meg az alsó határt (zárt)!`,
-        answer: 5,
+        stage: 2,
+        question: `Hány pozitív egész (x, y) párra teljesül x/12 = 2/y?`,
+        answer: 8,
         type: 'multiplication',
-        expression: `5 ≤ x < 6`,
+        expression: `xy = 24 → 8 pár`,
     },
     {
-        stage: 4,
-        question: `Oldd meg!
+        stage: 2,
+        question: `Hány pozitív egész (x, y) párra teljesül x/10 = 3/y?`,
+        answer: 8,
+        type: 'multiplication',
+        expression: `xy = 30 → 8 pár`,
+    },
 
-4^x − 5 · 2^x + 4 = 0
-
-Add meg a nagyobb megoldást!`,
+    // —— 3. szint ——
+    {
+        stage: 3,
+        question: `Oldd meg: |x − 4| = 3.
+Add meg a két megoldást!`,
+        answer: 2,
+        expectedSet: ['1', '7'],
+        type: 'multiplication',
+        expression: `x = 1 vagy 7`,
+    },
+    {
+        stage: 3,
+        question: `Oldd meg: |2x + 1| = 5.
+Add meg a két megoldást!`,
+        answer: 2,
+        expectedSet: ['-3', '2'],
+        type: 'multiplication',
+        expression: `x = 2 vagy −3`,
+    },
+    {
+        stage: 3,
+        question: `Oldd meg: |x − 2| = x + 4.`,
+        answer: -1,
+        type: 'multiplication',
+        expression: `x = −1`,
+    },
+    {
+        stage: 3,
+        question: `Oldd meg: |x + 1| = 2x − 1.`,
         answer: 2,
         type: 'multiplication',
-        expression: `t = 2^x → t = 4 vagy 1 → x = 2 vagy 0`,
+        expression: `x = 2`,
     },
     {
-        stage: 4,
-        question: `Oldd meg!
-
-log₃(x + 5) + log₃(x − 1) = 2
-
-Add meg a megoldást 3 tizedesjeggyel!`,
-        answer: 2.243,
-        type: 'multiplication',
-        expression: `x = −2 + 3√2 ≈ 2,243`,
-    },
-    {
-        stage: 4,
-        question: `Oldd meg!
-
-2 cos² x + cos x − 1 = 0
-
-Hány megoldás van a [0; 2π) intervallumon?`,
-        answer: 3,
-        type: 'multiplication',
-        expression: `cos x = 1/2 vagy −1 → 3 megoldás`,
-    },
-    {
-        stage: 4,
-        question: `Oldd meg!
-
-x + y = 6
-√x + √y = 2√3
-
-Add meg x-et!`,
-        answer: 3,
-        type: 'multiplication',
-        expression: `x = y = 3`,
-    },
-    {
-        stage: 4,
-        question: `Oldd meg!
-
-√(x + 3) + √(x − 1) = 4
-
-Add meg a megoldást!`,
-        answer: 3.25,
-        type: 'multiplication',
-        expression: `√(x − 1) = 1,5 → x = 3,25`,
-    },
-    {
-        stage: 4,
-        question: `Oldd meg!
-
-√(4x + 5) = |x + 1|
-
-Add meg a nagyobb megoldást 3 tizedesjeggyel!`,
-        answer: 3.236,
-        type: 'multiplication',
-        expression: `x = 1 + √5 ≈ 3,236`,
-    },
-    {
-        stage: 4,
-        question: `Oldd meg!
-
-|x² − 3x| = 2
-
-Add meg a legnagyobb megoldást 3 tizedesjeggyel!`,
-        answer: 3.562,
-        type: 'multiplication',
-        expression: `(3 + √17)/2 ≈ 3,562`,
-    },
-    {
-        stage: 4,
-        question: `Oldd meg!
-
-(x − 2)/(x − 5) ≤ −1
-
-Add meg az alsó határt (zárt)!`,
-        answer: 3.5,
-        type: 'multiplication',
-        expression: `3,5 ≤ x < 5`,
-    },
-    {
-        stage: 4,
-        question: `Oldd meg!
-
-9^x − 10 · 3^x + 9 = 0
-
-Add meg a nagyobb megoldást!`,
+        stage: 3,
+        question: `Oldd meg a [0, 8] alaphalmazon: |5 − |x − 3|| = 2.
+Add meg a két megoldást!`,
         answer: 2,
+        expectedSet: ['0', '6'],
         type: 'multiplication',
-        expression: `t = 3^x → t = 9 vagy 1 → x = 2 vagy 0`,
+        expression: `x = 0 vagy 6`,
     },
     {
-        stage: 4,
-        question: `Oldd meg!
-
-log₂(x + 3) + log₂(x − 1) = 3
-
-Add meg a megoldást 3 tizedesjeggyel!`,
-        answer: 2.464,
+        stage: 3,
+        question: `Oldd meg: √(x + 5) = 4.`,
+        answer: 11,
         type: 'multiplication',
-        expression: `x = −1 + 2√3 ≈ 2,464`,
+        expression: `x = 11`,
     },
     {
-        stage: 4,
-        question: `Oldd meg!
+        stage: 3,
+        question: `Oldd meg: √(2x − 1) = x − 1.
 
-2 sin² x + sin x − 1 = 0
-
-Hány megoldás van a [0; 2π) intervallumon?`,
-        answer: 3,
-        type: 'multiplication',
-        expression: `sin x = 1/2 vagy −1 → 3 megoldás`,
-    },
-    {
-        stage: 4,
-        question: `Oldd meg!
-
-x + y = 10
-√x + √y = 4
-
-Add meg a nagyobb számot!`,
-        answer: 9,
-        type: 'multiplication',
-        expression: `√x, √y = 1 és 3 → 1 és 9`,
-    },
-    {
-        stage: 4,
-        question: `Oldd meg!
-
-√(3x + 1) + √(x − 1) = 4
-
-Add meg a megoldást 3 tizedesjeggyel!`,
-        answer: 2.351,
-        type: 'multiplication',
-        expression: `x = 15 − 4√10 ≈ 2,351`,
-    },
-    {
-        stage: 4,
-        question: `Oldd meg!
-
-|x² − 4x + 3| = 1
-
-Add meg a legnagyobb megoldást 3 tizedesjeggyel!`,
+Add meg 3 tizedesjeggyel!`,
         answer: 3.414,
         type: 'multiplication',
-        expression: `2 + √2 ≈ 3,414`,
+        expression: `x = 2 + √2`,
     },
     {
-        stage: 4,
-        question: `Oldd meg!
-
-log₅(x − 2) + log₅(x + 2) = 1
-
-Add meg a megoldást!`,
+        stage: 3,
+        question: `Oldd meg: √(x + 6) = x.`,
         answer: 3,
         type: 'multiplication',
-        expression: `x² − 4 = 5 → x = 3`,
+        expression: `x = 3`,
     },
     {
-        stage: 4,
-        question: `Oldd meg!
-
-4^x − 10 · 2^x + 16 = 0
-
-Add meg a nagyobb megoldást!`,
-        answer: 3,
+        stage: 3,
+        question: `Oldd meg: √(x + 10) − √(x + 1) = 1.`,
+        answer: 15,
         type: 'multiplication',
-        expression: `t = 2^x → t = 8 vagy 2 → x = 3 vagy 1`,
+        expression: `x = 15`,
     },
     {
-        stage: 5,
-        question: `Vizsgáld!
+        stage: 3,
+        question: `Oldd meg: √(2x + 3) = √(x + 8) − 1.
 
-x² − (p + 2)x + 2p = 0
-
-Melyik p-nél nincs két különböző valós gyök?`,
+Add meg 3 tizedesjeggyel!`,
+        answer: 0.254,
+        type: 'multiplication',
+        expression: `8 − 2√15`,
+    },
+    {
+        stage: 3,
+        question: `Oldd meg: √(x + 4) + √x = 4.`,
+        answer: 2.25,
+        type: 'multiplication',
+        expression: `x = 9/4`,
+    },
+    {
+        stage: 3,
+        question: `Oldd meg: (x − 3)/(x + 2) = 2.`,
+        answer: -7,
+        type: 'multiplication',
+        expression: `x = −7`,
+    },
+    {
+        stage: 3,
+        question: `Oldd meg: (x + 1)/(x − 2) + 3/(x − 2) = 2.`,
+        answer: 8,
+        type: 'multiplication',
+        expression: `x = 8`,
+    },
+    {
+        stage: 3,
+        question: `Oldd meg: 1/(x − 1) + 1/(x + 1) = 3/4.
+Add meg a két megoldást 3 tizedesjeggyel!`,
         answer: 2,
+        expectedSet: ['-0.333', '3'],
         type: 'multiplication',
-        expression: `D = (p − 2)² = 0 ⇔ p = 2`,
+        expression: `x = 3 vagy −1/3`,
     },
     {
-        stage: 5,
-        question: `Az x² − (p + 1)x + p = 0 egyik gyöke kétszerese a másiknak.
-
-Add meg a nagyobb ilyen p-t!`,
-        answer: 2,
+        stage: 3,
+        question: `Oldd meg: x/(x − 2) = 4/(x + 1).
+Hány valós megoldása van?`,
+        answer: 0,
         type: 'multiplication',
-        expression: `gyökök: 1 és p → p = 2 vagy p = 1/2`,
+        expression: `Nincs valós megoldás`,
     },
     {
-        stage: 5,
-        question: `A p paraméter függvényében: |x − 2| = p
-
-Ha p = 0, hány valós megoldás van?`,
-        answer: 1,
-        type: 'multiplication',
-        expression: `p = 0 → egy megoldás (x = 2)`,
-    },
-    {
-        stage: 5,
-        question: `A p paraméter függvényében: x² − 4x + p = 0
-
-Ha p = 4, hány valós megoldás van?`,
-        answer: 1,
-        type: 'multiplication',
-        expression: `D = 0 ⇔ p = 4`,
-    },
-    {
-        stage: 5,
-        question: `Oldd meg!
-
-√(x + 4) + √(8 − x) = 4
-
-Add meg a nagyobb megoldást 3 tizedesjeggyel!`,
-        answer: 7.657,
-        type: 'multiplication',
-        expression: `x = 2 + 4√2 ≈ 7,657`,
-    },
-    {
-        stage: 5,
-        question: `Oldd meg!
-
-log₂(x − 1) + log₂(5 − x) = 1
-
-Add meg a nagyobb megoldást 3 tizedesjeggyel!`,
-        answer: 4.414,
-        type: 'multiplication',
-        expression: `x = 3 + √2 ≈ 4,414`,
-    },
-    {
-        stage: 5,
-        question: `Oldd meg!
-
-sin² x = 3 cos² x
-
-Hány megoldás van a [0; 2π) intervallumon?`,
+        stage: 3,
+        question: `Oldd meg: (x² − 9)/(x − 3) = 7 (ahol értelmezett).`,
         answer: 4,
         type: 'multiplication',
-        expression: `cos x = ±1/2 → 4 megoldás`,
+        expression: `x = 4`,
     },
     {
-        stage: 5,
-        question: `Határozd meg az összes pozitív egész (x, y) számpárt!
-
-1/x + 1/y = 1/2
-
-Hány ilyen számpár van?`,
-        answer: 3,
+        stage: 3,
+        question: `Oldd meg: (x² − 4)/(x + 2) = x − 2.
+Add meg a kizárt pontot!`,
+        answer: -2,
         type: 'multiplication',
-        expression: `(3, 6), (4, 4), (6, 3)`,
+        expression: `minden x ≠ −2`,
     },
     {
-        stage: 5,
-        question: `Az x² − (p + 2)x + 2p = 0 egyenletnél p = 0.
-
-Hány különböző valós gyök van?`,
+        stage: 3,
+        question: `Oldd meg: √(x − 1) + 1/√(x − 1) = 5/2.
+Add meg a két megoldást!`,
         answer: 2,
+        expectedSet: ['1.25', '5'],
         type: 'multiplication',
-        expression: `x² − 2x = 0 → x = 0 vagy 2`,
+        expression: `x = 5 vagy 5/4`,
     },
     {
-        stage: 5,
-        question: `Az x² − (p + 3)x + 2p = 0 egyenletnél p = 0.
-
-Add meg a nemnulla gyököt!`,
-        answer: 3,
-        type: 'multiplication',
-        expression: `x² − 3x = 0 → x = 0 vagy 3`,
-    },
-    {
-        stage: 5,
-        question: `|x − 2| = p. Ha p = 5, hány valós megoldás van?`,
+        stage: 3,
+        question: `Oldd meg: |x − 1| + |x + 2| = 7.
+Add meg a két megoldást!`,
         answer: 2,
+        expectedSet: ['-4', '3'],
         type: 'multiplication',
-        expression: `p > 0 → 2 megoldás`,
+        expression: `x = −4 vagy 3`,
     },
     {
-        stage: 5,
-        question: `|x − 2| = p. Ha p = −3, hány valós megoldás van?`,
-        answer: 0,
-        type: 'multiplication',
-        expression: `p < 0 → 0 megoldás`,
-    },
-    {
-        stage: 5,
-        question: `x² − 4x + p = 0. Ha p = 0, hány valós megoldás van?`,
+        stage: 3,
+        question: `Oldd meg: |x − |x − 3|| = 1.
+Add meg a két megoldást!`,
         answer: 2,
+        expectedSet: ['1', '2'],
         type: 'multiplication',
-        expression: `x = 0 vagy x = 4`,
+        expression: `x = 1 vagy 2`,
     },
-    {
-        stage: 5,
-        question: `x² − 4x + p = 0. Ha p = 5, hány valós megoldás van?`,
-        answer: 0,
-        type: 'multiplication',
-        expression: `D = 16 − 20 < 0`,
-    },
-    {
-        stage: 5,
-        question: `√(x + 4) + √(8 − x) = 4
 
-Add meg a kisebb megoldást 3 tizedesjeggyel!`,
-        answer: -3.657,
-        type: 'multiplication',
-        expression: `x = 2 − 4√2 ≈ −3,657`,
-    },
+    // —— 4. szint ——
     {
-        stage: 5,
-        question: `log₂(x − 1) + log₂(5 − x) = 1
-
-Add meg a kisebb megoldást 3 tizedesjeggyel!`,
-        answer: 1.586,
-        type: 'multiplication',
-        expression: `x = 3 − √2 ≈ 1,586`,
-    },
-    {
-        stage: 5,
-        question: `sin² x = 3 cos² x
-
-Add meg a kisebb pozitív megoldást fokban!`,
-        answer: 60,
-        type: 'multiplication',
-        expression: `tan² x = 3 → 60°`,
-    },
-    {
-        stage: 5,
-        question: `1/x + 1/y = 1/2, x, y pozitív egészek.
-
-Add meg a legnagyobb lehetséges x-et!`,
+        stage: 4,
+        question: `Oldd meg: 3x − 7 ≤ 11.
+Add meg a véges határpontot!`,
         answer: 6,
         type: 'multiplication',
-        expression: `x = 6, y = 3`,
+        expression: `x ≤ 6`,
+    },
+    {
+        stage: 4,
+        question: `Oldd meg: 5 − 2x > 9.
+Add meg a véges határpontot!`,
+        answer: -2,
+        type: 'multiplication',
+        expression: `x < −2`,
+    },
+    {
+        stage: 4,
+        question: `Oldd meg: (x − 2)(x + 3) ≥ 0.
+Add meg a két véges határpontot!`,
+        answer: 2,
+        expectedSet: ['-3', '2'],
+        type: 'multiplication',
+        expression: `(−∞, −3] ∪ [2, ∞)`,
+    },
+    {
+        stage: 4,
+        question: `Oldd meg: x² − 5x + 6 < 0.
+Add meg a két határpontot!`,
+        answer: 2,
+        expectedSet: ['2', '3'],
+        type: 'multiplication',
+        expression: `(2, 3)`,
+    },
+    {
+        stage: 4,
+        question: `Oldd meg: 2x² + x − 3 ≤ 0.
+Add meg a két határpontot!`,
+        answer: 2,
+        expectedSet: ['-1.5', '1'],
+        type: 'multiplication',
+        expression: `[−3/2, 1]`,
+    },
+    {
+        stage: 4,
+        question: `Oldd meg: (x − 4)/(x − 6) ≤ −1.
+Add meg a két határpontot!`,
+        answer: 2,
+        expectedSet: ['5', '6'],
+        type: 'multiplication',
+        expression: `[5, 6)`,
+    },
+    {
+        stage: 4,
+        question: `Oldd meg: (x + 2)/(x − 1) > 0.
+Add meg a két véges határpontot!`,
+        answer: 2,
+        expectedSet: ['-2', '1'],
+        type: 'multiplication',
+        expression: `(−∞, −2) ∪ (1, ∞)`,
+    },
+    {
+        stage: 4,
+        question: `Oldd meg: (x² − 9)/(x − 2) ≥ 0.
+Add meg a három véges határpontot!`,
+        answer: 3,
+        expectedSet: ['-3', '2', '3'],
+        type: 'multiplication',
+        expression: `[−3, 2) ∪ [3, ∞)`,
+    },
+    {
+        stage: 4,
+        question: `Oldd meg: |x − 3| ≤ 5.
+Add meg a két határpontot!`,
+        answer: 2,
+        expectedSet: ['-2', '8'],
+        type: 'multiplication',
+        expression: `[−2, 8]`,
+    },
+    {
+        stage: 4,
+        question: `Oldd meg: |2x + 1| > 3.
+Add meg a két véges határpontot!`,
+        answer: 2,
+        expectedSet: ['-2', '1'],
+        type: 'multiplication',
+        expression: `(−∞, −2) ∪ (1, ∞)`,
+    },
+    {
+        stage: 4,
+        question: `Oldd meg: |x − 2| ≥ x.
+Add meg a véges határpontot!`,
+        answer: 1,
+        type: 'multiplication',
+        expression: `x ≤ 1`,
+    },
+    {
+        stage: 4,
+        question: `Oldd meg: √(x + 1) ≤ 3.
+Add meg a két határpontot!`,
+        answer: 2,
+        expectedSet: ['-1', '8'],
+        type: 'multiplication',
+        expression: `[−1, 8]`,
+    },
+    {
+        stage: 4,
+        question: `Oldd meg: √(2x − 3) > 1.
+Add meg a véges határpontot!`,
+        answer: 2,
+        type: 'multiplication',
+        expression: `x > 2`,
+    },
+    {
+        stage: 4,
+        question: `Oldd meg: √(x + 4) ≥ x.
+Add meg a két határpontot 3 tizedesjeggyel!`,
+        answer: 2,
+        expectedSet: ['-4', '2.562'],
+        type: 'multiplication',
+        expression: `[−4, (1 + √17)/2]`,
+    },
+    {
+        stage: 4,
+        question: `Oldd meg a [4, 6] alaphalmazon: 2 cos² x + cos x − 1 ≤ 0.
+Add meg a jobb határpontot 3 tizedesjeggyel!`,
+        answer: 5.236,
+        type: 'multiplication',
+        expression: `[4, 5π/3]`,
+    },
+    {
+        stage: 4,
+        question: `Oldd meg a [0, 2π] alaphalmazon: 2 sin x − 1 ≥ 0.
+Add meg a két határpontot fokban!`,
+        answer: 2,
+        expectedSet: ['30', '150'],
+        type: 'multiplication',
+        expression: `[π/6, 5π/6]`,
+    },
+    {
+        stage: 4,
+        question: `Oldd meg: 2ˣ ≤ 8.
+Add meg a véges határpontot!`,
+        answer: 3,
+        type: 'multiplication',
+        expression: `x ≤ 3`,
+    },
+    {
+        stage: 4,
+        question: `Oldd meg: log₂(x − 1) > 2.
+Add meg a véges határpontot!`,
+        answer: 5,
+        type: 'multiplication',
+        expression: `x > 5`,
+    },
+    {
+        stage: 4,
+        question: `Oldd meg: log₃(x² − 1) ≤ 2.
+Add meg a pozitív külső határpontot 3 tizedesjeggyel!`,
+        answer: 3.162,
+        type: 'multiplication',
+        expression: `[−√10, −1) ∪ (1, √10]`,
+    },
+    {
+        stage: 4,
+        question: `Oldd meg a [−5, 5] alaphalmazon: (x² − 4)/(x + 1) < 0.
+Add meg a négy véges határpontot!`,
+        answer: 4,
+        expectedSet: ['-5', '-2', '-1', '2'],
+        type: 'multiplication',
+        expression: `[−5, −2) ∪ (−1, 2)`,
+    },
+
+    // —— 5. szint ——
+    {
+        stage: 5,
+        question: `Oldd meg: x⁴ − 5x² + 4 = 0.
+Add meg a négy gyököt!`,
+        answer: 4,
+        expectedSet: ['-2', '-1', '1', '2'],
+        type: 'multiplication',
+        expression: `x = ±1, ±2`,
     },
     {
         stage: 5,
-        question: `|x + 1| = p. Ha p = 0, hány valós megoldás van?`,
-        answer: 1,
+        question: `Oldd meg: x⁶ − 5x³ + 4 = 0.
+Add meg a két valós gyököt 3 tizedesjeggyel!`,
+        answer: 2,
+        expectedSet: ['1', '1.587'],
+        type: 'multiplication',
+        expression: `x = 1 vagy ∛4`,
+    },
+    {
+        stage: 5,
+        question: `Oldd meg: 2^{2x} − 5 · 2ˣ + 4 = 0.
+Add meg a két megoldást!`,
+        answer: 2,
+        expectedSet: ['0', '2'],
+        type: 'multiplication',
+        expression: `x = 0 vagy 2`,
+    },
+    {
+        stage: 5,
+        question: `Oldd meg: 9 · 9ˣ + 15 · 3ˣ − 6 = 0.`,
+        answer: -1,
         type: 'multiplication',
         expression: `x = −1`,
     },
     {
         stage: 5,
-        question: `x² − 6x + p = 0. Két különböző valós gyök van, ha p kisebb, mint …
+        question: `Oldd meg: 5^{2x} − 6 · 5ˣ + 5 = 0.
+Add meg a két megoldást!`,
+        answer: 2,
+        expectedSet: ['0', '1'],
+        type: 'multiplication',
+        expression: `x = 0 vagy 1`,
+    },
+    {
+        stage: 5,
+        question: `Oldd meg: log₂(x + 3) + log₂(x − 1) = 3.
 
-Add meg ezt a határt!`,
+Add meg 3 tizedesjeggyel!`,
+        answer: 2.464,
+        type: 'multiplication',
+        expression: `x = −1 + 2√3`,
+    },
+    {
+        stage: 5,
+        question: `Oldd meg: log₃(x + 8) + log₃(x − 2) − log₃(x + 4) = 1.`,
+        answer: 4,
+        type: 'multiplication',
+        expression: `x = 4`,
+    },
+    {
+        stage: 5,
+        question: `Oldd meg: (log₂ x)² − 5 log₂ x + 6 = 0.
+Add meg a két megoldást!`,
+        answer: 2,
+        expectedSet: ['4', '8'],
+        type: 'multiplication',
+        expression: `x = 4 vagy 8`,
+    },
+    {
+        stage: 5,
+        question: `Oldd meg: log₂ x = log_x 16.
+Add meg a két megoldást!`,
+        answer: 2,
+        expectedSet: ['0.25', '4'],
+        type: 'multiplication',
+        expression: `x = 4 vagy 1/4`,
+    },
+    {
+        stage: 5,
+        question: `Oldd meg: sin² x = 3 cos² x.
+Add meg a legkisebb pozitív megoldást fokban!`,
+        answer: 60,
+        type: 'multiplication',
+        expression: `tan² x = 3`,
+    },
+    {
+        stage: 5,
+        question: `Oldd meg: 2 cos² x − 5 cos x − 3 = 0.
+Add meg a [0°, 360°) megoldásokat fokban!`,
+        answer: 2,
+        expectedSet: ['120', '240'],
+        type: 'multiplication',
+        expression: `cos x = −1/2`,
+    },
+    {
+        stage: 5,
+        question: `Oldd meg: 2 sin² x + sin x − 1 = 0.
+Add meg a [0°, 360°) megoldásokat fokban!`,
+        answer: 3,
+        expectedSet: ['30', '150', '270'],
+        type: 'multiplication',
+        expression: `sin x = 1/2 vagy −1`,
+    },
+    {
+        stage: 5,
+        question: `Oldd meg: sin(2x − π/3) = 1/2.
+Add meg a két legkisebb pozitív megoldást fokban!`,
+        answer: 2,
+        expectedSet: ['45', '105'],
+        type: 'multiplication',
+        expression: `x = π/4 vagy 7π/12`,
+    },
+    {
+        stage: 5,
+        question: `Oldd meg: cos 2x = sin x.
+Add meg a [0°, 360°) megoldásokat fokban!`,
+        answer: 3,
+        expectedSet: ['30', '150', '270'],
+        type: 'multiplication',
+        expression: `sin x = 1/2 vagy −1`,
+    },
+    {
+        stage: 5,
+        question: `Oldd meg: sin 2x = cos x.
+Add meg a [0°, 360°) megoldásokat fokban!`,
+        answer: 4,
+        expectedSet: ['30', '90', '150', '270'],
+        type: 'multiplication',
+        expression: `cos x = 0 vagy sin x = 1/2`,
+    },
+    {
+        stage: 5,
+        question: `Oldd meg: 2ˣ + 2^{−x} = 5/2.
+Add meg a két megoldást!`,
+        answer: 2,
+        expectedSet: ['-1', '1'],
+        type: 'multiplication',
+        expression: `x = ±1`,
+    },
+    {
+        stage: 5,
+        question: `Oldd meg: 3ˣ + 3^{−x} = 10/3.
+Add meg a két megoldást!`,
+        answer: 2,
+        expectedSet: ['-1', '1'],
+        type: 'multiplication',
+        expression: `x = ±1`,
+    },
+    {
+        stage: 5,
+        question: `Oldd meg: log₅(x + 4) − log₅(x − 1) = 1.`,
+        answer: 2.25,
+        type: 'multiplication',
+        expression: `x = 9/4`,
+    },
+    {
+        stage: 5,
+        question: `Oldd meg: √(x + 1) = log₂(x + 1).
+Add meg a két megoldást!`,
+        answer: 2,
+        expectedSet: ['3', '15'],
+        type: 'multiplication',
+        expression: `x = 3 vagy 15`,
+    },
+    {
+        stage: 5,
+        question: `Hány valós megoldása van: 2 · 16ˣ + 7 · 4ˣ + 3 = 0?`,
+        answer: 0,
+        type: 'multiplication',
+        expression: `Nincs valós megoldás`,
+    },
+
+    // —— 6. szint ——
+    {
+        stage: 6,
+        question: `Mely p-kre van x² − (p + 1)x + p = 0-nak két különböző valós gyöke?
+Add meg a kizárt p-t!`,
+        answer: 1,
+        type: 'multiplication',
+        expression: `p ≠ 1`,
+    },
+    {
+        stage: 6,
+        question: `Határozd meg p-t úgy, hogy x² − 6x + p = 0-nak pontosan egy valós gyöke legyen!`,
         answer: 9,
         type: 'multiplication',
-        expression: `D = 36 − 4p > 0 → p < 9`,
+        expression: `p = 9`,
     },
     {
         stage: 6,
-        question: `Vizsgáld!
-
-|x² − 4x + 3| = p
-
-Ha p = 1, hány különböző valós megoldás van?`,
+        question: `Határozd meg p-t úgy, hogy 2^{2x} − p · 2ˣ + 4 = 0-nak pontosan egy valós megoldása legyen!`,
+        answer: 4,
+        type: 'multiplication',
+        expression: `p = 4`,
+    },
+    {
+        stage: 6,
+        question: `Mely p-kre van (log₂ x)² − p log₂ x + 1 = 0-nak két különböző pozitív megoldása?
+Add meg a pozitív határpontot!`,
+        answer: 2,
+        type: 'multiplication',
+        expression: `|p| > 2`,
+    },
+    {
+        stage: 6,
+        question: `Oldd meg a [1, 8] alaphalmazon: |x − 5| = 2x − 4.`,
         answer: 3,
         type: 'multiplication',
-        expression: `p = 1: a W-alak csúcsa + két külső`,
+        expression: `x = 3`,
     },
     {
         stage: 6,
-        question: `Ugyanez az egyenlet. Ha p = 2, hány különböző valós megoldás van?`,
-        answer: 2,
-        type: 'multiplication',
-        expression: `p > 1 → 2 megoldás`,
-    },
-    {
-        stage: 6,
-        question: `Ugyanez. Ha 0 < p < 1, hány különböző valós megoldás van?`,
-        answer: 4,
-        type: 'multiplication',
-        expression: `W-alak: 4 metszéspont`,
-    },
-    {
-        stage: 6,
-        question: `Ugyanez. Ha p < 0, hány különböző valós megoldás van?`,
-        answer: 0,
-        type: 'multiplication',
-        expression: `absz ≥ 0`,
-    },
-    {
-        stage: 6,
-        question: `Ugyanez. Ha p = 0, hány különböző valós megoldás van?`,
-        answer: 2,
-        type: 'multiplication',
-        expression: `x = 1 és x = 3`,
-    },
-    {
-        stage: 6,
-        question: `Vizsgáld!
-
-√(x + 2) = p − x
-
-Ha p = −3, hány valós megoldás van?`,
-        answer: 0,
-        type: 'multiplication',
-        expression: `p < −2 → 0 megoldás`,
-    },
-    {
-        stage: 6,
-        question: `Ugyanez. Ha p = −2, hány valós megoldás van?`,
-        answer: 1,
-        type: 'multiplication',
-        expression: `érintés x = −2-nél`,
-    },
-    {
-        stage: 6,
-        question: `Ugyanez. Ha p = 2, hány valós megoldás van?`,
-        answer: 1,
-        type: 'multiplication',
-        expression: `p > −2 → pontosan 1 megoldás`,
-    },
-    {
-        stage: 6,
-        question: `Vizsgáld!
-
-x² = p − x
-
-Ha p = −0,25, hány valós megoldás van?`,
-        answer: 1,
-        type: 'multiplication',
-        expression: `D = 0 ⇔ p = −1/4`,
-    },
-    {
-        stage: 6,
-        question: `Ugyanez. Ha p = 0, hány valós megoldás van?`,
-        answer: 2,
-        type: 'multiplication',
-        expression: `x = 0 vagy x = −1`,
-    },
-    {
-        stage: 6,
-        question: `Ugyanez. Ha p = −1, hány valós megoldás van?`,
-        answer: 0,
-        type: 'multiplication',
-        expression: `p < −1/4 → 0 megoldás`,
-    },
-    {
-        stage: 6,
-        question: `Bizonyítsd: (x + 1)/x = 2 a pozitív valósakon pontosan egy megoldású.
-
-Add meg ezt a megoldást!`,
-        answer: 1,
-        type: 'multiplication',
-        expression: `1 + 1/x = 2 → x = 1`,
-    },
-    {
-        stage: 6,
-        question: `Határozd meg az összes pozitív egész (x, y) számpárt!
-
-xy = 2x + 3y
-
-Hány ilyen számpár van?`,
-        answer: 4,
-        type: 'multiplication',
-        expression: `(4, 8), (5, 5), (6, 4), (9, 3)`,
-    },
-    {
-        stage: 6,
-        question: `Ugyanez. Add meg a legnagyobb lehetséges x-et!`,
-        answer: 9,
-        type: 'multiplication',
-        expression: `x = 9, y = 3`,
-    },
-    {
-        stage: 6,
-        question: `Oldd meg!
-
-(x² − 5x + 6)/(x² − 1) ≤ 0
-
-Hány egész megoldás van?`,
+        question: `Oldd meg a [0, 10] alaphalmazon: √(2x + 3) = x.`,
         answer: 3,
         type: 'multiplication',
-        expression: `x = 0, 2, 3`,
+        expression: `x = 3`,
     },
     {
         stage: 6,
-        question: `Ugyanez az egyenlőtlenség.
-
-Add meg a zárt intervallum alsó határát!`,
+        question: `Oldd meg pozitív egész párokra: xy = 36, x + y = 13.
+Add meg a két lehetséges x-et!`,
+        answer: 2,
+        expectedSet: ['4', '9'],
+        type: 'multiplication',
+        expression: `(4, 9) vagy (9, 4)`,
+    },
+    {
+        stage: 6,
+        question: `Hány pozitív egész (x, y) párra teljesül x/8 = 1,5 / y?`,
+        answer: 6,
+        type: 'multiplication',
+        expression: `xy = 12 → 6 pár`,
+    },
+    {
+        stage: 6,
+        question: `Határozd meg a pozitív egész n-et, amelyre (n + 4)! / n! = 24(n + 1)(n + 3).`,
         answer: 2,
         type: 'multiplication',
-        expression: `]−1; 1[ ∪ [2; 3]`,
+        expression: `n = 2`,
     },
     {
         stage: 6,
-        question: `Oldd meg!
-
-2 sin² x + sin x cos x − cos² x = 0
-
-Hány megoldás van a [0; 2π) intervallumon?`,
-        answer: 4,
+        question: `Hány egész n-re teljesül n² − 5n + 10 = 26?`,
+        answer: 0,
         type: 'multiplication',
-        expression: `tan x = 1/2 vagy tan x = −1`,
+        expression: `Nincs egész megoldás`,
     },
     {
         stage: 6,
-        question: `Vizsgáld!
-
-|x² − 4| = p x
-
-Ha p = 0, hány valós megoldás van?`,
+        question: `Hány valós megoldása van: 3x⁴ + 2x² + 5 = 0?`,
+        answer: 0,
+        type: 'multiplication',
+        expression: `Nincs valós megoldás`,
+    },
+    {
+        stage: 6,
+        question: `Igazold: x³ − 4x² − x + 4 = 0 gyökei −1, 1, 4.
+Add meg a három gyököt!`,
+        answer: 3,
+        expectedSet: ['-1', '1', '4'],
+        type: 'multiplication',
+        expression: `(x − 4)(x − 1)(x + 1)`,
+    },
+    {
+        stage: 6,
+        question: `Oldd meg: (x − 2)/(x + 1) = (x + 4)/(x − 3).`,
+        answer: 0.2,
+        type: 'multiplication',
+        expression: `x = 1/5`,
+    },
+    {
+        stage: 6,
+        question: `Oldd meg: √(x + 4) + √(x − 1) = 5.`,
+        answer: 5,
+        type: 'multiplication',
+        expression: `x = 5`,
+    },
+    {
+        stage: 6,
+        question: `Oldd meg: |x − 2| + |2x + 1| = 7.
+Add meg a két megoldást 3 tizedesjeggyel!`,
         answer: 2,
+        expectedSet: ['-2', '2.667'],
         type: 'multiplication',
-        expression: `x = ±2`,
+        expression: `x = −2 vagy 8/3`,
     },
     {
         stage: 6,
-        question: `Ugyanez. Ha p = 1, hány valós megoldás van?`,
-        answer: 2,
-        type: 'multiplication',
-        expression: `két pozitív gyök, negatív nincs`,
-    },
-    {
-        stage: 6,
-        question: `x² = p − x és p = −1/4.
+        question: `Oldd meg: log₂(x − 1) + log₂(x + 3) = 4.
 
-Add meg a (kettős) gyököt!`,
-        answer: -0.5,
+Add meg 3 tizedesjeggyel!`,
+        answer: 3.472,
         type: 'multiplication',
-        expression: `x = −1/2`,
+        expression: `x = −1 + 2√5`,
+    },
+    {
+        stage: 6,
+        question: `Oldd meg: 2^{x+1} + 2^{1−x} = 5.
+Add meg a két megoldást!`,
+        answer: 2,
+        expectedSet: ['-1', '1'],
+        type: 'multiplication',
+        expression: `x = ±1`,
+    },
+    {
+        stage: 6,
+        question: `Oldd meg: 2 sin² x − 3 sin x + 1 = 0.
+Add meg a [0°, 360°) megoldásokat fokban!`,
+        answer: 3,
+        expectedSet: ['30', '90', '150'],
+        type: 'multiplication',
+        expression: `sin x = 1 vagy 1/2`,
+    },
+    {
+        stage: 6,
+        question: `Mely p-kre esik |x − p| = 3 mindkét megoldása a [0, 10] intervallumba?
+Add meg a két határpontot!`,
+        answer: 2,
+        expectedSet: ['3', '7'],
+        type: 'multiplication',
+        expression: `3 ≤ p ≤ 7`,
+    },
+    {
+        stage: 6,
+        question: `P(n) = (n² − 5n + 10)/2. Van-e n ≥ 3 egész, amelyre P(n) = 35?
+
+Add meg 1-et, ha van, 0-t, ha nincs!`,
+        answer: 0,
+        type: 'multiplication',
+        expression: `n² − 5n − 60 = 0, nem egész`,
     },
 ];

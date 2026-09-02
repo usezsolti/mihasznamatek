@@ -1,933 +1,1009 @@
 import type { Question } from './types';
 
 /**
- * Bizonyítások — 6 szint × 20 feladat (MIHASZNAMATEK hat szintű rendszer).
- * 1 Alapok → 2 Módszerek → 3 Önálló rutin → 4 Összetett → 5 Emelt → 6 Mesterfok.
- * Egy kártya = egy feladat = egy válasz.
+ * Bizonyítások — 6×20 (Bizonyítások.pdf / TeX).
+ * 1 Direkt → 2 Megfordítás / ellenpélda / indirekt → 3 Algebra / számelmélet →
+ * 4 Indukció / sorozatok → 5 Geometria / kombinatorika / gráf → 6 Mesterfok.
+ * Egy kártya = egy szám vagy halmaz. Igaz/hamis: 1 / 0.
+ * Azonosság: adott helyen kiértékelt szám.
  */
 export const getProofPracticeQuestions = (): Question[] => [
+    // —— 1. szint ——
     {
         stage: 1,
-        question: `Igazold numerikusan!
-
-(a + b)² − (a − b)² = 4ab
-
-Ha a = 5 és b = 3, mennyi a bal oldal?`,
-        answer: 60,
+        question: `Bizonyítsd be, hogy két egymást követő egész összege páratlan.
+n = 6 esetén mennyi n + (n + 1)?`,
+        answer: 13,
         type: 'multiplication',
-        expression: `4ab = 4·5·3 = 60`,
+        expression: `2n + 1 = 13`,
     },
     {
         stage: 1,
-        question: `Igazold!
-
-a² − b² = (a − b)(a + b)
-
-Ha a = 7 és b = 2, mennyi az érték?`,
-        answer: 45,
+        question: `Bizonyítsd be, hogy két egymást követő egész szorzata páros.
+n = 6 esetén mennyi n(n + 1)?`,
+        answer: 42,
         type: 'multiplication',
-        expression: `49 − 4 = 45`,
+        expression: `6 · 7 = 42`,
     },
     {
         stage: 1,
-        question: `Egy derékszögű háromszög befogói 6 cm és 8 cm.
-
-Határozd meg az átfogót!`,
-        answer: 10,
+        question: `Bizonyítsd be, hogy három egymást követő egész összege osztható 3-mal.
+n = 5 esetén mennyi az összeg osztva 3-mal?`,
+        answer: 6,
         type: 'multiplication',
-        expression: `√(36+64) = 10`,
+        expression: `5 + 6 + 7 = 18`,
     },
     {
         stage: 1,
-        question: `Számtani sorozat: a₁ = 3, d = 4.
-
-Mennyi a tizedik tag?`,
-        answer: 39,
+        question: `Bizonyítsd be, hogy három egymást követő egész szorzata osztható 6-tal.
+n = 4 esetén mennyi n(n + 1)(n + 2) / 6?`,
+        answer: 20,
         type: 'multiplication',
-        expression: `a₁₀ = 3 + 9·4 = 39`,
+        expression: `4 · 5 · 6 / 6 = 20`,
     },
     {
         stage: 1,
-        question: `Szabályos dobókockával egyszer dobunk.
-
-Mennyi a páros dobás valószínűsége?`,
-        answer: 0.5,
+        question: `Bizonyítsd be, hogy n² + n páros.
+n = 7 esetén mennyi (n² + n) / 2?`,
+        answer: 28,
         type: 'multiplication',
-        expression: `3/6 = 1/2`,
+        expression: `n(n + 1) / 2 = 28`,
     },
     {
         stage: 1,
-        question: `Öt ember közül kettőt választunk.
-
-Hány különböző kiválasztás lehetséges?`,
-        answer: 10,
+        question: `Bizonyítsd be, hogy n³ − n osztható 6-tal.
+n = 5 esetén mennyi (n³ − n) / 6?`,
+        answer: 20,
         type: 'multiplication',
-        expression: `C(5,2) = 10`,
+        expression: `120 / 6 = 20`,
     },
     {
         stage: 1,
-        question: `n³ − n osztható 6-tal. Ellenőrzés: n = 4.
-
-Mennyi (n³ − n) / 6?`,
-        answer: 10,
+        question: `Bizonyítsd be, hogy páratlan egész négyzete páratlan.
+Mennyi 9²?`,
+        answer: 81,
         type: 'multiplication',
-        expression: `64 − 4 = 60, 60/6 = 10`,
+        expression: `(2k + 1)² páratlan`,
     },
     {
         stage: 1,
-        question: `Páratlan szám négyzete 8-cal osztva 1 maradékot ad.
-
-5² = 25. Mennyi 25 mod 8?`,
-        answer: 1,
-        type: 'multiplication',
-        expression: `24 + 1`,
-    },
-    {
-        stage: 1,
-        question: `1 + 3 + 5 + 7 + 9 = n².
-
-Mennyi az összeg?`,
+        question: `Bizonyítsd be, hogy páros egész négyzete osztható 4-gyel.
+Mennyi 10² / 4?`,
         answer: 25,
         type: 'multiplication',
-        expression: `5² = 25`,
+        expression: `(2k)² = 4k²`,
     },
     {
         stage: 1,
-        question: `1 + 2 + … + 10 = n(n+1)/2.
-
-Mennyi az összeg?`,
-        answer: 55,
+        question: `Bizonyítsd be, hogy két páratlan egész összege páros.
+Mennyi 7 + 11?`,
+        answer: 18,
         type: 'multiplication',
-        expression: `10·11/2 = 55`,
+        expression: `2(k + m + 1)`,
     },
     {
         stage: 1,
-        question: `C(n,0) + … + C(n,n) = 2ⁿ.
-
-n = 4 esetén a jobb oldal mennyi?`,
-        answer: 16,
+        question: `Bizonyítsd be, hogy két páratlan egész szorzata páratlan.
+Mennyi 7 · 11?`,
+        answer: 77,
         type: 'multiplication',
-        expression: `2⁴ = 16`,
+        expression: `4km + 2k + 2m + 1`,
     },
     {
         stage: 1,
-        question: `Pitagorasz: 3, 4, 5.
-
-Mennyi a háromszög területe?`,
-        answer: 6,
+        question: `Bizonyítsd be: (a + b)² + (a − b)² = 2(a² + b²).
+a = 5, b = 3 esetén mennyi a bal oldal?`,
+        answer: 68,
         type: 'multiplication',
-        expression: `3·4/2 = 6`,
+        expression: `64 + 4 = 68`,
     },
     {
         stage: 1,
-        question: `AM-GM: √(ab) ≤ (a+b)/2.
-
-Ha a = 4 és b = 9, mennyi a mértani közép?`,
-        answer: 6,
-        type: 'multiplication',
-        expression: `√36 = 6`,
-    },
-    {
-        stage: 1,
-        question: `Ha a = 4 és b = 9, mennyi a számtani közép?`,
-        answer: 6.5,
-        type: 'multiplication',
-        expression: `(4+9)/2 = 6,5`,
-    },
-    {
-        stage: 1,
-        question: `2ⁿ értéke n = 5 esetén?`,
-        answer: 32,
-        type: 'multiplication',
-        expression: `2⁵ = 32`,
-    },
-    {
-        stage: 1,
-        question: `Három egymást követő egész szorzata: 3·4·5.
-
-Mennyi a szorzat?`,
+        question: `Bizonyítsd be: (a + b)² − (a − b)² = 4ab.
+a = 5, b = 3 esetén mennyi a bal oldal?`,
         answer: 60,
         type: 'multiplication',
-        expression: `60`,
+        expression: `4 · 5 · 3 = 60`,
     },
     {
         stage: 1,
-        question: `n páratlan: n = 9. Mennyi n² mod 8?`,
-        answer: 1,
+        question: `Bizonyítsd be: a³ − b³ = (a − b)(a² + ab + b²).
+a = 5, b = 2 esetén mennyi a³ − b³?`,
+        answer: 117,
         type: 'multiplication',
-        expression: `81 = 10·8 + 1`,
+        expression: `125 − 8 = 117`,
     },
     {
         stage: 1,
-        question: `Hány prímszám van 10-nél nem nagyobb?`,
-        answer: 4,
-        type: 'multiplication',
-        expression: `2, 3, 5, 7`,
-    },
-    {
-        stage: 1,
-        question: `Egyenlő oldalú háromszög oldala 2.
-
-(a+b−c)(a−b+c)(−a+b+c) = ?`,
-        answer: 8,
-        type: 'multiplication',
-        expression: `2·2·2 = 8`,
-    },
-    {
-        stage: 1,
-        question: `C(6,1) = ?`,
-        answer: 6,
-        type: 'multiplication',
-        expression: `6`,
-    },
-    {
-        stage: 2,
-        question: `Bizonyítsd: pozitív a, b esetén a/b + b/a ≥ 2.
-
-Add meg a minimumot!`,
-        answer: 2,
-        type: 'multiplication',
-        expression: `egyenlőség ⇔ a = b`,
-    },
-    {
-        stage: 2,
-        question: `Mikor áll fenn egyenlőség a/b + b/a ≥ 2 esetén?
-
-Add meg az a/b arányt!`,
-        answer: 1,
-        type: 'multiplication',
-        expression: `a = b`,
-    },
-    {
-        stage: 2,
-        question: `|2x − 5| = x + 1 megoldásai közül a nagyobbikat add meg!`,
-        answer: 6,
-        type: 'multiplication',
-        expression: `2x−5 = x+1 → x = 6`,
-    },
-    {
-        stage: 2,
-        question: `√(3x − 2) = x.
-
-Add meg a nagyobb megoldást!`,
-        answer: 2,
-        type: 'multiplication',
-        expression: `x = 1 vagy x = 2`,
-    },
-    {
-        stage: 2,
-        question: `2^{x+1} = 16.
-
-Add meg x-et!`,
-        answer: 3,
-        type: 'multiplication',
-        expression: `2^{x+1} = 2⁴ → x = 3`,
-    },
-    {
-        stage: 2,
-        question: `x⁴ − 5x² + 4 = 0.
-
-Add meg a legnagyobb megoldást!`,
-        answer: 2,
-        type: 'multiplication',
-        expression: `x² = 4 vagy 1 → x = ±2, ±1`,
-    },
-    {
-        stage: 2,
-        question: `Számtani sorozat: a₄ = 11, a₉ = 26.
-
-Mennyi d?`,
-        answer: 3,
-        type: 'multiplication',
-        expression: `5d = 15 → d = 3`,
-    },
-    {
-        stage: 2,
-        question: `Ugyanennél a sorozatnál mennyi a₁?`,
-        answer: 2,
-        type: 'multiplication',
-        expression: `a₁ + 3d = 11 → a₁ = 2`,
-    },
-    {
-        stage: 2,
-        question: `Két kockával a dobott számok összege legalább 10.
-
-Hány kedvező kimenetel van (36-ból)?`,
-        answer: 6,
-        type: 'multiplication',
-        expression: `(4,6)(5,5)(5,6)(6,4)(6,5)(6,6)`,
-    },
-    {
-        stage: 2,
-        question: `Két oldal 7 és 10, közbezárt szög 60°.
-
-A harmadik oldal koszinusztétellel: c² = 49+100−70. Mennyi c²?`,
-        answer: 79,
-        type: 'multiplication',
-        expression: `c² = 149 − 70 = 79`,
-    },
-    {
-        stage: 2,
-        question: `n = 6. Mennyi (n³ − n)/6?`,
+        question: `Bizonyítsd be: a³ + b³ = (a + b)(a² − ab + b²).
+a = 3, b = 2 esetén mennyi a³ + b³?`,
         answer: 35,
         type: 'multiplication',
-        expression: `216−6 = 210, 210/6 = 35`,
+        expression: `27 + 8 = 35`,
     },
     {
-        stage: 2,
-        question: `15² = 225. Mennyi 225 mod 8?`,
-        answer: 1,
+        stage: 1,
+        question: `Bizonyítsd be: ha a | b és a | c, akkor a | (b + c).
+a = 4, b = 8, c = 12 esetén mennyi (b + c) / a?`,
+        answer: 5,
         type: 'multiplication',
-        expression: `28·8 = 224`,
+        expression: `20 / 4 = 5`,
+    },
+    {
+        stage: 1,
+        question: `Bizonyítsd be: ha a | b, akkor a | kb.
+a = 5, b = 15, k = 3 esetén mennyi kb / a?`,
+        answer: 9,
+        type: 'multiplication',
+        expression: `45 / 5 = 9`,
+    },
+    {
+        stage: 1,
+        question: `Bizonyítsd be: ha a | b és b | c, akkor a | c.
+a = 3, b = 6, c = 18 esetén mennyi c / a?`,
+        answer: 6,
+        type: 'multiplication',
+        expression: `18 / 3 = 6`,
+    },
+    {
+        stage: 1,
+        question: `Bizonyítsd be: (a + b)/2 ≥ √(ab) (a, b > 0).
+a = 9, b = 4 esetén mennyi a számtani közép?`,
+        answer: 6.5,
+        type: 'multiplication',
+        expression: `AM = 6,5 ≥ GM = 6`,
+    },
+    {
+        stage: 1,
+        question: `Bizonyítsd be: x² + 1 ≥ 2x.
+x = 5 esetén mennyi (x − 1)²?`,
+        answer: 16,
+        type: 'multiplication',
+        expression: `(x − 1)² ≥ 0`,
+    },
+    {
+        stage: 1,
+        question: `Bizonyítsd be: x² + y² ≥ 2xy.
+x = 4, y = 1 esetén mennyi (x − y)²?`,
+        answer: 9,
+        type: 'multiplication',
+        expression: `(x − y)² ≥ 0`,
+    },
+
+    // —— 2. szint ——
+    {
+        stage: 2,
+        question: `„Ha egy egész osztható 12-vel, akkor osztható 6-tal.”
+A megfordítás hamis. Adj ellenpéldát: melyik szám osztható 6-tal, de nem 12-vel?`,
+        answer: 6,
+        type: 'multiplication',
+        expression: `6 | 6, de 12 ∤ 6`,
     },
     {
         stage: 2,
-        question: `Páros n esetén (n² + 2) mod 4 mennyi?`,
+        question: `„Ha egy négyszög négyzet, akkor téglalap.”
+Igaz-e a megfordítás?
+
+Add meg 1-et, ha igaz, 0-t, ha hamis!`,
+        answer: 0,
+        type: 'multiplication',
+        expression: `Hamis (nem négyzet téglalap)`,
+    },
+    {
+        stage: 2,
+        question: `„Ha egy háromszög szabályos, akkor egyenlő szárú.”
+Igaz-e a megfordítás?
+
+Add meg 1-et, ha igaz, 0-t, ha hamis!`,
+        answer: 0,
+        type: 'multiplication',
+        expression: `Hamis`,
+    },
+    {
+        stage: 2,
+        question: `Adj ellenpéldát: „Ha a² | b², akkor a² | b.”
+a = 2 esetén mennyi b?`,
         answer: 2,
         type: 'multiplication',
-        expression: `(2k)² + 2 ≡ 2 (mod 4)`,
+        expression: `4 | 4, de 4 ∤ 2`,
     },
     {
         stage: 2,
-        question: `Páratlan n esetén (n² + 2) mod 4 mennyi?`,
+        question: `Adj ellenpéldát: „Ha ab páros, akkor a és b is páros.”
+Add meg a páratlan tényezőt a kulcsbeli példában!`,
         answer: 3,
         type: 'multiplication',
-        expression: `1 + 2 ≡ 3 (mod 4)`,
+        expression: `a = 2, b = 3`,
     },
     {
         stage: 2,
-        question: `1 + 3 + … + (2·8 − 1) = ?`,
+        question: `Adj ellenpéldát: „Ha x² > y², akkor x > y.”
+Add meg az x értékét a kulcsbeli példában!`,
+        answer: -3,
+        type: 'multiplication',
+        expression: `x = −3, y = 2`,
+    },
+    {
+        stage: 2,
+        question: `Bizonyítsd indirekt módon, hogy √2 irracionális.
+
+Add meg 1-et, ha az állítás igaz, 0-t, ha hamis!`,
+        answer: 1,
+        type: 'multiplication',
+        expression: `Igaz`,
+    },
+    {
+        stage: 2,
+        question: `Bizonyítsd indirekt módon, hogy nincs legnagyobb prímszám.
+
+Add meg 1-et, ha az állítás igaz, 0-t, ha hamis!`,
+        answer: 1,
+        type: 'multiplication',
+        expression: `Igaz`,
+    },
+    {
+        stage: 2,
+        question: `Bizonyítsd: ha n² páros, akkor n páros.
+n = 7 esetén mennyi n² mod 2?`,
+        answer: 1,
+        type: 'multiplication',
+        expression: `49 páratlan`,
+    },
+    {
+        stage: 2,
+        question: `Bizonyítsd: ha n² osztható 3-mal, akkor n is.
+n = 4 esetén mennyi n² mod 3?`,
+        answer: 1,
+        type: 'multiplication',
+        expression: `16 ≡ 1 (mod 3)`,
+    },
+    {
+        stage: 2,
+        question: `Bizonyítsd: ha egy háromszög két magassága egyenlő, akkor egyenlő szárú.
+
+Add meg 1-et, ha az állítás igaz, 0-t, ha hamis!`,
+        answer: 1,
+        type: 'multiplication',
+        expression: `T = am_a/2 = bm_b/2`,
+    },
+    {
+        stage: 2,
+        question: `Bizonyítsd: nincs olyan egész, amely egyszerre páros és páratlan.
+
+Add meg 1-et, ha az állítás igaz, 0-t, ha hamis!`,
+        answer: 1,
+        type: 'multiplication',
+        expression: `Igaz`,
+    },
+    {
+        stage: 2,
+        question: `Bizonyítsd: két különböző páratlan prím összege páros összetett.
+Mennyi 3 + 5?`,
+        answer: 8,
+        type: 'multiplication',
+        expression: `> 2 és páros`,
+    },
+    {
+        stage: 2,
+        question: `„Ha egy egész osztható 18-cal, akkor számjegyeinek összege osztható 9-cel.”
+A megfordítás hamis. Adj ellenpéldát!`,
+        answer: 9,
+        type: 'multiplication',
+        expression: `9 osztható 9-cel, de nem 18-cal`,
+    },
+    {
+        stage: 2,
+        question: `„Ha egy négyszög rombusz, akkor átlói merőlegesek.”
+Igaz-e a megfordítás?
+
+Add meg 1-et, ha igaz, 0-t, ha hamis!`,
+        answer: 0,
+        type: 'multiplication',
+        expression: `Hamis (pl. nem rombusz deltoid)`,
+    },
+    {
+        stage: 2,
+        question: `Ha a, b > 0 és a + b = 10, akkor nem lehet a > 5 és b > 5.
+Ha a = 6, mennyi a maximális b?`,
+        answer: 4,
+        type: 'multiplication',
+        expression: `a + b = 10`,
+    },
+    {
+        stage: 2,
+        question: `Két egymást követő pozitív négyzetszám különbsége.
+k = 5 esetén mennyi (k + 1)² − k²?`,
+        answer: 11,
+        type: 'multiplication',
+        expression: `2k + 1 = 11`,
+    },
+    {
+        stage: 2,
+        question: `„Ha két háromszögnek két-két oldala egyenlő, akkor egybevágók.”
+Igaz-e az állítás?
+
+Add meg 1-et, ha igaz, 0-t, ha hamis!`,
+        answer: 0,
+        type: 'multiplication',
+        expression: `Hamis (SSA nem elég)`,
+    },
+    {
+        stage: 2,
+        question: `„Ha két függvénynek ugyanaz a zérushelye, akkor azonosak.”
+f(x) = x és g(x) = x³ közös zérushelye?`,
+        answer: 0,
+        type: 'multiplication',
+        expression: `x = 0`,
+    },
+    {
+        stage: 2,
+        question: `Ha n nem osztható 2-vel és 3-mal, akkor n² ≡ 1 (mod 6).
+n = 5 esetén mennyi n² mod 6?`,
+        answer: 1,
+        type: 'multiplication',
+        expression: `25 ≡ 1 (mod 6)`,
+    },
+
+    // —— 3. szint ——
+    {
+        stage: 3,
+        question: `Bizonyítsd: n⁵ − n osztható 30-cal.
+n = 4 esetén mennyi (n⁵ − n) / 30?`,
+        answer: 34,
+        type: 'multiplication',
+        expression: `1020 / 30 = 34`,
+    },
+    {
+        stage: 3,
+        question: `Bizonyítsd: páratlan n-re n² ≡ 1 (mod 8).
+n = 7 esetén mennyi n² mod 8?`,
+        answer: 1,
+        type: 'multiplication',
+        expression: `49 ≡ 1 (mod 8)`,
+    },
+    {
+        stage: 3,
+        question: `Bizonyítsd: p > 3 prímre p² − 1 osztható 24-gyel.
+p = 7 esetén mennyi (p² − 1) / 24?`,
+        answer: 2,
+        type: 'multiplication',
+        expression: `48 / 24 = 2`,
+    },
+    {
+        stage: 3,
+        question: `Bizonyítsd: négyzetszám 4-gyel osztva 0 vagy 1 maradékot ad.
+Mennyi 7² mod 4?`,
+        answer: 1,
+        type: 'multiplication',
+        expression: `49 ≡ 1 (mod 4)`,
+    },
+    {
+        stage: 3,
+        question: `Bizonyítsd: négyzetszám nem végződhet 2, 3, 7, 8-ra.
+Mennyi 13² utolsó számjegye?`,
+        answer: 9,
+        type: 'multiplication',
+        expression: `169`,
+    },
+    {
+        stage: 3,
+        question: `Bizonyítsd: lnko(a, b) = 1 ⇒ lnko(a, a + b) = 1.
+a = 8, b = 15 esetén mennyi lnko(8, 23)?`,
+        answer: 1,
+        type: 'multiplication',
+        expression: `1`,
+    },
+    {
+        stage: 3,
+        question: `Bizonyítsd: két egymást követő pozitív egész relatív prím.
+Mennyi lnko(14, 15)?`,
+        answer: 1,
+        type: 'multiplication',
+        expression: `1`,
+    },
+    {
+        stage: 3,
+        question: `Bizonyítsd: lnko(n, n + 2) csak 1 vagy 2 lehet.
+n = 8 esetén mennyi lnko(8, 10)?`,
+        answer: 2,
+        type: 'multiplication',
+        expression: `2`,
+    },
+    {
+        stage: 3,
+        question: `Bizonyítsd: ha a | b és b | a pozitív egészekre, akkor a = b.
+
+Add meg 1-et, ha az állítás igaz, 0-t, ha hamis!`,
+        answer: 1,
+        type: 'multiplication',
+        expression: `kℓ = 1`,
+    },
+    {
+        stage: 3,
+        question: `Bizonyítsd Eukleidész lemmáját: p prím, p | ab ⇒ p | a vagy p | b.
+
+Add meg 1-et, ha az állítás igaz, 0-t, ha hamis!`,
+        answer: 1,
+        type: 'multiplication',
+        expression: `Igaz`,
+    },
+    {
+        stage: 3,
+        question: `Bizonyítsd: lnko(a, b) = 1 és a | bc ⇒ a | c.
+
+Add meg 1-et, ha az állítás igaz, 0-t, ha hamis!`,
+        answer: 1,
+        type: 'multiplication',
+        expression: `Bézout`,
+    },
+    {
+        stage: 3,
+        question: `Bizonyítsd: a² + b² ≥ 2ab (a, b > 0).
+a = 3, b = 5 esetén mennyi (a − b)²?`,
+        answer: 4,
+        type: 'multiplication',
+        expression: `4`,
+    },
+    {
+        stage: 3,
+        question: `Bizonyítsd: a/b + b/a ≥ 2 (a, b > 0).
+a = 4, b = 1 esetén mennyi a/b + b/a?`,
+        answer: 4.25,
+        type: 'multiplication',
+        expression: `4 + 1/4 = 4,25`,
+    },
+    {
+        stage: 3,
+        question: `Bizonyítsd: x + 1/x ≥ 2 (x > 0).
+x = 4 esetén mennyi x + 1/x?`,
+        answer: 4.25,
+        type: 'multiplication',
+        expression: `4,25`,
+    },
+    {
+        stage: 3,
+        question: `Bizonyítsd: (a + b + c)² ≥ 3(ab + bc + ca).
+a = 1, b = 2, c = 3 esetén mennyi a különbség?`,
+        answer: 3,
+        type: 'multiplication',
+        expression: `36 − 33 = 3`,
+    },
+    {
+        stage: 3,
+        question: `Ha a, b, c háromszög oldalai, akkor a² + b² + 2ab − c² > 0.
+a = 3, b = 4, c = 5 esetén mennyi a bal oldal?`,
+        answer: 24,
+        type: 'multiplication',
+        expression: `(a + b)² − c² = 24`,
+    },
+    {
+        stage: 3,
+        question: `Ha a, b, c > 0 és a + b = c, akkor a² + b² < c².
+a = 3, b = 4, c = 7 esetén mennyi c² − (a² + b²)?`,
+        answer: 24,
+        type: 'multiplication',
+        expression: `2ab = 24`,
+    },
+    {
+        stage: 3,
+        question: `Bizonyítsd: 52941 jegyeiből képzett ötjegyű szám nem négyzetszám.
+Mennyi a számjegyösszeg?`,
+        answer: 21,
+        type: 'multiplication',
+        expression: `21 osztható 3-mal, de nem 9-cel`,
+    },
+    {
+        stage: 3,
+        question: `Bizonyítsd: n³ + (n + 1)³ + (n + 2)³ osztható 9-cel.
+n = 2 esetén mennyi az összeg osztva 9-cel?`,
+        answer: 11,
+        type: 'multiplication',
+        expression: `99 / 9 = 11`,
+    },
+    {
+        stage: 3,
+        question: `Bizonyítsd: n⁴ − n² osztható 12-vel.
+n = 5 esetén mennyi (n⁴ − n²) / 12?`,
+        answer: 50,
+        type: 'multiplication',
+        expression: `600 / 12 = 50`,
+    },
+
+    // —— 4. szint ——
+    {
+        stage: 4,
+        question: `Bizonyítsd: 1 + 2 + … + n = n(n + 1)/2.
+n = 10 esetén mennyi az összeg?`,
+        answer: 55,
+        type: 'multiplication',
+        expression: `55`,
+    },
+    {
+        stage: 4,
+        question: `Bizonyítsd: 1 + 3 + … + (2n − 1) = n².
+n = 8 esetén mennyi az összeg?`,
         answer: 64,
         type: 'multiplication',
         expression: `8² = 64`,
     },
     {
-        stage: 2,
-        question: `(5³ − 1)/4 = ?`,
-        answer: 31,
-        type: 'multiplication',
-        expression: `124/4 = 31`,
-    },
-    {
-        stage: 2,
-        question: `1² + 2² + … + 5² = ?`,
+        stage: 4,
+        question: `Bizonyítsd: 1² + … + n² = n(n + 1)(2n + 1)/6.
+n = 5 esetén mennyi az összeg?`,
         answer: 55,
         type: 'multiplication',
-        expression: `5·6·11/6 = 55`,
+        expression: `55`,
     },
     {
-        stage: 2,
-        question: `C(7,2) = ?`,
-        answer: 21,
+        stage: 4,
+        question: `Bizonyítsd: 1³ + … + n³ = [n(n + 1)/2]².
+n = 5 esetén mennyi az összeg?`,
+        answer: 225,
         type: 'multiplication',
-        expression: `21`,
+        expression: `15² = 225`,
     },
     {
-        stage: 2,
-        question: `Ha hₐ = hᵦ, akkor a/b = ?`,
-        answer: 1,
+        stage: 4,
+        question: `Bizonyítsd: 2ⁿ ≥ n + 1.
+n = 5 esetén mennyi 2ⁿ?`,
+        answer: 32,
         type: 'multiplication',
-        expression: `T = a hₐ/2 = b hᵦ/2`,
+        expression: `32 ≥ 6`,
     },
     {
-        stage: 2,
-        question: `Húrnégyszög szemközti szögeinek összege (fok)?`,
-        answer: 180,
+        stage: 4,
+        question: `Bizonyítsd: 3ⁿ ≥ 2n + 1.
+n = 4 esetén mennyi 3ⁿ?`,
+        answer: 81,
         type: 'multiplication',
-        expression: `karakterizáció`,
+        expression: `81 ≥ 9`,
     },
     {
-        stage: 3,
-        question: `Igazold: (a+b)⁴ − (a−b)⁴ = 8ab(a²+b²).
-
-a = 2, b = 1 esetén mennyi mindkét oldal?`,
-        answer: 80,
-        type: 'multiplication',
-        expression: `81 − 1 = 80`,
-    },
-    {
-        stage: 3,
-        question: `x⁴ − 4x³ + 8x² − 8x + 4 = (x² − 2x + 2)² ≥ 0.
-
-Hány valós x-re van egyenlőség?`,
-        answer: 0,
-        type: 'multiplication',
-        expression: `D = 4−8 < 0`,
-    },
-    {
-        stage: 3,
-        question: `√(x+5) + √(x−4) = 3.
-
-Add meg a megoldást!`,
-        answer: 4,
-        type: 'multiplication',
-        expression: `x = 4`,
-    },
-    {
-        stage: 3,
-        question: `|x − 2| + |x + 3| = 7.
-
-Add meg a nagyobb megoldást!`,
+        stage: 4,
+        question: `Bizonyítsd: 4ⁿ + 6n − 1 osztható 9-cel.
+n = 2 esetén mennyi (4ⁿ + 6n − 1) / 9?`,
         answer: 3,
         type: 'multiplication',
-        expression: `x = −4 vagy x = 3`,
+        expression: `27 / 9 = 3`,
     },
     {
-        stage: 3,
-        question: `|x² − 5x + 4| = 2.
-
-Add meg a legnagyobb megoldást 3 tizedesjeggyel!`,
-        answer: 4.562,
+        stage: 4,
+        question: `Bizonyítsd: 7ⁿ − 1 osztható 6-tal.
+n = 2 esetén mennyi (7ⁿ − 1) / 6?`,
+        answer: 8,
         type: 'multiplication',
-        expression: `(5+√17)/2 ≈ 4,562`,
+        expression: `48 / 6 = 8`,
     },
     {
-        stage: 3,
-        question: `Mértani sorozat: a₂ = 6, a₅ = 162.
-
-Mennyi q?`,
-        answer: 3,
+        stage: 4,
+        question: `Bizonyítsd: 5^{2n} − 1 osztható 24-gyel.
+n = 2 esetén mennyi (5⁴ − 1) / 24?`,
+        answer: 26,
         type: 'multiplication',
-        expression: `q³ = 27 → q = 3`,
+        expression: `624 / 24 = 26`,
     },
     {
-        stage: 3,
-        question: `Ugyanennél mennyi a₁?`,
-        answer: 2,
-        type: 'multiplication',
-        expression: `a₁ q = 6 → a₁ = 2`,
-    },
-    {
-        stage: 3,
-        question: `Téglalap kerülete 40 cm.
-
-Mennyi a maximális terület?`,
-        answer: 100,
-        type: 'multiplication',
-        expression: `négyzet 10×10`,
-    },
-    {
-        stage: 3,
-        question: `Négy különböző könyv véletlen sorrendben.
-
-Két kijelölt egymás mellett: kedvező / 24. Add meg a valószínűséget 3 tizedesjeggyel!`,
-        answer: 0.5,
-        type: 'multiplication',
-        expression: `2·3! / 4! = 1/2`,
-    },
-    {
-        stage: 3,
-        question: `1² + … + 10² = n(n+1)(2n+1)/6.
-
-Mennyi az összeg?`,
-        answer: 385,
-        type: 'multiplication',
-        expression: `10·11·21/6 = 385`,
-    },
-    {
-        stage: 3,
-        question: `(5⁴ − 1)/4 = ?`,
-        answer: 156,
-        type: 'multiplication',
-        expression: `625−1 = 624`,
-    },
-    {
-        stage: 3,
-        question: `n = 6. 1+3+…+(2n−1) = ?`,
-        answer: 36,
-        type: 'multiplication',
-        expression: `36`,
-    },
-    {
-        stage: 3,
-        question: `C(n,0)+…+C(n,n), n = 6. Mennyi?`,
-        answer: 64,
-        type: 'multiplication',
-        expression: `2⁶ = 64`,
-    },
-    {
-        stage: 3,
-        question: `Pozitív a,b,c: (a+b+c)(1/a+1/b+1/c) ≥ ?`,
-        answer: 9,
-        type: 'multiplication',
-        expression: `AM-HM`,
-    },
-    {
-        stage: 3,
-        question: `aₙ = (2n+3)/(3n+4). Mennyi lim aₙ, 3 tizedesjegy?`,
-        answer: 0.667,
-        type: 'multiplication',
-        expression: `2/3`,
-    },
-    {
-        stage: 3,
-        question: `Ugyanennek a sorozatnak a₁ értéke 3 tizedesjeggyel?`,
-        answer: 0.714,
-        type: 'multiplication',
-        expression: `5/7`,
-    },
-    {
-        stage: 3,
-        question: `x² − (2p+3)x + p² + 3p + 1 = 0.
-
-A diszkrimináns (konstans) mennyi?`,
-        answer: 5,
-        type: 'multiplication',
-        expression: `D = 5`,
-    },
-    {
-        stage: 3,
-        question: `31 tanuló, 12 hónap. Legalább hányan születtek ugyanabban a hónapban?`,
-        answer: 3,
-        type: 'multiplication',
-        expression: `⌈31/12⌉ = 3`,
-    },
-    {
-        stage: 3,
-        question: `Létezhet-e gráf pontosan 1 páratlan fokú csúccsal? (1 = igen, 0 = nem)`,
-        answer: 0,
-        type: 'multiplication',
-        expression: `kézfogási lemma`,
-    },
-    {
-        stage: 3,
-        question: `n(n+1)(n+2)/3, n = 4. Mennyi 1·2+2·3+3·4+4·5?`,
+        stage: 4,
+        question: `Bizonyítsd: 1·2 + … + n(n + 1) = n(n + 1)(n + 2)/3.
+n = 4 esetén mennyi az összeg?`,
         answer: 40,
         type: 'multiplication',
         expression: `40`,
     },
     {
         stage: 4,
-        question: `Jegyár 3000 Ft, 400 eladott jegy. x darab 200 Ft-os áremelés.
-
-A jegyár x = 5 esetén mennyi?`,
-        answer: 4000,
+        question: `Bizonyítsd: 1·3 + … + n(n + 2) = n(n + 1)(2n + 7)/6.
+n = 3 esetén mennyi az összeg?`,
+        answer: 26,
         type: 'multiplication',
-        expression: `3000 + 1000`,
+        expression: `26`,
     },
     {
         stage: 4,
-        question: `Ugyanez: eladott jegyek száma x = 5 esetén?`,
-        answer: 300,
+        question: `Bizonyítsd: 1/(1·2) + … + 1/(n(n + 1)) = n/(n + 1).
+n = 4 esetén mennyi az összeg?`,
+        answer: 0.8,
         type: 'multiplication',
-        expression: `400 − 100`,
+        expression: `4/5 = 0,8`,
     },
     {
         stage: 4,
-        question: `Bevétel B(x) = (3000+200x)(400−20x).
-
-A maximum x = 2,5-nél van. Mennyi ekkor a jegyár?`,
-        answer: 3500,
+        question: `Bizonyítsd, hogy a_n = (3n + 2)/(4n + 1) szigorúan csökkenő.
+Mennyi a₂ 3 tizedesjeggyel?`,
+        answer: 0.889,
         type: 'multiplication',
-        expression: `3000 + 500`,
+        expression: `8/9 ≈ 0,889`,
     },
     {
         stage: 4,
-        question: `20 cm-es négyzet sarkából x = 4 cm-es négyzetet vágunk.
-
-Mennyi a megmaradó terület?`,
-        answer: 384,
+        question: `Bizonyítsd, hogy a_n = n/(n + 1) szigorúan növekvő és felülről korlátos.
+Mennyi a₁₀ 3 tizedesjeggyel?`,
+        answer: 0.909,
         type: 'multiplication',
-        expression: `400 − 16`,
+        expression: `10/11 ≈ 0,909`,
     },
     {
         stage: 4,
-        question: `aₙ = (3n+1)/(4n+2).
-
-Mennyi a határérték?`,
-        answer: 0.75,
-        type: 'multiplication',
-        expression: `3/4`,
-    },
-    {
-        stage: 4,
-        question: `Ugyanennek a₁ értéke 3 tizedesjeggyel?`,
-        answer: 0.667,
-        type: 'multiplication',
-        expression: `4/6 = 2/3`,
-    },
-    {
-        stage: 4,
-        question: `Sₙ = 1·2 + … + n(n+1) = n(n+1)(n+2)/3.
-
-n = 6 esetén mennyi Sₙ?`,
-        answer: 112,
-        type: 'multiplication',
-        expression: `6·7·8/3 = 112`,
-    },
-    {
-        stage: 4,
-        question: `Két kocka él p = 1 és q = 2. Összeolvasztás előtt a felszínek összege?`,
-        answer: 30,
-        type: 'multiplication',
-        expression: `6(1+4) = 30`,
-    },
-    {
-        stage: 4,
-        question: `52941 számjegyeinek összes sorrendje (az eredetivel együtt). Hány ötjegyű szám?`,
-        answer: 120,
-        type: 'multiplication',
-        expression: `5! = 120`,
-    },
-    {
-        stage: 4,
-        question: `Derékszögű háromszög oldalai számtani sorozat, legrövidebb 4.
-
-Mennyi a középső oldal?`,
-        answer: 5,
-        type: 'multiplication',
-        expression: `4, 5, 6 — 16+25=36`,
-    },
-    {
-        stage: 4,
-        question: `Ugyanennek az átfogója?`,
-        answer: 6,
-        type: 'multiplication',
-        expression: `6`,
-    },
-    {
-        stage: 4,
-        question: `Kocka és gömb felszíne egyenlő. A gömb térfogata nagyobb-e? (1 = igen, 0 = nem)`,
+        question: `Bizonyítsd, hogy a_n = (2n + 1)/(n + 3) szigorúan növekvő (n ≥ 1).
+Mennyi a₂?`,
         answer: 1,
         type: 'multiplication',
-        expression: `izoperimetrikus`,
+        expression: `5/5 = 1`,
     },
     {
         stage: 4,
-        question: `C(8,3) = ?`,
-        answer: 56,
+        question: `Bizonyítsd, hogy a_n = (5n + 4)/(7n + 2) szigorúan csökkenő.
+Mennyi a₂?`,
+        answer: 0.875,
         type: 'multiplication',
-        expression: `56`,
+        expression: `14/16 = 0,875`,
     },
     {
         stage: 4,
-        question: `1-től 8-ig három szám, az összeg páros. Hány ilyen választás van?`,
-        answer: 28,
-        type: 'multiplication',
-        expression: `C(4,3)+C(4,2)C(4,1) = 4+24`,
-    },
-    {
-        stage: 4,
-        question: `Ekkor a páros összeg valószínűsége?`,
-        answer: 0.5,
-        type: 'multiplication',
-        expression: `28/56`,
-    },
-    {
-        stage: 4,
-        question: `n = 9. 1+3+…+(2n−1) = ?`,
-        answer: 81,
-        type: 'multiplication',
-        expression: `81`,
-    },
-    {
-        stage: 4,
-        question: `Háromszög 5, 12, 13. Terület?`,
-        answer: 30,
-        type: 'multiplication',
-        expression: `30`,
-    },
-    {
-        stage: 4,
-        question: `n = 7. (n³ − n)/6 = ?`,
-        answer: 56,
-        type: 'multiplication',
-        expression: `336/6`,
-    },
-    {
-        stage: 4,
-        question: `2⁸ = ?`,
-        answer: 256,
-        type: 'multiplication',
-        expression: `256`,
-    },
-    {
-        stage: 4,
-        question: `Téglalap kerület 40, oldalak 12 és 8. Terület?`,
-        answer: 96,
-        type: 'multiplication',
-        expression: `96 (max 100)`,
-    },
-    {
-        stage: 5,
-        question: `x² − (2p+1)x + p = 0. D = 4p² + 1.
+        question: `b_n = L / (1 + K qⁿ), L, K > 0, 0 < q < 1. Szigorúan növekvő és L-hez tart?
 
-D minimuma mennyi?`,
+Add meg 1-et, ha igaz, 0-t, ha hamis!`,
         answer: 1,
         type: 'multiplication',
-        expression: `4p²+1 ≥ 1`,
+        expression: `Igaz`,
     },
     {
+        stage: 4,
+        question: `a₁ = 1, a_{n+1} = 2a_n + 1. Igazold: a_n = 2ⁿ − 1.
+Mennyi a₅?`,
+        answer: 31,
+        type: 'multiplication',
+        expression: `32 − 1 = 31`,
+    },
+    {
+        stage: 4,
+        question: `Bizonyítsd: 1 + 2 + 4 + … + 2^{n−1} = 2ⁿ − 1.
+n = 6 esetén mennyi az összeg?`,
+        answer: 63,
+        type: 'multiplication',
+        expression: `64 − 1 = 63`,
+    },
+    {
+        stage: 4,
+        question: `Bizonyítsd: 1·1! + … + n·n! = (n + 1)! − 1.
+n = 4 esetén mennyi az összeg?`,
+        answer: 119,
+        type: 'multiplication',
+        expression: `5! − 1 = 119`,
+    },
+
+    // —— 5. szint ——
+    {
         stage: 5,
-        question: `Ugyanez: hány valós p-re van két különböző valós gyök? (1 = minden p, 0 = nem minden)`,
+        question: `Bizonyítsd: ha egy háromszög két magassága egyenlő, akkor a hozzájuk tartozó oldalak is.
+
+Add meg 1-et, ha az állítás igaz, 0-t, ha hamis!`,
         answer: 1,
         type: 'multiplication',
-        expression: `D > 0 mindig`,
+        expression: `T = am/2`,
     },
     {
         stage: 5,
-        question: `1+3+…+(2n−1) = n². n = 15 esetén a jobb oldal?`,
-        answer: 225,
+        question: `Bizonyítsd: húrnégyszög szemközti szögeinek összege 180°.
+Mennyi ez az összeg fokban?`,
+        answer: 180,
         type: 'multiplication',
-        expression: `225`,
+        expression: `180`,
     },
     {
         stage: 5,
-        question: `f(x) = x³ − 6x² + 9x + 2. Lokális maximum értéke (x = 1)?`,
-        answer: 6,
-        type: 'multiplication',
-        expression: `f(1) = 6`,
-    },
-    {
-        stage: 5,
-        question: `Ugyanennek lokális minimuma (x = 3)?`,
-        answer: 2,
-        type: 'multiplication',
-        expression: `f(3) = 2`,
-    },
-    {
-        stage: 5,
-        question: `f′(x) = 3(x−1)(x−3). A kisebb stacionárius hely?`,
+        question: `Bizonyítsd: paralelogramma átlói felezik egymást.
+
+Add meg 1-et, ha az állítás igaz, 0-t, ha hamis!`,
         answer: 1,
         type: 'multiplication',
-        expression: `x = 1`,
+        expression: `Igaz`,
     },
     {
         stage: 5,
-        question: `C(8,3) = ?`,
-        answer: 56,
-        type: 'multiplication',
-        expression: `56`,
-    },
-    {
-        stage: 5,
-        question: `1,…,8 közül 3 szám, páros összeg. Hány eset?`,
-        answer: 28,
-        type: 'multiplication',
-        expression: `28`,
-    },
-    {
-        stage: 5,
-        question: `P(összeg páros) = ?`,
-        answer: 0.5,
-        type: 'multiplication',
-        expression: `1/2`,
-    },
-    {
-        stage: 5,
-        question: `(a+b+c)(1/a+1/b+1/c) ≥ 9. Egyenlőségnél a/b = ?`,
+        question: `Bizonyítsd: ha egy négyszög átlói felezik egymást, akkor paralelogramma.
+
+Add meg 1-et, ha az állítás igaz, 0-t, ha hamis!`,
         answer: 1,
         type: 'multiplication',
-        expression: `a = b = c`,
+        expression: `Igaz`,
     },
     {
         stage: 5,
-        question: `n = 8. 1²+…+n² = ?`,
-        answer: 204,
+        question: `Bizonyítsd: rombusz átlói merőlegesek.
+Mennyi a hajlásszögük fokban?`,
+        answer: 90,
         type: 'multiplication',
-        expression: `8·9·17/6 = 204`,
+        expression: `90`,
     },
     {
         stage: 5,
-        question: `Sₙ = n(n+1)(n+2)/3, n = 8. Mennyi?`,
-        answer: 240,
-        type: 'multiplication',
-        expression: `8·9·10/3 = 240`,
-    },
-    {
-        stage: 5,
-        question: `5ⁿ − 1 osztható 4-gyel. n = 5: (3125−1)/4 = ?`,
-        answer: 781,
-        type: 'multiplication',
-        expression: `3124/4`,
-    },
-    {
-        stage: 5,
-        question: `n⁴ + 6n − 1 osztható 9-cel. n = 2: (16+12−1)/9 = ?`,
-        answer: 3,
-        type: 'multiplication',
-        expression: `27/9`,
-    },
-    {
-        stage: 5,
-        question: `n⁴ + 6n − 1 osztható-e 8-cal? (1 = igen minden n-re, 0 = nem)`,
-        answer: 0,
-        type: 'multiplication',
-        expression: `n=1: 6, nem`,
-    },
-    {
-        stage: 5,
-        question: `Kocka él 1, gömb felszíne 6. r² = 6/(4π). A gömb térfogata nagyobb a kockáénál? (1/0)`,
-        answer: 1,
-        type: 'multiplication',
-        expression: `igen`,
-    },
-    {
-        stage: 5,
-        question: `Ramsey: 6 pont 2-színezésénél van egyszínű háromszög. Az alsó korlát n ≥ ?`,
-        answer: 6,
-        type: 'multiplication',
-        expression: `R(3,3)=6`,
-    },
-    {
-        stage: 5,
-        question: `Binomiális: n = 9, 2ⁿ = ?`,
-        answer: 512,
-        type: 'multiplication',
-        expression: `512`,
-    },
-    {
-        stage: 5,
-        question: `Skatulya: 50 tanuló, 12 hónap. Legalább hányan ugyanabban a hónapban?`,
-        answer: 5,
-        type: 'multiplication',
-        expression: `⌈50/12⌉ = 5`,
-    },
-    {
-        stage: 5,
-        question: `D = (2p+3)² − 4(p²+3p+1). Értéke?`,
+        question: `Bizonyítsd: téglalap átlói egyenlők.
+3 cm és 4 cm oldalú téglalap átlója cm-ben?`,
         answer: 5,
         type: 'multiplication',
         expression: `5`,
     },
     {
-        stage: 6,
-        question: `|x² − 4x + 3| = p. p = 1 esetén hány különböző valós megoldás van?`,
+        stage: 5,
+        question: `Bizonyítsd: azonos ívhez tartozó kerületi szögek egyenlők.
+
+Add meg 1-et, ha az állítás igaz, 0-t, ha hamis!`,
+        answer: 1,
+        type: 'multiplication',
+        expression: `Igaz`,
+    },
+    {
+        stage: 5,
+        question: `Bizonyítsd Thalész tételét: átmérőhöz tartozó kerületi szög.
+Mennyi ez a szög fokban?`,
+        answer: 90,
+        type: 'multiplication',
+        expression: `90`,
+    },
+    {
+        stage: 5,
+        question: `Bizonyítsd: a súlypont a súlyvonalakat 2 : 1 arányban osztja.
+Add meg a csúcs felőli arány nagyobbik tagját!`,
+        answer: 2,
+        type: 'multiplication',
+        expression: `2 : 1`,
+    },
+    {
+        stage: 5,
+        question: `Bizonyítsd: a középvonal a párhuzamos oldal fele.
+Ha az oldal 10, mennyi a középvonal?`,
+        answer: 5,
+        type: 'multiplication',
+        expression: `5`,
+    },
+    {
+        stage: 5,
+        question: `Bizonyítsd: C(n, k) = C(n, n − k).
+Mennyi C(8, 3)?`,
+        answer: 56,
+        type: 'multiplication',
+        expression: `C(8, 5) = 56`,
+    },
+    {
+        stage: 5,
+        question: `Bizonyítsd Pascal azonosságát.
+Mennyi C(5, 2) + C(5, 3)?`,
+        answer: 20,
+        type: 'multiplication',
+        expression: `C(6, 3) = 20`,
+    },
+    {
+        stage: 5,
+        question: `Bizonyítsd: Σ C(n, k) = 2ⁿ.
+n = 5 esetén mennyi az összeg?`,
+        answer: 32,
+        type: 'multiplication',
+        expression: `32`,
+    },
+    {
+        stage: 5,
+        question: `13 dobókockadobás között biztosan van legalább hány azonos eredmény?`,
         answer: 3,
         type: 'multiplication',
-        expression: `csúcs 1, két külső`,
+        expression: `6 · 2 + 1`,
     },
     {
-        stage: 6,
-        question: `Ugyanez p = 2 esetén hány megoldás?`,
-        answer: 2,
-        type: 'multiplication',
-        expression: `p > 1`,
-    },
-    {
-        stage: 6,
-        question: `Ugyanez 0 < p < 1 esetén hány megoldás?`,
-        answer: 4,
-        type: 'multiplication',
-        expression: `W-alak`,
-    },
-    {
-        stage: 6,
-        question: `Ugyanez p < 0 esetén hány megoldás?`,
-        answer: 0,
-        type: 'multiplication',
-        expression: `absz ≥ 0`,
-    },
-    {
-        stage: 6,
-        question: `Ugyanez p = 0 esetén hány megoldás?`,
-        answer: 2,
-        type: 'multiplication',
-        expression: `x = 1 és x = 3`,
-    },
-    {
-        stage: 6,
-        question: `| (x−1)(x−3) | maximuma [1,3]-on?`,
-        answer: 1,
-        type: 'multiplication',
-        expression: `x = 2: |−1| = 1`,
-    },
-    {
-        stage: 6,
-        question: `Sₙ = 1·2 + … + n(n+1). S₄ = ?`,
-        answer: 40,
-        type: 'multiplication',
-        expression: `40`,
-    },
-    {
-        stage: 6,
-        question: `A sejtés: Sₙ = n(n+1)(n+2)/3. n = 10-re mennyi?`,
-        answer: 440,
-        type: 'multiplication',
-        expression: `10·11·12/3 = 440`,
-    },
-    {
-        stage: 6,
-        question: `10 cm sugarú körbe írt téglalap maximális területe?`,
-        answer: 200,
-        type: 'multiplication',
-        expression: `négyzet, átló 20, T = 200`,
-    },
-    {
-        stage: 6,
-        question: `C(n,0)+…+C(n,n) = 2ⁿ. n = 10. Mennyi?`,
-        answer: 1024,
-        type: 'multiplication',
-        expression: `1024`,
-    },
-    {
-        stage: 6,
-        question: `Egyenlő szárú háromszög megfordítása igaz-e? (1 = igen, 0 = nem)`,
-        answer: 1,
-        type: 'multiplication',
-        expression: `alaptétel megfordítható`,
-    },
-    {
-        stage: 6,
-        question: `Páratlan fokú csúcsok száma gráfban páros. 3 páratlan fokú csúcs lehetséges? (1/0)`,
-        answer: 0,
-        type: 'multiplication',
-        expression: `nem`,
-    },
-    {
-        stage: 6,
-        question: `n ≥ ? kell ahhoz, hogy 2-színezett teljes gráfban legyen egyszínű háromszög?`,
+        stage: 5,
+        question: `n + 1 egész közül kettő különbsége osztható n-nel.
+n = 5 esetén hány szám kell ehhez?`,
         answer: 6,
         type: 'multiplication',
-        expression: `R(3,3)`,
+        expression: `5 + 1 = 6`,
     },
     {
-        stage: 6,
-        question: `(a+b+c)(1/a+1/b+1/c), a=b=c=2. Érték?`,
-        answer: 9,
+        stage: 5,
+        question: `Bizonyítsd: egyszerű gráfban a fokszámok összege páros.
+K₃ fokszámösszege?`,
+        answer: 6,
         type: 'multiplication',
-        expression: `6 · 1,5 = 9`,
+        expression: `2e = 6`,
     },
     {
-        stage: 6,
-        question: `Két kocka összeolvasztása: p=q=1. Az új él ³√2. Az új felszín 6·2^{2/3}. 2^{2/3} ≈ ? 3 tizedesjegy.`,
-        answer: 1.587,
+        stage: 5,
+        question: `Bizonyítsd: a páratlan fokszámú csúcsok száma páros.
+Egy 3 élű út hány páratlan fokú csúcsa van?`,
+        answer: 2,
         type: 'multiplication',
-        expression: `2^{2/3}`,
+        expression: `2`,
     },
     {
-        stage: 6,
-        question: `n = 12. 1+3+…+(2n−1) = ?`,
-        answer: 144,
+        stage: 5,
+        question: `Bizonyítsd: n csúcsú fa éleinek száma n − 1.
+n = 6 esetén mennyi az élszám?`,
+        answer: 5,
         type: 'multiplication',
-        expression: `144`,
+        expression: `5`,
+    },
+    {
+        stage: 5,
+        question: `Ha egy n csúcsú egyszerű gráfnak legalább C(n − 1, 2) + 1 éle van, akkor összefüggő.
+n = 4 esetén mennyi ez a küszöb?`,
+        answer: 4,
+        type: 'multiplication',
+        expression: `C(3, 2) + 1 = 4`,
+    },
+    {
+        stage: 5,
+        question: `K₆ éleinek kétszínezésében mindig van egyszínű háromszög.
+
+Add meg 1-et, ha az állítás igaz, 0-t, ha hamis!`,
+        answer: 1,
+        type: 'multiplication',
+        expression: `Ramsey`,
+    },
+
+    // —— 6. szint ——
+    {
+        stage: 6,
+        question: `Ha egy kocka és egy gömb felszíne egyenlő, a gömb térfogata nagyobb.
+
+Add meg 1-et, ha az állítás igaz, 0-t, ha hamis!`,
+        answer: 1,
+        type: 'multiplication',
+        expression: `π < 6`,
     },
     {
         stage: 6,
-        question: `f(x) = |x²−4x+3| − p. p = 1-nél a gyökök száma?`,
+        question: `p és q élű kockákat egy kockává olvasztunk. Az új felszín kisebb az eredeti összegnél.
+
+Add meg 1-et, ha az állítás igaz, 0-t, ha hamis!`,
+        answer: 1,
+        type: 'multiplication',
+        expression: `Igaz`,
+    },
+    {
+        stage: 6,
+        question: `Azonos magasságú hengerek sugarai r = 1, R = 4. Az összeolvasztott henger sugara √(r² + R²).
+
+Add meg 3 tizedesjeggyel!`,
+        answer: 4.123,
+        type: 'multiplication',
+        expression: `√17 ≈ 4,123 ≥ √8`,
+    },
+    {
+        stage: 6,
+        question: `R sugarú gömbbe írt maximális térfogatú henger magassága 2R/√3.
+Add meg h/R értékét 3 tizedesjeggyel!`,
+        answer: 1.155,
+        type: 'multiplication',
+        expression: `2/√3 ≈ 1,155`,
+    },
+    {
+        stage: 6,
+        question: `Adott térfogatú zárt henger felszíne akkor minimális, ha h = 2r.
+Add meg a h/r arányt!`,
+        answer: 2,
+        type: 'multiplication',
+        expression: `h = 2r`,
+    },
+    {
+        stage: 6,
+        question: `Adott térfogatú felül nyitott henger felszíne akkor minimális, ha h = r.
+Add meg a h/r arányt!`,
+        answer: 1,
+        type: 'multiplication',
+        expression: `h = r`,
+    },
+    {
+        stage: 6,
+        question: `Adott összes élhosszúságú téglatestek közül a kocka térfogata a legnagyobb.
+
+Add meg 1-et, ha az állítás igaz, 0-t, ha hamis!`,
+        answer: 1,
+        type: 'multiplication',
+        expression: `AM-GM`,
+    },
+    {
+        stage: 6,
+        question: `Ha egy négyszög szögei számtani sorozat egymást követő tagjai, akkor trapéz vagy húrnégyszög.
+
+Add meg 1-et, ha az állítás igaz, 0-t, ha hamis!`,
+        answer: 1,
+        type: 'multiplication',
+        expression: `Igaz`,
+    },
+    {
+        stage: 6,
+        question: `Ha egy nem szabályos háromszög oldalai számtani sorozat, akkor nincs 60°-os szöge.
+
+Add meg 1-et, ha az állítás igaz, 0-t, ha hamis!`,
+        answer: 1,
+        type: 'multiplication',
+        expression: `Igaz`,
+    },
+    {
+        stage: 6,
+        question: `f(n) = (n² − 5n + 10)/2, n ≥ 3 egész értékű és szigorúan növekvő.
+Mennyi f(4)?`,
         answer: 3,
         type: 'multiplication',
-        expression: `mint fent`,
+        expression: `(16 − 20 + 10)/2 = 3`,
     },
     {
         stage: 6,
-        question: `C(10,2) = ?`,
-        answer: 45,
+        question: `Van n ≥ 3, amelyre f(n) = 2 + m(m + 1)/2.
+m = 4 esetén mennyi ez az n?`,
+        answer: 7,
         type: 'multiplication',
-        expression: `45`,
+        expression: `n = m + 3`,
     },
     {
         stage: 6,
-        question: `√3 irracionális. Igaz-e, hogy √3 racionális? (1 = igen, 0 = nem)`,
+        question: `Bizonyítsd: 1³ + … + n³ = [n(n + 1)/2]².
+n = 3 esetén mennyi az összeg?`,
+        answer: 36,
+        type: 'multiplication',
+        expression: `6² = 36`,
+    },
+    {
+        stage: 6,
+        question: `Van-e n > 2, amelyre C(n,1), C(n,2), C(n,3) mértani sorozat?
+
+Add meg 1-et, ha van, 0-t, ha nincs!`,
         answer: 0,
         type: 'multiplication',
-        expression: `indirekt`,
+        expression: `n = −1 adódna`,
     },
     {
         stage: 6,
-        question: `Pozitív a,b,c AM-HM minimuma (a+b+c)(1/a+1/b+1/c) = ?`,
-        answer: 9,
+        question: `a² + 2ab + b² − c² > 0 háromszög-oldalakra; a megfordítás hamis.
+A kulcsbeli ellenpéldában mennyi c?`,
+        answer: 1,
         type: 'multiplication',
-        expression: `9`,
+        expression: `a = 2, b = 1, c = 1`,
+    },
+    {
+        stage: 6,
+        question: `6 csúcsú teljes gráf éleinek kétszínezésében van egyszínű háromszög.
+
+Add meg 1-et, ha az állítás igaz, 0-t, ha hamis!`,
+        answer: 1,
+        type: 'multiplication',
+        expression: `Ramsey`,
+    },
+    {
+        stage: 6,
+        question: `n csúcsú körmentes egyszerű gráfnak legfeljebb n − 1 éle van.
+n = 7 esetén mennyi a maximum?`,
+        answer: 6,
+        type: 'multiplication',
+        expression: `6`,
+    },
+    {
+        stage: 6,
+        question: `8 csúcsú, 9 élű gráf tartalmaz kört. Körmentes 8 csúcsú gráf max. élszáma?`,
+        answer: 7,
+        type: 'multiplication',
+        expression: `7 < 9`,
+    },
+    {
+        stage: 6,
+        question: `b_n = L / (1 + K qⁿ), L = 12000, K = 39, 0 < q < 1.
+Mennyi b₀?`,
+        answer: 300,
+        type: 'multiplication',
+        expression: `12000 / 40 = 300`,
+    },
+    {
+        stage: 6,
+        question: `P(t) = E / (1 + k · 2^{−ct}) ≤ E.
+E = 100, k = 1, t = 0 esetén mennyi P(0)?`,
+        answer: 50,
+        type: 'multiplication',
+        expression: `100 / 2 = 50`,
+    },
+    {
+        stage: 6,
+        question: `S_n = Σ_{1≤i<j≤n} ij = n(n − 1)(n + 1)(3n + 2)/24.
+n = 4 esetén mennyi S_n?`,
+        answer: 35,
+        type: 'multiplication',
+        expression: `35`,
     },
 ];

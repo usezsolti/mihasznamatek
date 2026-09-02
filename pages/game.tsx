@@ -11,6 +11,7 @@ import { useGamePlay, type GameSessionBridge } from '../hooks/useGamePlay';
 import { useGameSessionBuilders } from '../hooks/useGameSessionBuilders';
 import { useGameRouteBootstrap } from '../hooks/useGameRouteBootstrap';
 import type { Question } from '../utils/game';
+import { buildTopicPracticeHref } from '../utils/topicStats';
 
 export default function Game() {
     const router = useRouter();
@@ -343,9 +344,9 @@ export default function Game() {
                                 generateKozpontiQuestionsByTopic('vegyes');
                             }}
                             onGenerateVegyesSzigorlat={generateVegyesSzigorlatQuestions}
-                            onSelectUniversityTopic={(subjectId, topicId) => {
+                            onSelectUniversityTopic={(_subjectId, topicId) => {
                                 setSelectedUniversityTopic(topicId);
-                                generateUniversityQuestionsByTopic(subjectId, topicId);
+                                router.push(buildTopicPracticeHref(topicId, 'university'));
                             }}
                             highScore={highScore}
                             assignedTasks={assignedTasks}

@@ -2,13 +2,19 @@ import { useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import TopicPathMap from '../../components/TopicPathMap';
+import { agentDebugLog } from '../../utils/agentDebugLog';
 import { openAuthModal } from '../../utils/authModal';
 import {
     loadUserPracticeProgress,
     resolveProgressStorageKey,
     type TopicProgress,
 } from '../../utils/practiceProgress';
-import type { EducationLevelId, ErettsegiExamLevel } from '../../utils/mathTopicsCatalog';
+import {
+    getUniversitySubjectById,
+    findUniversityTopic,
+    type EducationLevelId,
+    type ErettsegiExamLevel,
+} from '../../utils/mathTopicsCatalog';
 import {
     aggregateTopicStats,
     buildTopicPracticeHref,
@@ -57,6 +63,32 @@ export default function TopicStatsPage() {
         () => (topicIdParam ? findCatalogTopic(topicIdParam, educationLevel, erettsegiLevel) : null),
         [topicIdParam, educationLevel, erettsegiLevel]
     );
+    const uniSubject = educationLevel === 'university' ? getUniversitySubjectById(topicIdParam) : undefined;
+    const uniNested = educationLevel === 'university' ? findUniversityTopic(topicIdParam) : null;
+
+    useEffect(() => {
+        if (!uniSubject) return;
+        // #region agent log
+        agentDebugLog({
+            hypothesisId: 'A',
+            location: 'topic/[topicId].tsx:uniSubject',
+            message: 'university subject topic list',
+            data: {
+                subjectId: uniSubject.id,
+                n: uniSubject.topics.length,
+                ids: uniSubject.topics.map((t) => t.id),
+                hasKomplex: uniSubject.topics.some((t) => t.id === 'a1-komplex'),
+                isLinearis: uniSubject.id.startsWith('linearis'),
+                firstTopic: uniSubject.topics[0]?.id,
+            },
+            runId: uniSubject.id.startsWith('linearis')
+                ? 'la-topics'
+                : uniSubject.id === 'analizis2'
+                  ? 'a2-topics'
+                  : 'a1-komplex',
+        });
+        // #endregion
+    }, [uniSubject]);
 
     const topicTitle = catalogTopic?.title || topicIdParam || 'Témakör';
     const topicIcon = catalogTopic?.icon || '📚';
@@ -153,6 +185,58 @@ export default function TopicStatsPage() {
         );
     }
 
+    if (showPath && uniSubject) {
+        return (
+            <div className="dashboard-container modern-theme has-site-navbar">
+                <main className="main-content topic-stats-page">
+                    <Link href={`/topic/${encodeURIComponent(topicIdParam)}?educationLevel=university`} className="topic-stats-back">
+                        ← Vissza a témakörökhöz
+                    </Link>
+                    <p className="topic-stats-muted">Előbb válassz egy témakört az útvonalhoz.</p>
+                </main>
+            </div>
+        );
+    }
+
+    if (uniSubject) {
+        return (
+            <div className="dashboard-container modern-theme has-site-navbar">
+                <main
+                    className="main-content topic-stats-page"
+                    style={{ ['--topic-color' as string]: topicColor }}
+                >
+                    <Link href="/dashboard" className="topic-stats-back">
+                        ← Vissza a dashboardra
+                    </Link>
+                    <div className="topic-stats-hero">
+                        <div className="topic-stats-icon" aria-hidden="true">
+                            {topicIcon}
+                        </div>
+                        <div className="topic-stats-hero-text">
+                            <h1 className="topic-stats-title">{topicTitle}</h1>
+                            <p className="topic-stats-subtitle">Válassz témakört — 6 szint × 20 feladat</p>
+                        </div>
+                    </div>
+                    <div className="topic-stats-grid">
+                        {uniSubject.topics.map((t) => (
+                            <Link
+                                key={t.id}
+                                href={buildTopicPracticeHref(t.id, 'university')}
+                                className="topic-stats-card"
+                                style={{ textDecoration: 'none', color: 'inherit' }}
+                            >
+                                <div className="topic-stats-card-label">
+                                    {t.icon} {t.title}
+                                </div>
+                                <div className="topic-stats-card-value is-small">Út →</div>
+                            </Link>
+                        ))}
+                    </div>
+                </main>
+            </div>
+        );
+    }
+
     if (showPath) {
         return (
             <div className="dashboard-container modern-theme has-site-navbar">
@@ -185,6 +269,14 @@ export default function TopicStatsPage() {
                 <Link href="/dashboard" className="topic-stats-back">
                     ← Vissza a dashboardra
                 </Link>
+                {uniNested && (
+                    <Link
+                        href={`/topic/${uniNested.subject.id}?educationLevel=university`}
+                        className="topic-stats-back"
+                    >
+                        ← {uniNested.subject.title} témakörei
+                    </Link>
+                )}
 
                 <div className="topic-stats-hero">
                     <div className="topic-stats-icon" aria-hidden="true">

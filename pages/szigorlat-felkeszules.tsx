@@ -9,7 +9,8 @@ export default function SzigorlatFelkeszules() {
     const szigorlatTopics = [
         { id: 'analizis1-osszes', title: 'Analízis I. - Összes témakör', icon: '∫', subject: 'analizis1' },
         { id: 'analizis2-osszes', title: 'Analízis II. - Összes témakör', icon: '∂', subject: 'analizis2' },
-        { id: 'analizis3-osszes', title: 'Analízis III. - Összes témakör', icon: '∭', subject: 'analizis3' },
+        { id: 'linearis1-osszes', title: 'Lineáris algebra I. - Összes témakör', icon: '[]', subject: 'linearis1' },
+        { id: 'linearis2-osszes', title: 'Lineáris algebra II. - Összes témakör', icon: 'V', subject: 'linearis2' },
         { id: 'vegyes-szigorlat', title: 'Vegyes Szigorlat', icon: '📚', subject: 'vegyes' },
     ];
 
