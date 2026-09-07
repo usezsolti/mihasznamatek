@@ -1,5 +1,7 @@
 import MathTemplateInput from '../MathTemplateInput';
 import type { Question } from '../../utils/game';
+import { formatMathText, stripOfficialTaskLabel } from '../../utils/formatMathText';
+import { agentDebugLog } from '../../utils/agentDebugLog';
 import GameQuestionFigure from './GameQuestionFigure';
 
 export type GameQuestionCardProps = {
@@ -27,6 +29,10 @@ export type GameQuestionCardProps = {
     message: string;
     isCorrect: boolean;
     showExpression: boolean;
+    feedbackPending?: boolean;
+    onDismissFeedback?: () => void;
+    hintText?: string | null;
+    hideOfficialLabel?: boolean;
 };
 
 export default function GameQuestionCard({
@@ -54,14 +60,37 @@ export default function GameQuestionCard({
     message,
     isCorrect,
     showExpression,
+    feedbackPending,
+    onDismissFeedback,
+    hintText,
+    hideOfficialLabel,
 }: GameQuestionCardProps) {
+    const rawQuestion = question?.question || '';
+    const displayQuestion = hideOfficialLabel ? stripOfficialTaskLabel(rawQuestion) : rawQuestion;
+    if (hideOfficialLabel && rawQuestion !== displayQuestion) {
+        // #region agent log
+        agentDebugLog({
+            hypothesisId: 'A',
+            location: 'GameQuestionCard.tsx:label',
+            message: 'official task label stripped',
+            data: {
+                before: rawQuestion.slice(0, 40),
+                after: displayQuestion.slice(0, 40),
+            },
+            runId: 'kf-label',
+        });
+        // #endregion
+    }
     return (
         <div className="question-card">
+            {hintText && (
+                <div className="mm-hint-banner">{hintText}</div>
+            )}
             {question?.subQuestions ? (
                 // Részfeladatokkal rendelkező feladat megjelenítése
                 <>
                     <h2 className="question-text" style={{ whiteSpace: 'pre-line', marginBottom: '2rem' }}>
-                        {question?.question}
+                        {formatMathText(displayQuestion)}
                     </h2>
                     <GameQuestionFigure question={question} />
                     {question.subQuestions!.map((subQ, index) => (
@@ -73,7 +102,7 @@ export default function GameQuestionCard({
                             border: '1px solid rgba(57, 255, 20, 0.3)'
                         }}>
                             <h3 style={{ color: '#39ff14', marginBottom: '1rem', fontSize: '1.1rem' }}>
-                                {subQ.question}
+                                {formatMathText(subQ.question)}
                             </h3>
                             {showSolutions && (
                                 <div style={{
@@ -85,7 +114,7 @@ export default function GameQuestionCard({
                                     background: 'rgba(57, 255, 20, 0.1)',
                                     borderRadius: '5px'
                                 }}>
-                                    {subQ.rubric}
+                                    {formatMathText(subQ.rubric)}
                                 </div>
                             )}
                             <div className="answer-section" style={{ marginTop: '1rem' }}>
@@ -168,14 +197,21 @@ export default function GameQuestionCard({
                     </div>
 
                     {message && (
-                        <div className={`message ${isCorrect ? 'correct' : 'incorrect'}`}>
-                            {message}
-                        </div>
+                        <button
+                            type="button"
+                            className={`message ${isCorrect ? 'correct' : 'incorrect'}${feedbackPending ? ' dismissable' : ''}`}
+                            onClick={feedbackPending ? onDismissFeedback : undefined}
+                        >
+                            <span className="message-text">{message}</span>
+                            {feedbackPending && (
+                                <span className="message-dismiss-hint">Koppints a bezáráshoz</span>
+                            )}
+                        </button>
                     )}
 
                     {showExpression && question && (
                         <div className="expression-display">
-                            <pre>{question.expression}</pre>
+                            <pre>{formatMathText(question.expression)}</pre>
                         </div>
                     )}
                 </>
@@ -183,7 +219,7 @@ export default function GameQuestionCard({
                 // Normál feladat megjelenítése
                 <>
                     <h2 className="question-text" style={{ whiteSpace: 'pre-line' }}>
-                        {question?.question}
+                        {formatMathText(displayQuestion)}
                     </h2>
                     <GameQuestionFigure question={question} />
 
@@ -296,7 +332,9 @@ export default function GameQuestionCard({
                                 className="submit-button"
                                 onClick={submitAnswer}
                                 disabled={
-                                    question?.fourthAnswer !== undefined
+                                    feedbackPending
+                                        ? true
+                                        : question?.fourthAnswer !== undefined
                                         ? (!userAnswer.trim() || !userAnswer2.trim() || !userAnswer3.trim() || !userAnswer4.trim())
                                         : question?.thirdAnswer !== undefined
                                             ? (!userAnswer.trim() || !userAnswer2.trim() || !userAnswer3.trim())
@@ -312,14 +350,21 @@ export default function GameQuestionCard({
                     </div>
 
                     {message && (
-                        <div className={`message ${isCorrect ? 'correct' : 'incorrect'}`}>
-                            {message}
-                        </div>
+                        <button
+                            type="button"
+                            className={`message ${isCorrect ? 'correct' : 'incorrect'}${feedbackPending ? ' dismissable' : ''}`}
+                            onClick={feedbackPending ? onDismissFeedback : undefined}
+                        >
+                            <span className="message-text">{message}</span>
+                            {feedbackPending && (
+                                <span className="message-dismiss-hint">Koppints a bezáráshoz</span>
+                            )}
+                        </button>
                     )}
 
                     {showExpression && question && (
                         <div className="expression-display">
-                            <pre>{question.expression}</pre>
+                            <pre>{formatMathText(question.expression)}</pre>
                         </div>
                     )}
                 </>

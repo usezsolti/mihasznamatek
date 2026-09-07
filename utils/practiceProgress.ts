@@ -11,6 +11,28 @@ import {
     normalizeTopicId,
     starsFromWrongCount,
 } from './topicPath';
+import {
+    isSrsTopicId,
+    mergeSrsMaps,
+    normalizeSrsCard,
+    reviewSrsCard,
+    srsCardId,
+    type SrsCard,
+    type SrsEducationLevel,
+    type SrsGrade,
+} from './srs';
+import {
+    applyJuiceEvent,
+    emptyJuice,
+    mergeJuice,
+    normalizeJuice,
+    rolloverDailyJuice,
+    type BoosterKind,
+    type GameJuiceState,
+    type JuiceSessionEvent,
+    BOOSTER_XP_COST,
+} from './gameJuice';
+import { canUnlockSkill, isSkillNodeId, syncSkillsFromXp, type SkillNodeId, skillNodeById } from './skillTree';
 
 export type PracticeStage = 1 | 2 | 3 | 4 | 5 | 6;
 
@@ -85,6 +107,10 @@ export interface UserPracticeProgress {
     badges: BadgeId[];
     /** Kulcs: normalizeTopicId(topicId) vagy régi TopicProgressKey */
     topics: Record<string, TopicProgress>;
+    /** Spaced repetition kártyák: `${topicId}:${stage}` */
+    srs?: Record<string, SrsCard>;
+    /** Combo / küldetés / booster / villámkör */
+    juice?: GameJuiceState;
     updatedAt?: any;
 }
 
@@ -203,7 +229,20 @@ export function assignStagesToQuestions<T extends { stage?: PracticeStage; quest
 
 export function resolveTopicProgressKey(topicId: string): TopicProgressKey | null {
     const t = topicId.toLowerCase();
-    if (t.startsWith('a1-') || t.startsWith('a2-') || t.startsWith('a3-') || /^la[1-4]-/.test(t)) return null;
+    if (/^hs\d{2}-/.test(t)) return null;
+    if (
+        t.startsWith('a1-') ||
+        t.startsWith('a2-') ||
+        t.startsWith('a3-') ||
+        /^la[1-4]-/.test(t) ||
+        /^de[1-4]-/.test(t) ||
+        /^pde[12]-/.test(t) ||
+        /^dm[1-3]-/.test(t) ||
+        /^ge[12]-/.test(t) ||
+        /^st[1-3]-/.test(t)
+    ) {
+        return null;
+    }
     if (t.includes('parameter') || t.includes('paramet')) return 'parameter';
     if (t.includes('abszolutertek') || (t.includes('gyok') && !t.includes('bizony'))) return 'absroot';
     if (t.includes('exponencialis') || t.includes('logaritmus')) return 'explog';
@@ -268,7 +307,7 @@ export function getBadgeDef(id: BadgeId): BadgeDef | undefined {
 }
 
 export function emptyProgress(): UserPracticeProgress {
-    return { xp: 0, rank: 'BEGINNER', rankLevel: 1, badges: [], topics: {} };
+    return { xp: 0, rank: 'BEGINNER', rankLevel: 1, badges: [], topics: {}, srs: {}, juice: emptyJuice() };
 }
 
 const LOCAL_PROGRESS_KEY = 'mihaszna_practice_progress_v1';
@@ -304,6 +343,16 @@ function normalizeLoadedTopic(raw: any): TopicProgress {
     };
 }
 
+function normalizeSrsMap(raw: unknown): Record<string, SrsCard> {
+    const out: Record<string, SrsCard> = {};
+    if (!raw || typeof raw !== 'object') return out;
+    Object.values(raw as Record<string, unknown>).forEach((item) => {
+        const card = normalizeSrsCard(item as Partial<SrsCard>);
+        if (card) out[card.id] = card;
+    });
+    return out;
+}
+
 function loadLocalProgress(): UserPracticeProgress {
     if (typeof window === 'undefined') return emptyProgress();
     try {
@@ -322,6 +371,8 @@ function loadLocalProgress(): UserPracticeProgress {
             rankLevel,
             badges: Array.isArray(data.badges) ? data.badges : [],
             topics,
+            srs: normalizeSrsMap(data.srs),
+            juice: normalizeJuice(data.juice),
             updatedAt: data.updatedAt,
         };
     } catch {
@@ -367,6 +418,35 @@ function mergeTopicProgress(a: TopicProgress, b: TopicProgress): TopicProgress {
     };
 }
 
+function applySkillsFromXp(progress: UserPracticeProgress): UserPracticeProgress {
+    const juice = normalizeJuice(progress.juice);
+    const fromXp = syncSkillsFromXp(progress.xp || 0);
+    const kept = juice.unlockedSkills.filter(isSkillNodeId);
+    const unlocked = Array.from(new Set([...kept, ...fromXp]));
+    juice.unlockedSkills = unlocked;
+    juice.skillShop = 'xp';
+    // #region agent log
+    if (kept.length !== unlocked.length) {
+        void import('./agentDebugLog').then(({ agentDebugLog }) => {
+            agentDebugLog({
+                hypothesisId: 'S',
+                location: 'practiceProgress.ts:applySkillsFromXp',
+                message: 'skills synced from XP',
+                data: {
+                    xp: progress.xp || 0,
+                    fromXpN: fromXp.length,
+                    keptN: kept.length,
+                    outN: unlocked.length,
+                    ids: unlocked,
+                },
+                runId: 'skill-xp',
+            });
+        });
+    }
+    // #endregion
+    return { ...progress, juice };
+}
+
 function mergeProgress(local: UserPracticeProgress, remote: UserPracticeProgress): UserPracticeProgress {
     const xp = Math.max(local.xp || 0, remote.xp || 0);
     const rankLevel = Math.max(local.rankLevel || 1, remote.rankLevel || 1, xpToRankLevel(xp));
@@ -377,16 +457,19 @@ function mergeProgress(local: UserPracticeProgress, remote: UserPracticeProgress
             ? mergeTopicProgress(topics[k], remote.topics[k])
             : normalizeLoadedTopic(remote.topics[k]);
     });
-    return {
+    return applySkillsFromXp({
         xp,
         rank: getRankTitle(rankLevel),
         rankLevel,
         badges: badges as BadgeId[],
         topics,
-    };
+        srs: mergeSrsMaps(local.srs, remote.srs),
+        juice: mergeJuice(local.juice, remote.juice),
+    });
 }
 
 async function persistProgress(uid: string | null | undefined, next: UserPracticeProgress) {
+    next = applySkillsFromXp(next);
     saveLocalProgress(next);
     const firebase = (window as any).firebase;
     if (uid && firebase?.firestore) {
@@ -452,6 +535,8 @@ export async function loadUserPracticeProgress(uid?: string | null): Promise<Use
             rankLevel,
             badges: Array.isArray(data.badges) ? data.badges : [],
             topics,
+            srs: normalizeSrsMap(data.srs),
+            juice: normalizeJuice(data.juice),
             updatedAt: data.updatedAt,
         };
         const merged = mergeProgress(local, remote);
@@ -502,6 +587,8 @@ export async function loadRemotePracticeProgress(uid: string): Promise<UserPract
             rankLevel,
             badges: Array.isArray(data.badges) ? data.badges : [],
             topics,
+            srs: normalizeSrsMap(data.srs),
+            juice: normalizeJuice(data.juice),
             updatedAt: data.updatedAt,
         };
     } catch {
@@ -651,6 +738,8 @@ export async function applyAndSaveProgress(
         rankLevel,
         badges: Array.from(badges),
         topics,
+        srs: previous.srs || {},
+        juice: previous.juice || emptyJuice(),
     };
 
     await persistProgress(uid, next);
@@ -721,9 +810,205 @@ export async function claimPathChest(
         rankLevel,
         badges: Array.from(badges),
         topics,
+        srs: previous.srs || {},
+        juice: previous.juice || emptyJuice(),
     };
 
     await persistProgress(uid, next);
 
     return { previous, next, xpGained, newBadges, alreadyClaimed: false };
+}
+
+export type SrsReviewItem = {
+    topicId: string;
+    stage: PracticeStage;
+    educationLevel: SrsEducationLevel;
+    grade: SrsGrade;
+};
+
+export async function applySrsSession(
+    uid: string | null | undefined,
+    reviews: SrsReviewItem[]
+): Promise<Record<string, SrsCard>> {
+    if (!reviews.length) return (await loadUserPracticeProgress(uid)).srs || {};
+    const previous = await loadUserPracticeProgress(uid);
+    const srs = { ...(previous.srs || {}) };
+    const now = Date.now();
+    for (const item of reviews) {
+        if (!isSrsTopicId(item.topicId)) continue;
+        const id = srsCardId(item.topicId, item.stage);
+        const prev = srs[id] || {
+            id,
+            topicId: item.topicId.toLowerCase(),
+            stage: item.stage,
+            educationLevel: item.educationLevel,
+            ease: 2.5,
+            intervalDays: 0,
+            reps: 0,
+            lapses: 0,
+            nextDueMs: 0,
+            lastReviewedMs: 0,
+        };
+        srs[id] = reviewSrsCard({ ...prev, educationLevel: item.educationLevel }, item.grade, now);
+    }
+    const next: UserPracticeProgress = { ...previous, srs };
+    await persistProgress(uid, next);
+    // #region agent log
+    const { agentDebugLog } = await import('./agentDebugLog');
+    agentDebugLog({
+        hypothesisId: 'A',
+        location: 'practiceProgress.ts:applySrsSession',
+        message: 'srs cards updated',
+        data: {
+            reviewN: reviews.length,
+            srsN: Object.keys(srs).length,
+            dueN: Object.values(srs).filter((c) => c.nextDueMs <= now).length,
+            sample: reviews.slice(0, 3).map((r) => ({ t: r.topicId, s: r.stage, g: r.grade })),
+        },
+        runId: 'srs-daily',
+    });
+    // #endregion
+    return srs;
+}
+
+export async function touchDailyJuice(
+    uid: string | null | undefined
+): Promise<UserPracticeProgress> {
+    const previous = await loadUserPracticeProgress(uid);
+    const juice = rolloverDailyJuice(normalizeJuice(previous.juice));
+    if (juice.skillShop !== 'xp') {
+        const prevUnlocked = juice.unlockedSkills.filter(isSkillNodeId);
+        juice.unlockedSkills = [];
+        juice.skillPoints = 0;
+        juice.skillMigrated = true;
+        juice.skillShop = 'xp';
+        // #region agent log
+        void import('./agentDebugLog').then(({ agentDebugLog }) => {
+            agentDebugLog({
+                hypothesisId: 'F',
+                location: 'practiceProgress.ts:touchDailyJuice',
+                message: 'skill shop switched to XP, free perks cleared',
+                data: { clearedN: prevUnlocked.length, xp: previous.xp || 0 },
+                runId: 'skill-xp',
+            });
+        });
+        // #endregion
+    } else {
+        // #region agent log
+        void import('./agentDebugLog').then(({ agentDebugLog }) => {
+            agentDebugLog({
+                hypothesisId: 'D',
+                location: 'practiceProgress.ts:touchDailyJuice',
+                message: 'skill shop already XP',
+                data: {
+                    xp: previous.xp || 0,
+                    unlockedN: juice.unlockedSkills.length,
+                },
+                runId: 'skill-xp',
+            });
+        });
+        // #endregion
+    }
+    const next: UserPracticeProgress = { ...previous, juice };
+    await persistProgress(uid, next);
+    return next;
+}
+
+export async function applyJuiceSession(
+    uid: string | null | undefined,
+    event: JuiceSessionEvent
+): Promise<UserPracticeProgress> {
+    const previous = await loadUserPracticeProgress(uid);
+    const rolled = rolloverDailyJuice(normalizeJuice(previous.juice));
+    const juice = applyJuiceEvent(rolled, event);
+    const next: UserPracticeProgress = { ...previous, juice };
+    await persistProgress(uid, next);
+    // #region agent log
+    const { agentDebugLog } = await import('./agentDebugLog');
+    agentDebugLog({
+        hypothesisId: 'B',
+        location: 'practiceProgress.ts:applyJuiceSession',
+        message: 'juice session applied',
+        data: {
+            correctCount: event.correctCount,
+            lessonsCompleted: event.lessonsCompleted,
+            didMix: event.didMix,
+            didDaily: event.didDaily,
+            didBlitz: !!event.didBlitz,
+            loginStreak: juice.loginStreak,
+            questsDone: juice.quests.filter((q) => q.done).length,
+            blitzBest: juice.blitzBest,
+            skillPoints: juice.skillPoints,
+        },
+        runId: 'juice',
+    });
+    // #endregion
+    return next;
+}
+
+export async function spendBoosterOrXp(
+    uid: string | null | undefined,
+    kind: BoosterKind
+): Promise<{ ok: boolean; juice: GameJuiceState; xpSpent: number; next: UserPracticeProgress }> {
+    const previous = await loadUserPracticeProgress(uid);
+    const juice = normalizeJuice(previous.juice);
+    if (juice.boosters[kind] > 0) {
+        juice.boosters[kind] -= 1;
+        const next: UserPracticeProgress = { ...previous, juice };
+        await persistProgress(uid, next);
+        return { ok: true, juice, xpSpent: 0, next };
+    }
+    const cost = BOOSTER_XP_COST[kind];
+    if ((previous.xp || 0) >= cost) {
+        const xp = previous.xp - cost;
+        const rankLevel = xpToRankLevel(xp);
+        const next: UserPracticeProgress = {
+            ...previous,
+            xp,
+            rankLevel,
+            rank: getRankTitle(rankLevel),
+            juice,
+        };
+        await persistProgress(uid, next);
+        return { ok: true, juice, xpSpent: cost, next };
+    }
+    return { ok: false, juice, xpSpent: 0, next: previous };
+}
+
+export async function unlockSkillNode(
+    uid: string | null | undefined,
+    id: SkillNodeId
+): Promise<{ ok: boolean; reason?: string; next: UserPracticeProgress }> {
+    const previous = await loadUserPracticeProgress(uid);
+    const juice = normalizeJuice(previous.juice);
+    const xp = previous.xp || 0;
+    const check = canUnlockSkill(id, juice.unlockedSkills, xp);
+    if (!check.ok) {
+        return { ok: false, reason: check.reason, next: previous };
+    }
+    const node = skillNodeById(id);
+    const cost = node?.cost || 0;
+    const nextXp = Math.max(0, xp - cost);
+    const rankLevel = xpToRankLevel(nextXp);
+    juice.unlockedSkills = Array.from(new Set([...juice.unlockedSkills, id]));
+    juice.skillShop = 'xp';
+    const next: UserPracticeProgress = {
+        ...previous,
+        xp: nextXp,
+        rankLevel,
+        rank: getRankTitle(rankLevel),
+        juice,
+    };
+    await persistProgress(uid, next);
+    // #region agent log
+    const { agentDebugLog } = await import('./agentDebugLog');
+    agentDebugLog({
+        hypothesisId: 'G',
+        location: 'practiceProgress.ts:unlockSkillNode',
+        message: 'skill bought with XP',
+        data: { id, cost, xpLeft: nextXp, unlockedN: juice.unlockedSkills.length },
+        runId: 'skill-xp',
+    });
+    // #endregion
+    return { ok: true, next };
 }

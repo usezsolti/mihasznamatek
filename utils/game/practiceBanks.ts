@@ -548,6 +548,78 @@ export const getAnalizis2PracticeQuestions = (topicId: string): Question[] | nul
 import { getLinearisPracticeQuestions as getLinearisRaw, LINEARIS_TOPIC_IDS } from './linearisAlgebra';
 export { LINEARIS_TOPIC_IDS };
 
+import { getDePracticeQuestions as getDeRaw, DE_TOPIC_IDS } from './deAlgebra';
+export { DE_TOPIC_IDS };
+
+import { getDmPracticeQuestions as getDmRaw, DM_TOPIC_IDS } from './dmAlgebra';
+export { DM_TOPIC_IDS };
+
+import { getStPracticeQuestions as getStRaw, ST_TOPIC_IDS } from './stAlgebra';
+export { ST_TOPIC_IDS };
+
+export const getStPracticeQuestions = (topicId: string): Question[] | null => {
+    const list = getStRaw(topicId);
+    if (!list) return null;
+    // #region agent log
+    agentDebugLog({
+        hypothesisId: 'B',
+        location: 'practiceBanks.ts:getStPracticeQuestions',
+        message: 'st bank loaded',
+        data: {
+            topicId,
+            total: list.length,
+            byStage: [1, 2, 3, 4, 5, 6].map((s) => list.filter((q) => q.stage === s).length),
+            firstQ: String(list[0]?.question || '').slice(0, 60),
+            firstAnswer: list[0]?.answer,
+        },
+        runId: 'st-topics',
+    });
+    // #endregion
+    return list;
+};
+
+export const getDmPracticeQuestions = (topicId: string): Question[] | null => {
+    const list = getDmRaw(topicId);
+    if (!list) return null;
+    // #region agent log
+    agentDebugLog({
+        hypothesisId: 'B',
+        location: 'practiceBanks.ts:getDmPracticeQuestions',
+        message: 'dm/ge bank loaded',
+        data: {
+            topicId,
+            total: list.length,
+            byStage: [1, 2, 3, 4, 5, 6].map((s) => list.filter((q) => q.stage === s).length),
+            firstQ: String(list[0]?.question || '').slice(0, 60),
+            firstAnswer: list[0]?.answer,
+        },
+        runId: 'dm-topics',
+    });
+    // #endregion
+    return list;
+};
+
+export const getDePracticeQuestions = (topicId: string): Question[] | null => {
+    const list = getDeRaw(topicId);
+    if (!list) return null;
+    // #region agent log
+    agentDebugLog({
+        hypothesisId: 'B',
+        location: 'practiceBanks.ts:getDePracticeQuestions',
+        message: 'de/pde bank loaded',
+        data: {
+            topicId,
+            total: list.length,
+            byStage: [1, 2, 3, 4, 5, 6].map((s) => list.filter((q) => q.stage === s).length),
+            firstQ: String(list[0]?.question || '').slice(0, 60),
+            firstAnswer: list[0]?.answer,
+        },
+        runId: 'de-topics',
+    });
+    // #endregion
+    return list;
+};
+
 export const getLinearisPracticeQuestions = (topicId: string): Question[] | null => {
     const list = getLinearisRaw(topicId);
     if (!list) return null;

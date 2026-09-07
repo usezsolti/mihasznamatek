@@ -1,7 +1,7 @@
 export type { Question } from './types';
 export type { GraphFigure } from './graphFigure';
 export type { DrawFigure, DrawPrimitive, QuestionFigure } from './questionFigure';
-export { drawFigure, figuresOf, graphFigure, imageFigure } from './questionFigure';
+export { coordPlaneFigure, drawFigure, figuresOf, graphFigure, imageFigure } from './questionFigure';
 
 export {
     getParameterPracticeQuestions,
@@ -30,6 +30,12 @@ export {
     ANALIZIS2_TOPIC_IDS,
     getLinearisPracticeQuestions,
     LINEARIS_TOPIC_IDS,
+    getDePracticeQuestions,
+    DE_TOPIC_IDS,
+    getDmPracticeQuestions,
+    DM_TOPIC_IDS,
+    getStPracticeQuestions,
+    ST_TOPIC_IDS,
 } from './practiceBanks';
 
 export {
@@ -44,6 +50,12 @@ export {
 export { generateErettsegiQuestionByTopicId } from './generateErettsegi';
 export { generateElementaryQuestionByTopic } from './generateElementary';
 export { generateKozpontiQuestionByTopic } from './generateKozponti';
+export {
+    KOZPONTI_PAPERS,
+    getKozpontiPaperQuestions,
+    getKozponti2026Mat1Questions,
+} from './kozpontiPapers';
+export type { KozpontiPaperMeta } from './kozpontiPapers';
 export { generateHighschoolQuestionByTopic } from './generateHighschool';
 export { generateUniversityQuestionByTopic } from './generateUniversity';
 export { getWorksheetListForTopic } from './worksheetLists';

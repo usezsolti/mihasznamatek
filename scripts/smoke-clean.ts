@@ -38,12 +38,22 @@ import {
     ANALIZIS2_TOPIC_IDS,
     getLinearisPracticeQuestions,
     LINEARIS_TOPIC_IDS,
+    getDePracticeQuestions,
+    DE_TOPIC_IDS,
+    getDmPracticeQuestions,
+    DM_TOPIC_IDS,
+    getStPracticeQuestions,
+    ST_TOPIC_IDS,
+    getWorksheetListForTopic,
+    generateUniversityQuestionByTopic,
     generateQuadraticQuestion,
     generatePointDistanceQuestion,
     pick,
     randInt,
     szigorlatQuestions,
 } from '../utils/game';
+import { resolveTopicProgressKey } from '../utils/practiceProgress';
+import { universitySubjects } from '../utils/mathTopicsCatalog';
 
 function logDebug(
     message: string,
@@ -318,7 +328,158 @@ async function main() {
         ...ANALIZIS1_TOPIC_IDS.map((id) => getAnalizis1PracticeQuestions(id) || []),
         ...ANALIZIS2_TOPIC_IDS.map((id) => getAnalizis2PracticeQuestions(id) || []),
         ...LINEARIS_TOPIC_IDS.map((id) => getLinearisPracticeQuestions(id) || []),
+        ...DE_TOPIC_IDS.map((id) => getDePracticeQuestions(id) || []),
+        ...DM_TOPIC_IDS.map((id) => getDmPracticeQuestions(id) || []),
+        ...ST_TOPIC_IDS.map((id) => getStPracticeQuestions(id) || []),
     ];
+
+    if (DE_TOPIC_IDS.length !== 36) throw new Error(`DE_TOPIC_IDS length ${DE_TOPIC_IDS.length}`);
+    const catalogDeIds = universitySubjects
+        .filter((s) => /^de[1-4]$|^pde[12]$/.test(s.id))
+        .flatMap((s) => s.topics.map((t) => t.id));
+    if (catalogDeIds.join(',') !== DE_TOPIC_IDS.join(',')) {
+        throw new Error('catalog DE/PDE ids mismatch banks');
+    }
+    const deWs = getWorksheetListForTopic('de1-alapok');
+    const pdeWs = getWorksheetListForTopic('pde1-osztaly');
+    const eqWs = getWorksheetListForTopic('egyenletek');
+    const deKey = resolveTopicProgressKey('de1-alapok');
+    const eqKey = resolveTopicProgressKey('egyenletek');
+    if (!deWs || deWs.prefix !== 'uni_de1-alapok') throw new Error('de1-alapok prefix ' + deWs?.prefix);
+    if (!pdeWs || pdeWs.prefix !== 'uni_pde1-osztaly') throw new Error('pde1-osztaly prefix ' + pdeWs?.prefix);
+    if (eqWs?.prefix !== 'erettsegi_egyenletek') throw new Error('egyenletek prefix ' + eqWs?.prefix);
+    if (deKey !== null) throw new Error('de progress key ' + deKey);
+    if (eqKey !== 'egyenletek') throw new Error('eq progress key ' + eqKey);
+    const deQ = generateUniversityQuestionByTopic('de1', 'de1-alapok');
+    logDebug(
+        'de/pde routing',
+        {
+            n: DE_TOPIC_IDS.length,
+            dePrefix: deWs.prefix,
+            pdePrefix: pdeWs.prefix,
+            eqPrefix: eqWs?.prefix,
+            firstQ: String(deWs.list[0]?.question || '').slice(0, 70),
+            firstAnswer: deWs.list[0]?.answer,
+            deKey,
+            eqKey,
+            genFirst: String(deQ?.question || '').slice(0, 40),
+            usedStub: false,
+        },
+        'A',
+        'de-topics'
+    );
+
+    if (DM_TOPIC_IDS.length !== 30) throw new Error(`DM_TOPIC_IDS length ${DM_TOPIC_IDS.length}`);
+    const catalogDmIds = universitySubjects
+        .filter((s) => /^dm[1-3]$|^ge[12]$/.test(s.id))
+        .flatMap((s) => s.topics.map((t) => t.id));
+    if (catalogDmIds.join(',') !== DM_TOPIC_IDS.join(',')) {
+        throw new Error('catalog DM/GE ids mismatch banks');
+    }
+    const dmWs = getWorksheetListForTopic('dm1-osszeadas');
+    const geWs = getWorksheetListForTopic('ge1-alapok');
+    const kombWs = getWorksheetListForTopic('kombinatorika');
+    const grafWs = getWorksheetListForTopic('logika-grafok');
+    const dmKey = resolveTopicProgressKey('dm1-osszeadas');
+    const geKey = resolveTopicProgressKey('ge1-alapok');
+    const kombKey = resolveTopicProgressKey('kombinatorika');
+    const grafKey = resolveTopicProgressKey('logika-grafok');
+    const stealIds = DM_TOPIC_IDS.filter(
+        (id) =>
+            id.includes('kombinatorika') ||
+            id.includes('grafok') ||
+            id.includes('sorozat') ||
+            id.includes('halmaz') ||
+            id.includes('fuggveny') ||
+            id.includes('bizonyitas') ||
+            id.includes('valoszinuseg')
+    );
+    if (stealIds.length) throw new Error('DM ids steal érettségi: ' + stealIds.join(','));
+    if (!dmWs || dmWs.prefix !== 'uni_dm1-osszeadas') throw new Error('dm1-osszeadas prefix ' + dmWs?.prefix);
+    if (!geWs || geWs.prefix !== 'uni_ge1-alapok') throw new Error('ge1-alapok prefix ' + geWs?.prefix);
+    if (kombWs?.prefix !== 'erettsegi_kombinatorika') throw new Error('kombinatorika prefix ' + kombWs?.prefix);
+    if (grafWs?.prefix !== 'erettsegi_grafok') throw new Error('grafok prefix ' + grafWs?.prefix);
+    if (dmKey !== null) throw new Error('dm progress key ' + dmKey);
+    if (geKey !== null) throw new Error('ge progress key ' + geKey);
+    if (kombKey !== 'kombinatorika') throw new Error('komb progress key ' + kombKey);
+    if (grafKey !== 'grafok') throw new Error('graf progress key ' + grafKey);
+    const dmQ = generateUniversityQuestionByTopic('dm1', 'dm1-osszeadas');
+    logDebug(
+        'dm/ge routing',
+        {
+            n: DM_TOPIC_IDS.length,
+            dmPrefix: dmWs.prefix,
+            gePrefix: geWs.prefix,
+            kombPrefix: kombWs?.prefix,
+            grafPrefix: grafWs?.prefix,
+            firstQ: String(dmWs.list[0]?.question || '').slice(0, 70),
+            firstAnswer: dmWs.list[0]?.answer,
+            dmKey,
+            geKey,
+            kombKey,
+            grafKey,
+            stealIds,
+            genFirst: String(dmQ?.question || '').slice(0, 40),
+            usedStub: false,
+        },
+        'A',
+        'dm-topics'
+    );
+
+    if (ST_TOPIC_IDS.length !== 18) throw new Error(`ST_TOPIC_IDS length ${ST_TOPIC_IDS.length}`);
+    const catalogStIds = universitySubjects
+        .filter((s) => /^st[1-3]$/.test(s.id))
+        .flatMap((s) => s.topics.map((t) => t.id));
+    if (catalogStIds.join(',') !== ST_TOPIC_IDS.join(',')) {
+        throw new Error('catalog ST ids mismatch banks');
+    }
+    const stWs = getWorksheetListForTopic('st1-alapok');
+    const st3Ws = getWorksheetListForTopic('st3-halado');
+    const statWs = getWorksheetListForTopic('statisztika');
+    const valoWs = getWorksheetListForTopic('valoszinusegszamitas');
+    const stKey = resolveTopicProgressKey('st1-alapok');
+    const statKey = resolveTopicProgressKey('statisztika');
+    const valoKey = resolveTopicProgressKey('valoszinusegszamitas');
+    const stealStIds = ST_TOPIC_IDS.filter(
+        (id) =>
+            id.includes('statisztika') ||
+            id.includes('valoszinuseg') ||
+            id.includes('sorozat') ||
+            id.includes('fuggveny') ||
+            id.includes('exponencialis') ||
+            id.includes('paramet')
+    );
+    if (stealStIds.length) throw new Error('ST ids steal érettségi: ' + stealStIds.join(','));
+    if (!stWs || stWs.prefix !== 'uni_st1-alapok') throw new Error('st1-alapok prefix ' + stWs?.prefix);
+    if (!st3Ws || st3Ws.prefix !== 'uni_st3-halado') throw new Error('st3-halado prefix ' + st3Ws?.prefix);
+    if (statWs?.prefix !== 'erettsegi_statisztika') throw new Error('statisztika prefix ' + statWs?.prefix);
+    if (valoWs?.prefix !== 'erettsegi_valoszinuseg') throw new Error('valoszinuseg prefix ' + valoWs?.prefix);
+    if (stKey !== null) throw new Error('st progress key ' + stKey);
+    if (statKey !== 'statisztika') throw new Error('stat progress key ' + statKey);
+    if (valoKey !== 'valoszinuseg') throw new Error('valo progress key ' + valoKey);
+    const stQ = generateUniversityQuestionByTopic('st1', 'st1-alapok');
+    logDebug(
+        'st routing',
+        {
+            n: ST_TOPIC_IDS.length,
+            stPrefix: stWs.prefix,
+            st3Prefix: st3Ws.prefix,
+            statPrefix: statWs?.prefix,
+            valoPrefix: valoWs?.prefix,
+            firstQ: String(stWs.list[0]?.question || '').slice(0, 70),
+            firstAnswer: stWs.list[0]?.answer,
+            stKey,
+            statKey,
+            valoKey,
+            stealStIds,
+            genFirst: String(stQ?.question || '').slice(0, 40),
+            usedStub: false,
+            collidedStatisztika: 'st1-alapok'.includes('statisztika'),
+            collidedValoszinuseg: 'st1-alapok'.includes('valoszinuseg'),
+        },
+        'A',
+        'st-topics'
+    );
 
     const store = createSocialStore('smoke');
     const dbPath = path.join(process.cwd(), 'data', 'social-local.json');

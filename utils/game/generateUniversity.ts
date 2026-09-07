@@ -3,6 +3,9 @@ import { agentDebugLog } from '../agentDebugLog';
 import { getAnalizis1PracticeQuestions } from './analizis1Levels';
 import { getAnalizis2PracticeQuestions } from './analizis2Levels';
 import { getLinearisPracticeQuestions } from './linearisAlgebra';
+import { getDePracticeQuestions } from './deAlgebra';
+import { getDmPracticeQuestions } from './dmAlgebra';
+import { getStPracticeQuestions } from './stAlgebra';
 import {
     generateDerivativeQuestion,
     generateIntegralQuestion,
@@ -77,6 +80,78 @@ export const generateUniversityQuestionByTopic = (subjectId: string, topicId: st
                     usedMatrixStub: false,
                 },
                 runId: 'la-topics',
+            });
+            // #endregion
+            return q;
+        }
+    }
+
+    if (/^de[1-4]-/.test(topicIdLower) || /^pde[12]-/.test(topicIdLower)) {
+        const list = getDePracticeQuestions(topicIdLower);
+        if (list && list.length) {
+            const q = list[Math.floor(Math.random() * list.length)];
+            // #region agent log
+            agentDebugLog({
+                hypothesisId: 'D',
+                location: 'generateUniversity.ts:de-bank',
+                message: 'de/pde topic served from practice bank',
+                data: {
+                    topicId: topicIdLower,
+                    total: list.length,
+                    firstQ: String(list[0]?.question || '').slice(0, 40),
+                    firstAnswer: list[0]?.answer,
+                    pickedQ: String(q.question || '').slice(0, 40),
+                    usedDeStub: false,
+                },
+                runId: 'de-topics',
+            });
+            // #endregion
+            return q;
+        }
+    }
+
+    if (/^dm[1-3]-/.test(topicIdLower) || /^ge[12]-/.test(topicIdLower)) {
+        const list = getDmPracticeQuestions(topicIdLower);
+        if (list && list.length) {
+            const q = list[Math.floor(Math.random() * list.length)];
+            // #region agent log
+            agentDebugLog({
+                hypothesisId: 'D',
+                location: 'generateUniversity.ts:dm-bank',
+                message: 'dm/ge topic served from practice bank',
+                data: {
+                    topicId: topicIdLower,
+                    total: list.length,
+                    firstQ: String(list[0]?.question || '').slice(0, 40),
+                    firstAnswer: list[0]?.answer,
+                    pickedQ: String(q.question || '').slice(0, 40),
+                    usedDmStub: false,
+                },
+                runId: 'dm-topics',
+            });
+            // #endregion
+            return q;
+        }
+    }
+
+    if (/^st[1-3]-/.test(topicIdLower)) {
+        const list = getStPracticeQuestions(topicIdLower);
+        if (list && list.length) {
+            const q = list[Math.floor(Math.random() * list.length)];
+            // #region agent log
+            agentDebugLog({
+                hypothesisId: 'D',
+                location: 'generateUniversity.ts:st-bank',
+                message: 'st topic served from practice bank',
+                data: {
+                    topicId: topicIdLower,
+                    total: list.length,
+                    firstQ: String(list[0]?.question || '').slice(0, 40),
+                    firstAnswer: list[0]?.answer,
+                    pickedQ: String(q.question || '').slice(0, 40),
+                    usedStStub: false,
+                },
+                runId: 'st-topics',
             });
             // #endregion
             return q;

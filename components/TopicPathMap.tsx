@@ -10,6 +10,7 @@ import {
     type TopicProgress,
     type UserPracticeProgress,
 } from '../utils/practiceProgress';
+import { gearFromRank } from '../utils/gameJuice';
 import {
     PATH_LESSON_COUNT,
     PATH_TOTAL_QUESTIONS,
@@ -20,6 +21,8 @@ import {
     lessonMathSymbol,
     type PathNode,
 } from '../utils/topicPath';
+import { agentDebugLog } from '../utils/agentDebugLog';
+import { textbookGradeFromTopicId } from '../utils/hsTextbook';
 import { formatAuthError, isTestLoginAllowed, signInAsTestUser, TEST_LOGIN_EMAIL } from '../utils/testLogin';
 import MathHexMascot from './MathHexMascot';
 import MathNodeIcon from './MathNodeIcon';
@@ -57,7 +60,7 @@ export default function TopicPathMap({
     const [loggedInEmail, setLoggedInEmail] = useState<string | null>(null);
     const [testLoading, setTestLoading] = useState(false);
     const [sprintMode, setSprintMode] = useState(false);
-    const nodes = useMemo(() => buildPathNodes(), []);
+    const nodes = useMemo(() => buildPathNodes(topicId), [topicId]);
     const winding = useMemo(() => buildWindingLayout(nodes.length), [nodes.length]);
 
     const storageKey = resolveProgressStorageKey(topicId);
@@ -142,8 +145,62 @@ export default function TopicPathMap({
             params.set('educationLevel', educationLevel);
             if (grade != null) params.set('grade', String(grade));
             else if (educationLevel === 'elementary') params.set('grade', '5');
-            else if (educationLevel === 'highschool') params.set('grade', '10');
+            else if (educationLevel === 'highschool') params.set('grade', String(textbookGradeFromTopicId(topicId) ?? 10));
         }
+        // #region agent log
+        agentDebugLog({
+            hypothesisId: 'H4',
+            location: 'TopicPathMap.tsx:startLesson',
+            message: 'start path lesson',
+            data: {
+                topicId,
+                lesson,
+                educationLevel,
+                grade: grade ?? null,
+                hrefGrade: params.get('grade'),
+                isHsTextbook: /^hs\d{2}-/.test(topicId),
+                textbookGrade: textbookGradeFromTopicId(topicId),
+            },
+            runId: topicId.startsWith('hs09-') ? 'hs09-oh' : 'hs11-oh',
+        });
+        // #endregion
+        router.push(`/game?${params.toString()}`);
+    };
+
+    const startTopicMix = () => {
+        if (lessonsCompleted.length < PATH_LESSON_COUNT) {
+            showToast('Előbb fejezd be a 6 leckét!');
+            return;
+        }
+        const params = new URLSearchParams({
+            topic: topicId,
+            topicMix: '1',
+        });
+        if (sprintMode) params.set('sprint', '1');
+        if (educationLevel === 'erettsegi') {
+            params.set('erettsegi', 'true');
+            params.set('level', erettsegiLevel);
+        } else {
+            params.set('educationLevel', educationLevel);
+            if (grade != null) params.set('grade', String(grade));
+            else if (educationLevel === 'elementary') params.set('grade', '5');
+            else if (educationLevel === 'highschool') params.set('grade', String(textbookGradeFromTopicId(topicId) ?? 10));
+        }
+        // #region agent log
+        agentDebugLog({
+            hypothesisId: 'B',
+            location: 'TopicPathMap.tsx:startTopicMix',
+            message: 'topic mix navigation',
+            data: {
+                topicId,
+                topicMix: params.get('topicMix'),
+                mixed: params.get('mixed'),
+                educationLevel,
+                query: params.toString(),
+            },
+            runId: 'topic-mix',
+        });
+        // #endregion
         router.push(`/game?${params.toString()}`);
     };
 
@@ -199,6 +256,51 @@ export default function TopicPathMap({
     const accent = topicColor || '#58cc02';
     const allDone = lessonsCompleted.length >= PATH_LESSON_COUNT;
 
+    useEffect(() => {
+        const root = document.querySelector('.mm-path-track');
+        if (!root) return;
+        const els = Array.from(
+            root.querySelectorAll<HTMLElement>(
+                '.mm-path-btn, .mm-path-caption, .mm-path-mascot, .mm-path-bubble, .mm-path-chest'
+            )
+        );
+        const boxes = els.map((el) => {
+            const r = el.getBoundingClientRect();
+            return {
+                cls: el.className.replace(/\s+/g, ' ').slice(0, 48),
+                t: Math.round(r.top),
+                l: Math.round(r.left),
+                r: Math.round(r.right),
+                b: Math.round(r.bottom),
+            };
+        });
+        const overlaps: Array<{ a: string; b: string }> = [];
+        for (let i = 0; i < boxes.length; i++) {
+            for (let j = i + 1; j < boxes.length; j++) {
+                const a = boxes[i];
+                const b = boxes[j];
+                const hit = a.l < b.r - 4 && b.l < a.r - 4 && a.t < b.b - 4 && b.t < a.b - 4;
+                if (!hit) continue;
+                if (els[i].contains(els[j]) || els[j].contains(els[i])) continue;
+                overlaps.push({ a: a.cls, b: b.cls });
+            }
+        }
+        // #region agent log
+        agentDebugLog({
+            hypothesisId: 'A',
+            location: 'TopicPathMap.tsx:overlapCheck',
+            message: 'path node overlap measure',
+            data: {
+                boxN: boxes.length,
+                overlapN: overlaps.length,
+                overlaps: overlaps.slice(0, 10),
+                trackH: Math.round(root.getBoundingClientRect().height),
+            },
+            runId: 'path-overlap',
+        });
+        // #endregion
+    }, [nodes.length, winding.points.length, allDone, continueLesson, doneCount]);
+
     const renderPlacedNode = (node: PathNode, index: number) => {
         const pt = winding.points[index];
         if (!pt) return null;
@@ -210,6 +312,52 @@ export default function TopicPathMap({
             top: `${pt.y}%`,
             zIndex: 5,
         };
+
+        if (node.kind === 'mixed') {
+            const unlocked = allDone;
+            // #region agent log
+            agentDebugLog({
+                hypothesisId: 'E',
+                location: 'TopicPathMap.tsx:renderMixed',
+                message: 'mixed node placed',
+                data: {
+                    topicId,
+                    index,
+                    nodesN: nodes.length,
+                    pointsN: winding.points.length,
+                    hasPoint: Boolean(pt),
+                    unlocked,
+                    lessonsDone: lessonsCompleted.length,
+                },
+                runId: 'topic-mix',
+            });
+            // #endregion
+            return (
+                <div key="mixed" className="mm-path-node" style={placeStyle}>
+                    <div className="mm-path-cluster">
+                        {unlocked && (
+                            <button type="button" className="mm-path-bubble" onClick={startTopicMix}>
+                                VEGYES
+                            </button>
+                        )}
+                        <div className="mm-path-btn-wrap">
+                            <button
+                                type="button"
+                                className={`mm-path-btn mixed ${unlocked ? 'unlocked' : 'locked'}`}
+                                disabled={!unlocked}
+                                onClick={startTopicMix}
+                                aria-label={node.label}
+                            >
+                                <span className="mm-path-glyph">Σ</span>
+                            </button>
+                        </div>
+                        <span className={`mm-path-caption ${unlocked ? '' : 'muted'}`}>
+                            {unlocked ? 'Vegyes gyakorlás' : 'Vegyes · 6 lecke után'}
+                        </span>
+                    </div>
+                </div>
+            );
+        }
 
         if (node.kind === 'lesson') {
             const done = lessonsCompleted.includes(node.lesson);
@@ -260,12 +408,22 @@ export default function TopicPathMap({
                                     />
                                 </span>
                             </button>
-                            <span
-                                className={`mm-path-caption ${unlocked ? '' : 'muted'} ${pt.side === 'left' ? 'cap-right' : 'cap-left'}`}
-                            >
-                                {done ? `Lecke ${node.lesson} · Kész` : node.label}
-                            </span>
+                            {showMascot && (
+                                <div
+                                    className={`mm-path-mascot ${pt.side === 'left' ? 'on-left' : 'on-right'}`}
+                                >
+                                    <MathHexMascot
+                                        size={72}
+                                        color={accent}
+                                        mood={done && allDone ? 'happy' : 'idle'}
+                                        gear={gearFromRank(progress?.rankLevel || 1)}
+                                    />
+                                </div>
+                            )}
                         </div>
+                        <span className={`mm-path-caption ${unlocked ? '' : 'muted'}`}>
+                            {done ? `Lecke ${node.lesson} · Kész` : node.label}
+                        </span>
                         {(done || starCount > 0) && (
                             <span className="mm-path-stars" aria-label={`${starCount} alakzat`}>
                                 {Array.from({ length: 3 }, (_, i) => (
@@ -277,18 +435,6 @@ export default function TopicPathMap({
                                     </span>
                                 ))}
                             </span>
-                        )}
-
-                        {showMascot && (
-                            <div
-                                className={`mm-path-mascot ${pt.side === 'left' ? 'on-right' : 'on-left'}`}
-                            >
-                                <MathHexMascot
-                                    size={108}
-                                    color={accent}
-                                    mood={done && allDone ? 'happy' : 'idle'}
-                                />
-                            </div>
                         )}
                     </div>
                 </div>
@@ -463,6 +609,19 @@ export default function TopicPathMap({
                 </svg>
                 {nodes.map((n, i) => renderPlacedNode(n, i))}
             </div>
+
+            {allDone && (
+                <div style={{ textAlign: 'center', padding: '0 1rem 1.5rem' }}>
+                    <button
+                        type="button"
+                        className="mm-path-bubble"
+                        onClick={startTopicMix}
+                        style={{ position: 'static', display: 'inline-block' }}
+                    >
+                        Vegyes feladatmegoldás
+                    </button>
+                </div>
+            )}
 
             {toast && <div className="mm-path-toast">{toast}</div>}
         </div>

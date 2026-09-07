@@ -9,7 +9,8 @@ import {
     type ErettsegiExamLevel,
 } from './mathTopicsCatalog';
 import { PATH_LESSON_COUNT } from './topicPath';
-import type { TopicProgress } from './practiceProgress';
+import { textbookGradeFromTopicId } from './hsTextbook';
+import { isSkillNodeId, type SkillNodeId } from './skillTree';
 
 export type RawGameResult = {
     id?: string;
@@ -194,6 +195,14 @@ export function findCatalogTopic(
         const list = getTopicsForEducationLevel(educationLevel, erettsegiLevel);
         const hit = list.find((t) => topicKeysMatch(t.id, topicId));
         if (hit) return hit;
+        if (educationLevel === 'highschool') {
+            for (const g of [9, 11]) {
+                const hitG = getTopicsForEducationLevel('highschool', erettsegiLevel, g).find((t) =>
+                    topicKeysMatch(t.id, topicId)
+                );
+                if (hitG) return hitG;
+            }
+        }
     }
 
     const levels: EducationLevelId[] = ['elementary', 'highschool', 'university', 'erettsegi'];
@@ -218,11 +227,19 @@ export function findCatalogTopic(
 export function buildTopicStatsHref(
     topicId: string,
     educationLevel: EducationLevelId,
-    erettsegiLevel: ErettsegiExamLevel = 'emelt'
+    erettsegiLevel: ErettsegiExamLevel = 'emelt',
+    grade?: number
 ): string {
     const params = new URLSearchParams({ educationLevel });
     if (educationLevel === 'erettsegi') {
         params.set('level', erettsegiLevel);
+    }
+    if (educationLevel === 'highschool') {
+        const g = grade && grade >= 9 && grade <= 12 ? grade : (textbookGradeFromTopicId(topicId) ?? 10);
+        params.set('grade', String(g));
+    }
+    if (educationLevel === 'elementary' && grade) {
+        params.set('grade', String(grade));
     }
     return `/topic/${encodeURIComponent(topicId)}?${params.toString()}`;
 }
@@ -231,7 +248,8 @@ export function buildTopicStatsHref(
 export function buildTopicPracticeHref(
     topicId: string,
     educationLevel: EducationLevelId,
-    erettsegiLevel: ErettsegiExamLevel = 'emelt'
+    erettsegiLevel: ErettsegiExamLevel = 'emelt',
+    grade?: number
 ): string {
     const params = new URLSearchParams({
         educationLevel,
@@ -241,11 +259,33 @@ export function buildTopicPracticeHref(
         params.set('level', erettsegiLevel);
     }
     if (educationLevel === 'elementary') {
-        params.set('grade', '5');
+        params.set('grade', String(grade && grade >= 1 && grade <= 8 ? grade : 5));
     } else if (educationLevel === 'highschool') {
-        params.set('grade', '10');
+        const g = grade && grade >= 9 && grade <= 12 ? grade : (textbookGradeFromTopicId(topicId) ?? 10);
+        params.set('grade', String(g));
     }
     return `/topic/${encodeURIComponent(topicId)}?${params.toString()}`;
+}
+
+/** Témakör-végi vegyes feladatmegoldás (6 lecke után). */
+export function buildTopicMixGameHref(
+    topicId: string,
+    educationLevel: EducationLevelId,
+    erettsegiLevel: ErettsegiExamLevel = 'emelt'
+): string {
+    const params = new URLSearchParams({
+        topic: topicId,
+        topicMix: '1',
+    });
+    if (educationLevel === 'erettsegi') {
+        params.set('erettsegi', 'true');
+        params.set('level', erettsegiLevel);
+    } else {
+        params.set('educationLevel', educationLevel);
+        if (educationLevel === 'elementary') params.set('grade', '5');
+        else if (educationLevel === 'highschool') params.set('grade', String(textbookGradeFromTopicId(topicId) ?? 10));
+    }
+    return `/game?${params.toString()}`;
 }
 
 /** Napi vegyes gyakorlás (több témából). */
@@ -257,6 +297,36 @@ export function buildDailyPracticeHref(educationLevel: EducationLevelId): string
     if (educationLevel === 'elementary') params.set('grade', '5');
     if (educationLevel === 'highschool') params.set('grade', '10');
     return `/game?${params.toString()}`;
+}
+
+export function buildBlitzHref(educationLevel: EducationLevelId): string {
+    const params = new URLSearchParams({
+        blitz: '1',
+        educationLevel,
+    });
+    if (educationLevel === 'elementary') params.set('grade', '5');
+    if (educationLevel === 'highschool') params.set('grade', '10');
+    return `/game?${params.toString()}`;
+}
+
+export function buildChallengeHref(
+    id: SkillNodeId,
+    educationLevel: EducationLevelId,
+    erettsegiLevel: ErettsegiExamLevel = 'emelt'
+): string {
+    const params = new URLSearchParams({
+        challenge: id,
+        educationLevel,
+    });
+    if (educationLevel === 'elementary') params.set('grade', '5');
+    if (educationLevel === 'highschool') params.set('grade', '10');
+    if (educationLevel === 'erettsegi') params.set('level', erettsegiLevel);
+    return `/game?${params.toString()}`;
+}
+
+export function challengeIdFromQuery(raw: unknown): SkillNodeId | null {
+    const id = String(raw || '');
+    return isSkillNodeId(id) ? id : null;
 }
 
 export function formatResultDate(timestamp: any): string {

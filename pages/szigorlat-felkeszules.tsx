@@ -11,6 +11,12 @@ export default function SzigorlatFelkeszules() {
         { id: 'analizis2-osszes', title: 'Analízis II. - Összes témakör', icon: '∂', subject: 'analizis2' },
         { id: 'linearis1-osszes', title: 'Lineáris algebra I. - Összes témakör', icon: '[]', subject: 'linearis1' },
         { id: 'linearis2-osszes', title: 'Lineáris algebra II. - Összes témakör', icon: 'V', subject: 'linearis2' },
+        { id: 'de1-osszes', title: 'Differenciálegyenletek I. - Összes témakör', icon: "y'", subject: 'de1' },
+        { id: 'de2-osszes', title: 'Differenciálegyenletek II. - Összes témakör', icon: "y''", subject: 'de2' },
+        { id: 'pde1-osszes', title: 'PDE I. - Összes témakör', icon: '∂u', subject: 'pde1' },
+        { id: 'dm1-osszes', title: 'Diszkrét matematika I. - Összes témakör', icon: 'n!', subject: 'dm1' },
+        { id: 'ge1-osszes', title: 'Gráfelmélet I. - Összes témakör', icon: 'G', subject: 'ge1' },
+        { id: 'st1-osszes', title: 'Statisztika I. - Összes témakör', icon: 'x̄', subject: 'st1' },
         { id: 'vegyes-szigorlat', title: 'Vegyes Szigorlat', icon: '📚', subject: 'vegyes' },
     ];
 

@@ -35,6 +35,41 @@ export function playCorrectSound() {
     window.setTimeout(() => beep(659.25, 120, 'sine', 0.07), 80);
 }
 
+/** Telefonos játékos fanfár helyes válasznál. */
+export function playCelebrateFanfare() {
+    const notes: Array<[number, number, number]> = [
+        [523.25, 0, 110],
+        [659.25, 90, 110],
+        [783.99, 180, 130],
+        [1046.5, 280, 220],
+        [1318.5, 420, 160],
+    ];
+    notes.forEach(([freq, delay, dur]) => {
+        window.setTimeout(() => beep(freq, dur, 'sine', 0.085), delay);
+    });
+}
+
+/** Hangosabb fanfár combo-mérföldkőnél (3 / 5 / 8). */
+export function playBigCelebrateFanfare() {
+    const notes: Array<[number, number, number, number]> = [
+        [523.25, 0, 120, 0.1],
+        [659.25, 80, 120, 0.11],
+        [783.99, 160, 140, 0.12],
+        [1046.5, 260, 200, 0.13],
+        [1318.5, 380, 180, 0.12],
+        [1568, 520, 260, 0.11],
+    ];
+    notes.forEach(([freq, delay, dur, gain]) => {
+        window.setTimeout(() => beep(freq, dur, 'square', gain), delay);
+    });
+}
+
+export function playComboBreakSound() {
+    beep(330, 160, 'sawtooth', 0.11);
+    window.setTimeout(() => beep(196, 240, 'sawtooth', 0.12), 140);
+    window.setTimeout(() => beep(110, 360, 'triangle', 0.1), 300);
+}
+
 export function playWrongSound() {
     beep(196, 180, 'triangle', 0.09);
 }
@@ -61,3 +96,4 @@ export function streakBonusXp(streak: number): number {
 }
 
 export const SPRINT_SECONDS = 90;
+export { BLITZ_SECONDS } from './gameJuice';

@@ -6,7 +6,8 @@ import {
 } from '../utils/practiceProgress';
 import { isLessonUnlocked } from '../utils/topicPath';
 import { type EducationLevelId, getUniversitySubjectById } from '../utils/mathTopicsCatalog';
-import { buildTopicPracticeHref } from '../utils/topicStats';
+import { skillNodeById } from '../utils/skillTree';
+import { buildTopicPracticeHref, challengeIdFromQuery } from '../utils/topicStats';
 import type { GameEducationLevel } from './useGameSessionBuilders';
 
 type PracticeEducationLevel = Exclude<GameEducationLevel, null>;
@@ -23,6 +24,18 @@ export type UseGameRouteBootstrapParams = {
     setSelectedUniversitySubject: Dispatch<SetStateAction<string | null>>;
     setSelectedUniversityTopic: Dispatch<SetStateAction<string | null>>;
     generateDailyMixedQuestions: (eduLevel: EducationLevelId, grade: number) => void;
+    generateBlitzQuestions: (eduLevel: EducationLevelId, grade: number) => void;
+    generateChallengeQuestions: (
+        eduLevel: EducationLevelId,
+        grade: number,
+        challenge: import('../utils/skillTree').SkillNode
+    ) => void;
+    startTopicMixedPractice: (
+        topicId: string,
+        eduLevel: EducationLevelId,
+        grade: number,
+        examLevel?: string
+    ) => void;
     startPathLessonForEducationLevel: (
         eduLevel: PracticeEducationLevel,
         topicId: string,
@@ -35,6 +48,7 @@ export type UseGameRouteBootstrapParams = {
     generateErettsegiQuestionsByTopic: (topicId: string, level: string, sprint?: boolean) => void;
     generateMixedErettsegiQuestions: (level: string) => void;
     generateKozpontiQuestionsByTopic: (topicId: string) => void;
+    generateKozpontiPaper: (paperId: string) => void;
     generateVegyesSzigorlatQuestions: () => void;
     generateSzigorlatQuestionsBySubject: (subjectId: string) => void;
     loadTaskQuestions: (taskId: string) => void | Promise<void>;
@@ -57,6 +71,9 @@ export function useGameRouteBootstrap({
     setSelectedUniversitySubject,
     setSelectedUniversityTopic,
     generateDailyMixedQuestions,
+    generateBlitzQuestions,
+    generateChallengeQuestions,
+    startTopicMixedPractice,
     startPathLessonForEducationLevel,
     generateElementaryQuestionsByTopic,
     generateHighschoolQuestionsByTopic,
@@ -64,6 +81,7 @@ export function useGameRouteBootstrap({
     generateErettsegiQuestionsByTopic,
     generateMixedErettsegiQuestions,
     generateKozpontiQuestionsByTopic,
+    generateKozpontiPaper,
     generateVegyesSzigorlatQuestions,
     generateSzigorlatQuestionsBySubject,
     loadTaskQuestions,
@@ -98,8 +116,56 @@ export function useGameRouteBootstrap({
             const pathRequested = router.query.path === '1';
             const dailyRequested = router.query.daily === '1';
             const sprintRequested = router.query.sprint === '1';
+            const blitzRequested = router.query.blitz === '1';
+            const challengeId = challengeIdFromQuery(router.query.challenge);
+            const challengeNode = challengeId ? skillNodeById(challengeId) : undefined;
+            const topicMixRequested = router.query.topicMix === '1';
 
-            if (dailyRequested && resolvedLevel && !gameActive) {
+            if (topicMixRequested && topicParam && !gameActive) {
+                const mixLevel: EducationLevelId =
+                    resolvedLevel
+                    || (router.query.erettsegi === 'true' ? 'erettsegi' : 'erettsegi');
+                const grade = !isNaN(gradeParam)
+                    ? gradeParam
+                    : mixLevel === 'elementary'
+                      ? 5
+                      : 10;
+                const examLevel = (router.query.level as string) || 'emelt';
+                // #region agent log
+                void import('../utils/agentDebugLog').then(({ agentDebugLog }) => {
+                    agentDebugLog({
+                        hypothesisId: 'A',
+                        location: 'useGameRouteBootstrap.ts:topicMix',
+                        message: 'topicMix query intercepted',
+                        data: {
+                            topicParam,
+                            mixLevel,
+                            grade,
+                            examLevel,
+                            mixedQuery: router.query.mixed === 'true',
+                            pathRequested,
+                            erettsegi: router.query.erettsegi === 'true',
+                        },
+                        runId: 'topic-mix',
+                    });
+                });
+                // #endregion
+                startTopicMixedPractice(topicParam, mixLevel, grade, examLevel);
+            } else if (challengeNode && !gameActive) {
+                const rawEdu = String(router.query.educationLevel || '');
+                const chalLevel: EducationLevelId =
+                    rawEdu === 'elementary' || rawEdu === 'highschool' || rawEdu === 'university' || rawEdu === 'erettsegi'
+                        ? rawEdu
+                        : (resolvedLevel || 'highschool');
+                const grade = !isNaN(gradeParam)
+                    ? gradeParam
+                    : chalLevel === 'elementary' ? 5 : 10;
+                generateChallengeQuestions(chalLevel, grade, challengeNode);
+            } else if (blitzRequested && !gameActive) {
+                const blitzLevel: EducationLevelId = resolvedLevel || 'highschool';
+                const grade = !isNaN(gradeParam) ? gradeParam : blitzLevel === 'elementary' ? 5 : 10;
+                generateBlitzQuestions(blitzLevel, grade);
+            } else if (dailyRequested && resolvedLevel && !gameActive) {
                 const grade = !isNaN(gradeParam) ? gradeParam : resolvedLevel === 'elementary' ? 5 : 10;
                 generateDailyMixedQuestions(resolvedLevel, grade);
             } else if (pathRequested && resolvedLevel && topicParam && !gameActive) {
@@ -164,7 +230,7 @@ export function useGameRouteBootstrap({
         }
 
         // Érettségi mód kezelése — path lecke: csak ha az előző kész
-        if (router.query.erettsegi === 'true' && router.query.topic) {
+        if (router.query.erettsegi === 'true' && router.query.topic && router.query.topicMix !== '1') {
             const topicId = router.query.topic as string;
             const level = (router.query.level as string) || 'emelt';
             const nodeParsed = router.query.node != null
@@ -217,7 +283,10 @@ export function useGameRouteBootstrap({
         }
 
         // Központi felvételi kezelése - gimnáziumi felvételi felkészülés
-        if (router.isReady && router.query.kozponti === 'true' && router.query.topic) {
+        if (router.isReady && router.query.kozponti === 'true' && router.query.paper) {
+            const paperId = router.query.paper as string;
+            generateKozpontiPaper(paperId);
+        } else if (router.isReady && router.query.kozponti === 'true' && router.query.topic) {
             const topicId = router.query.topic as string;
             console.log('Központi felvételi detected, topicId:', topicId);
             generateKozpontiQuestionsByTopic(topicId);

@@ -1,4 +1,11 @@
-import type { CatalogTopic, UniversitySubject } from '../../utils/mathTopicsCatalog';
+import {
+    elementaryTopics,
+    getHighschoolTopicsForGrade,
+    universitySubjects,
+    type CatalogTopic,
+    type UniversitySubject,
+} from '../../utils/mathTopicsCatalog';
+import { agentDebugLog } from '../../utils/agentDebugLog';
 
 export type GameEducationLevel = 'elementary' | 'highschool' | 'university' | null;
 
@@ -37,6 +44,7 @@ export type GameLobbyProps = {
     assignedTasks: Array<{ title: string }>;
     onStartGame: () => void;
     onResetGame: () => void;
+    onStartBlitz?: () => void;
 };
 
 export default function GameLobby({
@@ -74,6 +82,7 @@ export default function GameLobby({
     assignedTasks,
     onStartGame,
     onResetGame,
+    onStartBlitz,
 }: GameLobbyProps) {
     return (
         <div className="start-screen">
@@ -140,6 +149,16 @@ export default function GameLobby({
                             <span className="level-name">Érettségi Felkészülés</span>
                             <span className="level-desc">Témakörök és feladatsorok</span>
                         </button>
+                        {onStartBlitz && (
+                            <button
+                                className="level-btn blitz"
+                                onClick={onStartBlitz}
+                            >
+                                <span className="level-icon">⚡</span>
+                                <span className="level-name">Villámkör</span>
+                                <span className="level-desc">60 mp — minél több helyes</span>
+                            </button>
+                        )}
                         <button
                             className="level-btn kozponti"
                             onClick={onGenerateKozponti}
@@ -261,12 +280,37 @@ export default function GameLobby({
                             🔄 Osztály váltása
                         </button>
                     </div>
+                    {selectedHighschoolGrade === 9 && (
+                        <p className="level-desc" style={{ marginBottom: '1rem', opacity: 0.85 }}>
+                            OH-MAT09TA/I tankönyv fejezetei — 3 témakör, témánként 6 lecke
+                        </p>
+                    )}
+                    {selectedHighschoolGrade === 11 && (
+                        <p className="level-desc" style={{ marginBottom: '1rem', opacity: 0.85 }}>
+                            OH-MAT11TA tankönyv fejezetei — 7 témakör, témánként 6 lecke
+                        </p>
+                    )}
                     <div className="elementary-topics-grid">
-                        {highschoolTopics.map(topic => (
+                        {getHighschoolTopicsForGrade(selectedHighschoolGrade).map(topic => (
                             <div
                                 key={topic.id}
                                 className="elementary-topic-card"
-                                onClick={() => onSelectHighschoolTopic(topic.id, selectedHighschoolGrade)}
+                                onClick={() => {
+                                    // #region agent log
+                                    agentDebugLog({
+                                        hypothesisId: 'H1',
+                                        location: 'GameLobby.tsx:onSelectHighschoolTopic',
+                                        message: 'highschool topic click',
+                                        data: {
+                                            topicId: topic.id,
+                                            grade: selectedHighschoolGrade,
+                                            isHsTextbook: /^hs\d{2}-/.test(topic.id),
+                                        },
+                                        runId: topic.id.startsWith('hs09-') ? 'hs09-oh' : 'hs11-oh',
+                                    });
+                                    // #endregion
+                                    onSelectHighschoolTopic(topic.id, selectedHighschoolGrade);
+                                }}
                             >
                                 <div className="topic-icon" style={{ color: topic.color }}>
                                     {topic.icon}

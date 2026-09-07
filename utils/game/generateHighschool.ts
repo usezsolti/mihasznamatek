@@ -1,4 +1,7 @@
 import type { Question } from './types';
+import { getHs09PracticeQuestions } from './hs09Levels';
+import { getHs11PracticeQuestions } from './hs11Levels';
+import { agentDebugLog } from '../agentDebugLog';
 import {
     generateDerivativeQuestion,
     generateGeometryQuestion,
@@ -8,6 +11,31 @@ import {
 
 export const generateHighschoolQuestionByTopic = (topicId: string, grade: number, difficulty: number = 0): Question | null => {
     const topicIdLower = topicId.toLowerCase();
+    if (topicIdLower.startsWith('hs09-') || topicIdLower.startsWith('hs11-')) {
+        const list = topicIdLower.startsWith('hs09-')
+            ? getHs09PracticeQuestions(topicIdLower)
+            : getHs11PracticeQuestions(topicIdLower);
+        if (!list || !list.length) return null;
+        const stage = Math.min(6, Math.max(1, difficulty + 1));
+        const pool = list.filter((q) => q.stage === stage);
+        const src = (pool.length ? pool : list)[Math.floor(Math.random() * (pool.length || list.length))];
+        // #region agent log
+        agentDebugLog({
+            hypothesisId: 'H2',
+            location: 'generateHighschool.ts:hsTextbook',
+            message: 'hs textbook generate pick',
+            data: {
+                topicId: topicIdLower,
+                difficulty,
+                stage,
+                poolLen: pool.length,
+                q: String(src.question || '').slice(0, 50),
+            },
+            runId: topicIdLower.startsWith('hs09-') ? 'hs09-oh' : 'hs11-oh',
+        });
+        // #endregion
+        return { ...src };
+    }
 
     // Abszolútérték, gyök
     if (topicIdLower.includes('abszolutertek') || topicIdLower.includes('gyok')) {

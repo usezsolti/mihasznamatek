@@ -25,11 +25,56 @@ import {
     getAnalizis1PracticeQuestions,
     getAnalizis2PracticeQuestions,
     getLinearisPracticeQuestions,
+    getDePracticeQuestions,
+    getDmPracticeQuestions,
+    getStPracticeQuestions,
 } from './practiceBanks';
+import { getHs09PracticeQuestions } from './hs09Levels';
+import { getHs11PracticeQuestions } from './hs11Levels';
 
 export const getWorksheetListForTopic = (topicId: string): { list: Question[]; prefix: string } | null => {
     const topicLower = topicId.toLowerCase();
     if (!isWorksheetTopicId(topicId)) return null;
+    if (topicLower.startsWith('hs09-')) {
+        const list = getHs09PracticeQuestions(topicLower);
+        if (!list) return null;
+        // #region agent log
+        agentDebugLog({
+            hypothesisId: 'H3',
+            location: 'worksheetLists.ts:getWorksheetListForTopic',
+            message: 'hs09 topic routed',
+            data: {
+                topicId,
+                prefix: `hs09_${topicLower}`,
+                total: list.length,
+                stages: [1, 2, 3, 4, 5, 6].map((s) => list.filter((q) => q.stage === s).length),
+                firstQ: String(list[0]?.question || '').slice(0, 50),
+            },
+            runId: 'hs09-oh',
+        });
+        // #endregion
+        return { list, prefix: `hs09_${topicLower}` };
+    }
+    if (topicLower.startsWith('hs11-')) {
+        const list = getHs11PracticeQuestions(topicLower);
+        if (!list) return null;
+        // #region agent log
+        agentDebugLog({
+            hypothesisId: 'H',
+            location: 'worksheetLists.ts:getWorksheetListForTopic',
+            message: 'hs11 topic routed',
+            data: {
+                topicId,
+                prefix: `hs11_${topicLower}`,
+                total: list.length,
+                stages: [1, 2, 3, 4, 5, 6].map((s) => list.filter((q) => q.stage === s).length),
+                firstQ: String(list[0]?.question || '').slice(0, 50),
+            },
+            runId: 'hs11-oh',
+        });
+        // #endregion
+        return { list, prefix: `hs11_${topicLower}` };
+    }
     if (topicLower.startsWith('a1-')) {
         const list = getAnalizis1PracticeQuestions(topicId);
         if (!list) return null;
@@ -91,6 +136,77 @@ export const getWorksheetListForTopic = (topicId: string): { list: Question[]; p
                 collidedEgyenletek: topicLower.includes('egyenletek'),
             },
             runId: 'la-topics',
+        });
+        // #endregion
+        return { list, prefix: `uni_${topicLower}` };
+    }
+    if (/^de[1-4]-/.test(topicLower) || /^pde[12]-/.test(topicLower)) {
+        const list = getDePracticeQuestions(topicId);
+        if (!list) return null;
+        // #region agent log
+        agentDebugLog({
+            hypothesisId: 'A',
+            location: 'worksheetLists.ts:getWorksheetListForTopic',
+            message: 'de/pde topic routed',
+            data: {
+                topicId,
+                prefix: `uni_${topicLower}`,
+                total: list.length,
+                stages: [1, 2, 3, 4, 5, 6].map((s) => list.filter((q) => q.stage === s).length),
+                firstQ: String(list[0]?.question || '').slice(0, 60),
+                firstAnswer: list[0]?.answer,
+                collidedEgyenletek: topicLower.includes('egyenletek'),
+                collidedFuggveny: topicLower.includes('fuggveny'),
+            },
+            runId: 'de-topics',
+        });
+        // #endregion
+        return { list, prefix: `uni_${topicLower}` };
+    }
+    if (/^dm[1-3]-/.test(topicLower) || /^ge[12]-/.test(topicLower)) {
+        const list = getDmPracticeQuestions(topicId);
+        if (!list) return null;
+        // #region agent log
+        agentDebugLog({
+            hypothesisId: 'A',
+            location: 'worksheetLists.ts:getWorksheetListForTopic',
+            message: 'dm/ge topic routed',
+            data: {
+                topicId,
+                prefix: `uni_${topicLower}`,
+                total: list.length,
+                stages: [1, 2, 3, 4, 5, 6].map((s) => list.filter((q) => q.stage === s).length),
+                firstQ: String(list[0]?.question || '').slice(0, 60),
+                firstAnswer: list[0]?.answer,
+                collidedKombinatorika: topicLower.includes('kombinatorika'),
+                collidedGrafok: topicLower.includes('grafok'),
+                collidedSorozat: topicLower.includes('sorozat'),
+            },
+            runId: 'dm-topics',
+        });
+        // #endregion
+        return { list, prefix: `uni_${topicLower}` };
+    }
+    if (/^st[1-3]-/.test(topicLower)) {
+        const list = getStPracticeQuestions(topicId);
+        if (!list) return null;
+        // #region agent log
+        agentDebugLog({
+            hypothesisId: 'A',
+            location: 'worksheetLists.ts:getWorksheetListForTopic',
+            message: 'st topic routed',
+            data: {
+                topicId,
+                prefix: `uni_${topicLower}`,
+                total: list.length,
+                stages: [1, 2, 3, 4, 5, 6].map((s) => list.filter((q) => q.stage === s).length),
+                firstQ: String(list[0]?.question || '').slice(0, 60),
+                firstAnswer: list[0]?.answer,
+                collidedStatisztika: topicLower.includes('statisztika'),
+                collidedValoszinuseg: topicLower.includes('valoszinuseg'),
+                collidedSorozat: topicLower.includes('sorozat'),
+            },
+            runId: 'st-topics',
         });
         // #endregion
         return { list, prefix: `uni_${topicLower}` };

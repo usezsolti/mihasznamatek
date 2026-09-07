@@ -22,11 +22,16 @@ import {
     type ErettsegiExamLevel,
 } from "../utils/mathTopicsCatalog";
 import {
-    loadUserPracticeProgress,
     resolveProgressStorageKey,
+    touchDailyJuice,
 } from "../utils/practiceProgress";
+import type { GameJuiceState } from "../utils/gameJuice";
+import SkillTreePanel from "../components/SkillTreePanel";
+import { countDueSrs } from "../utils/srs";
 import { PATH_LESSON_COUNT } from "../utils/topicPath";
 import {
+    buildBlitzHref,
+    buildChallengeHref,
     buildDailyPracticeHref,
     buildTopicStatsHref,
     indexBestSessionsByTopic,
@@ -80,6 +85,7 @@ export default function Dashboard() {
     const [me, setMe] = useState<UserDoc | null>(null);
     const [error, setError] = useState<string | null>(null);
     const [educationLevel, setEducationLevel] = useState<EducationLevelId>('university');
+    const [highschoolGrade, setHighschoolGrade] = useState(11);
     const [erettsegiExamLevel, setErettsegiExamLevel] = useState<ErettsegiExamLevel>('emelt');
     const [isAdmin, setIsAdmin] = useState(false);
     const [activeTab, setActiveTab] = useState<DashboardTab>("tanulas");
@@ -98,6 +104,9 @@ export default function Dashboard() {
     const [reminderLoading, setReminderLoading] = useState(false);
     const [reminderInfo, setReminderInfo] = useState<string | null>(null);
     const [workingHoursVersion, setWorkingHoursVersion] = useState(0);
+    const [srsDueCount, setSrsDueCount] = useState(0);
+    const [juice, setJuice] = useState<GameJuiceState | null>(null);
+    const [practiceXp, setPracticeXp] = useState(0);
     const [showNewTopicForm, setShowNewTopicForm] = useState(false);
     const [newTopic, setNewTopic] = useState({
         title: '',
@@ -106,7 +115,7 @@ export default function Dashboard() {
     });
 
     const catalogToMathTopics = (level: EducationLevelId, examLevel: ErettsegiExamLevel): MathTopic[] =>
-        getTopicsForEducationLevel(level, examLevel).map((t) => ({
+        getTopicsForEducationLevel(level, examLevel, level === 'highschool' ? highschoolGrade : undefined).map((t) => ({
             ...t,
             completed: 0,
             total: 0,
@@ -133,11 +142,29 @@ export default function Dashboard() {
         if (savedExam === 'kozep' || savedExam === 'emelt') {
             setErettsegiExamLevel(savedExam);
         }
+        const savedHs = parseInt(localStorage.getItem('highschoolGrade') || '', 10);
+        if (savedHs >= 9 && savedHs <= 12) setHighschoolGrade(savedHs);
     }, []);
 
     useEffect(() => {
-        loadTopicsWithGameResults(catalogToMathTopics(educationLevel, erettsegiExamLevel));
-    }, [educationLevel, erettsegiExamLevel]);
+        const next = catalogToMathTopics(educationLevel, erettsegiExamLevel);
+        // #region agent log
+        if (educationLevel === 'highschool') {
+            agentDebugLog({
+                hypothesisId: 'H1',
+                location: 'dashboard.tsx:loadTopics',
+                message: 'highschool topics for grade',
+                data: {
+                    grade: highschoolGrade,
+                    n: next.length,
+                    ids: next.map((t) => t.id),
+                },
+                runId: 'hs11-oh',
+            });
+        }
+        // #endregion
+        loadTopicsWithGameResults(next);
+    }, [educationLevel, erettsegiExamLevel, highschoolGrade]);
 
     useEffect(() => {
         let unsub: (() => void) | undefined;
@@ -641,13 +668,28 @@ export default function Dashboard() {
             const bestByKey = indexBestSessionsByTopic(rows);
 
             let practiceTopics: Record<string, { lessonsCompleted?: number[]; completed?: boolean }> = {};
-            if (uid) {
-                try {
-                    const progress = await loadUserPracticeProgress(uid);
-                    practiceTopics = progress.topics || {};
-                } catch (err) {
-                    console.error('Error loading practice progress:', err);
-                }
+            try {
+                const progress = await touchDailyJuice(uid || null);
+                practiceTopics = progress.topics || {};
+                setSrsDueCount(countDueSrs(progress.srs));
+                setJuice(progress.juice || null);
+                setPracticeXp(progress.xp || 0);
+                // #region agent log
+                agentDebugLog({
+                    hypothesisId: 'D',
+                    location: 'dashboard.tsx:touchDailyJuice',
+                    message: 'skill tree loaded',
+                    data: {
+                        xp: progress.xp || 0,
+                        shop: progress.juice?.skillShop || '',
+                        unlocked: progress.juice?.unlockedSkills || [],
+                        unlockedN: (progress.juice?.unlockedSkills || []).length,
+                    },
+                    runId: 'skill-xp',
+                });
+                // #endregion
+            } catch (err) {
+                console.error('Error loading practice progress:', err);
             }
 
             const topicsWithResults = baseTopics.map((topic) => {
@@ -721,7 +763,7 @@ export default function Dashboard() {
     };
 
     const navigateToTopicStats = (topicId: string) => {
-        router.push(buildTopicStatsHref(topicId, educationLevel, erettsegiExamLevel));
+        router.push(buildTopicStatsHref(topicId, educationLevel, erettsegiExamLevel, highschoolGrade));
     };
 
     const addNewTopic = () => {
@@ -928,7 +970,7 @@ export default function Dashboard() {
                 )}
                 {activeTab === 'tanulas' && (
                 <>
-                {/* Education Level Selector — first so the 4 categories are visible */}
+                {/* Education Level Selector — categories first */}
                 <section className="education-level-section">
                     <h3 className="level-title">
                         {t('dashboard.chooseCategory')}
@@ -950,7 +992,45 @@ export default function Dashboard() {
                                 </span>
                             </button>
                         ))}
+                        <button
+                            type="button"
+                            className="level-btn level-btn-kozponti"
+                            onClick={() => {
+                                // #region agent log
+                                agentDebugLog({
+                                    hypothesisId: 'K',
+                                    location: 'dashboard.tsx:kozpontiCard',
+                                    message: 'kozponti category opened',
+                                    data: { href: '/kozponti-felkeszules' },
+                                    runId: 'kozponti-dash',
+                                });
+                                // #endregion
+                                router.push('/kozponti-felkeszules');
+                            }}
+                        >
+                            <span style={{ display: 'block', fontSize: '1.35rem' }}>🎯</span>
+                            {t('dashboard.level.kozponti')}
+                            <span style={{ display: 'block', fontSize: '0.8rem', opacity: 0.75, fontWeight: 500 }}>
+                                {t('dashboard.level.kozpontiDesc')}
+                            </span>
+                        </button>
                     </div>
+                    {educationLevel === 'highschool' && (
+                        <div className="level-selector" style={{ marginTop: '1rem', flexWrap: 'wrap' }}>
+                            {[9, 10, 11, 12].map((g) => (
+                                <button
+                                    key={g}
+                                    className={`level-btn ${highschoolGrade === g ? 'active' : ''}`}
+                                    onClick={() => {
+                                        setHighschoolGrade(g);
+                                        localStorage.setItem('highschoolGrade', String(g));
+                                    }}
+                                >
+                                    {g}. osztály
+                                </button>
+                            ))}
+                        </div>
+                    )}
                     {educationLevel === 'erettsegi' && (
                         <div className="level-selector" style={{ marginTop: '1rem', flexWrap: 'wrap' }}>
                             <button
@@ -1063,14 +1143,53 @@ export default function Dashboard() {
                                 {educationLevel === 'erettsegi' && t('dashboard.topicsSub.erettsegi')}
                             </p>
                         </div>
-                        <button
-                            type="button"
-                            className="dash-daily-btn"
-                            onClick={() => router.push(buildDailyPracticeHref(educationLevel))}
-                        >
-                            {t('dashboard.daily')}
-                        </button>
+                        <div className="dash-learn-actions">
+                            <button
+                                type="button"
+                                className="dash-daily-btn"
+                                onClick={() => router.push(buildDailyPracticeHref(educationLevel))}
+                            >
+                                {srsDueCount > 0
+                                    ? t('dashboard.dailyDue').replace('{n}', String(srsDueCount))
+                                    : t('dashboard.daily')}
+                            </button>
+                            <button
+                                type="button"
+                                className="dash-daily-btn dash-blitz-btn"
+                                onClick={() => router.push(buildBlitzHref(educationLevel))}
+                            >
+                                {t('dashboard.blitz')}
+                            </button>
+                        </div>
                     </div>
+                    {juice && (
+                        <SkillTreePanel
+                            juice={juice}
+                            xp={practiceXp}
+                            onStart={(id) => {
+                                router.push(buildChallengeHref(id, educationLevel, erettsegiExamLevel));
+                            }}
+                        />
+                    )}
+                    {juice && (
+                        <div className="dash-juice">
+                            <div className="dash-juice-streak">
+                                🔥 {juice.loginStreak} {t('dashboard.loginStreak')}
+                                {juice.blitzBest > 0 ? ` · ⚡ ${juice.blitzBest}` : ''}
+                            </div>
+                            <div className="dash-quests">
+                                {juice.quests.map((q) => (
+                                    <div
+                                        key={q.id}
+                                        className={`dash-quest ${q.done ? 'done' : ''}`}
+                                    >
+                                        <span>{q.title}</span>
+                                        <b>{q.progress}/{q.target}</b>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    )}
 
                     <div className="topics-grid">
                         {mathTopics.map((topic) => {

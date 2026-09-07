@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
+import { formatMathText } from '../utils/formatMathText';
 
 interface Question {
     question: string;
@@ -606,7 +607,7 @@ export default function StudentGame() {
 
                         <div className="question-container">
                             <div className="question">
-                                <h3>{currentTask.questions[currentQuestionIndex].question}</h3>
+                                <h3>{formatMathText(currentTask.questions[currentQuestionIndex].question)}</h3>
                             </div>
                             <div className="answer-input">
                                 <input

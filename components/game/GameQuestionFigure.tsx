@@ -146,7 +146,13 @@ function DrawSvg({ fig }: { fig: DrawFigure }) {
                 }
                 if (p.t === 'text') {
                     return (
-                        <text key={key} x={p.x} y={p.y} className={p.className || 'game-draw-text'}>
+                        <text
+                            key={key}
+                            x={p.x}
+                            y={p.y}
+                            className={p.className || 'game-draw-text'}
+                            textAnchor={p.className === 'game-draw-tick' ? 'middle' : 'start'}
+                        >
                             {p.text}
                         </text>
                     );

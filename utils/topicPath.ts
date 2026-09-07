@@ -1,6 +1,7 @@
 /** Duolingo-s témakör út: 6 lecke = 6 nehézségi szint (szintenként 20 feladat) + 3 kincs */
 
 import { agentDebugLog } from './agentDebugLog';
+import { getHsTextbookLessonLabel } from './hsTextbook';
 
 export type PathStage = 1 | 2 | 3 | 4 | 5 | 6;
 
@@ -14,7 +15,7 @@ export const PATH_CHEST_XP: Record<1 | 2 | 3, number> = {
     3: 100,
 };
 
-export type PathNodeKind = 'lesson' | 'chest';
+export type PathNodeKind = 'lesson' | 'chest' | 'mixed';
 
 export interface PathLessonNode {
     kind: 'lesson';
@@ -31,7 +32,12 @@ export interface PathChestNode {
     xp: number;
 }
 
-export type PathNode = PathLessonNode | PathChestNode;
+export interface PathMixedNode {
+    kind: 'mixed';
+    label: string;
+}
+
+export type PathNode = PathLessonNode | PathChestNode | PathMixedNode;
 
 /** Emelt suffix levágása — progress kulcs */
 export function normalizeTopicId(topicId: string): string {
@@ -66,15 +72,18 @@ export function chestAfterLesson(lesson: number): 1 | 2 | 3 | null {
     return null;
 }
 
-export function buildPathNodes(): PathNode[] {
+export function buildPathNodes(topicId?: string): PathNode[] {
     const nodes: PathNode[] = [];
     for (let lesson = 1; lesson <= PATH_LESSON_COUNT; lesson++) {
         const stage = lessonToStage(lesson);
+        const hsLabel = topicId ? getHsTextbookLessonLabel(topicId, lesson) : null;
         nodes.push({
             kind: 'lesson',
             lesson,
             stage,
-            label: `Lecke ${lesson} · ${PATH_STAGE_LABELS[stage]}`,
+            label: hsLabel
+                ? `Lecke ${lesson} · ${hsLabel}`
+                : `Lecke ${lesson} · ${PATH_STAGE_LABELS[stage]}`,
         });
         const chest = chestAfterLesson(lesson);
         if (chest) {
@@ -87,6 +96,10 @@ export function buildPathNodes(): PathNode[] {
             });
         }
     }
+    nodes.push({
+        kind: 'mixed',
+        label: 'Vegyes gyakorlás',
+    });
     return nodes;
 }
 
@@ -255,7 +268,7 @@ export function buildWindingLayout(count: number): {
     svgPath: string;
     helix: DoubleHelixPaths;
 } {
-    const built = buildDoubleHelix(count);
+    const built = buildDoubleHelix(count, { y0: 11, y1: 90, amplitude: 18 });
     return {
         points: built.points,
         svgPath: built.svgPath,
@@ -378,9 +391,15 @@ export function getLessonQuestions<T extends { pathLesson?: number }>(
 export function isWorksheetTopicId(topicId: string): boolean {
     const t = topicId.toLowerCase();
     return (
+        /^hs\d{2}-/.test(t) ||
         t.startsWith('a1-') ||
         t.startsWith('a2-') ||
         /^la[1-4]-/.test(t) ||
+        /^de[1-4]-/.test(t) ||
+        /^pde[12]-/.test(t) ||
+        /^dm[1-3]-/.test(t) ||
+        /^ge[12]-/.test(t) ||
+        /^st[1-3]-/.test(t) ||
         t.includes('parameter') ||
         t.includes('paramet') ||
         t.includes('exponencialis') ||

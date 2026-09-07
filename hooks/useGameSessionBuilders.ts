@@ -13,11 +13,19 @@ import {
 import {
     elementaryTopics,
     highschoolTopics,
+    getHighschoolTopicsForGrade,
     universitySubjects,
     getTopicsForEducationLevel,
     type EducationLevelId,
 } from '../utils/mathTopicsCatalog';
 import { SPRINT_SECONDS, type MascotMood } from '../utils/gameFeedback';
+import { BLITZ_SECONDS } from '../utils/gameJuice';
+import { type SkillNode } from '../utils/skillTree';
+import { agentDebugLog } from '../utils/agentDebugLog';
+import { shuffleArray } from '../utils/shuffle';
+import { loadUserPracticeProgress } from '../utils/practiceProgress';
+import { dueSrsCards } from '../utils/srs';
+import { generateSkillQuestion, generateSkillQuestionFromCard } from '../utils/srsQuestions';
 import type { Question } from '../utils/game';
 import {
     generateQuadraticQuestion,
@@ -29,6 +37,7 @@ import {
     generateErettsegiQuestionByTopicId,
     generateElementaryQuestionByTopic,
     generateKozpontiQuestionByTopic,
+    getKozpontiPaperQuestions,
     generateHighschoolQuestionByTopic,
     generateUniversityQuestionByTopic,
     getWorksheetListForTopic,
@@ -70,6 +79,7 @@ export type UseGameSessionBuildersParams = {
     setMascotMood: Dispatch<SetStateAction<MascotMood>>;
     setIsDailyMode: Dispatch<SetStateAction<boolean>>;
     setIsErettsegiMode: Dispatch<SetStateAction<boolean>>;
+    setIsBlitzMode: Dispatch<SetStateAction<boolean>>;
     setCorrectQuestionIds: Dispatch<SetStateAction<string[]>>;
     setWrongFirstIds: Dispatch<SetStateAction<string[]>>;
     setStagesCleared: Dispatch<SetStateAction<PracticeStage[]>>;
@@ -284,6 +294,31 @@ export function useGameSessionBuilders(p: UseGameSessionBuildersParams) {
         }
     };
 
+    const generateKozpontiPaper = (paperId: string) => {
+        const list = getKozpontiPaperQuestions(paperId);
+        // #region agent log
+        agentDebugLog({
+            hypothesisId: 'B',
+            location: 'useGameSessionBuilders.ts:generateKozpontiPaper',
+            message: 'kozponti paper started',
+            data: {
+                paperId,
+                total: list?.length || 0,
+                firstId: list?.[0]?.id,
+                firstAnswer: list?.[0]?.answer,
+                ready: Boolean(list?.length),
+            },
+            runId: 'kf-2026',
+        });
+        // #endregion
+        if (!list?.length) {
+            console.error('No központi paper questions for', paperId);
+            return;
+        }
+        setTaskQuestions(list);
+        startGeneratedRun(p, true);
+    };
+
     const generateSzigorlatQuestionsBySubject = (_subjectId: string) => {
         setTaskQuestions(szigorlatQuestions);
         startGeneratedRun(p, szigorlatQuestions.length > 0, { resetSubQuestions: true });
@@ -325,7 +360,8 @@ export function useGameSessionBuilders(p: UseGameSessionBuildersParams) {
     };
 
     const generateHighschoolQuestionsByTopic = (topicId: string, grade: number) => {
-        const topic = highschoolTopics.find(t => t.id === topicId);
+        const topic = getHighschoolTopicsForGrade(grade).find(t => t.id === topicId)
+            || highschoolTopics.find(t => t.id === topicId);
         if (topic) {
             p.setSelectedHighschoolTopic(topic.title);
         }
@@ -358,8 +394,14 @@ export function useGameSessionBuilders(p: UseGameSessionBuildersParams) {
             sprint?: boolean;
             erettsegi?: boolean;
             daily?: boolean;
+            blitz?: boolean;
+            keepOrder?: boolean;
+            challenge?: SkillNode;
         }
     ) => {
+        const source = opts.challenge
+            ? questions.slice(0, Math.max(1, opts.challenge.rules.questionCount))
+            : questions;
         const pathMode = opts.lessonNode != null;
         p.setIsPathMode(pathMode);
         p.setPathLesson(opts.lessonNode);
@@ -367,8 +409,14 @@ export function useGameSessionBuilders(p: UseGameSessionBuildersParams) {
         p.setIsWorksheetMode(true);
         p.setIsErettsegiMode(!!opts.erettsegi);
         p.setIsDailyMode(!!opts.daily);
-        p.setIsSprintMode(!!opts.sprint);
-        p.setSprintLeft(SPRINT_SECONDS);
+        p.setIsBlitzMode(!!opts.blitz);
+        p.setIsSprintMode(!!opts.sprint || !!opts.blitz || !!opts.challenge);
+        const challengeSec = opts.challenge?.rules.seconds;
+        p.setSprintLeft(
+            typeof challengeSec === 'number'
+                ? challengeSec
+                : opts.blitz ? BLITZ_SECONDS : SPRINT_SECONDS
+        );
         p.sprintEndedRef.current = false;
         p.setMascotMood('idle');
         p.worksheetTopicKeyRef.current = resolveProgressStorageKey(opts.topicId);
@@ -382,9 +430,20 @@ export function useGameSessionBuilders(p: UseGameSessionBuildersParams) {
         p.setFailedQuestions([]);
         p.correctQuestionIdsRef.current = [];
         p.wrongFirstIdsRef.current = [];
-        erettsegiQuestionsRef.current = questions;
-        setErettsegiQuestions(questions);
-        setTaskQuestions(questions);
+        const ordered = opts.keepOrder ? source.slice() : shuffleArray(source);
+        const stamped = ordered.map((q) => ({
+            ...q,
+            srsTopicId: q.srsTopicId || (opts.daily ? q.srsTopicId : opts.topicId),
+            srsStage: q.srsStage || q.stage,
+        }));
+        if (pathMode && stamped.length >= 3) {
+            for (let i = stamped.length - 3; i < stamped.length; i++) {
+                stamped[i] = { ...stamped[i], isBoss: true };
+            }
+        }
+        erettsegiQuestionsRef.current = stamped;
+        setErettsegiQuestions(stamped);
+        setTaskQuestions(stamped);
 
         // #region agent log
         void import('../utils/agentDebugLog').then(({ agentDebugLog }) => {
@@ -395,19 +454,30 @@ export function useGameSessionBuilders(p: UseGameSessionBuildersParams) {
                 data: {
                     pathMode,
                     lesson: opts.lessonNode,
-                    questionsLength: questions.length,
+                    questionsLength: stamped.length,
+                    shuffled: !opts.keepOrder,
+                    firstId: stamped[0]?.id || null,
                     topicId: opts.topicId,
+                    daily: !!opts.daily,
+                    blitz: !!opts.blitz,
+                    challenge: opts.challenge?.id || '',
+                    challengeQ: opts.challenge?.rules.questionCount || 0,
+                    challengeSec: opts.challenge?.rules.seconds || 0,
+                    bossN: stamped.filter((q) => q.isBoss).length,
+                    topicMix: p.router.query.topicMix === '1',
                 },
-                runId: 'path-20q',
+                runId: p.router.query.topicMix === '1' ? 'topic-mix' : 'path-20q',
             });
         });
         // #endregion
 
-        if (questions.length > 0) {
+        if (source.length > 0) {
             p.setGameActive(true);
             p.setScore(0);
             p.setLevel(1);
-            const startLives = opts.sprint ? 2 : 3;
+            const startLives = opts.challenge
+                ? opts.challenge.rules.lives
+                : opts.sprint ? 2 : 3;
             p.livesRef.current = startLives;
             p.setLives(startLives);
             p.setCurrentQuestion(0);
@@ -483,42 +553,203 @@ export function useGameSessionBuilders(p: UseGameSessionBuildersParams) {
         });
     };
 
-    const generateDailyMixedQuestions = (
+    const startTopicMixedPractice = (
+        topicId: string,
+        eduLevel: EducationLevelId,
+        grade: number,
+        examLevel = 'emelt'
+    ) => {
+        const perStage = 3;
+        const qLevel =
+            eduLevel === 'elementary'
+                ? 'elementary'
+                : eduLevel === 'highschool'
+                  ? 'highschool'
+                  : eduLevel === 'university'
+                    ? 'university'
+                    : examLevel === 'kozep'
+                      ? 'highschool'
+                      : 'university';
+
+        let stagedSource: (Question & { stage: PracticeStage })[] = [];
+        const worksheet = getWorksheetListForTopic(topicId);
+        if (worksheet) {
+            stagedSource = assignStagesToQuestions(
+                worksheet.list.map((q, i) => ({
+                    ...q,
+                    id: `${worksheet.prefix}_mix_${i + 1}`,
+                    level: qLevel,
+                }))
+            );
+        } else {
+            for (let band = 0; band < 6; band++) {
+                const stage = (band + 1) as PracticeStage;
+                const difficulty = Math.min(4, Math.floor(band * 0.8));
+                for (let i = 0; i < 6; i++) {
+                    let question: Question | null = null;
+                    if (eduLevel === 'elementary') {
+                        question = generateElementaryQuestionByTopic(topicId, grade, difficulty);
+                    } else if (eduLevel === 'highschool') {
+                        question = generateHighschoolQuestionByTopic(topicId, grade, difficulty);
+                    } else if (eduLevel === 'university') {
+                        question = generateUniversityQuestionByTopic(topicId, topicId);
+                    } else {
+                        question = generateErettsegiQuestionByTopicId(topicId, examLevel);
+                    }
+                    if (question) {
+                        stagedSource.push({
+                            ...question,
+                            id: `mix_${eduLevel}_${topicId}_s${stage}_${i}_${Math.random().toString(36).slice(2, 7)}`,
+                            level: qLevel,
+                            stage,
+                        });
+                    }
+                }
+            }
+        }
+
+        const questions: Question[] = [];
+        const stageCounts: Record<number, number> = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0 };
+        for (let band = 0; band < 6; band++) {
+            const stage = (band + 1) as PracticeStage;
+            const pool = stagedSource
+                .filter((q) => q.stage === stage)
+                .sort(() => Math.random() - 0.5);
+            const fallback = stagedSource.length ? stagedSource : pool;
+            const source = pool.length ? pool : fallback;
+            for (let i = 0; i < perStage; i++) {
+                const src = source[i % Math.max(1, source.length)];
+                if (!src) continue;
+                questions.push({
+                    ...src,
+                    id: `topicmix_${topicId}_s${stage}_${i}_${Math.random().toString(36).slice(2, 7)}`,
+                    stage,
+                    srsTopicId: topicId,
+                    srsStage: stage,
+                });
+                stageCounts[stage] = (stageCounts[stage] || 0) + 1;
+            }
+        }
+
+        // #region agent log
+        agentDebugLog({
+            hypothesisId: 'D',
+            location: 'useGameSessionBuilders.ts:startTopicMixedPractice',
+            message: 'topic-end mixed bank built',
+            data: {
+                topicId,
+                eduLevel,
+                examLevel,
+                usedWorksheet: Boolean(worksheet),
+                total: questions.length,
+                stageCounts,
+                lessonNode: null,
+            },
+            runId: 'topic-mix',
+        });
+        // #endregion
+
+        if (eduLevel === 'elementary') {
+            p.setSelectedGrade(grade);
+            p.setSelectedElementaryTopic(topicId);
+            p.setEducationLevel('elementary');
+        } else if (eduLevel === 'highschool') {
+            p.setSelectedHighschoolGrade(grade);
+            p.setSelectedHighschoolTopic(topicId);
+            p.setEducationLevel('highschool');
+        } else if (eduLevel === 'university') {
+            p.setSelectedUniversitySubject(topicId);
+            p.setSelectedUniversityTopic(topicId);
+            p.setEducationLevel('university');
+        } else {
+            p.setEducationLevel(null);
+        }
+
+        beginPathOrWorksheetRun(questions, {
+            topicId,
+            lessonNode: null,
+            sprint: p.router.query.sprint === '1',
+            erettsegi: eduLevel === 'erettsegi',
+            daily: false,
+        });
+    };
+
+    const generateDailyMixedQuestions = async (
         eduLevel: EducationLevelId,
         grade: number
     ) => {
         const examLevel = eduLevel === 'erettsegi'
             ? ((p.router.query.level as string) === 'kozep' ? 'kozep' : 'emelt')
             : 'emelt';
+        const srsLevel = eduLevel === 'elementary' || eduLevel === 'highschool' || eduLevel === 'university' || eduLevel === 'erettsegi'
+            ? eduLevel
+            : 'erettsegi';
+        const uid = p.currentUser?.uid || null;
+        const progress = await loadUserPracticeProgress(uid);
+        const due = dueSrsCards(progress.srs).filter((c) =>
+            eduLevel === 'erettsegi' ? true : c.educationLevel === srsLevel || c.educationLevel === 'erettsegi'
+        );
+        const questions: Question[] = [];
+        const reviewIds = new Set<string>();
+        for (const card of due.slice(0, 8)) {
+            const q = generateSkillQuestionFromCard(card, grade || 10);
+            if (q) {
+                questions.push(q);
+                reviewIds.add(card.id);
+            }
+        }
+
         const topics = getTopicsForEducationLevel(
             eduLevel === 'erettsegi' ? 'erettsegi' : eduLevel,
             examLevel as 'kozep' | 'emelt'
         );
         const picked = [...topics].sort(() => Math.random() - 0.5).slice(0, 6);
-        const questions: Question[] = [];
         let guard = 0;
         while (questions.length < 12 && guard < 80) {
             guard++;
             const t = picked[questions.length % Math.max(1, picked.length)];
             if (!t) break;
-            let q: Question | null = null;
-            if (eduLevel === 'elementary') {
-                q = generateElementaryQuestionByTopic(t.id, grade || 5, Math.floor(Math.random() * 4));
-            } else if (eduLevel === 'highschool') {
-                q = generateHighschoolQuestionByTopic(t.id, grade || 10, Math.floor(Math.random() * 4));
-            } else if (eduLevel === 'university') {
-                q = generateUniversityQuestionByTopic(t.id, t.id);
-            } else {
-                q = generateErettsegiQuestionByTopicId(t.id, examLevel);
+            const stage = lessonToStage(Math.floor(questions.length / 4) + 1) as PracticeStage;
+            let q: Question | null = generateSkillQuestion(t.id, stage, srsLevel, grade || 10);
+            if (!q) {
+                if (eduLevel === 'elementary') {
+                    q = generateElementaryQuestionByTopic(t.id, grade || 5, Math.floor(Math.random() * 4));
+                } else if (eduLevel === 'highschool') {
+                    q = generateHighschoolQuestionByTopic(t.id, grade || 10, Math.floor(Math.random() * 4));
+                } else if (eduLevel === 'university') {
+                    q = generateUniversityQuestionByTopic(t.id, t.id);
+                } else {
+                    q = generateErettsegiQuestionByTopicId(t.id, examLevel);
+                }
+                if (q) {
+                    q = {
+                        ...q,
+                        id: `daily_${t.id}_${questions.length}`,
+                        stage,
+                        srsTopicId: t.id,
+                        srsStage: stage,
+                    };
+                }
             }
-            if (q) {
-                questions.push({
-                    ...q,
-                    id: `daily_${t.id}_${questions.length}`,
-                    stage: lessonToStage(Math.floor(questions.length / 4) + 1) as PracticeStage,
-                });
-            }
+            if (q) questions.push(q);
         }
+
+        // #region agent log
+        agentDebugLog({
+            hypothesisId: 'B',
+            location: 'useGameSessionBuilders.ts:generateDailyMixedQuestions',
+            message: 'daily srs mix built',
+            data: {
+                eduLevel,
+                dueN: due.length,
+                reviewN: reviewIds.size,
+                total: questions.length,
+                firstSrs: questions[0]?.srsTopicId || null,
+            },
+            runId: 'srs-daily',
+        });
+        // #endregion
+
         p.setEducationLevel(
             eduLevel === 'erettsegi'
                 ? null
@@ -532,6 +763,159 @@ export function useGameSessionBuilders(p: UseGameSessionBuildersParams) {
             sprint: p.router.query.sprint === '1',
             erettsegi: eduLevel === 'erettsegi',
             daily: true,
+        });
+    };
+
+    const generateBlitzQuestions = async (
+        eduLevel: EducationLevelId,
+        grade: number
+    ) => {
+        const examLevel = eduLevel === 'erettsegi'
+            ? ((p.router.query.level as string) === 'kozep' ? 'kozep' : 'emelt')
+            : 'emelt';
+        const srsLevel = eduLevel === 'elementary' || eduLevel === 'highschool' || eduLevel === 'university' || eduLevel === 'erettsegi'
+            ? eduLevel
+            : 'erettsegi';
+        const topics = getTopicsForEducationLevel(
+            eduLevel === 'erettsegi' ? 'erettsegi' : eduLevel,
+            examLevel as 'kozep' | 'emelt'
+        );
+        const picked = [...topics].sort(() => Math.random() - 0.5).slice(0, 8);
+        const questions: Question[] = [];
+        let guard = 0;
+        while (questions.length < 24 && guard < 120) {
+            guard++;
+            const t = picked[questions.length % Math.max(1, picked.length)];
+            if (!t) break;
+            const stage = lessonToStage(Math.floor(questions.length / 4) + 1) as PracticeStage;
+            let q: Question | null = generateSkillQuestion(t.id, stage, srsLevel, grade || 10);
+            if (!q) {
+                if (eduLevel === 'elementary') {
+                    q = generateElementaryQuestionByTopic(t.id, grade || 5, Math.floor(Math.random() * 4));
+                } else if (eduLevel === 'highschool') {
+                    q = generateHighschoolQuestionByTopic(t.id, grade || 10, Math.floor(Math.random() * 4));
+                } else if (eduLevel === 'university') {
+                    q = generateUniversityQuestionByTopic(t.id, t.id);
+                } else {
+                    q = generateErettsegiQuestionByTopicId(t.id, examLevel);
+                }
+                if (q) {
+                    q = {
+                        ...q,
+                        id: `blitz_${t.id}_${questions.length}`,
+                        stage,
+                        srsTopicId: t.id,
+                        srsStage: stage,
+                    };
+                }
+            }
+            if (q) questions.push({ ...q, id: q.id || `blitz_${questions.length}` });
+        }
+        // #region agent log
+        agentDebugLog({
+            hypothesisId: 'D',
+            location: 'useGameSessionBuilders.ts:generateBlitzQuestions',
+            message: 'blitz bank built',
+            data: { eduLevel, total: questions.length },
+            runId: 'juice',
+        });
+        // #endregion
+        p.setEducationLevel(
+            eduLevel === 'erettsegi'
+                ? null
+                : eduLevel === 'elementary' || eduLevel === 'highschool' || eduLevel === 'university'
+                  ? eduLevel
+                  : null
+        );
+        beginPathOrWorksheetRun(questions, {
+            topicId: `blitz_${eduLevel}`,
+            lessonNode: null,
+            sprint: false,
+            blitz: true,
+            erettsegi: eduLevel === 'erettsegi',
+            daily: false,
+        });
+    };
+
+    const generateChallengeQuestions = async (
+        eduLevel: EducationLevelId,
+        grade: number,
+        challenge: SkillNode
+    ) => {
+        const examLevel = eduLevel === 'erettsegi'
+            ? ((p.router.query.level as string) === 'kozep' ? 'kozep' : 'emelt')
+            : 'emelt';
+        const srsLevel = eduLevel === 'elementary' || eduLevel === 'highschool' || eduLevel === 'university' || eduLevel === 'erettsegi'
+            ? eduLevel
+            : 'erettsegi';
+        const topics = getTopicsForEducationLevel(
+            eduLevel === 'erettsegi' ? 'erettsegi' : eduLevel,
+            examLevel as 'kozep' | 'emelt'
+        );
+        const needed = Math.max(1, challenge.rules.questionCount);
+        const picked = [...topics].sort(() => Math.random() - 0.5).slice(0, Math.min(8, Math.max(3, topics.length)));
+        const questions: Question[] = [];
+        let guard = 0;
+        while (questions.length < needed + 2 && guard < 80) {
+            guard++;
+            const t = picked[questions.length % Math.max(1, picked.length)];
+            if (!t) break;
+            const stage = lessonToStage(Math.floor(questions.length / 2) + 1) as PracticeStage;
+            let q: Question | null = generateSkillQuestion(t.id, stage, srsLevel, grade || 10);
+            if (!q) {
+                if (eduLevel === 'elementary') {
+                    q = generateElementaryQuestionByTopic(t.id, grade || 5, Math.floor(Math.random() * 4));
+                } else if (eduLevel === 'highschool') {
+                    q = generateHighschoolQuestionByTopic(t.id, grade || 10, Math.floor(Math.random() * 4));
+                } else if (eduLevel === 'university') {
+                    q = generateUniversityQuestionByTopic(t.id, t.id);
+                } else {
+                    q = generateErettsegiQuestionByTopicId(t.id, examLevel);
+                }
+                if (q) {
+                    q = {
+                        ...q,
+                        id: `chal_${challenge.id}_${t.id}_${questions.length}`,
+                        stage,
+                        srsTopicId: t.id,
+                        srsStage: stage,
+                    };
+                }
+            }
+            if (q) questions.push({ ...q, id: q.id || `chal_${challenge.id}_${questions.length}` });
+        }
+        // #region agent log
+        agentDebugLog({
+            hypothesisId: 'C',
+            location: 'useGameSessionBuilders.ts:generateChallengeQuestions',
+            message: 'challenge bank built',
+            data: {
+                id: challenge.id,
+                needed,
+                total: questions.length,
+                sec: challenge.rules.seconds,
+                timer: challenge.rules.timerMode,
+                lives: challenge.rules.lives,
+                noBoosters: challenge.rules.noBoosters,
+            },
+            runId: 'challenge-tree',
+        });
+        // #endregion
+        p.setEducationLevel(
+            eduLevel === 'erettsegi'
+                ? null
+                : eduLevel === 'elementary' || eduLevel === 'highschool' || eduLevel === 'university'
+                  ? eduLevel
+                  : null
+        );
+        beginPathOrWorksheetRun(questions, {
+            topicId: `challenge_${challenge.id}`,
+            lessonNode: null,
+            sprint: true,
+            blitz: false,
+            erettsegi: eduLevel === 'erettsegi',
+            daily: false,
+            challenge,
         });
     };
 
@@ -763,13 +1147,17 @@ export function useGameSessionBuilders(p: UseGameSessionBuildersParams) {
         generateQuestionByTopic,
         generateElementaryQuestionsByTopic,
         generateKozpontiQuestionsByTopic,
+        generateKozpontiPaper,
         generateSzigorlatQuestionsBySubject,
         generateVegyesSzigorlatQuestions,
         generateUniversityQuestionsByTopic,
         generateHighschoolQuestionsByTopic,
         beginPathOrWorksheetRun,
         startPathLessonForEducationLevel,
+        startTopicMixedPractice,
         generateDailyMixedQuestions,
+        generateBlitzQuestions,
+        generateChallengeQuestions,
         generateErettsegiQuestionsByTopic,
         generateMixedErettsegiQuestions,
         loadAssignedTasks,

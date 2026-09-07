@@ -5,6 +5,7 @@ type Props = {
     color?: string;
     mood?: 'idle' | 'happy' | 'sad';
     className?: string;
+    gear?: 'none' | 'glasses' | 'hat' | 'cape' | 'crown';
 };
 
 export default function MathHexMascot({
@@ -12,6 +13,7 @@ export default function MathHexMascot({
     color = '#58cc02',
     mood = 'idle',
     className = '',
+    gear = 'none',
 }: Props) {
     const eyeY = mood === 'sad' ? 46 : 42;
     const mouth =
@@ -31,6 +33,13 @@ export default function MathHexMascot({
                 aria-label="Matek hexagon"
             >
                 <ellipse cx="50" cy="102" rx="28" ry="6" fill="rgba(0,0,0,0.35)" />
+                {(gear === 'cape' || gear === 'crown') && (
+                    <polygon
+                        points="18,38 8,88 50,78 92,88 82,38"
+                        fill={gear === 'crown' ? '#7c3aed' : '#c41e3a'}
+                        opacity="0.92"
+                    />
+                )}
                 <polygon
                     points="50,8 88,30 88,70 50,92 12,70 12,30"
                     fill={color}
@@ -57,6 +66,27 @@ export default function MathHexMascot({
                 >
                     Σ
                 </text>
+                {(gear === 'glasses' || gear === 'hat' || gear === 'cape' || gear === 'crown') && (
+                    <g>
+                        <ellipse cx="38" cy={eyeY} rx="10" ry="7" fill="none" stroke="#111" strokeWidth="2.2" />
+                        <ellipse cx="62" cy={eyeY} rx="10" ry="7" fill="none" stroke="#111" strokeWidth="2.2" />
+                        <path d={`M 48 ${eyeY} H 52`} stroke="#111" strokeWidth="2.2" />
+                    </g>
+                )}
+                {(gear === 'hat' || gear === 'cape' || gear === 'crown') && (
+                    <g>
+                        <rect x="22" y="10" width="56" height="8" rx="2" fill="#1e3a8a" />
+                        <path d="M 30 10 L 50 0 L 70 10 Z" fill="#2563eb" />
+                    </g>
+                )}
+                {gear === 'crown' && (
+                    <g>
+                        <polygon points="24,14 32,2 40,14 50,4 60,14 68,2 76,14 24,14" fill="#ffd400" stroke="#b45309" strokeWidth="1.2" />
+                        <circle cx="32" cy="5" r="2" fill="#ef4444" />
+                        <circle cx="50" cy="6" r="2" fill="#3b82f6" />
+                        <circle cx="68" cy="5" r="2" fill="#22c55e" />
+                    </g>
+                )}
             </svg>
             <style jsx>{`
                 .math-hex-wrap {

@@ -6,12 +6,17 @@ import GameQuestionCard from '../components/game/GameQuestionCard';
 import GamePathBackButton from '../components/game/GamePathBackButton';
 import GameLoading from '../components/game/GameLoading';
 import GameLobby from '../components/game/GameLobby';
+import GameCelebrate from '../components/game/GameCelebrate';
 import { useGameAuth } from '../hooks/useGameAuth';
 import { useGamePlay, type GameSessionBridge } from '../hooks/useGamePlay';
 import { useGameSessionBuilders } from '../hooks/useGameSessionBuilders';
 import { useGameRouteBootstrap } from '../hooks/useGameRouteBootstrap';
 import type { Question } from '../utils/game';
-import { buildTopicPracticeHref } from '../utils/topicStats';
+import { buildBlitzHref, buildTopicPracticeHref } from '../utils/topicStats';
+import { getHsTextbookLessonLabel } from '../utils/hsTextbook';
+import { comboMultiplier, gearFromRank } from '../utils/gameJuice';
+import { agentDebugLog } from '../utils/agentDebugLog';
+import { skillNodeById } from '../utils/skillTree';
 
 export default function Game() {
     const router = useRouter();
@@ -77,7 +82,9 @@ export default function Game() {
         setUserAnswer4,
         message,
         setMessage,
-        failedQuestions,
+        feedbackPending,
+        celebrateLevelUp,
+        continueAfterFeedback,
         setFailedQuestions,
         isCorrect,
         setIsCorrect,
@@ -111,6 +118,16 @@ export default function Game() {
         setIsDailyMode,
         isErettsegiMode,
         setIsErettsegiMode,
+        isBlitzMode,
+        setIsBlitzMode,
+        juiceBoosters,
+        hintText,
+        secondChanceArmed,
+        comboBroken,
+        brokenStreak,
+        lastXpGain,
+        skillPerks,
+        useBooster,
         worksheetTopicKeyRef,
         pathLessonRef,
         livesRef,
@@ -122,6 +139,7 @@ export default function Game() {
         resetGame,
         checkSubQuestionAnswers,
         submitAnswer,
+        skipQuestion,
     } = useGamePlay({
         currentUser,
         setTotalXp,
@@ -140,18 +158,24 @@ export default function Game() {
 
     const {
         taskQuestions,
+        setTaskQuestions,
         erettsegiQuestions,
+        setErettsegiQuestions,
         assignedTasks,
         selectedTask,
         loadTaskQuestions,
         generateElementaryQuestionsByTopic,
         generateKozpontiQuestionsByTopic,
+        generateKozpontiPaper,
         generateSzigorlatQuestionsBySubject,
         generateVegyesSzigorlatQuestions,
         generateUniversityQuestionsByTopic,
         generateHighschoolQuestionsByTopic,
         startPathLessonForEducationLevel,
+        startTopicMixedPractice,
         generateDailyMixedQuestions,
+        generateBlitzQuestions,
+        generateChallengeQuestions,
         generateErettsegiQuestionsByTopic,
         generateMixedErettsegiQuestions,
         loadAssignedTasks,
@@ -190,6 +214,7 @@ export default function Game() {
         setMascotMood,
         setIsDailyMode,
         setIsErettsegiMode,
+        setIsBlitzMode,
         setCorrectQuestionIds,
         setWrongFirstIds,
         setStagesCleared,
@@ -224,6 +249,10 @@ export default function Game() {
         currentTopic,
         erettsegiQuestions,
         assignedTasks,
+        replaceSessionQuestions: (qs) => {
+            setErettsegiQuestions(qs);
+            setTaskQuestions(qs);
+        },
     };
 
     const { isClient } = useGameRouteBootstrap({
@@ -238,6 +267,9 @@ export default function Game() {
         setSelectedUniversitySubject,
         setSelectedUniversityTopic,
         generateDailyMixedQuestions,
+        generateBlitzQuestions,
+        generateChallengeQuestions,
+        startTopicMixedPractice,
         startPathLessonForEducationLevel,
         generateElementaryQuestionsByTopic,
         generateHighschoolQuestionsByTopic,
@@ -245,11 +277,15 @@ export default function Game() {
         generateErettsegiQuestionsByTopic,
         generateMixedErettsegiQuestions,
         generateKozpontiQuestionsByTopic,
+        generateKozpontiPaper,
         generateVegyesSzigorlatQuestions,
         generateSzigorlatQuestionsBySubject,
         loadTaskQuestions,
         loadAssignedTasks,
     });
+
+    const showDevNav =
+        process.env.NODE_ENV === 'development' || router.query.dev === '1';
 
     // Érettségi feladatok betöltése után automatikusan elindítjuk a játékot
     useEffect(() => {
@@ -278,13 +314,30 @@ export default function Game() {
             baseQuestions = taskQuestions;
         } else {
             const levelQuestions = getQuestionsForLevel(educationLevel || 'elementary');
-            // Keverjük össze a feladatokat, hogy mindig más legyen a sorrend
             baseQuestions = [...levelQuestions].sort(() => Math.random() - 0.5);
         }
-        // Hozzáadjuk a hibás feladatokat a végére
-        return [...baseQuestions, ...failedQuestions];
-    }, [erettsegiQuestions, taskQuestions, educationLevel, failedQuestions]);
+        return baseQuestions;
+    }, [erettsegiQuestions, taskQuestions, educationLevel]);
     questionsRef.current = questions;
+
+    useEffect(() => {
+        if (!gameActive) return;
+        // #region agent log
+        agentDebugLog({
+            hypothesisId: 'A',
+            location: 'game.tsx:showDevNav',
+            message: 'dev nav visibility',
+            data: {
+                showDevNav,
+                nodeEnv: process.env.NODE_ENV || '',
+                queryDev: String(router.query.dev || ''),
+                qLen: questions.length,
+                idx: currentQuestion,
+            },
+            runId: 'dev-nav',
+        });
+        // #endregion
+    }, [gameActive, showDevNav, questions.length, currentQuestion, router.query.dev]);
 
     if (!isClient || loading) {
         return <GameLoading />;
@@ -331,6 +384,10 @@ export default function Game() {
                             selectedHighschoolTopic={selectedHighschoolTopic}
                             highschoolTopics={highschoolTopics}
                             onSelectHighschoolTopic={(topicId, grade) => {
+                                if (grade === 9 || grade === 11) {
+                                    router.push(buildTopicPracticeHref(topicId, 'highschool', 'emelt', grade));
+                                    return;
+                                }
                                 setSelectedHighschoolTopic(topicId);
                                 generateHighschoolQuestionsByTopic(topicId, grade);
                             }}
@@ -341,7 +398,7 @@ export default function Game() {
                             setShowSzigorlatMenu={setShowSzigorlatMenu}
                             universitySubjects={universitySubjects}
                             onGenerateKozponti={() => {
-                                generateKozpontiQuestionsByTopic('vegyes');
+                                router.push('/kozponti-felkeszules');
                             }}
                             onGenerateVegyesSzigorlat={generateVegyesSzigorlatQuestions}
                             onSelectUniversityTopic={(_subjectId, topicId) => {
@@ -352,6 +409,10 @@ export default function Game() {
                             assignedTasks={assignedTasks}
                             onStartGame={startGame}
                             onResetGame={resetGame}
+                            onStartBlitz={() => {
+                                const level = educationLevel || 'highschool';
+                                router.push(buildBlitzHref(level));
+                            }}
                         />
                     ) : (
                         <div className="game-screen">
@@ -366,6 +427,9 @@ export default function Game() {
                                 isPathMode={isPathMode}
                                 isSprintMode={isSprintMode}
                                 isDailyMode={isDailyMode}
+                                isTopicMix={router.query.topicMix === '1'}
+                                isBlitzMode={isBlitzMode}
+                                isBoss={!!questions[currentQuestion]?.isBoss}
                                 isErettsegiMode={isErettsegiMode}
                                 isWorksheetMode={isWorksheetMode}
                                 pathLesson={pathLesson}
@@ -374,6 +438,19 @@ export default function Game() {
                                 badgeToast={badgeToast}
                                 avatarLevel={avatarLevel}
                                 currentStage={questions[currentQuestion]?.stage}
+                                juiceBoosters={juiceBoosters}
+                                secondChanceArmed={secondChanceArmed}
+                                onUseBooster={useBooster}
+                                comboEarlier={skillPerks.comboEarlier}
+                                extraLives={skillPerks.extraLives}
+                                hideTaskIndex={router.query.kozponti === 'true'}
+                                challengeTitle={skillNodeById(String(router.query.challenge || ''))?.title}
+                                hideBoosters={!!skillNodeById(String(router.query.challenge || ''))?.rules.noBoosters}
+                                maxLives={skillNodeById(String(router.query.challenge || ''))?.rules.lives}
+                                pathStageLabel={getHsTextbookLessonLabel(
+                                    String(router.query.topic || selectedHighschoolTopic || ''),
+                                    pathLesson || 0
+                                )}
                             />
 
                             <GameQuestionCard
@@ -401,10 +478,50 @@ export default function Game() {
                                 message={message}
                                 isCorrect={isCorrect}
                                 showExpression={showExpression}
+                                feedbackPending={feedbackPending}
+                                onDismissFeedback={continueAfterFeedback}
+                                hintText={hintText}
+                                hideOfficialLabel={router.query.kozponti === 'true'}
+                            />
+
+                            <GameCelebrate
+                                open={feedbackPending && (isCorrect || comboBroken)}
+                                streak={comboBroken && !isCorrect ? brokenStreak : correctStreak}
+                                levelUp={celebrateLevelUp}
+                                multiplier={comboMultiplier(correctStreak, skillPerks.comboEarlier)}
+                                xpGained={lastXpGain}
+                                isBoss={!!questions[currentQuestion]?.isBoss && isCorrect}
+                                broken={comboBroken && !isCorrect}
+                                gear={gearFromRank(avatarLevel)}
+                                onContinue={continueAfterFeedback}
                             />
 
                             {isPathMode && (
                                 <GamePathBackButton currentTopic={currentTopic} />
+                            )}
+
+                            {showDevNav && (
+                                <div className="dev-nav-row">
+                                    <button
+                                        type="button"
+                                        className="dev-nav-btn"
+                                        onClick={() => skipQuestion(-1)}
+                                        disabled={!currentQuestion}
+                                    >
+                                        ← Előző
+                                    </button>
+                                    <span className="dev-nav-idx">
+                                        {currentQuestion + 1}/{questions.length}
+                                    </span>
+                                    <button
+                                        type="button"
+                                        className="dev-nav-btn"
+                                        onClick={() => skipQuestion(1)}
+                                        disabled={currentQuestion >= questions.length - 1}
+                                    >
+                                        Következő →
+                                    </button>
+                                </div>
                             )}
 
                             <button className="reset-button" onClick={resetGame}>

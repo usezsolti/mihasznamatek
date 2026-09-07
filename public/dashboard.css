@@ -3607,6 +3607,16 @@ select.form-input:disabled {
     text-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
 }
 
+.modern-theme .level-btn-kozponti {
+    border: 1px solid rgba(255, 180, 0, 0.45);
+    box-shadow: 0 0 16px rgba(255, 160, 0, 0.18);
+}
+
+.modern-theme .level-btn-kozponti:hover {
+    background: rgba(255, 160, 0, 0.22);
+    box-shadow: 0 0 22px rgba(255, 160, 0, 0.4);
+}
+
 /* Neon Green-Pink Card Styles */
 .speedometer-card {
     background: rgba(20, 20, 30, 0.9);
@@ -5304,7 +5314,7 @@ select.form-input:disabled {
 /* ---- Duolingo-style winding path (TopicPathMap) ----
    Global CSS so layout cannot break if styled-jsx fails to apply. */
 .mm-path {
-    max-width: 560px;
+    max-width: 620px;
     margin: 0 auto;
     padding: 0.35rem 1.25rem 3.5rem;
     position: relative;
@@ -5410,10 +5420,10 @@ select.form-input:disabled {
 .mm-path-track {
     position: relative !important;
     width: 100%;
-    height: 960px;
+    height: 1580px;
     margin-top: 0.75rem;
     overflow: visible !important;
-    padding: 0 0.5rem;
+    padding: 3.5rem 0.75rem 4.5rem;
     box-sizing: border-box;
 }
 
@@ -5442,27 +5452,27 @@ select.form-input:disabled {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 120px;
+    width: max-content;
+    min-width: 88px;
+    gap: 0.4rem;
     overflow: visible !important;
     z-index: 6;
 }
 
 .mm-path-bubble {
-    position: absolute;
-    top: -46px;
-    left: 50%;
-    transform: translateX(-50%);
+    position: relative;
+    transform: none;
     background: #1c1c1e;
     color: #58cc02;
     border: none;
     border-radius: 14px;
-    padding: 0.5rem 1rem;
+    padding: 0.45rem 0.95rem;
     font-weight: 900;
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     letter-spacing: 0.08em;
     cursor: pointer;
     box-shadow: 0 6px 0 #0a0a0a;
-    z-index: 5;
+    z-index: 8;
     animation: mmPathPulse 1.6s ease-in-out infinite;
 }
 
@@ -5477,8 +5487,8 @@ select.form-input:disabled {
 }
 
 @keyframes mmPathPulse {
-    0%, 100% { transform: translateX(-50%) translateY(0); }
-    50% { transform: translateX(-50%) translateY(-4px); }
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-4px); }
 }
 
 .mm-path-btn-wrap {
@@ -5513,6 +5523,10 @@ select.form-input:disabled {
     box-shadow: 0 8px 0 #151518;
 }
 
+.mm-path-btn.mixed.unlocked {
+    background: linear-gradient(180deg, #7c4dff, #4a1fd6);
+    box-shadow: 0 8px 0 #2a0f80;
+}
 .mm-path-btn.current {
     animation: mmPathGlow 2s ease-in-out infinite;
 }
@@ -5538,18 +5552,23 @@ select.form-input:disabled {
 }
 
 .mm-path-caption {
-    font-size: 0.8rem !important;
+    position: static !important;
+    left: auto !important;
+    right: auto !important;
+    top: auto !important;
+    transform: none !important;
+    font-size: 0.78rem !important;
     font-weight: 800 !important;
     color: #ffffff !important;
     text-align: center;
-    max-width: 132px;
+    max-width: 148px;
     line-height: 1.25;
-    padding: 0.32rem 0.58rem;
+    padding: 0.28rem 0.5rem;
     border-radius: 10px;
     background: rgba(8, 10, 14, 0.95) !important;
     border: 1px solid rgba(255, 255, 255, 0.28);
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.55);
-    z-index: 9;
+    z-index: 6;
     text-shadow: none !important;
     opacity: 1 !important;
     pointer-events: none;
@@ -5563,21 +5582,17 @@ select.form-input:disabled {
 
 .mm-path-caption.cap-left,
 .mm-path-caption.cap-right {
-    position: absolute;
-    top: 50%;
+    position: static !important;
+    top: auto;
     margin: 0;
-    transform: translateY(-50%);
+    transform: none !important;
     white-space: normal;
 }
 
-.mm-path-caption.cap-right {
-    left: calc(100% + 12px);
-    right: auto;
-}
-
+.mm-path-caption.cap-right,
 .mm-path-caption.cap-left {
-    right: calc(100% + 12px);
     left: auto;
+    right: auto;
 }
 
 .mm-path-stars {
@@ -5638,19 +5653,21 @@ select.form-input:disabled {
 .mm-path-mascot {
     position: absolute;
     top: 50%;
-    transform: translateY(-40%);
-    width: 108px;
+    transform: translateY(-50%);
+    width: 72px;
     pointer-events: none;
     filter: drop-shadow(0 12px 14px rgba(0, 0, 0, 0.45));
-    z-index: 4;
+    z-index: 2;
 }
 
 .mm-path-mascot.on-right {
-    left: calc(50% + 52px);
+    left: calc(100% + 16px);
+    right: auto;
 }
 
 .mm-path-mascot.on-left {
-    right: calc(50% + 52px);
+    right: calc(100% + 16px);
+    left: auto;
 }
 
 .mm-path-toast {
@@ -5712,13 +5729,47 @@ select.form-input:disabled {
     text-align: center;
 }
 
+.mm-frac {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: center;
+    vertical-align: middle;
+    margin: 0 0.28em;
+    line-height: 1.15;
+    font-size: 0.7em;
+    min-width: 1.35em;
+}
+
+.mm-frac-num,
+.mm-frac-den {
+    display: block;
+    padding: 0 0.28em;
+    white-space: nowrap;
+    text-align: center;
+}
+
+.mm-frac-num {
+    padding-bottom: 0.12em;
+    border-bottom: 2.5px solid currentColor;
+}
+
+.mm-frac-bar {
+    display: none;
+}
+
+.mm-frac-den {
+    padding-top: 0.12em;
+}
+
 @media (max-width: 420px) {
     .mm-path {
         max-width: 100%;
         padding: 0.35rem 0.65rem 3rem;
     }
     .mm-path-track {
-        height: 820px;
+        height: 1320px;
+        padding: 2.75rem 0.5rem 3.5rem;
     }
     .mm-path-btn,
     .mm-path-btn-wrap {
@@ -5730,7 +5781,7 @@ select.form-input:disabled {
         font-size: 0.72rem !important;
     }
     .mm-path-mascot {
-        width: 86px;
+        width: 60px;
     }
     .mm-path-title {
         font-size: 1rem;
@@ -5867,6 +5918,330 @@ select.form-input:disabled {
 .dash-learn-titles {
     flex: 1 1 240px;
     min-width: 0;
+}
+
+.dash-learn-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.55rem;
+    flex-shrink: 0;
+}
+
+.dash-blitz-btn {
+    background: linear-gradient(90deg, #ff8a00, #ff4d9a) !important;
+    color: #fff !important;
+}
+
+.dash-skill {
+    margin: 0 0 1.15rem;
+    padding: 1rem 1.05rem 0.95rem;
+    border-radius: 18px;
+    background:
+        radial-gradient(circle at 50% 0%, rgba(88, 204, 2, 0.16), transparent 42%),
+        radial-gradient(circle at 12% 30%, rgba(255, 107, 26, 0.12), transparent 28%),
+        radial-gradient(circle at 88% 30%, rgba(192, 132, 252, 0.12), transparent 28%),
+        linear-gradient(180deg, #101826, #0b1220);
+    border: 1px solid rgba(255, 212, 0, 0.28);
+    color: #f4f7fb;
+    overflow: hidden;
+}
+
+.dash-skill-head {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    align-items: flex-start;
+    margin-bottom: 0.7rem;
+}
+
+.dash-skill-head h3 {
+    margin: 0 0 0.25rem;
+    font-size: 1.25rem;
+    color: #fff;
+}
+
+.dash-skill-head p {
+    margin: 0;
+    opacity: 0.78;
+    font-size: 0.88rem;
+}
+
+.dash-skill-meta {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.dash-skill-points {
+    min-width: 4.4rem;
+    text-align: center;
+    padding: 0.4rem 0.55rem;
+    border-radius: 12px;
+    background: rgba(255, 212, 0, 0.14);
+    border: 1px solid rgba(255, 212, 0, 0.35);
+    color: #ffd400;
+}
+
+.dash-skill-points.dim {
+    color: #c8d4e0;
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 255, 255, 0.12);
+}
+
+.dash-skill-points b {
+    display: block;
+    font-size: 1.45rem;
+    line-height: 1;
+}
+
+.dash-skill-points span {
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+}
+
+.dash-skill-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-bottom: 0.7rem;
+}
+
+.dash-skill-chip {
+    padding: 0.18rem 0.55rem;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 800;
+    color: var(--b);
+    border: 1px solid var(--b);
+    background: color-mix(in srgb, var(--b) 14%, transparent);
+}
+
+.dash-skill-scroll {
+    overflow-x: auto;
+    margin: 0 -0.4rem;
+    padding: 0.2rem 0.4rem 0.4rem;
+}
+
+.dash-skill-canvas {
+    position: relative;
+    margin: 0 auto;
+    min-width: 720px;
+    background-image:
+        radial-gradient(rgba(255, 255, 255, 0.07) 1px, transparent 1px);
+    background-size: 28px 28px;
+}
+
+.dash-skill-svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+.dash-skill-svg path.lit {
+    filter: drop-shadow(0 0 6px currentColor);
+}
+
+.dash-hex {
+    position: absolute;
+    width: 108px;
+    height: 118px;
+    transform: translate(-50%, -50%);
+    border: 0;
+    padding: 0;
+    background: transparent;
+    cursor: pointer;
+    z-index: 2;
+}
+
+.dash-hex-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.15rem;
+    width: 100%;
+    height: 100%;
+    color: #fff;
+    background:
+        radial-gradient(circle at 50% 30%, color-mix(in srgb, var(--b) 38%, #142033), #0d1522);
+    clip-path: polygon(50% 0%, 93% 25%, 93% 75%, 50% 100%, 7% 75%, 7% 25%);
+    box-shadow: 0 0 0 2px color-mix(in srgb, var(--b) 45%, transparent);
+}
+
+.dash-hex.open .dash-hex-inner {
+    box-shadow: 0 0 0 3px var(--b), 0 0 22px var(--g);
+}
+
+.dash-hex.ready .dash-hex-inner {
+    animation: dashHexPulse 1.5s ease-in-out infinite;
+    box-shadow: 0 0 0 3px #ffd400, 0 0 22px rgba(255, 212, 0, 0.45);
+}
+
+.dash-hex.locked .dash-hex-inner {
+    filter: grayscale(0.45) brightness(0.72);
+}
+
+.dash-hex.sel .dash-hex-inner {
+    transform: scale(1.06);
+    box-shadow: 0 0 0 3px #fff, 0 0 26px var(--g);
+}
+
+.dash-hex.cap .dash-hex-inner {
+    background:
+        radial-gradient(circle at 50% 30%, rgba(255, 212, 0, 0.45), #1a1408 70%);
+}
+
+.dash-hex-icon {
+    font-size: 1.35rem;
+    line-height: 1;
+}
+
+.dash-hex-title {
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.02em;
+    max-width: 78px;
+    line-height: 1.15;
+}
+
+.dash-skill-detail {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    margin-top: 0.75rem;
+    padding: 0.75rem 0.85rem;
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.dash-skill-detail-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 12px;
+    display: grid;
+    place-items: center;
+    font-size: 1.4rem;
+    background: color-mix(in srgb, var(--b) 22%, #111);
+    border: 1px solid var(--b);
+    flex-shrink: 0;
+}
+
+.dash-skill-detail-copy {
+    min-width: 0;
+    flex: 1;
+}
+
+.dash-skill-detail-copy strong {
+    display: block;
+    font-size: 1.05rem;
+}
+
+.dash-skill-detail-copy span {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 800;
+    opacity: 0.7;
+    margin-bottom: 0.2rem;
+}
+
+.dash-skill-detail-copy p {
+    margin: 0;
+    font-size: 0.86rem;
+    opacity: 0.88;
+}
+
+.dash-skill-effect {
+    margin: 0.35rem 0 0.25rem !important;
+    font-weight: 800;
+    opacity: 1 !important;
+    color: #ffd400;
+}
+
+.dash-skill-buy {
+    flex-shrink: 0;
+    border: 0;
+    border-radius: 12px;
+    padding: 0.65rem 0.9rem;
+    font-weight: 800;
+    cursor: default;
+    background: rgba(255, 255, 255, 0.12);
+    color: #fff;
+    text-align: center;
+}
+
+.dash-skill-buy.ready {
+    background: linear-gradient(90deg, #ffd400, #58cc02);
+    color: #111;
+    cursor: pointer;
+}
+
+.dash-skill-buy.open {
+    background: rgba(88, 204, 2, 0.2);
+    color: #58cc02;
+    cursor: default;
+}
+
+.dash-skill-buy:disabled:not(.open):not(.ready) {
+    opacity: 0.55;
+    cursor: not-allowed;
+}
+
+@keyframes dashHexPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+@media (max-width: 720px) {
+    .dash-skill-detail {
+        flex-wrap: wrap;
+    }
+    .dash-skill-buy {
+        width: 100%;
+    }
+}
+
+.dash-juice {
+    margin: 0 0 1.1rem;
+    padding: 0.85rem 1rem;
+    border-radius: 14px;
+    background: rgba(17, 24, 39, 0.55);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.dash-juice-streak {
+    font-weight: 800;
+    margin-bottom: 0.55rem;
+}
+
+.dash-quests {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.5rem;
+}
+
+.dash-quest {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.4rem;
+    padding: 0.45rem 0.6rem;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.06);
+    font-size: 0.86rem;
+    font-weight: 700;
+}
+
+.dash-quest.done {
+    background: rgba(88, 204, 2, 0.18);
+    color: #58cc02;
+}
+
+@media (max-width: 640px) {
+    .dash-quests {
+        grid-template-columns: 1fr;
+    }
 }
 
 .dash-daily-btn {

@@ -15,8 +15,10 @@ import {
     type EducationLevelId,
     type ErettsegiExamLevel,
 } from '../../utils/mathTopicsCatalog';
+import { textbookGradeFromTopicId } from '../../utils/hsTextbook';
 import {
     aggregateTopicStats,
+    buildTopicMixGameHref,
     buildTopicPracticeHref,
     buildTopicStatsHref,
     findCatalogTopic,
@@ -51,7 +53,7 @@ export default function TopicStatsPage() {
         : educationLevel === 'elementary'
           ? 5
           : educationLevel === 'highschool'
-            ? 10
+            ? (textbookGradeFromTopicId(topicIdParam) ?? 10)
             : undefined;
 
     const [loading, setLoading] = useState(true);
@@ -79,13 +81,22 @@ export default function TopicStatsPage() {
                 ids: uniSubject.topics.map((t) => t.id),
                 hasKomplex: uniSubject.topics.some((t) => t.id === 'a1-komplex'),
                 isLinearis: uniSubject.id.startsWith('linearis'),
+                isDePde: /^de[1-4]$|^pde[12]$/.test(uniSubject.id),
+                isDmGe: /^dm[1-3]$|^ge[12]$/.test(uniSubject.id),
+                isSt: /^st[1-3]$/.test(uniSubject.id),
                 firstTopic: uniSubject.topics[0]?.id,
             },
             runId: uniSubject.id.startsWith('linearis')
                 ? 'la-topics'
                 : uniSubject.id === 'analizis2'
                   ? 'a2-topics'
-                  : 'a1-komplex',
+                  : /^de[1-4]$|^pde[12]$/.test(uniSubject.id)
+                    ? 'de-topics'
+                    : /^dm[1-3]$|^ge[12]$/.test(uniSubject.id)
+                      ? 'dm-topics'
+                      : /^st[1-3]$/.test(uniSubject.id)
+                        ? 'st-topics'
+                        : 'a1-komplex',
         });
         // #endregion
     }, [uniSubject]);
@@ -430,6 +441,23 @@ export default function TopicStatsPage() {
                             <button type="button" className="topic-stats-cta" onClick={goPractice}>
                                 Gyakorlás indítása
                             </button>
+                            {path.lessonsDone >= 6 && (
+                                <button
+                                    type="button"
+                                    className="topic-stats-cta"
+                                    onClick={() =>
+                                        router.push(
+                                            buildTopicMixGameHref(
+                                                topicIdParam,
+                                                educationLevel,
+                                                erettsegiLevel
+                                            )
+                                        )
+                                    }
+                                >
+                                    Vegyes feladatmegoldás
+                                </button>
+                            )}
                         </div>
                     </>
                 )}

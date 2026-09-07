@@ -2,15 +2,32 @@ import { useState, useEffect, useRef, type Dispatch, type MutableRefObject, type
 import { useRouter } from 'next/router';
 import {
     applyAndSaveProgress,
+    applyJuiceSession,
+    applySrsSession,
     getBadgeDef,
     resolveProgressStorageKey,
+    spendBoosterOrXp,
+    touchDailyJuice,
     STAGE_LABELS,
     type BadgeId,
     type PracticeStage,
 } from '../utils/practiceProgress';
+import {
+    BOOSTER_LABEL,
+    comboMultiplier,
+    fiftyFiftyHint,
+    FREEZE_SECONDS,
+    isComboMilestone,
+    type BoosterKind,
+    type JuiceBoosters,
+} from '../utils/gameJuice';
+import { deriveSkillPerks, EMPTY_SKILL_PERKS, skillNodeById, type SkillPerks } from '../utils/skillTree';
 import { PATH_LESSON_XP } from '../utils/topicPath';
 import {
     SPRINT_SECONDS,
+    playBigCelebrateFanfare,
+    playCelebrateFanfare,
+    playComboBreakSound,
     playCorrectSound,
     playLifeLostSound,
     playStreakSound,
@@ -24,6 +41,7 @@ import type { Question } from '../utils/game';
 import { parseStudentNumber } from '../utils/parseStudentNumber';
 import { studentSetMatches } from '../utils/parseStudentSet';
 import { agentDebugLog } from '../utils/agentDebugLog';
+import { isSrsTopicId, type SrsEducationLevel } from '../utils/srs';
 
 export type GameSessionBridge = {
     educationLevel: 'elementary' | 'highschool' | 'university' | null;
@@ -38,6 +56,7 @@ export type GameSessionBridge = {
     /** Session banks from generators (for worksheet save / stage checks). */
     erettsegiQuestions?: Question[];
     assignedTasks?: any[];
+    replaceSessionQuestions?: (qs: Question[]) => void;
 };
 
 export type UseGamePlayParams = {
@@ -73,6 +92,7 @@ export function useGamePlay({
     onResetPicker,
 }: UseGamePlayParams) {
     const router = useRouter();
+    const challengeNode = skillNodeById(String(router.query.challenge || ''));
 
     const [score, setScore] = useState(0);
     const [level, setLevel] = useState(1);
@@ -107,6 +127,27 @@ export function useGamePlay({
     const [mascotMood, setMascotMood] = useState<MascotMood>('idle');
     const [isDailyMode, setIsDailyMode] = useState(false);
     const [isErettsegiMode, setIsErettsegiMode] = useState(false);
+    const [isBlitzMode, setIsBlitzMode] = useState(false);
+    const [juiceBoosters, setJuiceBoosters] = useState<JuiceBoosters>({
+        fiftyFifty: 0,
+        secondChance: 0,
+        freeze: 0,
+    });
+    const [hintText, setHintText] = useState<string | null>(null);
+    const [secondChanceArmed, setSecondChanceArmed] = useState(false);
+    const [comboBroken, setComboBroken] = useState(false);
+    const [brokenStreak, setBrokenStreak] = useState(0);
+    const [lastXpGain, setLastXpGain] = useState(10);
+    const [skillPerks, setSkillPerks] = useState<SkillPerks>(EMPTY_SKILL_PERKS);
+    const [feedbackPending, setFeedbackPending] = useState(false);
+    const [celebrateLevelUp, setCelebrateLevelUp] = useState(false);
+    const feedbackAdvanceRef = useRef<{
+        correct: boolean;
+        currentQ: Question;
+        questionIndex: number;
+        failedSnapshot: Question[];
+        scoreNow: number;
+    } | null>(null);
 
     const worksheetTopicKeyRef = useRef<string | null>(null);
     const pathLessonRef = useRef<number | null>(null);
@@ -118,6 +159,11 @@ export function useGamePlay({
 
     const getQuestions = () => questionsRef.current;
 
+    const currentUid = () =>
+        currentUser?.uid
+        || (typeof window !== 'undefined' && (window as any).firebase?.auth?.()?.currentUser?.uid)
+        || null;
+
     useEffect(() => {
         if (typeof window === 'undefined') return;
         const saved = localStorage.getItem('highScore');
@@ -125,6 +171,43 @@ export function useGamePlay({
             setHighScore(parseInt(saved, 10));
         }
     }, []);
+
+    useEffect(() => {
+        if (!gameActive) return;
+        void touchDailyJuice(currentUid()).then((prog) => {
+            setJuiceBoosters(prog.juice?.boosters || { fiftyFifty: 0, secondChance: 0, freeze: 0 });
+            const perks = deriveSkillPerks(prog.juice?.unlockedSkills);
+            setSkillPerks(perks);
+            if (!challengeNode && perks.startSecondArmed) {
+                setSecondChanceArmed(true);
+            }
+            if (!challengeNode && perks.extraLives > 0) {
+                livesRef.current += perks.extraLives;
+                setLives((n) => n + perks.extraLives);
+            }
+            if (!challengeNode && perks.blitzBonus > 0 && (isBlitzMode || router.query.blitz === '1')) {
+                setSprintLeft((s) => s + perks.blitzBonus);
+            }
+            // #region agent log
+            void import('../utils/agentDebugLog').then(({ agentDebugLog }) => {
+                agentDebugLog({
+                    hypothesisId: 'H',
+                    location: 'useGamePlay.ts:gameActive',
+                    message: 'skill perks applied',
+                    data: {
+                        extraLives: perks.extraLives,
+                        comboEarlier: perks.comboEarlier,
+                        xpBonus: perks.xpBonus,
+                        blitzBonus: perks.blitzBonus,
+                        skillPoints: prog.juice?.skillPoints || 0,
+                    },
+                    runId: 'skill-tree',
+                });
+            });
+            // #endregion
+        }).catch(() => undefined);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [gameActive]);
 
     const saveGameResults = async () => {
             try {
@@ -184,6 +267,30 @@ export function useGamePlay({
                     lessonJustCompleted,
                     lessonWrongCount: lessonJustCompleted ? wrongIds.length : undefined,
                 });
+                const eduRaw = String(router.query.educationLevel || ctx.educationLevel || 'erettsegi');
+                const srsEdu: SrsEducationLevel =
+                    eduRaw === 'elementary' || eduRaw === 'highschool' || eduRaw === 'university' || eduRaw === 'erettsegi'
+                        ? eduRaw
+                        : 'erettsegi';
+                const groups = new Map<string, { topicId: string; stage: PracticeStage; wrong: boolean }>();
+                for (const q of baseList) {
+                    const skillTopic = q.srsTopicId || topicFromQuery;
+                    if (!isSrsTopicId(skillTopic)) continue;
+                    const stage = (q.srsStage || q.stage || 1) as PracticeStage;
+                    const key = `${skillTopic.toLowerCase()}:${stage}`;
+                    const prev = groups.get(key) || { topicId: skillTopic, stage, wrong: false };
+                    if (wrongIds.includes(q.id || '')) prev.wrong = true;
+                    groups.set(key, prev);
+                }
+                const reviews = Array.from(groups.values()).map((g) => ({
+                    topicId: g.topicId,
+                    stage: g.stage,
+                    educationLevel: srsEdu,
+                    grade: g.wrong ? ('again' as const) : ('good' as const),
+                }));
+                if (reviews.length) {
+                    await applySrsSession(uid, reviews);
+                }
                 setTotalXp(result.next.xp);
                 setAvatarLevel(result.next.rankLevel);
                 if (result.newBadges.length > 0) {
@@ -211,6 +318,19 @@ export function useGamePlay({
                     }, 2200);
                 }
             }
+
+            await applyJuiceSession(uid, {
+                correctCount: correctAnswerCount,
+                lessonsCompleted: (isPathMode && pathLessonRef.current
+                    && baseList.every((q) => correctIds.includes(q.id || '')))
+                    ? 1
+                    : 0,
+                didMix: router.query.topicMix === '1',
+                didDaily: isDailyMode,
+                didBlitz: isBlitzMode,
+                blitzScore: isBlitzMode ? correctAnswerCount : undefined,
+                maxStreak,
+            });
 
             if (!currentUser || !(window as any).firebase?.firestore) return;
 
@@ -323,6 +443,26 @@ export function useGamePlay({
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [gameActive, isSprintMode, sprintLeft]);
 
+    useEffect(() => {
+        if (!gameActive || !challengeNode || challengeNode.rules.timerMode !== 'perQuestion') return;
+        sprintEndedRef.current = false;
+        setSprintLeft(challengeNode.rules.seconds);
+        // #region agent log
+        agentDebugLog({
+            hypothesisId: 'C',
+            location: 'useGamePlay.ts:challengeTimer',
+            message: 'per-question timer reset',
+            data: {
+                id: challengeNode.id,
+                idx: currentQuestion,
+                sec: challengeNode.rules.seconds,
+                qCount: challengeNode.rules.questionCount,
+            },
+            runId: 'challenge-tree',
+        });
+        // #endregion
+    }, [gameActive, currentQuestion, challengeNode?.id, challengeNode?.rules.timerMode, challengeNode?.rules.seconds]);
+
     const startGame = async () => {
         if (!educationLevel) return;
 
@@ -354,6 +494,9 @@ export function useGamePlay({
         setMessage('');
         setIsCorrect(false);
         setShowExpression(false);
+        setFeedbackPending(false);
+        feedbackAdvanceRef.current = null;
+        setCelebrateLevelUp(false);
         setAvatarLevel(1);
         setAvatarProgress(0);
     };
@@ -371,6 +514,9 @@ export function useGamePlay({
         setMessage('');
         setIsCorrect(false);
         setShowExpression(false);
+        setFeedbackPending(false);
+        feedbackAdvanceRef.current = null;
+        setCelebrateLevelUp(false);
         setAvatarLevel(1);
         setAvatarProgress(0);
         setFailedQuestions([]);
@@ -381,6 +527,11 @@ export function useGamePlay({
         setIsSprintMode(false);
         setIsDailyMode(false);
         setIsErettsegiMode(false);
+        setIsBlitzMode(false);
+        setHintText(null);
+        setSecondChanceArmed(false);
+        setComboBroken(false);
+        setLastXpGain(10);
         setCorrectStreak(0);
         setMaxStreak(0);
         setSessionXp(0);
@@ -462,10 +613,124 @@ export function useGamePlay({
         // Ne ugorjunk tovább automatikusan - a felhasználó kattintson a "Következő" gombra
     };
 
+    const continueAfterFeedback = () => {
+        const pending = feedbackAdvanceRef.current;
+        if (!pending) return;
+
+        const { correct, currentQ, questionIndex, failedSnapshot, scoreNow } = pending;
+        const questions = getQuestions();
+        feedbackAdvanceRef.current = null;
+        setFeedbackPending(false);
+        setCelebrateLevelUp(false);
+        setComboBroken(false);
+        setHintText(null);
+        setSecondChanceArmed(false);
+
+        // #region agent log
+        agentDebugLog({
+            hypothesisId: 'A',
+            location: 'useGamePlay.ts:continueAfterFeedback',
+            message: 'feedback dismissed by user',
+            data: {
+                correct,
+                questionIndex,
+                lives: livesRef.current,
+                hadExpression: Boolean(currentQ.expression),
+            },
+            runId: 'feedback-persist',
+        });
+        // #endregion
+
+        if (correct) {
+            const updatedFailed = failedSnapshot.filter((q) =>
+                !((q.id && currentQ.id && q.id === currentQ.id) || q.question === currentQ.question)
+            );
+            if (updatedFailed.length !== failedSnapshot.length) {
+                setFailedQuestions(updatedFailed);
+            }
+
+            if (questionIndex < questions.length - 1) {
+                setCurrentQuestion(questionIndex + 1);
+                setUserAnswer('');
+                setUserAnswer2('');
+                setUserAnswer3('');
+                setUserAnswer4('');
+                setMessage('');
+                setIsCorrect(false);
+                setShowExpression(false);
+                setMascotMood('idle');
+            } else {
+                const remainingFailed = updatedFailed.length !== failedSnapshot.length ? updatedFailed : failedSnapshot;
+                if (remainingFailed.length > 0 && !(isPathMode || isSprintMode)) {
+                    const baseCount = questions.length - failedSnapshot.length;
+                    setCurrentQuestion(baseCount);
+                    setUserAnswer('');
+                    setUserAnswer2('');
+                    setUserAnswer3('');
+                    setUserAnswer4('');
+                    setMessage('Most a hibás feladatokat oldd meg újra!');
+                    setIsCorrect(false);
+                    setShowExpression(false);
+                    setMascotMood('idle');
+                } else {
+                    if (scoreNow > highScore) {
+                        setHighScore(scoreNow);
+                        if (typeof window !== 'undefined') {
+                            localStorage.setItem('highScore', scoreNow.toString());
+                        }
+                    }
+                    setMessage('Gratulálok! Megnyerted a játékot! 🏆');
+                    setMascotMood('happy');
+                    saveGameResults();
+                }
+            }
+            return;
+        }
+
+        if ((isPathMode || isSprintMode || isDailyMode) && livesRef.current <= 0) {
+            setMessage('Elfogyott az életed! 💔 Próbáld újra a leckét.');
+            setMascotMood('sad');
+            setGameActive(false);
+            saveGameResults();
+            return;
+        }
+        if (questionIndex < questions.length - 1) {
+            setCurrentQuestion(questionIndex + 1);
+            setUserAnswer('');
+            setUserAnswer2('');
+            setUserAnswer3('');
+            setUserAnswer4('');
+            setMessage('');
+            setIsCorrect(false);
+            setShowExpression(false);
+            setMascotMood('idle');
+        } else if (failedSnapshot.length > 0 && !(isPathMode || isSprintMode)) {
+            const baseCount = questions.length - failedSnapshot.length;
+            setCurrentQuestion(baseCount);
+            setUserAnswer('');
+            setUserAnswer2('');
+            setUserAnswer3('');
+            setUserAnswer4('');
+            setMessage('Most a hibás feladatokat oldd meg újra!');
+            setIsCorrect(false);
+            setShowExpression(false);
+        } else {
+            if (scoreNow > highScore) {
+                setHighScore(scoreNow);
+                if (typeof window !== 'undefined') {
+                    localStorage.setItem('highScore', scoreNow.toString());
+                }
+            }
+            setMessage('Gratulálok! Megnyerted a játékot! 🏆');
+            saveGameResults();
+        }
+    };
+
     const submitAnswer = () => {
         const questions = getQuestions();
         const currentQ = questions[currentQuestion];
         if (!currentQ) return;
+        if (feedbackAdvanceRef.current) return;
         
         // Ha van részfeladat, ne használjuk a normál submitAnswer-t
         if (currentQ.subQuestions) {
@@ -590,18 +855,32 @@ export function useGamePlay({
         setShowExpression(true);
 
         if (correct) {
+            const newStreak = correctStreak + 1;
+            const mult = comboMultiplier(newStreak, skillPerks.comboEarlier);
+            const baseXp = 10 * mult + (currentQ.isBoss ? 5 + skillPerks.bossXpBonus : 0) + skillPerks.xpBonus;
+            setCorrectStreak(newStreak);
+            setMaxStreak((m) => Math.max(m, newStreak));
+            setLastXpGain(baseXp);
+            setComboBroken(false);
             playCorrectSound();
+            if (isComboMilestone(newStreak) || currentQ.isBoss) {
+                playBigCelebrateFanfare();
+            } else {
+                playCelebrateFanfare();
+            }
             setMascotMood('happy');
-            const newScore = score + 10;
+            const newScore = score + baseXp;
             setScore(newScore);
             
             // Szint emelkedés minden 5 helyes válasz után (50 pont = 5 helyes válasz)
             const newLevel = Math.floor(newScore / 50) + 1;
-            if (newLevel > level) {
+            const leveled = newLevel > level;
+            setCelebrateLevelUp(leveled);
+            if (leveled) {
                 setLevel(newLevel);
                 setMessage(`Helyes! 🎉\n\n🎊 Szint emelkedett! Új szint: ${newLevel}`);
             } else {
-            setMessage('Helyes! 🎉');
+            setMessage(mult > 1 ? `Helyes! 🎉 ×${mult}` : 'Helyes! 🎉');
             }
 
             // Avatar progress
@@ -611,27 +890,41 @@ export function useGamePlay({
                 setAvatarProgress(0);
             }
 
+            // #region agent log
+            agentDebugLog({
+                hypothesisId: 'A',
+                location: 'useGamePlay.ts:submitAnswer',
+                message: 'combo applied',
+                data: {
+                    newStreak,
+                    mult,
+                    baseXp,
+                    isBoss: !!currentQ.isBoss,
+                    milestone: isComboMilestone(newStreak),
+                },
+                runId: 'juice',
+            });
+            // #endregion
+
             // Munkalap / path XP / streak / szakasz
             if (isWorksheetMode) {
                 const qid = currentQ.id || `idx_${currentQuestion}`;
                 const alreadyCorrect = correctQuestionIds.includes(qid);
-                const newStreak = correctStreak + 1;
-                setCorrectStreak(newStreak);
-                setMaxStreak((m) => Math.max(m, newStreak));
                 let msgExtra = '';
                 if (!alreadyCorrect) {
                     const nextCorrect = [...correctQuestionIds, qid];
                     correctQuestionIdsRef.current = nextCorrect;
                     setCorrectQuestionIds(nextCorrect);
-                    setSessionXp((x) => x + 10);
-                    setTotalXp((x) => x + 10);
+                    setSessionXp((x) => x + baseXp);
+                    setTotalXp((x) => x + baseXp);
 
                     const bonus = streakBonusXp(newStreak);
                     if (bonus > 0) {
                         playStreakSound();
                         setSessionXp((x) => x + bonus);
                         setTotalXp((x) => x + bonus);
-                        msgExtra += `\n\n🔥 Streak ${newStreak}! (+${bonus} XP)`;
+                        setLastXpGain(baseXp + bonus);
+                        msgExtra += `\n\n🔥 Streak ${newStreak}! ×${mult} (+${bonus} XP)`;
                     }
 
                     if (!isPathMode) {
@@ -653,9 +946,16 @@ export function useGamePlay({
                         const baseQs = bank.length > 0 ? bank : questions;
                         const lessonDone = baseQs.every((q) => nextCorrect.includes(q.id || ''));
                         if (lessonDone && pathLessonRef.current) {
-                            setSessionXp((x) => x + PATH_LESSON_XP);
-                            setTotalXp((x) => x + PATH_LESSON_XP);
-                            msgExtra += `\n\n🎉 Lecke ${pathLessonRef.current} kész! (+${PATH_LESSON_XP} XP)`;
+                            const lessonPay = PATH_LESSON_XP + skillPerks.lessonXpBonus;
+                            setSessionXp((x) => x + lessonPay);
+                            setTotalXp((x) => x + lessonPay);
+                            msgExtra += `\n\n🎉 Lecke ${pathLessonRef.current} kész! (+${lessonPay} XP)`;
+                            const bossQs = baseQs.filter((q) => q.isBoss);
+                            if (bossQs.length > 0 && bossQs.every((q) => nextCorrect.includes(q.id || ''))) {
+                                setSessionXp((x) => x + 20);
+                                setTotalXp((x) => x + 20);
+                                msgExtra += `\n\n👹 Főnök leverve! (+20 XP)`;
+                            }
                         }
                     }
                 }
@@ -668,7 +968,34 @@ export function useGamePlay({
                 }
             }
         } else {
-            playWrongSound();
+            if (secondChanceArmed) {
+                setSecondChanceArmed(false);
+                setIsCorrect(false);
+                setShowExpression(false);
+                setMessage('Második esély! Próbáld újra — a sorozat megmaradt.');
+                setUserAnswer('');
+                setUserAnswer2('');
+                setUserAnswer3('');
+                setUserAnswer4('');
+                // #region agent log
+                agentDebugLog({
+                    hypothesisId: 'C',
+                    location: 'useGamePlay.ts:submitAnswer',
+                    message: 'second chance consumed',
+                    data: { streak: correctStreak, questionIndex: currentQuestion },
+                    runId: 'juice',
+                });
+                // #endregion
+                return;
+            }
+            const brokeCombo = correctStreak >= 2;
+            if (brokeCombo) {
+                playComboBreakSound();
+                setComboBroken(true);
+                setBrokenStreak(correctStreak);
+            } else {
+                playWrongSound();
+            }
             setMascotMood('sad');
             setCorrectStreak(0);
             // Hibás válasz: hozzáadjuk a hibás feladatok listájához (ha még nincs benne)
@@ -684,6 +1011,45 @@ export function useGamePlay({
                 );
                 if (questionIndex === -1) {
                     setFailedQuestions([...failedQuestions, { ...currentQ }]);
+                }
+                const origin = String(currentQ.id || currentQ.question || 'q').replace(/_r[a-z0-9]+$/i, '');
+                const bank = (
+                    erettsegiQuestionsRef.current.length
+                        ? erettsegiQuestionsRef.current
+                        : getQuestions()
+                ).slice();
+                const alreadyQueued = bank.filter((q) => {
+                    const id = String(q.id || q.question || '');
+                    return id === origin || id.startsWith(`${origin}_r`);
+                }).length;
+                if (alreadyQueued < 3 && !challengeNode) {
+                    const retry: Question = {
+                        ...currentQ,
+                        id: `${origin}_r${Math.random().toString(36).slice(2, 8)}`,
+                    };
+                    const remaining = Math.max(0, bank.length - (currentQuestion + 1));
+                    const gap = remaining <= 1
+                        ? remaining
+                        : 2 + Math.floor(Math.random() * Math.min(4, remaining));
+                    const insertAt = Math.min(bank.length, currentQuestion + 1 + gap);
+                    bank.splice(insertAt, 0, retry);
+                    erettsegiQuestionsRef.current = bank;
+                    questionsRef.current = bank;
+                    sessionBridgeRef.current.replaceSessionQuestions?.(bank);
+                    // #region agent log
+                    agentDebugLog({
+                        hypothesisId: 'R',
+                        location: 'useGamePlay.ts:submitAnswer',
+                        message: 'wrong question requeued later',
+                        data: {
+                            origin: origin.slice(0, 40),
+                            insertAt,
+                            bankLen: bank.length,
+                            currentQuestion,
+                        },
+                        runId: 'shuffle-retry',
+                    });
+                    // #endregion
                 }
                 const qid = currentQ.id || `idx_${currentQuestion}`;
                 if (!wrongFirstIdsRef.current.includes(qid) && !wrongFirstIds.includes(qid)) {
@@ -715,98 +1081,113 @@ export function useGamePlay({
             }
         }
 
-        setTimeout(() => {
-            if (correct) {
-                // Helyes válasz: eltávolítjuk a hibás feladatok listájából, ha benne volt
-                const updatedFailed = failedQuestions.filter(q => 
-                    !((q.id && currentQ.id && q.id === currentQ.id) || q.question === currentQ.question)
-                );
-                if (updatedFailed.length !== failedQuestions.length) {
-                    setFailedQuestions(updatedFailed);
-                }
-                
-                // Továbblépünk
-                if (currentQuestion < questions.length - 1) {
-                    setCurrentQuestion(currentQuestion + 1);
-                    setUserAnswer('');
-                    setUserAnswer2('');
-                    setUserAnswer3('');
-                    setUserAnswer4('');
-                    setMessage('');
-                    setIsCorrect(false);
-                    setShowExpression(false);
-                    setMascotMood('idle');
-                } else {
-                    // Ha nincs több feladat, de vannak még hibás feladatok
-                    const remainingFailed = updatedFailed.length !== failedQuestions.length ? updatedFailed : failedQuestions;
-                    if (remainingFailed.length > 0 && !(isPathMode || isSprintMode)) {
-                        // Vissza a hibás feladatokhoz - a questions tömb végén vannak
-                        const baseCount = questions.length - failedQuestions.length;
-                        setCurrentQuestion(baseCount); // Vissza a hibás feladatokhoz
-                        setUserAnswer('');
-                        setUserAnswer2('');
-                        setUserAnswer3('');
-                        setUserAnswer4('');
-                        setMessage('Most a hibás feladatokat oldd meg újra!');
-                    setIsCorrect(false);
-                    setShowExpression(false);
-                    setMascotMood('idle');
-                } else {
-                    // Game won
-                    if (score > highScore) {
-                        setHighScore(score);
-                        if (typeof window !== 'undefined') {
-                            localStorage.setItem('highScore', score.toString());
-                        }
-                    }
-                    setMessage('Gratulálok! Megnyerted a játékot! 🏆');
-                    setMascotMood('happy');
-                    saveGameResults();
-                    }
-                }
-            } else {
-                // Hibás válasz: ha elfogyott az élet (path/sprint), mentés és vége
-                if ((isPathMode || isSprintMode || isDailyMode) && livesRef.current <= 0) {
-                    setMessage('Elfogyott az életed! 💔 Próbáld újra a leckét.');
-                    setMascotMood('sad');
-                    setGameActive(false);
-                    saveGameResults();
-                    return;
-                }
-                if (currentQuestion < questions.length - 1) {
-                    setCurrentQuestion(currentQuestion + 1);
-                    setUserAnswer('');
-                    setUserAnswer2('');
-                    setUserAnswer3('');
-                    setUserAnswer4('');
-                    setMessage('');
-                    setIsCorrect(false);
-                    setShowExpression(false);
-                    setMascotMood('idle');
-                } else {
-                    if (failedQuestions.length > 0 && !(isPathMode || isSprintMode)) {
-                        const baseCount = questions.length - failedQuestions.length;
-                        setCurrentQuestion(baseCount);
-                        setUserAnswer('');
-                        setUserAnswer2('');
-                        setUserAnswer3('');
-                        setUserAnswer4('');
-                        setMessage('Most a hibás feladatokat oldd meg újra!');
-                        setIsCorrect(false);
-                        setShowExpression(false);
-                    } else {
-                        if (score > highScore) {
-                            setHighScore(score);
-                            if (typeof window !== 'undefined') {
-                                localStorage.setItem('highScore', score.toString());
-                            }
-                        }
-                        setMessage('Gratulálok! Megnyerted a játékot! 🏆');
-                        saveGameResults();
-                    }
-                }
+        feedbackAdvanceRef.current = {
+            correct,
+            currentQ,
+            questionIndex: currentQuestion,
+            failedSnapshot: failedQuestions,
+            scoreNow: correct ? score + 10 : score,
+        };
+        setFeedbackPending(true);
+
+        // #region agent log
+        agentDebugLog({
+            hypothesisId: 'A',
+            location: 'useGamePlay.ts:submitAnswer',
+            message: 'feedback kept until dismiss',
+            data: {
+                correct,
+                autoAdvanceMs: 0,
+                hasExpression: Boolean(currentQ.expression),
+                questionIndex: currentQuestion,
+            },
+            runId: 'feedback-persist',
+        });
+        // #endregion
+    };
+
+    const useBooster = async (kind: BoosterKind) => {
+        if (!gameActive || feedbackPending) return;
+        if (challengeNode?.rules.noBoosters) {
+            setBadgeToast('Ebben a kihívásban nincs booster');
+            setTimeout(() => setBadgeToast(null), 2500);
+            return;
+        }
+        if (kind === 'freeze' && !(isSprintMode || isBlitzMode)) {
+            setBadgeToast('Időfagy csak időre megyős körben működik');
+            setTimeout(() => setBadgeToast(null), 2500);
+            return;
+        }
+        const spent = await spendBoosterOrXp(currentUid(), kind);
+        if (!spent.ok) {
+            setBadgeToast(`Nincs ${BOOSTER_LABEL[kind]} — kell ${kind === 'fiftyFifty' ? 25 : kind === 'freeze' ? 30 : 40} XP`);
+            setTimeout(() => setBadgeToast(null), 2800);
+            return;
+        }
+        setJuiceBoosters(spent.juice.boosters);
+        if (spent.xpSpent > 0) {
+            setTotalXp(spent.next.xp);
+            setAvatarLevel(spent.next.rankLevel);
+        }
+        if (kind === 'fiftyFifty') {
+            const q = getQuestions()[currentQuestion];
+            if (q) {
+                setHintText(fiftyFiftyHint(q.answer, [
+                    q.alternativeAnswer,
+                    q.thirdAnswer,
+                    q.fourthAnswer,
+                ].filter((n): n is number => typeof n === 'number'), skillPerks.tightHint));
             }
-        }, 2000);
+        } else if (kind === 'secondChance') {
+            setSecondChanceArmed(true);
+            setBadgeToast('2. esély élesítve — a következő hiba nem számít');
+            setTimeout(() => setBadgeToast(null), 2800);
+        } else if (kind === 'freeze') {
+            const freezeSec = FREEZE_SECONDS + skillPerks.freezeBonus;
+            setSprintLeft((s) => s + freezeSec);
+            setBadgeToast(`⏱ +${freezeSec} mp`);
+            setTimeout(() => setBadgeToast(null), 2200);
+        }
+        // #region agent log
+        agentDebugLog({
+            hypothesisId: 'C',
+            location: 'useGamePlay.ts:useBooster',
+            message: 'booster used',
+            data: { kind, xpSpent: spent.xpSpent, left: spent.juice.boosters[kind] },
+            runId: 'juice',
+        });
+        // #endregion
+    };
+
+    const skipQuestion = (dir: -1 | 1) => {
+        const qs = getQuestions();
+        const nextIdx = Math.min(qs.length - 1, Math.max(0, currentQuestion + dir));
+        if (nextIdx === currentQuestion) return;
+        feedbackAdvanceRef.current = null;
+        setFeedbackPending(false);
+        setCelebrateLevelUp(false);
+        setComboBroken(false);
+        setHintText(null);
+        setUserAnswer('');
+        setUserAnswer2('');
+        setUserAnswer3('');
+        setUserAnswer4('');
+        setSubQuestionAnswers({});
+        setMessage('');
+        setIsCorrect(false);
+        setShowExpression(false);
+        setShowSolutions(false);
+        setMascotMood('idle');
+        setCurrentQuestion(nextIdx);
+        // #region agent log
+        agentDebugLog({
+            hypothesisId: 'N',
+            location: 'useGamePlay.ts:skipQuestion',
+            message: 'dev skip question',
+            data: { from: currentQuestion, to: nextIdx, dir, total: qs.length, score },
+            runId: 'dev-nav',
+        });
+        // #endregion
     };
 
     return {
@@ -835,6 +1216,9 @@ export function useGamePlay({
         setUserAnswer4,
         message,
         setMessage,
+        feedbackPending,
+        celebrateLevelUp,
+        continueAfterFeedback,
         failedQuestions,
         setFailedQuestions,
         isCorrect,
@@ -877,6 +1261,16 @@ export function useGamePlay({
         setIsDailyMode,
         isErettsegiMode,
         setIsErettsegiMode,
+        isBlitzMode,
+        setIsBlitzMode,
+        juiceBoosters,
+        hintText,
+        secondChanceArmed,
+        comboBroken,
+        brokenStreak,
+        lastXpGain,
+        skillPerks,
+        useBooster,
         // refs for generators / orchestration
         worksheetTopicKeyRef,
         pathLessonRef,
@@ -891,5 +1285,6 @@ export function useGamePlay({
         checkSubQuestionAnswers,
         submitAnswer,
         saveGameResults,
+        skipQuestion,
     };
 }

@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { getAvatarColor, getRankEmoji, getRankTitle } from '../utils/practiceProgress';
+import { formatMathText } from '../utils/formatMathText';
 
 export default function UniBoostGame() {
     const router = useRouter();
@@ -460,7 +461,7 @@ export default function UniBoostGame() {
 
                         <div className="question-card">
                             <h2 className="question-text">
-                                {questions[currentQuestion]?.question}
+                                {formatMathText(questions[currentQuestion]?.question)}
                             </h2>
 
                             <div className="answer-section">
@@ -492,7 +493,7 @@ export default function UniBoostGame() {
                             {showExpression && (
                                 <div className="expression-display">
                                     <h3>📝 Megoldás:</h3>
-                                    <pre>{questions[currentQuestion]?.expression}</pre>
+                                    <pre>{formatMathText(questions[currentQuestion]?.expression)}</pre>
                                     <button className="next-button" onClick={nextQuestion}>
                                         Következő kérdés →
                                     </button>
