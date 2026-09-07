@@ -22,7 +22,7 @@ import {
     type PathNode,
 } from '../utils/topicPath';
 import { agentDebugLog } from '../utils/agentDebugLog';
-import { textbookGradeFromTopicId } from '../utils/hsTextbook';
+import { textbookGradeFromTopicId, hsTextbookRunId } from '../utils/hsTextbook';
 import { formatAuthError, isTestLoginAllowed, signInAsTestUser, TEST_LOGIN_EMAIL } from '../utils/testLogin';
 import MathHexMascot from './MathHexMascot';
 import MathNodeIcon from './MathNodeIcon';
@@ -161,7 +161,7 @@ export default function TopicPathMap({
                 isHsTextbook: /^hs\d{2}-/.test(topicId),
                 textbookGrade: textbookGradeFromTopicId(topicId),
             },
-            runId: topicId.startsWith('hs09-') ? 'hs09-oh' : 'hs11-oh',
+            runId: hsTextbookRunId(topicId),
         });
         // #endregion
         router.push(`/game?${params.toString()}`);

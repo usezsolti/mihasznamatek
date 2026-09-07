@@ -196,7 +196,7 @@ export function findCatalogTopic(
         const hit = list.find((t) => topicKeysMatch(t.id, topicId));
         if (hit) return hit;
         if (educationLevel === 'highschool') {
-            for (const g of [9, 11]) {
+            for (const g of [9, 10, 11, 12]) {
                 const hitG = getTopicsForEducationLevel('highschool', erettsegiLevel, g).find((t) =>
                     topicKeysMatch(t.id, topicId)
                 );

@@ -49,11 +49,29 @@ export const highschoolTopics: CatalogTopic[] = [
     { id: 'sorozatok', title: 'Sorozatok', icon: '∞', color: '#39ff14' },
 ];
 
-/** OH-MAT09TA/I (NAT 2020) — 9. osztály I. kötet fejezetei. */
+/** OH-MAT09TA I–II. kötet (NAT 2020) — 9. osztály tankönyv fejezetei. */
 export const highschoolGrade09Topics: CatalogTopic[] = [
     { id: 'hs09-kombi', title: '1. Kombinatorika, halmazok', icon: '🔢', color: '#3aa0ff' },
     { id: 'hs09-szamok', title: '2. A számok világa', icon: '💯', color: '#f5c400' },
     { id: 'hs09-eq', title: '3. Egyenletek és azonosságok', icon: 'Σ', color: '#39ff14' },
+    { id: 'hs09-geo', title: '4. Bevezetés a geometriába', icon: '📐', color: '#c084fc' },
+    { id: 'hs09-plot', title: '5. Függvények', icon: '📈', color: '#ff6b1a' },
+    { id: 'hs09-ngon', title: '6. Egybevágóság, négyszögek', icon: '⬜', color: '#3aa0ff' },
+    { id: 'hs09-cash', title: '7. Mindennapi pénzügyeink', icon: '💰', color: '#58cc02' },
+];
+
+/** OH-MAT10TA I–II. kötet (NAT 2020) — 10. osztály tankönyv fejezetei. */
+export const highschoolGrade10Topics: CatalogTopic[] = [
+    { id: 'hs10-logic', title: '1. Logika', icon: '⚖️', color: '#c084fc' },
+    { id: 'hs10-sys', title: '2. Egyenletrendszerek', icon: 'Σ', color: '#39ff14' },
+    { id: 'hs10-pow', title: '3. Hatványozás és négyzetgyök', icon: '√', color: '#f5c400' },
+    { id: 'hs10-xform', title: '4. Függvénytranszformációk', icon: '📈', color: '#3aa0ff' },
+    { id: 'hs10-quad', title: '5. Másodfokú egyenletek', icon: 'x²', color: '#ff6b1a' },
+    { id: 'hs10-cong', title: '6. Egybevágóság, kör', icon: '⭕', color: '#39ff14' },
+    { id: 'hs10-data', title: '7. Statisztika, valószínűség', icon: '📊', color: '#ff6b1a' },
+    { id: 'hs10-ineq', title: '8. Egyenletek, egyenlőtlenségek', icon: '≠', color: '#3aa0ff' },
+    { id: 'hs10-sim', title: '9. Hasonlóság', icon: '📐', color: '#c084fc' },
+    { id: 'hs10-cash', title: '10. Mindennapi pénzügyeink', icon: '💰', color: '#58cc02' },
 ];
 
 /** OH-MAT11TA (NAT 2020) — 11. osztály tankönyv fejezetei. */
@@ -67,9 +85,23 @@ export const highschoolGrade11Topics: CatalogTopic[] = [
     { id: 'hs11-finance', title: '7. Mindennapi pénzügyeink', icon: '💰', color: '#58cc02' },
 ];
 
+/** OH-MAT12TA (NAT 2020) — 12. osztály: 3 új fejezet + 5 rendszerező összefoglaló. */
+export const highschoolGrade12Topics: CatalogTopic[] = [
+    { id: 'hs12-solid', title: '1. Térgeometria', icon: '📦', color: '#39ff14' },
+    { id: 'hs12-seq', title: '2. Sorozatok', icon: '∞', color: '#3aa0ff' },
+    { id: 'hs12-chance', title: '3. Statisztika és valószínűség', icon: '🎲', color: '#ff6b1a' },
+    { id: 'hs12-disc', title: '4. Halmazok, logika, kombinatorika, gráfok', icon: '🕸️', color: '#c084fc' },
+    { id: 'hs12-alg', title: '5. Számtan, algebra', icon: 'Σ', color: '#f5c400' },
+    { id: 'hs12-maps', title: '6. Függvények, sorozatok', icon: '📈', color: '#3aa0ff' },
+    { id: 'hs12-plane', title: '7. Geometria', icon: '📐', color: '#39ff14' },
+    { id: 'hs12-odds', title: '8. Statisztika, valószínűség (összefoglaló)', icon: '📊', color: '#58cc02' },
+];
+
 export function getHighschoolTopicsForGrade(grade: number): CatalogTopic[] {
     if (grade === 9) return highschoolGrade09Topics;
+    if (grade === 10) return highschoolGrade10Topics;
     if (grade === 11) return highschoolGrade11Topics;
+    if (grade === 12) return highschoolGrade12Topics;
     return highschoolTopics;
 }
 

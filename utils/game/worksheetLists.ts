@@ -29,51 +29,32 @@ import {
     getDmPracticeQuestions,
     getStPracticeQuestions,
 } from './practiceBanks';
-import { getHs09PracticeQuestions } from './hs09Levels';
-import { getHs11PracticeQuestions } from './hs11Levels';
+import { getHsTextbookPracticeQuestions } from './hsTextbookBanks';
+import { hsTextbookRunId } from '../hsTextbook';
 
 export const getWorksheetListForTopic = (topicId: string): { list: Question[]; prefix: string } | null => {
     const topicLower = topicId.toLowerCase();
     if (!isWorksheetTopicId(topicId)) return null;
-    if (topicLower.startsWith('hs09-')) {
-        const list = getHs09PracticeQuestions(topicLower);
+    if (/^hs\d{2}-/.test(topicLower)) {
+        const list = getHsTextbookPracticeQuestions(topicLower);
         if (!list) return null;
+        const prefix = `hs${topicLower.slice(2, 4)}_${topicLower}`;
         // #region agent log
         agentDebugLog({
             hypothesisId: 'H3',
             location: 'worksheetLists.ts:getWorksheetListForTopic',
-            message: 'hs09 topic routed',
+            message: 'hs textbook topic routed',
             data: {
                 topicId,
-                prefix: `hs09_${topicLower}`,
+                prefix,
                 total: list.length,
                 stages: [1, 2, 3, 4, 5, 6].map((s) => list.filter((q) => q.stage === s).length),
                 firstQ: String(list[0]?.question || '').slice(0, 50),
             },
-            runId: 'hs09-oh',
+            runId: hsTextbookRunId(topicLower),
         });
         // #endregion
-        return { list, prefix: `hs09_${topicLower}` };
-    }
-    if (topicLower.startsWith('hs11-')) {
-        const list = getHs11PracticeQuestions(topicLower);
-        if (!list) return null;
-        // #region agent log
-        agentDebugLog({
-            hypothesisId: 'H',
-            location: 'worksheetLists.ts:getWorksheetListForTopic',
-            message: 'hs11 topic routed',
-            data: {
-                topicId,
-                prefix: `hs11_${topicLower}`,
-                total: list.length,
-                stages: [1, 2, 3, 4, 5, 6].map((s) => list.filter((q) => q.stage === s).length),
-                firstQ: String(list[0]?.question || '').slice(0, 50),
-            },
-            runId: 'hs11-oh',
-        });
-        // #endregion
-        return { list, prefix: `hs11_${topicLower}` };
+        return { list, prefix };
     }
     if (topicLower.startsWith('a1-')) {
         const list = getAnalizis1PracticeQuestions(topicId);

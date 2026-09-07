@@ -1,4 +1,4 @@
-/** OH-MAT09TA/I (NAT 2020) — 9. osztály I. kötet, 6 játéklecke / fejezet. */
+/** OH-MAT09TA I–II. (NAT 2020) — 9. osztály, 6 játéklecke / fejezet. */
 export const HS09_LESSON_LABELS: Record<string, Record<1 | 2 | 3 | 4 | 5 | 6, string>> = {
     'hs09-kombi': {
         1: 'Hányféleképpen lehet?',
@@ -23,6 +23,38 @@ export const HS09_LESSON_LABELS: Record<string, Record<1 | 2 | 3 | 4 | 5 | 6, st
         4: 'Egyenletek',
         5: 'Szöveges feladatok',
         6: 'Alaphalmaz, gyakorlás',
+    },
+    'hs09-geo': {
+        1: 'A sík geometriája, szögek',
+        2: 'Háromszögek, Pitagorasz',
+        3: 'Távolságok, kör',
+        4: 'Nevezetes vonalak és pontok',
+        5: 'Thalész tétele',
+        6: 'Kerület, terület, gyakorlás',
+    },
+    'hs09-plot': {
+        1: 'Táblázatok, diagramok',
+        2: 'A függvény fogalma, grafikon',
+        3: 'Arányosság, meredekség',
+        4: 'Lineáris és abszolútérték',
+        5: 'Szélsőérték, másodfokú',
+        6: 'Grafikus megoldás, gyakorlás',
+    },
+    'hs09-ngon': {
+        1: 'Forgatás, középpontos tükrözés',
+        2: 'Vektorok, eltolás',
+        3: 'Tengelyes tükrözés, szerkesztés',
+        4: 'Szimmetrikus négyszögek',
+        5: 'Négyszögek területe',
+        6: 'Gyakorlás, tudáspróba',
+    },
+    'hs09-cash': {
+        1: 'Árengedmény',
+        2: 'Költségvetési egyenes',
+        3: 'Állampapír',
+        4: 'SZJA, valutaváltás',
+        5: 'Vállalkozó, áfa',
+        6: 'Gyakorlás',
     },
 };
 

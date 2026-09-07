@@ -306,7 +306,11 @@ export function useGameSessionBuilders(p: UseGameSessionBuildersParams) {
                 total: list?.length || 0,
                 firstId: list?.[0]?.id,
                 firstAnswer: list?.[0]?.answer,
+                lastId: list?.[list.length - 1]?.id,
+                lastAnswer: list?.[list.length - 1]?.answer,
                 ready: Boolean(list?.length),
+                isFeb: String(paperId || '').includes('feb') || String(paperId || '').includes('mat2'),
+                is2025Jan: String(paperId || '').includes('2025'),
             },
             runId: 'kf-2026',
         });

@@ -384,7 +384,7 @@ export default function Game() {
                             selectedHighschoolTopic={selectedHighschoolTopic}
                             highschoolTopics={highschoolTopics}
                             onSelectHighschoolTopic={(topicId, grade) => {
-                                if (grade === 9 || grade === 11) {
+                                if (grade === 9 || grade === 10 || grade === 11 || grade === 12) {
                                     router.push(buildTopicPracticeHref(topicId, 'highschool', 'emelt', grade));
                                     return;
                                 }

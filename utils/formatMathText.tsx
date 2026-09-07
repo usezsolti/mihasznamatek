@@ -237,10 +237,38 @@ function formatScripts(text: string): ReactNode {
     return nodes.map((node, idx) => <Fragment key={idx}>{node}</Fragment>);
 }
 
-/** Hivatalos sorszám: 2026/1.a) — a felvételinél ne jelenjen meg. */
+/** Hivatalos sorszám: 2026/1.a) — a felvételinél ne jelenjen meg.
+ *  Válaszmező betűje: (A) = ? / (C)=? — ezt se mutassuk. A feleletválasztó
+ *  (A) Minden oldala… sorokat nem nyúljuk, mert utánuk nem egyenlőségjel van.
+ */
 export function stripOfficialTaskLabel(text: string | undefined | null): string {
     if (!text) return '';
-    return String(text).replace(/^\d{4}\/\d+(?:\.[a-z])?(?:–[a-z])?\)?\s*/i, '');
+    const before = String(text);
+    const after = before
+        .replace(/^\d{4}\/\d+(?:\.[a-z])?(?:–[a-z])?\)?\s*/i, '')
+        .replace(/\s*\(([A-Ea-e])\)\s*(?==)/g, ' ')
+        .replace(/[ \t]{2,}/g, ' ')
+        .replace(/[ \t]+\n/g, '\n')
+        .trim();
+    // #region agent log
+    if (/\([A-Ea-e]\)\s*=/.test(before) || before !== after) {
+        agentDebugLog({
+            hypothesisId: 'H1',
+            location: 'formatMathText.tsx:stripOfficialTaskLabel',
+            message: 'kozponti official/letter strip',
+            data: {
+                hadYearPrefix: /^\d{4}\//.test(before),
+                hadLetterSlot: /\([A-Ea-e]\)\s*=/.test(before),
+                afterHasLetterSlot: /\([A-Ea-e]\)\s*=/.test(after),
+                keptChoiceLines: /^\([A-E]\)\s+\S/m.test(after),
+                before: before.slice(0, 90),
+                after: after.slice(0, 90),
+            },
+            runId: 'kf-label',
+        });
+    }
+    // #endregion
+    return after;
 }
 
 /** a_n → alsó index, ^n → felső, a/b → egymás alatti hányados. */

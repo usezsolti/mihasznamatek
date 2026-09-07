@@ -11,7 +11,9 @@ import {
     erettsegiEmeltTopics,
     erettsegiKozepTopics,
     highschoolGrade09Topics,
+    highschoolGrade10Topics,
     highschoolGrade11Topics,
+    highschoolGrade12Topics,
     highschoolTopics,
     universitySubjects,
     type EducationLevelId,
@@ -149,8 +151,10 @@ function catalogTitle(id: string): string {
     const all = [
         ...elementaryTopics,
         ...highschoolGrade09Topics,
+        ...highschoolGrade10Topics,
         ...highschoolTopics,
         ...highschoolGrade11Topics,
+        ...highschoolGrade12Topics,
         ...erettsegiKozepTopics,
         ...erettsegiEmeltTopics,
         ...universitySubjects.flatMap((s) => s.topics),
@@ -161,7 +165,7 @@ function catalogTitle(id: string): string {
 
 function levelLabelForTopicKey(key: string): string {
     if (elementaryTopics.some((t) => t.id === key)) return 'Ált. iskola';
-    if (highschoolGrade09Topics.some((t) => t.id === key) || highschoolTopics.some((t) => t.id === key) || highschoolGrade11Topics.some((t) => t.id === key)) return 'Középiskola';
+    if (highschoolGrade09Topics.some((t) => t.id === key) || highschoolGrade10Topics.some((t) => t.id === key) || highschoolTopics.some((t) => t.id === key) || highschoolGrade11Topics.some((t) => t.id === key) || highschoolGrade12Topics.some((t) => t.id === key)) return 'Középiskola';
     if (erettsegiKozepTopics.some((t) => t.id === key)) return 'Érettségi · közép';
     if (erettsegiEmeltTopics.some((t) => t.id === key)) return 'Érettségi · emelt';
     for (const s of universitySubjects) {
@@ -185,8 +189,10 @@ function catalogKeysForStudentLevel(
     if (level === 'elementary') pushTopics(elementaryTopics, 'Ált. iskola');
     else if (level === 'highschool') {
         pushTopics(highschoolGrade09Topics, 'Középiskola · 9.');
+        pushTopics(highschoolGrade10Topics, 'Középiskola · 10.');
         pushTopics(highschoolTopics, 'Középiskola');
         pushTopics(highschoolGrade11Topics, 'Középiskola · 11.');
+        pushTopics(highschoolGrade12Topics, 'Középiskola · 12.');
     }
     else if (level === 'erettsegi') {
         pushTopics(erettsegiKozepTopics, 'Érettségi · közép');
@@ -196,8 +202,10 @@ function catalogKeysForStudentLevel(
     } else {
         pushTopics(elementaryTopics, 'Ált. iskola');
         pushTopics(highschoolGrade09Topics, 'Középiskola · 9.');
+        pushTopics(highschoolGrade10Topics, 'Középiskola · 10.');
         pushTopics(highschoolTopics, 'Középiskola');
         pushTopics(highschoolGrade11Topics, 'Középiskola · 11.');
+        pushTopics(highschoolGrade12Topics, 'Középiskola · 12.');
         pushTopics(erettsegiKozepTopics, 'Érettségi · közép');
         pushTopics(erettsegiEmeltTopics, 'Érettségi · emelt');
         for (const s of universitySubjects) pushTopics(s.topics, `Egyetem · ${s.title}`);

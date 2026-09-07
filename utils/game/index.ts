@@ -52,10 +52,23 @@ export { generateElementaryQuestionByTopic } from './generateElementary';
 export { generateKozpontiQuestionByTopic } from './generateKozponti';
 export {
     KOZPONTI_PAPERS,
+    KOZPONTI_GRADES,
     getKozpontiPaperQuestions,
     getKozponti2026Mat1Questions,
+    getKozponti2026FebQuestions,
+    getKozponti2025JanQuestions,
+    getKozponti2025FebQuestions,
+    getKozponti2024JanQuestions,
+    getKozponti2024FebQuestions,
+    getKozponti2023JanQuestions,
+    getKozponti2023FebQuestions,
+    getKozponti2022JanQuestions,
+    getKozponti2022FebQuestions,
+    getKozponti2022MarQuestions,
+    getKozpontiPapersForGrade,
+    kozpontiPapersByYear,
 } from './kozpontiPapers';
-export type { KozpontiPaperMeta } from './kozpontiPapers';
+export type { KozpontiPaperMeta, KozpontiGrade, KozpontiMonth } from './kozpontiPapers';
 export { generateHighschoolQuestionByTopic } from './generateHighschool';
 export { generateUniversityQuestionByTopic } from './generateUniversity';
 export { getWorksheetListForTopic } from './worksheetLists';

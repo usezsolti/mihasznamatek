@@ -1,4 +1,5 @@
 import type { GraphFigure } from './graphFigure';
+import { agentDebugLog } from '../agentDebugLog';
 
 /** Statikus kép: tedd a fájlt public/figures/ alá, pl. /figures/sikgeometria/haromszog.png */
 export type ImageFigure = {
@@ -21,7 +22,7 @@ export type DrawPrimitive =
     | { t: 'rect'; x: number; y: number; w: number; h: number; className?: string }
     | { t: 'poly'; points: Array<[number, number]>; className?: string }
     | { t: 'path'; d: string; className?: string }
-    | { t: 'text'; x: number; y: number; text: string; className?: string }
+    | { t: 'text'; x: number; y: number; text: string; className?: string; anchor?: 'start' | 'middle' | 'end' }
     | { t: 'axes'; xmin: number; xmax: number; ymin: number; ymax: number };
 
 export type DrawFigure = {
@@ -82,15 +83,16 @@ export function coordPlaneFigure(opts: {
     const w = opts.width ?? 480;
     const h = opts.height ?? 400;
     const mx = 40;
-    const my = 34;
+    const myTop = opts.yLabel ? 28 : 24;
+    const myBot = opts.xLabel ? 52 : 34;
     const xmin = opts.xmin;
     const xmax = opts.xmax;
     const ymin = opts.ymin;
     const ymax = opts.ymax;
     const sx = (w - 2 * mx) / (xmax - xmin || 1);
-    const sy = (h - 2 * my) / (ymax - ymin || 1);
+    const sy = (h - myTop - myBot) / (ymax - ymin || 1);
     const X = (x: number) => mx + (x - xmin) * sx;
-    const Y = (y: number) => h - my - (y - ymin) * sy;
+    const Y = (y: number) => h - myBot - (y - ymin) * sy;
 
     const primitives: DrawPrimitive[] = [];
     for (let x = Math.ceil(xmin); x <= Math.floor(xmax); x++) {
@@ -112,10 +114,43 @@ export function coordPlaneFigure(opts: {
     }
     primitives.push({ t: 'text', x: X(0) - 10, y: Y(0) + 14, text: '0', className: 'game-draw-tick' });
     if (opts.xLabel) {
-        primitives.push({ t: 'text', x: X(xmax) - 8, y: Y(0) - 8, text: opts.xLabel, className: 'game-draw-text' });
+        const xLabelX = (X(xmin) + X(xmax)) / 2;
+        const xLabelY = h - 16;
+        primitives.push({
+            t: 'text',
+            x: xLabelX,
+            y: xLabelY,
+            text: opts.xLabel,
+            className: 'game-draw-text',
+            anchor: 'middle',
+        });
+        // #region agent log
+        agentDebugLog({
+            hypothesisId: 'H1',
+            location: 'questionFigure.ts:coordPlaneFigure',
+            message: 'coord xLabel placed',
+            data: {
+                xLabel: opts.xLabel,
+                xLabelX,
+                xLabelY,
+                w,
+                h,
+                myBot,
+                oldWouldOverflow: X(xmax) - 8 + Math.round(opts.xLabel.length * 8) > w,
+            },
+            runId: 'kf-xlabel',
+        });
+        // #endregion
     }
     if (opts.yLabel) {
-        primitives.push({ t: 'text', x: X(0) + 8, y: Y(ymax) + 4, text: opts.yLabel, className: 'game-draw-text' });
+        primitives.push({
+            t: 'text',
+            x: X(0) + 8,
+            y: Y(ymax) - 8,
+            text: opts.yLabel,
+            className: 'game-draw-text',
+            anchor: 'start',
+        });
     }
 
     for (const p of opts.points) {

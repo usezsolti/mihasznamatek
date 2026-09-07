@@ -1,11 +1,16 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
-import { KOZPONTI_PAPERS } from '../utils/game/kozpontiPapers';
+import {
+    KOZPONTI_GRADES,
+    kozpontiPapersByYear,
+    type KozpontiGrade,
+} from '../utils/game/kozpontiPapers';
 import { agentDebugLog } from '../utils/agentDebugLog';
 
 export default function KozpontiFelkeszules() {
     const router = useRouter();
+    const [selectedGrade, setSelectedGrade] = useState<KozpontiGrade | null>(null);
 
     const kozpontiTopics = [
         { id: 'szamitas', title: 'Számítás', icon: '🔢', description: 'Alapműveletek, számolási feladatok' },
@@ -18,29 +23,46 @@ export default function KozpontiFelkeszules() {
         { id: 'valoszinuseg', title: 'Valószínűség', icon: '🎲', description: 'Valószínűségszámítás alapjai' },
     ];
 
+    const yearGroups = selectedGrade ? kozpontiPapersByYear(selectedGrade) : [];
+
     useEffect(() => {
         // #region agent log
         agentDebugLog({
-            hypothesisId: 'L',
+            hypothesisId: 'H1',
             location: 'kozponti-felkeszules.tsx:mount',
-            message: 'kf page using namespaced layout',
+            message: 'kf page tracks',
             data: {
-                papers: KOZPONTI_PAPERS.length,
-                topics: kozpontiTopics.length,
+                grades: KOZPONTI_GRADES,
+                selectedGrade,
+                yearN: yearGroups.length,
+                monthsPerYear: yearGroups[0]?.papers.map((p) => p.month) || [],
+                y2026: yearGroups
+                    .find((g) => g.year === 2026)
+                    ?.papers.map((p) => ({ id: p.id, month: p.month, ready: p.ready, n: p.questionCount, sub: p.subtitle })),
                 usedGlobalSectionClass: false,
             },
-            runId: 'kf-layout',
+            runId: 'kf-tracks',
         });
         // #endregion
-    }, []);
+    }, [selectedGrade, yearGroups.length]);
 
-    const handlePaperClick = (paperId: string, ready: boolean) => {
+    const handlePaperClick = (paperId: string, ready: boolean, month?: string) => {
+        // #region agent log
+        agentDebugLog({
+            hypothesisId: 'H2',
+            location: 'kozponti-felkeszules.tsx:paperClick',
+            message: 'kf paper click',
+            data: { paperId, ready, grade: selectedGrade, month },
+            runId: 'kf-tracks',
+        });
+        // #endregion
         if (!ready) return;
         router.push(`/game?kozponti=true&paper=${encodeURIComponent(paperId)}`);
     };
 
     const handleTopicClick = (topicId: string) => {
-        router.push(`/game?kozponti=true&topic=${topicId}`);
+        const gradeQ = selectedGrade ? `&grade=${selectedGrade}` : '';
+        router.push(`/game?kozponti=true&topic=${topicId}${gradeQ}`);
     };
 
     return (
@@ -114,6 +136,19 @@ export default function KozpontiFelkeszules() {
                         grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
                         gap: 1rem;
                     }
+                    .kf-month-grid {
+                        display: grid;
+                        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                        gap: 0.85rem;
+                    }
+                    .kf-year-row {
+                        margin: 0 0 1.25rem;
+                    }
+                    .kf-year-row h3 {
+                        margin: 0 0 0.55rem;
+                        color: #fff;
+                        font-size: 1.05rem;
+                    }
                     .kf-card {
                         display: flex;
                         flex-direction: column;
@@ -181,62 +216,129 @@ export default function KozpontiFelkeszules() {
                         .kf-page {
                             padding: 1rem 0.85rem 2.2rem;
                         }
-                        .kf-grid {
+                        .kf-grid,
+                        .kf-month-grid {
                             grid-template-columns: 1fr;
                         }
                     }
                 `}</style>
                 <div className="kf-wrap">
-                    <button type="button" className="kf-back" onClick={() => router.push('/dashboard')}>
-                        ← Vissza a dashboardra
+                    <button
+                        type="button"
+                        className="kf-back"
+                        onClick={() => {
+                            if (selectedGrade) setSelectedGrade(null);
+                            else router.push('/dashboard');
+                        }}
+                    >
+                        {selectedGrade ? '← Vissza az évfolyamokhoz' : '← Vissza a dashboardra'}
                     </button>
                     <div className="kf-hero">
                         <h1>Központi felvételi</h1>
-                        <p>8. évfolyam · hivatalos sorok évek szerint, plusz témakörös gyakorlás</p>
-                    </div>
-                    <div className="kf-block">
-                        <h2>Feladatsorok évek szerint</h2>
                         <p>
-                            A 2026-os Mat1 már bent van. A 2020–2025-ös sorok ugyanide kerülnek, ha megvannak.
+                            {selectedGrade
+                                ? selectedGrade === 8
+                                    ? '8. évfolyam · 9. évfolyamra · évenként külön januári és februári játék'
+                                    : '6. évfolyam · 6/8 évfolyamos gimnázium · évenként külön januári és februári játék'
+                                : '6. és 8. évfolyam központi írásbeli. Egy éven belül a január és a február külön játék.'}
                         </p>
-                        <div className="kf-grid">
-                            {KOZPONTI_PAPERS.map((paper) => (
-                                <button
-                                    key={paper.id}
-                                    type="button"
-                                    className={`kf-card ${paper.ready ? 'ready' : 'soon'}`}
-                                    onClick={() => handlePaperClick(paper.id, paper.ready)}
-                                >
-                                    <div className="kf-year">{paper.year}</div>
-                                    <h3>{paper.title}</h3>
-                                    <p>{paper.subtitle}</p>
-                                    <span className={`kf-badge ${paper.ready ? 'ready' : 'soon'}`}>
-                                        {paper.ready
-                                            ? `${paper.questionCount} feladat · ${paper.timeLimitMin} perc`
-                                            : 'Hamarosan'}
-                                    </span>
-                                </button>
-                            ))}
-                        </div>
                     </div>
-                    <div className="kf-block">
-                        <h2>Témakörös gyakorlás</h2>
-                        <p>Vegyes, generált feladatok a felvételi témakörökre.</p>
-                        <div className="kf-grid">
-                            {kozpontiTopics.map((topic) => (
-                                <button
-                                    key={topic.id}
-                                    type="button"
-                                    className="kf-card"
-                                    onClick={() => handleTopicClick(topic.id)}
-                                >
-                                    <div className="kf-icon">{topic.icon}</div>
-                                    <h3>{topic.title}</h3>
-                                    <p>{topic.description}</p>
-                                </button>
-                            ))}
+                    {!selectedGrade ? (
+                        <div className="kf-block">
+                            <h2>Válassz évfolyamot</h2>
+                            <p>A 6. évfolyam a 6/8 évfolyamos, a 8. évfolyam a 9. évfolyamra készülő felvételi.</p>
+                            <div className="kf-grid">
+                                {KOZPONTI_GRADES.map((grade) => (
+                                    <button
+                                        key={grade}
+                                        type="button"
+                                        className="kf-card ready"
+                                        onClick={() => {
+                                            // #region agent log
+                                            agentDebugLog({
+                                                hypothesisId: 'H1',
+                                                location: 'kozponti-felkeszules.tsx:gradeClick',
+                                                message: 'kf grade selected',
+                                                data: { grade },
+                                                runId: 'kf-tracks',
+                                            });
+                                            // #endregion
+                                            setSelectedGrade(grade);
+                                        }}
+                                    >
+                                        <div className="kf-year">{grade}.</div>
+                                        <h3>{grade}. évfolyam</h3>
+                                        <p>
+                                            {grade === 6
+                                                ? 'Központi írásbeli 6/8 évfolyamos gimnáziumba'
+                                                : 'Központi írásbeli 9. évfolyamra'}
+                                        </p>
+                                        <span className="kf-badge ready">Január és február külön</span>
+                                    </button>
+                                ))}
+                            </div>
                         </div>
-                    </div>
+                    ) : (
+                        <>
+                            <div className="kf-block">
+                                <h2>Feladatsorok évek szerint</h2>
+                                <p>
+                                    Minden évben a januári rendes és a februári pótló írásbeli külön játék. Jelenleg a
+                                    2026–2023 8. évfolyam sorai, valamint a 2022-es január 22., január 27. és február 4. sora játszható.
+                                </p>
+                                {yearGroups.map(({ year, papers }) => (
+                                    <div key={year} className="kf-year-row">
+                                        <h3>{year}</h3>
+                                        <div className="kf-month-grid">
+                                            {papers.map((paper) => (
+                                                <button
+                                                    key={paper.id}
+                                                    type="button"
+                                                    className={`kf-card ${paper.ready ? 'ready' : 'soon'}`}
+                                                    onClick={() =>
+                                                        handlePaperClick(paper.id, paper.ready, paper.month)
+                                                    }
+                                                >
+                                                    <div className="kf-year">
+                                                        {paper.month === 'januar'
+                                                            ? '01'
+                                                            : paper.month === 'februar'
+                                                              ? '02'
+                                                              : '03'}
+                                                    </div>
+                                                    <h3>{paper.title}</h3>
+                                                    <p>{paper.subtitle}</p>
+                                                    <span className={`kf-badge ${paper.ready ? 'ready' : 'soon'}`}>
+                                                        {paper.ready
+                                                            ? `${paper.questionCount} feladat · ${paper.timeLimitMin} perc`
+                                                            : 'Hamarosan'}
+                                                    </span>
+                                                </button>
+                                            ))}
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                            <div className="kf-block">
+                                <h2>Témakörös gyakorlás</h2>
+                                <p>Vegyes, generált feladatok a {selectedGrade}. évfolyam felvételi témaköreire.</p>
+                                <div className="kf-grid">
+                                    {kozpontiTopics.map((topic) => (
+                                        <button
+                                            key={topic.id}
+                                            type="button"
+                                            className="kf-card"
+                                            onClick={() => handleTopicClick(topic.id)}
+                                        >
+                                            <div className="kf-icon">{topic.icon}</div>
+                                            <h3>{topic.title}</h3>
+                                            <p>{topic.description}</p>
+                                        </button>
+                                    ))}
+                                </div>
+                            </div>
+                        </>
+                    )}
                 </div>
             </div>
         </>

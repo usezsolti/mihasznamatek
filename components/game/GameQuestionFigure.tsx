@@ -8,6 +8,7 @@ import {
     type QuestionFigure,
 } from '../../utils/game/questionFigure';
 import type { Question } from '../../utils/game/types';
+import { agentDebugLog } from '../../utils/agentDebugLog';
 
 type Props = {
     question?: Question | null;
@@ -145,13 +146,33 @@ function DrawSvg({ fig }: { fig: DrawFigure }) {
                     return <path key={key} d={p.d} className={p.className || 'game-draw-stroke'} />;
                 }
                 if (p.t === 'text') {
+                    if (p.text && p.text.length > 4 && p.anchor === 'middle') {
+                        // #region agent log
+                        agentDebugLog({
+                            hypothesisId: 'H1',
+                            location: 'GameQuestionFigure.tsx:DrawSvg',
+                            message: 'axis title rendered',
+                            data: {
+                                text: p.text,
+                                x: p.x,
+                                y: p.y,
+                                anchor: p.anchor,
+                                viewW: w,
+                                viewH: h,
+                                fitsX: p.x > 40 && p.x < w - 40,
+                                fitsY: p.y > 10 && p.y < h - 4,
+                            },
+                            runId: 'kf-xlabel',
+                        });
+                        // #endregion
+                    }
                     return (
                         <text
                             key={key}
                             x={p.x}
                             y={p.y}
                             className={p.className || 'game-draw-text'}
-                            textAnchor={p.className === 'game-draw-tick' ? 'middle' : 'start'}
+                            textAnchor={p.anchor || (p.className === 'game-draw-tick' ? 'middle' : 'start')}
                         >
                             {p.text}
                         </text>
@@ -164,7 +185,37 @@ function DrawSvg({ fig }: { fig: DrawFigure }) {
 }
 
 function ImageBlock({ fig }: { fig: ImageFigure }) {
-    return <img className="game-question-image" src={fig.src} alt={fig.alt || fig.caption || ''} />;
+    return (
+        <img
+            className="game-question-image"
+            src={fig.src}
+            alt={fig.alt || fig.caption || ''}
+            onLoad={() => {
+                if (!fig.src.includes('kozponti/20')) return;
+                // #region agent log
+                agentDebugLog({
+                    hypothesisId: 'H5',
+                    location: 'GameQuestionFigure.tsx:ImageBlock',
+                    message: 'feb figure loaded',
+                    data: { src: fig.src },
+                    runId: 'kf-2026-feb',
+                });
+                // #endregion
+            }}
+            onError={() => {
+                if (!fig.src.includes('kozponti/20')) return;
+                // #region agent log
+                agentDebugLog({
+                    hypothesisId: 'H5',
+                    location: 'GameQuestionFigure.tsx:ImageBlock',
+                    message: 'feb figure failed',
+                    data: { src: fig.src },
+                    runId: 'kf-2026-feb',
+                });
+                // #endregion
+            }}
+        />
+    );
 }
 
 function OneFigure({ fig }: { fig: QuestionFigure }) {

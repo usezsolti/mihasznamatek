@@ -6,6 +6,7 @@ import {
     type UniversitySubject,
 } from '../../utils/mathTopicsCatalog';
 import { agentDebugLog } from '../../utils/agentDebugLog';
+import { hsTextbookRunId } from '../../utils/hsTextbook';
 
 export type GameEducationLevel = 'elementary' | 'highschool' | 'university' | null;
 
@@ -165,7 +166,7 @@ export default function GameLobby({
                         >
                             <span className="level-icon">🎯</span>
                             <span className="level-name">Központi Felvételi</span>
-                            <span className="level-desc">Gimnáziumi felvételi felkészülés</span>
+                            <span className="level-desc">6. és 8. évfolyam · január / február</span>
                         </button>
                     </div>
                 </div>
@@ -282,12 +283,22 @@ export default function GameLobby({
                     </div>
                     {selectedHighschoolGrade === 9 && (
                         <p className="level-desc" style={{ marginBottom: '1rem', opacity: 0.85 }}>
-                            OH-MAT09TA/I tankönyv fejezetei — 3 témakör, témánként 6 lecke
+                            OH-MAT09TA I–II. kötet — 7 témakör, témánként 6 lecke
+                        </p>
+                    )}
+                    {selectedHighschoolGrade === 10 && (
+                        <p className="level-desc" style={{ marginBottom: '1rem', opacity: 0.85 }}>
+                            OH-MAT10TA I–II. kötet — 10 témakör, témánként 6 lecke
                         </p>
                     )}
                     {selectedHighschoolGrade === 11 && (
                         <p className="level-desc" style={{ marginBottom: '1rem', opacity: 0.85 }}>
                             OH-MAT11TA tankönyv fejezetei — 7 témakör, témánként 6 lecke
+                        </p>
+                    )}
+                    {selectedHighschoolGrade === 12 && (
+                        <p className="level-desc" style={{ marginBottom: '1rem', opacity: 0.85 }}>
+                            OH-MAT12TA — 3 új fejezet + 5 összefoglaló, témánként 6 lecke
                         </p>
                     )}
                     <div className="elementary-topics-grid">
@@ -306,7 +317,7 @@ export default function GameLobby({
                                             grade: selectedHighschoolGrade,
                                             isHsTextbook: /^hs\d{2}-/.test(topic.id),
                                         },
-                                        runId: topic.id.startsWith('hs09-') ? 'hs09-oh' : 'hs11-oh',
+                                        runId: hsTextbookRunId(topic.id),
                                     });
                                     // #endregion
                                     onSelectHighschoolTopic(topic.id, selectedHighschoolGrade);

@@ -1,13 +1,38 @@
 import type { Question } from './types';
 import { coordPlaneFigure, imageFigure } from './questionFigure';
 import { agentDebugLog } from '../agentDebugLog';
+import { getKozponti2026FebQuestions, KOZPONTI_2026_FEB_COUNT } from './kf2026FebBank';
+import { getKozponti2025JanQuestions, KOZPONTI_2025_JAN_COUNT } from './kf2025JanBank';
+import { getKozponti2025FebQuestions, KOZPONTI_2025_FEB_COUNT } from './kf2025FebBank';
+import { getKozponti2024JanQuestions, KOZPONTI_2024_JAN_COUNT } from './kf2024JanBank';
+import { getKozponti2024FebQuestions, KOZPONTI_2024_FEB_COUNT } from './kf2024FebBank';
+import { getKozponti2023JanQuestions, KOZPONTI_2023_JAN_COUNT } from './kf2023JanBank';
+import { getKozponti2023FebQuestions, KOZPONTI_2023_FEB_COUNT } from './kf2023FebBank';
+import { getKozponti2022JanQuestions, KOZPONTI_2022_JAN_COUNT } from './kf2022JanBank';
+import { getKozponti2022FebQuestions, KOZPONTI_2022_FEB_COUNT } from './kf2022FebBank';
+import { getKozponti2022MarQuestions, KOZPONTI_2022_MAR_COUNT } from './kf2022MarBank';
 
-export type KozpontiPaperId = '2026-mat1';
+export { getKozponti2026FebQuestions } from './kf2026FebBank';
+export { getKozponti2025JanQuestions } from './kf2025JanBank';
+export { getKozponti2025FebQuestions } from './kf2025FebBank';
+export { getKozponti2024JanQuestions } from './kf2024JanBank';
+export { getKozponti2024FebQuestions } from './kf2024FebBank';
+export { getKozponti2023JanQuestions } from './kf2023JanBank';
+export { getKozponti2023FebQuestions } from './kf2023FebBank';
+export { getKozponti2022JanQuestions } from './kf2022JanBank';
+export { getKozponti2022FebQuestions } from './kf2022FebBank';
+export { getKozponti2022MarQuestions } from './kf2022MarBank';
+
+export type KozpontiPaperId = string;
+export type KozpontiGrade = 6 | 8;
+export type KozpontiMonth = 'januar' | 'februar' | 'harmadik';
 
 export type KozpontiPaperMeta = {
     id: string;
     year: number;
-    part: 'mat1' | 'mat2';
+    grade: KozpontiGrade;
+    month: KozpontiMonth;
+    part: 'mat1' | 'mat2' | 'mat3';
     title: string;
     subtitle: string;
     ready: boolean;
@@ -15,16 +40,190 @@ export type KozpontiPaperMeta = {
     timeLimitMin: number;
 };
 
-/** 2020–2026 keret: csak a beküldött sorok ready-k. */
-export const KOZPONTI_PAPERS: KozpontiPaperMeta[] = [
-    { id: '2020-mat1', year: 2020, part: 'mat1', title: '2020 Mat1', subtitle: 'Hamarosan — küldd a feladatsort', ready: false, questionCount: 0, timeLimitMin: 45 },
-    { id: '2021-mat1', year: 2021, part: 'mat1', title: '2021 Mat1', subtitle: 'Hamarosan — küldd a feladatsort', ready: false, questionCount: 0, timeLimitMin: 45 },
-    { id: '2022-mat1', year: 2022, part: 'mat1', title: '2022 Mat1', subtitle: 'Hamarosan — küldd a feladatsort', ready: false, questionCount: 0, timeLimitMin: 45 },
-    { id: '2023-mat1', year: 2023, part: 'mat1', title: '2023 Mat1', subtitle: 'Hamarosan — küldd a feladatsort', ready: false, questionCount: 0, timeLimitMin: 45 },
-    { id: '2024-mat1', year: 2024, part: 'mat1', title: '2024 Mat1', subtitle: 'Hamarosan — küldd a feladatsort', ready: false, questionCount: 0, timeLimitMin: 45 },
-    { id: '2025-mat1', year: 2025, part: 'mat1', title: '2025 Mat1', subtitle: 'Hamarosan — küldd a feladatsort', ready: false, questionCount: 0, timeLimitMin: 45 },
-    { id: '2026-mat1', year: 2026, part: 'mat1', title: '2026 Mat1', subtitle: '2026. január 24. · 45 perc · OH hivatalos sor', ready: true, questionCount: 30, timeLimitMin: 45 },
-];
+export const KOZPONTI_GRADES: KozpontiGrade[] = [6, 8];
+export const KOZPONTI_YEARS = [2026, 2025, 2024, 2023, 2022, 2021, 2020] as const;
+
+function kfPaperId(year: number, grade: KozpontiGrade, month: KozpontiMonth): string {
+    return `kf-${year}-g${grade}-${month === 'januar' ? 'jan' : 'feb'}`;
+}
+
+/** 2026 jan. és febr. 8. évfolyam a beküldött hivatalos sorok. */
+const READY_PAPER_IDS = new Set([
+    'kf-2026-g8-jan',
+    '2026-mat1',
+    '2026',
+    'kf-2026',
+    'kf-2026-g8-feb',
+    '2026-mat2',
+    'kf-2026-feb',
+    'kf-2025-g8-jan',
+    '2025-mat1',
+    'kf-2025-jan',
+    'kf-2025-g8-feb',
+    '2025-mat2',
+    'kf-2025-feb',
+    'kf-2024-g8-jan',
+    '2024-mat1',
+    'kf-2024-jan',
+    'kf-2024-g8-feb',
+    '2024-mat2',
+    'kf-2024-feb',
+    'kf-2023-g8-jan',
+    '2023-mat1',
+    'kf-2023-jan',
+    'kf-2023-g8-feb',
+    '2023-mat2',
+    'kf-2023-feb',
+    'kf-2022-g8-jan',
+    '2022-mat1',
+    'kf-2022-jan',
+    'kf-2022-g8-feb',
+    '2022-mat2',
+    'kf-2022-feb',
+    'kf-2022-g8-mar',
+    '2022-mat3',
+    'kf-2022-mar',
+]);
+
+function readyPaperCopy(id: string, month: KozpontiMonth): { subtitle: string; questionCount: number } {
+    if (id === 'kf-2026-g8-jan') {
+        return { subtitle: '2026. január 24. · 45 perc · OH hivatalos sor', questionCount: 30 };
+    }
+    if (id === 'kf-2026-g8-feb') {
+        return {
+            subtitle: '2026. február 3. · 45 perc · OH hivatalos sor',
+            questionCount: KOZPONTI_2026_FEB_COUNT,
+        };
+    }
+    if (id === 'kf-2025-g8-jan') {
+        return {
+            subtitle: '2025. január 18. · 45 perc · OH hivatalos sor',
+            questionCount: KOZPONTI_2025_JAN_COUNT,
+        };
+    }
+    if (id === 'kf-2025-g8-feb') {
+        return {
+            subtitle: '2025. január 28. · 45 perc · OH hivatalos sor',
+            questionCount: KOZPONTI_2025_FEB_COUNT,
+        };
+    }
+    if (id === 'kf-2024-g8-jan') {
+        return {
+            subtitle: '2024. január 20. · 45 perc · OH hivatalos sor',
+            questionCount: KOZPONTI_2024_JAN_COUNT,
+        };
+    }
+    if (id === 'kf-2024-g8-feb') {
+        return {
+            subtitle: '2024. január 30. · 45 perc · OH hivatalos sor',
+            questionCount: KOZPONTI_2024_FEB_COUNT,
+        };
+    }
+    if (id === 'kf-2023-g8-jan') {
+        return {
+            subtitle: '2023. január 21. · 45 perc · OH hivatalos sor',
+            questionCount: KOZPONTI_2023_JAN_COUNT,
+        };
+    }
+    if (id === 'kf-2023-g8-feb') {
+        return {
+            subtitle: '2023. január 31. · 45 perc · OH hivatalos sor',
+            questionCount: KOZPONTI_2023_FEB_COUNT,
+        };
+    }
+    if (id === 'kf-2022-g8-jan') {
+        return {
+            subtitle: '2022. január 22. · 45 perc · OH hivatalos sor',
+            questionCount: KOZPONTI_2022_JAN_COUNT,
+        };
+    }
+    if (id === 'kf-2022-g8-feb') {
+        return {
+            subtitle: '2022. január 27. · 45 perc · OH hivatalos sor',
+            questionCount: KOZPONTI_2022_FEB_COUNT,
+        };
+    }
+    if (id === 'kf-2022-g8-mar') {
+        return {
+            subtitle: '2022. február 4. · 45 perc · OH hivatalos sor',
+            questionCount: KOZPONTI_2022_MAR_COUNT,
+        };
+    }
+    return { subtitle: month === 'januar' ? 'rendes írásbeli' : 'pótló írásbeli', questionCount: 0 };
+}
+
+function buildKozpontiPapers(): KozpontiPaperMeta[] {
+    const months: KozpontiMonth[] = ['januar', 'februar'];
+    const out: KozpontiPaperMeta[] = [];
+    for (const grade of KOZPONTI_GRADES) {
+        for (const year of KOZPONTI_YEARS) {
+            for (const month of months) {
+                const id = kfPaperId(year, grade, month);
+                const ready = READY_PAPER_IDS.has(id);
+                const monthLabel =
+                    id === 'kf-2025-g8-feb'
+                        ? 'Január 28'
+                        : id === 'kf-2024-g8-feb'
+                          ? 'Január 30'
+                          : id === 'kf-2023-g8-feb'
+                            ? 'Január 31'
+                            : id === 'kf-2022-g8-feb'
+                              ? 'Január 27'
+                              : month === 'januar'
+                              ? 'Január'
+                              : 'Február';
+                const sitting = month === 'januar' ? 'rendes írásbeli' : 'pótló írásbeli';
+                const track = grade === 8 ? '9. évfolyamra' : '6/8 évfolyamos gimnázium';
+                out.push({
+                    id,
+                    year,
+                    grade,
+                    month,
+                    part: month === 'januar' ? 'mat1' : 'mat2',
+                    title: monthLabel,
+                    subtitle: ready ? readyPaperCopy(id, month).subtitle : `${track} · ${sitting}`,
+                    ready,
+                    questionCount: ready ? readyPaperCopy(id, month).questionCount : 0,
+                    timeLimitMin: 45,
+                });
+            }
+            if (year === 2022) {
+                const id = `kf-${year}-g${grade}-mar`;
+                const ready = READY_PAPER_IDS.has(id);
+                const track = grade === 8 ? '9. évfolyamra' : '6/8 évfolyamos gimnázium';
+                out.push({
+                    id,
+                    year,
+                    grade,
+                    month: 'harmadik',
+                    part: 'mat3',
+                    title: 'Február 4',
+                    subtitle: ready ? readyPaperCopy(id, 'harmadik').subtitle : `${track} · 3. írásbeli`,
+                    ready,
+                    questionCount: ready ? readyPaperCopy(id, 'harmadik').questionCount : 0,
+                    timeLimitMin: 45,
+                });
+            }
+        }
+    }
+    return out;
+}
+
+export const KOZPONTI_PAPERS: KozpontiPaperMeta[] = buildKozpontiPapers();
+
+export function getKozpontiPapersForGrade(grade: KozpontiGrade): KozpontiPaperMeta[] {
+    return KOZPONTI_PAPERS.filter((p) => p.grade === grade);
+}
+
+export function kozpontiPapersByYear(grade: KozpontiGrade): Array<{ year: number; papers: KozpontiPaperMeta[] }> {
+    const map = new Map<number, KozpontiPaperMeta[]>();
+    for (const p of getKozpontiPapersForGrade(grade)) {
+        const list = map.get(p.year) || [];
+        list.push(p);
+        map.set(p.year, list);
+    }
+    return [...map.entries()].map(([year, papers]) => ({ year, papers }));
+}
 
 function q(
     id: string,
@@ -92,25 +291,25 @@ export function getKozponti2026Mat1Questions(): Question[] {
     const list: Question[] = [
         q(
             'kf2026-1a',
-            '2026/1.a) Egy szabályos hatszög átlóinak száma (A) = ?',
+            '2026/1.a) Egy szabályos hatszög átlóinak száma = ?',
             9,
             'Szabályos hatszög: n(n−3)/2 = 6·3/2 = 9'
         ),
         q(
             'kf2026-1b',
-            '2026/1.b) A 12 és a 15 legkisebb közös többszöröse (B) = ?',
+            '2026/1.b) A 12 és a 15 legkisebb közös többszöröse = ?',
             60,
             '12=2²·3, 15=3·5 → LKKT = 2²·3·5 = 60'
         ),
         q(
             'kf2026-1c',
-            '2026/1.c) A 16; 9; 18; 3; 4 számsokaság mediánja (C) = ?',
+            '2026/1.c) A 16; 9; 18; 3; 4 számsokaság mediánja = ?',
             9,
             'Rendezve: 3, 4, 9, 16, 18. Középső: 9'
         ),
         q(
             'kf2026-1d',
-            '2026/1.d) D = 2 : (8/15) = ?  (írhatod 3,75 vagy 15/4 alakban)',
+            '2026/1.d) 2 : (8/15) = ?  (írhatod 3,75 vagy 15/4 alakban)',
             3.75,
             '2 : (8/15) = 2 · 15/8 = 30/8 = 15/4 = 3,75'
         ),
@@ -321,8 +520,87 @@ export function getKozponti2026Mat1Questions(): Question[] {
 
 export function getKozpontiPaperQuestions(paperId: string): Question[] | null {
     const id = String(paperId || '').toLowerCase();
-    if (id === '2026-mat1' || id === '2026' || id === 'kf-2026') {
+    const is2026G8Jan =
+        id === 'kf-2026-g8-jan' ||
+        id === '2026-mat1' ||
+        id === '2026' ||
+        id === 'kf-2026';
+    const is2026G8Feb = id === 'kf-2026-g8-feb' || id === '2026-mat2' || id === 'kf-2026-feb';
+    const is2025G8Jan = id === 'kf-2025-g8-jan' || id === '2025-mat1' || id === 'kf-2025-jan';
+    const is2025G8Feb = id === 'kf-2025-g8-feb' || id === '2025-mat2' || id === 'kf-2025-feb';
+    const is2024G8Jan = id === 'kf-2024-g8-jan' || id === '2024-mat1' || id === 'kf-2024-jan';
+    const is2024G8Feb = id === 'kf-2024-g8-feb' || id === '2024-mat2' || id === 'kf-2024-feb';
+    const is2023G8Jan = id === 'kf-2023-g8-jan' || id === '2023-mat1' || id === 'kf-2023-jan';
+    const is2023G8Feb = id === 'kf-2023-g8-feb' || id === '2023-mat2' || id === 'kf-2023-feb';
+    const is2022G8Jan = id === 'kf-2022-g8-jan' || id === '2022-mat1' || id === 'kf-2022-jan';
+    const is2022G8Feb = id === 'kf-2022-g8-feb' || id === '2022-mat2' || id === 'kf-2022-feb';
+    const is2022G8Mar = id === 'kf-2022-g8-mar' || id === '2022-mat3' || id === 'kf-2022-mar';
+    // #region agent log
+    agentDebugLog({
+        hypothesisId: 'H2',
+        location: 'kozpontiPapers.ts:getKozpontiPaperQuestions',
+        message: 'kf paper lookup',
+        data: {
+            paperId: id,
+            is2026G8Jan,
+            is2026G8Feb,
+            is2025G8Jan,
+            is2025G8Feb,
+            is2024G8Jan,
+            is2024G8Feb,
+            is2023G8Jan,
+            is2023G8Feb,
+            is2022G8Jan,
+            is2022G8Feb,
+            is2022G8Mar,
+            ready:
+                is2026G8Jan ||
+                is2026G8Feb ||
+                is2025G8Jan ||
+                is2025G8Feb ||
+                is2024G8Jan ||
+                is2024G8Feb ||
+                is2023G8Jan ||
+                is2023G8Feb ||
+                is2022G8Jan ||
+                is2022G8Feb ||
+                is2022G8Mar,
+        },
+        runId: 'kf-tracks',
+    });
+    // #endregion
+    if (is2026G8Jan) {
         return getKozponti2026Mat1Questions();
+    }
+    if (is2026G8Feb) {
+        return getKozponti2026FebQuestions();
+    }
+    if (is2025G8Jan) {
+        return getKozponti2025JanQuestions();
+    }
+    if (is2025G8Feb) {
+        return getKozponti2025FebQuestions();
+    }
+    if (is2024G8Jan) {
+        return getKozponti2024JanQuestions();
+    }
+    if (is2024G8Feb) {
+        return getKozponti2024FebQuestions();
+    }
+    if (is2023G8Jan) {
+        return getKozponti2023JanQuestions();
+    }
+    if (is2023G8Feb) {
+        return getKozponti2023FebQuestions();
+    }
+    if (is2022G8Jan) {
+        return getKozponti2022JanQuestions();
+    }
+    if (is2022G8Feb) {
+        return getKozponti2022FebQuestions();
+    }
+    if (is2022G8Mar) {
+        return getKozponti2022MarQuestions();
     }
     return null;
 }

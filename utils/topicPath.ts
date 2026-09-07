@@ -100,6 +100,32 @@ export function buildPathNodes(topicId?: string): PathNode[] {
         kind: 'mixed',
         label: 'Vegyes gyakorlás',
     });
+    // #region agent log
+    if (topicId && /^hs09-/.test(topicId.toLowerCase())) {
+        agentDebugLog({
+            hypothesisId: 'H4',
+            location: 'topicPath.ts:buildPathNodes',
+            message: 'hs09 path labels',
+            data: {
+                topicId,
+                labels: [1, 2, 3, 4, 5, 6].map((n) => getHsTextbookLessonLabel(topicId, n)),
+            },
+            runId: 'hs09-oh',
+        });
+    }
+    if (topicId && /^hs12-/.test(topicId.toLowerCase())) {
+        agentDebugLog({
+            hypothesisId: 'H4',
+            location: 'topicPath.ts:buildPathNodes',
+            message: 'hs12 path labels',
+            data: {
+                topicId,
+                labels: [1, 2, 3, 4, 5, 6].map((n) => getHsTextbookLessonLabel(topicId, n)),
+            },
+            runId: 'hs12-oh',
+        });
+    }
+    // #endregion
     return nodes;
 }
 
