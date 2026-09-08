@@ -4,6 +4,7 @@ import {
     LESSON_SUBJECTS,
     type PreferredLessonType,
     type RegistrationProfile,
+    isRegistrationProfileComplete,
     validateRegistrationProfile,
 } from "../utils/registrationProfile";
 import {
@@ -69,6 +70,7 @@ export default function AuthModal({
     const [awaitingVerification, setAwaitingVerification] = useState(false);
     const [verifyLink, setVerifyLink] = useState("");
     const [gdprAccepted, setGdprAccepted] = useState(false);
+    const [googleProfilePending, setGoogleProfilePending] = useState(false);
     const wasOpenRef = useRef(false);
     const onCloseRef = useRef(onClose);
     onCloseRef.current = onClose;
@@ -127,6 +129,7 @@ export default function AuthModal({
         setError("");
         setInfoMessage("");
         setAwaitingVerification(false);
+        setGoogleProfilePending(false);
     };
 
     // Csak nyitáskor inicializál — ne állítsa vissza a regisztrációt Navbar újrarendernél
@@ -148,6 +151,7 @@ export default function AuthModal({
             setError("");
             setInfoMessage("");
             setAwaitingVerification(false);
+            setGoogleProfilePending(false);
         }
 
         const onKey = (e: KeyboardEvent) => {
@@ -165,8 +169,52 @@ export default function AuthModal({
         setGdprAccepted(false);
     };
 
+    const saveGoogleRegistrationProfile = async () => {
+        const profile = buildProfile();
+        const profileErr = validateRegistrationProfile(profile);
+        if (profileErr) {
+            setError(profileErr);
+            return;
+        }
+        if (!gdprAccepted) {
+            setError(t("auth.errorGdpr"));
+            return;
+        }
+        setLoading(true);
+        try {
+            const firebase = await waitForFirebase();
+            const user = firebase?.auth?.()?.currentUser;
+            if (!firebase || !user) {
+                setError(t("auth.errorFirebase"));
+                return;
+            }
+            if (profile.name && profile.name !== user.displayName) {
+                try {
+                    await user.updateProfile({ displayName: profile.name });
+                } catch {
+                    /* ignore */
+                }
+            }
+            await ensureUserDoc(firebase, user, {
+                name: profile.name,
+                gdprAccepted: true,
+                profile,
+            });
+            setGoogleProfilePending(false);
+            finishAuthSuccess();
+        } catch (err: any) {
+            setError(formatAuthError(err) || mapFirebaseAuthError(err?.code));
+        } finally {
+            setLoading(false);
+        }
+    };
+
     const handleEmailSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        if (googleProfilePending) {
+            await saveGoogleRegistrationProfile();
+            return;
+        }
         setError("");
         setLoading(true);
         try {
@@ -364,17 +412,6 @@ export default function AuthModal({
 
     const handleGoogle = async () => {
         setError("");
-        if (mode === "register") {
-            const profile = buildProfile();
-            if (!profile.postalCode.trim() || !profile.street.trim() || !profile.houseNumber.trim()) {
-                setError(t("auth.errorGoogleBilling"));
-                return;
-            }
-            if (!gdprAccepted) {
-                setError(t("auth.errorGdpr"));
-                return;
-            }
-        }
         setLoading(true);
         try {
             const firebase = await waitForFirebase();
@@ -386,69 +423,70 @@ export default function AuthModal({
             provider.addScope("email");
             provider.addScope("profile");
             const result = await firebase.auth().signInWithPopup(provider);
-            const isNewUser = result.additionalUserInfo?.isNewUser;
-            if (isNewUser && mode !== "register") {
-                try {
-                    await firebase.auth().signOut();
-                } catch {
-                    /* ignore */
-                }
-                setMode("register");
-                setError(
-                    t("auth.errorGoogleNew")
-                );
+            const user = result.user;
+            if (!user) {
+                setError(t("auth.errorGeneric"));
                 return;
             }
-            if (isNewUser && !gdprAccepted) {
-                try {
-                    await firebase.auth().signOut();
-                } catch {
-                    /* ignore */
+
+            const displayName = name.trim() || String(user.displayName || "");
+            setEmail(String(user.email || ""));
+            if (displayName && !name.trim()) setName(displayName);
+
+            let storedComplete = false;
+            try {
+                const snap = await firebase.firestore().collection("users").doc(user.uid).get();
+                storedComplete = isRegistrationProfileComplete(snap.exists ? snap.data() : null);
+                if (snap.exists) {
+                    const d = snap.data() || {};
+                    if (!name.trim() && d.name) setName(String(d.name));
+                    if (d.postalCode) setPostalCode(String(d.postalCode));
+                    if (d.street) setStreet(String(d.street));
+                    if (d.houseNumber) setHouseNumber(String(d.houseNumber));
+                    if (d.preferredSubject) setSubject(String(d.preferredSubject));
+                    if (d.preferredLessonType === "personal" || d.preferredLessonType === "online") {
+                        setLessonType(d.preferredLessonType);
+                    }
+                    if (d.hobby) setHobby(String(d.hobby));
                 }
-                setMode("register");
-                setError(
-                    t("auth.errorGoogleGdpr")
-                );
-                return;
+            } catch {
+                storedComplete = false;
             }
-            if (result.user) {
-                const profile = buildProfile();
-                const displayName = profile.name || result.user.displayName || "";
-                const fullProfile: RegistrationProfile = {
-                    ...profile,
-                    name: displayName,
-                };
-                if (isNewUser) {
-                    const err = validateRegistrationProfile(fullProfile);
-                    if (err) {
-                        try {
-                            await firebase.auth().signOut();
-                        } catch {
-                            /* ignore */
-                        }
-                        setError(err);
-                        return;
-                    }
-                    if (displayName && displayName !== result.user.displayName) {
-                        try {
-                            await result.user.updateProfile({ displayName });
-                        } catch {
-                            /* ignore */
-                        }
-                    }
-                }
+
+            const formProfile = { ...buildProfile(), name: displayName };
+            const formReady = !validateRegistrationProfile(formProfile) && gdprAccepted;
+
+            if (formReady) {
                 try {
-                    await ensureUserDoc(firebase, result.user, {
-                        gdprAccepted: Boolean(isNewUser && gdprAccepted),
-                        profile: isNewUser ? fullProfile : undefined,
-                        name: displayName || undefined,
+                    await ensureUserDoc(firebase, user, {
+                        name: formProfile.name,
+                        gdprAccepted: true,
+                        profile: formProfile,
                     });
                 } catch (docErr) {
                     console.warn("ensureUserDoc after Google:", docErr);
                 }
+                setPassword("");
+                setGoogleProfilePending(false);
+                finishAuthSuccess();
+                return;
             }
-            setPassword("");
-            finishAuthSuccess();
+
+            if (storedComplete) {
+                try {
+                    await ensureUserDoc(firebase, user, { name: user.displayName || undefined });
+                } catch {
+                    /* ignore */
+                }
+                setPassword("");
+                finishAuthSuccess();
+                return;
+            }
+
+            setMode("register");
+            setGoogleProfilePending(true);
+            setInfoMessage("");
+            setError("");
         } catch (err: any) {
             console.error(err);
             setError(formatAuthError(err) || mapFirebaseAuthError(err?.code));
@@ -467,7 +505,7 @@ export default function AuthModal({
             aria-labelledby="auth-modal-title"
             onClick={(e) => {
                 // Ne zárjon véletlen háttérkattintásra űrlap kitöltés közben
-                if (mode === "register" || awaitingVerification) return;
+                if (mode === "register" || awaitingVerification || googleProfilePending) return;
                 if (e.target === e.currentTarget) onClose();
             }}
         >
@@ -491,7 +529,9 @@ export default function AuthModal({
                 <h2 id="auth-modal-title">
                     {awaitingVerification
                         ? t("auth.verifyTitle")
-                        : mode === "login"
+                        : googleProfilePending
+                          ? t("auth.googleNeedProfile")
+                          : mode === "login"
                           ? t("auth.login")
                           : t("auth.register")}
                 </h2>
@@ -692,8 +732,10 @@ export default function AuthModal({
                                         placeholder={t("auth.emailPlaceholder")}
                                         autoComplete="email"
                                         required
+                                        readOnly={googleProfilePending}
                                     />
                                 </div>
+                                {!googleProfilePending ? (
                                 <div className="form-group">
                                     <label htmlFor="auth-modal-password">{t("auth.password")}</label>
                                     <input
@@ -709,6 +751,7 @@ export default function AuthModal({
                                         required
                                     />
                                 </div>
+                                ) : null}
 
                                 {mode === "register" && (
                                     <div
@@ -851,12 +894,16 @@ export default function AuthModal({
                                 <button type="submit" className="submit-btn" disabled={loading}>
                                     {loading
                                         ? t("auth.processing")
-                                        : mode === "login"
+                                        : googleProfilePending
+                                          ? t("auth.googleSave")
+                                          : mode === "login"
                                           ? t("auth.login")
                                           : t("auth.register")}
                                 </button>
                             </form>
 
+                            {!googleProfilePending ? (
+                            <>
                             <div className="auth-divider">
                                 <span>{t("common.or")}</span>
                             </div>
@@ -869,6 +916,8 @@ export default function AuthModal({
                             >
                                 {t("auth.google")}
                             </button>
+                            </>
+                            ) : null}
 
                             {mode === "register" && (
                                 <p

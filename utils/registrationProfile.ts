@@ -30,3 +30,23 @@ export function validateRegistrationProfile(
     if (!p.preferredSubject?.trim()) return "Válassz témakört / szintet.";
     return null;
 }
+
+export function isRegistrationProfileComplete(
+    p: Partial<RegistrationProfile> | Record<string, unknown> | null | undefined
+): boolean {
+    if (!p) return false;
+    return !validateRegistrationProfile({
+        name: String(p.name || ''),
+        postalCode: String(p.postalCode || ''),
+        street: String(p.street || ''),
+        houseNumber: String(p.houseNumber || ''),
+        preferredSubject: String(
+            (p as RegistrationProfile).preferredSubject ||
+                (p as { preferredSubject?: string }).preferredSubject ||
+                ''
+        ),
+        preferredLessonType:
+            (p as RegistrationProfile).preferredLessonType === 'personal' ? 'personal' : 'online',
+        hobby: String((p as { hobby?: string }).hobby || ''),
+    });
+}

@@ -94,7 +94,11 @@ const hu: Dict = {
     'auth.teacherPassword': 'Tanári jelszó',
     'auth.teacherPasswordPh': 'Tanári jelszó',
     'auth.teacherHint': 'Csak a tanári fiók jelszavával léphetsz be.',
-    'auth.googleRegisterHint': 'Google regisztrációnál is töltsd ki előbb a fenti adatokat (cím, témakör, GDPR).',
+    'auth.googleRegisterHint':
+        'Google után is ki kell tölteni a regisztrációs adatokat (név, cím, témakör, GDPR).',
+    'auth.googleNeedProfile':
+        'Google belépés kész. Töltsd ki a regisztrációs adatokat a folytatáshoz.',
+    'auth.googleSave': 'Adatok mentése',
     'auth.verifyLoginInfo': 'Erősítsd meg az e-mail címed a belépéshez. Nézd a postaládát (és a Spam mappát).',
     'auth.verifyRegisteredInfo': 'Regisztráció kész! Küldtünk egy megerősítő e-mailt. Erősítsd meg, majd jelentkezz be.',
     'auth.verifySendFailed': 'A fiók létrejött, de a megerősítő levelet nem sikerült elküldeni. Próbáld meg az újraküldés gombbal.',
@@ -1027,7 +1031,11 @@ const en: Dict = {
     'auth.teacherPassword': 'Teacher password',
     'auth.teacherPasswordPh': 'Teacher password',
     'auth.teacherHint': 'Sign in with the teacher account password only.',
-    'auth.googleRegisterHint': 'For Google registration, first complete the details above (address, subject, GDPR).',
+    'auth.googleRegisterHint':
+        'After Google you still need to complete the registration details (name, address, subject, GDPR).',
+    'auth.googleNeedProfile':
+        'Google sign-in succeeded. Fill in the registration details to continue.',
+    'auth.googleSave': 'Save details',
     'auth.verifyLoginInfo': 'Verify your email address to sign in. Check your inbox (and Spam folder).',
     'auth.verifyRegisteredInfo': 'Registration complete! We sent a verification email. Verify it, then sign in.',
     'auth.verifySendFailed': 'Your account was created, but the verification email could not be sent. Try the resend button.',
