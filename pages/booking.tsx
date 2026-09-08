@@ -134,7 +134,7 @@ export default function BookingPage() {
                     const email = String(user.email || "").toLowerCase();
                     const name = String(user.displayName || "");
                     setAuthUser({ email, name });
-                    // Foglalási mezőket NEM töltjük ki automatikusan — mindig meg kell adni
+                    if (email) setCustomerEmail(email);
                     setBookingPath("account");
                     setError("");
                 });
@@ -319,12 +319,9 @@ export default function BookingPage() {
             setError(t("booking.error.needDateTime"));
             return;
         }
-        if (!customerName.trim() || !customerEmail.trim()) {
+        const bookingEmail = (authUser?.email || customerEmail.trim()).toLowerCase();
+        if (!customerName.trim() || !bookingEmail) {
             setError(t("booking.error.needNameEmail"));
-            return;
-        }
-        if (authUser?.email && customerEmail.trim().toLowerCase() !== authUser.email) {
-            setError(t("booking.error.emailMismatch"));
             return;
         }
         if (!authUser && bookingPath !== "guest") {
@@ -383,7 +380,7 @@ export default function BookingPage() {
                 date: dateKey,
                 times: selectedTimes,
                 customerName: customerName.trim(),
-                customerEmail: customerEmail.trim(),
+                customerEmail: bookingEmail,
                 lessonType,
                 selectedSubject,
                 hobby: hobby.trim() || "—",
@@ -732,18 +729,20 @@ export default function BookingPage() {
                                         autoComplete="name"
                                     />
                                 </div>
-                                <div className="booking-field">
-                                    <label htmlFor="booking-email">{t("auth.email")}</label>
-                                    <input
-                                        id="booking-email"
-                                        type="email"
-                                        value={customerEmail}
-                                        onChange={(e) => setCustomerEmail(e.target.value)}
-                                        placeholder={t("booking.emailPlaceholder")}
-                                        required
-                                        autoComplete="email"
-                                    />
-                                </div>
+                                {!authUser?.email ? (
+                                    <div className="booking-field">
+                                        <label htmlFor="booking-email">{t("auth.email")}</label>
+                                        <input
+                                            id="booking-email"
+                                            type="email"
+                                            value={customerEmail}
+                                            onChange={(e) => setCustomerEmail(e.target.value)}
+                                            placeholder={t("booking.emailPlaceholder")}
+                                            required
+                                            autoComplete="email"
+                                        />
+                                    </div>
+                                ) : null}
 
                                 <div className="booking-field">
                                     <label>{t("auth.lessonType")}</label>

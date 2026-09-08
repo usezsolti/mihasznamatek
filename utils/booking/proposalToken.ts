@@ -9,6 +9,8 @@ function secret(): string {
     );
 }
 
+export type DecisionPurpose = 'student_accept' | 'admin_approve' | 'admin_propose';
+
 export function proposalPayload(
     bookingId: string,
     email: string,
@@ -39,4 +41,47 @@ export function verifyProposal(opts: {
 }): boolean {
     const expected = signProposal(opts.bookingId, opts.email, opts.date, opts.times);
     return Boolean(opts.token) && opts.token === expected;
+}
+
+export function signDecision(
+    purpose: DecisionPurpose,
+    bookingId: string,
+    email: string,
+    date: string,
+    times: string[]
+): string {
+    return createHmac('sha256', secret())
+        .update([purpose, proposalPayload(bookingId, email, date, times)].join('|'))
+        .digest('hex')
+        .slice(0, 32);
+}
+
+export function verifyDecision(opts: {
+    purpose: DecisionPurpose;
+    bookingId: string;
+    email: string;
+    date: string;
+    times: string[];
+    token: string;
+}): boolean {
+    const expected = signDecision(opts.purpose, opts.bookingId, opts.email, opts.date, opts.times);
+    return Boolean(opts.token) && opts.token === expected;
+}
+
+export function adminDecisionUrl(
+    origin: string,
+    action: 'approve' | 'propose',
+    booking: { id: string; customerEmail: string; customerName: string; date: string; times: string[] },
+    token: string
+): string {
+    const q = new URLSearchParams({
+        action,
+        id: booking.id,
+        email: booking.customerEmail,
+        date: booking.date,
+        times: booking.times.join(','),
+        name: booking.customerName,
+        token,
+    });
+    return `${origin.replace(/\/$/, '')}/foglalas-dontes?${q.toString()}`;
 }

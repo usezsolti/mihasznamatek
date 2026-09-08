@@ -222,3 +222,12 @@ export function secureSiteOrigin(): string {
     if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`.replace(/\/$/, '');
     return 'https://mihasznamatek.hu';
 }
+
+/** Email-link origin: lokálisan a kérés originje, élesen a kanonikus site. */
+export function mailLinkOrigin(req: NextApiRequest): string {
+    if (process.env.NODE_ENV !== 'production') {
+        const raw = String(req.headers.origin || '').replace(/\/$/, '');
+        if (raw && /^https?:\/\//i.test(raw)) return raw;
+    }
+    return secureSiteOrigin();
+}

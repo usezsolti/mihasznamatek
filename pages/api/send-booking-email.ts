@@ -18,8 +18,9 @@ import {
     extractBearerToken,
     verifyFirebaseIdToken,
     sanitizeText,
-    secureSiteOrigin,
+    mailLinkOrigin,
 } from "../../utils/apiSecurity";
+import { adminDecisionUrl, signDecision } from "../../utils/booking/proposalToken";
 import { sendErr, sendOk } from "../../server/http";
 import { sanitizePublicError } from "../../utils/apiEnvelope";
 import { isAdminEmail } from "../../utils/admin";
@@ -38,6 +39,7 @@ type MailItem = {
     to: string;
     subject: string;
     text: string;
+    html?: string;
     replyTo?: string;
     cc?: string;
 };
@@ -124,6 +126,7 @@ async function sendViaGmail(mails: MailItem[]): Promise<EmailSendResult> {
                 replyTo: mail.replyTo,
                 subject: mail.subject,
                 text: mail.text,
+                html: mail.html,
             });
         }
         return { ok: true, provider: "gmail" };
@@ -314,8 +317,25 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
 
     // Linkek: soha ne bízzunk a kliens originben productionben
-    const baseOrigin = secureSiteOrigin();
-    const mails = buildMailsForType(type, booking, baseOrigin);
+    const baseOrigin = mailLinkOrigin(req);
+    const extras =
+        type === "admin_new"
+            ? {
+                  approveUrl: adminDecisionUrl(
+                      baseOrigin,
+                      "approve",
+                      booking,
+                      signDecision("admin_approve", booking.id, booking.customerEmail, booking.date, booking.times)
+                  ),
+                  proposeUrl: adminDecisionUrl(
+                      baseOrigin,
+                      "propose",
+                      booking,
+                      signDecision("admin_propose", booking.id, booking.customerEmail, booking.date, booking.times)
+                  ),
+              }
+            : undefined;
+    const mails = buildMailsForType(type, booking, baseOrigin, extras);
 
     try {
         if (hasResend()) {

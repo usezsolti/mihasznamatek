@@ -4,8 +4,17 @@ import {
     formatAttachmentsLine,
     type BookingEmailType,
     type BookingPayload,
+    type MailBuildExtras,
     type MailPayload,
 } from './types';
+
+function escapeHtml(s: string): string {
+    return s
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+}
 
 function formatDateHu(dateKey: string): string {
     return new Date(dateKey + 'T12:00:00').toLocaleDateString('hu-HU', {
@@ -27,7 +36,11 @@ function addressLine(booking: BookingPayload): string {
     );
 }
 
-export function formatAdminNewMessage(booking: BookingPayload, dashboardUrl: string): string {
+export function formatAdminNewMessage(
+    booking: BookingPayload,
+    approveUrl: string,
+    proposeUrl: string
+): string {
     return [
         'Új időpontfoglalás érkezett – elfogadásra vár!',
         '',
@@ -44,12 +57,70 @@ export function formatAdminNewMessage(booking: BookingPayload, dashboardUrl: str
         `Beküldve: ${new Date(booking.submittedAt).toLocaleString('hu-HU')}`,
         `Foglalás ID: ${booking.id}`,
         '',
-        'A diák még NEM kapott levelet. Először te igazold:',
-        '— Jóváhagyás: a kért időpont jó',
-        '— Másik időpont: te javasolsz, a diák elfogadja, utána kapsz emailt',
+        'A diák még NEM kapott levelet. Itt, az e-mailből dönthetsz:',
         '',
-        dashboardUrl,
+        'Elfogadom ezt az időpontot:',
+        approveUrl,
+        '',
+        'Ha nem jó, javasolj másik időpontot:',
+        proposeUrl,
+        '',
+        'Ha a diák elfogadja a javaslatot, kapsz róla e-mailt.',
     ].join('\n');
+}
+
+function formatAdminNewHtml(
+    booking: BookingPayload,
+    approveUrl: string,
+    proposeUrl: string
+): string {
+    const rows: Array<[string, string]> = [
+        ['Név', booking.customerName],
+        ['E-mail', booking.customerEmail],
+        ['Dátum', formatDateHu(booking.date)],
+        ['Időpont(ok)', booking.times.join(', ')],
+        ['Óra típusa', typeLabel(booking.lessonType)],
+        ['Témakör', booking.selectedSubject || '—'],
+        ['Megjegyzés', booking.hobby || '—'],
+        ['Ár', `${booking.totalPrice.toLocaleString('hu-HU')} Ft`],
+        ['Foglalás ID', booking.id],
+    ];
+    const table = rows
+        .map(
+            ([k, v]) =>
+                `<tr><td style="padding:6px 12px 6px 0;color:#555;vertical-align:top;">${escapeHtml(k)}</td><td style="padding:6px 0;font-weight:600;">${escapeHtml(v)}</td></tr>`
+        )
+        .join('');
+    return `<!DOCTYPE html>
+<html lang="hu">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width"></head>
+<body style="margin:0;padding:0;background:#f6f7f9;font-family:Segoe UI,Roboto,Helvetica,Arial,sans-serif;color:#1a1a1a;">
+  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f6f7f9;padding:24px 12px;">
+    <tr><td align="center">
+      <table role="presentation" width="100%" style="max-width:560px;background:#ffffff;border-radius:12px;padding:28px 24px;">
+        <tr><td>
+          <p style="margin:0 0 8px;font-size:20px;font-weight:700;">Új foglalás</p>
+          <p style="margin:0 0 16px;font-size:15px;line-height:1.5;">A diák még nem kapott levelet. Itt dönthetsz:</p>
+          <table role="presentation" style="margin:0 0 20px;font-size:14px;line-height:1.45;">${table}</table>
+          <p style="margin:0 0 12px;">
+            <a href="${escapeHtml(approveUrl)}" style="display:inline-block;background:#0b6e4f;color:#ffffff;text-decoration:none;padding:12px 20px;border-radius:8px;font-weight:600;font-size:15px;">
+              Elfogadom ezt az időpontot
+            </a>
+          </p>
+          <p style="margin:0 0 20px;">
+            <a href="${escapeHtml(proposeUrl)}" style="display:inline-block;background:#ffffff;color:#0b6e4f;border:2px solid #0b6e4f;text-decoration:none;padding:10px 18px;border-radius:8px;font-weight:600;font-size:15px;">
+              Másik időpontot javaslok
+            </a>
+          </p>
+          <p style="margin:0;font-size:12px;color:#777;line-height:1.45;">
+            Ha a gombok nem működnek, nyisd meg a sima szöveges linkeket.
+          </p>
+        </td></tr>
+      </table>
+    </td></tr>
+  </table>
+</body>
+</html>`;
 }
 
 export function formatStudentDecisionMessage(
@@ -175,16 +246,20 @@ export function formatLessonReminderMessage(booking: BookingPayload): string {
 export function buildMailsForType(
     type: BookingEmailType,
     booking: BookingPayload,
-    origin: string
+    origin: string,
+    extras?: MailBuildExtras
 ): MailPayload[] {
     const dashboardUrl = `${origin}/dashboard`;
 
     if (type === 'admin_new') {
+        const approveUrl = extras?.approveUrl || `${origin}/dashboard`;
+        const proposeUrl = extras?.proposeUrl || `${origin}/dashboard`;
         return [
             {
                 to: ADMIN_BOOKING_EMAIL,
                 subject: `Új időpontfoglalás: ${booking.customerName} – ${booking.date} ${booking.times.join(', ')}`,
-                text: formatAdminNewMessage(booking, dashboardUrl),
+                text: formatAdminNewMessage(booking, approveUrl, proposeUrl),
+                html: formatAdminNewHtml(booking, approveUrl, proposeUrl),
                 replyTo: booking.customerEmail,
             },
         ];

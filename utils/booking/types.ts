@@ -74,8 +74,14 @@ export type MailPayload = {
     to: string;
     subject: string;
     text: string;
+    html?: string;
     replyTo?: string;
     cc?: string;
+};
+
+export type MailBuildExtras = {
+    approveUrl?: string;
+    proposeUrl?: string;
 };
 
 export function normalizeAttachments(
