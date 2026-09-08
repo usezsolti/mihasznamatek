@@ -24,7 +24,7 @@ service cloud.firestore {
     // Diák saját profil — ne írhat privileged mezőket (assignedTasks / teacherAdmin)
     function ownerUserWritableKeys() {
       return [
-        'email', 'name', 'photoURL', 'createdAt', 'updatedAt',
+        'email', 'name', 'username', 'photoURL', 'createdAt', 'updatedAt',
         'preferredLessonType', 'preferredSubject', 'hobby',
         'postalCode', 'street', 'houseNumber', 'profileCompletedAt',
         'gdprAccepted', 'gdprAcceptedAt', 'gdprVersion',

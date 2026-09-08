@@ -4,7 +4,8 @@ import {
     LESSON_SUBJECTS,
     type PreferredLessonType,
     type RegistrationProfile,
-    isRegistrationProfileComplete,
+    hasCompletedRegistrationOnce,
+    normalizeUsername,
     validateRegistrationProfile,
 } from "../utils/registrationProfile";
 import {
@@ -27,6 +28,7 @@ import { useLang } from "../utils/i18n";
 import { safeAppPath } from "../utils/safePath";
 import { agentDebugLog } from "../utils/agentDebugLog";
 import { apiPost } from "../utils/apiClient";
+import { SHOW_EMAIL_PASSWORD_UI } from "../utils/authModal";
 
 type AuthMode = "login" | "register";
 
@@ -56,6 +58,7 @@ export default function AuthModal({
     const { t, lang } = useLang();
     const [mode, setMode] = useState<AuthMode>(initialMode);
     const [name, setName] = useState("");
+    const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [lessonType, setLessonType] = useState<PreferredLessonType>("online");
@@ -89,6 +92,7 @@ export default function AuthModal({
 
     const buildProfile = (): RegistrationProfile => ({
         name: name.trim(),
+        username: normalizeUsername(username),
         preferredLessonType: lessonType,
         preferredSubject: subject,
         hobby: hobby.trim(),
@@ -116,6 +120,7 @@ export default function AuthModal({
 
     const resetForm = () => {
         setName("");
+        setUsername("");
         setEmail("");
         setPassword("");
         const p = emptyProfile();
@@ -295,6 +300,7 @@ export default function AuthModal({
                     "/api/auth/password-register",
                     {
                         name: profile.name,
+                        username: profile.username,
                         email: email.trim(),
                         password,
                     }
@@ -433,13 +439,14 @@ export default function AuthModal({
             setEmail(String(user.email || ""));
             if (displayName && !name.trim()) setName(displayName);
 
-            let storedComplete = false;
+            let alreadyDone = false;
             try {
                 const snap = await firebase.firestore().collection("users").doc(user.uid).get();
-                storedComplete = isRegistrationProfileComplete(snap.exists ? snap.data() : null);
+                const d = snap.exists ? snap.data() || {} : {};
+                alreadyDone = hasCompletedRegistrationOnce(d);
                 if (snap.exists) {
-                    const d = snap.data() || {};
                     if (!name.trim() && d.name) setName(String(d.name));
+                    if (d.username) setUsername(String(d.username));
                     if (d.postalCode) setPostalCode(String(d.postalCode));
                     if (d.street) setStreet(String(d.street));
                     if (d.houseNumber) setHouseNumber(String(d.houseNumber));
@@ -450,7 +457,19 @@ export default function AuthModal({
                     if (d.hobby) setHobby(String(d.hobby));
                 }
             } catch {
-                storedComplete = false;
+                alreadyDone = false;
+            }
+
+            if (alreadyDone) {
+                try {
+                    await ensureUserDoc(firebase, user, { name: displayName || user.displayName || undefined });
+                } catch {
+                    /* ignore */
+                }
+                setPassword("");
+                setGoogleProfilePending(false);
+                finishAuthSuccess();
+                return;
             }
 
             const formProfile = { ...buildProfile(), name: displayName };
@@ -465,20 +484,13 @@ export default function AuthModal({
                     });
                 } catch (docErr) {
                     console.warn("ensureUserDoc after Google:", docErr);
+                    setError("A regisztrációs adatok mentése nem sikerült. Próbáld újra.");
+                    setMode("register");
+                    setGoogleProfilePending(true);
+                    return;
                 }
                 setPassword("");
                 setGoogleProfilePending(false);
-                finishAuthSuccess();
-                return;
-            }
-
-            if (storedComplete) {
-                try {
-                    await ensureUserDoc(firebase, user, { name: user.displayName || undefined });
-                } catch {
-                    /* ignore */
-                }
-                setPassword("");
                 finishAuthSuccess();
                 return;
             }
@@ -531,9 +543,9 @@ export default function AuthModal({
                         ? t("auth.verifyTitle")
                         : googleProfilePending
                           ? t("auth.googleNeedProfile")
-                          : mode === "login"
-                          ? t("auth.login")
-                          : t("auth.register")}
+                          : SHOW_EMAIL_PASSWORD_UI && mode === "register"
+                          ? t("auth.register")
+                          : t("auth.login")}
                 </h2>
 
                 {awaitingVerification ? (
@@ -656,6 +668,7 @@ export default function AuthModal({
                     </div>
                 ) : (
                     <>
+                        {SHOW_EMAIL_PASSWORD_UI ? (
                         <div className="auth-tabs">
                             <button
                                 type="button"
@@ -672,9 +685,10 @@ export default function AuthModal({
                                 {t("auth.register")}
                             </button>
                         </div>
+                        ) : null}
 
                         <div className="auth-tab-content active">
-                            {mode === "login" && isTestLoginAllowed() && (
+                            {SHOW_EMAIL_PASSWORD_UI && mode === "login" && isTestLoginAllowed() && (
                                 <div style={{ marginBottom: "1rem" }}>
                                     <button
                                         type="button"
@@ -707,8 +721,10 @@ export default function AuthModal({
                                     </div>
                                 </div>
                             )}
+                            {(SHOW_EMAIL_PASSWORD_UI || googleProfilePending) ? (
                             <form className="email-form" onSubmit={handleEmailSubmit}>
                                 {mode === "register" && (
+                                    <>
                                     <div className="form-group">
                                         <label htmlFor="auth-modal-name">{t("auth.name")}</label>
                                         <input
@@ -721,6 +737,21 @@ export default function AuthModal({
                                             required
                                         />
                                     </div>
+                                    <div className="form-group">
+                                        <label htmlFor="auth-modal-username">{t("auth.username")}</label>
+                                        <input
+                                            id="auth-modal-username"
+                                            type="text"
+                                            value={username}
+                                            onChange={(e) => setUsername(e.target.value)}
+                                            placeholder={t("auth.usernamePlaceholder")}
+                                            autoComplete="username"
+                                            required
+                                            minLength={3}
+                                            maxLength={24}
+                                        />
+                                    </div>
+                                    </>
                                 )}
                                 <div className="form-group">
                                     <label htmlFor="auth-modal-email">{t("auth.email")}</label>
@@ -901,12 +932,19 @@ export default function AuthModal({
                                           : t("auth.register")}
                                 </button>
                             </form>
+                            ) : null}
 
                             {!googleProfilePending ? (
                             <>
+                            {SHOW_EMAIL_PASSWORD_UI ? (
                             <div className="auth-divider">
                                 <span>{t("common.or")}</span>
                             </div>
+                            ) : null}
+
+                            {!SHOW_EMAIL_PASSWORD_UI && error ? (
+                                <p className="form-msg">{error}</p>
+                            ) : null}
 
                             <button
                                 type="button"
@@ -919,7 +957,7 @@ export default function AuthModal({
                             </>
                             ) : null}
 
-                            {mode === "register" && (
+                            {SHOW_EMAIL_PASSWORD_UI && mode === "register" && (
                                 <p
                                     style={{
                                         color: "#aaa",

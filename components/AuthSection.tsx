@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { openAuthModal } from "../utils/authModal";
+import { openAuthModal, SHOW_EMAIL_PASSWORD_UI } from "../utils/authModal";
 import { isTestAuthUser } from "../utils/testLogin";
 import { isAdminEmail } from "../utils/admin";
 import { waitForFirebase } from "../utils/firebaseReady";
@@ -171,8 +171,9 @@ export default function AuthSection() {
                     onClick={() => openAuthModal({ mode: "login" })}
                     style={{ padding: "0.85rem 1.4rem", cursor: "pointer", border: "none" }}
                 >
-                    {t("auth.login")}
+                    {t("auth.google")}
                 </button>
+                {SHOW_EMAIL_PASSWORD_UI ? (
                 <button
                     type="button"
                     onClick={() => openAuthModal({ mode: "register" })}
@@ -188,6 +189,7 @@ export default function AuthSection() {
                 >
                     {t("auth.register")}
                 </button>
+                ) : null}
             </div>
         </div>
     );

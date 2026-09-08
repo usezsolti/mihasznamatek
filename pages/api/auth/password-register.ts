@@ -22,15 +22,19 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     const email = sanitizeText(req.body?.email, 200).toLowerCase();
     const name = sanitizeText(req.body?.name, 120);
+    const username = sanitizeText(req.body?.username, 24).replace(/^@/, '');
     const password = String(req.body?.password || '');
     if (!isValidEmail(email) || !name) {
         return sendErr(res, 'Név és érvényes e-mail kell.', 400);
+    }
+    if (!/^[a-zA-Z0-9._]{3,24}$/.test(username)) {
+        return sendErr(res, 'A felhasználónév 3–24 karakter: betű, szám, pont vagy aláhúzás.', 400);
     }
     if (password.length < 6 || password.length > 200) {
         return sendErr(res, 'A jelszónak legalább 6 karakter kell.', 400);
     }
 
-    const saved = await createPasswordUser({ email, name, password });
+    const saved = await createPasswordUser({ email, name, username, password });
     if (!saved.ok) return sendErr(res, saved.error, 409);
 
     let emailSent = false;

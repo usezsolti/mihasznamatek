@@ -1091,6 +1091,7 @@ export default function Home() {
                         <Link href="/adatkezelesi-tajekoztato">{t('home.footer.privacy')}</Link>
                     </div>
                 </div>
+                <p className="site-legal-footer__credit">{t('home.footer.credit')}</p>
             </footer>
 
             <CookieBanner />

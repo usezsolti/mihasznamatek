@@ -59,6 +59,7 @@ export async function ensureUserDoc(
     const profileFields = options?.profile
         ? {
               name: options.profile.name,
+              username: options.profile.username,
               preferredLessonType: options.profile.preferredLessonType,
               preferredSubject: options.profile.preferredSubject,
               hobby: options.profile.hobby || '',

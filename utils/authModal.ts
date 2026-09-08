@@ -1,5 +1,8 @@
 /** Globális esemény: AuthModal megnyitása bárhonnan (Navbar figyeli). */
 
+/** Email/jelszó belépés a kódban megmarad; a felületen kikapcsolva, csak Google látszik. */
+export const SHOW_EMAIL_PASSWORD_UI = false;
+
 export const OPEN_AUTH_MODAL_EVENT = "mihaszna:open-auth-modal";
 
 export type OpenAuthModalDetail = {

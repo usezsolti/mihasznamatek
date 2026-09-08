@@ -13,6 +13,7 @@ export type PasswordUserRow = {
     id: string;
     email: string;
     name: string;
+    username?: string;
     passwordHash: string;
     createdAt: string;
     firebaseUid?: string;
@@ -79,6 +80,7 @@ function rowFromData(id: string, data: Record<string, unknown>): PasswordUserRow
         id: String(data.id || id),
         email,
         name,
+        username: data.username ? String(data.username) : undefined,
         passwordHash,
         createdAt: String(data.createdAt || new Date().toISOString()),
         firebaseUid: data.firebaseUid ? String(data.firebaseUid) : undefined,
@@ -107,10 +109,12 @@ export async function findUserByEmail(email: string): Promise<PasswordUserRow | 
 export async function createPasswordUser(input: {
     email: string;
     name: string;
+    username?: string;
     password: string;
 }): Promise<{ ok: true; user: Omit<PasswordUserRow, 'passwordHash'> } | { ok: false; error: string }> {
     const email = normalizeEmail(input.email);
     const name = input.name.trim();
+    const username = String(input.username || '').trim().replace(/^@/, '');
     const password = String(input.password || '');
     if (!email || !name) return { ok: false, error: 'Név és e-mail kell.' };
     if (password.length < 6) return { ok: false, error: 'A jelszónak legalább 6 karakter kell.' };
@@ -122,6 +126,7 @@ export async function createPasswordUser(input: {
         id: randomUUID(),
         email,
         name,
+        username: username || undefined,
         passwordHash: hashPassword(password),
         createdAt: new Date().toISOString(),
     };
@@ -133,6 +138,7 @@ export async function createPasswordUser(input: {
                 id: row.id,
                 email: row.email,
                 name: row.name,
+                username: row.username || '',
                 passwordHash: row.passwordHash,
                 createdAt: row.createdAt,
                 provider: 'password',
@@ -147,7 +153,7 @@ export async function createPasswordUser(input: {
     table.users.push(row);
     writeFileTable(table);
 
-    return { ok: true, user: { id: row.id, email: row.email, name: row.name, createdAt: row.createdAt } };
+    return { ok: true, user: { id: row.id, email: row.email, name: row.name, username: row.username, createdAt: row.createdAt } };
 }
 
 export async function verifyPasswordUser(

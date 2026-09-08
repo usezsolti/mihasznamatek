@@ -20,7 +20,7 @@ import {
     makeSlotsForDateKeyFn,
     toDateKey,
 } from "../utils/bookingSlots";
-import { openAuthModal } from "../utils/authModal";
+import { openAuthModal, SHOW_EMAIL_PASSWORD_UI } from "../utils/authModal";
 import { useLang } from "../utils/i18n";
 import { LESSON_SUBJECTS } from "../utils/registrationProfile";
 
@@ -554,6 +554,7 @@ export default function BookingPage() {
                                 {authLoading ? t("auth.loggingIn") : t("booking.googleLogin")}
                             </button>
 
+                            {SHOW_EMAIL_PASSWORD_UI ? (
                             <p className="booking-muted" style={{ marginTop: "1.25rem" }}>
                                 <button
                                     type="button"
@@ -575,6 +576,7 @@ export default function BookingPage() {
                                     {t("booking.emailRegister")}
                                 </button>
                             </p>
+                            ) : null}
                         </section>
                     ) : (
                     <div className="booking-layout">
