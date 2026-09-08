@@ -32,6 +32,11 @@ service cloud.firestore {
       ];
     }
 
+    // Email/jelszó users tábla — csak Admin SDK (kliensről tiltva)
+    match /auth_users/{userId} {
+      allow read, write: if false;
+    }
+
     match /users/{userId} {
       allow read: if isOwner(userId) || isAdmin();
       allow create: if isOwner(userId)

@@ -89,7 +89,11 @@ export async function sendBrandedVerificationMail(opts: {
             },
         ]);
         if (sent.ok) return;
-        throw new Error(sent.error || 'Resend verification failed');
+        console.warn('Resend verification failed, trying Gmail:', sent.error);
+    }
+
+    if (!pass) {
+        throw new Error(hasResend() ? 'Resend és Gmail is hiányzik / sikertelen' : 'Nincs GMAIL_APP_PASSWORD');
     }
 
     const transporter = nodemailer.createTransport({

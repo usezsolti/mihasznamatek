@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { sendErr, sendOk } from '../../../server/http';
-import { isUidEmailVerified } from '../../../server/emailVerificationStore';
+import { isEmailVerified, isUidEmailVerified } from '../../../server/emailVerificationStore';
 import { isAllowedOrigin, requireAuth } from '../../../utils/apiSecurity';
 
 /** GET/POST /api/auth/verification-status */
@@ -13,7 +13,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const user = await requireAuth(req, res);
     if (!user) return;
 
-    const appVerified = isUidEmailVerified(user.uid);
+    const appVerified = isUidEmailVerified(user.uid) || isEmailVerified(user.email);
     return sendOk(res, {
         firebaseVerified: Boolean(user.emailVerified),
         appVerified,

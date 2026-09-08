@@ -25,6 +25,7 @@ import { waitForFirebase } from "../utils/firebaseReady";
 import { useLang } from "../utils/i18n";
 import { safeAppPath } from "../utils/safePath";
 import { agentDebugLog } from "../utils/agentDebugLog";
+import { apiPost } from "../utils/apiClient";
 
 type AuthMode = "login" | "register";
 
@@ -179,8 +180,33 @@ export default function AuthModal({
             auth.languageCode = lang;
 
             if (mode === "login") {
-                const cred = await auth.signInWithEmailAndPassword(email.trim(), password);
+                const tableLogin = await apiPost<{ name?: string }>("/api/auth/password-login", {
+                    email: email.trim(),
+                    password,
+                });
+                if (!tableLogin.ok && tableLogin.status !== 404) {
+                    setError(tableLogin.error || t("auth.errorGeneric"));
+                    return;
+                }
+                let cred: { user: any };
+                try {
+                    cred = await auth.signInWithEmailAndPassword(email.trim(), password);
+                } catch (fbErr: any) {
+                    const code = String(fbErr?.code || "");
+                    if (tableLogin.ok && /user-not-found|invalid-credential|invalid-login/i.test(code)) {
+                        cred = await auth.createUserWithEmailAndPassword(email.trim(), password);
+                    } else {
+                        throw fbErr;
+                    }
+                }
                 const user = cred.user;
+                if (tableLogin.ok && tableLogin.data?.name && user && !user.displayName) {
+                    try {
+                        await user.updateProfile({ displayName: tableLogin.data.name });
+                    } catch {
+                        /* ignore */
+                    }
+                }
                 const isTestEmail =
                     email.trim().toLowerCase() === TEST_LOGIN_EMAIL.toLowerCase();
                 // Teszt fióknál ne blokkoljon az e-mail megerősítés
@@ -217,6 +243,18 @@ export default function AuthModal({
                     setError(t("auth.errorGdpr"));
                     return;
                 }
+                const saved = await apiPost<{ emailSent?: boolean; emailError?: string }>(
+                    "/api/auth/password-register",
+                    {
+                        name: profile.name,
+                        email: email.trim(),
+                        password,
+                    }
+                );
+                if (!saved.ok) {
+                    setError(saved.error || t("auth.errorGeneric"));
+                    return;
+                }
                 const credential = await auth.createUserWithEmailAndPassword(
                     email.trim(),
                     password
@@ -234,14 +272,22 @@ export default function AuthModal({
                         console.warn("ensureUserDoc after register:", docErr);
                     }
                     try {
-                        const sent = await sendVerificationEmail(user);
-                        setAwaitingVerification(true);
-                        setVerifyLink(sent.verifyLink || "");
-                        setInfoMessage(
-                            sent.provider === 'gmail'
-                                ? 'Regisztráció kész! Küldtünk megerősítő e-mailt a Mihaszna Matek feladóval. Erősítsd meg, majd jelentkezz be.'
-                                : t("auth.verifyRegisteredInfo")
-                        );
+                        if (saved.data?.emailSent) {
+                            setAwaitingVerification(true);
+                            setVerifyLink("");
+                            setInfoMessage(
+                                'Regisztráció kész! Küldtünk megerősítő e-mailt a Mihaszna Matek feladóval (info@mihasznamatek.hu). Nézd a Beérkezett és a Spam mappát is.'
+                            );
+                        } else {
+                            const sent = await sendVerificationEmail(user);
+                            setAwaitingVerification(true);
+                            setVerifyLink(sent.verifyLink || "");
+                            setInfoMessage(
+                                sent.provider === 'gmail' || sent.provider === 'resend'
+                                    ? 'Regisztráció kész! Küldtünk megerősítő e-mailt a Mihaszna Matek feladóval. Erősítsd meg, majd jelentkezz be.'
+                                    : t("auth.verifyRegisteredInfo")
+                            );
+                        }
                     } catch (verErr) {
                         console.warn("Verification email failed:", verErr);
                         setAwaitingVerification(true);

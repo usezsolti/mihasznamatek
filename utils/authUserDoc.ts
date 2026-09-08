@@ -138,9 +138,13 @@ export async function sendVerificationEmail(
             runId: 'spam-deliverability',
         });
         // #endregion
-        if (res.ok && json?.ok && json?.data?.provider === 'gmail') {
+        if (
+            res.ok &&
+            json?.ok &&
+            (json?.data?.provider === 'gmail' || json?.data?.provider === 'resend')
+        ) {
             return {
-                provider: 'gmail',
+                provider: String(json.data.provider),
                 verifyLink: json?.data?.verifyLink || undefined,
             };
         }

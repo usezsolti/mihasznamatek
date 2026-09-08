@@ -2,16 +2,18 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import { sendErr, sendOk } from '../../../server/http';
 import { getFirebaseAdmin } from '../../../server/firebaseAdmin';
 import {
-    createEmailVerificationToken,
+    isEmailVerified,
     isUidEmailVerified,
+    signEmailVerifyToken,
 } from '../../../server/emailVerificationStore';
 import { sendBrandedVerificationMail } from '../../../server/brandedMail';
+import { hasResend } from '../../../server/resendMail';
 import {
     getClientIp,
     isAllowedOrigin,
+    mailLinkOrigin,
     rateLimit,
     requireAuth,
-    secureSiteOrigin,
 } from '../../../utils/apiSecurity';
 import { agentDebugLog } from '../../../utils/agentDebugLog';
 import { emailFromName } from '../../../utils/emailFrom';
@@ -21,14 +23,6 @@ import { emailFromName } from '../../../utils/emailFrom';
  * A megerősítő link a publikus HTTPS originre mutat.
  * Lokális custom tokenhez a válaszban külön localVerifyLink megy (UI gomb).
  */
-function mailLinkOrigin(): string {
-    const site = secureSiteOrigin() || 'https://mihasznamatek.hu';
-    if (/localhost|127\.0\.0\.1/i.test(site)) {
-        return 'https://mihasznamatek.hu';
-    }
-    return site;
-}
-
 function requestLocalOrigin(req: NextApiRequest): string | null {
     const originHeader = String(req.headers.origin || '').replace(/\/$/, '');
     if (/localhost|127\.0\.0\.1/i.test(originHeader)) return originHeader;
@@ -51,16 +45,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const user = await requireAuth(req, res);
     if (!user) return;
     if (!user.email) return sendErr(res, 'Nincs e-mail a fiókhoz.', 400);
-    if (user.emailVerified || isUidEmailVerified(user.uid)) {
+    if (user.emailVerified || isUidEmailVerified(user.uid) || isEmailVerified(user.email)) {
         return sendOk(res, { alreadyVerified: true });
     }
 
     const admin = getFirebaseAdmin();
     const gmailPass = String(process.env.GMAIL_APP_PASSWORD || '').replace(/\s+/g, '');
-    const hasResend = String(process.env.RESEND_API_KEY || '').trim().startsWith('re_');
-    const origin = mailLinkOrigin();
+    const origin = mailLinkOrigin(req);
 
-    if (!gmailPass && !hasResend) {
+    if (!gmailPass && !hasResend()) {
         // #region agent log
         agentDebugLog({
             hypothesisId: 'S1',
@@ -80,16 +73,20 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         let link: string;
         let mode: 'gmail-admin' | 'gmail-custom';
         const localOrigin = requestLocalOrigin(req);
+        const token = signEmailVerifyToken(user.email);
 
         if (admin) {
-            link = await admin.auth().generateEmailVerificationLink(user.email, {
-                url: `${origin}/dashboard`,
-                handleCodeInApp: false,
-            });
-            mode = 'gmail-admin';
+            try {
+                link = await admin.auth().generateEmailVerificationLink(user.email, {
+                    url: `${origin}/dashboard`,
+                    handleCodeInApp: false,
+                });
+                mode = 'gmail-admin';
+            } catch {
+                link = `${origin}/verify-email?token=${encodeURIComponent(token)}`;
+                mode = 'gmail-custom';
+            }
         } else {
-            const token = createEmailVerificationToken(user.uid, user.email);
-            // Email: publikus HTTPS (spam ellen). UI: helyi link, ha localhoston fut a szerver.
             link = `${origin}/verify-email?token=${encodeURIComponent(token)}`;
             mode = 'gmail-custom';
         }
@@ -134,7 +131,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         });
         // #endregion
 
-        return sendOk(res, { provider: 'gmail', mode, verifyLink: uiLink });
+        return sendOk(res, {
+            provider: hasResend() ? 'resend' : 'gmail',
+            mode,
+            verifyLink: uiLink,
+        });
     } catch (err: any) {
         console.error('send-verification-email', err);
         // #region agent log

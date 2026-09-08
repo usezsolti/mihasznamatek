@@ -1,7 +1,11 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { sendErr, sendOk } from '../../../server/http';
-import { getFirebaseAdmin } from '../../../server/firebaseAdmin';
-import { consumeEmailVerificationToken } from '../../../server/emailVerificationStore';
+import { getAdminDb, getFirebaseAdmin } from '../../../server/firebaseAdmin';
+import {
+    consumeEmailVerificationToken,
+    markEmailVerified,
+    readEmailVerifyToken,
+} from '../../../server/emailVerificationStore';
 import { getClientIp, isAllowedOrigin, rateLimit } from '../../../utils/apiSecurity';
 import { agentDebugLog } from '../../../utils/agentDebugLog';
 
@@ -20,7 +24,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const token = String(req.body?.token || '').trim();
     if (!token || token.length < 16) return sendErr(res, 'Érvénytelen token.', 400);
 
-    const consumed = consumeEmailVerificationToken(token);
+    const signed = readEmailVerifyToken(token);
+    const consumed = signed
+        ? { uid: '', email: signed.email }
+        : consumeEmailVerificationToken(token);
     if (!consumed) {
         // #region agent log
         agentDebugLog({
@@ -34,12 +41,26 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         return sendErr(res, 'A link lejárt vagy érvénytelen. Kérj új megerősítő levelet.', 400);
     }
 
+    markEmailVerified(consumed.email);
     const admin = getFirebaseAdmin();
     if (admin) {
         try {
-            await admin.auth().updateUser(consumed.uid, { emailVerified: true });
+            if (consumed.uid) {
+                await admin.auth().updateUser(consumed.uid, { emailVerified: true });
+            } else {
+                const found = await admin.auth().getUserByEmail(consumed.email);
+                await admin.auth().updateUser(found.uid, { emailVerified: true });
+            }
         } catch (e: any) {
             console.warn('confirm-email-verification admin updateUser', e?.message || e);
+        }
+        const db = getAdminDb();
+        if (db) {
+            await db
+                .collection('auth_users')
+                .doc(consumed.email.replace(/[^a-z0-9@._+-]/g, '_'))
+                .set({ emailVerified: true, emailVerifiedAt: new Date().toISOString() }, { merge: true })
+                .catch(() => undefined);
         }
     }
 
