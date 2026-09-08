@@ -9,13 +9,21 @@ import crypto from 'crypto';
 const STORE_PATH = path.join(process.cwd(), 'data', 'email-verification.json');
 const TTL_MS = 24 * 60 * 60 * 1000;
 
+function hmacSecrets(): string[] {
+    const list = [
+        process.env.EMAIL_VERIFY_SECRET,
+        process.env.BOOKING_PROPOSAL_SECRET,
+        process.env.CRON_SECRET,
+        process.env.RESEND_API_KEY,
+        'mihaszna-email-verify',
+    ]
+        .map((s) => String(s || '').trim())
+        .filter(Boolean);
+    return [...new Set(list)];
+}
+
 function hmacSecret(): string {
-    return (
-        process.env.BOOKING_PROPOSAL_SECRET ||
-        process.env.CRON_SECRET ||
-        process.env.RESEND_API_KEY ||
-        'mihaszna-email-verify'
-    );
+    return hmacSecrets()[0] || 'mihaszna-email-verify';
 }
 
 /** Stateless megerősítő token — Vercel példányok között is működik. */
@@ -30,20 +38,23 @@ export function signEmailVerifyToken(email: string): string {
 }
 
 export function readEmailVerifyToken(token: string): { email: string } | null {
-    const [payload, sig] = String(token || '').split('.');
+    const cleaned = String(token || '').trim().replace(/\s+/g, '');
+    const dot = cleaned.lastIndexOf('.');
+    if (dot < 8) return null;
+    const payload = cleaned.slice(0, dot);
+    const sig = cleaned.slice(dot + 1);
     if (!payload || !sig) return null;
-    const expected = crypto
-        .createHmac('sha256', hmacSecret())
-        .update(payload)
-        .digest('hex')
-        .slice(0, 32);
-    if (sig !== expected) return null;
+
+    const matched = hmacSecrets().some((secret) => {
+        const expected = crypto.createHmac('sha256', secret).update(payload).digest('hex').slice(0, 32);
+        return sig === expected;
+    });
+    if (!matched) return null;
+
     try {
-        const data = JSON.parse(Buffer.from(payload, 'base64url').toString('utf8')) as {
-            e?: string;
-            exp?: number;
-        };
-        if (!data?.e || !data.exp || data.exp < Date.now()) return null;
+        const json = Buffer.from(payload, 'base64url').toString('utf8');
+        const data = JSON.parse(json) as { e?: string; exp?: number };
+        if (!data?.e || !data.exp || Number(data.exp) < Date.now()) return null;
         return { email: String(data.e).toLowerCase() };
     } catch {
         return null;
@@ -154,4 +165,20 @@ export function markEmailVerified(email: string): void {
 export function isEmailVerified(email: string): boolean {
     const store = readStore();
     return Boolean(store.verifiedByEmail[email.trim().toLowerCase()]);
+}
+
+const SESSION_TTL_MS = 90 * 24 * 60 * 60 * 1000;
+
+export function signVerifiedSession(email: string): string {
+    const exp = Date.now() + SESSION_TTL_MS;
+    const payload = Buffer.from(
+        JSON.stringify({ e: email.trim().toLowerCase(), exp }),
+        'utf8'
+    ).toString('base64url');
+    const sig = crypto.createHmac('sha256', hmacSecret()).update(payload).digest('hex').slice(0, 32);
+    return `${payload}.${sig}`;
+}
+
+export function emailFromVerifiedSession(token: string): string | null {
+    return readEmailVerifyToken(token)?.email || null;
 }
