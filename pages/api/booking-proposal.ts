@@ -11,6 +11,8 @@ import {
 } from '../../utils/apiSecurity';
 import { buildMailsForType, type BookingPayload } from '../../utils/bookingNotify';
 import {
+    adminDecisionUrl,
+    signDecision,
     signProposal,
     verifyDecision,
     verifyProposal,
@@ -318,6 +320,100 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             message: 'admin proposed from email',
             data: { ok: sent.ok, bookingId: id, date, times },
             runId: 'email-debug',
+        });
+        // #endregion
+        if (!sent.ok) return sendErr(res, sent.error || 'Email nem ment ki', 502);
+        return sendOk(res, { ok: true, date, times });
+    }
+
+    if (action === 'student_counter') {
+        const rl = rateLimit(`student_counter:${ip}`, 20, 60 * 60 * 1000);
+        if (!rl.ok) return sendErr(res, 'Túl sok kérés.', 429);
+        const id = sanitizeText(req.body?.id, 80);
+        const email = sanitizeText(req.body?.email, 200).toLowerCase();
+        const name = sanitizeText(req.body?.name, 120) || 'Diák';
+        const offeredDate = sanitizeText(req.body?.offeredDate || req.body?.date, 32);
+        const offeredTimes = parseTimes(req.body?.offeredTimes || req.body?.times);
+        const token = sanitizeText(req.body?.token, 64);
+        const date = sanitizeText(req.body?.newDate || req.body?.proposedDate, 32);
+        const times = parseTimes(req.body?.newTimes || req.body?.proposedTimes);
+        if (!id || !isValidEmail(email) || !/^\d{4}-\d{2}-\d{2}$/.test(offeredDate) || !offeredTimes.length) {
+            return sendErr(res, 'Érvénytelen link.', 400);
+        }
+        if (!/^\d{4}-\d{2}-\d{2}$/.test(date) || !times.length) {
+            return sendErr(res, 'Adj meg dátumot és időt.', 400);
+        }
+        if (!verifyProposal({ bookingId: id, email, date: offeredDate, times: offeredTimes, token })) {
+            return sendErr(res, 'Érvénytelen vagy lejárt link.', 403);
+        }
+        const fallback: BookingPayload = {
+            id,
+            date: offeredDate,
+            times: offeredTimes,
+            customerName: name,
+            customerEmail: email,
+            lessonType: 'online',
+            selectedSubject: '',
+            hobby: '',
+            totalPrice: 0,
+            submittedAt: new Date().toISOString(),
+            status: 'proposed',
+        };
+        const booking = await loadBookingDoc(id, fallback);
+        if (booking.status === 'approved' || booking.status === 'cancelled' || booking.status === 'rejected') {
+            return sendErr(res, 'Ez a foglalás már lezárult.', 409);
+        }
+        const next: BookingPayload = {
+            ...booking,
+            customerEmail: email,
+            customerName: name || booking.customerName,
+            date,
+            times,
+            proposedDate: date,
+            proposedTimes: times,
+            status: 'pending',
+        };
+        const db = getAdminDb();
+        if (db) {
+            await db
+                .collection('bookings')
+                .doc(id)
+                .set(
+                    {
+                        date,
+                        times,
+                        proposedDate: date,
+                        proposedTimes: times,
+                        status: 'pending',
+                        updatedAt: new Date().toISOString(),
+                    },
+                    { merge: true }
+                )
+                .catch(() => undefined);
+        }
+        const extras = {
+            approveUrl: adminDecisionUrl(
+                origin,
+                'approve',
+                next,
+                signDecision('admin_approve', id, email, date, times)
+            ),
+            proposeUrl: adminDecisionUrl(
+                origin,
+                'propose',
+                next,
+                signDecision('admin_propose', id, email, date, times)
+            ),
+        };
+        const mails = buildMailsForType('student_counter', next, origin, extras);
+        const sent = await sendMails(mails);
+        // #region agent log
+        agentDebugLog({
+            hypothesisId: 'N1',
+            location: 'api/booking-proposal.ts:student_counter',
+            message: 'student countered with another time',
+            data: { ok: sent.ok, bookingId: id, date, times },
+            runId: 'negotiate-time',
         });
         // #endregion
         if (!sent.ok) return sendErr(res, sent.error || 'Email nem ment ki', 502);

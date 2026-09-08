@@ -2,11 +2,16 @@ import { getGoogleCalendarUrl } from '../bookingCalendar';
 import {
     ADMIN_BOOKING_EMAIL,
     formatAttachmentsLine,
+    priceForTimes,
     type BookingEmailType,
     type BookingPayload,
     type MailBuildExtras,
     type MailPayload,
 } from './types';
+
+function displayPrice(booking: BookingPayload): number {
+    return booking.totalPrice > 0 ? booking.totalPrice : priceForTimes(booking.times);
+}
 
 function escapeHtml(s: string): string {
     return s
@@ -52,7 +57,7 @@ export function formatAdminNewMessage(
         `Óra típusa: ${typeLabel(booking.lessonType)}`,
         `Témakör: ${booking.selectedSubject}`,
         `Megjegyzés: ${booking.hobby || '—'}`,
-        `Ár: ${booking.totalPrice.toLocaleString('hu-HU')} Ft`,
+        `Ár: ${displayPrice(booking).toLocaleString('hu-HU')} Ft`,
         `Számlázási cím: ${addressLine(booking)}`,
         `Csatolt fájlok:\n  ${formatAttachmentsLine(booking.uploadedFiles)}`,
         `Beküldve: ${new Date(booking.submittedAt).toLocaleString('hu-HU')}`,
@@ -84,7 +89,7 @@ function formatAdminNewHtml(
         ['Óra típusa', typeLabel(booking.lessonType)],
         ['Témakör', booking.selectedSubject || '—'],
         ['Megjegyzés', booking.hobby || '—'],
-        ['Ár', `${booking.totalPrice.toLocaleString('hu-HU')} Ft`],
+        ['Ár', `${displayPrice(booking).toLocaleString('hu-HU')} Ft`],
         ['Számlázási cím', addressLine(booking)],
         ['Csatolt fájlok', formatAttachmentsLine(booking.uploadedFiles)],
         ['Foglalás ID', booking.id],
@@ -143,7 +148,7 @@ export function formatStudentDecisionMessage(
             `⏰ Időpontok: ${booking.times.join(', ')}`,
             `📍 Óra típusa: ${typeLabel(booking.lessonType)}`,
             `📚 Témakör: ${booking.selectedSubject}`,
-            `💰 Összesen: ${booking.totalPrice.toLocaleString('hu-HU')} Ft`,
+            `💰 Összesen: ${displayPrice(booking).toLocaleString('hu-HU')} Ft`,
             ...(calUrl ? ['', 'Naptárba mentés (Google):', calUrl] : []),
             '',
             'Egy nappal az óra előtt emlékeztető e-mailt is küldünk.',
@@ -180,7 +185,7 @@ export function formatStudentReceivedMessage(booking: BookingPayload): string {
         `📅 Dátum: ${formatDateHu(booking.date)}`,
         `⏰ Időpontok: ${booking.times.join(', ')}`,
         `📍 Óra típusa: ${typeLabel(booking.lessonType)}`,
-        `💰 Összesen: ${booking.totalPrice.toLocaleString('hu-HU')} Ft`,
+        `💰 Összesen: ${displayPrice(booking).toLocaleString('hu-HU')} Ft`,
         '',
         'Üdvözlettel,',
         'Mihaszna Matek',
@@ -284,13 +289,41 @@ export function buildMailsForType(
                     `📅 ${formatDateHu(date)}`,
                     `⏰ ${times.join(', ')}`,
                     '',
-                    'Ha megfelel, nyisd meg ezt a linket:',
+                    'Ha megfelel, a linken el tudod fogadni. Ha ez sem jó, ugyanott másik időpontot is kérhetsz.',
                     acceptUrl,
                     '',
                     'Üdvözlettel,',
                     'Mihaszna Matek',
                 ].join('\n'),
                 replyTo: ADMIN_BOOKING_EMAIL,
+            },
+        ];
+    }
+
+    if (type === 'student_counter') {
+        const approveUrl = extras?.approveUrl || `${origin}/dashboard`;
+        const proposeUrl = extras?.proposeUrl || `${origin}/dashboard`;
+        return [
+            {
+                to: ADMIN_BOOKING_EMAIL,
+                subject: `A diák másik időpontot kér: ${booking.customerName} – ${booking.date} ${booking.times.join(', ')}`,
+                text: [
+                    `${booking.customerName} nem tudja a javasolt időpontot, ezt kéri helyette:`,
+                    '',
+                    `Név: ${booking.customerName}`,
+                    `E-mail: ${booking.customerEmail}`,
+                    `📅 ${formatDateHu(booking.date)}`,
+                    `⏰ ${booking.times.join(', ')}`,
+                    `Foglalás ID: ${booking.id}`,
+                    '',
+                    'Elfogadom ezt az időpontot:',
+                    approveUrl,
+                    '',
+                    'Ha ez sem jó, javasolj másikat:',
+                    proposeUrl,
+                ].join('\n'),
+                html: formatAdminNewHtml(booking, approveUrl, proposeUrl),
+                replyTo: booking.customerEmail,
             },
         ];
     }

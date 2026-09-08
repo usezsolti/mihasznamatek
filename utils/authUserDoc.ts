@@ -36,6 +36,14 @@ export function mapFirebaseAuthError(code?: string): string {
     }
 }
 
+function omitUndefined<T extends Record<string, unknown>>(obj: T): T {
+    const out: Record<string, unknown> = {};
+    for (const [k, v] of Object.entries(obj)) {
+        if (v !== undefined) out[k] = v;
+    }
+    return out as T;
+}
+
 export async function ensureUserDoc(
     firebase: any,
     user: any,
@@ -49,10 +57,11 @@ export async function ensureUserDoc(
     const db = firebase.firestore();
     const ref = db.collection('users').doc(user.uid);
     const snap = await ref.get();
+    const ts = firebase.firestore?.FieldValue?.serverTimestamp?.();
     const gdprFields = options?.gdprAccepted
         ? {
               gdprAccepted: true,
-              gdprAcceptedAt: firebase.firestore.FieldValue.serverTimestamp(),
+              ...(ts ? { gdprAcceptedAt: ts } : {}),
               gdprVersion: '2026-08-03',
           }
         : {};
@@ -66,26 +75,22 @@ export async function ensureUserDoc(
               postalCode: options.profile.postalCode,
               street: options.profile.street,
               houseNumber: options.profile.houseNumber,
-              profileCompletedAt: firebase.firestore.FieldValue.serverTimestamp(),
+              ...(ts ? { profileCompletedAt: ts } : { profileCompletedAt: Date.now() }),
           }
         : { name: options?.name || user.displayName || '' };
 
+    const payload = omitUndefined({
+        email: user.email || snap.data()?.email || '',
+        ...profileFields,
+        ...gdprFields,
+        updatedAt: ts || Date.now(),
+        ...(!snap.exists ? { createdAt: ts || Date.now() } : {}),
+    });
+
     if (!snap.exists) {
-        await ref.set({
-            email: user.email || '',
-            createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-            ...profileFields,
-            ...gdprFields,
-        });
+        await ref.set(payload);
     } else {
-        await ref.set(
-            {
-                ...profileFields,
-                ...gdprFields,
-                email: user.email || snap.data()?.email || '',
-            },
-            { merge: true }
-        );
+        await ref.set(payload, { merge: true });
     }
 }
 

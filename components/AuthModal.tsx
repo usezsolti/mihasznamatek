@@ -27,7 +27,7 @@ import { waitForFirebase } from "../utils/firebaseReady";
 import { useLang } from "../utils/i18n";
 import { safeAppPath } from "../utils/safePath";
 import { agentDebugLog } from "../utils/agentDebugLog";
-import { apiPost } from "../utils/apiClient";
+import { apiPost, apiPostAuth } from "../utils/apiClient";
 import { SHOW_EMAIL_PASSWORD_UI } from "../utils/authModal";
 
 type AuthMode = "login" | "register";
@@ -200,15 +200,29 @@ export default function AuthModal({
                     /* ignore */
                 }
             }
-            await ensureUserDoc(firebase, user, {
-                name: profile.name,
-                gdprAccepted: true,
-                profile,
-            });
+            const apiSaved = await apiPostAuth<{ saved?: boolean; fallback?: string }>(
+                "/api/auth/complete-profile",
+                profile
+            );
+            if (!(apiSaved.ok && apiSaved.data?.saved)) {
+                await ensureUserDoc(firebase, user, {
+                    name: profile.name,
+                    gdprAccepted: true,
+                    profile,
+                });
+            }
             setGoogleProfilePending(false);
             finishAuthSuccess();
         } catch (err: any) {
-            setError(formatAuthError(err) || mapFirebaseAuthError(err?.code));
+            const code = String(err?.code || "");
+            const msg = String(err?.message || "");
+            if (code.includes("permission") || /insufficient permissions|PERMISSION_DENIED/i.test(msg)) {
+                setError(
+                    "A regisztrációs adatok mentése nem sikerült (Firestore szabályok). Próbáld újra, vagy jelezd a tanárnak."
+                );
+            } else {
+                setError(formatAuthError(err) || mapFirebaseAuthError(err?.code) || msg);
+            }
         } finally {
             setLoading(false);
         }
@@ -730,7 +744,7 @@ export default function AuthModal({
                                 </div>
                             )}
                             {(SHOW_EMAIL_PASSWORD_UI || googleProfilePending) ? (
-                            <form className="email-form" onSubmit={handleEmailSubmit}>
+                            <form className="email-form" action="#" onSubmit={handleEmailSubmit}>
                                 {mode === "register" && (
                                     <>
                                     <div className="form-group">

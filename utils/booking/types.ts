@@ -1,5 +1,13 @@
 export const ADMIN_BOOKING_EMAIL = 'usezsolti@gmail.com';
 
+/** 1 órás sáv ára — a foglaló és az e-mail ezt használja. */
+export const LESSON_PRICE_PER_HOUR = 11000;
+
+export function priceForTimes(times: string[] | undefined | null): number {
+    const n = Array.isArray(times) ? times.length : 0;
+    return n * LESSON_PRICE_PER_HOUR;
+}
+
 export type BookingStatus = 'pending' | 'approved' | 'rejected' | 'cancelled' | 'proposed';
 
 export type PaymentStatus = 'unpaid' | 'transfer_pending' | 'paid';
@@ -45,7 +53,8 @@ export type BookingEmailType =
     | 'booking_cancelled'
     | 'lesson_reminder'
     | 'propose_time'
-    | 'proposal_accepted';
+    | 'proposal_accepted'
+    | 'student_counter';
 
 export type EmailSendResult = {
     ok: boolean;

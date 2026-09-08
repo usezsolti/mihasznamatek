@@ -6,6 +6,7 @@ import {
     BookingPayload,
     EmailSendResult,
     buildMailsForType,
+    priceForTimes,
     sendViaFormSubmit,
 } from "../../utils/bookingNotify";
 import {
@@ -76,7 +77,7 @@ function sanitizeBooking(raw: any): BookingPayload | null {
         lessonType: raw.lessonType === "personal" ? "personal" : "online",
         selectedSubject: sanitizeText(raw.selectedSubject, 120),
         hobby: sanitizeText(raw.hobby, 500),
-        totalPrice: Math.min(Math.max(Number(raw.totalPrice) || 0, 0), 5_000_000),
+        totalPrice: Math.min(priceForTimes(times), 5_000_000),
         postalCode: sanitizeText(raw.postalCode, 16),
         street: sanitizeText(raw.street, 120),
         houseNumber: sanitizeText(raw.houseNumber, 32),

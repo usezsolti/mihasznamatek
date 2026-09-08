@@ -10,6 +10,8 @@ import {
     uploadBookingAttachments,
     type BookingAttachment,
     type BookingPayload,
+    LESSON_PRICE_PER_HOUR,
+    priceForTimes,
 } from "../utils/bookingNotify";
 import {
     DEFAULT_WORKING_HOURS,
@@ -34,7 +36,7 @@ interface BookingRequest extends BookingPayload {
     status: "pending";
 }
 
-const PRICE_PER_HOUR = 11000;
+const PRICE_PER_HOUR = LESSON_PRICE_PER_HOUR;
 
 const SUBJECTS = [...LESSON_SUBJECTS];
 
@@ -92,6 +94,7 @@ export default function BookingPage() {
     );
     const [submitting, setSubmitting] = useState(false);
     const [success, setSuccess] = useState(false);
+    const [confirmedPrice, setConfirmedPrice] = useState<number | null>(null);
     const [error, setError] = useState("");
     const [authUser, setAuthUser] = useState<{ uid: string; email: string; name: string } | null>(null);
     const [profileLoading, setProfileLoading] = useState(false);
@@ -310,7 +313,7 @@ export default function BookingPage() {
         return set;
     }, [existingBookings, selectedDate, blockedByDate]);
 
-    const totalPrice = selectedTimes.length * PRICE_PER_HOUR;
+    const totalPrice = confirmedPrice ?? priceForTimes(selectedTimes);
     const showNameField = !authUser || (!profileLoading && !customerName.trim());
     const showHobbyField = !authUser;
     const showAddressFields =
@@ -333,6 +336,7 @@ export default function BookingPage() {
         setSelectedDate(day);
         setSelectedTimes([]);
         setSuccess(false);
+        setConfirmedPrice(null);
         setError("");
     };
 
@@ -357,6 +361,7 @@ export default function BookingPage() {
             setError(t("booking.error.needDateTime"));
             return;
         }
+        const chargedPrice = priceForTimes(selectedTimes);
         const bookingEmail = (authUser?.email || customerEmail.trim()).toLowerCase();
         const bookingName = (customerName.trim() || authUser?.name || "").trim();
         if (!bookingName || !bookingEmail) {
@@ -424,7 +429,7 @@ export default function BookingPage() {
                 lessonType,
                 selectedSubject,
                 hobby: hobby.trim() || "—",
-                totalPrice,
+                totalPrice: chargedPrice,
                 postalCode: postalCode.trim(),
                 street: street.trim(),
                 houseNumber: houseNumber.trim(),
@@ -451,6 +456,7 @@ export default function BookingPage() {
             const emailed = await sendBookingEmailFromClient("admin_new", booking);
 
             setSuccess(true);
+            setConfirmedPrice(chargedPrice);
             setSelectedTimes([]);
             if (!authUser) setHobby("");
             setSelectedFiles([]);
