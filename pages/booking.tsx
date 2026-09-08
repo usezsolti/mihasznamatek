@@ -93,7 +93,9 @@ export default function BookingPage() {
     const [submitting, setSubmitting] = useState(false);
     const [success, setSuccess] = useState(false);
     const [error, setError] = useState("");
-    const [authUser, setAuthUser] = useState<{ email: string; name: string } | null>(null);
+    const [authUser, setAuthUser] = useState<{ uid: string; email: string; name: string } | null>(null);
+    const [profileLoading, setProfileLoading] = useState(false);
+    const [profileUsername, setProfileUsername] = useState("");
 
     const [customerName, setCustomerName] = useState("");
     const [customerEmail, setCustomerEmail] = useState("");
@@ -126,17 +128,47 @@ export default function BookingPage() {
                 if (cancelled || !(window as any).firebase?.auth) return;
                 const auth = (window as any).firebase.auth();
                 unsub = auth.onAuthStateChanged((user: any) => {
-                    if (cancelled) return;
-                    if (!user) {
-                        setAuthUser(null);
-                        return;
-                    }
-                    const email = String(user.email || "").toLowerCase();
-                    const name = String(user.displayName || "");
-                    setAuthUser({ email, name });
-                    if (email) setCustomerEmail(email);
-                    setBookingPath("account");
-                    setError("");
+                    void (async () => {
+                        if (cancelled) return;
+                        if (!user) {
+                            setAuthUser(null);
+                            setProfileUsername("");
+                            setProfileLoading(false);
+                            return;
+                        }
+                        const email = String(user.email || "").toLowerCase();
+                        const name = String(user.displayName || "");
+                        setAuthUser({ uid: String(user.uid || ""), email, name });
+                        if (email) setCustomerEmail(email);
+                        if (name) setCustomerName((prev) => prev || name);
+                        setBookingPath("account");
+                        setError("");
+                        setProfileLoading(true);
+                        try {
+                            const db = (window as any).firebase?.firestore?.();
+                            if (!db || !user.uid) return;
+                            const snap = await db.collection("users").doc(user.uid).get();
+                            if (cancelled || !snap.exists) return;
+                            const d = snap.data() || {};
+                            if (d.name) setCustomerName(String(d.name));
+                            if (d.username) setProfileUsername(String(d.username));
+                            if (d.postalCode) setPostalCode(String(d.postalCode));
+                            if (d.street) setStreet(String(d.street));
+                            if (d.houseNumber) setHouseNumber(String(d.houseNumber));
+                            if (d.hobby) setHobby(String(d.hobby));
+                            if (d.preferredSubject && SUBJECTS.includes(String(d.preferredSubject))) {
+                                setSelectedSubject(String(d.preferredSubject));
+                            }
+                            if (d.preferredLessonType === "personal" || d.preferredLessonType === "online") {
+                                setLessonType(d.preferredLessonType);
+                            }
+                            if (d.gdprAccepted) setGdprAccepted(true);
+                        } catch (err) {
+                            console.warn("booking profile load failed", err);
+                        } finally {
+                            if (!cancelled) setProfileLoading(false);
+                        }
+                    })();
                 });
             } catch (e) {
                 console.warn("booking auth init failed", e);
@@ -279,6 +311,12 @@ export default function BookingPage() {
     }, [existingBookings, selectedDate, blockedByDate]);
 
     const totalPrice = selectedTimes.length * PRICE_PER_HOUR;
+    const showNameField = !authUser || (!profileLoading && !customerName.trim());
+    const showHobbyField = !authUser;
+    const showAddressFields =
+        !authUser ||
+        (!profileLoading && (!postalCode.trim() || !street.trim() || !houseNumber.trim()));
+    const showGdprField = !authUser;
 
     const changeMonth = (delta: number) => {
         const next = new Date(currentMonth);
@@ -320,7 +358,8 @@ export default function BookingPage() {
             return;
         }
         const bookingEmail = (authUser?.email || customerEmail.trim()).toLowerCase();
-        if (!customerName.trim() || !bookingEmail) {
+        const bookingName = (customerName.trim() || authUser?.name || "").trim();
+        if (!bookingName || !bookingEmail) {
             setError(t("booking.error.needNameEmail"));
             return;
         }
@@ -328,7 +367,7 @@ export default function BookingPage() {
             setError(t("booking.error.needPath"));
             return;
         }
-        if (!gdprAccepted) {
+        if (!authUser && !gdprAccepted) {
             setError(t("booking.error.needGdpr"));
             return;
         }
@@ -379,8 +418,9 @@ export default function BookingPage() {
                 id: bookingId,
                 date: dateKey,
                 times: selectedTimes,
-                customerName: customerName.trim(),
+                customerName: bookingName,
                 customerEmail: bookingEmail,
+                username: profileUsername.trim() || undefined,
                 lessonType,
                 selectedSubject,
                 hobby: hobby.trim() || "—",
@@ -412,7 +452,7 @@ export default function BookingPage() {
 
             setSuccess(true);
             setSelectedTimes([]);
-            setHobby("");
+            if (!authUser) setHobby("");
             setSelectedFiles([]);
             const fileInput = document.getElementById("booking-files") as HTMLInputElement | null;
             if (fileInput) fileInput.value = "";
@@ -720,6 +760,7 @@ export default function BookingPage() {
                                 </p>
                             )}
                             <form onSubmit={handleSubmit} className="booking-form-fields">
+                                {showNameField ? (
                                 <div className="booking-field">
                                     <label htmlFor="booking-name">{t("auth.name")}</label>
                                     <input
@@ -731,6 +772,7 @@ export default function BookingPage() {
                                         autoComplete="name"
                                     />
                                 </div>
+                                ) : null}
                                 {!authUser?.email ? (
                                     <div className="booking-field">
                                         <label htmlFor="booking-email">{t("auth.email")}</label>
@@ -781,6 +823,7 @@ export default function BookingPage() {
                                     </select>
                                 </div>
 
+                                {showHobbyField ? (
                                 <div className="booking-field">
                                     <label htmlFor="booking-hobby">{t("auth.hobby")}</label>
                                     <input
@@ -790,7 +833,9 @@ export default function BookingPage() {
                                         placeholder={t("auth.hobbyPlaceholder")}
                                     />
                                 </div>
+                                ) : null}
 
+                                {showAddressFields ? (
                                 <div className="booking-address-block">
                                     <div className="booking-field" style={{ marginBottom: "0.35rem" }}>
                                         <label>{t("auth.billing")}</label>
@@ -834,6 +879,7 @@ export default function BookingPage() {
                                         </div>
                                     </div>
                                 </div>
+                                ) : null}
 
                                 <div className="booking-field">
                                     <label htmlFor="booking-files">{t("booking.files")}</label>
@@ -873,6 +919,7 @@ export default function BookingPage() {
                                     </div>
                                 </div>
 
+                                {showGdprField ? (
                                 <label className="gdpr-consent booking-gdpr">
                                     <input
                                         type="checkbox"
@@ -892,6 +939,7 @@ export default function BookingPage() {
                                         {t("booking.gdprFormSuffix")}
                                     </span>
                                 </label>
+                                ) : null}
 
                                 {error && <p className="booking-error">{error}</p>}
                                 {success && (

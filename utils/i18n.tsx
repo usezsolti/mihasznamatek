@@ -310,7 +310,7 @@ const hu: Dict = {
     'booking.taken': ' (foglalt)',
     'booking.signedIn': 'Bejelentkezve:',
     'booking.signedInHint':
-        'A foglaláshoz ezt az e-mail címet használjuk, nem kell újra megadnod.',
+        'A neved, címed és e-mailed a fiókodból kerül a foglalásba. Itt csak az óra típusát, a témakört, és ha akarod, fájlt kell megadnod.',
     'booking.streetPlaceholder': 'Szent Imre utca',
     'booking.filesHint': 'Max. 5 fájl, egyenként 8 MB — PDF, JPG, PNG, DOC, DOCX.',
     'booking.filesSelected': 'Kiválasztva: {names}',
@@ -1251,7 +1251,7 @@ const en: Dict = {
     'booking.taken': ' (booked)',
     'booking.signedIn': 'Signed in as:',
     'booking.signedInHint':
-        'We will use this email for the booking — you do not need to enter it again.',
+        'Your name, address and email come from your account. Here you only choose lesson type, topic, and optionally upload a file.',
     'booking.streetPlaceholder': 'Main Street',
     'booking.filesHint': 'Max. 5 files, 8 MB each — PDF, JPG, PNG, DOC, DOCX.',
     'booking.filesSelected': 'Selected: {names}',

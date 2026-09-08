@@ -15,6 +15,7 @@ export type BookingPayload = {
     times: string[];
     customerName: string;
     customerEmail: string;
+    username?: string;
     lessonType: 'online' | 'personal';
     selectedSubject: string;
     hobby: string;

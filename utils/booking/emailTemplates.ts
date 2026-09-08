@@ -45,6 +45,7 @@ export function formatAdminNewMessage(
         'Új időpontfoglalás érkezett – elfogadásra vár!',
         '',
         `Név: ${booking.customerName}`,
+        `Felhasználónév: ${booking.username || '—'}`,
         `E-mail: ${booking.customerEmail}`,
         `Dátum: ${formatDateHu(booking.date)}`,
         `Időpont(ok): ${booking.times.join(', ')}`,
@@ -76,6 +77,7 @@ function formatAdminNewHtml(
 ): string {
     const rows: Array<[string, string]> = [
         ['Név', booking.customerName],
+        ['Felhasználónév', booking.username || '—'],
         ['E-mail', booking.customerEmail],
         ['Dátum', formatDateHu(booking.date)],
         ['Időpont(ok)', booking.times.join(', ')],
@@ -83,6 +85,8 @@ function formatAdminNewHtml(
         ['Témakör', booking.selectedSubject || '—'],
         ['Megjegyzés', booking.hobby || '—'],
         ['Ár', `${booking.totalPrice.toLocaleString('hu-HU')} Ft`],
+        ['Számlázási cím', addressLine(booking)],
+        ['Csatolt fájlok', formatAttachmentsLine(booking.uploadedFiles)],
         ['Foglalás ID', booking.id],
     ];
     const table = rows

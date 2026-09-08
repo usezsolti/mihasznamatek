@@ -72,6 +72,7 @@ function sanitizeBooking(raw: any): BookingPayload | null {
         times,
         customerName,
         customerEmail,
+        username: sanitizeText(raw.username, 24) || undefined,
         lessonType: raw.lessonType === "personal" ? "personal" : "online",
         selectedSubject: sanitizeText(raw.selectedSubject, 120),
         hobby: sanitizeText(raw.hobby, 500),
