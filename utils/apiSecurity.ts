@@ -194,6 +194,12 @@ export function isAllowedOrigin(req: NextApiRequest): boolean {
         const host = hostnameOf(value);
         if (!host) return false;
         if (allowedHosts.has(host)) return true;
+        if (
+            process.env.NODE_ENV !== 'production' &&
+            /^(192\.168\.|10\.|172\.(1[6-9]|2\d|3[01])\.)/.test(host)
+        ) {
+            return true;
+        }
         // Explicit preview allowlist (nem minden *.vercel.app)
         const extra = String(process.env.ALLOWED_ORIGINS || '')
             .split(',')

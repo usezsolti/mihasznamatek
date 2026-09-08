@@ -11,6 +11,18 @@ export type ApiErr = {
 };
 export type ApiResult<T> = ApiOk<T> | ApiErr;
 
+/** HTML / karbantartó oldal ne menjen ki a UI-ba. */
+export function sanitizePublicError(raw: unknown, status = 0): string {
+    const text = String(raw || '').trim();
+    if (!text) return status ? `HTTP ${status}` : 'Ismeretlen hiba';
+    if (/<!DOCTYPE|<html[\s>]|Site under maintenance|502 Bad Gateway|cloudflare/i.test(text)) {
+        return status === 502
+            ? 'A levelező szerver nem elérhető (502). Próbáld újra egy perc múlva.'
+            : `A szerver HTML hibát adott (HTTP ${status || 'ismeretlen'}).`;
+    }
+    return text.length > 240 ? `${text.slice(0, 237)}...` : text;
+}
+
 /** HTTP status + JSON body → egységes ApiResult. */
 export function parseApiEnvelope<T>(status: number, json: unknown): ApiResult<T> {
     const body = json as any;
@@ -26,7 +38,7 @@ export function parseApiEnvelope<T>(status: number, json: unknown): ApiResult<T>
         }
         return {
             ok: false,
-            error: String(body?.error || `HTTP ${status}`),
+            error: sanitizePublicError(body?.error || `HTTP ${status}`, status),
             status,
             ...(Object.keys(meta).length ? { meta } : {}),
         };

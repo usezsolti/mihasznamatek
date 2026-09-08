@@ -16,17 +16,22 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         return sendErr(res, 'Túl sok kérés.', 429);
     }
 
+    const hasResend = String(process.env.RESEND_API_KEY || '').trim().startsWith('re_');
     const hasGmail = Boolean(process.env.GMAIL_APP_PASSWORD?.trim());
     const hasWeb3 = Boolean(process.env.WEB3FORMS_ACCESS_KEY?.trim());
 
     return sendOk(res, {
-        ready: hasGmail || hasWeb3,
-        mode: hasGmail ? 'gmail' : hasWeb3 ? 'web3forms' : 'none',
+        ready: hasResend || hasGmail || hasWeb3,
+        mode: hasResend ? 'resend' : hasGmail ? 'gmail' : hasWeb3 ? 'web3forms' : 'none',
+        hasResend,
         hasGmail,
         hasWeb3,
+        from: process.env.EMAIL_FROM || 'info@mihasznamatek.hu',
         siteConfigured: Boolean(process.env.NEXT_PUBLIC_SITE_URL),
-        hint: hasGmail
-            ? 'Gmail SMTP aktív.'
-            : 'Állítsd be a GMAIL_APP_PASSWORD-öt a szerver env-ben.',
+        hint: hasResend
+            ? 'Resend aktív, feladó a hitelesített domain.'
+            : hasGmail
+              ? 'Gmail SMTP aktív.'
+              : 'Állítsd be a RESEND_API_KEY-t a szerver env-ben.',
     });
 }

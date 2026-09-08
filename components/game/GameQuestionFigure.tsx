@@ -200,6 +200,15 @@ function ImageBlock({ fig }: { fig: ImageFigure }) {
                     data: { src: fig.src },
                     runId: 'kf-2026-feb',
                 });
+                if (fig.src.includes('2021jan')) {
+                    agentDebugLog({
+                        hypothesisId: 'H3',
+                        location: 'GameQuestionFigure.tsx:ImageBlock:2021',
+                        message: '2021 jan figure loaded',
+                        data: { src: fig.src, ok: true },
+                        runId: 'kf-2021-jan',
+                    });
+                }
                 // #endregion
             }}
             onError={() => {
@@ -212,6 +221,15 @@ function ImageBlock({ fig }: { fig: ImageFigure }) {
                     data: { src: fig.src },
                     runId: 'kf-2026-feb',
                 });
+                if (fig.src.includes('2021jan')) {
+                    agentDebugLog({
+                        hypothesisId: 'H3',
+                        location: 'GameQuestionFigure.tsx:ImageBlock:2021',
+                        message: '2021 jan figure failed',
+                        data: { src: fig.src, ok: false },
+                        runId: 'kf-2021-jan',
+                    });
+                }
                 // #endregion
             }}
         />

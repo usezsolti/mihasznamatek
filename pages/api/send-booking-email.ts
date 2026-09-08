@@ -21,10 +21,12 @@ import {
     secureSiteOrigin,
 } from "../../utils/apiSecurity";
 import { sendErr, sendOk } from "../../server/http";
+import { sanitizePublicError } from "../../utils/apiEnvelope";
 import { isAdminEmail } from "../../utils/admin";
 import { getAdminDb } from "../../server/firebaseAdmin";
 import { agentDebugLog } from "../../utils/agentDebugLog";
 import { emailFromHeader } from "../../utils/emailFrom";
+import { hasResend, sendViaResend } from "../../server/resendMail";
 
 type Body = {
     type?: BookingEmailType;
@@ -44,6 +46,8 @@ const ADMIN_ONLY_TYPES: BookingEmailType[] = [
     "student_approved",
     "student_rejected",
     "lesson_reminder",
+    "propose_time",
+    "proposal_accepted",
 ];
 
 function sanitizeBooking(raw: any): BookingPayload | null {
@@ -87,6 +91,16 @@ function sanitizeBooking(raw: any): BookingPayload | null {
         submittedAt: sanitizeText(raw.submittedAt, 40) || new Date().toISOString(),
         status: raw.status,
         paymentStatus: raw.paymentStatus,
+        proposedDate: /^\d{4}-\d{2}-\d{2}$/.test(String(raw.proposedDate || ''))
+            ? String(raw.proposedDate)
+            : undefined,
+        proposedTimes: Array.isArray(raw.proposedTimes)
+            ? raw.proposedTimes
+                  .map((t: any) => sanitizeText(t, 8))
+                  .filter((t: string) => /^\d{2}:\d{2}$/.test(t))
+                  .slice(0, 8)
+            : undefined,
+        proposalToken: sanitizeText(raw.proposalToken, 64) || undefined,
     };
 }
 
@@ -171,7 +185,7 @@ function emailOk(res: NextApiResponse, result: EmailSendResult) {
 function emailFail(res: NextApiResponse, result: EmailSendResult, status = 502) {
     return res.status(status).json({
         ok: false,
-        error: result.error || "E-mail küldés sikertelen",
+        error: sanitizePublicError(result.error || "E-mail küldés sikertelen", status),
         provider: result.provider,
         needsActivation: result.needsActivation,
     });
@@ -195,6 +209,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         "student_rejected",
         "booking_cancelled",
         "lesson_reminder",
+        "propose_time",
+        "proposal_accepted",
     ];
     if (!type || !allowed.includes(type)) {
         return sendErr(res, "Érvénytelen e-mail típus", 400);
@@ -250,7 +266,19 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             if (!user) {
                 return sendErr(res, "Érvénytelen vagy lejárt munkamenet.", 401);
             }
-            if (user.email !== booking.customerEmail.toLowerCase()) {
+            const tokenEmail = String(user.email || "").toLowerCase();
+            // Anonim / email nélküli session: vendégfoglalás, ne blokkoljuk.
+            const sameEmail = !tokenEmail || tokenEmail === booking.customerEmail;
+            if (!sameEmail && !isAdminEmail(tokenEmail)) {
+                // #region agent log
+                agentDebugLog({
+                    hypothesisId: "E403",
+                    location: "api/send-booking-email.ts:emailMismatch",
+                    message: "admin_new blocked: token email != booking",
+                    data: { tokenEmail, bookingEmail: booking.customerEmail },
+                    runId: "email-debug",
+                });
+                // #endregion
                 return sendErr(
                     res,
                     "A foglalási e-mailnek egyeznie kell a bejelentkezett fiókkal.",
@@ -258,9 +286,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 );
             }
         }
-        // Spam ellen: csak létező Firestore foglalásra küldünk (Admin SDK ha elérhető)
+        // Élesen: csak létező Firestore foglalásra. Lokálisan a rules gyakran tilt, a levél akkor is menjen.
         const db = getAdminDb();
-        if (db && booking.id) {
+        if (db && booking.id && process.env.NODE_ENV === "production") {
             try {
                 const snap = await db.collection("bookings").doc(booking.id).get();
                 if (!snap.exists) {
@@ -290,6 +318,26 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const mails = buildMailsForType(type, booking, baseOrigin);
 
     try {
+        if (hasResend()) {
+            const resendResult = await sendViaResend(mails);
+            // #region agent log
+            agentDebugLog({
+                hypothesisId: 'E0',
+                location: 'api/send-booking-email.ts:resend',
+                message: 'resend attempt',
+                data: {
+                    ok: resendResult.ok,
+                    err: String(resendResult.error || '').slice(0, 160),
+                    type,
+                    mailCount: mails.length,
+                    from: emailFromHeader(),
+                },
+                runId: 'email-debug',
+            });
+            // #endregion
+            if (resendResult.ok) return emailOk(res, resendResult);
+            console.warn("Resend failed, trying fallbacks:", resendResult.error);
+        }
         if (process.env.GMAIL_APP_PASSWORD) {
             const gmailResult = await sendViaGmail(mails);
             // #region agent log

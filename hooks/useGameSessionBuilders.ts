@@ -314,6 +314,23 @@ export function useGameSessionBuilders(p: UseGameSessionBuildersParams) {
             },
             runId: 'kf-2026',
         });
+        agentDebugLog({
+            hypothesisId: 'H1',
+            location: 'useGameSessionBuilders.ts:generateKozpontiPaper:2021',
+            message: '2021 jan paper start',
+            data: {
+                paperId,
+                total: list?.length || 0,
+                firstId: list?.[0]?.id,
+                firstAnswer: list?.[0]?.answer,
+                lastId: list?.[list.length - 1]?.id,
+                lastAnswer: list?.[list.length - 1]?.answer,
+                swimFig: list?.find((x) => x.id === 'kf2021-4a')?.figure?.kind || null,
+                triFig: list?.find((x) => x.id === 'kf2021-5a')?.figure?.kind || null,
+                solidFig: list?.find((x) => x.id === 'kf2021-9')?.figure?.kind || null,
+            },
+            runId: 'kf-2021-jan',
+        });
         // #endregion
         if (!list?.length) {
             console.error('No központi paper questions for', paperId);

@@ -92,6 +92,7 @@ export default function Dashboard() {
     const [publicTasks, setPublicTasks] = useState<any[]>([]);
     const [assignedTasks, setAssignedTasks] = useState<AssignedTaskDoc[]>([]);
     const [pendingBookings, setPendingBookings] = useState<any[]>([]);
+    const [proposeDraft, setProposeDraft] = useState<Record<string, { date: string; time: string }>>({});
     const [emailStatus, setEmailStatus] = useState<{
         ready?: boolean;
         mode?: string;
@@ -595,6 +596,28 @@ export default function Dashboard() {
         );
     };
 
+    const proposeOtherTime = async (bookingId: string) => {
+        const booking = pendingBookings.find((b) => b.id === bookingId);
+        if (!booking) return;
+        const draft = proposeDraft[bookingId] || { date: booking.date, time: (booking.times || [])[0] || '17:00' };
+        if (!/^\d{4}-\d{2}-\d{2}$/.test(draft.date) || !/^\d{2}:\d{2}$/.test(draft.time)) {
+            alert('Adj meg dátumot és időt (óra:perc).');
+            return;
+        }
+        const { apiPostAuth } = await import('../utils/apiClient');
+        const res = await apiPostAuth('/api/booking-proposal', {
+            action: 'propose',
+            booking,
+            date: draft.date,
+            times: [draft.time],
+        });
+        if (!res.ok) {
+            alert(res.error || 'A javaslat nem ment ki.');
+            return;
+        }
+        alert('A diáknak kiment a másik időpont. Ha elfogadja, kapsz emailt.');
+    };
+
     const rejectBooking = async (bookingId: string) => {
         const booking = pendingBookings.find((b) => b.id === bookingId);
         if (!booking) return;
@@ -946,6 +969,48 @@ export default function Dashboard() {
                                                     <button className="reject-btn" onClick={() => rejectBooking(booking.id)}>
                                                         Elutasítás
                                                     </button>
+                                                    <div style={{ display: 'grid', gap: '0.35rem', marginTop: '0.4rem' }}>
+                                                        <input
+                                                            type="date"
+                                                            value={proposeDraft[booking.id]?.date || booking.date}
+                                                            onChange={(e) =>
+                                                                setProposeDraft((prev) => ({
+                                                                    ...prev,
+                                                                    [booking.id]: {
+                                                                        date: e.target.value,
+                                                                        time:
+                                                                            prev[booking.id]?.time ||
+                                                                            (booking.times || [])[0] ||
+                                                                            '17:00',
+                                                                    },
+                                                                }))
+                                                            }
+                                                        />
+                                                        <input
+                                                            type="time"
+                                                            value={
+                                                                proposeDraft[booking.id]?.time ||
+                                                                (booking.times || [])[0] ||
+                                                                '17:00'
+                                                            }
+                                                            onChange={(e) =>
+                                                                setProposeDraft((prev) => ({
+                                                                    ...prev,
+                                                                    [booking.id]: {
+                                                                        date: prev[booking.id]?.date || booking.date,
+                                                                        time: e.target.value,
+                                                                    },
+                                                                }))
+                                                            }
+                                                        />
+                                                        <button
+                                                            type="button"
+                                                            className="approve-btn"
+                                                            onClick={() => void proposeOtherTime(booking.id)}
+                                                        >
+                                                            Másik időpontot javaslok
+                                                        </button>
+                                                    </div>
                                                     <button
                                                         type="button"
                                                         className="approve-btn"

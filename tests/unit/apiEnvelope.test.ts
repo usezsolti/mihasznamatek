@@ -39,4 +39,16 @@ describe('parseApiEnvelope', () => {
         assert.equal(r.ok, false);
         if (!r.ok) assert.match(r.error, /HTTP 404/);
     });
+
+    it('strips HTML maintenance pages from error', () => {
+        const r = parseApiEnvelope(502, {
+            ok: false,
+            error: '<!DOCTYPE html><title>Site under maintenance | mihasznamatek.hu</title>',
+        });
+        assert.equal(r.ok, false);
+        if (!r.ok) {
+            assert.equal(r.error.includes('<!DOCTYPE'), false);
+            assert.match(r.error, /502/);
+        }
+    });
 });

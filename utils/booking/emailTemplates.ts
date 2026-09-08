@@ -44,7 +44,10 @@ export function formatAdminNewMessage(booking: BookingPayload, dashboardUrl: str
         `Beküldve: ${new Date(booking.submittedAt).toLocaleString('hu-HU')}`,
         `Foglalás ID: ${booking.id}`,
         '',
-        'Elfogadáshoz / elutasításhoz nyisd meg a dashboardot:',
+        'A diák még NEM kapott levelet. Először te igazold:',
+        '— Jóváhagyás: a kért időpont jó',
+        '— Másik időpont: te javasolsz, a diák elfogadja, utána kapsz emailt',
+        '',
         dashboardUrl,
     ].join('\n');
 }
@@ -184,11 +187,53 @@ export function buildMailsForType(
                 text: formatAdminNewMessage(booking, dashboardUrl),
                 replyTo: booking.customerEmail,
             },
+        ];
+    }
+
+    if (type === 'propose_time') {
+        const date = booking.proposedDate || booking.date;
+        const times = booking.proposedTimes?.length ? booking.proposedTimes : booking.times;
+        const acceptUrl = `${origin}/foglalas-valasz?id=${encodeURIComponent(booking.id)}&email=${encodeURIComponent(booking.customerEmail)}&date=${encodeURIComponent(date)}&times=${encodeURIComponent(times.join(','))}&name=${encodeURIComponent(booking.customerName)}&token=${encodeURIComponent(booking.proposalToken || '')}`;
+        return [
             {
                 to: booking.customerEmail,
-                subject: `Megkaptuk a foglalásod – Mihaszna Matek (${booking.date})`,
-                text: formatStudentReceivedMessage(booking),
+                subject: `Másik időpontot javasolunk – ${date} ${times.join(', ')}`,
+                text: [
+                    `Kedves ${booking.customerName}!`,
+                    '',
+                    'A kért időpont sajnos nem jó. Ezt az időpontot javasoljuk helyette:',
+                    `📅 ${formatDateHu(date)}`,
+                    `⏰ ${times.join(', ')}`,
+                    '',
+                    'Ha megfelel, nyisd meg ezt a linket:',
+                    acceptUrl,
+                    '',
+                    'Üdvözlettel,',
+                    'Mihaszna Matek',
+                ].join('\n'),
                 replyTo: ADMIN_BOOKING_EMAIL,
+            },
+        ];
+    }
+
+    if (type === 'proposal_accepted') {
+        const date = booking.proposedDate || booking.date;
+        const times = booking.proposedTimes?.length ? booking.proposedTimes : booking.times;
+        return [
+            {
+                to: ADMIN_BOOKING_EMAIL,
+                subject: `A diák elfogadta a javasolt időpontot: ${booking.customerName} – ${date} ${times.join(', ')}`,
+                text: [
+                    `${booking.customerName} elfogadta a javasolt időpontot.`,
+                    '',
+                    `E-mail: ${booking.customerEmail}`,
+                    `📅 ${formatDateHu(date)}`,
+                    `⏰ ${times.join(', ')}`,
+                    `Foglalás ID: ${booking.id}`,
+                    '',
+                    dashboardUrl,
+                ].join('\n'),
+                replyTo: booking.customerEmail,
             },
         ];
     }

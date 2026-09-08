@@ -43,6 +43,25 @@ export default function KozpontiFelkeszules() {
             },
             runId: 'kf-tracks',
         });
+        agentDebugLog({
+            hypothesisId: 'H4',
+            location: 'kozponti-felkeszules.tsx:mount:2021',
+            message: 'kf 2021 jan card',
+            data: {
+                selectedGrade,
+                y2021: yearGroups
+                    .find((g) => g.year === 2021)
+                    ?.papers.map((p) => ({
+                        id: p.id,
+                        month: p.month,
+                        ready: p.ready,
+                        n: p.questionCount,
+                        title: p.title,
+                        sub: p.subtitle,
+                    })),
+            },
+            runId: 'kf-2021-jan',
+        });
         // #endregion
     }, [selectedGrade, yearGroups.length]);
 

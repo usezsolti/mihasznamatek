@@ -65,6 +65,7 @@ export {
     getKozponti2022JanQuestions,
     getKozponti2022FebQuestions,
     getKozponti2022MarQuestions,
+    getKozponti2021JanQuestions,
     getKozpontiPapersForGrade,
     kozpontiPapersByYear,
 } from './kozpontiPapers';

@@ -3,6 +3,7 @@
  */
 import nodemailer from 'nodemailer';
 import { emailFromAddress, emailFromHeader, emailFromName } from '../utils/emailFrom';
+import { hasResend, sendViaResend } from './resendMail';
 
 function escapeHtml(s: string): string {
     return s
@@ -27,11 +28,6 @@ export async function sendBrandedVerificationMail(opts: {
     const site = 'https://mihasznamatek.hu';
     const safeLink = opts.link;
     const safeBrand = escapeHtml(brand);
-
-    const transporter = nodemailer.createTransport({
-        service: 'gmail',
-        auth: { user, pass },
-    });
 
     const text = [
         `Szia!`,
@@ -81,6 +77,25 @@ export async function sendBrandedVerificationMail(opts: {
   </table>
 </body>
 </html>`;
+
+    if (hasResend()) {
+        const sent = await sendViaResend([
+            {
+                to: opts.to,
+                subject: `${brand} – e-mail megerősítés`,
+                text,
+                html,
+                replyTo: user || emailFromAddress(),
+            },
+        ]);
+        if (sent.ok) return;
+        throw new Error(sent.error || 'Resend verification failed');
+    }
+
+    const transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: { user, pass },
+    });
 
     await transporter.sendMail({
         from: emailFromHeader(),

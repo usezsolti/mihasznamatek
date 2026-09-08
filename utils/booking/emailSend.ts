@@ -40,7 +40,9 @@ export async function sendViaFormSubmit(
             // HTML válasz = gyakran CF / hiba
         }
 
-        const msg = String(data?.message || raw || '');
+        const msg = /<!DOCTYPE|<html[\s>]/i.test(String(data?.message || raw || ''))
+            ? 'FormSubmit HTML hibát adott (karbantartás / blokk).'
+            : String(data?.message || raw || '');
         const needsActivation = /activat/i.test(msg) || /Activate Form/i.test(msg);
 
         if (needsActivation) {

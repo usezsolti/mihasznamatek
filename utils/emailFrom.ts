@@ -6,7 +6,7 @@ export function emailFromAddress(): string {
     return (
         process.env.EMAIL_FROM ||
         process.env.GMAIL_USER ||
-        'usezsolti@gmail.com'
+        'info@mihasznamatek.hu'
     ).trim();
 }
 
@@ -14,7 +14,7 @@ export function emailFromName(): string {
     return (process.env.EMAIL_FROM_NAME || 'Mihaszna Matek').trim();
 }
 
-/** nodemailer `from` mező: "Mihaszna Matek" <usezsolti@gmail.com> */
+/** nodemailer / Resend `from` mező: "Mihaszna Matek" <info@mihasznamatek.hu> */
 export function emailFromHeader(): string {
     const name = emailFromName().replace(/"/g, '');
     return `"${name}" <${emailFromAddress()}>`;

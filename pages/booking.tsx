@@ -420,10 +420,14 @@ export default function BookingPage() {
             const fileInput = document.getElementById("booking-files") as HTMLInputElement | null;
             if (fileInput) fileInput.value = "";
             if (!emailed.ok) {
+                const rawErr = String(emailed.error || "");
+                const htmlDump = /<!DOCTYPE|<html[\s>]|Site under maintenance|502 Bad Gateway|cloudflare/i.test(rawErr);
                 setError(
                     emailed.needsActivation
                         ? emailed.error || t("booking.error.emailNeedsActivation")
-                        : emailed.error || t("booking.error.emailFailed")
+                        : htmlDump
+                          ? t("booking.error.emailFailed")
+                          : emailed.error || t("booking.error.emailFailed")
                 );
             } else if (emailed.warning) {
                 setError(emailed.warning);

@@ -1,6 +1,6 @@
 export const ADMIN_BOOKING_EMAIL = 'usezsolti@gmail.com';
 
-export type BookingStatus = 'pending' | 'approved' | 'rejected' | 'cancelled';
+export type BookingStatus = 'pending' | 'approved' | 'rejected' | 'cancelled' | 'proposed';
 
 export type PaymentStatus = 'unpaid' | 'transfer_pending' | 'paid';
 
@@ -32,6 +32,9 @@ export type BookingPayload = {
     gdprAccepted?: boolean;
     gdprAcceptedAt?: string;
     gdprVersion?: string;
+    proposedDate?: string;
+    proposedTimes?: string[];
+    proposalToken?: string;
 };
 
 export type BookingEmailType =
@@ -39,11 +42,13 @@ export type BookingEmailType =
     | 'student_approved'
     | 'student_rejected'
     | 'booking_cancelled'
-    | 'lesson_reminder';
+    | 'lesson_reminder'
+    | 'propose_time'
+    | 'proposal_accepted';
 
 export type EmailSendResult = {
     ok: boolean;
-    provider?: 'gmail' | 'web3forms' | 'formsubmit';
+    provider?: 'resend' | 'gmail' | 'web3forms' | 'formsubmit';
     error?: string;
     needsActivation?: boolean;
     warning?: string;

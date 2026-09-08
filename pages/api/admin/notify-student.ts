@@ -12,6 +12,7 @@ import {
 } from '../../../utils/apiSecurity';
 import { sendErr, sendOk } from '../../../server/http';
 import { emailFromHeader } from '../../../utils/emailFrom';
+import { hasResend, sendViaResend } from '../../../server/resendMail';
 
 /**
  * POST /api/admin/notify-student
@@ -53,6 +54,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         replyTo: ADMIN_BOOKING_EMAIL,
         cc: ADMIN_BOOKING_EMAIL,
     };
+
+    if (hasResend()) {
+        const sent = await sendViaResend([mail]);
+        if (sent.ok) return sendOk(res, { provider: 'resend' });
+    }
 
     const gmailUser = process.env.GMAIL_USER || ADMIN_BOOKING_EMAIL;
     const gmailPass = String(process.env.GMAIL_APP_PASSWORD || '').replace(/\s+/g, '');

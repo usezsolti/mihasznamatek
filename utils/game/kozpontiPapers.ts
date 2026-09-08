@@ -11,6 +11,7 @@ import { getKozponti2023FebQuestions, KOZPONTI_2023_FEB_COUNT } from './kf2023Fe
 import { getKozponti2022JanQuestions, KOZPONTI_2022_JAN_COUNT } from './kf2022JanBank';
 import { getKozponti2022FebQuestions, KOZPONTI_2022_FEB_COUNT } from './kf2022FebBank';
 import { getKozponti2022MarQuestions, KOZPONTI_2022_MAR_COUNT } from './kf2022MarBank';
+import { getKozponti2021JanQuestions, KOZPONTI_2021_JAN_COUNT } from './kf2021JanBank';
 
 export { getKozponti2026FebQuestions } from './kf2026FebBank';
 export { getKozponti2025JanQuestions } from './kf2025JanBank';
@@ -22,6 +23,7 @@ export { getKozponti2023FebQuestions } from './kf2023FebBank';
 export { getKozponti2022JanQuestions } from './kf2022JanBank';
 export { getKozponti2022FebQuestions } from './kf2022FebBank';
 export { getKozponti2022MarQuestions } from './kf2022MarBank';
+export { getKozponti2021JanQuestions } from './kf2021JanBank';
 
 export type KozpontiPaperId = string;
 export type KozpontiGrade = 6 | 8;
@@ -83,6 +85,9 @@ const READY_PAPER_IDS = new Set([
     'kf-2022-g8-mar',
     '2022-mat3',
     'kf-2022-mar',
+    'kf-2021-g8-jan',
+    '2021-mat1',
+    'kf-2021-jan',
 ]);
 
 function readyPaperCopy(id: string, month: KozpontiMonth): { subtitle: string; questionCount: number } {
@@ -147,6 +152,12 @@ function readyPaperCopy(id: string, month: KozpontiMonth): { subtitle: string; q
         return {
             subtitle: '2022. február 4. · 45 perc · OH hivatalos sor',
             questionCount: KOZPONTI_2022_MAR_COUNT,
+        };
+    }
+    if (id === 'kf-2021-g8-jan') {
+        return {
+            subtitle: '2021. január 23. · 45 perc · OH hivatalos sor',
+            questionCount: KOZPONTI_2021_JAN_COUNT,
         };
     }
     return { subtitle: month === 'januar' ? 'rendes írásbeli' : 'pótló írásbeli', questionCount: 0 };
@@ -535,6 +546,7 @@ export function getKozpontiPaperQuestions(paperId: string): Question[] | null {
     const is2022G8Jan = id === 'kf-2022-g8-jan' || id === '2022-mat1' || id === 'kf-2022-jan';
     const is2022G8Feb = id === 'kf-2022-g8-feb' || id === '2022-mat2' || id === 'kf-2022-feb';
     const is2022G8Mar = id === 'kf-2022-g8-mar' || id === '2022-mat3' || id === 'kf-2022-mar';
+    const is2021G8Jan = id === 'kf-2021-g8-jan' || id === '2021-mat1' || id === 'kf-2021-jan';
     // #region agent log
     agentDebugLog({
         hypothesisId: 'H2',
@@ -601,6 +613,18 @@ export function getKozpontiPaperQuestions(paperId: string): Question[] | null {
     }
     if (is2022G8Mar) {
         return getKozponti2022MarQuestions();
+    }
+    // #region agent log
+    agentDebugLog({
+        hypothesisId: 'H1',
+        location: 'kozpontiPapers.ts:getKozpontiPaperQuestions:2021',
+        message: 'kf 2021 jan lookup',
+        data: { paperId: id, is2021G8Jan, willReturn: is2021G8Jan },
+        runId: 'kf-2021-jan',
+    });
+    // #endregion
+    if (is2021G8Jan) {
+        return getKozponti2021JanQuestions();
     }
     return null;
 }

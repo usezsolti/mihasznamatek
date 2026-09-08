@@ -35,7 +35,15 @@ export async function apiRequest<T>(
 ): Promise<ApiResult<T>> {
     try {
         const res = await fetch(path, init);
-        const json = await res.json().catch(() => ({}));
+        const raw = await res.text();
+        let json: unknown = {};
+        try {
+            json = raw ? JSON.parse(raw) : {};
+        } catch {
+            json = /<!DOCTYPE|<html[\s>]/i.test(raw)
+                ? { ok: false, error: raw }
+                : { ok: false, error: raw.slice(0, 200) || `HTTP ${res.status}` };
+        }
         return parseApiEnvelope<T>(res.status, json);
     } catch (e: any) {
         return { ok: false, error: String(e?.message || e), status: 0 };

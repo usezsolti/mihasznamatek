@@ -57,9 +57,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     const admin = getFirebaseAdmin();
     const gmailPass = String(process.env.GMAIL_APP_PASSWORD || '').replace(/\s+/g, '');
+    const hasResend = String(process.env.RESEND_API_KEY || '').trim().startsWith('re_');
     const origin = mailLinkOrigin();
 
-    if (!gmailPass) {
+    if (!gmailPass && !hasResend) {
         // #region agent log
         agentDebugLog({
             hypothesisId: 'S1',
