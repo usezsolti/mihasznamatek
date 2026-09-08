@@ -11,10 +11,14 @@ import {
     rateLimit,
     sanitizeText,
 } from '../../../utils/apiSecurity';
+import { SHOW_EMAIL_PASSWORD_UI } from '../../../utils/authModal';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     if (req.method !== 'POST') return sendErr(res, 'Method not allowed', 405);
     if (!isAllowedOrigin(req)) return sendErr(res, 'Nem engedélyezett origin.', 403);
+    if (!SHOW_EMAIL_PASSWORD_UI) {
+        return sendErr(res, 'A belépés csak Google-fiókkal lehetséges.', 403);
+    }
 
     const ip = getClientIp(req);
     const rl = rateLimit(`password-register:${ip}`, 8, 60 * 60 * 1000);

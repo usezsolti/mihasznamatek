@@ -220,6 +220,10 @@ export default function AuthModal({
             await saveGoogleRegistrationProfile();
             return;
         }
+        if (!SHOW_EMAIL_PASSWORD_UI) {
+            setError(t("auth.googleOnly"));
+            return;
+        }
         setError("");
         setLoading(true);
         try {
@@ -401,6 +405,10 @@ export default function AuthModal({
     };
 
     const handleTestLogin = async () => {
+        if (!SHOW_EMAIL_PASSWORD_UI) {
+            setError(t("auth.googleOnly"));
+            return;
+        }
         setError("");
         setLoading(true);
         try {

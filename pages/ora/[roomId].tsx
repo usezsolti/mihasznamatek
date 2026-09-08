@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import AuthModal from '../../components/AuthModal';
+import { SHOW_EMAIL_PASSWORD_UI } from '../../utils/authModal';
 import LessonHourRoom from '../../components/LessonHourRoom';
 import { waitForFirebase } from '../../utils/firebaseReady';
 import {
@@ -180,11 +181,13 @@ export default function OraPage() {
                             </p>
                         ) : null}
                         <button type="button" className="ora-primary" onClick={() => openLogin('login')}>
-                            Bejelentkezés
+                            Folytatás Google-lal
                         </button>
+                        {SHOW_EMAIL_PASSWORD_UI ? (
                         <button type="button" className="ora-secondary" onClick={() => openLogin('register')}>
                             Regisztráció
                         </button>
+                        ) : null}
                         <Link href="/dashboard">Vissza a dashboardra</Link>
                     </div>
                 ) : !roomId ? (

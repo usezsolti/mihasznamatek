@@ -165,7 +165,7 @@ export default function OraHubPage() {
                         <h1>{t('ora.hubTitle')}</h1>
                         <p>{t('ora.hubLoginBody')}</p>
                         <button type="button" className="ora-hub-primary" onClick={() => setAuthOpen(true)}>
-                            {t('auth.login')}
+                            {t('auth.google')}
                         </button>
                         <Link href="/dashboard">{t('ora.backDashboard')}</Link>
                     </div>
