@@ -76,7 +76,9 @@ export default function AuthModal({
     const [googleProfilePending, setGoogleProfilePending] = useState(false);
     const wasOpenRef = useRef(false);
     const onCloseRef = useRef(onClose);
+    const googleProfilePendingRef = useRef(false);
     onCloseRef.current = onClose;
+    googleProfilePendingRef.current = googleProfilePending;
 
     useEffect(() => {
         if (!isOpen) return;
@@ -156,16 +158,51 @@ export default function AuthModal({
             setError("");
             setInfoMessage("");
             setAwaitingVerification(false);
-            setGoogleProfilePending(false);
         }
 
         const onKey = (e: KeyboardEvent) => {
-            if (e.key === "Escape") onCloseRef.current();
+            if (e.key !== "Escape") return;
+            if (googleProfilePendingRef.current) return;
+            onCloseRef.current();
         };
         window.addEventListener("keydown", onKey);
         return () => window.removeEventListener("keydown", onKey);
         // initialMode only applied on open transition
         // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isOpen]);
+
+    useEffect(() => {
+        if (!isOpen) return;
+        let cancelled = false;
+        void (async () => {
+            const firebase = await waitForFirebase();
+            const user = firebase?.auth?.()?.currentUser;
+            if (cancelled || !firebase || !user || isAdminEmail(user.email)) return;
+            try {
+                const snap = await firebase.firestore().collection("users").doc(user.uid).get();
+                const d = snap.exists ? snap.data() || {} : {};
+                if (hasCompletedRegistrationOnce(d)) return;
+                if (cancelled) return;
+                setEmail(String(user.email || ""));
+                setName((prev) => prev.trim() || String(d.name || user.displayName || ""));
+                if (d.username) setUsername(String(d.username));
+                if (d.postalCode) setPostalCode(String(d.postalCode));
+                if (d.street) setStreet(String(d.street));
+                if (d.houseNumber) setHouseNumber(String(d.houseNumber));
+                if (d.hobby) setHobby(String(d.hobby));
+                if (d.preferredSubject) setSubject(String(d.preferredSubject));
+                if (d.preferredLessonType === "personal" || d.preferredLessonType === "online") {
+                    setLessonType(d.preferredLessonType);
+                }
+                setMode("register");
+                setGoogleProfilePending(true);
+            } catch {
+                /* Ha a profil nem olvasható, ne zárjuk be erővel a belépett, kész fiókokat. */
+            }
+        })();
+        return () => {
+            cancelled = true;
+        };
     }, [isOpen]);
 
     const switchMode = (next: AuthMode) => {
@@ -544,6 +581,7 @@ export default function AuthModal({
             }}
         >
             <div className="auth-modal-content">
+                {googleProfilePending ? null : (
                 <button
                     type="button"
                     className="auth-modal-close"
@@ -560,6 +598,7 @@ export default function AuthModal({
                         />
                     </svg>
                 </button>
+                )}
                 <h2 id="auth-modal-title">
                     {awaitingVerification
                         ? t("auth.verifyTitle")

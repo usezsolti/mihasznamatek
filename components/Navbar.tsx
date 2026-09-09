@@ -6,6 +6,7 @@ import AuthModal from "./AuthModal";
 import LanguageToggle from "./LanguageToggle";
 import { isAdminEmail } from "../utils/admin";
 import { OPEN_AUTH_MODAL_EVENT, type OpenAuthModalDetail } from "../utils/authModal";
+import { hasCompletedRegistrationOnce } from "../utils/registrationProfile";
 import { useLang } from "../utils/i18n";
 
 interface NavUser {
@@ -66,15 +67,20 @@ export default function Navbar() {
                 }
                 let photoURL: string | null = user.photoURL || null;
                 let displayName: string | null = user.displayName || null;
+                let profileIncomplete = false;
                 try {
                     const snap = await firebase.firestore().collection("users").doc(user.uid).get();
                     if (snap.exists) {
                         const data = snap.data() || {};
                         if (data.photoURL) photoURL = String(data.photoURL);
                         if (data.name) displayName = String(data.name);
+                        profileIncomplete = !hasCompletedRegistrationOnce(data);
+                    } else {
+                        profileIncomplete = true;
                     }
                 } catch {
                     /* firestore optional */
+                    profileIncomplete = !isAdminEmail(user.email);
                 }
                 if (cancelled || seq !== applySeq) return;
                 // Ha közben kijelentkezett, ne írjuk vissza
@@ -88,6 +94,11 @@ export default function Navbar() {
                     email: user.email || null,
                     photoURL,
                 });
+
+                if (profileIncomplete && !isAdminEmail(user.email)) {
+                    setAuthModalMode("register");
+                    setAuthModalOpen(true);
+                }
 
                 if (isAdminEmail(user.email)) {
                     (async () => {
