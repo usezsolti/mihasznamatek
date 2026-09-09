@@ -1285,7 +1285,7 @@ blockquote {
   box-shadow:
     0 0 30px rgba(0, 255, 127, 0.3),
     inset 0 0 20px rgba(0, 255, 127, 0.1);
-  transform: translateY(-3px) scale(1.02);
+  transform: none;
   background: #000000;
 }
 
@@ -1332,6 +1332,15 @@ textarea::placeholder {
   color: rgba(255, 255, 255, 0.5) !important;
 }
 
+@keyframes onAutoFillStart {
+  from {
+    opacity: 0.99;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
 /* Autofill: Chrome fehér hátteret rak, a fehér szöveg eltűnik. */
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
@@ -1349,7 +1358,29 @@ select:-webkit-autofill:focus {
   border-color: rgba(255, 255, 255, 0.2) !important;
   box-shadow: 0 0 0 1000px #000000 inset !important;
   -webkit-box-shadow: 0 0 0 1000px #000000 inset !important;
+  background-color: #000000 !important;
+  background-image: none !important;
+  transform: none !important;
+  filter: none !important;
+  animation-name: onAutoFillStart;
+  animation-duration: 0.001s;
   transition: background-color 99999s ease-out 0s;
+}
+
+.booking-form-fields,
+.booking-address-row,
+.auth-address-row,
+.auth-modal-content,
+.email-form {
+  color-scheme: dark;
+}
+
+.booking-field input:-webkit-autofill,
+.booking-address-row input:-webkit-autofill,
+.auth-address-row input:-webkit-autofill {
+  -webkit-text-fill-color: #ffffff !important;
+  box-shadow: 0 0 0 1000px #000000 inset !important;
+  -webkit-box-shadow: 0 0 0 1000px #000000 inset !important;
 }
 
 input:autofill,
@@ -1381,7 +1412,7 @@ select:autofill {
 .form-group input:hover,
 .form-group textarea:hover {
   border-color: rgba(255, 255, 255, 0.3);
-  transform: translateY(-1px);
+  transform: none;
   background: #000000;
 }
 

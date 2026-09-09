@@ -25,6 +25,8 @@ import {
 import { openAuthModal, SHOW_EMAIL_PASSWORD_UI } from "../utils/authModal";
 import { useLang } from "../utils/i18n";
 import { LESSON_SUBJECTS } from "../utils/registrationProfile";
+import { bindAutofillInput, preferFilled, syncInputsFromDom } from "../utils/formAutofill";
+import { agentDebugLog } from "../utils/agentDebugLog";
 
 type LessonType = "online" | "personal";
 
@@ -108,6 +110,7 @@ export default function BookingPage() {
     const [postalCode, setPostalCode] = useState("");
     const [street, setStreet] = useState("");
     const [houseNumber, setHouseNumber] = useState("");
+    const [keepAddressVisible, setKeepAddressVisible] = useState(false);
     const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
     const [gdprAccepted, setGdprAccepted] = useState(false);
     const [authLoading, setAuthLoading] = useState(false);
@@ -316,10 +319,24 @@ export default function BookingPage() {
     const totalPrice = confirmedPrice ?? priceForTimes(selectedTimes);
     const showNameField = !authUser || (!profileLoading && !customerName.trim());
     const showHobbyField = !authUser;
-    const showAddressFields =
+    const needAddress =
         !authUser ||
         (!profileLoading && (!postalCode.trim() || !street.trim() || !houseNumber.trim()));
+    useEffect(() => {
+        if (needAddress) setKeepAddressVisible(true);
+    }, [needAddress]);
+    const showAddressFields = !authUser || keepAddressVisible || needAddress;
     const showGdprField = !authUser;
+
+    const syncBookingAddressFromDom = () => {
+        syncInputsFromDom({
+            "booking-zip": setPostalCode,
+            "booking-street": setStreet,
+            "booking-house": setHouseNumber,
+        });
+    };
+    const nameField = bindAutofillInput(setCustomerName);
+    const emailField = bindAutofillInput(setCustomerEmail);
 
     const changeMonth = (delta: number) => {
         const next = new Date(currentMonth);
@@ -362,8 +379,11 @@ export default function BookingPage() {
             return;
         }
         const chargedPrice = priceForTimes(selectedTimes);
-        const bookingEmail = (authUser?.email || customerEmail.trim()).toLowerCase();
-        const bookingName = (customerName.trim() || authUser?.name || "").trim();
+        const bookingEmail = preferFilled(authUser?.email || customerEmail, "booking-email").toLowerCase();
+        const bookingName = preferFilled(customerName || authUser?.name || "", "booking-name");
+        const zip = preferFilled(postalCode, "booking-zip");
+        const streetVal = preferFilled(street, "booking-street");
+        const house = preferFilled(houseNumber, "booking-house");
         if (!bookingName || !bookingEmail) {
             setError(t("booking.error.needNameEmail"));
             return;
@@ -376,7 +396,19 @@ export default function BookingPage() {
             setError(t("booking.error.needGdpr"));
             return;
         }
-        if (!postalCode.trim() || !street.trim() || !houseNumber.trim()) {
+        // #region agent log
+        agentDebugLog({
+            hypothesisId: 'A',
+            location: 'booking.tsx:handleSubmit',
+            message: 'booking address before send',
+            data: {
+                stateEmpty: !postalCode.trim() || !street.trim() || !houseNumber.trim(),
+                domFilled: Boolean(zip && streetVal && house),
+            },
+            runId: 'reg-save',
+        });
+        // #endregion
+        if (!zip || !streetVal || !house) {
             setError(t("booking.error.needAddress"));
             return;
         }
@@ -430,9 +462,9 @@ export default function BookingPage() {
                 selectedSubject,
                 hobby: hobby.trim() || "—",
                 totalPrice: chargedPrice,
-                postalCode: postalCode.trim(),
-                street: street.trim(),
-                houseNumber: houseNumber.trim(),
+                postalCode: zip,
+                street: streetVal,
+                houseNumber: house,
                 uploadedFiles,
                 submittedAt: new Date().toISOString(),
                 status: "pending",
@@ -771,8 +803,9 @@ export default function BookingPage() {
                                     <label htmlFor="booking-name">{t("auth.name")}</label>
                                     <input
                                         id="booking-name"
+                                        type="text"
                                         value={customerName}
-                                        onChange={(e) => setCustomerName(e.target.value)}
+                                        {...nameField}
                                         placeholder={t("auth.namePlaceholder")}
                                         required
                                         autoComplete="name"
@@ -786,7 +819,7 @@ export default function BookingPage() {
                                             id="booking-email"
                                             type="email"
                                             value={customerEmail}
-                                            onChange={(e) => setCustomerEmail(e.target.value)}
+                                            {...emailField}
                                             placeholder={t("booking.emailPlaceholder")}
                                             required
                                             autoComplete="email"
@@ -855,8 +888,20 @@ export default function BookingPage() {
                                             <label htmlFor="booking-zip">{t("auth.postalCode")}</label>
                                             <input
                                                 id="booking-zip"
+                                                type="text"
+                                                name="mm-postal"
                                                 value={postalCode}
-                                                onChange={(e) => setPostalCode(e.target.value)}
+                                                onChange={(e) => {
+                                                    setPostalCode(e.currentTarget.value);
+                                                    syncBookingAddressFromDom();
+                                                }}
+                                                onInput={syncBookingAddressFromDom}
+                                                onBlur={syncBookingAddressFromDom}
+                                                onAnimationStart={(e) => {
+                                                    if (/onAutoFillStart/i.test(e.animationName)) {
+                                                        syncBookingAddressFromDom();
+                                                    }
+                                                }}
                                                 placeholder="2151"
                                                 required
                                                 autoComplete="postal-code"
@@ -866,21 +911,46 @@ export default function BookingPage() {
                                             <label htmlFor="booking-street">{t("auth.street")}</label>
                                             <input
                                                 id="booking-street"
+                                                type="text"
+                                                name="mm-street"
                                                 value={street}
-                                                onChange={(e) => setStreet(e.target.value)}
+                                                onChange={(e) => {
+                                                    setStreet(e.currentTarget.value);
+                                                    syncBookingAddressFromDom();
+                                                }}
+                                                onInput={syncBookingAddressFromDom}
+                                                onBlur={syncBookingAddressFromDom}
+                                                onAnimationStart={(e) => {
+                                                    if (/onAutoFillStart/i.test(e.animationName)) {
+                                                        syncBookingAddressFromDom();
+                                                    }
+                                                }}
                                                 placeholder={t("booking.streetPlaceholder")}
                                                 required
-                                                autoComplete="street-address"
+                                                autoComplete="address-line1"
                                             />
                                         </div>
                                         <div className="booking-field">
                                             <label htmlFor="booking-house">{t("auth.houseNumber")}</label>
                                             <input
                                                 id="booking-house"
+                                                type="text"
+                                                name="mm-house"
                                                 value={houseNumber}
-                                                onChange={(e) => setHouseNumber(e.target.value)}
+                                                onChange={(e) => {
+                                                    setHouseNumber(e.currentTarget.value);
+                                                    syncBookingAddressFromDom();
+                                                }}
+                                                onInput={syncBookingAddressFromDom}
+                                                onBlur={syncBookingAddressFromDom}
+                                                onAnimationStart={(e) => {
+                                                    if (/onAutoFillStart/i.test(e.animationName)) {
+                                                        syncBookingAddressFromDom();
+                                                    }
+                                                }}
                                                 placeholder="18"
                                                 required
+                                                autoComplete="address-line2"
                                             />
                                         </div>
                                     </div>

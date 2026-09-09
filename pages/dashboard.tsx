@@ -1652,7 +1652,7 @@ export default function Dashboard() {
                                      Facebook
                                  </a>
                                  <a
-                                     href="https://www.instagram.com/mihaszna__/"
+                                     href="https://www.instagram.com/mihasznamatek/?hl=en"
                                      target="_blank"
                                      rel="noopener noreferrer"
                                  >

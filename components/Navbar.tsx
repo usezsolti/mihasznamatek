@@ -444,7 +444,7 @@ export default function Navbar() {
                             <FaFacebook size={16} />
                         </a>
                         <a
-                            href="https://www.instagram.com/mihaszna__/"
+                            href="https://www.instagram.com/mihasznamatek/?hl=en"
                             target="_blank"
                             rel="noopener noreferrer"
                             className="nav-social-link instagram"

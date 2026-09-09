@@ -29,6 +29,7 @@ import { safeAppPath } from "../utils/safePath";
 import { agentDebugLog } from "../utils/agentDebugLog";
 import { apiPost, apiPostAuth } from "../utils/apiClient";
 import { SHOW_EMAIL_PASSWORD_UI } from "../utils/authModal";
+import { bindAutofillInput, preferFilled, syncInputsFromDom } from "../utils/formAutofill";
 
 type AuthMode = "login" | "register";
 
@@ -102,6 +103,18 @@ export default function AuthModal({
         street: street.trim(),
         houseNumber: houseNumber.trim(),
     });
+
+    const syncAuthAddressFromDom = () => {
+        syncInputsFromDom({
+            "auth-modal-zip": setPostalCode,
+            "auth-modal-street": setStreet,
+            "auth-modal-house": setHouseNumber,
+        });
+    };
+
+    const nameField = bindAutofillInput(setName);
+    const usernameField = bindAutofillInput(setUsername);
+    const emailField = bindAutofillInput(setEmail);
 
     const finishAuthSuccess = () => {
         onClose();
@@ -212,7 +225,14 @@ export default function AuthModal({
     };
 
     const saveGoogleRegistrationProfile = async () => {
-        const profile = buildProfile();
+        const profile = {
+            ...buildProfile(),
+            name: preferFilled(name, "auth-modal-name"),
+            username: normalizeUsername(preferFilled(username, "auth-modal-username")),
+            postalCode: preferFilled(postalCode, "auth-modal-zip"),
+            street: preferFilled(street, "auth-modal-street"),
+            houseNumber: preferFilled(houseNumber, "auth-modal-house"),
+        };
         const profileErr = validateRegistrationProfile(profile);
         // #region agent log
         agentDebugLog({
@@ -226,6 +246,12 @@ export default function AuthModal({
                 hasSubject: Boolean(profile.preferredSubject),
                 gdprAccepted,
                 profileErr: profileErr || '',
+                stateAddressEmpty: !postalCode.trim() || !street.trim() || !houseNumber.trim(),
+                domAddressFilled: Boolean(
+                    preferFilled('', 'auth-modal-zip') &&
+                        preferFilled('', 'auth-modal-street') &&
+                        preferFilled('', 'auth-modal-house')
+                ),
             },
             runId: 'reg-save',
         });
@@ -877,7 +903,7 @@ export default function AuthModal({
                                             id="auth-modal-name"
                                             type="text"
                                             value={name}
-                                            onChange={(e) => setName(e.target.value)}
+                                            {...nameField}
                                             placeholder={t("auth.namePlaceholder")}
                                             autoComplete="name"
                                             required
@@ -889,7 +915,7 @@ export default function AuthModal({
                                             id="auth-modal-username"
                                             type="text"
                                             value={username}
-                                            onChange={(e) => setUsername(e.target.value)}
+                                            {...usernameField}
                                             placeholder={t("auth.usernamePlaceholder")}
                                             autoComplete="username"
                                             required
@@ -905,7 +931,7 @@ export default function AuthModal({
                                         id="auth-modal-email"
                                         type="email"
                                         value={email}
-                                        onChange={(e) => setEmail(e.target.value)}
+                                        {...emailField}
                                         placeholder={t("auth.emailPlaceholder")}
                                         autoComplete="email"
                                         required
@@ -1020,27 +1046,64 @@ export default function AuthModal({
                                             </p>
                                             <div className="auth-address-row">
                                                 <input
+                                                    id="auth-modal-zip"
                                                     type="text"
+                                                    name="mm-postal"
                                                     value={postalCode}
-                                                    onChange={(e) => setPostalCode(e.target.value)}
+                                                    onChange={(e) => {
+                                                        setPostalCode(e.currentTarget.value);
+                                                        syncAuthAddressFromDom();
+                                                    }}
+                                                    onInput={syncAuthAddressFromDom}
+                                                    onBlur={syncAuthAddressFromDom}
+                                                    onAnimationStart={(e) => {
+                                                        if (/onAutoFillStart/i.test(e.animationName)) {
+                                                            syncAuthAddressFromDom();
+                                                        }
+                                                    }}
                                                     placeholder={t("auth.postalCode")}
                                                     required
                                                     autoComplete="postal-code"
                                                 />
                                                 <input
+                                                    id="auth-modal-street"
                                                     type="text"
+                                                    name="mm-street"
                                                     value={street}
-                                                    onChange={(e) => setStreet(e.target.value)}
+                                                    onChange={(e) => {
+                                                        setStreet(e.currentTarget.value);
+                                                        syncAuthAddressFromDom();
+                                                    }}
+                                                    onInput={syncAuthAddressFromDom}
+                                                    onBlur={syncAuthAddressFromDom}
+                                                    onAnimationStart={(e) => {
+                                                        if (/onAutoFillStart/i.test(e.animationName)) {
+                                                            syncAuthAddressFromDom();
+                                                        }
+                                                    }}
                                                     placeholder={t("auth.street")}
                                                     required
-                                                    autoComplete="street-address"
+                                                    autoComplete="address-line1"
                                                 />
                                                 <input
+                                                    id="auth-modal-house"
                                                     type="text"
+                                                    name="mm-house"
                                                     value={houseNumber}
-                                                    onChange={(e) => setHouseNumber(e.target.value)}
+                                                    onChange={(e) => {
+                                                        setHouseNumber(e.currentTarget.value);
+                                                        syncAuthAddressFromDom();
+                                                    }}
+                                                    onInput={syncAuthAddressFromDom}
+                                                    onBlur={syncAuthAddressFromDom}
+                                                    onAnimationStart={(e) => {
+                                                        if (/onAutoFillStart/i.test(e.animationName)) {
+                                                            syncAuthAddressFromDom();
+                                                        }
+                                                    }}
                                                     placeholder={t("auth.houseNumber")}
                                                     required
+                                                    autoComplete="address-line2"
                                                 />
                                             </div>
                                         </div>
