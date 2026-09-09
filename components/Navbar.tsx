@@ -8,6 +8,7 @@ import { isAdminEmail } from "../utils/admin";
 import { OPEN_AUTH_MODAL_EVENT, type OpenAuthModalDetail } from "../utils/authModal";
 import { hasCompletedRegistrationOnce, isProfileGateOpen, clearProfileGate, markProfileGate } from "../utils/registrationProfile";
 import { useLang } from "../utils/i18n";
+import { agentDebugLog } from "../utils/agentDebugLog";
 
 interface NavUser {
     uid: string;

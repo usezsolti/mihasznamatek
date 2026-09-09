@@ -183,23 +183,26 @@ export default function GameLobby({
                     >
                         ← Vissza a szintekhez
                     </button>
-                    <h2 className="level-title">Válassz érettségi felkészülés módot:</h2>
+                    <h2 className="level-title">Hogyan szeretnél gyakorolni?</h2>
+                    <p className="section-description" style={{ textAlign: 'center', marginBottom: '1.5rem' }}>
+                        Témakörönként haladhatsz, vagy kitölthetsz egy teljes hivatalos feladatsort.
+                    </p>
                     <div className="level-buttons">
                         <button
                             className="level-btn erettsegi-option"
                             onClick={onSelectErettsegiTopics}
                         >
                             <span className="level-icon">📖</span>
-                            <span className="level-name">Érettségi Témakörök szerint</span>
-                            <span className="level-desc">Témakörönként gyakorlás</span>
+                            <span className="level-name">Témakörönként</span>
+                            <span className="level-desc">Egy témakört választasz, és leckénként gyakorolsz</span>
                         </button>
                         <button
                             className="level-btn erettsegi-option"
                             onClick={onSelectErettsegiPapers}
                         >
                             <span className="level-icon">📄</span>
-                            <span className="level-name">Érettségi Feladatsorok</span>
-                            <span className="level-desc">Évek szerint csoportosított feladatsorok</span>
+                            <span className="level-name">Egy feladatsor kitöltése</span>
+                            <span className="level-desc">Hivatalos májusi vagy októberi érettségi sor</span>
                         </button>
                     </div>
                 </div>

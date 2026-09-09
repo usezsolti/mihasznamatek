@@ -24,33 +24,69 @@ interface ExamTopic {
     description: string;
 }
 
+type PrepViewMode = 'choose' | 'topics' | 'papers';
+
 export default function ErettsegiFelkeszules() {
     const router = useRouter();
     const [selectedTopic, setSelectedTopic] = useState<string | null>(null);
-    const [viewMode, setViewMode] = useState<'topics' | 'papers'>('topics');
+    const [viewMode, setViewMode] = useState<PrepViewMode>('choose');
     const [selectedLevel, setSelectedLevel] = useState<'kozep' | 'emelt' | null>(null);
     const [topicProgressMap, setTopicProgressMap] = useState<Partial<Record<string, TopicProgress>>>({});
     const [pathTopicId, setPathTopicId] = useState<string | null>(null);
 
     useEffect(() => {
-        // URL paraméter alapján beállítjuk a módot
-        if (router.query.mode === 'papers') {
-            setViewMode('papers');
+        if (!router.isReady) return;
+
+        let nextMode: PrepViewMode = 'choose';
+        if (typeof router.query.topic === 'string' && router.query.topic) {
+            setPathTopicId(router.query.topic);
+            nextMode = 'topics';
+        } else if (router.query.mode === 'papers') {
+            nextMode = 'papers';
         } else if (router.query.mode === 'topics') {
-            setViewMode('topics');
+            nextMode = 'topics';
+        } else {
+            setPathTopicId(null);
         }
-        
-        // Szint paraméter kezelése
+        setViewMode(nextMode);
+
         if (router.query.level === 'emelt' || router.query.level === 'kozep') {
             setSelectedLevel(router.query.level as 'kozep' | 'emelt');
         }
 
-        // Visszatérés a játékból: path újra megnyitása
-        if (typeof router.query.topic === 'string' && router.query.topic) {
-            setPathTopicId(router.query.topic);
-            setViewMode('topics');
-        }
-    }, [router.query.mode, router.query.level, router.query.topic]);
+        // #region agent log
+        agentDebugLog({
+            hypothesisId: 'H6',
+            location: 'erettsegi-felkeszules.tsx:urlSync',
+            message: 'erettsegi prep hub url sync',
+            data: {
+                queryMode: typeof router.query.mode === 'string' ? router.query.mode : null,
+                hasTopic: Boolean(router.query.topic),
+                nextMode,
+            },
+            runId: 'er-choose-hub',
+        });
+        // #endregion
+    }, [router.isReady, router.query.mode, router.query.level, router.query.topic]);
+
+    const goToPrepMode = (mode: PrepViewMode) => {
+        // #region agent log
+        agentDebugLog({
+            hypothesisId: 'H7',
+            location: 'erettsegi-felkeszules.tsx:goToPrepMode',
+            message: 'erettsegi prep path chosen',
+            data: { mode, selectedLevel, from: viewMode },
+            runId: 'er-choose-hub',
+        });
+        // #endregion
+        setViewMode(mode);
+        setSelectedTopic(null);
+        if (mode === 'choose') setPathTopicId(null);
+        const query: Record<string, string> = {};
+        if (mode === 'topics' || mode === 'papers') query.mode = mode;
+        if (selectedLevel) query.level = selectedLevel;
+        router.replace({ pathname: '/erettsegi-felkeszules', query }, undefined, { shallow: true });
+    };
 
     useEffect(() => {
         let cancelled = false;
@@ -427,29 +463,70 @@ export default function ErettsegiFelkeszules() {
                         📚 Érettségi Felkészülés
                     </h1>
                     <p className="erettsegi-subtitle">
-                        Témakörök szerinti gyakorlás és érettségi feladatsorok
+                        Először válassz: témakörönként gyakorolsz, vagy egy teljes feladatsort töltesz ki.
                     </p>
                 </div>
 
                 <div className="erettsegi-content">
-                    {/* Navigációs gombok */}
+                    {viewMode === 'choose' && (
+                        <section className="prep-choose-section">
+                            <h2 className="section-title">Hogyan szeretnél gyakorolni?</h2>
+                            <p className="section-description">
+                                Témakörönként haladhatsz leckénként, vagy kitölthetsz egy hivatalos
+                                májusi / októberi érettségi feladatsort.
+                            </p>
+                            <div className="prep-choose-grid">
+                                <button
+                                    type="button"
+                                    className="prep-choose-card"
+                                    onClick={() => goToPrepMode('topics')}
+                                >
+                                    <span className="prep-choose-icon">📖</span>
+                                    <span className="prep-choose-name">Témakörönként</span>
+                                    <span className="prep-choose-desc">
+                                        Egy témakört választasz, és leckénként gyakorolsz
+                                    </span>
+                                </button>
+                                <button
+                                    type="button"
+                                    className="prep-choose-card papers"
+                                    onClick={() => goToPrepMode('papers')}
+                                >
+                                    <span className="prep-choose-icon">📄</span>
+                                    <span className="prep-choose-name">Egy feladatsor kitöltése</span>
+                                    <span className="prep-choose-desc">
+                                        Hivatalos érettségi sor, időkerettel — május vagy október
+                                    </span>
+                                </button>
+                            </div>
+                        </section>
+                    )}
+
+                    {viewMode !== 'choose' && (
                     <div className="view-mode-selector">
                         <button
+                            type="button"
+                            className="mode-btn"
+                            onClick={() => goToPrepMode('choose')}
+                        >
+                            ← Vissza
+                        </button>
+                        <button
+                            type="button"
                             className={`mode-btn ${viewMode === 'topics' ? 'active' : ''}`}
-                            onClick={() => {
-                                setViewMode('topics');
-                                setSelectedTopic(null);
-                            }}
+                            onClick={() => goToPrepMode('topics')}
                         >
                             📖 Témakörök
                         </button>
                         <button
+                            type="button"
                             className={`mode-btn ${viewMode === 'papers' ? 'active' : ''}`}
-                            onClick={() => setViewMode('papers')}
+                            onClick={() => goToPrepMode('papers')}
                         >
-                            📄 Érettségi Feladatsorok
+                            📄 Feladatsor
                         </button>
                     </div>
+                    )}
 
                     {/* Témakörök nézet */}
                     {viewMode === 'topics' && (
@@ -686,6 +763,73 @@ export default function ErettsegiFelkeszules() {
                 .erettsegi-content {
                     max-width: 1200px;
                     margin: 0 auto;
+                }
+
+                .prep-choose-section {
+                    text-align: center;
+                    margin-bottom: 2rem;
+                }
+
+                .prep-choose-grid {
+                    display: grid;
+                    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+                    gap: 1.25rem;
+                    max-width: 860px;
+                    margin: 0 auto;
+                }
+
+                .prep-choose-card {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    gap: 0.65rem;
+                    min-height: 220px;
+                    padding: 2rem 1.5rem;
+                    border-radius: 20px;
+                    background: rgba(255, 255, 255, 0.08);
+                    border: 2px solid rgba(57, 255, 20, 0.45);
+                    color: #ffffff;
+                    cursor: pointer;
+                    text-align: center;
+                    backdrop-filter: blur(10px);
+                    transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+                }
+
+                .prep-choose-card:hover {
+                    transform: translateY(-4px);
+                    border-color: #39ff14;
+                    box-shadow: 0 10px 28px rgba(57, 255, 20, 0.22);
+                }
+
+                .prep-choose-card.papers {
+                    border-color: rgba(255, 215, 0, 0.5);
+                }
+
+                .prep-choose-card.papers:hover {
+                    border-color: #ffd700;
+                    box-shadow: 0 10px 28px rgba(255, 215, 0, 0.2);
+                }
+
+                .prep-choose-icon {
+                    font-size: 2.4rem;
+                    line-height: 1;
+                }
+
+                .prep-choose-name {
+                    font-size: 1.35rem;
+                    font-weight: 800;
+                    color: #39ff14;
+                }
+
+                .prep-choose-card.papers .prep-choose-name {
+                    color: #ffd700;
+                }
+
+                .prep-choose-desc {
+                    color: #ffcccc;
+                    font-size: 0.98rem;
+                    line-height: 1.45;
+                    font-weight: 500;
                 }
 
                 .view-mode-selector {

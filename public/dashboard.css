@@ -5927,6 +5927,76 @@ select.form-input:disabled {
     flex-shrink: 0;
 }
 
+.erettsegi-prep-choice {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1rem;
+    margin: 0 0 1.25rem;
+}
+
+.erettsegi-prep-card {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.35rem;
+    min-height: 148px;
+    padding: 1.15rem 1.2rem;
+    border-radius: 18px;
+    text-align: left;
+    cursor: pointer;
+    color: inherit;
+    background: rgba(18, 22, 30, 0.92);
+    border: 2px solid rgba(57, 255, 20, 0.35);
+    transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.erettsegi-prep-card:hover,
+.erettsegi-prep-card.active {
+    transform: translateY(-2px);
+    border-color: #39ff14;
+    box-shadow: 0 8px 24px rgba(57, 255, 20, 0.14);
+}
+
+.erettsegi-prep-card.papers {
+    border-color: rgba(255, 215, 0, 0.45);
+}
+
+.erettsegi-prep-card.papers:hover {
+    border-color: #ffd700;
+    box-shadow: 0 8px 24px rgba(255, 215, 0, 0.14);
+}
+
+.erettsegi-prep-icon {
+    font-size: 1.7rem;
+    line-height: 1;
+}
+
+.erettsegi-prep-card strong {
+    color: #39ff14;
+    font-size: 1.15rem;
+}
+
+.erettsegi-prep-card.papers strong {
+    color: #ffd700;
+}
+
+.erettsegi-prep-card small {
+    color: rgba(255, 255, 255, 0.78);
+    font-size: 0.92rem;
+    line-height: 1.4;
+}
+
+.erettsegi-prep-back {
+    margin: 0 0 1rem;
+    padding: 0.45rem 0.85rem;
+    border-radius: 10px;
+    border: 1px solid rgba(57, 255, 20, 0.4);
+    background: rgba(18, 22, 30, 0.9);
+    color: #cfe9d4;
+    font-weight: 700;
+    cursor: pointer;
+}
+
 .dash-blitz-btn {
     background: linear-gradient(90deg, #ff8a00, #ff4d9a) !important;
     color: #fff !important;

@@ -87,6 +87,7 @@ export default function Dashboard() {
     const [educationLevel, setEducationLevel] = useState<EducationLevelId>('university');
     const [highschoolGrade, setHighschoolGrade] = useState(11);
     const [erettsegiExamLevel, setErettsegiExamLevel] = useState<ErettsegiExamLevel>('emelt');
+    const [erettsegiPrepPath, setErettsegiPrepPath] = useState<'choose' | 'topics'>('choose');
     const [isAdmin, setIsAdmin] = useState(false);
     const [activeTab, setActiveTab] = useState<DashboardTab>("tanulas");
     const [publicTasks, setPublicTasks] = useState<any[]>([]);
@@ -1051,6 +1052,7 @@ export default function Dashboard() {
                                 onClick={() => {
                                     setEducationLevel(level.id);
                                     localStorage.setItem('educationLevel', level.id);
+                                    setErettsegiPrepPath(level.id === 'erettsegi' ? 'choose' : 'topics');
                                 }}
                             >
                                 <span style={{ display: 'block', fontSize: '1.35rem' }}>{level.emoji}</span>
@@ -1200,15 +1202,20 @@ export default function Dashboard() {
                                 {educationLevel === 'highschool' && t('dashboard.topics.highschool')}
                                 {educationLevel === 'university' && t('dashboard.topics.university')}
                                 {educationLevel === 'erettsegi' &&
-                                    (erettsegiExamLevel === 'emelt'
-                                        ? t('dashboard.topics.erettsegiEmelt')
-                                        : t('dashboard.topics.erettsegiKozep'))}
+                                    (erettsegiPrepPath === 'choose'
+                                        ? t('dashboard.erettsegi.chooseTitle')
+                                        : erettsegiExamLevel === 'emelt'
+                                          ? t('dashboard.topics.erettsegiEmelt')
+                                          : t('dashboard.topics.erettsegiKozep'))}
                             </h2>
                             <p className="section-subtitle">
                                 {educationLevel === 'elementary' && t('dashboard.topicsSub.elementary')}
                                 {educationLevel === 'highschool' && t('dashboard.topicsSub.highschool')}
                                 {educationLevel === 'university' && t('dashboard.topicsSub.university')}
-                                {educationLevel === 'erettsegi' && t('dashboard.topicsSub.erettsegi')}
+                                {educationLevel === 'erettsegi' &&
+                                    (erettsegiPrepPath === 'choose'
+                                        ? t('dashboard.erettsegi.chooseSub')
+                                        : t('dashboard.topicsSub.erettsegi'))}
                             </p>
                         </div>
                         <div className="dash-learn-actions">
@@ -1230,7 +1237,66 @@ export default function Dashboard() {
                             </button>
                         </div>
                     </div>
-                    {juice && (
+                    {educationLevel === 'erettsegi' && erettsegiPrepPath === 'choose' && (
+                        <div className="erettsegi-prep-choice">
+                            <button
+                                type="button"
+                                className={`erettsegi-prep-card ${erettsegiPrepPath === 'topics' ? 'active' : ''}`}
+                                onClick={() => {
+                                    // #region agent log
+                                    agentDebugLog({
+                                        hypothesisId: 'H3',
+                                        location: 'dashboard.tsx:erettsegiPrepPath',
+                                        message: 'dashboard erettsegi path chosen',
+                                        data: { path: 'topics', level: erettsegiExamLevel },
+                                        runId: 'er-choose-hub',
+                                    });
+                                    // #endregion
+                                    setErettsegiPrepPath('topics');
+                                }}
+                            >
+                                <span className="erettsegi-prep-icon" aria-hidden>
+                                    📖
+                                </span>
+                                <strong>{t('dashboard.erettsegi.topicsTitle')}</strong>
+                                <small>{t('dashboard.erettsegi.topicsDesc')}</small>
+                            </button>
+                            <button
+                                type="button"
+                                className="erettsegi-prep-card papers"
+                                onClick={() => {
+                                    // #region agent log
+                                    agentDebugLog({
+                                        hypothesisId: 'H3',
+                                        location: 'dashboard.tsx:erettsegiPrepPath',
+                                        message: 'dashboard erettsegi path chosen',
+                                        data: { path: 'papers', level: erettsegiExamLevel },
+                                        runId: 'er-choose-hub',
+                                    });
+                                    // #endregion
+                                    router.push(
+                                        `/erettsegi-felkeszules?mode=papers&level=${erettsegiExamLevel}`
+                                    );
+                                }}
+                            >
+                                <span className="erettsegi-prep-icon" aria-hidden>
+                                    📄
+                                </span>
+                                <strong>{t('dashboard.erettsegi.papersTitle')}</strong>
+                                <small>{t('dashboard.erettsegi.papersDesc')}</small>
+                            </button>
+                        </div>
+                    )}
+                    {educationLevel === 'erettsegi' && erettsegiPrepPath === 'topics' && (
+                        <button
+                            type="button"
+                            className="erettsegi-prep-back"
+                            onClick={() => setErettsegiPrepPath('choose')}
+                        >
+                            {t('dashboard.erettsegi.backChoose')}
+                        </button>
+                    )}
+                    {(educationLevel !== 'erettsegi' || erettsegiPrepPath === 'topics') && juice && (
                         <SkillTreePanel
                             juice={juice}
                             xp={practiceXp}
@@ -1239,7 +1305,7 @@ export default function Dashboard() {
                             }}
                         />
                     )}
-                    {juice && (
+                    {(educationLevel !== 'erettsegi' || erettsegiPrepPath === 'topics') && juice && (
                         <div className="dash-juice">
                             <div className="dash-juice-streak">
                                 🔥 {juice.loginStreak} {t('dashboard.loginStreak')}
@@ -1259,6 +1325,7 @@ export default function Dashboard() {
                         </div>
                     )}
 
+                    {(educationLevel !== 'erettsegi' || erettsegiPrepPath === 'topics') && (
                     <div className="topics-grid">
                         {mathTopics.map((topic) => {
                             const successRate = topic.totalAnswers > 0 ? (topic.correctAnswers / topic.totalAnswers) * 100 : 0;
@@ -1407,9 +1474,11 @@ export default function Dashboard() {
                         })}
 
                     </div>
+                    )}
                 </section>
 
                 {/* Overall Progress Summary */}
+                {(educationLevel !== 'erettsegi' || erettsegiPrepPath === 'topics') && (
                 <section className="overall-progress-section">
                     <h2 className="section-title">{t('dashboard.overall')}</h2>
                     <div className="overall-speedometer-container">
@@ -1518,6 +1587,7 @@ export default function Dashboard() {
                         })()}
                     </div>
                 </section>
+                )}
 
                  {assignedTasks.length > 0 && (
                      <section className="public-tasks-section" style={{ marginBottom: "2rem" }}>
