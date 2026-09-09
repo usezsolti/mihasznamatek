@@ -3,6 +3,20 @@ export const ADMIN_BOOKING_EMAIL = 'usezsolti@gmail.com';
 /** 1 órás sáv ára — a foglaló és az e-mail ezt használja. */
 export const LESSON_PRICE_PER_HOUR = 11000;
 
+export const CANCEL_POLICY_HU =
+    'Ha 24 óránál kevesebbel az óra előtt mondod le, a teljes összeget ki kell fizetni.';
+
+export function resolveLessonType(...vals: unknown[]): 'online' | 'personal' {
+    for (const v of vals) {
+        const s = String(v || '')
+            .toLowerCase()
+            .trim();
+        if (s === 'personal' || s === 'személyes' || s === 'szemelyes') return 'personal';
+        if (s === 'online') return 'online';
+    }
+    return 'online';
+}
+
 export function priceForTimes(times: string[] | undefined | null): number {
     const n = Array.isArray(times) ? times.length : 0;
     return n * LESSON_PRICE_PER_HOUR;
@@ -92,6 +106,8 @@ export type MailPayload = {
 export type MailBuildExtras = {
     approveUrl?: string;
     proposeUrl?: string;
+    cancelUrl?: string;
+    respondUrl?: string;
 };
 
 export function normalizeAttachments(

@@ -1,6 +1,8 @@
 import { getGoogleCalendarUrl } from '../bookingCalendar';
+import { agentDebugLog } from '../agentDebugLog';
 import {
     ADMIN_BOOKING_EMAIL,
+    CANCEL_POLICY_HU,
     formatAttachmentsLine,
     priceForTimes,
     type BookingEmailType,
@@ -31,7 +33,71 @@ function formatDateHu(dateKey: string): string {
 }
 
 function typeLabel(lessonType: string): string {
-    return lessonType === 'online' ? 'Online' : 'Személyes (Fót)';
+    return lessonType === 'personal' ? 'Személyes (Fót)' : 'Online';
+}
+
+function emailBtn(href: string, label: string, variant: 'primary' | 'danger' | 'outline'): string {
+    const styles = {
+        primary: 'background:#0b6e4f;color:#ffffff;border:2px solid #0b6e4f;',
+        danger: 'background:#b42318;color:#ffffff;border:2px solid #b42318;',
+        outline: 'background:#ffffff;color:#0b6e4f;border:2px solid #0b6e4f;',
+    }[variant];
+    return `<a href="${escapeHtml(href)}" style="display:inline-block;${styles}text-decoration:none;padding:12px 20px;border-radius:8px;font-weight:600;font-size:15px;">${escapeHtml(label)}</a>`;
+}
+
+function wrapStudentHtml(title: string, inner: string): string {
+    return `<!DOCTYPE html>
+<html lang="hu">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width"></head>
+<body style="margin:0;padding:0;background:#f6f7f9;font-family:Segoe UI,Roboto,Helvetica,Arial,sans-serif;color:#1a1a1a;">
+  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f6f7f9;padding:24px 12px;">
+    <tr><td align="center">
+      <table role="presentation" width="100%" style="max-width:560px;background:#ffffff;border-radius:12px;padding:28px 24px;">
+        <tr><td>
+          <p style="margin:0 0 8px;font-size:20px;font-weight:700;">${escapeHtml(title)}</p>
+          ${inner}
+        </td></tr>
+      </table>
+    </td></tr>
+  </table>
+</body>
+</html>`;
+}
+
+function studentDetailsTable(booking: BookingPayload, dateKey?: string, times?: string[]): string {
+    const dateHu = formatDateHu(dateKey || booking.date);
+    const slot = (times || booking.times).join(', ');
+    const rows: Array<[string, string]> = [
+        ['Dátum', dateHu],
+        ['Időpont(ok)', slot],
+        ['Óra típusa', typeLabel(booking.lessonType)],
+        ['Témakör', booking.selectedSubject || '—'],
+        ['Összesen', `${displayPrice(booking).toLocaleString('hu-HU')} Ft`],
+    ];
+    return `<table role="presentation" style="margin:0 0 20px;font-size:14px;line-height:1.45;">${rows
+        .map(
+            ([k, v]) =>
+                `<tr><td style="padding:6px 12px 6px 0;color:#555;vertical-align:top;">${escapeHtml(k)}</td><td style="padding:6px 0;font-weight:600;">${escapeHtml(v)}</td></tr>`
+        )
+        .join('')}</table>`;
+}
+
+function policyBlock(): string {
+    return `<p style="margin:16px 0 0;padding:12px 14px;background:#fff6e8;border-radius:8px;font-size:13px;line-height:1.5;color:#5c3b00;">${escapeHtml(CANCEL_POLICY_HU)}</p>`;
+}
+
+const STUDENT_WELCOME_LINES = [
+    'Csáó leendő tanítványom!',
+    'Üdvözöllek a MihasznaMatek univerzumában, várom, hogy együtt csapassuk a közös munkát és fejlődjünk.',
+];
+
+function studentWelcomeHtml(): string {
+    return `<p style="margin:0 0 8px;font-size:16px;font-weight:700;line-height:1.45;">${escapeHtml(STUDENT_WELCOME_LINES[0])}</p>
+          <p style="margin:0 0 16px;font-size:15px;line-height:1.55;">${escapeHtml(STUDENT_WELCOME_LINES[1])}</p>`;
+}
+
+function studentSignoffHtml(): string {
+    return `<p style="margin:16px 0 0;font-size:13px;color:#555;line-height:1.5;">Ha kérdésed van, írj bátran erre az e-mailre.<br><br>Találkozunk az órán!<br>Zsolt<br>Mihaszna Matek</p>`;
 }
 
 function addressLine(booking: BookingPayload): string {
@@ -132,30 +198,114 @@ function formatAdminNewHtml(
 </html>`;
 }
 
+function formatStudentApprovedHtml(booking: BookingPayload, extras?: MailBuildExtras): string {
+    const calUrl = getGoogleCalendarUrl(booking);
+    const buttons = [
+        calUrl ? `<p style="margin:0 0 12px;">${emailBtn(calUrl, 'Naptárba mentés', 'primary')}</p>` : '',
+        extras?.cancelUrl
+            ? `<p style="margin:0 0 8px;">${emailBtn(extras.cancelUrl, 'Lemondás', 'danger')}</p>`
+            : '',
+    ]
+        .filter(Boolean)
+        .join('');
+    return wrapStudentHtml(
+        'Foglalásod jóváhagyva',
+        `${studentWelcomeHtml()}
+          <p style="margin:0 0 16px;font-size:15px;line-height:1.5;">Az órád be van írva, ${escapeHtml(booking.customerName)}. Itt a részletek:</p>
+          ${studentDetailsTable(booking)}
+          ${buttons}
+          ${policyBlock()}
+          <p style="margin:16px 0 0;font-size:14px;line-height:1.5;">Egy nappal az óra előtt emlékeztetőt is küldünk.</p>
+          ${studentSignoffHtml()}`
+    );
+}
+
+function formatProposeTimeHtml(
+    booking: BookingPayload,
+    date: string,
+    times: string[],
+    respondUrl: string,
+    cancelUrl?: string
+): string {
+    const buttons = [
+        `<p style="margin:0 0 12px;">${emailBtn(respondUrl, 'Elfogadom / másik időpontot kérek', 'primary')}</p>`,
+        cancelUrl ? `<p style="margin:0 0 8px;">${emailBtn(cancelUrl, 'Lemondás', 'danger')}</p>` : '',
+    ].join('');
+    return wrapStudentHtml(
+        'Másik időpontot javasolunk',
+        `<p style="margin:0 0 16px;font-size:15px;line-height:1.5;">Kedves ${escapeHtml(booking.customerName)}! A kért időpont sajnos nem jó. Ezt javasoljuk helyette:</p>
+          ${studentDetailsTable(booking, date, times)}
+          ${buttons}
+          ${policyBlock()}
+          <p style="margin:16px 0 0;font-size:13px;color:#555;">Üdvözlettel,<br>Mihaszna Matek</p>`
+    );
+}
+
+function formatReminderHtml(booking: BookingPayload, extras?: MailBuildExtras): string {
+    const calUrl = getGoogleCalendarUrl(booking);
+    const loc =
+        booking.lessonType === 'personal'
+            ? 'Az óra személyesen lesz (Fót).'
+            : 'Az óra online lesz — a linket / belépési infót e-mailben vagy Messengeren egyeztetjük.';
+    const buttons = [
+        calUrl ? `<p style="margin:0 0 12px;">${emailBtn(calUrl, 'Naptárba mentés', 'primary')}</p>` : '',
+        extras?.cancelUrl
+            ? `<p style="margin:0 0 8px;">${emailBtn(extras.cancelUrl, 'Lemondás', 'danger')}</p>`
+            : '',
+    ]
+        .filter(Boolean)
+        .join('');
+    return wrapStudentHtml(
+        'Holnap matekóra',
+        `<p style="margin:0 0 16px;font-size:15px;line-height:1.5;">Kedves ${escapeHtml(booking.customerName)}!</p>
+          ${studentDetailsTable(booking)}
+          <p style="margin:0 0 16px;font-size:14px;line-height:1.5;">${escapeHtml(loc)}</p>
+          ${buttons}
+          ${policyBlock()}
+          <p style="margin:16px 0 0;font-size:13px;color:#555;">Üdvözlettel,<br>Mihaszna Matek</p>`
+    );
+}
+
+function formatStudentCancelledHtml(booking: BookingPayload): string {
+    return wrapStudentHtml(
+        'Foglalásod lemondva',
+        `<p style="margin:0 0 16px;font-size:15px;line-height:1.5;">Kedves ${escapeHtml(booking.customerName)}! A foglalásod sikeresen lemondva.</p>
+          ${studentDetailsTable(booking)}
+          ${policyBlock()}
+          <p style="margin:16px 0 0;font-size:14px;line-height:1.5;">Ha máskor szeretnél órát, foglalj újra a honlapon.</p>
+          <p style="margin:16px 0 0;font-size:13px;color:#555;">Üdvözlettel,<br>Mihaszna Matek</p>`
+    );
+}
+
 export function formatStudentDecisionMessage(
     booking: BookingPayload,
-    decision: 'approved' | 'rejected'
+    decision: 'approved' | 'rejected',
+    extras?: MailBuildExtras
 ): string {
     const dateHu = formatDateHu(booking.date);
     if (decision === 'approved') {
-        const calUrl = getGoogleCalendarUrl(booking);
         return [
-            `Kedves ${booking.customerName}!`,
+            STUDENT_WELCOME_LINES[0],
+            STUDENT_WELCOME_LINES[1],
             '',
-            '✅ Foglalásod jóváhagyva!',
+            `Az órád be van írva, ${booking.customerName}. Itt a részletek:`,
             '',
-            `📅 Dátum: ${dateHu}`,
-            `⏰ Időpontok: ${booking.times.join(', ')}`,
-            `📍 Óra típusa: ${typeLabel(booking.lessonType)}`,
-            `📚 Témakör: ${booking.selectedSubject}`,
-            `💰 Összesen: ${displayPrice(booking).toLocaleString('hu-HU')} Ft`,
-            ...(calUrl ? ['', 'Naptárba mentés (Google):', calUrl] : []),
+            `Dátum: ${dateHu}`,
+            `Időpontok: ${booking.times.join(', ')}`,
+            `Óra típusa: ${typeLabel(booking.lessonType)}`,
+            `Témakör: ${booking.selectedSubject}`,
+            `Összesen: ${displayPrice(booking).toLocaleString('hu-HU')} Ft`,
+            '',
+            CANCEL_POLICY_HU,
+            '',
+            extras?.cancelUrl ? 'Lemondáshoz használd a gombot az e-mailben.' : '',
             '',
             'Egy nappal az óra előtt emlékeztető e-mailt is küldünk.',
             '',
-            'Várunk az órán!',
+            'Ha kérdésed van, írj bátran erre az e-mailre.',
             '',
-            'Üdvözlettel,',
+            'Találkozunk az órán!',
+            'Zsolt',
             'Mihaszna Matek',
             ADMIN_BOOKING_EMAIL,
         ].join('\n');
@@ -218,6 +368,8 @@ export function formatStudentCancelledMessage(booking: BookingPayload): string {
         `📅 Dátum: ${formatDateHu(booking.date)}`,
         `⏰ Időpontok: ${(booking.times || []).join(', ')}`,
         '',
+        CANCEL_POLICY_HU,
+        '',
         'Ha máskor szeretnél órát, foglalj újra a honlapon.',
         '',
         'Üdvözlettel,',
@@ -228,7 +380,6 @@ export function formatStudentCancelledMessage(booking: BookingPayload): string {
 
 export function formatLessonReminderMessage(booking: BookingPayload): string {
     const times = (booking.times || []).join(', ');
-    const calUrl = getGoogleCalendarUrl(booking);
     return [
         `Kedves ${booking.customerName}!`,
         '',
@@ -239,12 +390,13 @@ export function formatLessonReminderMessage(booking: BookingPayload): string {
         `📍 Óra típusa: ${typeLabel(booking.lessonType)}`,
         `📚 Témakör: ${booking.selectedSubject || '—'}`,
         '',
-        booking.lessonType === 'online'
-            ? 'Az óra online lesz — a linket / belépési infót e-mailben / Messengeren egyeztetjük.'
-            : 'Az óra személyesen lesz (Fót).',
-        ...(calUrl ? ['', 'Naptárba mentés (Google):', calUrl] : []),
+        booking.lessonType === 'personal'
+            ? 'Az óra személyesen lesz (Fót).'
+            : 'Az óra online lesz — a linket / belépési infót e-mailben / Messengeren egyeztetjük.',
         '',
-        'Ha mégsem tudsz jönni, mondd le a Dashboard → Profilom → Óráim menüben.',
+        CANCEL_POLICY_HU,
+        '',
+        'Ha mégsem tudsz jönni, a lemondás gombbal vagy a Profilom → Óráim menüben mondhatod le.',
         '',
         'Üdvözlettel,',
         'Mihaszna Matek',
@@ -277,7 +429,9 @@ export function buildMailsForType(
     if (type === 'propose_time') {
         const date = booking.proposedDate || booking.date;
         const times = booking.proposedTimes?.length ? booking.proposedTimes : booking.times;
-        const acceptUrl = `${origin}/foglalas-valasz?id=${encodeURIComponent(booking.id)}&email=${encodeURIComponent(booking.customerEmail)}&date=${encodeURIComponent(date)}&times=${encodeURIComponent(times.join(','))}&name=${encodeURIComponent(booking.customerName)}&token=${encodeURIComponent(booking.proposalToken || '')}`;
+        const respondUrl =
+            extras?.respondUrl ||
+            `${origin}/foglalas-valasz?id=${encodeURIComponent(booking.id)}&email=${encodeURIComponent(booking.customerEmail)}&date=${encodeURIComponent(date)}&times=${encodeURIComponent(times.join(','))}&name=${encodeURIComponent(booking.customerName)}&token=${encodeURIComponent(booking.proposalToken || '')}`;
         return [
             {
                 to: booking.customerEmail,
@@ -286,15 +440,18 @@ export function buildMailsForType(
                     `Kedves ${booking.customerName}!`,
                     '',
                     'A kért időpont sajnos nem jó. Ezt az időpontot javasoljuk helyette:',
-                    `📅 ${formatDateHu(date)}`,
-                    `⏰ ${times.join(', ')}`,
+                    `Dátum: ${formatDateHu(date)}`,
+                    `Időpontok: ${times.join(', ')}`,
+                    `Óra típusa: ${typeLabel(booking.lessonType)}`,
                     '',
-                    'Ha megfelel, a linken el tudod fogadni. Ha ez sem jó, ugyanott másik időpontot is kérhetsz.',
-                    acceptUrl,
+                    'A gombbal el tudod fogadni, vagy másik időpontot kérni.',
+                    '',
+                    CANCEL_POLICY_HU,
                     '',
                     'Üdvözlettel,',
                     'Mihaszna Matek',
                 ].join('\n'),
+                html: formatProposeTimeHtml(booking, date, times, respondUrl, extras?.cancelUrl),
                 replyTo: ADMIN_BOOKING_EMAIL,
             },
         ];
@@ -362,6 +519,7 @@ export function buildMailsForType(
                 to: booking.customerEmail,
                 subject: `Foglalásod lemondva – ${booking.date}`,
                 text: formatStudentCancelledMessage(booking),
+                html: formatStudentCancelledHtml(booking),
                 replyTo: ADMIN_BOOKING_EMAIL,
             },
         ];
@@ -372,8 +530,9 @@ export function buildMailsForType(
         return [
             {
                 to: booking.customerEmail,
-                subject: `⏰ Holnap óra – ${booking.date} ${times}`,
+                subject: `Holnap óra – ${booking.date} ${times}`,
                 text: formatLessonReminderMessage(booking),
+                html: formatReminderHtml(booking, extras),
                 replyTo: ADMIN_BOOKING_EMAIL,
                 cc: ADMIN_BOOKING_EMAIL,
             },
@@ -381,14 +540,30 @@ export function buildMailsForType(
     }
 
     const decision = type === 'student_approved' ? 'approved' : 'rejected';
+    // #region agent log
+    agentDebugLog({
+        hypothesisId: 'E',
+        location: 'emailTemplates.ts:buildMailsForType',
+        message: 'student decision mail built',
+        data: {
+            type,
+            lessonType: booking.lessonType,
+            typeLabel: typeLabel(booking.lessonType),
+            hasCancelUrl: Boolean(extras?.cancelUrl),
+            hasHtml: decision === 'approved',
+        },
+        runId: 'lesson-type-email',
+    });
+    // #endregion
     return [
         {
             to: booking.customerEmail,
             subject:
                 decision === 'approved'
-                    ? `✅ Foglalásod jóváhagyva – ${booking.date}`
+                    ? `Foglalásod jóváhagyva – ${booking.date}`
                     : `Foglalási kérelem – ${booking.date}`,
-            text: formatStudentDecisionMessage(booking, decision),
+            text: formatStudentDecisionMessage(booking, decision, extras),
+            html: decision === 'approved' ? formatStudentApprovedHtml(booking, extras) : undefined,
             replyTo: ADMIN_BOOKING_EMAIL,
             cc: ADMIN_BOOKING_EMAIL,
         },

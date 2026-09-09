@@ -9,7 +9,7 @@ function secret(): string {
     );
 }
 
-export type DecisionPurpose = 'student_accept' | 'admin_approve' | 'admin_propose';
+export type DecisionPurpose = 'student_accept' | 'admin_approve' | 'admin_propose' | 'student_cancel';
 
 export function proposalPayload(
     bookingId: string,
@@ -71,7 +71,14 @@ export function verifyDecision(opts: {
 export function adminDecisionUrl(
     origin: string,
     action: 'approve' | 'propose',
-    booking: { id: string; customerEmail: string; customerName: string; date: string; times: string[] },
+    booking: {
+        id: string;
+        customerEmail: string;
+        customerName: string;
+        date: string;
+        times: string[];
+        lessonType?: string;
+    },
     token: string
 ): string {
     const q = new URLSearchParams({
@@ -83,5 +90,35 @@ export function adminDecisionUrl(
         name: booking.customerName,
         token,
     });
+    if (booking.lessonType) q.set('lessonType', booking.lessonType);
     return `${origin.replace(/\/$/, '')}/foglalas-dontes?${q.toString()}`;
+}
+
+export function studentCancelUrl(
+    origin: string,
+    booking: { id: string; customerEmail: string; customerName: string; date: string; times: string[] },
+    token: string
+): string {
+    const q = new URLSearchParams({
+        id: booking.id,
+        email: booking.customerEmail,
+        date: booking.date,
+        times: booking.times.join(','),
+        name: booking.customerName,
+        token,
+    });
+    return `${origin.replace(/\/$/, '')}/foglalas-lemondas?${q.toString()}`;
+}
+
+export function studentMailExtras(
+    origin: string,
+    booking: { id: string; customerEmail: string; customerName: string; date: string; times: string[] }
+): { cancelUrl: string } {
+    return {
+        cancelUrl: studentCancelUrl(
+            origin,
+            booking,
+            signDecision('student_cancel', booking.id, booking.customerEmail, booking.date, booking.times)
+        ),
+    };
 }

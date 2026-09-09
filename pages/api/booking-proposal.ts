@@ -10,10 +10,12 @@ import {
     sanitizeText,
 } from '../../utils/apiSecurity';
 import { buildMailsForType, type BookingPayload } from '../../utils/bookingNotify';
+import { resolveLessonType } from '../../utils/booking/types';
 import {
     adminDecisionUrl,
     signDecision,
     signProposal,
+    studentMailExtras,
     verifyDecision,
     verifyProposal,
 } from '../../utils/booking/proposalToken';
@@ -30,13 +32,45 @@ function parseTimes(raw: unknown): string[] {
     return list.map((t) => sanitizeText(t, 8)).filter((t) => /^\d{2}:\d{2}$/.test(t)).slice(0, 8);
 }
 
+function isLateCancel(date: string, times: string[]): boolean {
+    const hm = times[0] || '00:00';
+    const start = Date.parse(`${date}T${hm}:00`);
+    if (!Number.isFinite(start)) return false;
+    return start - Date.now() < 24 * 60 * 60 * 1000;
+}
+
 async function loadBookingDoc(id: string, fallback: BookingPayload): Promise<BookingPayload> {
     const db = getAdminDb();
-    if (!db) return fallback;
+    if (!db) {
+        // #region agent log
+        agentDebugLog({
+            hypothesisId: 'A',
+            location: 'api/booking-proposal.ts:loadBookingDoc',
+            message: 'no admin db, using fallback',
+            data: { fallbackLessonType: fallback.lessonType },
+            runId: 'lesson-type-email',
+        });
+        // #endregion
+        return fallback;
+    }
     try {
         const snap = await db.collection('bookings').doc(id).get();
         if (!snap.exists) return fallback;
         const d = (snap.data() || {}) as Partial<BookingPayload>;
+        const resolved = resolveLessonType(d.lessonType, fallback.lessonType);
+        // #region agent log
+        agentDebugLog({
+            hypothesisId: 'B',
+            location: 'api/booking-proposal.ts:loadBookingDoc',
+            message: 'firestore lessonType',
+            data: {
+                firestoreLessonType: String(d.lessonType || ''),
+                fallbackLessonType: fallback.lessonType,
+                resolved,
+            },
+            runId: 'lesson-type-email',
+        });
+        // #endregion
         return {
             ...fallback,
             ...d,
@@ -45,6 +79,7 @@ async function loadBookingDoc(id: string, fallback: BookingPayload): Promise<Boo
             customerName: String(d.customerName || fallback.customerName || 'Diák'),
             date: String(d.date || fallback.date || ''),
             times: Array.isArray(d.times) && d.times.length ? d.times : fallback.times,
+            lessonType: resolved,
             status: (d.status as BookingPayload['status']) || fallback.status,
         };
     } catch {
@@ -89,7 +124,7 @@ async function proposeToStudent(opts: {
             )
             .catch(() => undefined);
     }
-    const mails = buildMailsForType('propose_time', payload, opts.origin);
+    const mails = buildMailsForType('propose_time', payload, opts.origin, studentMailExtras(opts.origin, payload));
     return sendMails(mails);
 }
 
@@ -149,7 +184,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             times,
             customerName: name,
             customerEmail: email,
-            lessonType: 'online',
+            lessonType: resolveLessonType(req.body?.lessonType),
             selectedSubject: '',
             hobby: '',
             totalPrice: 0,
@@ -157,6 +192,17 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             proposedDate: date,
             proposedTimes: times,
             status: 'approved',
+        };
+        const loaded = await loadBookingDoc(id, booking);
+        const approved: BookingPayload = {
+            ...loaded,
+            date,
+            times,
+            customerEmail: email,
+            proposedDate: date,
+            proposedTimes: times,
+            status: 'approved',
+            lessonType: resolveLessonType(loaded.lessonType, req.body?.lessonType),
         };
         const db = getAdminDb();
         if (db) {
@@ -171,12 +217,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                         approvedAt: new Date().toISOString(),
                         proposedDate: date,
                         proposedTimes: times,
+                        lessonType: approved.lessonType,
                     },
                     { merge: true }
                 )
                 .catch(() => undefined);
         }
-        const mails = buildMailsForType('proposal_accepted', booking, origin);
+        const mails = buildMailsForType('proposal_accepted', approved, origin);
         const sent = await sendMails(mails);
         // #region agent log
         agentDebugLog({
@@ -212,7 +259,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             times,
             customerName: name,
             customerEmail: email,
-            lessonType: req.body?.lessonType === 'personal' ? 'personal' : 'online',
+            lessonType: resolveLessonType(req.body?.lessonType),
             selectedSubject: sanitizeText(req.body?.selectedSubject, 120),
             hobby: sanitizeText(req.body?.hobby, 500),
             totalPrice: Math.min(Math.max(Number(req.body?.totalPrice) || 0, 0), 5_000_000),
@@ -220,6 +267,20 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             status: 'pending',
         };
         const booking = await loadBookingDoc(id, fallback);
+        // #region agent log
+        agentDebugLog({
+            hypothesisId: 'A',
+            location: 'api/booking-proposal.ts:admin_approve',
+            message: 'lessonType sources at approve',
+            data: {
+                bodyLessonType: String(req.body?.lessonType || ''),
+                fallbackLessonType: fallback.lessonType,
+                loadedLessonType: booking.lessonType,
+                hasAdminDb: Boolean(getAdminDb()),
+            },
+            runId: 'lesson-type-email',
+        });
+        // #endregion
         if (String(booking.customerEmail || '').toLowerCase() && String(booking.customerEmail).toLowerCase() !== email) {
             return sendErr(res, 'A foglalási adatok nem egyeznek.', 403);
         }
@@ -229,6 +290,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         if (booking.status === 'cancelled' || booking.status === 'rejected') {
             return sendErr(res, 'Ez a foglalás már lezárult.', 409);
         }
+        const approved: BookingPayload = {
+            ...booking,
+            customerEmail: email,
+            date,
+            times,
+            status: 'approved',
+            lessonType: resolveLessonType(booking.lessonType, req.body?.lessonType),
+        };
         const db = getAdminDb();
         if (db) {
             await db
@@ -240,21 +309,28 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                         approvedAt: new Date().toISOString(),
                         date,
                         times,
+                        lessonType: approved.lessonType,
                     },
                     { merge: true }
                 )
                 .catch(() => undefined);
         }
-        const approved: BookingPayload = { ...booking, customerEmail: email, date, times, status: 'approved' };
-        const mails = buildMailsForType('student_approved', approved, origin);
+        const extras = studentMailExtras(origin, approved);
+        const mails = buildMailsForType('student_approved', approved, origin, extras);
         const sent = await sendMails(mails);
         // #region agent log
         agentDebugLog({
-            hypothesisId: 'P3',
+            hypothesisId: 'C',
             location: 'api/booking-proposal.ts:admin_approve',
             message: 'admin approved from email',
-            data: { ok: sent.ok, bookingId: id, date, times },
-            runId: 'email-debug',
+            data: {
+                ok: sent.ok,
+                bookingId: id,
+                approvedLessonType: approved.lessonType,
+                hasCancelUrl: Boolean(extras.cancelUrl),
+                htmlLen: mails[0]?.html?.length || 0,
+            },
+            runId: 'lesson-type-email',
         });
         // #endregion
         if (!sent.ok) return sendErr(res, sent.error || 'A diák e-mail nem ment ki', 502);
@@ -296,7 +372,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             times: originalTimes,
             customerName: name,
             customerEmail: email,
-            lessonType: 'online',
+            lessonType: resolveLessonType(req.body?.lessonType),
             selectedSubject: '',
             hobby: '',
             totalPrice: 0,
@@ -307,7 +383,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             return sendErr(res, 'Ez a foglalás már lezárult.', 409);
         }
         const sent = await proposeToStudent({
-            booking: { ...booking, customerEmail: email, customerName: name },
+            booking: {
+                ...booking,
+                customerEmail: email,
+                customerName: name,
+                lessonType: resolveLessonType(booking.lessonType, req.body?.lessonType),
+            },
             email,
             date,
             times,
@@ -352,7 +433,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             times: offeredTimes,
             customerName: name,
             customerEmail: email,
-            lessonType: 'online',
+            lessonType: resolveLessonType(req.body?.lessonType),
             selectedSubject: '',
             hobby: '',
             totalPrice: 0,
@@ -418,6 +499,81 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         // #endregion
         if (!sent.ok) return sendErr(res, sent.error || 'Email nem ment ki', 502);
         return sendOk(res, { ok: true, date, times });
+    }
+
+    if (action === 'student_cancel') {
+        const rl = rateLimit(`student_cancel:${ip}`, 20, 60 * 60 * 1000);
+        if (!rl.ok) return sendErr(res, 'Túl sok kérés.', 429);
+        const id = sanitizeText(req.body?.id, 80);
+        const email = sanitizeText(req.body?.email, 200).toLowerCase();
+        const name = sanitizeText(req.body?.name, 120) || 'Diák';
+        const date = sanitizeText(req.body?.date, 32);
+        const times = parseTimes(req.body?.times);
+        const token = sanitizeText(req.body?.token, 64);
+        if (!id || !isValidEmail(email) || !/^\d{4}-\d{2}-\d{2}$/.test(date) || !times.length) {
+            return sendErr(res, 'Érvénytelen link.', 400);
+        }
+        if (!verifyDecision({ purpose: 'student_cancel', bookingId: id, email, date, times, token })) {
+            return sendErr(res, 'Érvénytelen vagy lejárt link.', 403);
+        }
+        const fallback: BookingPayload = {
+            id,
+            date,
+            times,
+            customerName: name,
+            customerEmail: email,
+            lessonType: resolveLessonType(req.body?.lessonType),
+            selectedSubject: '',
+            hobby: '',
+            totalPrice: 0,
+            submittedAt: new Date().toISOString(),
+            status: 'pending',
+        };
+        const booking = await loadBookingDoc(id, fallback);
+        if (String(booking.customerEmail || '').toLowerCase() && String(booking.customerEmail).toLowerCase() !== email) {
+            return sendErr(res, 'A foglalási adatok nem egyeznek.', 403);
+        }
+        if (booking.status === 'cancelled') {
+            return sendOk(res, { ok: true, already: true, lateCancel: isLateCancel(booking.date, booking.times) });
+        }
+        if (booking.status === 'rejected') {
+            return sendErr(res, 'Ez a foglalás már lezárult.', 409);
+        }
+        const day = Date.parse(`${booking.date}T23:59:59`);
+        if (Number.isFinite(day) && day < Date.now()) {
+            return sendErr(res, 'Múltbeli óra nem mondható le.', 409);
+        }
+        const cancelled: BookingPayload = { ...booking, customerEmail: email, status: 'cancelled' };
+        const lateCancel = isLateCancel(cancelled.date, cancelled.times);
+        const db = getAdminDb();
+        if (db) {
+            await db
+                .collection('bookings')
+                .doc(id)
+                .set(
+                    {
+                        status: 'cancelled',
+                        cancelledAt: new Date().toISOString(),
+                        cancelledBy: 'student',
+                        lateCancel,
+                    },
+                    { merge: true }
+                )
+                .catch(() => undefined);
+        }
+        const mails = buildMailsForType('booking_cancelled', cancelled, origin);
+        const sent = await sendMails(mails);
+        // #region agent log
+        agentDebugLog({
+            hypothesisId: 'D',
+            location: 'api/booking-proposal.ts:student_cancel',
+            message: 'student cancelled from email',
+            data: { ok: sent.ok, bookingId: id, lateCancel, lessonType: cancelled.lessonType },
+            runId: 'lesson-type-email',
+        });
+        // #endregion
+        if (!sent.ok) return sendErr(res, sent.error || 'Lemondva, de az e-mail nem ment ki', 502);
+        return sendOk(res, { ok: true, lateCancel });
     }
 
     return sendErr(res, 'Ismeretlen művelet', 400);

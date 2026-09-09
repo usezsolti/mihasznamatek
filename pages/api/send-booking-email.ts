@@ -7,6 +7,7 @@ import {
     EmailSendResult,
     buildMailsForType,
     priceForTimes,
+    resolveLessonType,
     sendViaFormSubmit,
 } from "../../utils/bookingNotify";
 import {
@@ -21,7 +22,7 @@ import {
     sanitizeText,
     mailLinkOrigin,
 } from "../../utils/apiSecurity";
-import { adminDecisionUrl, signDecision } from "../../utils/booking/proposalToken";
+import { adminDecisionUrl, signDecision, studentMailExtras } from "../../utils/booking/proposalToken";
 import { sendErr, sendOk } from "../../server/http";
 import { sanitizePublicError } from "../../utils/apiEnvelope";
 import { isAdminEmail } from "../../utils/admin";
@@ -74,7 +75,7 @@ function sanitizeBooking(raw: any): BookingPayload | null {
         customerName,
         customerEmail,
         username: sanitizeText(raw.username, 24) || undefined,
-        lessonType: raw.lessonType === "personal" ? "personal" : "online",
+        lessonType: resolveLessonType(raw.lessonType),
         selectedSubject: sanitizeText(raw.selectedSubject, 120),
         hobby: sanitizeText(raw.hobby, 500),
         totalPrice: Math.min(priceForTimes(times), 5_000_000),
@@ -336,7 +337,22 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                       signDecision("admin_propose", booking.id, booking.customerEmail, booking.date, booking.times)
                   ),
               }
-            : undefined;
+            : type === "student_approved" || type === "lesson_reminder" || type === "propose_time"
+              ? studentMailExtras(baseOrigin, booking)
+              : undefined;
+    // #region agent log
+    agentDebugLog({
+        hypothesisId: "B",
+        location: "api/send-booking-email.ts:extras",
+        message: "booking email extras",
+        data: {
+            type,
+            lessonType: booking.lessonType,
+            hasCancelUrl: Boolean(extras && "cancelUrl" in extras && extras.cancelUrl),
+        },
+        runId: "lesson-type-email",
+    });
+    // #endregion
     const mails = buildMailsForType(type, booking, baseOrigin, extras);
 
     try {

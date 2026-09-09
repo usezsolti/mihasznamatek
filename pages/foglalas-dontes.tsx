@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router';
 import { useEffect, useRef, useState } from 'react';
 import Head from 'next/head';
+import { agentDebugLog } from '../utils/agentDebugLog';
 
 function q(v: string | string[] | undefined): string {
     return String(Array.isArray(v) ? v[0] : v || '');
@@ -20,6 +21,7 @@ export default function FoglalasDontes() {
     const date = q(router.query.date);
     const times = q(router.query.times);
     const token = q(router.query.token);
+    const lessonType = q(router.query.lessonType) === 'personal' ? 'personal' : q(router.query.lessonType) === 'online' ? 'online' : '';
 
     const [busy, setBusy] = useState(false);
     const [done, setDone] = useState(false);
@@ -47,6 +49,15 @@ export default function FoglalasDontes() {
             return;
         }
         approveStarted.current = true;
+        // #region agent log
+        agentDebugLog({
+            hypothesisId: 'A',
+            location: 'foglalas-dontes.tsx:approve',
+            message: 'teacher approve POST',
+            data: { lessonTypeFromUrl: lessonType, hasLessonType: Boolean(lessonType) },
+            runId: 'lesson-type-email',
+        });
+        // #endregion
         (async () => {
             setBusy(true);
             setErr('');
@@ -62,6 +73,7 @@ export default function FoglalasDontes() {
                         date,
                         times: times.split(','),
                         token,
+                        lessonType: lessonType || undefined,
                     }),
                 });
                 const data = await res.json().catch(() => ({}));
@@ -90,7 +102,7 @@ export default function FoglalasDontes() {
                 setBusy(false);
             }
         })();
-    }, [router.isReady, action, id, token, email, name, date, times]);
+    }, [router.isReady, action, id, token, email, name, date, times, lessonType]);
 
     const propose = async () => {
         const nextDate = proposedDate;
@@ -115,6 +127,7 @@ export default function FoglalasDontes() {
                     proposedDate: nextDate,
                     proposedTimes: [nextTime],
                     token,
+                    lessonType: lessonType || undefined,
                 }),
             });
             const data = await res.json().catch(() => ({}));
@@ -147,6 +160,12 @@ export default function FoglalasDontes() {
                     Kért időpont: <strong>{date}</strong>
                     <br />
                     {times.split(',').filter(Boolean).join(', ')}
+                    {lessonType ? (
+                        <>
+                            <br />
+                            Típus: {lessonType === 'personal' ? 'Személyes (Fót)' : 'Online'}
+                        </>
+                    ) : null}
                 </p>
 
                 {action === 'propose' && !done ? (
