@@ -214,6 +214,22 @@ export default function AuthModal({
     const saveGoogleRegistrationProfile = async () => {
         const profile = buildProfile();
         const profileErr = validateRegistrationProfile(profile);
+        // #region agent log
+        agentDebugLog({
+            hypothesisId: 'A',
+            location: 'AuthModal.tsx:saveGoogleRegistrationProfile:start',
+            message: 'save profile clicked',
+            data: {
+                hasName: Boolean(profile.name),
+                usernameLen: profile.username.length,
+                hasAddress: Boolean(profile.postalCode && profile.street && profile.houseNumber),
+                hasSubject: Boolean(profile.preferredSubject),
+                gdprAccepted,
+                profileErr: profileErr || '',
+            },
+            runId: 'reg-save',
+        });
+        // #endregion
         if (profileErr) {
             setError(profileErr);
             return;
@@ -226,6 +242,15 @@ export default function AuthModal({
         try {
             const firebase = await waitForFirebase();
             const user = firebase?.auth?.()?.currentUser;
+            // #region agent log
+            agentDebugLog({
+                hypothesisId: 'B',
+                location: 'AuthModal.tsx:saveGoogleRegistrationProfile:user',
+                message: 'firebase user for save',
+                data: { hasFirebase: Boolean(firebase), hasUser: Boolean(user) },
+                runId: 'reg-save',
+            });
+            // #endregion
             if (!firebase || !user) {
                 setError(t("auth.errorFirebase"));
                 return;
@@ -241,6 +266,20 @@ export default function AuthModal({
                 "/api/auth/complete-profile",
                 profile
             );
+            // #region agent log
+            agentDebugLog({
+                hypothesisId: 'B',
+                location: 'AuthModal.tsx:saveGoogleRegistrationProfile:api',
+                message: 'complete-profile result',
+                data: {
+                    ok: apiSaved.ok,
+                    saved: Boolean(apiSaved.ok && apiSaved.data?.saved),
+                    fallback: apiSaved.ok ? String(apiSaved.data?.fallback || '') : '',
+                    err: apiSaved.ok ? '' : String(apiSaved.error || '').slice(0, 120),
+                },
+                runId: 'reg-save',
+            });
+            // #endregion
             if (!(apiSaved.ok && apiSaved.data?.saved)) {
                 await ensureUserDoc(firebase, user, {
                     name: profile.name,
@@ -249,10 +288,28 @@ export default function AuthModal({
                 });
             }
             setGoogleProfilePending(false);
+            // #region agent log
+            agentDebugLog({
+                hypothesisId: 'D',
+                location: 'AuthModal.tsx:saveGoogleRegistrationProfile:done',
+                message: 'save succeeded, finishing auth',
+                data: { willClose: true },
+                runId: 'reg-save',
+            });
+            // #endregion
             finishAuthSuccess();
         } catch (err: any) {
             const code = String(err?.code || "");
             const msg = String(err?.message || "");
+            // #region agent log
+            agentDebugLog({
+                hypothesisId: 'B',
+                location: 'AuthModal.tsx:saveGoogleRegistrationProfile:catch',
+                message: 'save threw',
+                data: { code: code.slice(0, 80), msg: msg.slice(0, 120) },
+                runId: 'reg-save',
+            });
+            // #endregion
             if (code.includes("permission") || /insufficient permissions|PERMISSION_DENIED/i.test(msg)) {
                 setError(
                     "A regisztrációs adatok mentése nem sikerült (Firestore szabályok). Próbáld újra, vagy jelezd a tanárnak."
@@ -267,6 +324,15 @@ export default function AuthModal({
 
     const handleEmailSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        // #region agent log
+        agentDebugLog({
+            hypothesisId: 'A',
+            location: 'AuthModal.tsx:handleEmailSubmit',
+            message: 'form submit',
+            data: { googleProfilePending, mode },
+            runId: 'reg-save',
+        });
+        // #endregion
         if (googleProfilePending) {
             await saveGoogleRegistrationProfile();
             return;
@@ -783,7 +849,26 @@ export default function AuthModal({
                                 </div>
                             )}
                             {(SHOW_EMAIL_PASSWORD_UI || googleProfilePending) ? (
-                            <form className="email-form" action="#" onSubmit={handleEmailSubmit}>
+                            <form
+                                className="email-form"
+                                action="#"
+                                onSubmit={handleEmailSubmit}
+                                onInvalid={(e) => {
+                                    const el = e.target as HTMLInputElement;
+                                    // #region agent log
+                                    agentDebugLog({
+                                        hypothesisId: 'A',
+                                        location: 'AuthModal.tsx:onInvalid',
+                                        message: 'native validation blocked submit',
+                                        data: {
+                                            id: String(el.id || el.placeholder || el.type || '').slice(0, 80),
+                                            required: Boolean(el.required),
+                                        },
+                                        runId: 'reg-save',
+                                    });
+                                    // #endregion
+                                }}
+                            >
                                 {mode === "register" && (
                                     <>
                                     <div className="form-group">

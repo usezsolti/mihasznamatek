@@ -6,6 +6,7 @@ import {
     requireAuth,
     sanitizeText,
 } from '../../../utils/apiSecurity';
+import { agentDebugLog } from '../../../utils/agentDebugLog';
 import {
     normalizeUsername,
     validateRegistrationProfile,
@@ -47,6 +48,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         if (profileErr) return sendErr(res, profileErr, 400);
 
         const db = getAdminDb();
+        // #region agent log
+        agentDebugLog({
+            hypothesisId: 'B',
+            location: 'complete-profile.ts',
+            message: 'complete-profile write',
+            data: { hasAdminDb: Boolean(db), uidLen: user.uid.length },
+            runId: 'reg-save',
+        });
+        // #endregion
         if (!db) {
             return sendOk(res, { fallback: 'client' as const });
         }

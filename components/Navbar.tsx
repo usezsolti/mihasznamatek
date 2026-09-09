@@ -96,6 +96,18 @@ export default function Navbar() {
                 });
 
                 if (profileIncomplete && !isAdminEmail(user.email)) {
+                    // #region agent log
+                    agentDebugLog({
+                        hypothesisId: 'C',
+                        location: 'Navbar.tsx:applyUser',
+                        message: 'reopening auth modal, profile incomplete',
+                        data: {
+                            hasUserDoc: true,
+                            profileIncomplete: true,
+                        },
+                        runId: 'reg-save',
+                    });
+                    // #endregion
                     setAuthModalMode("register");
                     setAuthModalOpen(true);
                 }
