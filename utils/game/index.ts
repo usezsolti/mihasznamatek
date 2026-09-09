@@ -70,6 +70,14 @@ export {
     kozpontiPapersByYear,
 } from './kozpontiPapers';
 export type { KozpontiPaperMeta, KozpontiGrade, KozpontiMonth } from './kozpontiPapers';
+export {
+    ERETTSEGI_PAPERS,
+    ERETTSEGI_YEARS,
+    getErettsegiPaperQuestions,
+    getErettsegiPapersForLevel,
+    erettsegiPapersByYear,
+} from './erettsegiPapers';
+export type { ErettsegiPaperMeta, ErettsegiMonth, ErettsegiExamLevel } from './erettsegiPapers';
 export { generateHighschoolQuestionByTopic } from './generateHighschool';
 export { generateUniversityQuestionByTopic } from './generateUniversity';
 export { getWorksheetListForTopic } from './worksheetLists';

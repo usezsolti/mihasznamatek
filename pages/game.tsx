@@ -167,6 +167,7 @@ export default function Game() {
         generateElementaryQuestionsByTopic,
         generateKozpontiQuestionsByTopic,
         generateKozpontiPaper,
+        generateErettsegiPaper,
         generateSzigorlatQuestionsBySubject,
         generateVegyesSzigorlatQuestions,
         generateUniversityQuestionsByTopic,
@@ -278,6 +279,7 @@ export default function Game() {
         generateMixedErettsegiQuestions,
         generateKozpontiQuestionsByTopic,
         generateKozpontiPaper,
+        generateErettsegiPaper,
         generateVegyesSzigorlatQuestions,
         generateSzigorlatQuestionsBySubject,
         loadTaskQuestions,
@@ -481,7 +483,9 @@ export default function Game() {
                                 feedbackPending={feedbackPending}
                                 onDismissFeedback={continueAfterFeedback}
                                 hintText={hintText}
-                                hideOfficialLabel={router.query.kozponti === 'true'}
+                                hideOfficialLabel={
+                                    router.query.kozponti === 'true' || Boolean(router.query.paperId)
+                                }
                             />
 
                             <GameCelebrate

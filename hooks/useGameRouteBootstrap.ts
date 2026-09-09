@@ -9,6 +9,7 @@ import { type EducationLevelId, getUniversitySubjectById } from '../utils/mathTo
 import { skillNodeById } from '../utils/skillTree';
 import { buildTopicPracticeHref, challengeIdFromQuery } from '../utils/topicStats';
 import type { GameEducationLevel } from './useGameSessionBuilders';
+import { getErettsegiPaperQuestions } from '../utils/game/erettsegiPapers';
 
 type PracticeEducationLevel = Exclude<GameEducationLevel, null>;
 
@@ -49,6 +50,7 @@ export type UseGameRouteBootstrapParams = {
     generateMixedErettsegiQuestions: (level: string) => void;
     generateKozpontiQuestionsByTopic: (topicId: string) => void;
     generateKozpontiPaper: (paperId: string) => void;
+    generateErettsegiPaper: (paperId: string) => void;
     generateVegyesSzigorlatQuestions: () => void;
     generateSzigorlatQuestionsBySubject: (subjectId: string) => void;
     loadTaskQuestions: (taskId: string) => void | Promise<void>;
@@ -82,6 +84,7 @@ export function useGameRouteBootstrap({
     generateMixedErettsegiQuestions,
     generateKozpontiQuestionsByTopic,
     generateKozpontiPaper,
+    generateErettsegiPaper,
     generateVegyesSzigorlatQuestions,
     generateSzigorlatQuestionsBySubject,
     loadTaskQuestions,
@@ -270,10 +273,16 @@ export function useGameRouteBootstrap({
             generateDailyMixedQuestions('erettsegi', 10);
         }
 
-        // Érettségi feladatsor kezelése - közép vagy emelt szintű feladatokkal vegyes témakörökből
+        // Érettségi feladatsor: hivatalos OH sor, különben vegyes gyakorló
         if (router.query.erettsegi === 'true' && router.query.paperId && router.query.level) {
+            const paperId = String(router.query.paperId);
             const level = router.query.level as string;
-            generateMixedErettsegiQuestions(level);
+            const official = getErettsegiPaperQuestions(paperId);
+            if (official?.length) {
+                generateErettsegiPaper(paperId);
+            } else {
+                generateMixedErettsegiQuestions(level);
+            }
         }
 
         // Érettségi feladatsor kezelése - vegyes közép és emelt szintű feladatokkal

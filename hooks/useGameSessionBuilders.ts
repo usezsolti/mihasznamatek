@@ -38,6 +38,7 @@ import {
     generateElementaryQuestionByTopic,
     generateKozpontiQuestionByTopic,
     getKozpontiPaperQuestions,
+    getErettsegiPaperQuestions,
     generateHighschoolQuestionByTopic,
     generateUniversityQuestionByTopic,
     getWorksheetListForTopic,
@@ -337,6 +338,32 @@ export function useGameSessionBuilders(p: UseGameSessionBuildersParams) {
             return;
         }
         setTaskQuestions(list);
+        startGeneratedRun(p, true);
+    };
+
+    const generateErettsegiPaper = (paperId: string) => {
+        const list = getErettsegiPaperQuestions(paperId);
+        // #region agent log
+        agentDebugLog({
+            hypothesisId: 'H1',
+            location: 'useGameSessionBuilders.ts:generateErettsegiPaper',
+            message: 'erettsegi official paper started',
+            data: {
+                paperId,
+                total: list?.length || 0,
+                firstId: list?.[0]?.id,
+                lastId: list?.[list.length - 1]?.id,
+                ready: Boolean(list?.length),
+            },
+            runId: 'er-2026-maj',
+        });
+        // #endregion
+        if (!list?.length) {
+            console.error('No érettségi paper questions for', paperId);
+            return;
+        }
+        p.setIsErettsegiMode(true);
+        setErettsegiQuestions(list);
         startGeneratedRun(p, true);
     };
 
@@ -1169,6 +1196,7 @@ export function useGameSessionBuilders(p: UseGameSessionBuildersParams) {
         generateElementaryQuestionsByTopic,
         generateKozpontiQuestionsByTopic,
         generateKozpontiPaper,
+        generateErettsegiPaper,
         generateSzigorlatQuestionsBySubject,
         generateVegyesSzigorlatQuestions,
         generateUniversityQuestionsByTopic,

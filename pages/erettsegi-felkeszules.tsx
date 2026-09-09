@@ -9,6 +9,12 @@ import {
     type UserPracticeProgress,
 } from '../utils/practiceProgress';
 import { PATH_LESSON_COUNT } from '../utils/topicPath';
+import {
+    erettsegiPapersByYear,
+    type ErettsegiExamLevel,
+    type ErettsegiPaperMeta,
+} from '../utils/game/erettsegiPapers';
+import { agentDebugLog } from '../utils/agentDebugLog';
 
 interface ExamTopic {
     id: string;
@@ -18,21 +24,9 @@ interface ExamTopic {
     description: string;
 }
 
-interface ExamPaper {
-    id: string;
-    year: number;
-    type: 'közép' | 'emelt';
-    title: string;
-    description: string;
-    questions: number;
-    timeLimit: number; // minutes
-    topics: string[];
-}
-
 export default function ErettsegiFelkeszules() {
     const router = useRouter();
     const [selectedTopic, setSelectedTopic] = useState<string | null>(null);
-    const [selectedPaper, setSelectedPaper] = useState<ExamPaper | null>(null);
     const [viewMode, setViewMode] = useState<'topics' | 'papers'>('topics');
     const [selectedLevel, setSelectedLevel] = useState<'kozep' | 'emelt' | null>(null);
     const [topicProgressMap, setTopicProgressMap] = useState<Partial<Record<string, TopicProgress>>>({});
@@ -355,35 +349,26 @@ export default function ErettsegiFelkeszules() {
     // Aktuális témakörök a kiválasztott szint alapján
     const examTopics = selectedLevel === 'kozep' ? kozepTopics : selectedLevel === 'emelt' ? emeltTopics : [];
 
-    // Érettségi feladatsorok - 10 közép és 10 emelt szintű feladatsor, mindegyik vegyes témakörökből
-    const examPapers: ExamPaper[] = [
-        // 10 közép szintű feladatsor
-        ...Array.from({ length: 10 }, (_, i) => ({
-            id: `feladatsor-kozep-${i + 1}`,
-            year: i + 1,
-            type: 'közép' as 'közép' | 'emelt',
-            title: `Közép Szint - Feladatsor ${i + 1}`,
-            description: `Érettségi feladatsor ${i + 1} - közép szint, vegyes témakörökből`,
-            questions: 50,
-            timeLimit: 180,
-            topics: ['algebra', 'geometria', 'trigonometria', 'valoszinuseg', 'logaritmus', 'sorozatok', 'fuggvenyek']
-        })),
-        // 10 emelt szintű feladatsor
-        ...Array.from({ length: 10 }, (_, i) => ({
-            id: `feladatsor-emelt-${i + 1}`,
-            year: i + 11,
-            type: 'emelt' as 'közép' | 'emelt',
-            title: `Emelt Szint - Feladatsor ${i + 1}`,
-            description: `Érettségi feladatsor ${i + 1} - emelt szint, vegyes témakörökből`,
-            questions: 50,
-            timeLimit: 180,
-            topics: ['algebra', 'geometria', 'trigonometria', 'analizis', 'valoszinuseg', 'logaritmus', 'sorozatok', 'fuggvenyek']
-        }))
-    ];
+    const yearGroups = selectedLevel ? erettsegiPapersByYear(selectedLevel) : [];
 
-    const filteredPapers = selectedTopic
-        ? examPapers.filter(paper => paper.topics.includes(selectedTopic))
-        : examPapers;
+    useEffect(() => {
+        // #region agent log
+        agentDebugLog({
+            hypothesisId: 'H1',
+            location: 'erettsegi-felkeszules.tsx:papers',
+            message: 'erettsegi paper tracks',
+            data: {
+                viewMode,
+                selectedLevel,
+                yearN: yearGroups.length,
+                y2026: yearGroups
+                    .find((g) => g.year === 2026)
+                    ?.papers.map((p) => ({ id: p.id, month: p.month, ready: p.ready, n: p.questionCount })),
+            },
+            runId: 'er-2026-maj',
+        });
+        // #endregion
+    }, [viewMode, selectedLevel, yearGroups.length]);
 
     const handleTopicClick = (topicId: string) => {
         const topic = examTopics.find(t => t.id === topicId);
@@ -414,14 +399,19 @@ export default function ErettsegiFelkeszules() {
         }
     };
 
-    const handlePaperClick = (paper: ExamPaper) => {
-        // Navigálás a játékhoz érettségi módban - közép vagy emelt szintű feladatokkal vegyes témakörökből
-        const level = paper.type === 'emelt' ? 'emelt' : 'kozep';
-        router.push(`/game?erettsegi=true&paperId=${paper.id}&level=${level}`);
-    };
-
-    const getTopicById = (topicId: string) => {
-        return examTopics.find(t => t.id === topicId);
+    const handlePaperClick = (paper: ErettsegiPaperMeta) => {
+        // #region agent log
+        agentDebugLog({
+            hypothesisId: 'H2',
+            location: 'erettsegi-felkeszules.tsx:paperClick',
+            message: 'erettsegi paper click',
+            data: { paperId: paper.id, ready: paper.ready, month: paper.month, level: paper.level },
+            runId: 'er-2026-maj',
+        });
+        // #endregion
+        if (!paper.ready) return;
+        const level: ErettsegiExamLevel = paper.level;
+        router.push(`/game?erettsegi=true&paperId=${encodeURIComponent(paper.id)}&level=${level}`);
     };
 
     return (
@@ -590,53 +580,72 @@ export default function ErettsegiFelkeszules() {
                     {viewMode === 'papers' && (
                         <section className="papers-section">
                             <div className="papers-header">
-                                <h2 className="section-title">
-                                    {selectedTopic ? `${getTopicById(selectedTopic)?.title} - Érettségi Feladatsorok` : 'Érettségi Feladatsorok'}
-                                </h2>
-                                {selectedTopic && (
-                                    <button
-                                        className="clear-filter-btn"
-                                        onClick={() => setSelectedTopic(null)}
-                                    >
-                                        ✕ Szűrő törlése
-                                    </button>
-                                )}
+                                <h2 className="section-title">Érettségi Feladatsorok</h2>
+                                <p className="section-description">
+                                    2020–2026, külön május és október. Először válassz szintet, majd egy
+                                    játszható sort. Most a 2026. májusi és a 2025. októberi középszint él.
+                                </p>
                             </div>
-
-                            {/* Feladatsorok listázása 1-10-ig */}
-                            <div className="papers-grid">
-                                {filteredPapers.map(paper => (
-                                    <div
-                                        key={paper.id}
-                                        className="paper-card"
-                                        onClick={() => handlePaperClick(paper)}
-                                    >
-                                        <div className="paper-header">
-                                            <h4 className="paper-title">{paper.title}</h4>
-                                            <span className="paper-type" style={{
-                                                background: 'rgba(57, 255, 20, 0.2)',
-                                                border: '1px solid rgba(57, 255, 20, 0.5)',
-                                                color: '#39ff14',
-                                                padding: '0.3rem 0.8rem',
-                                                borderRadius: '10px',
-                                                fontSize: '0.85rem',
-                                                fontWeight: '600',
-                                                whiteSpace: 'nowrap'
-                                            }}>
-                                                🔀 Vegyes
-                                            </span>
-                                        </div>
-                                        <p className="paper-description">{paper.description}</p>
-                                        <div className="paper-meta">
-                                            <span className="meta-item">❓ {paper.questions} feladat</span>
-                                            <span className="meta-item">⏱️ {paper.timeLimit} perc</span>
-                                        </div>
-                                        <div className="paper-action">
-                                            <span className="action-text">Kezdés →</span>
-                                        </div>
+                            {!selectedLevel ? (
+                                <div className="level-selector-section">
+                                    <h2 className="section-title">Válassz szintet:</h2>
+                                    <div className="level-selector-buttons">
+                                        <button
+                                            className="level-select-btn kozep"
+                                            onClick={() => setSelectedLevel('kozep')}
+                                        >
+                                            <span className="level-select-icon">📝</span>
+                                            <span className="level-select-name">Közép Szint</span>
+                                            <span className="level-select-desc">Május és október külön</span>
+                                        </button>
+                                        <button
+                                            className="level-select-btn emelt"
+                                            onClick={() => setSelectedLevel('emelt')}
+                                        >
+                                            <span className="level-select-icon">⭐</span>
+                                            <span className="level-select-name">Emelt Szint</span>
+                                            <span className="level-select-desc">Május és október külön</span>
+                                        </button>
                                     </div>
-                                ))}
-                            </div>
+                                </div>
+                            ) : (
+                                <>
+                                    <button
+                                        type="button"
+                                        className="clear-filter-btn"
+                                        onClick={() => setSelectedLevel(null)}
+                                        style={{ marginBottom: '1.25rem' }}
+                                    >
+                                        ← Másik szint
+                                    </button>
+                                    {yearGroups.map(({ year, papers }) => (
+                                        <div key={year} className="er-year-row">
+                                            <h3 className="er-year-title">{year}</h3>
+                                            <div className="er-month-grid">
+                                                {papers.map((paper) => (
+                                                    <button
+                                                        key={paper.id}
+                                                        type="button"
+                                                        className={`er-paper-card ${paper.ready ? 'ready' : 'soon'}`}
+                                                        onClick={() => handlePaperClick(paper)}
+                                                    >
+                                                        <div className="er-month-num">
+                                                            {paper.month === 'majus' ? '05' : '10'}
+                                                        </div>
+                                                        <h4>{paper.title}</h4>
+                                                        <p>{paper.subtitle}</p>
+                                                        <span className={`er-badge ${paper.ready ? 'ready' : 'soon'}`}>
+                                                            {paper.ready
+                                                                ? `${paper.questionCount} feladat · ${paper.timeLimitMin} perc`
+                                                                : 'Hamarosan'}
+                                                        </span>
+                                                    </button>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    ))}
+                                </>
+                            )}
                         </section>
                     )}
                 </div>
@@ -830,6 +839,89 @@ export default function ErettsegiFelkeszules() {
                     display: grid;
                     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
                     gap: 1.5rem;
+                }
+
+                .er-year-row {
+                    margin: 0 0 1.5rem;
+                }
+
+                .er-year-title {
+                    color: #fff;
+                    font-size: 1.25rem;
+                    font-weight: 700;
+                    margin: 0 0 0.65rem;
+                }
+
+                .er-month-grid {
+                    display: grid;
+                    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                    gap: 0.85rem;
+                }
+
+                .er-paper-card {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: flex-start;
+                    gap: 0.25rem;
+                    min-height: 168px;
+                    padding: 1.15rem 1.2rem 1.05rem;
+                    border-radius: 16px;
+                    background: rgba(20, 28, 44, 0.55);
+                    border: 1px solid rgba(57, 255, 20, 0.22);
+                    color: inherit;
+                    text-align: left;
+                    cursor: pointer;
+                    transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
+                }
+
+                .er-paper-card h4 {
+                    margin: 0;
+                    color: #39ff14;
+                    font-size: 1.05rem;
+                }
+
+                .er-paper-card p {
+                    margin: 0;
+                    color: #c5c5d0;
+                    font-size: 0.88rem;
+                    line-height: 1.35;
+                }
+
+                .er-paper-card.ready:hover {
+                    transform: translateY(-3px);
+                    border-color: #39ff14;
+                    box-shadow: 0 10px 24px rgba(57, 255, 20, 0.12);
+                }
+
+                .er-paper-card.soon {
+                    opacity: 0.62;
+                    cursor: default;
+                    border-color: rgba(255, 255, 255, 0.1);
+                }
+
+                .er-month-num {
+                    font-size: 1.7rem;
+                    font-weight: 800;
+                    line-height: 1;
+                    margin-bottom: 0.2rem;
+                }
+
+                .er-badge {
+                    margin-top: auto;
+                    padding: 0.22rem 0.55rem;
+                    border-radius: 999px;
+                    font-size: 0.72rem;
+                    font-weight: 800;
+                }
+
+                .er-badge.ready {
+                    background: rgba(57, 255, 20, 0.16);
+                    color: #39ff14;
+                }
+
+                .er-badge.soon {
+                    background: rgba(255, 255, 255, 0.08);
+                    color: #9a9aa8;
                 }
 
                 .paper-card {
