@@ -1332,6 +1332,46 @@ textarea::placeholder {
   color: rgba(255, 255, 255, 0.5) !important;
 }
 
+/* Autofill: Chrome fehér hátteret rak, a fehér szöveg eltűnik. */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+  -webkit-text-fill-color: #ffffff !important;
+  caret-color: #ffffff;
+  color: #ffffff !important;
+  border-color: rgba(255, 255, 255, 0.2) !important;
+  box-shadow: 0 0 0 1000px #000000 inset !important;
+  -webkit-box-shadow: 0 0 0 1000px #000000 inset !important;
+  transition: background-color 99999s ease-out 0s;
+}
+
+input:autofill,
+textarea:autofill,
+select:autofill {
+  -webkit-text-fill-color: #ffffff;
+  caret-color: #ffffff;
+  box-shadow: 0 0 0 1000px #000000 inset;
+}
+
+.email-form .form-group input:-webkit-autofill:focus,
+.email-form .auth-address-row input:-webkit-autofill:focus,
+.booking-field input:-webkit-autofill:focus {
+  border-color: var(--neon-green) !important;
+  box-shadow:
+    0 0 0 1000px #000000 inset,
+    0 0 20px rgba(57, 255, 20, 0.3) !important;
+  -webkit-box-shadow:
+    0 0 0 1000px #000000 inset,
+    0 0 20px rgba(57, 255, 20, 0.3) !important;
+}
+
 .form-group textarea {
   resize: vertical;
   min-height: 140px;
@@ -3713,6 +3753,7 @@ html, body {
 }
 
 .auth-modal-content {
+  color-scheme: dark;
   background: rgba(0, 0, 0, 0.9);
   border: 2px solid var(--neon-green);
   border-radius: 15px;
