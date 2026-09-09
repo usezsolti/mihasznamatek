@@ -5466,7 +5466,8 @@ textarea::placeholder {
 }
 
 .booking-field input,
-.booking-field select {
+.booking-field select,
+.booking-field textarea {
   width: 100%;
   padding: 0.85rem 1rem;
   border-radius: 10px;
@@ -5476,8 +5477,16 @@ textarea::placeholder {
   font-size: 1rem;
 }
 
+.booking-field textarea {
+  min-height: 6.5rem;
+  resize: vertical;
+  font-family: inherit;
+  line-height: 1.45;
+}
+
 .booking-field input:focus,
-.booking-field select:focus {
+.booking-field select:focus,
+.booking-field textarea:focus {
   outline: none;
   border-color: var(--neon-green);
   box-shadow: 0 0 16px rgba(57, 255, 20, 0.25);

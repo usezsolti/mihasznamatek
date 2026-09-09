@@ -122,7 +122,7 @@ export function formatAdminNewMessage(
         `Időpont(ok): ${booking.times.join(', ')}`,
         `Óra típusa: ${typeLabel(booking.lessonType)}`,
         `Témakör: ${booking.selectedSubject}`,
-        `Megjegyzés: ${booking.hobby || '—'}`,
+        `Témakör részlete: ${booking.hobby || '—'}`,
         `Ár: ${displayPrice(booking).toLocaleString('hu-HU')} Ft`,
         `Számlázási cím: ${addressLine(booking)}`,
         `Csatolt fájlok:\n  ${formatAttachmentsLine(booking.uploadedFiles)}`,
@@ -154,7 +154,7 @@ function formatAdminNewHtml(
         ['Időpont(ok)', booking.times.join(', ')],
         ['Óra típusa', typeLabel(booking.lessonType)],
         ['Témakör', booking.selectedSubject || '—'],
-        ['Megjegyzés', booking.hobby || '—'],
+        ['Témakör részlete', booking.hobby || '—'],
         ['Ár', `${displayPrice(booking).toLocaleString('hu-HU')} Ft`],
         ['Számlázási cím', addressLine(booking)],
         ['Csatolt fájlok', formatAttachmentsLine(booking.uploadedFiles)],
@@ -294,6 +294,9 @@ export function formatStudentDecisionMessage(
             `Időpontok: ${booking.times.join(', ')}`,
             `Óra típusa: ${typeLabel(booking.lessonType)}`,
             `Témakör: ${booking.selectedSubject}`,
+            booking.hobby && booking.hobby !== '—'
+                ? `Témakör részlete: ${booking.hobby}`
+                : '',
             `Összesen: ${displayPrice(booking).toLocaleString('hu-HU')} Ft`,
             '',
             CANCEL_POLICY_HU,

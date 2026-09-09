@@ -1,12 +1,12 @@
 import Link from "next/link";
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, useRef } from "react";
 import { useRouter } from "next/router";
 import { FaYoutube, FaFacebook, FaInstagram, FaTiktok } from "react-icons/fa";
 import AuthModal from "./AuthModal";
 import LanguageToggle from "./LanguageToggle";
 import { isAdminEmail } from "../utils/admin";
 import { OPEN_AUTH_MODAL_EVENT, type OpenAuthModalDetail } from "../utils/authModal";
-import { hasCompletedRegistrationOnce } from "../utils/registrationProfile";
+import { hasCompletedRegistrationOnce, isProfileGateOpen, clearProfileGate, markProfileGate } from "../utils/registrationProfile";
 import { useLang } from "../utils/i18n";
 
 interface NavUser {
@@ -25,6 +25,7 @@ export default function Navbar() {
     const [authModalOpen, setAuthModalOpen] = useState(false);
     const [authModalMode, setAuthModalMode] = useState<"login" | "register">("login");
     const [authRedirectTo, setAuthRedirectTo] = useState<string | false | undefined>(undefined);
+    const profileIncompleteRef = useRef(false);
 
     useEffect(() => {
         setIsClient(true);
@@ -37,6 +38,7 @@ export default function Navbar() {
         let cancelled = false;
         let onProfileUpdated: ((e: Event) => void) | undefined;
         let onLogoutEvent: (() => void) | undefined;
+        let onProfileComplete: (() => void) | undefined;
 
         const init = async () => {
             for (let i = 0; i < 50; i++) {
@@ -62,6 +64,7 @@ export default function Navbar() {
             const applyUser = async (user: any) => {
                 const seq = ++applySeq;
                 if (!user) {
+                    profileIncompleteRef.current = false;
                     setCurrentUser(null);
                     return;
                 }
@@ -74,14 +77,21 @@ export default function Navbar() {
                         const data = snap.data() || {};
                         if (data.photoURL) photoURL = String(data.photoURL);
                         if (data.name) displayName = String(data.name);
-                        profileIncomplete = !hasCompletedRegistrationOnce(data);
+                        if (hasCompletedRegistrationOnce(data)) {
+                            clearProfileGate(user.uid);
+                            profileIncomplete = false;
+                        } else {
+                            markProfileGate(user.uid);
+                            profileIncomplete = true;
+                        }
                     } else {
+                        markProfileGate(user.uid);
                         profileIncomplete = true;
                     }
                 } catch {
-                    /* firestore optional */
-                    profileIncomplete = !isAdminEmail(user.email);
+                    profileIncomplete = isProfileGateOpen(user.uid) || !isAdminEmail(user.email);
                 }
+                profileIncompleteRef.current = profileIncomplete && !isAdminEmail(user.email);
                 if (cancelled || seq !== applySeq) return;
                 // Ha közben kijelentkezett, ne írjuk vissza
                 if (!auth.currentUser || auth.currentUser.uid !== user.uid) {
@@ -155,8 +165,18 @@ export default function Navbar() {
             };
             window.addEventListener("mihaszna:user-profile-updated", onProfileUpdated);
 
-            onLogoutEvent = () => setCurrentUser(null);
+            onLogoutEvent = () => {
+                profileIncompleteRef.current = false;
+                setCurrentUser(null);
+            };
             window.addEventListener("mihaszna:auth-logout", onLogoutEvent);
+
+            onProfileComplete = () => {
+                profileIncompleteRef.current = false;
+                setAuthModalOpen(false);
+                setAuthRedirectTo(undefined);
+            };
+            window.addEventListener("mihaszna:profile-complete", onProfileComplete);
         };
 
         init();
@@ -168,6 +188,9 @@ export default function Navbar() {
             }
             if (onLogoutEvent) {
                 window.removeEventListener("mihaszna:auth-logout", onLogoutEvent);
+            }
+            if (onProfileComplete) {
+                window.removeEventListener("mihaszna:profile-complete", onProfileComplete);
             }
         };
     }, [isClient]);
@@ -213,6 +236,11 @@ export default function Navbar() {
     };
 
     const closeAuthModal = useCallback(() => {
+        if (profileIncompleteRef.current) {
+            setAuthModalMode("register");
+            setAuthModalOpen(true);
+            return;
+        }
         setAuthModalOpen(false);
         setAuthRedirectTo(undefined);
     }, []);

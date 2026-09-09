@@ -732,7 +732,8 @@ export default function AdminTeacherConsole({
                                                 {(b.times || []).join(', ') || '—'} · {b.customerName}
                                             </strong>
                                             <p className="atc-muted">
-                                                {b.selectedSubject || 'Téma nincs'} ·{' '}
+                                                {b.selectedSubject || 'Téma nincs'}
+                                                {b.hobby && b.hobby !== '—' ? ` · ${b.hobby}` : ''} ·{' '}
                                                 {b.status === 'approved' ? 'Jóváhagyva' : 'Függőben'}
                                             </p>
                                         </div>

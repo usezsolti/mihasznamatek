@@ -73,7 +73,7 @@ export function getBookingEventDescription(booking: CalendarBooking): string {
         `Időpontok: ${(booking.times || []).join(", ")}`,
     ];
     if (booking.hobby && booking.hobby !== "—") {
-        lines.push(`Megjegyzés: ${booking.hobby}`);
+        lines.push(`Témakör részlete: ${booking.hobby}`);
     }
     lines.push("", "Mihaszna Matek – https://mihasznamatek.hu");
     return lines.join("\n");

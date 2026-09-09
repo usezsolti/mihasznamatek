@@ -21,15 +21,9 @@ service cloud.firestore {
     function isOwner(uid) {
       return signedIn() && request.auth.uid == uid;
     }
-    // Diák saját profil — ne írhat privileged mezőket (assignedTasks / teacherAdmin)
-    function ownerUserWritableKeys() {
-      return [
-        'email', 'name', 'username', 'photoURL', 'createdAt', 'updatedAt',
-        'preferredLessonType', 'preferredSubject', 'hobby',
-        'postalCode', 'street', 'houseNumber', 'profileCompletedAt',
-        'gdprAccepted', 'gdprAcceptedAt', 'gdprVersion',
-        'taskScores', 'completedTasks', 'isTestAccount'
-      ];
+    // Diák saját profil: írhat mindent, KIVÉVE tanári mezőket.
+    function ownerForbiddenUserKeys() {
+      return ['assignedTasks', 'teacherAdmin'];
     }
 
     // Email/jelszó users tábla — csak Admin SDK (kliensről tiltva)
@@ -40,10 +34,10 @@ service cloud.firestore {
     match /users/{userId} {
       allow read: if isOwner(userId) || isAdmin();
       allow create: if isOwner(userId)
-        && request.resource.data.keys().hasOnly(ownerUserWritableKeys());
+        && !request.resource.data.keys().hasAny(ownerForbiddenUserKeys());
       allow update: if (isOwner(userId)
-            && request.resource.data.diff(resource.data).affectedKeys()
-                 .hasOnly(ownerUserWritableKeys()))
+            && !request.resource.data.diff(resource.data).affectedKeys()
+                 .hasAny(ownerForbiddenUserKeys()))
         || (isAdmin() && request.resource.data.diff(resource.data).affectedKeys()
               .hasOnly(['assignedTasks', 'updatedAt', 'teacherAdmin']));
       allow delete: if isAdmin();

@@ -955,6 +955,9 @@ export default function Dashboard() {
                                                     <p><strong>Idő:</strong> {(booking.times || []).join(', ')}</p>
                                                     <p><strong>Típus:</strong> {booking.lessonType === 'online' ? 'Online' : 'Személyes'}</p>
                                                     <p><strong>Téma:</strong> {booking.selectedSubject}</p>
+                                                    {booking.hobby && booking.hobby !== '—' ? (
+                                                        <p><strong>Témakör részlete:</strong> {booking.hobby}</p>
+                                                    ) : null}
                                                     <p><strong>Ár:</strong> {booking.totalPrice} Ft</p>
                                                     <p>
                                                         <strong>Fizetés:</strong>{' '}

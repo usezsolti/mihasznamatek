@@ -110,7 +110,6 @@ export default function BookingPage() {
     const [postalCode, setPostalCode] = useState("");
     const [street, setStreet] = useState("");
     const [houseNumber, setHouseNumber] = useState("");
-    const [keepAddressVisible, setKeepAddressVisible] = useState(false);
     const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
     const [gdprAccepted, setGdprAccepted] = useState(false);
     const [authLoading, setAuthLoading] = useState(false);
@@ -161,7 +160,6 @@ export default function BookingPage() {
                             if (d.postalCode) setPostalCode(String(d.postalCode));
                             if (d.street) setStreet(String(d.street));
                             if (d.houseNumber) setHouseNumber(String(d.houseNumber));
-                            if (d.hobby) setHobby(String(d.hobby));
                             if (d.preferredSubject && SUBJECTS.includes(String(d.preferredSubject))) {
                                 setSelectedSubject(String(d.preferredSubject));
                             }
@@ -318,15 +316,27 @@ export default function BookingPage() {
 
     const totalPrice = confirmedPrice ?? priceForTimes(selectedTimes);
     const showNameField = !authUser || (!profileLoading && !customerName.trim());
-    const showHobbyField = !authUser;
-    const needAddress =
-        !authUser ||
-        (!profileLoading && (!postalCode.trim() || !street.trim() || !houseNumber.trim()));
-    useEffect(() => {
-        if (needAddress) setKeepAddressVisible(true);
-    }, [needAddress]);
-    const showAddressFields = !authUser || keepAddressVisible || needAddress;
+    const showLessonTypeField = !authUser;
+    const showAddressFields = !authUser;
     const showGdprField = !authUser;
+
+    useEffect(() => {
+        // #region agent log
+        agentDebugLog({
+            hypothesisId: 'A',
+            location: 'booking.tsx:signedInFields',
+            message: 'logged-in booking field visibility',
+            data: {
+                signedIn: Boolean(authUser),
+                showLessonType: showLessonTypeField,
+                showAddress: showAddressFields,
+                showName: showNameField,
+                showGdpr: showGdprField,
+            },
+            runId: 'logged-in-topic',
+        });
+        // #endregion
+    }, [authUser, showLessonTypeField, showAddressFields, showNameField, showGdprField]);
 
     const syncBookingAddressFromDom = () => {
         syncInputsFromDom({
@@ -396,6 +406,26 @@ export default function BookingPage() {
             setError(t("booking.error.needGdpr"));
             return;
         }
+        const topicDetail = hobby.trim();
+        // #region agent log
+        agentDebugLog({
+            hypothesisId: 'D',
+            location: 'booking.tsx:handleSubmit:topic',
+            message: 'topic validation',
+            data: {
+                signedIn: Boolean(authUser),
+                topicLen: topicDetail.length,
+                blockedNeedTopic: !topicDetail,
+                showLessonType: showLessonTypeField,
+                showAddress: showAddressFields,
+            },
+            runId: 'logged-in-topic',
+        });
+        // #endregion
+        if (!topicDetail) {
+            setError(t("booking.error.needTopic"));
+            return;
+        }
         // #region agent log
         agentDebugLog({
             hypothesisId: 'A',
@@ -460,7 +490,7 @@ export default function BookingPage() {
                 username: profileUsername.trim() || undefined,
                 lessonType,
                 selectedSubject,
-                hobby: hobby.trim() || "—",
+                hobby: topicDetail,
                 totalPrice: chargedPrice,
                 postalCode: zip,
                 street: streetVal,
@@ -490,7 +520,7 @@ export default function BookingPage() {
             setSuccess(true);
             setConfirmedPrice(chargedPrice);
             setSelectedTimes([]);
-            if (!authUser) setHobby("");
+            setHobby("");
             setSelectedFiles([]);
             const fileInput = document.getElementById("booking-files") as HTMLInputElement | null;
             if (fileInput) fileInput.value = "";
@@ -827,6 +857,7 @@ export default function BookingPage() {
                                     </div>
                                 ) : null}
 
+                                {showLessonTypeField ? (
                                 <div className="booking-field">
                                     <label>{t("auth.lessonType")}</label>
                                     <div className="booking-toggle">
@@ -846,6 +877,7 @@ export default function BookingPage() {
                                         </button>
                                     </div>
                                 </div>
+                                ) : null}
 
                                 <div className="booking-field">
                                     <label htmlFor="booking-subject">{t("auth.subject")}</label>
@@ -862,17 +894,18 @@ export default function BookingPage() {
                                     </select>
                                 </div>
 
-                                {showHobbyField ? (
                                 <div className="booking-field">
-                                    <label htmlFor="booking-hobby">{t("auth.hobby")}</label>
-                                    <input
+                                    <label htmlFor="booking-hobby">{t("booking.topicDetail")}</label>
+                                    <textarea
                                         id="booking-hobby"
                                         value={hobby}
                                         onChange={(e) => setHobby(e.target.value)}
-                                        placeholder={t("auth.hobbyPlaceholder")}
+                                        placeholder={t("booking.topicDetailPlaceholder")}
+                                        required
+                                        rows={4}
+                                        maxLength={500}
                                     />
                                 </div>
-                                ) : null}
 
                                 {showAddressFields ? (
                                 <div className="booking-address-block">
@@ -902,7 +935,7 @@ export default function BookingPage() {
                                                         syncBookingAddressFromDom();
                                                     }
                                                 }}
-                                                placeholder="2151"
+                                                placeholder="1234"
                                                 required
                                                 autoComplete="postal-code"
                                             />
@@ -948,7 +981,7 @@ export default function BookingPage() {
                                                         syncBookingAddressFromDom();
                                                     }
                                                 }}
-                                                placeholder="18"
+                                                placeholder="12"
                                                 required
                                                 autoComplete="address-line2"
                                             />

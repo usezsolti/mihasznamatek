@@ -65,6 +65,36 @@ export function hasCompletedRegistrationOnce(
     p: Record<string, unknown> | null | undefined
 ): boolean {
     if (!p) return false;
-    if (p.profileCompletedAt) return true;
     return isRegistrationProfileComplete(p);
+}
+
+function profileGateKey(uid: string): string {
+    return `mihaszna:profileGate:${uid}`;
+}
+
+export function markProfileGate(uid: string): void {
+    if (!uid || typeof window === 'undefined') return;
+    try {
+        localStorage.setItem(profileGateKey(uid), '1');
+    } catch {
+        /* ignore */
+    }
+}
+
+export function clearProfileGate(uid: string): void {
+    if (!uid || typeof window === 'undefined') return;
+    try {
+        localStorage.removeItem(profileGateKey(uid));
+    } catch {
+        /* ignore */
+    }
+}
+
+export function isProfileGateOpen(uid: string): boolean {
+    if (!uid || typeof window === 'undefined') return false;
+    try {
+        return localStorage.getItem(profileGateKey(uid)) === '1';
+    } catch {
+        return false;
+    }
 }

@@ -5,6 +5,9 @@ import {
     type PreferredLessonType,
     type RegistrationProfile,
     hasCompletedRegistrationOnce,
+    markProfileGate,
+    clearProfileGate,
+    isProfileGateOpen,
     normalizeUsername,
     validateRegistrationProfile,
 } from "../utils/registrationProfile";
@@ -117,6 +120,18 @@ export default function AuthModal({
     const emailField = bindAutofillInput(setEmail);
 
     const finishAuthSuccess = () => {
+        if (googleProfilePendingRef.current) {
+            // #region agent log
+            agentDebugLog({
+                hypothesisId: 'G',
+                location: 'AuthModal.tsx:finishAuthSuccess',
+                message: 'blocked close, profile still pending',
+                data: { pending: true },
+                runId: 'reg-save',
+            });
+            // #endregion
+            return;
+        }
         onClose();
         if (redirectTo === false) return;
         const safe = typeof redirectTo === "string" ? safeAppPath(redirectTo) : null;
@@ -157,7 +172,7 @@ export default function AuthModal({
         if (!isOpen) {
             if (wasOpenRef.current) {
                 setLoading(false);
-                resetForm();
+                if (!googleProfilePendingRef.current) resetForm();
             }
             wasOpenRef.current = false;
             return;
@@ -191,11 +206,31 @@ export default function AuthModal({
             const firebase = await waitForFirebase();
             const user = firebase?.auth?.()?.currentUser;
             if (cancelled || !firebase || !user || isAdminEmail(user.email)) return;
+            const gated = isProfileGateOpen(user.uid);
+            if (gated) {
+                setMode("register");
+                setGoogleProfilePending(true);
+            }
             try {
                 const snap = await firebase.firestore().collection("users").doc(user.uid).get();
                 const d = snap.exists ? snap.data() || {} : {};
-                if (hasCompletedRegistrationOnce(d)) return;
+                const done = hasCompletedRegistrationOnce(d);
+                // #region agent log
+                agentDebugLog({
+                    hypothesisId: 'G',
+                    location: 'AuthModal.tsx:gate-check',
+                    message: 'registration gate after open',
+                    data: { done, gated, exists: snap.exists },
+                    runId: 'reg-save',
+                });
+                // #endregion
                 if (cancelled) return;
+                if (done) {
+                    clearProfileGate(user.uid);
+                    setGoogleProfilePending(false);
+                    return;
+                }
+                markProfileGate(user.uid);
                 setEmail(String(user.email || ""));
                 setName((prev) => prev.trim() || String(d.name || user.displayName || ""));
                 if (d.username) setUsername(String(d.username));
@@ -210,7 +245,9 @@ export default function AuthModal({
                 setMode("register");
                 setGoogleProfilePending(true);
             } catch {
-                /* Ha a profil nem olvasható, ne zárjuk be erővel a belépett, kész fiókokat. */
+                markProfileGate(user.uid);
+                setMode("register");
+                setGoogleProfilePending(true);
             }
         })();
         return () => {
@@ -288,9 +325,11 @@ export default function AuthModal({
                     /* ignore */
                 }
             }
-            const apiSaved = await apiPostAuth<{ saved?: boolean; fallback?: string }>(
+            const token = await user.getIdToken();
+            const apiSaved = await apiPost<{ saved?: boolean; fallback?: string }>(
                 "/api/auth/complete-profile",
-                profile
+                profile,
+                { headers: { Authorization: `Bearer ${token}` } }
             );
             // #region agent log
             agentDebugLog({
@@ -307,13 +346,38 @@ export default function AuthModal({
             });
             // #endregion
             if (!(apiSaved.ok && apiSaved.data?.saved)) {
-                await ensureUserDoc(firebase, user, {
-                    name: profile.name,
-                    gdprAccepted: true,
-                    profile,
-                });
+                try {
+                    await ensureUserDoc(firebase, user, {
+                        name: profile.name,
+                        gdprAccepted: true,
+                        profile,
+                    });
+                } catch (docErr: any) {
+                    // #region agent log
+                    agentDebugLog({
+                        hypothesisId: 'F',
+                        location: 'AuthModal.tsx:saveGoogleRegistrationProfile:clientWrite',
+                        message: 'client firestore write failed',
+                        data: {
+                            apiOk: apiSaved.ok,
+                            apiFallback: apiSaved.ok ? String(apiSaved.data?.fallback || '') : '',
+                            apiErr: apiSaved.ok ? '' : String(apiSaved.error || '').slice(0, 120),
+                            code: String(docErr?.code || '').slice(0, 80),
+                        },
+                        runId: 'reg-save',
+                    });
+                    // #endregion
+                    throw docErr;
+                }
             }
+            clearProfileGate(user.uid);
+            googleProfilePendingRef.current = false;
             setGoogleProfilePending(false);
+            try {
+                window.dispatchEvent(new CustomEvent("mihaszna:profile-complete"));
+            } catch {
+                /* ignore */
+            }
             // #region agent log
             agentDebugLog({
                 hypothesisId: 'D',
@@ -612,40 +676,38 @@ export default function AuthModal({
             }
 
             if (alreadyDone) {
+                // #region agent log
+                agentDebugLog({
+                    hypothesisId: 'G',
+                    location: 'AuthModal.tsx:handleGoogle',
+                    message: 'google user already completed profile',
+                    data: { alreadyDone: true },
+                    runId: 'reg-save',
+                });
+                // #endregion
+                clearProfileGate(user.uid);
                 try {
                     await ensureUserDoc(firebase, user, { name: displayName || user.displayName || undefined });
                 } catch {
                     /* ignore */
                 }
+                googleProfilePendingRef.current = false;
                 setPassword("");
                 setGoogleProfilePending(false);
                 finishAuthSuccess();
                 return;
             }
 
-            const formProfile = { ...buildProfile(), name: displayName };
-            const formReady = !validateRegistrationProfile(formProfile) && gdprAccepted;
-
-            if (formReady) {
-                try {
-                    await ensureUserDoc(firebase, user, {
-                        name: formProfile.name,
-                        gdprAccepted: true,
-                        profile: formProfile,
-                    });
-                } catch (docErr) {
-                    console.warn("ensureUserDoc after Google:", docErr);
-                    setError("A regisztrációs adatok mentése nem sikerült. Próbáld újra.");
-                    setMode("register");
-                    setGoogleProfilePending(true);
-                    return;
-                }
-                setPassword("");
-                setGoogleProfilePending(false);
-                finishAuthSuccess();
-                return;
-            }
-
+            markProfileGate(user.uid);
+            // #region agent log
+            agentDebugLog({
+                hypothesisId: 'G',
+                location: 'AuthModal.tsx:handleGoogle',
+                message: 'google user must fill registration form',
+                data: { alreadyDone: false },
+                runId: 'reg-save',
+            });
+            // #endregion
             setMode("register");
             setGoogleProfilePending(true);
             setInfoMessage("");

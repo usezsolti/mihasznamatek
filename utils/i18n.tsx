@@ -310,8 +310,11 @@ const hu: Dict = {
     'booking.taken': ' (foglalt)',
     'booking.signedIn': 'Bejelentkezve:',
     'booking.signedInHint':
-        'A neved, címed és e-mailed a fiókodból kerül a foglalásba. Itt csak az óra típusát, a témakört, és ha akarod, fájlt kell megadnod.',
-    'booking.streetPlaceholder': 'Szent Imre utca',
+        'A neved, címed, e-mailed és az óra típusa a fiókodból kerül a foglalásba. Itt csak a témakört kell kiválasztanod, és kötelezően leírnod, mit szeretnél gyakorolni. Fájlt opcionálisan csatolhatsz.',
+    'booking.topicDetail': 'Mit szeretnél gyakorolni? *',
+    'booking.topicDetailPlaceholder':
+        'Írd le, melyik anyagrészt szeretnéd (pl. törtek, másodfokú egyenlet, érettségi geometria).',
+    'booking.streetPlaceholder': 'Utca neve',
     'booking.filesHint': 'Max. 5 fájl, egyenként 8 MB — PDF, JPG, PNG, DOC, DOCX.',
     'booking.filesSelected': 'Kiválasztva: {names}',
     'booking.billingPersonalExtra':
@@ -351,6 +354,7 @@ const hu: Dict = {
     'booking.error.needGdpr': 'A foglaláshoz el kell fogadnod az adatkezelési tájékoztatót.',
     'booking.error.needAddress':
         'A számlázási cím megadása kötelező (irányítószám, utca, házszám).',
+    'booking.error.needTopic': 'Írd le, mit szeretnél gyakorolni ezen az órán.',
     'booking.error.conflict':
         'Ezek az időpontok már nem elérhetők: {times}. Válassz másikat.',
     'booking.error.uploadFailed': 'Fájlfeltöltés sikertelen.',
@@ -1251,7 +1255,10 @@ const en: Dict = {
     'booking.taken': ' (booked)',
     'booking.signedIn': 'Signed in as:',
     'booking.signedInHint':
-        'Your name, address and email come from your account. Here you only choose lesson type, topic, and optionally upload a file.',
+        'Your name, address, email and lesson type come from your account. Here you only choose the subject and must describe what you want to cover. You may optionally upload a file.',
+    'booking.topicDetail': 'What would you like to practise? *',
+    'booking.topicDetailPlaceholder':
+        'Describe the topic (e.g. fractions, quadratic equations, geometry for the exam).',
     'booking.streetPlaceholder': 'Main Street',
     'booking.filesHint': 'Max. 5 files, 8 MB each — PDF, JPG, PNG, DOC, DOCX.',
     'booking.filesSelected': 'Selected: {names}',
@@ -1292,6 +1299,7 @@ const en: Dict = {
     'booking.error.needGdpr': 'You must accept the privacy notice to book.',
     'booking.error.needAddress':
         'Billing address is required (postal code, street, house number).',
+    'booking.error.needTopic': 'Describe what you would like to practise in this lesson.',
     'booking.error.conflict':
         'These times are no longer available: {times}. Please choose others.',
     'booking.error.uploadFailed': 'File upload failed.',
