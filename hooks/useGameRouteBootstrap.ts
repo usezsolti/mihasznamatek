@@ -10,6 +10,7 @@ import { skillNodeById } from '../utils/skillTree';
 import { buildTopicPracticeHref, challengeIdFromQuery } from '../utils/topicStats';
 import type { GameEducationLevel } from './useGameSessionBuilders';
 import { getErettsegiPaperQuestions } from '../utils/game/erettsegiPapers';
+import { isBmeValszamPaperId } from '../utils/game/bmeValszamPapers';
 
 type PracticeEducationLevel = Exclude<GameEducationLevel, null>;
 
@@ -51,6 +52,7 @@ export type UseGameRouteBootstrapParams = {
     generateKozpontiQuestionsByTopic: (topicId: string) => void;
     generateKozpontiPaper: (paperId: string) => void;
     generateErettsegiPaper: (paperId: string) => void;
+    generateBmeValszamPaper: (paperId: string) => void;
     generateVegyesSzigorlatQuestions: () => void;
     generateSzigorlatQuestionsBySubject: (subjectId: string) => void;
     loadTaskQuestions: (taskId: string) => void | Promise<void>;
@@ -85,6 +87,7 @@ export function useGameRouteBootstrap({
     generateKozpontiQuestionsByTopic,
     generateKozpontiPaper,
     generateErettsegiPaper,
+    generateBmeValszamPaper,
     generateVegyesSzigorlatQuestions,
     generateSzigorlatQuestionsBySubject,
     loadTaskQuestions,
@@ -221,8 +224,38 @@ export function useGameRouteBootstrap({
                 setSelectedHighschoolTopic(topicParam);
                 generateHighschoolQuestionsByTopic(topicParam, grade);
             } else if (resolvedLevel === 'university' && topicParam && !gameActive) {
+                const bmePaperQuery = typeof router.query.paperId === 'string' ? router.query.paperId : '';
                 const knownSubject = Boolean(getUniversitySubjectById(topicParam));
-                if (knownSubject) {
+                if (router.query.bmeValszam === 'true' && bmePaperQuery) {
+                    // #region agent log
+                    void import('../utils/agentDebugLog').then(({ agentDebugLog }) => {
+                        agentDebugLog({
+                            hypothesisId: 'H31',
+                            location: 'useGameRouteBootstrap.ts:bmePaper',
+                            message: 'BME valszam paper query',
+                            data: { topicParam, paperId: bmePaperQuery, knownSubject },
+                            runId: 'bme-valszam',
+                        });
+                    });
+                    // #endregion
+                    generateBmeValszamPaper(bmePaperQuery);
+                } else if (isBmeValszamPaperId(topicParam)) {
+                    generateBmeValszamPaper(topicParam);
+                } else if (topicParam === 'valszam' || topicParam === 'valszam-bme') {
+                    setSelectedUniversitySubject('valszam');
+                    if (topicParam === 'valszam-bme') setSelectedUniversityTopic('valszam-bme');
+                    // #region agent log
+                    void import('../utils/agentDebugLog').then(({ agentDebugLog }) => {
+                        agentDebugLog({
+                            hypothesisId: 'H33',
+                            location: 'useGameRouteBootstrap.ts:valszamHub',
+                            message: 'BME valszam hub, no auto-start',
+                            data: { topicParam, paperPicker: topicParam === 'valszam-bme' },
+                            runId: 'bme-valszam',
+                        });
+                    });
+                    // #endregion
+                } else if (knownSubject) {
                     setSelectedUniversitySubject(topicParam);
                 } else {
                     setSelectedUniversitySubject(topicParam);
@@ -299,6 +332,12 @@ export function useGameRouteBootstrap({
             const topicId = router.query.topic as string;
             console.log('Központi felvételi detected, topicId:', topicId);
             generateKozpontiQuestionsByTopic(topicId);
+        }
+
+        // BME valószínűségszámítás hivatalos gyakorlat
+        if (router.isReady && router.query.bmeValszam === 'true' && router.query.paperId && !gameActive) {
+            const paperId = String(router.query.paperId);
+            generateBmeValszamPaper(paperId);
         }
 
         // Szigorlat kezelése

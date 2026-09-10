@@ -45,6 +45,15 @@ service firebase.storage {
         && request.auth.uid == userId;
     }
 
+    match /lesson-packs/{userId}/{fileName} {
+      allow read: if isAdmin() || (signedIn() && request.auth.uid == userId);
+      allow write: if signedIn()
+        && request.auth.uid == userId
+        && request.resource.contentType == 'application/pdf'
+        && request.resource.size < 8 * 1024 * 1024;
+      allow delete: if isAdmin() || (signedIn() && request.auth.uid == userId);
+    }
+
     match /booking-files/{bookingId}/{fileName} {
       // Olvasás: tanár VAGY a foglalás tulajdonosa (e-mail egyezés)
       allow read: if isAdmin()

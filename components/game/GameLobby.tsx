@@ -5,6 +5,7 @@ import {
     type CatalogTopic,
     type UniversitySubject,
 } from '../../utils/mathTopicsCatalog';
+import { BME_VALSZAM_PAPERS } from '../../utils/game/bmeValszamPapers';
 import { agentDebugLog } from '../../utils/agentDebugLog';
 import { hsTextbookRunId } from '../../utils/hsTextbook';
 
@@ -41,6 +42,7 @@ export type GameLobbyProps = {
     onGenerateKozponti: () => void;
     onGenerateVegyesSzigorlat: () => void;
     onSelectUniversityTopic: (subjectId: string, topicId: string) => void;
+    onSelectBmePaper?: (paperId: string) => void;
     highScore: number;
     assignedTasks: Array<{ title: string }>;
     onStartGame: () => void;
@@ -79,6 +81,7 @@ export default function GameLobby({
     onGenerateKozponti,
     onGenerateVegyesSzigorlat,
     onSelectUniversityTopic,
+    onSelectBmePaper,
     highScore,
     assignedTasks,
     onStartGame,
@@ -399,6 +402,55 @@ export default function GameLobby({
                             </p>
                             <div className="topic-arrow">→</div>
                         </div>
+                    </div>
+                </div>
+            ) : educationLevel === 'university' && selectedUniversitySubject === 'valszam' && selectedUniversityTopic === 'valszam-bme' ? (
+                <div className="topic-selector-section">
+                    <div className="selected-grade-header">
+                        <h2 className="level-title">BME valószínűségszámítás — válassz gyakorlatot:</h2>
+                        <button
+                            className="change-grade-btn"
+                            onClick={() => onSelectUniversityTopic('valszam', '')}
+                        >
+                            ← Témakörök
+                        </button>
+                    </div>
+                    <div className="elementary-topics-grid">
+                        {BME_VALSZAM_PAPERS.map((paper) => (
+                            <div
+                                key={paper.id}
+                                className="elementary-topic-card"
+                                onClick={() => {
+                                    // #region agent log
+                                    agentDebugLog({
+                                        hypothesisId: 'H31',
+                                        location: 'GameLobby.tsx:bmePaperClick',
+                                        message: 'BME valszam paper clicked in lobby',
+                                        data: {
+                                            paperId: paper.id,
+                                            ready: paper.ready,
+                                            questionCount: paper.questionCount,
+                                        },
+                                        runId: 'bme-valszam',
+                                    });
+                                    // #endregion
+                                    if (!paper.ready) return;
+                                    onSelectBmePaper?.(paper.id);
+                                }}
+                                style={paper.ready ? undefined : { opacity: 0.55 }}
+                            >
+                                <div className="topic-icon" style={{ color: '#39ff14' }}>
+                                    {String(paper.n).padStart(2, '0')}
+                                </div>
+                                <h3 className="topic-title">{paper.title}</h3>
+                                <p style={{ color: '#ccc', fontSize: '0.85rem', marginTop: '0.4rem' }}>
+                                    {paper.ready
+                                        ? `${paper.questionCount} pontozható feladat`
+                                        : paper.subtitle}
+                                </p>
+                                <div className="topic-arrow">{paper.ready ? '→' : '…'}</div>
+                            </div>
+                        ))}
                     </div>
                 </div>
             ) : educationLevel === 'university' && selectedUniversitySubject && !selectedUniversityTopic ? (

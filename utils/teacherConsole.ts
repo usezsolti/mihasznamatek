@@ -25,6 +25,7 @@ import {
     type UserPracticeProgress,
 } from './practiceProgress';
 import { PATH_LESSON_COUNT } from './topicPath';
+import { readLessonPacks } from './saveLessonPack';
 
 export type TeacherStudent = {
     uid: string;
@@ -63,6 +64,7 @@ export type StudentProfileDetail = {
     bookings: BookingPayload[];
     teacherAdmin: TeacherAdminMeta;
     nextLesson: BookingPayload | null;
+    lessonPacks: import('./lessonPack').LessonPackRecord[];
 };
 
 export const emptyTeacherAdminMeta = (): TeacherAdminMeta => ({
@@ -420,6 +422,11 @@ const USER_DOC_SKIP = new Set([
     'password',
     'passwordHash',
     'teacherAdmin',
+    'lessonPacks',
+    'lastLessonPackId',
+    'lastLessonPackAt',
+    'lastLessonTopic',
+    'lastLessonGoal',
 ]);
 
 function pickNextLesson(bookings: BookingPayload[]): BookingPayload | null {
@@ -485,6 +492,7 @@ export async function loadStudentProfileDetail(
         bookings: [],
         teacherAdmin: emptyTeacherAdminMeta(),
         nextLesson: null,
+        lessonPacks: [],
     };
 
     const firebase = getFirebase();
@@ -556,6 +564,7 @@ export async function loadStudentProfileDetail(
         bookings,
         teacherAdmin: readTeacherAdmin(userData.teacherAdmin),
         nextLesson: pickNextLesson(bookings),
+        lessonPacks: readLessonPacks(userData),
     };
 }
 

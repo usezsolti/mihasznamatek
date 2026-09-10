@@ -27,6 +27,10 @@ import { useLang } from "../utils/i18n";
 import { LESSON_SUBJECTS } from "../utils/registrationProfile";
 import { bindAutofillInput, preferFilled, syncInputsFromDom } from "../utils/formAutofill";
 import { agentDebugLog } from "../utils/agentDebugLog";
+import { BOOKING_OTHER_TOPIC_ID } from "../utils/mathTopicsCatalog";
+import { LESSON_GOAL_IDS, isLessonGoalId } from "../utils/booking/lessonGoals";
+import BookingTopicSearch from "../components/BookingTopicSearch";
+import { requestLessonPackFromApi, saveLessonPackToStudent } from "../utils/saveLessonPack";
 
 type LessonType = "online" | "personal";
 
@@ -95,6 +99,7 @@ export default function BookingPage() {
         cloneWorkingHours(DEFAULT_WORKING_HOURS)
     );
     const [submitting, setSubmitting] = useState(false);
+    const [packStatus, setPackStatus] = useState<"idle" | "generating" | "saved" | "failed">("idle");
     const [success, setSuccess] = useState(false);
     const [confirmedPrice, setConfirmedPrice] = useState<number | null>(null);
     const [error, setError] = useState("");
@@ -106,7 +111,10 @@ export default function BookingPage() {
     const [customerEmail, setCustomerEmail] = useState("");
     const [lessonType, setLessonType] = useState<LessonType>("online");
     const [selectedSubject, setSelectedSubject] = useState(SUBJECTS[0]);
-    const [hobby, setHobby] = useState("");
+    const [preparingFor, setPreparingFor] = useState("");
+    const [topicId, setTopicId] = useState("");
+    const [topicTitle, setTopicTitle] = useState("");
+    const [topicNote, setTopicNote] = useState("");
     const [postalCode, setPostalCode] = useState("");
     const [street, setStreet] = useState("");
     const [houseNumber, setHouseNumber] = useState("");
@@ -406,23 +414,31 @@ export default function BookingPage() {
             setError(t("booking.error.needGdpr"));
             return;
         }
-        const topicDetail = hobby.trim();
+        const chosenTopic = topicTitle.trim();
+        const note = topicNote.trim();
         // #region agent log
         agentDebugLog({
-            hypothesisId: 'D',
+            hypothesisId: 'H8',
             location: 'booking.tsx:handleSubmit:topic',
             message: 'topic validation',
             data: {
                 signedIn: Boolean(authUser),
-                topicLen: topicDetail.length,
-                blockedNeedTopic: !topicDetail,
+                hasGoal: Boolean(preparingFor),
+                topicId: topicId || null,
+                topicLen: chosenTopic.length,
+                blockedNeedGoal: !isLessonGoalId(preparingFor),
+                blockedNeedTopic: !chosenTopic,
                 showLessonType: showLessonTypeField,
                 showAddress: showAddressFields,
             },
-            runId: 'logged-in-topic',
+            runId: 'booking-goal-topic',
         });
         // #endregion
-        if (!topicDetail) {
+        if (!isLessonGoalId(preparingFor)) {
+            setError(t("booking.error.needGoal"));
+            return;
+        }
+        if (!chosenTopic || (topicId === BOOKING_OTHER_TOPIC_ID && !chosenTopic)) {
             setError(t("booking.error.needTopic"));
             return;
         }
@@ -444,6 +460,7 @@ export default function BookingPage() {
         }
 
         setSubmitting(true);
+        setPackStatus("generating");
         try {
             const dateKey = toDateKey(selectedDate);
             const [remote, blocked, hours] = await Promise.all([
@@ -465,6 +482,7 @@ export default function BookingPage() {
             if (conflict.length > 0) {
                 setError(t("booking.error.conflict", { times: conflict.join(", ") }));
                 setSelectedTimes((prev) => prev.filter((t) => !taken.has(t)));
+                setPackStatus("idle");
                 setSubmitting(false);
                 return;
             }
@@ -475,10 +493,61 @@ export default function BookingPage() {
                 const up = await uploadBookingAttachments(bookingId, selectedFiles);
                 if (!up.ok) {
                     setError(up.error || t("booking.error.uploadFailed"));
+                    setPackStatus("idle");
                     setSubmitting(false);
                     return;
                 }
                 uploadedFiles = up.files;
+            }
+
+            let lessonPack: BookingRequest["lessonPack"];
+            try {
+                const generated = await requestLessonPackFromApi({
+                    topicTitle: chosenTopic,
+                    topicId: topicId || undefined,
+                    preparingFor,
+                    preparingForLabel: t(`booking.goal.${preparingFor}`),
+                    selectedSubject,
+                    topicNote: note || undefined,
+                });
+                const packId = `pack_${Date.now()}`;
+                const record = {
+                    id: packId,
+                    bookingId,
+                    topicId: topicId || undefined,
+                    topicTitle: chosenTopic,
+                    preparingFor,
+                    preparingForLabel: t(`booking.goal.${preparingFor}`),
+                    selectedSubject,
+                    summary: generated.summary,
+                    content: generated.content,
+                    createdAt: new Date().toISOString(),
+                    source: generated.source,
+                };
+                if (authUser?.uid) {
+                    const stored = await saveLessonPackToStudent(authUser.uid, record);
+                    lessonPack = {
+                        id: packId,
+                        title: generated.content.title,
+                        summary: generated.summary,
+                        source: generated.source,
+                        pdfUrl: stored.pdfUrl,
+                        content: generated.content,
+                    };
+                    setPackStatus(stored.ok ? "saved" : "failed");
+                } else {
+                    lessonPack = {
+                        id: packId,
+                        title: generated.content.title,
+                        summary: generated.summary,
+                        source: generated.source,
+                        content: generated.content,
+                    };
+                    setPackStatus("saved");
+                }
+            } catch (packErr) {
+                console.warn("lesson pack generate failed", packErr);
+                setPackStatus("failed");
             }
 
             const booking: BookingRequest = {
@@ -490,7 +559,13 @@ export default function BookingPage() {
                 username: profileUsername.trim() || undefined,
                 lessonType,
                 selectedSubject,
-                hobby: topicDetail,
+                hobby: chosenTopic,
+                preparingFor,
+                preparingForLabel: t(`booking.goal.${preparingFor}`),
+                topicId: topicId || BOOKING_OTHER_TOPIC_ID,
+                topicTitle: chosenTopic,
+                topicNote: note || undefined,
+                lessonPack,
                 totalPrice: chargedPrice,
                 postalCode: zip,
                 street: streetVal,
@@ -520,7 +595,10 @@ export default function BookingPage() {
             setSuccess(true);
             setConfirmedPrice(chargedPrice);
             setSelectedTimes([]);
-            setHobby("");
+            setPreparingFor("");
+            setTopicId("");
+            setTopicTitle("");
+            setTopicNote("");
             setSelectedFiles([]);
             const fileInput = document.getElementById("booking-files") as HTMLInputElement | null;
             if (fileInput) fileInput.value = "";
@@ -895,15 +973,48 @@ export default function BookingPage() {
                                 </div>
 
                                 <div className="booking-field">
-                                    <label htmlFor="booking-hobby">{t("booking.topicDetail")}</label>
-                                    <textarea
-                                        id="booking-hobby"
-                                        value={hobby}
-                                        onChange={(e) => setHobby(e.target.value)}
-                                        placeholder={t("booking.topicDetailPlaceholder")}
+                                    <label htmlFor="booking-goal">{t("booking.goalLabel")}</label>
+                                    <select
+                                        id="booking-goal"
+                                        value={preparingFor}
+                                        onChange={(e) => setPreparingFor(e.target.value)}
                                         required
-                                        rows={4}
-                                        maxLength={500}
+                                    >
+                                        <option value="">{t("booking.goalPlaceholder")}</option>
+                                        {LESSON_GOAL_IDS.map((id) => (
+                                            <option key={id} value={id}>
+                                                {t(`booking.goal.${id}`)}
+                                            </option>
+                                        ))}
+                                    </select>
+                                </div>
+
+                                <div className="booking-field">
+                                    <label htmlFor="booking-topic-search">{t("booking.topicSearch")}</label>
+                                    <BookingTopicSearch
+                                        subject={selectedSubject}
+                                        topicId={topicId}
+                                        topicTitle={topicTitle}
+                                        searchPlaceholder={t("booking.topicSearchPlaceholder")}
+                                        otherLabel={t("booking.topicOther")}
+                                        otherPlaceholder={t("booking.topicOtherPlaceholder")}
+                                        noMatchLabel={t("booking.topicNoMatch")}
+                                        onChange={(id, title) => {
+                                            setTopicId(id);
+                                            setTopicTitle(title);
+                                        }}
+                                    />
+                                </div>
+
+                                <div className="booking-field">
+                                    <label htmlFor="booking-topic-note">{t("booking.topicNote")}</label>
+                                    <textarea
+                                        id="booking-topic-note"
+                                        value={topicNote}
+                                        onChange={(e) => setTopicNote(e.target.value)}
+                                        placeholder={t("booking.topicNotePlaceholder")}
+                                        rows={3}
+                                        maxLength={400}
                                     />
                                 </div>
 
@@ -1054,6 +1165,17 @@ export default function BookingPage() {
                                 {success && (
                                     <p className="booking-success">
                                         {t("booking.success")}
+                                        {packStatus === "saved" ? (
+                                            <>
+                                                <br />
+                                                {t("booking.packSaved")}
+                                            </>
+                                        ) : packStatus === "failed" ? (
+                                            <>
+                                                <br />
+                                                {t("booking.packFailed")}
+                                            </>
+                                        ) : null}
                                         <br /><br />
                                         <strong>{t("booking.paymentTitle")}</strong>
                                         <br />
@@ -1070,7 +1192,11 @@ export default function BookingPage() {
                                     className="booking-submit"
                                     disabled={submitting}
                                 >
-                                    {submitting ? t("booking.submitting") : t("booking.submit")}
+                                    {submitting
+                                        ? packStatus === "generating"
+                                            ? t("booking.packGenerating")
+                                            : t("booking.submitting")
+                                        : t("booking.submit")}
                                 </button>
                             </form>
                         </section>

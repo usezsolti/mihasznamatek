@@ -8,6 +8,9 @@ export type CalendarBooking = {
     lessonType?: "online" | "personal" | string;
     selectedSubject?: string;
     hobby?: string;
+    preparingForLabel?: string;
+    topicTitle?: string;
+    topicNote?: string;
     postalCode?: string;
     street?: string;
     houseNumber?: string;
@@ -69,12 +72,15 @@ export function getBookingEventDescription(booking: CalendarBooking): string {
         `Diák: ${booking.customerName || "—"}`,
         `E-mail: ${booking.customerEmail || "—"}`,
         `Típus: ${booking.lessonType === "online" ? "Online" : "Személyes (Fót)"}`,
-        `Témakör: ${booking.selectedSubject || "—"}`,
+        `Szint: ${booking.selectedSubject || "—"}`,
         `Időpontok: ${(booking.times || []).join(", ")}`,
     ];
-    if (booking.hobby && booking.hobby !== "—") {
-        lines.push(`Témakör részlete: ${booking.hobby}`);
+    if (booking.preparingForLabel) {
+        lines.push(`Mire készül: ${booking.preparingForLabel}`);
     }
+    const topic = booking.topicTitle || (booking.hobby && booking.hobby !== "—" ? booking.hobby : "");
+    if (topic) lines.push(`Konkrét téma: ${topic}`);
+    if (booking.topicNote) lines.push(`Megjegyzés: ${booking.topicNote}`);
     lines.push("", "Mihaszna Matek – https://mihasznamatek.hu");
     return lines.join("\n");
 }

@@ -168,6 +168,7 @@ export default function Game() {
         generateKozpontiQuestionsByTopic,
         generateKozpontiPaper,
         generateErettsegiPaper,
+        generateBmeValszamPaper,
         generateSzigorlatQuestionsBySubject,
         generateVegyesSzigorlatQuestions,
         generateUniversityQuestionsByTopic,
@@ -280,6 +281,7 @@ export default function Game() {
         generateKozpontiQuestionsByTopic,
         generateKozpontiPaper,
         generateErettsegiPaper,
+        generateBmeValszamPaper,
         generateVegyesSzigorlatQuestions,
         generateSzigorlatQuestionsBySubject,
         loadTaskQuestions,
@@ -404,8 +406,32 @@ export default function Game() {
                             }}
                             onGenerateVegyesSzigorlat={generateVegyesSzigorlatQuestions}
                             onSelectUniversityTopic={(_subjectId, topicId) => {
+                                if (!topicId) {
+                                    setSelectedUniversityTopic(null);
+                                    return;
+                                }
+                                if (topicId === 'valszam-bme') {
+                                    setSelectedUniversityTopic(topicId);
+                                    // #region agent log
+                                    void import('../utils/agentDebugLog').then(({ agentDebugLog }) => {
+                                        agentDebugLog({
+                                            hypothesisId: 'H33',
+                                            location: 'game.tsx:selectBmeHub',
+                                            message: 'BME hub selected, stay in lobby',
+                                            data: { topicId, navigatedToPath: false },
+                                            runId: 'bme-valszam',
+                                        });
+                                    });
+                                    // #endregion
+                                    return;
+                                }
                                 setSelectedUniversityTopic(topicId);
                                 router.push(buildTopicPracticeHref(topicId, 'university'));
+                            }}
+                            onSelectBmePaper={(paperId) => {
+                                router.push(
+                                    `/game?educationLevel=university&bmeValszam=true&paperId=${encodeURIComponent(paperId)}`
+                                );
                             }}
                             highScore={highScore}
                             assignedTasks={assignedTasks}

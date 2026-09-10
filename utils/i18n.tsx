@@ -310,7 +310,25 @@ const hu: Dict = {
     'booking.taken': ' (foglalt)',
     'booking.signedIn': 'Bejelentkezve:',
     'booking.signedInHint':
-        'A neved, címed, e-mailed és az óra típusa a fiókodból kerül a foglalásba. Itt csak a témakört kell kiválasztanod, és kötelezően leírnod, mit szeretnél gyakorolni. Fájlt opcionálisan csatolhatsz.',
+        'A neved, címed, e-mailed és az óra típusa a fiókodból kerül a foglalásba. Itt válaszd ki, mire készülsz, és a konkrét témakört. Fájlt opcionálisan csatolhatsz.',
+    'booking.goalLabel': 'Mire készülsz? *',
+    'booking.goalPlaceholder': 'Válassz egyet',
+    'booking.goal.dolgozat': 'Dolgozat / témazáró',
+    'booking.goal.erettsegi': 'Érettségi',
+    'booking.goal.potvizsga': 'Pótvizsga / javító',
+    'booking.goal.felveteli': 'Központi felvételi',
+    'booking.goal.verseny': 'Verseny',
+    'booking.goal.megertes': 'Anyag megértése / felzárkózás',
+    'booking.goal.gyakorlas': 'Gyakorlás (nincs számonkérés)',
+    'booking.goal.other': 'Egyéb',
+    'booking.topicSearch': 'Konkrét témakör *',
+    'booking.topicSearchPlaceholder': 'Kezdd el gépelni, pl. trigonometria',
+    'booking.topicOther': 'Egyéb téma (nem találom a listában)',
+    'booking.topicOtherPlaceholder': 'Írd be a témakört',
+    'booking.topicNoMatch': 'Nincs találat — próbálj másik szót, vagy válaszd az Egyéb témát.',
+    'booking.topicNote': 'Pontosítás (nem kötelező)',
+    'booking.topicNotePlaceholder':
+        'Pl. a dolgozat 3. feladata, vagy melyik lépésnél akadtál el.',
     'booking.topicDetail': 'Mit szeretnél gyakorolni? *',
     'booking.topicDetailPlaceholder':
         'Írd le, melyik anyagrészt szeretnéd (pl. törtek, másodfokú egyenlet, érettségi geometria).',
@@ -319,6 +337,11 @@ const hu: Dict = {
     'booking.filesSelected': 'Kiválasztva: {names}',
     'booking.billingPersonalExtra':
         ' Személyes óránál ez egyben a foglalkozás címe is lehet.',
+    'booking.packGenerating': 'Óraanyag készül…',
+    'booking.packSaved':
+        'Az AI óraanyag-PDF a profilodba került — a tanár ebből készül.',
+    'booking.packFailed':
+        'A foglalás megvan. Az óraanyagot most nem tudtuk legenerálni, később pótoljuk.',
     'booking.success':
         'Köszönjük! A foglalásod elmentve. E-mail értesítést küldtünk, és hamarosan visszajelzünk a megadott címre.',
     'booking.paymentTitle': 'Fizetés (készpénz vagy utalás):',
@@ -354,7 +377,8 @@ const hu: Dict = {
     'booking.error.needGdpr': 'A foglaláshoz el kell fogadnod az adatkezelési tájékoztatót.',
     'booking.error.needAddress':
         'A számlázási cím megadása kötelező (irányítószám, utca, házszám).',
-    'booking.error.needTopic': 'Írd le, mit szeretnél gyakorolni ezen az órán.',
+    'booking.error.needGoal': 'Válaszd ki, mire készülsz ezen az órán.',
+    'booking.error.needTopic': 'Válassz egy témakört a listából, vagy írd be, ha Egyéb.',
     'booking.error.conflict':
         'Ezek az időpontok már nem elérhetők: {times}. Válassz másikat.',
     'booking.error.uploadFailed': 'Fájlfeltöltés sikertelen.',
@@ -690,7 +714,7 @@ const hu: Dict = {
     'dashboard.topic.hs12-maps': '6. Függvények, sorozatok',
     'dashboard.topic.hs12-plane': '7. Geometria',
     'dashboard.topic.hs12-odds': '8. Statisztika, valószínűség (összefoglaló)',
-    'dashboard.topicsSub.university': 'Analízis I–III. és lineáris algebra I–IV.',
+    'dashboard.topicsSub.university': 'Analízis, lineáris algebra, DE/PDE, diszkrét matek, statisztika, valószínűségszámítás',
     'dashboard.topicsSub.erettsegi': 'Válassz témakört — útvonal és feladatok',
     'dashboard.correct': '{a}/{b} helyes',
     'dashboard.pathDone': '✓ Út kész',
@@ -872,6 +896,8 @@ const hu: Dict = {
     'dashboard.topic.st3-pca': 'Többváltozós statisztika (PCA, faktor)',
     'dashboard.topic.st3-klaszter': 'Klaszteranalízis és skálázás',
     'dashboard.topic.st3-halado': 'Haladó matematikai statisztika',
+    'dashboard.topic.valszam': 'Valószínűségszámítás',
+    'dashboard.topic.valszam-bme': 'BME valószínűségszámítás',
     'dashboard.assignedTitle': 'Neked kiosztott feladatok',
     'dashboard.assignedSub': 'Az oktató által hozzád rendelt gyakorló feladatok',
     'dashboard.statusDone': 'Kész',
@@ -1262,7 +1288,25 @@ const en: Dict = {
     'booking.taken': ' (booked)',
     'booking.signedIn': 'Signed in as:',
     'booking.signedInHint':
-        'Your name, address, email and lesson type come from your account. Here you only choose the subject and must describe what you want to cover. You may optionally upload a file.',
+        'Your name, address, email and lesson type come from your account. Here you choose what you are preparing for and the specific topic. You may optionally upload a file.',
+    'booking.goalLabel': 'What are you preparing for? *',
+    'booking.goalPlaceholder': 'Choose one',
+    'booking.goal.dolgozat': 'Test / chapter exam',
+    'booking.goal.erettsegi': 'School-leaving exam',
+    'booking.goal.potvizsga': 'Resit / make-up exam',
+    'booking.goal.felveteli': 'Central entrance exam',
+    'booking.goal.verseny': 'Contest',
+    'booking.goal.megertes': 'Understanding / catching up',
+    'booking.goal.gyakorlas': 'Practice (no upcoming test)',
+    'booking.goal.other': 'Other',
+    'booking.topicSearch': 'Specific topic *',
+    'booking.topicSearchPlaceholder': 'Start typing, e.g. trigonometry',
+    'booking.topicOther': 'Other topic (not in the list)',
+    'booking.topicOtherPlaceholder': 'Type the topic',
+    'booking.topicNoMatch': 'No match — try another word, or pick Other topic.',
+    'booking.topicNote': 'Details (optional)',
+    'booking.topicNotePlaceholder':
+        'E.g. exercise 3 on the test, or which step you got stuck on.',
     'booking.topicDetail': 'What would you like to practise? *',
     'booking.topicDetailPlaceholder':
         'Describe the topic (e.g. fractions, quadratic equations, geometry for the exam).',
@@ -1271,6 +1315,11 @@ const en: Dict = {
     'booking.filesSelected': 'Selected: {names}',
     'booking.billingPersonalExtra':
         ' For in-person lessons this may also be the session address.',
+    'booking.packGenerating': 'Preparing your lesson PDF…',
+    'booking.packSaved':
+        'The AI lesson PDF is saved on your profile — your teacher will use it.',
+    'booking.packFailed':
+        'Your booking is saved. We could not generate the lesson pack now; we will add it later.',
     'booking.success':
         'Thank you! Your booking is saved. We sent an email notification and will get back to you soon.',
     'booking.paymentTitle': 'Payment (cash or bank transfer):',
@@ -1306,7 +1355,8 @@ const en: Dict = {
     'booking.error.needGdpr': 'You must accept the privacy notice to book.',
     'booking.error.needAddress':
         'Billing address is required (postal code, street, house number).',
-    'booking.error.needTopic': 'Describe what you would like to practise in this lesson.',
+    'booking.error.needGoal': 'Choose what you are preparing for.',
+    'booking.error.needTopic': 'Pick a topic from the list, or type one under Other.',
     'booking.error.conflict':
         'These times are no longer available: {times}. Please choose others.',
     'booking.error.uploadFailed': 'File upload failed.',
@@ -1641,7 +1691,7 @@ const en: Dict = {
     'dashboard.topic.hs12-maps': '6. Functions and sequences',
     'dashboard.topic.hs12-plane': '7. Geometry',
     'dashboard.topic.hs12-odds': '8. Statistics and probability (review)',
-    'dashboard.topicsSub.university': 'Analysis I–III and linear algebra I–IV',
+    'dashboard.topicsSub.university': 'Analysis, linear algebra, ODE/PDE, discrete math, statistics, probability',
     'dashboard.topicsSub.erettsegi': 'Pick a topic — path and practice tasks',
     'dashboard.correct': '{a}/{b} correct',
     'dashboard.pathDone': '✓ Path complete',
@@ -1823,6 +1873,8 @@ const en: Dict = {
     'dashboard.topic.st3-pca': 'Multivariate statistics (PCA, factor)',
     'dashboard.topic.st3-klaszter': 'Cluster analysis and scaling',
     'dashboard.topic.st3-halado': 'Advanced mathematical statistics',
+    'dashboard.topic.valszam': 'Probability theory',
+    'dashboard.topic.valszam-bme': 'BME probability',
     'dashboard.assignedTitle': 'Tasks assigned to you',
     'dashboard.assignedSub': 'Practice tasks from your teacher',
     'dashboard.statusDone': 'Done',

@@ -18,6 +18,9 @@ import {
     xpForNextRank,
     type UserPracticeProgress,
 } from '../utils/practiceProgress';
+import { downloadLessonPackPdf } from '../utils/lessonPackPdf';
+import { readLessonPacks } from '../utils/saveLessonPack';
+import type { LessonPackRecord } from '../utils/lessonPack';
 
 interface GameResult {
     id: string;
@@ -118,6 +121,7 @@ export default function ProfilePanel({ embedded = false }: { embedded?: boolean 
     });
     const [selectedFilter, setSelectedFilter] = useState<'all' | 'elementary' | 'highschool' | 'university' | 'erettsegi'>('all');
     const [myBookings, setMyBookings] = useState<BookingPayload[]>([]);
+    const [lessonPacks, setLessonPacks] = useState<LessonPackRecord[]>([]);
     const [bookingsLoading, setBookingsLoading] = useState(false);
     const [cancellingId, setCancellingId] = useState<string | null>(null);
     const [practiceProgress, setPracticeProgress] = useState<UserPracticeProgress>(emptyProgress());
@@ -167,6 +171,7 @@ export default function ProfilePanel({ embedded = false }: { embedded?: boolean 
                             if (data?.photoURL) {
                                 setPhotoURL(data.photoURL);
                             }
+                            setLessonPacks(readLessonPacks(data));
                         }
                     } catch (err) {
                         console.warn('Profilkép betöltési hiba:', err);
@@ -912,6 +917,8 @@ export default function ProfilePanel({ embedded = false }: { embedded?: boolean 
                                             <p style={{ margin: '0.25rem 0', color: '#bbb', fontSize: '0.95rem' }}>
                                                 {b.lessonType === 'online' ? '💻 Online' : '🏠 Személyes'}
                                                 {b.selectedSubject ? ` · ${b.selectedSubject}` : ''}
+                                                {b.preparingForLabel ? ` · ${b.preparingForLabel}` : ''}
+                                                {b.topicTitle ? ` · ${b.topicTitle}` : ''}
                                                 {typeof b.totalPrice === 'number'
                                                     ? ` · ${b.totalPrice.toLocaleString('hu-HU')} Ft`
                                                     : ''}
@@ -994,6 +1001,80 @@ export default function ProfilePanel({ embedded = false }: { embedded?: boolean 
                             </div>
                         )}
                     </div>
+
+                    {lessonPacks.length > 0 && (
+                        <div
+                            style={{
+                                background: 'rgba(255, 255, 255, 0.08)',
+                                border: '2px solid rgba(57, 255, 20, 0.35)',
+                                borderRadius: '25px',
+                                padding: '1.75rem',
+                                marginBottom: '2rem',
+                            }}
+                        >
+                            <h2
+                                style={{
+                                    margin: '0 0 1rem',
+                                    fontSize: '1.35rem',
+                                    color: '#39ff14',
+                                }}
+                            >
+                                Óraanyagaid
+                            </h2>
+                            <div style={{ display: 'grid', gap: '0.75rem' }}>
+                                {lessonPacks
+                                    .slice()
+                                    .reverse()
+                                    .map((pack) => (
+                                        <div
+                                            key={pack.id}
+                                            style={{
+                                                display: 'flex',
+                                                justifyContent: 'space-between',
+                                                gap: '0.75rem',
+                                                alignItems: 'center',
+                                                flexWrap: 'wrap',
+                                                padding: '0.85rem 1rem',
+                                                borderRadius: 12,
+                                                border: '1px solid rgba(57,255,20,0.25)',
+                                            }}
+                                        >
+                                            <div>
+                                                <strong style={{ color: '#fff' }}>
+                                                    {pack.topicTitle}
+                                                </strong>
+                                                <div style={{ color: '#bbb', fontSize: '0.88rem' }}>
+                                                    {pack.preparingForLabel || pack.preparingFor || ''}
+                                                    {pack.createdAt
+                                                        ? ` · ${new Date(pack.createdAt).toLocaleDateString('hu-HU')}`
+                                                        : ''}
+                                                </div>
+                                            </div>
+                                            <button
+                                                type="button"
+                                                onClick={() =>
+                                                    downloadLessonPackPdf(
+                                                        pack.content,
+                                                        `oraanyag-${pack.topicTitle}`
+                                                    )
+                                                }
+                                                style={{
+                                                    border: 'none',
+                                                    borderRadius: 10,
+                                                    padding: '0.45rem 0.85rem',
+                                                    fontWeight: 800,
+                                                    cursor: 'pointer',
+                                                    background: 'linear-gradient(135deg, #39ff14, #b8ff5a)',
+                                                    color: '#061008',
+                                                }}
+                                            >
+                                                PDF letöltése
+                                            </button>
+                                        </div>
+                                    ))}
+                            </div>
+                        </div>
+                    )}
 
                     {/* Statistics */}
                     <div style={{

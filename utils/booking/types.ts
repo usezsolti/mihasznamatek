@@ -41,6 +41,20 @@ export type BookingPayload = {
     lessonType: 'online' | 'personal';
     selectedSubject: string;
     hobby: string;
+    /** Mire készül: dolgozat, érettségi, felvételi… */
+    preparingFor?: string;
+    preparingForLabel?: string;
+    topicId?: string;
+    topicTitle?: string;
+    topicNote?: string;
+    lessonPack?: {
+        id: string;
+        title: string;
+        summary: string;
+        pdfUrl?: string;
+        source?: string;
+        content?: import('../lessonPack').LessonPackContent;
+    };
     totalPrice: number;
     postalCode?: string;
     street?: string;

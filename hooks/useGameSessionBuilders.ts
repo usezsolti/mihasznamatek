@@ -39,6 +39,7 @@ import {
     generateKozpontiQuestionByTopic,
     getKozpontiPaperQuestions,
     getErettsegiPaperQuestions,
+    getBmeValszamPaperQuestions,
     generateHighschoolQuestionByTopic,
     generateUniversityQuestionByTopic,
     getWorksheetListForTopic,
@@ -355,7 +356,7 @@ export function useGameSessionBuilders(p: UseGameSessionBuildersParams) {
                 lastId: list?.[list.length - 1]?.id,
                 ready: Boolean(list?.length),
             },
-            runId: 'er-2026-maj',
+            runId: 'er-batch-2325',
         });
         // #endregion
         if (!list?.length) {
@@ -380,7 +381,41 @@ export function useGameSessionBuilders(p: UseGameSessionBuildersParams) {
         });
     };
 
+    const generateBmeValszamPaper = (paperId: string) => {
+        const list = getBmeValszamPaperQuestions(paperId);
+        // #region agent log
+        agentDebugLog({
+            hypothesisId: 'H31',
+            location: 'useGameSessionBuilders.ts:generateBmeValszamPaper',
+            message: 'BME valszam paper started',
+            data: {
+                paperId,
+                total: list?.length || 0,
+                firstId: list?.[0]?.id,
+                lastId: list?.[list && list.length ? list.length - 1 : 0]?.id,
+                ready: Boolean(list?.length),
+            },
+            runId: 'bme-valszam',
+        });
+        // #endregion
+        if (!list?.length) {
+            console.error('No BME valszam paper questions for', paperId);
+            return;
+        }
+        p.setEducationLevel('university');
+        p.setSelectedUniversitySubject('valszam');
+        p.setSelectedUniversityTopic(paperId);
+        setTaskQuestions(list);
+        startGeneratedRun(p, true);
+    };
+
     const generateUniversityQuestionsByTopic = (subjectId: string, topicId: string) => {
+        const bmeList = getBmeValszamPaperQuestions(topicId) || getBmeValszamPaperQuestions(subjectId);
+        if (bmeList?.length) {
+            generateBmeValszamPaper(topicId);
+            return;
+        }
+
         const subject = universitySubjects.find(s => s.id === subjectId);
         if (subject) {
             p.setSelectedUniversitySubject(subject.title);
@@ -1197,6 +1232,7 @@ export function useGameSessionBuilders(p: UseGameSessionBuildersParams) {
         generateKozpontiQuestionsByTopic,
         generateKozpontiPaper,
         generateErettsegiPaper,
+        generateBmeValszamPaper,
         generateSzigorlatQuestionsBySubject,
         generateVegyesSzigorlatQuestions,
         generateUniversityQuestionsByTopic,

@@ -10,10 +10,47 @@ import {
     generateDerivativeQuestion,
     generateIntegralQuestion,
 } from './generateHelpers';
+import { getAllBmeValszamQuestions, getBmeValszamGyakQuestions } from './bmeValszamBanks';
+import { getBmeValszamPaperQuestions, isBmeValszamPaperId } from './bmeValszamPapers';
 
 export const generateUniversityQuestionByTopic = (subjectId: string, topicId: string, _difficulty: number = 0): Question | null => {
     const topicIdLower = topicId.toLowerCase();
     const subjectIdLower = subjectId.toLowerCase();
+
+    if (
+        topicIdLower.startsWith('valszam-') ||
+        subjectIdLower === 'valszam' ||
+        isBmeValszamPaperId(topicIdLower)
+    ) {
+        const paper = getBmeValszamPaperQuestions(topicIdLower);
+        const gm = topicIdLower.match(/gyak(\d{1,2})$/);
+        const list = paper?.length
+            ? paper
+            : gm
+              ? getBmeValszamGyakQuestions(parseInt(gm[1], 10))
+              : getAllBmeValszamQuestions();
+        if (list.length) {
+            const q = list[Math.floor(Math.random() * list.length)];
+            // #region agent log
+            agentDebugLog({
+                hypothesisId: 'H32',
+                location: 'generateUniversity.ts:valszam-bank',
+                message: 'BME valszam served from practice bank',
+                data: {
+                    topicId: topicIdLower,
+                    subjectId: subjectIdLower,
+                    total: list.length,
+                    firstId: list[0]?.id,
+                    pickedId: q.id,
+                    usedDerivativeStub: false,
+                    routedToValoszinuseg: topicIdLower.includes('valoszinuseg'),
+                },
+                runId: 'bme-valszam',
+            });
+            // #endregion
+            return q;
+        }
+    }
 
     if (topicIdLower.startsWith('a1-')) {
         const list = getAnalizis1PracticeQuestions(topicIdLower);

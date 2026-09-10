@@ -64,6 +64,26 @@ function wrapStudentHtml(title: string, inner: string): string {
 </html>`;
 }
 
+function lessonFocusRows(booking: BookingPayload): Array<[string, string]> {
+    const topic =
+        booking.topicTitle ||
+        (booking.hobby && booking.hobby !== '—' ? booking.hobby : '');
+    const rows: Array<[string, string]> = [['Szint', booking.selectedSubject || '—']];
+    if (booking.preparingForLabel || booking.preparingFor) {
+        rows.push(['Mire készül', booking.preparingForLabel || booking.preparingFor || '—']);
+    }
+    if (topic) rows.push(['Konkrét téma', topic]);
+    if (booking.topicNote?.trim()) rows.push(['Megjegyzés', booking.topicNote.trim()]);
+    if (booking.lessonPack?.title) {
+        rows.push(['Óraanyag', booking.lessonPack.title]);
+    }
+    return rows;
+}
+
+function lessonFocusText(booking: BookingPayload): string[] {
+    return lessonFocusRows(booking).map(([k, v]) => `${k}: ${v}`);
+}
+
 function studentDetailsTable(booking: BookingPayload, dateKey?: string, times?: string[]): string {
     const dateHu = formatDateHu(dateKey || booking.date);
     const slot = (times || booking.times).join(', ');
@@ -71,7 +91,7 @@ function studentDetailsTable(booking: BookingPayload, dateKey?: string, times?: 
         ['Dátum', dateHu],
         ['Időpont(ok)', slot],
         ['Óra típusa', typeLabel(booking.lessonType)],
-        ['Témakör', booking.selectedSubject || '—'],
+        ...lessonFocusRows(booking),
         ['Összesen', `${displayPrice(booking).toLocaleString('hu-HU')} Ft`],
     ];
     return `<table role="presentation" style="margin:0 0 20px;font-size:14px;line-height:1.45;">${rows
@@ -121,8 +141,7 @@ export function formatAdminNewMessage(
         `Dátum: ${formatDateHu(booking.date)}`,
         `Időpont(ok): ${booking.times.join(', ')}`,
         `Óra típusa: ${typeLabel(booking.lessonType)}`,
-        `Témakör: ${booking.selectedSubject}`,
-        `Témakör részlete: ${booking.hobby || '—'}`,
+        ...lessonFocusText(booking),
         `Ár: ${displayPrice(booking).toLocaleString('hu-HU')} Ft`,
         `Számlázási cím: ${addressLine(booking)}`,
         `Csatolt fájlok:\n  ${formatAttachmentsLine(booking.uploadedFiles)}`,
@@ -153,8 +172,7 @@ function formatAdminNewHtml(
         ['Dátum', formatDateHu(booking.date)],
         ['Időpont(ok)', booking.times.join(', ')],
         ['Óra típusa', typeLabel(booking.lessonType)],
-        ['Témakör', booking.selectedSubject || '—'],
-        ['Témakör részlete', booking.hobby || '—'],
+        ...lessonFocusRows(booking),
         ['Ár', `${displayPrice(booking).toLocaleString('hu-HU')} Ft`],
         ['Számlázási cím', addressLine(booking)],
         ['Csatolt fájlok', formatAttachmentsLine(booking.uploadedFiles)],
@@ -293,10 +311,7 @@ export function formatStudentDecisionMessage(
             `Dátum: ${dateHu}`,
             `Időpontok: ${booking.times.join(', ')}`,
             `Óra típusa: ${typeLabel(booking.lessonType)}`,
-            `Témakör: ${booking.selectedSubject}`,
-            booking.hobby && booking.hobby !== '—'
-                ? `Témakör részlete: ${booking.hobby}`
-                : '',
+            ...lessonFocusText(booking),
             `Összesen: ${displayPrice(booking).toLocaleString('hu-HU')} Ft`,
             '',
             CANCEL_POLICY_HU,
@@ -354,7 +369,7 @@ export function formatAdminCancelledMessage(booking: BookingPayload, dashboardUr
         `Dátum: ${formatDateHu(booking.date)}`,
         `Időpont(ok): ${(booking.times || []).join(', ')}`,
         `Óra típusa: ${typeLabel(booking.lessonType)}`,
-        `Témakör: ${booking.selectedSubject || '—'}`,
+        ...lessonFocusText(booking),
         `Foglalás ID: ${booking.id}`,
         '',
         'Dashboard:',
@@ -391,7 +406,7 @@ export function formatLessonReminderMessage(booking: BookingPayload): string {
         `📅 Dátum: ${formatDateHu(booking.date)}`,
         `⏰ Időpontok: ${times}`,
         `📍 Óra típusa: ${typeLabel(booking.lessonType)}`,
-        `📚 Témakör: ${booking.selectedSubject || '—'}`,
+        ...lessonFocusText(booking).map((line) => `📚 ${line}`),
         '',
         booking.lessonType === 'personal'
             ? 'Az óra személyesen lesz (Fót).'

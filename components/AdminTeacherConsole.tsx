@@ -32,6 +32,7 @@ import {
     type TeacherAdminMeta,
     type TeacherStudent,
 } from '../utils/teacherConsole';
+import { downloadLessonPackPdf } from '../utils/lessonPackPdf';
 
 type ConsoleTab = 'students' | 'tasks' | 'lessons' | 'schedule';
 type LevelFilter = 'all' | 'elementary' | 'highschool' | 'erettsegi' | 'university';
@@ -733,7 +734,10 @@ export default function AdminTeacherConsole({
                                             </strong>
                                             <p className="atc-muted">
                                                 {b.selectedSubject || 'Téma nincs'}
-                                                {b.hobby && b.hobby !== '—' ? ` · ${b.hobby}` : ''} ·{' '}
+                                                {b.preparingForLabel ? ` · ${b.preparingForLabel}` : ''}
+                                                {b.topicTitle || (b.hobby && b.hobby !== '—')
+                                                    ? ` · ${b.topicTitle || b.hobby}`
+                                                    : ''} ·{' '}
                                                 {b.status === 'approved' ? 'Jóváhagyva' : 'Függőben'}
                                             </p>
                                         </div>
@@ -1250,6 +1254,37 @@ export default function AdminTeacherConsole({
                                     ) : (
                                         <p className="atc-muted">Nincs közelgő foglalás.</p>
                                     )}
+                                    {dossier.profile.lessonPacks.length > 0 ? (
+                                        <div style={{ marginTop: '0.85rem' }}>
+                                            <strong>AI óraanyagok</strong>
+                                            <ul className="atc-plain-list">
+                                                {dossier.profile.lessonPacks
+                                                    .slice()
+                                                    .reverse()
+                                                    .slice(0, 8)
+                                                    .map((pack) => (
+                                                        <li key={pack.id}>
+                                                            <strong>{pack.topicTitle}</strong>
+                                                            <span className="atc-muted">
+                                                                {' '}
+                                                                {pack.preparingForLabel || ''}
+                                                            </span>
+                                                            <button
+                                                                type="button"
+                                                                onClick={() =>
+                                                                    downloadLessonPackPdf(
+                                                                        pack.content,
+                                                                        `oraanyag-${pack.topicTitle}`
+                                                                    )
+                                                                }
+                                                            >
+                                                                PDF
+                                                            </button>
+                                                        </li>
+                                                    ))}
+                                            </ul>
+                                        </div>
+                                    ) : null}
                                     <div className="atc-prep-cols">
                                         <div>
                                             <strong>Gyenge témák</strong>

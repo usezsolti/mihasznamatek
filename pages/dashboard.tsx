@@ -955,9 +955,46 @@ export default function Dashboard() {
                                                     <p><strong>Email:</strong> {booking.customerEmail}</p>
                                                     <p><strong>Idő:</strong> {(booking.times || []).join(', ')}</p>
                                                     <p><strong>Típus:</strong> {booking.lessonType === 'online' ? 'Online' : 'Személyes'}</p>
-                                                    <p><strong>Téma:</strong> {booking.selectedSubject}</p>
-                                                    {booking.hobby && booking.hobby !== '—' ? (
-                                                        <p><strong>Témakör részlete:</strong> {booking.hobby}</p>
+                                                    <p><strong>Szint:</strong> {booking.selectedSubject}</p>
+                                                    {booking.preparingForLabel || booking.preparingFor ? (
+                                                        <p>
+                                                            <strong>Mire készül:</strong>{' '}
+                                                            {booking.preparingForLabel || booking.preparingFor}
+                                                        </p>
+                                                    ) : null}
+                                                    {(booking.topicTitle || (booking.hobby && booking.hobby !== '—')) ? (
+                                                        <p>
+                                                            <strong>Konkrét téma:</strong>{' '}
+                                                            {booking.topicTitle || booking.hobby}
+                                                        </p>
+                                                    ) : null}
+                                                    {booking.topicNote ? (
+                                                        <p><strong>Megjegyzés:</strong> {booking.topicNote}</p>
+                                                    ) : null}
+                                                    {booking.lessonPack?.title ? (
+                                                        <p>
+                                                            <strong>Óraanyag:</strong>{' '}
+                                                            {booking.lessonPack.title}
+                                                            {booking.lessonPack.content ? (
+                                                                <button
+                                                                    type="button"
+                                                                    style={{
+                                                                        marginLeft: 8,
+                                                                        cursor: 'pointer',
+                                                                    }}
+                                                                    onClick={async () => {
+                                                                        const { downloadLessonPackPdf } =
+                                                                            await import('../utils/lessonPackPdf');
+                                                                        downloadLessonPackPdf(
+                                                                            booking.lessonPack!.content!,
+                                                                            `oraanyag-${booking.topicTitle || 'matek'}`
+                                                                        );
+                                                                    }}
+                                                                >
+                                                                    PDF
+                                                                </button>
+                                                            ) : null}
+                                                        </p>
                                                     ) : null}
                                                     <p><strong>Ár:</strong> {booking.totalPrice} Ft</p>
                                                     <p>

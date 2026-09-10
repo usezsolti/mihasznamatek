@@ -29,6 +29,7 @@ import {
     type RawGameResult,
     type TopicSessionAggregate,
 } from '../../utils/topicStats';
+import { BME_VALSZAM_PAPERS } from '../../utils/game/bmeValszamPapers';
 
 function parseEducationLevel(value: unknown): EducationLevelId {
     if (value === 'elementary' || value === 'highschool' || value === 'university' || value === 'erettsegi') {
@@ -84,6 +85,7 @@ export default function TopicStatsPage() {
                 isDePde: /^de[1-4]$|^pde[12]$/.test(uniSubject.id),
                 isDmGe: /^dm[1-3]$|^ge[12]$/.test(uniSubject.id),
                 isSt: /^st[1-3]$/.test(uniSubject.id),
+                isValszam: uniSubject.id === 'valszam',
                 firstTopic: uniSubject.topics[0]?.id,
             },
             runId: uniSubject.id.startsWith('linearis')
@@ -96,10 +98,31 @@ export default function TopicStatsPage() {
                       ? 'dm-topics'
                       : /^st[1-3]$/.test(uniSubject.id)
                         ? 'st-topics'
-                        : 'a1-komplex',
+                        : uniSubject.id === 'valszam'
+                          ? 'bme-valszam'
+                          : 'a1-komplex',
         });
         // #endregion
     }, [uniSubject]);
+
+    useEffect(() => {
+        if (topicIdParam !== 'valszam-bme' && uniNested?.topic.id !== 'valszam-bme') return;
+        // #region agent log
+        agentDebugLog({
+            hypothesisId: 'H30',
+            location: 'topic/[topicId].tsx:bmePapers',
+            message: 'BME valszam paper list rendered',
+            data: {
+                topicIdParam,
+                paperN: BME_VALSZAM_PAPERS.length,
+                readyIds: BME_VALSZAM_PAPERS.filter((p) => p.ready).map((p) => p.id),
+                counts: BME_VALSZAM_PAPERS.map((p) => ({ id: p.id, n: p.questionCount, ready: p.ready })),
+                hasValoszinusegId: BME_VALSZAM_PAPERS.some((p) => p.id.includes('valoszinuseg')),
+            },
+            runId: 'bme-valszam',
+        });
+        // #endregion
+    }, [topicIdParam, uniNested?.topic.id]);
 
     const topicTitle = catalogTopic?.title || topicIdParam || 'Témakör';
     const topicIcon = catalogTopic?.icon || '📚';
@@ -225,22 +248,109 @@ export default function TopicStatsPage() {
                         </div>
                         <div className="topic-stats-hero-text">
                             <h1 className="topic-stats-title">{topicTitle}</h1>
-                            <p className="topic-stats-subtitle">Válassz témakört — 6 szint × 20 feladat</p>
+                            <p className="topic-stats-subtitle">
+                                {uniSubject.id === 'valszam'
+                                    ? 'Válassz képzést — BME gyakorlatok'
+                                    : 'Válassz témakört — 6 szint × 20 feladat'}
+                            </p>
                         </div>
                     </div>
                     <div className="topic-stats-grid">
                         {uniSubject.topics.map((t) => (
                             <Link
                                 key={t.id}
-                                href={buildTopicPracticeHref(t.id, 'university')}
+                                href={
+                                    t.id === 'valszam-bme'
+                                        ? `/topic/valszam-bme?educationLevel=university`
+                                        : buildTopicPracticeHref(t.id, 'university')
+                                }
                                 className="topic-stats-card"
                                 style={{ textDecoration: 'none', color: 'inherit' }}
                             >
                                 <div className="topic-stats-card-label">
                                     {t.icon} {t.title}
                                 </div>
-                                <div className="topic-stats-card-value is-small">Út →</div>
+                                <div className="topic-stats-card-value is-small">
+                                    {t.id === 'valszam-bme' ? 'Gyakorlatok →' : 'Út →'}
+                                </div>
                             </Link>
+                        ))}
+                    </div>
+                </main>
+            </div>
+        );
+    }
+
+    if (topicIdParam === 'valszam-bme' || uniNested?.topic.id === 'valszam-bme') {
+        return (
+            <div className="dashboard-container modern-theme has-site-navbar">
+                <main
+                    className="main-content topic-stats-page"
+                    style={{ ['--topic-color' as string]: topicColor }}
+                >
+                    <Link href="/dashboard" className="topic-stats-back">
+                        ← Vissza a dashboardra
+                    </Link>
+                    <Link
+                        href="/topic/valszam?educationLevel=university"
+                        className="topic-stats-back"
+                    >
+                        ← Valószínűségszámítás
+                    </Link>
+                    <div className="topic-stats-hero">
+                        <div className="topic-stats-icon" aria-hidden="true">
+                            BME
+                        </div>
+                        <div className="topic-stats-hero-text">
+                            <h1 className="topic-stats-title">BME valószínűségszámítás</h1>
+                            <p className="topic-stats-subtitle">
+                                2020 őszi gyakorlatok — pontozható feladatok a hivatalos megoldókulcs szerint
+                            </p>
+                        </div>
+                    </div>
+                    <div className="topic-stats-grid">
+                        {BME_VALSZAM_PAPERS.map((paper) => (
+                            <button
+                                key={paper.id}
+                                type="button"
+                                className="topic-stats-card"
+                                style={{
+                                    textAlign: 'left',
+                                    cursor: paper.ready ? 'pointer' : 'default',
+                                    opacity: paper.ready ? 1 : 0.55,
+                                }}
+                                onClick={() => {
+                                    // #region agent log
+                                    agentDebugLog({
+                                        hypothesisId: 'H31',
+                                        location: 'topic/[topicId].tsx:bmePaperClick',
+                                        message: 'BME paper click from topic page',
+                                        data: {
+                                            paperId: paper.id,
+                                            ready: paper.ready,
+                                            questionCount: paper.questionCount,
+                                        },
+                                        runId: 'bme-valszam',
+                                    });
+                                    // #endregion
+                                    if (!paper.ready) return;
+                                    router.push(
+                                        `/game?educationLevel=university&bmeValszam=true&paperId=${encodeURIComponent(paper.id)}`
+                                    );
+                                }}
+                            >
+                                <div className="topic-stats-card-label">
+                                    {paper.title}
+                                </div>
+                                <div className="topic-stats-card-value is-small">
+                                    {paper.ready
+                                        ? `${paper.questionCount} feladat →`
+                                        : 'Hamarosan'}
+                                </div>
+                                <p className="topic-stats-muted" style={{ marginTop: 8 }}>
+                                    {paper.subtitle}
+                                </p>
+                            </button>
                         ))}
                     </div>
                 </main>

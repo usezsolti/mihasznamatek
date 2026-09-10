@@ -78,6 +78,14 @@ export {
     erettsegiPapersByYear,
 } from './erettsegiPapers';
 export type { ErettsegiPaperMeta, ErettsegiMonth, ErettsegiExamLevel } from './erettsegiPapers';
+export {
+    BME_VALSZAM_PAPERS,
+    getBmeValszamPaperQuestions,
+    getBmeValszamPaperById,
+    isBmeValszamPaperId,
+    logBmeValszamCatalog,
+} from './bmeValszamPapers';
+export type { BmeValszamPaperMeta } from './bmeValszamPapers';
 export { generateHighschoolQuestionByTopic } from './generateHighschool';
 export { generateUniversityQuestionByTopic } from './generateUniversity';
 export { getWorksheetListForTopic } from './worksheetLists';

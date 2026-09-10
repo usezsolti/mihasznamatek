@@ -407,6 +407,15 @@ export const universitySubjects: UniversitySubject[] = [
             { id: 'st3-halado', title: 'Haladó matematikai statisztika', icon: 'I' },
         ],
     },
+    {
+        id: 'valszam',
+        title: 'Valószínűségszámítás',
+        icon: 'P',
+        color: '#39ff14',
+        topics: [
+            { id: 'valszam-bme', title: 'BME valószínűségszámítás', icon: 'BME' },
+        ],
+    },
 ];
 
 const G = '#39ff14';
@@ -468,6 +477,64 @@ export function getTopicsForEducationLevel(
         return erettsegiLevel === 'kozep' ? erettsegiKozepTopics : erettsegiEmeltTopics;
     }
     return universitySubjects.map(({ id, title, icon, color }) => ({ id, title, icon, color }));
+}
+
+export type BookingCatalogTopic = {
+    id: string;
+    title: string;
+    group: string;
+    icon?: string;
+};
+
+export const BOOKING_OTHER_TOPIC_ID = 'booking-other';
+
+/** Foglaláshoz: minden témakör egy kereshető listában, csoportcímmel. */
+export function listAllBookingTopics(): BookingCatalogTopic[] {
+    const out: BookingCatalogTopic[] = [];
+    for (const t of elementaryTopics) {
+        out.push({ id: t.id, title: t.title, group: 'Általános iskola', icon: t.icon });
+    }
+    const grades: Array<[string, CatalogTopic[]]> = [
+        ['9. osztály', highschoolGrade09Topics],
+        ['10. osztály', highschoolGrade10Topics],
+        ['11. osztály', highschoolGrade11Topics],
+        ['12. osztály', highschoolGrade12Topics],
+    ];
+    for (const [group, topics] of grades) {
+        for (const t of topics) {
+            out.push({ id: t.id, title: t.title, group, icon: t.icon });
+        }
+    }
+    for (const t of highschoolTopics) {
+        out.push({ id: t.id, title: t.title, group: 'Középiskola', icon: t.icon });
+    }
+    for (const t of erettsegiKozepTopics) {
+        out.push({ id: t.id, title: t.title, group: 'Érettségi · középszint', icon: t.icon });
+    }
+    for (const t of erettsegiEmeltTopics) {
+        out.push({ id: t.id, title: t.title, group: 'Érettségi · emelt', icon: t.icon });
+    }
+    for (const s of universitySubjects) {
+        for (const t of s.topics) {
+            out.push({
+                id: t.id,
+                title: t.title,
+                group: `Egyetem · ${s.title}`,
+                icon: t.icon,
+            });
+        }
+    }
+    return out;
+}
+
+export function preferredBookingTopicGroups(subject: string): string[] {
+    if (subject.includes('Általános')) return ['Általános iskola'];
+    if (subject.includes('Középiskola')) {
+        return ['9. osztály', '10. osztály', '11. osztály', '12. osztály', 'Középiskola'];
+    }
+    if (subject.includes('Érettségi')) return ['Érettségi · középszint', 'Érettségi · emelt'];
+    if (subject.includes('Egyetem')) return ['Egyetem ·'];
+    return [];
 }
 
 export function getUniversitySubjectById(subjectId: string): UniversitySubject | undefined {

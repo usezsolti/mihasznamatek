@@ -400,8 +400,13 @@ export default function ErettsegiFelkeszules() {
                 y2026: yearGroups
                     .find((g) => g.year === 2026)
                     ?.papers.map((p) => ({ id: p.id, month: p.month, ready: p.ready, n: p.questionCount })),
+                readyKozep: yearGroups.flatMap((g) =>
+                    g.papers
+                        .filter((p) => p.ready && p.level === 'kozep')
+                        .map((p) => ({ id: p.id, n: p.questionCount }))
+                ),
             },
-            runId: 'er-2026-maj',
+            runId: 'er-batch-2325',
         });
         // #endregion
     }, [viewMode, selectedLevel, yearGroups.length]);
@@ -442,7 +447,7 @@ export default function ErettsegiFelkeszules() {
             location: 'erettsegi-felkeszules.tsx:paperClick',
             message: 'erettsegi paper click',
             data: { paperId: paper.id, ready: paper.ready, month: paper.month, level: paper.level },
-            runId: 'er-2026-maj',
+            runId: 'er-batch-2325',
         });
         // #endregion
         if (!paper.ready) return;
