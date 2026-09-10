@@ -450,6 +450,21 @@ export default function ErettsegiFelkeszules() {
             runId: 'er-batch-2325',
         });
         // #endregion
+        // #region agent log
+        agentDebugLog({
+            hypothesisId: 'H52',
+            location: 'erettsegi-felkeszules.tsx:paperClick:readyGate',
+            message: 'emelt/kozep ready gate',
+            data: {
+                paperId: paper.id,
+                ready: paper.ready,
+                level: paper.level,
+                questionCount: paper.questionCount,
+                timeLimitMin: paper.timeLimitMin,
+            },
+            runId: 'er-emelt-batch',
+        });
+        // #endregion
         if (!paper.ready) return;
         const level: ErettsegiExamLevel = paper.level;
         router.push(`/game?erettsegi=true&paperId=${encodeURIComponent(paper.id)}&level=${level}`);
