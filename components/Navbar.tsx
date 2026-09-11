@@ -307,10 +307,11 @@ export default function Navbar() {
 
     const displayLabel =
         currentUser?.displayName || currentUser?.email || t('nav.user');
+    const isDash = router.pathname === '/dashboard';
 
     return (
         <>
-            <nav className="site-navbar" suppressHydrationWarning>
+            <nav className={`site-navbar${isDash ? ' site-navbar--dash' : ''}`} suppressHydrationWarning>
                 <div className="logo">
                     <Link href="/" aria-label={t('nav.home')} onClick={() => setIsMenuOpen(false)}>
                     <svg
@@ -360,7 +361,7 @@ export default function Navbar() {
                     </Link>
                     {isClient && currentUser && (
                         <Link
-                            href="/dashboard"
+                            href="/dashboard?tab=profil"
                             className="nav-user-chip nav-user-chip-left"
                             title={displayLabel}
                             onClick={() => setIsMenuOpen(false)}
@@ -380,12 +381,37 @@ export default function Navbar() {
                     )}
                 </div>
                 <div className="nav-center">
+                    {isDash && (
+                        <div className="nav-dash-primary">
+                            <Link
+                                href="/dashboard?tab=tanulas"
+                                className={router.query.tab !== 'profil' && router.query.tab !== 'admin' ? 'nav-link-active' : undefined}
+                                onClick={() => setIsMenuOpen(false)}
+                            >
+                                {t('nav.practice')}
+                            </Link>
+                            <Link href="/booking" onClick={() => setIsMenuOpen(false)}>
+                                {t('nav.booking')}
+                            </Link>
+                        </div>
+                    )}
                     <ul className={`nav-links ${isMenuOpen ? "open" : "closed"}`}>
                         <li className="nav-close">
                             <button onClick={toggleMenu} className="close-btn">
                                 ✕
                             </button>
                         </li>
+                        {isDash && (
+                            <li>
+                                <Link
+                                    href="/dashboard?tab=tanulas"
+                                    className={router.query.tab !== 'profil' && router.query.tab !== 'admin' ? 'nav-link-active' : undefined}
+                                    onClick={() => setIsMenuOpen(false)}
+                                >
+                                    {t('nav.practice')}
+                                </Link>
+                            </li>
+                        )}
                         <li>
                             <a href="/#about" onClick={handleAnchorClick("#about")}>
                                 {t('nav.about')}

@@ -16,6 +16,7 @@ import {
     type ErettsegiExamLevel,
 } from '../../utils/mathTopicsCatalog';
 import { textbookGradeFromTopicId } from '../../utils/hsTextbook';
+import { elemNatGradeFromTopicId } from '../../utils/elemNatCatalog';
 import {
     aggregateTopicStats,
     buildTopicMixGameHref,
@@ -52,7 +53,7 @@ export default function TopicStatsPage() {
     const pathGrade = Number.isFinite(gradeParam)
         ? gradeParam
         : educationLevel === 'elementary'
-          ? 5
+          ? (elemNatGradeFromTopicId(topicIdParam) ?? 1)
           : educationLevel === 'highschool'
             ? (textbookGradeFromTopicId(topicIdParam) ?? 10)
             : undefined;

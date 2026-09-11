@@ -4,6 +4,7 @@
 
 import {
     elementaryTopics,
+    getElementaryTopicsForGrade,
     erettsegiEmeltTopics,
     erettsegiKozepTopics,
     highschoolTopics,
@@ -69,6 +70,22 @@ export function buildCatalogExamTasks(): ExamTaskBankItem[] {
                 timeLimit: 25,
             })
         );
+    }
+    for (const g of [1, 2, 3, 4, 5, 6, 7, 8] as const) {
+        for (const t of getElementaryTopicsForGrade(g)) {
+            out.push(
+                catalogTask({
+                    id: `cat-${t.id}`,
+                    title: `${g}. osztály · ${t.title}`,
+                    description: `Általános iskola · ${g}. osztály · ${t.title}`,
+                    topic: t.title,
+                    topicId: t.id,
+                    educationLevel: 'elementary',
+                    questions: 20,
+                    timeLimit: 20,
+                })
+            );
+        }
     }
 
     for (const t of highschoolTopics) {

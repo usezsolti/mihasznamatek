@@ -89,6 +89,7 @@ export type { BmeValszamPaperMeta } from './bmeValszamPapers';
 export { generateHighschoolQuestionByTopic } from './generateHighschool';
 export { generateUniversityQuestionByTopic } from './generateUniversity';
 export { getWorksheetListForTopic } from './worksheetLists';
+export { getElemNatPracticeQuestions } from './elemNatBanks';
 export { pick, randBelow, randInt } from './random';
 export {
     generatePointDistanceQuestion,

@@ -1,3 +1,5 @@
+import { topicsForElemNatGrade, type ElemNatGrade } from './elemNatCatalog';
+
 /** Közös témakörök — ugyanaz, mint a játék kezdőképernyőjén + érettségi. */
 
 export type EducationLevelId = 'elementary' | 'highschool' | 'university' | 'erettsegi';
@@ -103,6 +105,12 @@ export function getHighschoolTopicsForGrade(grade: number): CatalogTopic[] {
     if (grade === 11) return highschoolGrade11Topics;
     if (grade === 12) return highschoolGrade12Topics;
     return highschoolTopics;
+}
+
+/** 1–8: NAT 2020 alsó és felső tagozat. */
+export function getElementaryTopicsForGrade(grade: number): CatalogTopic[] {
+    if (grade >= 1 && grade <= 8) return topicsForElemNatGrade(grade as ElemNatGrade);
+    return elementaryTopics;
 }
 
 export const universitySubjects: UniversitySubject[] = [
@@ -469,10 +477,10 @@ export const erettsegiEmeltTopics: CatalogTopic[] = [
 export function getTopicsForEducationLevel(
     level: EducationLevelId,
     erettsegiLevel: ErettsegiExamLevel = 'emelt',
-    highschoolGrade?: number
+    grade?: number
 ): CatalogTopic[] {
-    if (level === 'elementary') return elementaryTopics;
-    if (level === 'highschool') return getHighschoolTopicsForGrade(highschoolGrade ?? 10);
+    if (level === 'elementary') return getElementaryTopicsForGrade(grade ?? 1);
+    if (level === 'highschool') return getHighschoolTopicsForGrade(grade ?? 10);
     if (level === 'erettsegi') {
         return erettsegiLevel === 'kozep' ? erettsegiKozepTopics : erettsegiEmeltTopics;
     }
@@ -492,7 +500,12 @@ export const BOOKING_OTHER_TOPIC_ID = 'booking-other';
 export function listAllBookingTopics(): BookingCatalogTopic[] {
     const out: BookingCatalogTopic[] = [];
     for (const t of elementaryTopics) {
-        out.push({ id: t.id, title: t.title, group: 'Általános iskola', icon: t.icon });
+        out.push({ id: t.id, title: t.title, group: 'Általános iskola · 5–8.', icon: t.icon });
+    }
+    for (const g of [1, 2, 3, 4, 5, 6, 7, 8] as const) {
+        for (const t of topicsForElemNatGrade(g)) {
+            out.push({ id: t.id, title: t.title, group: `Általános iskola · ${g}.`, icon: t.icon });
+        }
     }
     const grades: Array<[string, CatalogTopic[]]> = [
         ['9. osztály', highschoolGrade09Topics],

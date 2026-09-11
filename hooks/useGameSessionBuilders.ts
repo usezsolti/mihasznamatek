@@ -784,7 +784,8 @@ export function useGameSessionBuilders(p: UseGameSessionBuildersParams) {
 
         const topics = getTopicsForEducationLevel(
             eduLevel === 'erettsegi' ? 'erettsegi' : eduLevel,
-            examLevel as 'kozep' | 'emelt'
+            examLevel as 'kozep' | 'emelt',
+            eduLevel === 'elementary' || eduLevel === 'highschool' ? grade : undefined
         );
         const picked = [...topics].sort(() => Math.random() - 0.5).slice(0, 6);
         let guard = 0;
@@ -861,7 +862,8 @@ export function useGameSessionBuilders(p: UseGameSessionBuildersParams) {
             : 'erettsegi';
         const topics = getTopicsForEducationLevel(
             eduLevel === 'erettsegi' ? 'erettsegi' : eduLevel,
-            examLevel as 'kozep' | 'emelt'
+            examLevel as 'kozep' | 'emelt',
+            eduLevel === 'elementary' || eduLevel === 'highschool' ? grade : undefined
         );
         const picked = [...topics].sort(() => Math.random() - 0.5).slice(0, 8);
         const questions: Question[] = [];
@@ -933,7 +935,8 @@ export function useGameSessionBuilders(p: UseGameSessionBuildersParams) {
             : 'erettsegi';
         const topics = getTopicsForEducationLevel(
             eduLevel === 'erettsegi' ? 'erettsegi' : eduLevel,
-            examLevel as 'kozep' | 'emelt'
+            examLevel as 'kozep' | 'emelt',
+            eduLevel === 'elementary' || eduLevel === 'highschool' ? grade : undefined
         );
         const needed = Math.max(1, challenge.rules.questionCount);
         const picked = [...topics].sort(() => Math.random() - 0.5).slice(0, Math.min(8, Math.max(3, topics.length)));

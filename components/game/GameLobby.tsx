@@ -1,5 +1,6 @@
 import {
     elementaryTopics,
+    getElementaryTopicsForGrade,
     getHighschoolTopicsForGrade,
     universitySubjects,
     type CatalogTopic,
@@ -240,8 +241,17 @@ export default function GameLobby({
                             🔄 Osztály váltása
                         </button>
                     </div>
+                    {selectedGrade >= 1 && selectedGrade <= 8 && (
+                        <p className="level-desc" style={{ marginBottom: '1rem', opacity: 0.85 }}>
+                            {selectedGrade <= 4
+                                ? 'NAT 2020 alsó tagozat — témánként 6 játéklecke, leckénként 20 feladat'
+                                : selectedGrade <= 6
+                                  ? 'NAT 2020 felső tagozat (5–6.) — témánként 6 játéklecke, leckénként 20 feladat'
+                                  : 'NAT 2020 felső tagozat (7–8.) — témánként 6 játéklecke, leckénként 20 feladat'}
+                        </p>
+                    )}
                     <div className="elementary-topics-grid">
-                        {elementaryTopics.map(topic => (
+                        {getElementaryTopicsForGrade(selectedGrade).map(topic => (
                             <div
                                 key={topic.id}
                                 className="elementary-topic-card"

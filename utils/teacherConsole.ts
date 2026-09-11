@@ -8,6 +8,7 @@ import { getBudapestDateKeyOffset, type BookingPayload } from './bookingNotify';
 import { fetchGameResultsForUser, type GameResultDoc } from './gameResultsClient';
 import {
     elementaryTopics,
+    getElementaryTopicsForGrade,
     erettsegiEmeltTopics,
     erettsegiKozepTopics,
     highschoolGrade09Topics,
@@ -152,6 +153,14 @@ function getFirebase(): any | null {
 function catalogTitle(id: string): string {
     const all = [
         ...elementaryTopics,
+        ...getElementaryTopicsForGrade(1),
+        ...getElementaryTopicsForGrade(2),
+        ...getElementaryTopicsForGrade(3),
+        ...getElementaryTopicsForGrade(4),
+        ...getElementaryTopicsForGrade(5),
+        ...getElementaryTopicsForGrade(6),
+        ...getElementaryTopicsForGrade(7),
+        ...getElementaryTopicsForGrade(8),
         ...highschoolGrade09Topics,
         ...highschoolGrade10Topics,
         ...highschoolTopics,
@@ -166,7 +175,7 @@ function catalogTitle(id: string): string {
 }
 
 function levelLabelForTopicKey(key: string): string {
-    if (elementaryTopics.some((t) => t.id === key)) return 'Ált. iskola';
+    if (elementaryTopics.some((t) => t.id === key) || /^el0[1-8]-/.test(key)) return 'Ált. iskola';
     if (highschoolGrade09Topics.some((t) => t.id === key) || highschoolGrade10Topics.some((t) => t.id === key) || highschoolTopics.some((t) => t.id === key) || highschoolGrade11Topics.some((t) => t.id === key) || highschoolGrade12Topics.some((t) => t.id === key)) return 'Középiskola';
     if (erettsegiKozepTopics.some((t) => t.id === key)) return 'Érettségi · közép';
     if (erettsegiEmeltTopics.some((t) => t.id === key)) return 'Érettségi · emelt';
@@ -188,7 +197,16 @@ function catalogKeysForStudentLevel(
         for (const t of topics) out.push({ id: t.id, title: t.title, levelLabel });
     };
 
-    if (level === 'elementary') pushTopics(elementaryTopics, 'Ált. iskola');
+    if (level === 'elementary') {
+        pushTopics(getElementaryTopicsForGrade(1), 'Ált. iskola · 1.');
+        pushTopics(getElementaryTopicsForGrade(2), 'Ált. iskola · 2.');
+        pushTopics(getElementaryTopicsForGrade(3), 'Ált. iskola · 3.');
+        pushTopics(getElementaryTopicsForGrade(4), 'Ált. iskola · 4.');
+        pushTopics(getElementaryTopicsForGrade(5), 'Ált. iskola · 5.');
+        pushTopics(getElementaryTopicsForGrade(6), 'Ált. iskola · 6.');
+        pushTopics(getElementaryTopicsForGrade(7), 'Ált. iskola · 7.');
+        pushTopics(getElementaryTopicsForGrade(8), 'Ált. iskola · 8.');
+    }
     else if (level === 'highschool') {
         pushTopics(highschoolGrade09Topics, 'Középiskola · 9.');
         pushTopics(highschoolGrade10Topics, 'Középiskola · 10.');
@@ -202,7 +220,14 @@ function catalogKeysForStudentLevel(
     } else if (level === 'university') {
         for (const s of universitySubjects) pushTopics(s.topics, `Egyetem · ${s.title}`);
     } else {
-        pushTopics(elementaryTopics, 'Ált. iskola');
+        pushTopics(getElementaryTopicsForGrade(1), 'Ált. iskola · 1.');
+        pushTopics(getElementaryTopicsForGrade(2), 'Ált. iskola · 2.');
+        pushTopics(getElementaryTopicsForGrade(3), 'Ált. iskola · 3.');
+        pushTopics(getElementaryTopicsForGrade(4), 'Ált. iskola · 4.');
+        pushTopics(getElementaryTopicsForGrade(5), 'Ált. iskola · 5.');
+        pushTopics(getElementaryTopicsForGrade(6), 'Ált. iskola · 6.');
+        pushTopics(getElementaryTopicsForGrade(7), 'Ált. iskola · 7.');
+        pushTopics(getElementaryTopicsForGrade(8), 'Ált. iskola · 8.');
         pushTopics(highschoolGrade09Topics, 'Középiskola · 9.');
         pushTopics(highschoolGrade10Topics, 'Középiskola · 10.');
         pushTopics(highschoolTopics, 'Középiskola');

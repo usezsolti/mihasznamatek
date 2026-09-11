@@ -86,6 +86,7 @@ export default function Dashboard() {
     const [error, setError] = useState<string | null>(null);
     const [educationLevel, setEducationLevel] = useState<EducationLevelId>('university');
     const [highschoolGrade, setHighschoolGrade] = useState(11);
+    const [elementaryGrade, setElementaryGrade] = useState(1);
     const [erettsegiExamLevel, setErettsegiExamLevel] = useState<ErettsegiExamLevel>('emelt');
     const [erettsegiPrepPath, setErettsegiPrepPath] = useState<'choose' | 'topics'>('choose');
     const [isAdmin, setIsAdmin] = useState(false);
@@ -117,7 +118,11 @@ export default function Dashboard() {
     });
 
     const catalogToMathTopics = (level: EducationLevelId, examLevel: ErettsegiExamLevel): MathTopic[] =>
-        getTopicsForEducationLevel(level, examLevel, level === 'highschool' ? highschoolGrade : undefined).map((t) => ({
+        getTopicsForEducationLevel(
+            level,
+            examLevel,
+            level === 'highschool' ? highschoolGrade : level === 'elementary' ? elementaryGrade : undefined
+        ).map((t) => ({
             ...t,
             completed: 0,
             total: 0,
@@ -146,6 +151,8 @@ export default function Dashboard() {
         }
         const savedHs = parseInt(localStorage.getItem('highschoolGrade') || '', 10);
         if (savedHs >= 9 && savedHs <= 12) setHighschoolGrade(savedHs);
+        const savedEl = parseInt(localStorage.getItem('elementaryGrade') || '', 10);
+        if (savedEl >= 1 && savedEl <= 8) setElementaryGrade(savedEl);
     }, []);
 
     useEffect(() => {
@@ -166,7 +173,7 @@ export default function Dashboard() {
         }
         // #endregion
         loadTopicsWithGameResults(next);
-    }, [educationLevel, erettsegiExamLevel, highschoolGrade]);
+    }, [educationLevel, erettsegiExamLevel, highschoolGrade, elementaryGrade]);
 
     useEffect(() => {
         let unsub: (() => void) | undefined;
@@ -295,7 +302,11 @@ export default function Dashboard() {
             setActiveTab('admin');
             return;
         }
-        if (tab === 'tanulas' || tab === 'profil') {
+        if (tab === 'profil') {
+            setActiveTab('profil');
+            return;
+        }
+        if (tab === 'tanulas') {
             setActiveTab('tanulas');
             return;
         }
@@ -314,16 +325,15 @@ export default function Dashboard() {
 
     const switchTab = (tab: DashboardTab) => {
         if (tab === 'admin' && !isAdmin) return;
-        const next = tab === 'profil' ? 'tanulas' : tab;
-        setActiveTab(next);
+        setActiveTab(tab);
         const query =
-            next === 'admin'
+            tab === 'admin'
                 ? { tab: 'admin' }
-                : next === 'tanulas' && isAdmin
+                : tab === 'tanulas' && isAdmin
                   ? { tab: 'tanulas' }
-                  : next === 'tanulas'
+                  : tab === 'tanulas'
                     ? {}
-                    : { tab: next };
+                    : { tab };
         router.replace({ pathname: '/dashboard', query }, undefined, { shallow: true });
     };
 
@@ -819,7 +829,14 @@ export default function Dashboard() {
     };
 
     const navigateToTopicStats = (topicId: string) => {
-        router.push(buildTopicStatsHref(topicId, educationLevel, erettsegiExamLevel, highschoolGrade));
+        router.push(
+            buildTopicStatsHref(
+                topicId,
+                educationLevel,
+                erettsegiExamLevel,
+                educationLevel === 'elementary' ? elementaryGrade : highschoolGrade
+            )
+        );
     };
 
     const addNewTopic = () => {
@@ -853,6 +870,12 @@ export default function Dashboard() {
     const toggleNewTopicForm = () => {
         setShowNewTopicForm(!showNewTopicForm);
     };
+
+    const overallAnswers = mathTopics.reduce((s, x) => s + x.totalAnswers, 0);
+    const overallPct =
+        overallAnswers > 0
+            ? Math.round((mathTopics.reduce((s, x) => s + x.correctAnswers, 0) / overallAnswers) * 100)
+            : 0;
 
     // Email küldő funkciók
 
@@ -1106,6 +1129,46 @@ export default function Dashboard() {
                         )}
                     />
                 )}
+                {activeTab === 'profil' && (
+                    <section className="dash-profile-tab">
+                        <button
+                            type="button"
+                            className="erettsegi-prep-back"
+                            onClick={() => switchTab('tanulas')}
+                        >
+                            {t('dashboard.backToPractice')}
+                        </button>
+                        <ProfilePanel embedded />
+                        {juice && (
+                            <>
+                                <SkillTreePanel
+                                    juice={juice}
+                                    xp={practiceXp}
+                                    onStart={(id) => {
+                                        router.push(buildChallengeHref(id, educationLevel, erettsegiExamLevel));
+                                    }}
+                                />
+                                <div className="dash-juice">
+                                    <div className="dash-juice-streak">
+                                        🔥 {juice.loginStreak} {t('dashboard.loginStreak')}
+                                        {juice.blitzBest > 0 ? ` · ⚡ ${juice.blitzBest}` : ''}
+                                    </div>
+                                    <div className="dash-quests">
+                                        {juice.quests.map((q) => (
+                                            <div
+                                                key={q.id}
+                                                className={`dash-quest ${q.done ? 'done' : ''}`}
+                                            >
+                                                <span>{q.title}</span>
+                                                <b>{q.progress}/{q.target}</b>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            </>
+                        )}
+                    </section>
+                )}
                 {activeTab === 'tanulas' && (
                 <>
                 {/* Education Level Selector — categories first */}
@@ -1113,7 +1176,7 @@ export default function Dashboard() {
                     <h3 className="level-title">
                         {t('dashboard.chooseCategory')}
                     </h3>
-                    <div className="level-selector" style={{ flexWrap: 'wrap' }}>
+                    <div className="level-selector level-selector--cats">
                         {EDUCATION_LEVELS.map((level) => (
                             <button
                                 key={level.id}
@@ -1154,6 +1217,22 @@ export default function Dashboard() {
                             </span>
                         </button>
                     </div>
+                    {educationLevel === 'elementary' && (
+                        <div className="level-selector" style={{ marginTop: '1rem', flexWrap: 'wrap' }}>
+                            {[1, 2, 3, 4, 5, 6, 7, 8].map((g) => (
+                                <button
+                                    key={g}
+                                    className={`level-btn ${elementaryGrade === g ? 'active' : ''}`}
+                                    onClick={() => {
+                                        setElementaryGrade(g);
+                                        localStorage.setItem('elementaryGrade', String(g));
+                                    }}
+                                >
+                                    {g}. osztály
+                                </button>
+                            ))}
+                        </div>
+                    )}
                     {educationLevel === 'highschool' && (
                         <div className="level-selector" style={{ marginTop: '1rem', flexWrap: 'wrap' }}>
                             {[9, 10, 11, 12].map((g) => (
@@ -1194,72 +1273,19 @@ export default function Dashboard() {
                     )}
                 </section>
 
-                {isAdmin ? (
-                    <div
-                        style={{
-                            margin: '0.5rem auto 1.25rem',
-                            maxWidth: 720,
-                            padding: '0.85rem 1rem',
-                            borderRadius: 12,
-                            border: '1px solid rgba(57,255,20,0.35)',
-                            background: 'rgba(18,24,33,0.95)',
-                            display: 'flex',
-                            flexWrap: 'wrap',
-                            gap: '0.75rem',
-                            alignItems: 'center',
-                            justifyContent: 'space-between',
-                        }}
-                    >
+                {isAdmin && (
+                    <div className="dash-admin-hint">
                         <span style={{ color: '#cfe9d4' }}>
                             {t('dashboard.studentViewHint')}
                         </span>
                         <button
                             type="button"
                             onClick={() => switchTab('admin')}
-                            style={{
-                                border: 'none',
-                                borderRadius: 10,
-                                padding: '0.55rem 0.9rem',
-                                fontWeight: 800,
-                                cursor: 'pointer',
-                                background: 'linear-gradient(135deg, #39ff14, #b8ff5a)',
-                                color: '#061008',
-                            }}
+                            className="dash-admin-hint-btn"
                         >
                             {t('dashboard.adminPlatform')}
                         </button>
                     </div>
-                ) : (
-                    <>
-                        <section className="profile-embedded-section dash-profile-embed">
-                            <ProfilePanel embedded />
-                        </section>
-
-                        <section className="dash-tools" aria-label={t('dashboard.tools')}>
-                            <div className="dash-tools-grid">
-                                <Link href="/community?tab=profile" className="dash-tool-card">
-                                    <span className="dash-tool-icon" aria-hidden>
-                                        M
-                                    </span>
-                                    <span className="dash-tool-copy">
-                                        <strong>{t('dashboard.socialTitle')}</strong>
-                                        <small>{t('dashboard.socialShort')}</small>
-                                    </span>
-                                    <span className="dash-tool-cta">{t('dashboard.open')}</span>
-                                </Link>
-                                <Link href="/whiteboard" className="dash-tool-card">
-                                    <span className="dash-tool-icon dash-tool-icon--wb" aria-hidden>
-                                        ✎
-                                    </span>
-                                    <span className="dash-tool-copy">
-                                        <strong>{t('dashboard.whiteboardTitle')}</strong>
-                                        <small>{t('dashboard.whiteboardShort')}</small>
-                                    </span>
-                                    <span className="dash-tool-cta">{t('dashboard.open')}</span>
-                                </Link>
-                            </div>
-                        </section>
-                    </>
                 )}
 
                 {/* Mathematical Topics Section */}
@@ -1286,12 +1312,21 @@ export default function Dashboard() {
                                         ? t('dashboard.erettsegi.chooseSub')
                                         : t('dashboard.topicsSub.erettsegi'))}
                             </p>
+                            {(educationLevel !== 'erettsegi' || erettsegiPrepPath === 'topics') && (
+                                <p className="dash-overall-line">
+                                    {t('dashboard.overallLine')
+                                        .replace('{pct}', String(overallPct))
+                                        .replace('{n}', String(mathTopics.length))}
+                                </p>
+                            )}
                         </div>
                         <div className="dash-learn-actions">
                             <button
                                 type="button"
                                 className="dash-daily-btn"
-                                onClick={() => router.push(buildDailyPracticeHref(educationLevel))}
+                                onClick={() =>
+                                    router.push(buildDailyPracticeHref(educationLevel, elementaryGrade))
+                                }
                             >
                                 {srsDueCount > 0
                                     ? t('dashboard.dailyDue').replace('{n}', String(srsDueCount))
@@ -1300,7 +1335,7 @@ export default function Dashboard() {
                             <button
                                 type="button"
                                 className="dash-daily-btn dash-blitz-btn"
-                                onClick={() => router.push(buildBlitzHref(educationLevel))}
+                                onClick={() => router.push(buildBlitzHref(educationLevel, elementaryGrade))}
                             >
                                 {t('dashboard.blitz')}
                             </button>
@@ -1364,34 +1399,6 @@ export default function Dashboard() {
                         >
                             {t('dashboard.erettsegi.backChoose')}
                         </button>
-                    )}
-                    {(educationLevel !== 'erettsegi' || erettsegiPrepPath === 'topics') && juice && (
-                        <SkillTreePanel
-                            juice={juice}
-                            xp={practiceXp}
-                            onStart={(id) => {
-                                router.push(buildChallengeHref(id, educationLevel, erettsegiExamLevel));
-                            }}
-                        />
-                    )}
-                    {(educationLevel !== 'erettsegi' || erettsegiPrepPath === 'topics') && juice && (
-                        <div className="dash-juice">
-                            <div className="dash-juice-streak">
-                                🔥 {juice.loginStreak} {t('dashboard.loginStreak')}
-                                {juice.blitzBest > 0 ? ` · ⚡ ${juice.blitzBest}` : ''}
-                            </div>
-                            <div className="dash-quests">
-                                {juice.quests.map((q) => (
-                                    <div
-                                        key={q.id}
-                                        className={`dash-quest ${q.done ? 'done' : ''}`}
-                                    >
-                                        <span>{q.title}</span>
-                                        <b>{q.progress}/{q.target}</b>
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
                     )}
 
                     {(educationLevel !== 'erettsegi' || erettsegiPrepPath === 'topics') && (
@@ -1546,117 +1553,6 @@ export default function Dashboard() {
                     )}
                 </section>
 
-                {/* Overall Progress Summary */}
-                {(educationLevel !== 'erettsegi' || erettsegiPrepPath === 'topics') && (
-                <section className="overall-progress-section">
-                    <h2 className="section-title">{t('dashboard.overall')}</h2>
-                    <div className="overall-speedometer-container">
-                        {(() => {
-                            const totalCorrect = mathTopics.reduce((sum, topic) => sum + topic.correctAnswers, 0);
-                            const totalAnswers = mathTopics.reduce((sum, topic) => sum + topic.totalAnswers, 0);
-                            const overallSuccessRate = totalAnswers > 0 ? (totalCorrect / totalAnswers) * 100 : 0;
-
-                            return (
-                                <>
-                                    <div className="performance-header" style={{ color: '#39ff14' }}>
-                                        {Math.round(overallSuccessRate)}%
-                                    </div>
-                                    <div className="speedometer">
-                                        <svg className="speedometer-gauge" viewBox="0 0 200 120">
-                                            {/* Háttér ív */}
-                                            <path
-                                                className="gauge-background"
-                                                d="M 20 100 A 80 80 0 0 1 180 100"
-                                                fill="none"
-                                                stroke="#e0e0e0"
-                                                strokeWidth="12"
-                                            />
-                                            {/* Progress ív */}
-                                            <path
-                                                className="gauge-progress"
-                                                d="M 20 100 A 80 80 0 0 1 180 100"
-                                                fill="none"
-                                                stroke="#39ff14"
-                                                strokeWidth="12"
-                                                strokeLinecap="round"
-                                                style={{
-                                                    strokeDasharray: `${Math.PI * 80}`,
-                                                    strokeDashoffset: `${Math.PI * 80 * (1 - overallSuccessRate / 100)}`,
-                                                    filter: `drop-shadow(0 0 8px #39ff14)`
-                                                }}
-                                            />
-                                            {/* Skála jelölések */}
-                                            {[0, 25, 50, 75, 100].map((value, i) => {
-                                                const angle = (value / 100) * Math.PI - Math.PI;
-                                                const x1 = 100 + 70 * Math.cos(angle);
-                                                const y1 = 100 + 70 * Math.sin(angle);
-                                                const x2 = 100 + 80 * Math.cos(angle);
-                                                const y2 = 100 + 80 * Math.sin(angle);
-                                                return (
-                                                    <g key={i}>
-                                                        <line
-                                                            x1={x1}
-                                                            y1={y1}
-                                                            x2={x2}
-                                                            y2={y2}
-                                                            stroke="#666"
-                                                            strokeWidth="2"
-                                                        />
-                                                        <text
-                                                            className="gauge-label"
-                                                            x={100 + 60 * Math.cos(angle)}
-                                                            y={100 + 60 * Math.sin(angle) + 5}
-                                                            textAnchor="middle"
-                                                            fontSize="10"
-                                                            fill="#666"
-                                                        >
-                                                            {value}
-                                                        </text>
-                                                    </g>
-                                                );
-                                            })}
-                                            {/* Mutató */}
-                                            <g className="gauge-needle">
-                                                <line
-                                                    x1="100"
-                                                    y1="100"
-                                                    x2="100"
-                                                    y2="35"
-                                                    stroke="#39ff14"
-                                                    strokeWidth="4"
-                                                    strokeLinecap="round"
-                                                    style={{
-                                                        transform: `rotate(${(overallSuccessRate / 100) * 180 - 90}deg)`,
-                                                        transformOrigin: '100px 100px',
-                                                        filter: `drop-shadow(0 0 6px #39ff14)`
-                                                    }}
-                                                />
-                                                <circle
-                                                    cx="100"
-                                                    cy="100"
-                                                    r="6"
-                                                    fill="#39ff14"
-                                                    style={{
-                                                        filter: `drop-shadow(0 0 8px #39ff14)`
-                                                    }}
-                                                />
-                                            </g>
-                                        </svg>
-                                        <div className="speedometer-display">
-                                            <div className="progress-percentage">
-                                                {t('dashboard.correct', {
-                                                    a: String(totalCorrect),
-                                                    b: String(totalAnswers),
-                                                })}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </>
-                            );
-                        })()}
-                    </div>
-                </section>
-                )}
 
                  {assignedTasks.length > 0 && (
                      <section className="public-tasks-section" style={{ marginBottom: "2rem" }}>
@@ -1751,73 +1647,6 @@ export default function Dashboard() {
                      </section>
                  )}
 
-                 {/* Contact Section */}
-                 <section className="dash-contact" aria-labelledby="dash-contact-title">
-                     <div className="dash-contact-head">
-                         <h2 id="dash-contact-title" className="section-title">
-                             {t('dashboard.contact')}
-                         </h2>
-                         <p className="section-subtitle">{t('dashboard.contactSub')}</p>
-                     </div>
-
-                     <div className="dash-contact-grid">
-                         <a href="tel:+36308935495" className="dash-contact-tile dash-contact-tile--link">
-                             <span className="dash-contact-label">{t('dashboard.phone')}</span>
-                             <strong className="dash-contact-value">+36 30 893 5495</strong>
-                             <span className="dash-contact-hint">{t('dashboard.callAnytime')}</span>
-                         </a>
-
-                         <a href="mailto:usezsolti@gmail.com" className="dash-contact-tile dash-contact-tile--link">
-                             <span className="dash-contact-label">{t('dashboard.email')}</span>
-                             <strong className="dash-contact-value">usezsolti@gmail.com</strong>
-                             <span className="dash-contact-hint">{t('dashboard.writeAnytime')}</span>
-                         </a>
-
-                         <div className="dash-contact-tile">
-                             <span className="dash-contact-label">{t('dashboard.address')}</span>
-                             <strong className="dash-contact-value">
-                                 2151 Fót
-                                 <br />
-                                 Szent Imre utca 18
-                             </strong>
-                             <span className="dash-contact-hint">{t('dashboard.inPersonOk')}</span>
-                         </div>
-
-                         <div className="dash-contact-tile">
-                             <span className="dash-contact-label">{t('dashboard.social')}</span>
-                             <div className="dash-contact-social">
-                                 <a
-                                     href="https://www.facebook.com/profile.php?id=100075272401924"
-                                     target="_blank"
-                                     rel="noopener noreferrer"
-                                 >
-                                     Facebook
-                                 </a>
-                                 <a
-                                     href="https://www.instagram.com/mihasznamatek/?hl=en"
-                                     target="_blank"
-                                     rel="noopener noreferrer"
-                                 >
-                                     Instagram
-                                 </a>
-                                 <a
-                                     href="https://www.youtube.com/@Mihasznamatek"
-                                     target="_blank"
-                                     rel="noopener noreferrer"
-                                 >
-                                     YouTube
-                                 </a>
-                                 <a
-                                     href="https://tiktok.com/@mihasznamatek"
-                                     target="_blank"
-                                     rel="noopener noreferrer"
-                                 >
-                                     TikTok
-                                 </a>
-                             </div>
-                         </div>
-                     </div>
-                 </section>
                 </>
                 )}
             </main>

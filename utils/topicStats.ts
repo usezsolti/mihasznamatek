@@ -10,6 +10,7 @@ import {
 } from './mathTopicsCatalog';
 import { PATH_LESSON_COUNT } from './topicPath';
 import { textbookGradeFromTopicId } from './hsTextbook';
+import { elemNatGradeFromTopicId } from './elemNatCatalog';
 import { isSkillNodeId, type SkillNodeId } from './skillTree';
 
 export type RawGameResult = {
@@ -203,6 +204,14 @@ export function findCatalogTopic(
                 if (hitG) return hitG;
             }
         }
+        if (educationLevel === 'elementary') {
+            for (const g of [1, 2, 3, 4, 5, 6, 7, 8]) {
+                const hitG = getTopicsForEducationLevel('elementary', erettsegiLevel, g).find((t) =>
+                    topicKeysMatch(t.id, topicId)
+                );
+                if (hitG) return hitG;
+            }
+        }
     }
 
     const levels: EducationLevelId[] = ['elementary', 'highschool', 'university', 'erettsegi'];
@@ -210,6 +219,13 @@ export function findCatalogTopic(
         if (level === 'erettsegi') {
             for (const exam of ['kozep', 'emelt'] as ErettsegiExamLevel[]) {
                 const hit = getTopicsForEducationLevel(level, exam).find((t) =>
+                    topicKeysMatch(t.id, topicId)
+                );
+                if (hit) return hit;
+            }
+        } else if (level === 'elementary') {
+            for (const g of [1, 2, 3, 4, 5, 6, 7, 8]) {
+                const hit = getTopicsForEducationLevel(level, 'emelt', g).find((t) =>
                     topicKeysMatch(t.id, topicId)
                 );
                 if (hit) return hit;
@@ -259,7 +275,8 @@ export function buildTopicPracticeHref(
         params.set('level', erettsegiLevel);
     }
     if (educationLevel === 'elementary') {
-        params.set('grade', String(grade && grade >= 1 && grade <= 8 ? grade : 5));
+        const fromId = elemNatGradeFromTopicId(topicId);
+        params.set('grade', String(grade && grade >= 1 && grade <= 8 ? grade : fromId ?? 1));
     } else if (educationLevel === 'highschool') {
         const g = grade && grade >= 9 && grade <= 12 ? grade : (textbookGradeFromTopicId(topicId) ?? 10);
         params.set('grade', String(g));
@@ -282,29 +299,33 @@ export function buildTopicMixGameHref(
         params.set('level', erettsegiLevel);
     } else {
         params.set('educationLevel', educationLevel);
-        if (educationLevel === 'elementary') params.set('grade', '5');
+        if (educationLevel === 'elementary') params.set('grade', String(elemNatGradeFromTopicId(topicId) ?? 1));
         else if (educationLevel === 'highschool') params.set('grade', String(textbookGradeFromTopicId(topicId) ?? 10));
     }
     return `/game?${params.toString()}`;
 }
 
 /** Napi vegyes gyakorlás (több témából). */
-export function buildDailyPracticeHref(educationLevel: EducationLevelId): string {
+export function buildDailyPracticeHref(educationLevel: EducationLevelId, grade?: number): string {
     const params = new URLSearchParams({
         daily: '1',
         educationLevel,
     });
-    if (educationLevel === 'elementary') params.set('grade', '5');
+    if (educationLevel === 'elementary') {
+        params.set('grade', String(grade && grade >= 1 && grade <= 8 ? grade : 1));
+    }
     if (educationLevel === 'highschool') params.set('grade', '10');
     return `/game?${params.toString()}`;
 }
 
-export function buildBlitzHref(educationLevel: EducationLevelId): string {
+export function buildBlitzHref(educationLevel: EducationLevelId, grade?: number): string {
     const params = new URLSearchParams({
         blitz: '1',
         educationLevel,
     });
-    if (educationLevel === 'elementary') params.set('grade', '5');
+    if (educationLevel === 'elementary') {
+        params.set('grade', String(grade && grade >= 1 && grade <= 8 ? grade : 1));
+    }
     if (educationLevel === 'highschool') params.set('grade', '10');
     return `/game?${params.toString()}`;
 }

@@ -31,10 +31,16 @@ import {
 } from './practiceBanks';
 import { getHsTextbookPracticeQuestions } from './hsTextbookBanks';
 import { hsTextbookRunId } from '../hsTextbook';
+import { getElemNatPracticeQuestions } from './elemNatBanks';
 
 export const getWorksheetListForTopic = (topicId: string): { list: Question[]; prefix: string } | null => {
     const topicLower = topicId.toLowerCase();
     if (!isWorksheetTopicId(topicId)) return null;
+    if (/^el0[1-8]-/.test(topicLower)) {
+        const list = getElemNatPracticeQuestions(topicLower);
+        if (!list) return null;
+        return { list, prefix: `el_${topicLower}` };
+    }
     if (/^hs\d{2}-/.test(topicLower)) {
         const list = getHsTextbookPracticeQuestions(topicLower);
         if (!list) return null;

@@ -2,6 +2,7 @@
 
 import { agentDebugLog } from './agentDebugLog';
 import { getHsTextbookLessonLabel } from './hsTextbook';
+import { getElemNatLessonLabel } from './elemNatCatalog';
 
 export type PathStage = 1 | 2 | 3 | 4 | 5 | 6;
 
@@ -77,12 +78,14 @@ export function buildPathNodes(topicId?: string): PathNode[] {
     for (let lesson = 1; lesson <= PATH_LESSON_COUNT; lesson++) {
         const stage = lessonToStage(lesson);
         const hsLabel = topicId ? getHsTextbookLessonLabel(topicId, lesson) : null;
+        const elLabel = topicId ? getElemNatLessonLabel(topicId, lesson) : null;
+        const named = hsLabel || elLabel;
         nodes.push({
             kind: 'lesson',
             lesson,
             stage,
-            label: hsLabel
-                ? `Lecke ${lesson} · ${hsLabel}`
+            label: named
+                ? `Lecke ${lesson} · ${named}`
                 : `Lecke ${lesson} · ${PATH_STAGE_LABELS[stage]}`,
         });
         const chest = chestAfterLesson(lesson);
@@ -417,6 +420,7 @@ export function getLessonQuestions<T extends { pathLesson?: number }>(
 export function isWorksheetTopicId(topicId: string): boolean {
     const t = topicId.toLowerCase();
     return (
+        /^el0[1-8]-/.test(t) ||
         /^hs\d{2}-/.test(t) ||
         t.startsWith('a1-') ||
         t.startsWith('a2-') ||

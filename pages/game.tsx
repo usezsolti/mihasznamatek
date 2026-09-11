@@ -14,6 +14,7 @@ import { useGameRouteBootstrap } from '../hooks/useGameRouteBootstrap';
 import type { Question } from '../utils/game';
 import { buildBlitzHref, buildTopicPracticeHref } from '../utils/topicStats';
 import { getHsTextbookLessonLabel } from '../utils/hsTextbook';
+import { getElemNatLessonLabel } from '../utils/elemNatCatalog';
 import { comboMultiplier, gearFromRank } from '../utils/gameJuice';
 import { agentDebugLog } from '../utils/agentDebugLog';
 import { skillNodeById } from '../utils/skillTree';
@@ -475,10 +476,13 @@ export default function Game() {
                                 challengeTitle={skillNodeById(String(router.query.challenge || ''))?.title}
                                 hideBoosters={!!skillNodeById(String(router.query.challenge || ''))?.rules.noBoosters}
                                 maxLives={skillNodeById(String(router.query.challenge || ''))?.rules.lives}
-                                pathStageLabel={getHsTextbookLessonLabel(
-                                    String(router.query.topic || selectedHighschoolTopic || ''),
-                                    pathLesson || 0
-                                )}
+                                pathStageLabel={
+                                    getHsTextbookLessonLabel(
+                                        String(router.query.topic || selectedHighschoolTopic || ''),
+                                        pathLesson || 0
+                                    ) ||
+                                    getElemNatLessonLabel(String(router.query.topic || ''), pathLesson || 0)
+                                }
                             />
 
                             <GameQuestionCard
