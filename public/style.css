@@ -249,8 +249,7 @@ nav.site-navbar {
   transform: translateX(0);
 }
 
-/* Content Containers */
-header,
+/* Content Containers — do not style bare `header` (dashboard contact used that tag). */
 .section {
   position: relative;
   width: 100vw;
@@ -261,7 +260,7 @@ header,
   align-items: center;
 }
 
-header .hero-content,
+.hero-content,
 .section h2,
 .section .about-flex,
 .section .cards-grid,
@@ -279,7 +278,7 @@ header .hero-content,
   width: 100%;
 }
 
-header .hero-content {
+.hero-content {
   text-align: center;
   max-width: 1200px;
   margin: 0 auto;
@@ -287,14 +286,14 @@ header .hero-content {
   width: 100%;
 }
 
-header h1 {
+.hero-content h1 {
   font-family: 'Playfair Display', serif;
   font-size: 3rem;
   margin-bottom: 1rem;
   text-shadow: 0 0 8px var(--neon-pink);
 }
 
-header p {
+.hero-content p {
   font-size: 1.25rem;
   margin-bottom: 2rem;
   text-shadow: 0 0 5px var(--neon-pink);
@@ -1557,7 +1556,6 @@ form textarea:focus {
 
 @media (max-width: 767px) {
 
-  header,
   .section {
     padding: 2rem 0;
     min-height: auto;
@@ -1567,7 +1565,7 @@ form textarea:focus {
     padding: 0 1rem;
   }
 
-  header .hero-content {
+  .hero-content {
     padding: 0 1rem;
   }
 }

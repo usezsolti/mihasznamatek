@@ -294,35 +294,35 @@ body {
     background: #4338ca;
 }
 
-/* Header Styles from Template */
-header h3 {
+/* Old template header — must NOT match <header class="dash-contact-head"> */
+header.legacy-dash-top h3 {
     font-weight: 500;
 }
 
-header {
+header.legacy-dash-top {
     position: fixed;
     width: 100vw;
     z-index: 1000;
     background-color: var(--color-background);
 }
 
-header.active {
+header.legacy-dash-top.active {
     box-shadow: var(--box-shadow);
 }
 
-header .logo {
+header.legacy-dash-top .logo {
     display: flex;
     gap: .8rem;
     margin-right: auto;
 }
 
-header .logo img {
+header.legacy-dash-top .logo img {
     width: 2rem;
     height: 2rem;
 }
 
-header,
-header .navbar {
+header.legacy-dash-top,
+header.legacy-dash-top .navbar {
     display: flex;
     align-items: center;
     justify-content: flex-end;
@@ -330,7 +330,7 @@ header .navbar {
     color: var(--color-info);
 }
 
-header .navbar a {
+header.legacy-dash-top .navbar a {
     display: flex;
     margin-left: 2rem;
     gap: 1rem;
@@ -342,16 +342,16 @@ header .navbar a {
     padding: 0 2rem;
 }
 
-header .navbar a:hover {
+header.legacy-dash-top .navbar a:hover {
     padding-top: 1.5rem;
 }
 
-header .navbar a.active {
+header.legacy-dash-top .navbar a.active {
     background: var(--color-light);
     color: var(--color-primary);
 }
 
-header .navbar a.active::before {
+header.legacy-dash-top .navbar a.active::before {
     content: "";
     background-color: var(--color-primary);
     position: absolute;
@@ -361,14 +361,14 @@ header .navbar a.active::before {
     top: 0;
 }
 
-header #profile-btn {
+header.legacy-dash-top #profile-btn {
     display: none;
     font-size: 2rem;
     margin: .5rem 2rem 0 0;
     cursor: pointer;
 }
 
-header .theme-toggler {
+header.legacy-dash-top .theme-toggler {
     background: var(--color-light);
     display: flex;
     justify-content: space-between;
@@ -380,7 +380,7 @@ header .theme-toggler {
     margin-right: 2rem;
 }
 
-header .theme-toggler span {
+header.legacy-dash-top .theme-toggler span {
     font-size: 1.2rem;
     width: 50%;
     height: 100%;
@@ -389,7 +389,7 @@ header .theme-toggler span {
     justify-content: center;
 }
 
-header .theme-toggler span.active {
+header.legacy-dash-top .theme-toggler span.active {
     background-color: var(--color-primary);
     color: white;
     border-radius: var(--border-radius-1);
@@ -6375,6 +6375,14 @@ select.form-input:disabled {
 }
 
 .dash-contact-head {
+    position: static !important;
+    width: auto !important;
+    min-height: 0 !important;
+    height: auto !important;
+    display: block !important;
+    background: transparent !important;
+    padding: 0 !important;
+    z-index: auto !important;
     text-align: center;
     margin-bottom: 1.1rem;
 }

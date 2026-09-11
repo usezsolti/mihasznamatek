@@ -575,6 +575,38 @@ export default function Dashboard() {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isAdmin, loading]);
 
+    useEffect(() => {
+        if (loading || typeof window === 'undefined') return;
+        const head = document.querySelector('.dash-contact-head');
+        const nav = document.querySelector('nav.site-navbar');
+        const links = document.querySelector('.nav-links');
+        const hs = head ? window.getComputedStyle(head) : null;
+        const ns = nav ? window.getComputedStyle(nav) : null;
+        const ls = links ? window.getComputedStyle(links) : null;
+        // #region agent log
+        agentDebugLog({
+            hypothesisId: 'H70',
+            location: 'dashboard.tsx:layoutProbe',
+            message: 'dashboard contact/nav computed layout',
+            data: {
+                host: window.location.host,
+                innerWidth: window.innerWidth,
+                headTag: head?.tagName || null,
+                headPosition: hs?.position || null,
+                headDisplay: hs?.display || null,
+                headMinHeight: hs?.minHeight || null,
+                headBg: (hs?.backgroundColor || '').slice(0, 40),
+                headWidth: hs?.width || null,
+                navOverflow: ns?.overflow || null,
+                linksWrap: ls?.flexWrap || null,
+                linksDir: ls?.flexDirection || null,
+                path: window.location.pathname,
+            },
+            runId: 'dash-layout',
+        });
+        // #endregion
+    }, [loading, activeTab]);
+
     const approveBooking = async (bookingId: string) => {
         const booking = pendingBookings.find((b) => b.id === bookingId);
         if (!booking) return;
@@ -1721,12 +1753,12 @@ export default function Dashboard() {
 
                  {/* Contact Section */}
                  <section className="dash-contact" aria-labelledby="dash-contact-title">
-                     <header className="dash-contact-head">
+                     <div className="dash-contact-head">
                          <h2 id="dash-contact-title" className="section-title">
                              {t('dashboard.contact')}
                          </h2>
                          <p className="section-subtitle">{t('dashboard.contactSub')}</p>
-                     </header>
+                     </div>
 
                      <div className="dash-contact-grid">
                          <a href="tel:+36308935495" className="dash-contact-tile dash-contact-tile--link">
