@@ -1,9 +1,12 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
     BRANCH_META,
+    BRANCH_ORDER,
     SKILL_NODES,
-    skillEdges,
+    branchNodes,
+    canStartChallenge,
     skillNodeById,
+    type SkillNode,
     type SkillNodeId,
 } from '../utils/skillTree';
 import type { GameJuiceState } from '../utils/gameJuice';
@@ -15,46 +18,63 @@ type Props = {
     onStart: (id: SkillNodeId) => void;
 };
 
-const VW = 1100;
-const VH = 880;
+function gateLabel(node: SkillNode, completed: string[], xp: number): string {
+    const gate = canStartChallenge(node.id, completed, xp);
+    if (gate.ok) return '';
+    if (gate.reason === 'xp') return `Még ${gate.xpLeft} XP`;
+    if (gate.reason === 'prereq') {
+        const first = gate.missing[0];
+        if (!first) return 'Előbb az előző szint';
+        if (first.branch === 'csucs') return 'Mind az öt ág kell';
+        return `Előbb: ${first.title}`;
+    }
+    return 'Zárva';
+}
 
 export default function SkillTreePanel({ juice, xp, onStart }: Props) {
     const [selected, setSelected] = useState<SkillNodeId>(SKILL_NODES[0].id);
-    const unlocked = juice.unlockedSkills || [];
+    const completed = juice.completedChallenges || [];
     const points = xp || 0;
-    const openN = unlocked.length;
-
-    const byId = useMemo(() => new Map(SKILL_NODES.map((n) => [n.id, n])), []);
-    const edges = useMemo(() => skillEdges(), []);
+    const doneN = completed.length;
     const node = skillNodeById(selected) || SKILL_NODES[0];
-    const isOpen = unlocked.includes(node.id);
-    const prereqOk = node.requires.every((req) => unlocked.includes(req));
-    const xpLeft = Math.max(0, node.cost - points);
-
-    const xy = (id: string) => {
-        const n = byId.get(id as SkillNodeId);
-        if (!n) return { x: 0, y: 0 };
-        return { x: (n.x / 100) * VW, y: (n.y / 100) * VH };
-    };
+    const done = completed.includes(node.id);
+    const gate = canStartChallenge(node.id, completed, points);
+    const canPlay = gate.ok;
+    const meta = BRANCH_META[node.branch];
+    const master = skillNodeById('mihasznaMester')!;
 
     useEffect(() => {
-        // #region agent log
         agentDebugLog({
             hypothesisId: 'C',
             location: 'SkillTreePanel.tsx:mount',
             message: 'challenge tree render',
             data: {
-                hasHexMag: SKILL_NODES.some((n) => String(n.id) === 'root' || n.title.toLowerCase().includes('hex')),
                 firstId: SKILL_NODES[0].id,
-                firstKind: SKILL_NODES[0].rules.timerMode,
-                qCount: SKILL_NODES[0].rules.questionCount,
-                unlockedN: unlocked.length,
+                nodeN: SKILL_NODES.length,
+                doneN,
                 xp: points,
             },
             runId: 'challenge-tree',
         });
-        // #endregion
-    }, [unlocked.length, points]);
+    }, [doneN, points]);
+
+    const start = (id: SkillNodeId) => {
+        const target = skillNodeById(id);
+        if (!target || !canStartChallenge(id, completed, points).ok) return;
+        agentDebugLog({
+            hypothesisId: 'C',
+            location: 'SkillTreePanel.tsx:start',
+            message: 'challenge start clicked',
+            data: {
+                id,
+                q: target.rules.questionCount,
+                sec: target.rules.seconds,
+                timer: target.rules.timerMode,
+            },
+            runId: 'challenge-tree',
+        });
+        onStart(id);
+    };
 
     return (
         <section className="dash-skill" aria-label="Kihívásfa">
@@ -62,8 +82,8 @@ export default function SkillTreePanel({ juice, xp, onStart }: Props) {
                 <div>
                     <h3>Kihívásfa</h3>
                     <p>
-                        Nem könnyítők, hanem plusz feltételek. XP-vel nyílnak, indításkor időre kell
-                        megoldanod egy vagy több feladatot.
+                        Öt ág, áganként tíz szint. Egy szint akkor indul, ha megvan az XP-küszöb
+                        és az előzőt már megcsináltad. A badge a teljesítéskor jár.
                     </p>
                 </div>
                 <div className="dash-skill-meta">
@@ -72,129 +92,108 @@ export default function SkillTreePanel({ juice, xp, onStart }: Props) {
                         <span>XP</span>
                     </div>
                     <div className="dash-skill-points dim">
-                        <b>{openN}/{SKILL_NODES.length}</b>
-                        <span>nyitva</span>
+                        <b>{doneN}/{SKILL_NODES.length}</b>
+                        <span>kész</span>
                     </div>
                 </div>
             </div>
 
             <div className="dash-skill-legend">
-                {(['flame', 'shield', 'vault', 'wind', 'mind'] as const).map((b) => (
+                {BRANCH_ORDER.map((b) => (
                     <span key={b} className="dash-skill-chip" style={{ '--b': BRANCH_META[b].color } as any}>
-                        {BRANCH_META[b].label}
+                        {BRANCH_META[b].icon} {BRANCH_META[b].label}
                     </span>
                 ))}
             </div>
 
             <div className="dash-skill-scroll">
-                <div className="dash-skill-canvas" style={{ width: VW, height: VH }}>
-                    <svg className="dash-skill-svg" viewBox={`0 0 ${VW} ${VH}`} aria-hidden>
-                        {edges.map(({ from, to }) => {
-                            const a = xy(from);
-                            const b = xy(to);
-                            const midY = (a.y + b.y) / 2;
-                            const toNode = byId.get(to);
-                            const color = toNode ? BRANCH_META[toNode.branch].color : '#888';
-                            const lit = unlocked.includes(from);
-                            return (
-                                <path
-                                    key={`${from}-${to}`}
-                                    d={`M ${a.x} ${a.y + 36} C ${a.x} ${midY}, ${b.x} ${midY}, ${b.x} ${b.y - 36}`}
-                                    fill="none"
-                                    stroke={color}
-                                    strokeWidth={lit ? 4 : 2}
-                                    strokeOpacity={lit ? 0.85 : 0.22}
-                                    className={lit ? 'lit' : ''}
-                                />
-                            );
-                        })}
-                    </svg>
-                    {SKILL_NODES.map((n) => {
-                        const open = unlocked.includes(n.id);
-                        const ready = !open && n.requires.every((req) => unlocked.includes(req)) && points >= n.cost;
-                        const locked = !open && !ready;
-                        const meta = BRANCH_META[n.branch];
+                <div className="dash-skill-grid">
+                    {BRANCH_ORDER.map((branch) => {
+                        const nodes = branchNodes(branch);
+                        const cleared = nodes.filter((n) => completed.includes(n.id)).length;
+                        const col = BRANCH_META[branch];
                         return (
-                            <button
-                                key={n.id}
-                                type="button"
-                                className={`dash-hex ${open ? 'open' : ''} ${ready ? 'ready' : ''} ${locked ? 'locked' : ''} ${selected === n.id ? 'sel' : ''} ${n.branch === 'cap' ? 'cap' : ''}`}
-                                style={{
-                                    left: `${n.x}%`,
-                                    top: `${n.y}%`,
-                                    '--b': meta.color,
-                                    '--g': meta.glow,
-                                } as any}
-                                onClick={() => {
-                                    setSelected(n.id);
-                                    // #region agent log
-                                    agentDebugLog({
-                                        hypothesisId: 'C',
-                                        location: 'SkillTreePanel.tsx:select',
-                                        message: 'challenge selected',
-                                        data: {
-                                            id: n.id,
-                                            q: n.rules.questionCount,
-                                            sec: n.rules.seconds,
-                                            timer: n.rules.timerMode,
-                                            open,
-                                        },
-                                        runId: 'challenge-tree',
-                                    });
-                                    // #endregion
-                                }}
-                            >
-                                <span className="dash-hex-inner">
-                                    <span className="dash-hex-icon">{n.icon}</span>
-                                    <span className="dash-hex-title">{n.title}</span>
-                                </span>
-                            </button>
+                            <div key={branch} className="dash-skill-col">
+                                <div className="dash-skill-col-head" style={{ '--b': col.color } as any}>
+                                    <strong>{col.icon} {col.label}</strong>
+                                    <em>{col.tagline}</em>
+                                    <span>{cleared}/10 kész</span>
+                                </div>
+                                {nodes.map((n) => {
+                                    const isDone = completed.includes(n.id);
+                                    const ready = !isDone && canStartChallenge(n.id, completed, points).ok;
+                                    const locked = !isDone && !ready;
+                                    return (
+                                        <button
+                                            key={n.id}
+                                            type="button"
+                                            className={`dash-skill-node ${isDone ? 'done' : ''} ${ready ? 'ready' : ''} ${locked ? 'locked' : ''} ${selected === n.id ? 'sel' : ''}`}
+                                            style={{ '--b': col.color, '--g': col.glow } as any}
+                                            onClick={() => {
+                                                setSelected(n.id);
+                                                agentDebugLog({
+                                                    hypothesisId: 'C',
+                                                    location: 'SkillTreePanel.tsx:select',
+                                                    message: 'challenge selected',
+                                                    data: {
+                                                        id: n.id,
+                                                        q: n.rules.questionCount,
+                                                        sec: n.rules.seconds,
+                                                        timer: n.rules.timerMode,
+                                                        done: isDone,
+                                                    },
+                                                    runId: 'challenge-tree',
+                                                });
+                                            }}
+                                        >
+                                            <span className="dash-skill-node-lv">{n.level}</span>
+                                            <span className="dash-skill-node-icon">{n.icon}</span>
+                                            <span className="dash-skill-node-title">{n.title}</span>
+                                        </button>
+                                    );
+                                })}
+                            </div>
                         );
                     })}
                 </div>
+                <button
+                    type="button"
+                    className={`dash-skill-cap ${completed.includes(master.id) ? 'done' : ''} ${canStartChallenge(master.id, completed, points).ok && !completed.includes(master.id) ? 'ready' : ''} ${selected === master.id ? 'sel' : ''}`}
+                    onClick={() => setSelected(master.id)}
+                >
+                    <span>{master.icon}</span>
+                    <strong>{master.title}</strong>
+                    <em>Mind az öt ág teteje + 4000 XP</em>
+                </button>
             </div>
 
             <div className="dash-skill-detail">
-                <div className="dash-skill-detail-icon" style={{ '--b': BRANCH_META[node.branch].color } as any}>
+                <div className="dash-skill-detail-icon" style={{ '--b': meta.color } as any}>
                     {node.icon}
                 </div>
                 <div className="dash-skill-detail-copy">
                     <strong>{node.title}</strong>
-                    <span>{BRANCH_META[node.branch].label} · {node.cost} XP</span>
+                    <span>
+                        {meta.label}
+                        {node.branch !== 'csucs' ? ` · ${node.level}. szint` : ''}
+                        {' · '}
+                        {node.minXp} XP
+                        {node.badgeId ? ' · badge' : ''}
+                    </span>
                     <p className="dash-skill-effect">{node.effect}</p>
                     <p>{node.desc}</p>
                 </div>
-                {isOpen ? (
+                {canPlay ? (
                     <button
                         type="button"
                         className="dash-skill-buy ready"
-                        onClick={() => {
-                            // #region agent log
-                            agentDebugLog({
-                                hypothesisId: 'C',
-                                location: 'SkillTreePanel.tsx:start',
-                                message: 'challenge start clicked',
-                                data: {
-                                    id: node.id,
-                                    q: node.rules.questionCount,
-                                    sec: node.rules.seconds,
-                                    timer: node.rules.timerMode,
-                                },
-                                runId: 'challenge-tree',
-                            });
-                            // #endregion
-                            onStart(node.id);
-                        }}
+                        onClick={() => start(node.id)}
                     >
-                        Indítom
+                        {done ? 'Újra' : 'Indítom'}
                     </button>
                 ) : (
                     <div className="dash-skill-buy">
-                        {!prereqOk
-                            ? 'Előbb az előző fok kell'
-                            : xpLeft > 0
-                                ? `Még ${xpLeft} XP`
-                                : 'Hamarosan nyílik'}
+                        {gateLabel(node, completed, points)}
                     </div>
                 )}
             </div>

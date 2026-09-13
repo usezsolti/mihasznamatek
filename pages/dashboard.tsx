@@ -1145,7 +1145,16 @@ export default function Dashboard() {
                                     juice={juice}
                                     xp={practiceXp}
                                     onStart={(id) => {
-                                        router.push(buildChallengeHref(id, educationLevel, erettsegiExamLevel));
+                                        router.push(buildChallengeHref(
+                                            id,
+                                            educationLevel,
+                                            erettsegiExamLevel,
+                                            educationLevel === 'elementary'
+                                                ? elementaryGrade
+                                                : educationLevel === 'highschool'
+                                                    ? highschoolGrade
+                                                    : undefined
+                                        ));
                                     }}
                                 />
                                 <div className="dash-juice">

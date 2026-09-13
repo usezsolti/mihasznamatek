@@ -46,6 +46,7 @@ export type GamePlayHudProps = {
     comboEarlier?: boolean;
     extraLives?: number;
     hideTaskIndex?: boolean;
+    hideTimer?: boolean;
     challengeTitle?: string;
     hideBoosters?: boolean;
     maxLives?: number;
@@ -80,6 +81,7 @@ export default function GamePlayHud({
     comboEarlier,
     extraLives = 0,
     hideTaskIndex,
+    hideTimer,
     challengeTitle,
     hideBoosters,
     maxLives,
@@ -136,7 +138,7 @@ export default function GamePlayHud({
                         <span className="hud-value">👹 Főnök</span>
                     </div>
                 )}
-                {(isSprintMode || isBlitzMode) && (
+                {(isSprintMode || isBlitzMode) && !hideTimer && (
                     <div className="hud-item">
                         <span className="hud-label">Idő:</span>
                         <span

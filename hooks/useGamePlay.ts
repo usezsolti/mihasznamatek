@@ -4,6 +4,8 @@ import {
     applyAndSaveProgress,
     applyJuiceSession,
     applySrsSession,
+    completeChallenge,
+    persistChallengeXp,
     getBadgeDef,
     resolveProgressStorageKey,
     spendBoosterOrXp,
@@ -21,7 +23,14 @@ import {
     type BoosterKind,
     type JuiceBoosters,
 } from '../utils/gameJuice';
-import { deriveSkillPerks, EMPTY_SKILL_PERKS, skillNodeById, type SkillPerks } from '../utils/skillTree';
+import {
+    challengeSecondsForIndex,
+    deriveSkillPerks,
+    EMPTY_SKILL_PERKS,
+    isPerQuestionTimer,
+    skillNodeById,
+    type SkillPerks,
+} from '../utils/skillTree';
 import { PATH_LESSON_XP } from '../utils/topicPath';
 import {
     SPRINT_SECONDS,
@@ -236,8 +245,45 @@ export function useGamePlay({
                 || (window as any).firebase?.auth?.()?.currentUser?.uid
                 || null;
 
-            // Path / munkalap progress — localStorage + Firestore (ha van user)
-            if (isWorksheetMode) {
+            if (challengeNode) {
+                const needed = Math.max(1, challengeNode.rules.questionCount);
+                const timedOut = sprintEndedRef.current;
+                const noLives = livesRef.current <= 0;
+                const anyWrong = wrongIds.length > 0;
+                const enoughCorrect = correctIds.length >= needed;
+                const success = !timedOut
+                    && !noLives
+                    && (!challengeNode.rules.failOnWrong || !anyWrong)
+                    && enoughCorrect
+                    && (!challengeNode.rules.resetOnWrong || !anyWrong || enoughCorrect);
+                const stake = !!challengeNode.rules.xpStake;
+                const persistXp = success
+                    ? sessionXp + (stake ? sessionXp : 0)
+                    : (stake ? 0 : sessionXp);
+                if (success) {
+                    const cleared = await completeChallenge(uid, challengeNode.id, persistXp);
+                    setTotalXp(cleared.next.xp);
+                    setAvatarLevel(cleared.next.rankLevel);
+                    if (cleared.newBadges.length > 0) {
+                        const titles = cleared.newBadges
+                            .map((id) => getBadgeDef(id as BadgeId)?.title || id)
+                            .join(', ');
+                        setBadgeToast(`Új badge: ${titles}`);
+                        setTimeout(() => setBadgeToast(null), 5000);
+                    } else if (cleared.firstClear) {
+                        setBadgeToast(`Kihívás kész: ${challengeNode.title}`);
+                        setTimeout(() => setBadgeToast(null), 4000);
+                    }
+                } else {
+                    const next = await persistChallengeXp(uid, persistXp);
+                    setTotalXp(next.xp);
+                    setAvatarLevel(next.rankLevel);
+                    if (stake) {
+                        setBadgeToast('Kettős tét: most semmi XP');
+                        setTimeout(() => setBadgeToast(null), 4000);
+                    }
+                }
+            } else if (isWorksheetMode) {
                 const topicKey = worksheetTopicKeyRef.current
                     || resolveProgressStorageKey(topicFromQuery);
                 const lessonJustCompleted =
@@ -444,9 +490,10 @@ export function useGamePlay({
     }, [gameActive, isSprintMode, sprintLeft]);
 
     useEffect(() => {
-        if (!gameActive || !challengeNode || challengeNode.rules.timerMode !== 'perQuestion') return;
+        if (!gameActive || !challengeNode || !isPerQuestionTimer(challengeNode.rules)) return;
         sprintEndedRef.current = false;
-        setSprintLeft(challengeNode.rules.seconds);
+        const sec = challengeSecondsForIndex(challengeNode.rules, currentQuestion);
+        setSprintLeft(sec);
         // #region agent log
         agentDebugLog({
             hypothesisId: 'C',
@@ -455,7 +502,8 @@ export function useGamePlay({
             data: {
                 id: challengeNode.id,
                 idx: currentQuestion,
-                sec: challengeNode.rules.seconds,
+                sec,
+                mode: challengeNode.rules.timerMode,
                 qCount: challengeNode.rules.questionCount,
             },
             runId: 'challenge-tree',
@@ -688,10 +736,24 @@ export function useGamePlay({
         }
 
         if ((isPathMode || isSprintMode || isDailyMode) && livesRef.current <= 0) {
-            setMessage('Elfogyott az életed! 💔 Próbáld újra a leckét.');
+            setMessage(challengeNode ? 'A kihívás elbukott.' : 'Elfogyott az életed! Próbáld újra a leckét.');
             setMascotMood('sad');
             setGameActive(false);
             saveGameResults();
+            return;
+        }
+        if (challengeNode?.rules.resetOnWrong) {
+            correctQuestionIdsRef.current = [];
+            setCorrectQuestionIds([]);
+            setCurrentQuestion(0);
+            setUserAnswer('');
+            setUserAnswer2('');
+            setUserAnswer3('');
+            setUserAnswer4('');
+            setMessage('');
+            setIsCorrect(false);
+            setShowExpression(false);
+            setMascotMood('idle');
             return;
         }
         if (questionIndex < questions.length - 1) {
@@ -869,6 +931,10 @@ export function useGamePlay({
                 playCelebrateFanfare();
             }
             setMascotMood('happy');
+            const timeBonus = challengeNode?.rules.timeBonusPerCorrect || 0;
+            if (timeBonus > 0) {
+                setSprintLeft((s) => s + timeBonus);
+            }
             const newScore = score + baseXp;
             setScore(newScore);
             
@@ -876,11 +942,14 @@ export function useGamePlay({
             const newLevel = Math.floor(newScore / 50) + 1;
             const leveled = newLevel > level;
             setCelebrateLevelUp(leveled);
-            if (leveled) {
+            if (challengeNode?.rules.deferFeedback) {
+                setMessage('Tovább.');
+                setShowExpression(false);
+            } else if (leveled) {
                 setLevel(newLevel);
-                setMessage(`Helyes! 🎉\n\n🎊 Szint emelkedett! Új szint: ${newLevel}`);
+                setMessage(`Helyes!\n\nSzint emelkedett! Új szint: ${newLevel}`);
             } else {
-            setMessage(mult > 1 ? `Helyes! 🎉 ×${mult}` : 'Helyes! 🎉');
+            setMessage(mult > 1 ? `Helyes! ×${mult}` : 'Helyes!');
             }
 
             // Avatar progress
@@ -1056,7 +1125,7 @@ export function useGamePlay({
                     const nextWrong = [...wrongFirstIdsRef.current, qid];
                     wrongFirstIdsRef.current = nextWrong;
                     setWrongFirstIds(nextWrong);
-                    if (isPathMode || isSprintMode || isDailyMode) {
+                    if ((isPathMode || isSprintMode || isDailyMode) && !challengeNode?.rules.resetOnWrong) {
                         lostLife = true;
                         playLifeLostSound();
                         const nextLives = Math.max(0, livesRef.current - 1);
@@ -1066,11 +1135,29 @@ export function useGamePlay({
                 }
             }
 
+            if (challengeNode?.rules.resetOnWrong && !isFailedQuestion) {
+                lostLife = true;
+                playLifeLostSound();
+                const nextLives = Math.max(0, livesRef.current - 1);
+                livesRef.current = nextLives;
+                setLives(nextLives);
+            } else if (challengeNode?.rules.failOnWrong && !challengeNode.rules.deferFeedback) {
+                livesRef.current = 0;
+                setLives(0);
+            }
+
             const lifeNote = lostLife
-                ? `\n\n💔 Élet: ${livesRef.current}/3`
+                ? `\n\nÉlet: ${livesRef.current}`
                 : '';
-            
-            if (currentQ.fourthAnswer !== undefined) {
+
+            if (challengeNode?.rules.deferFeedback) {
+                setMessage('Tovább.');
+                setShowExpression(false);
+            } else if (challengeNode?.rules.resetOnWrong) {
+                setMessage(livesRef.current <= 0
+                    ? 'Elfogyott az újrakezdés.'
+                    : `Elölről! Az óra megy tovább.${lifeNote}`);
+            } else if (currentQ.fourthAnswer !== undefined) {
                 setMessage(`Hibás! A helyes válaszok: ${currentQ.answer}, ${currentQ.alternativeAnswer}, ${currentQ.thirdAnswer}, ${currentQ.fourthAnswer}\n\nEz a feladat később újra megjelenik.${lifeNote}`);
             } else if (currentQ.thirdAnswer !== undefined) {
                 setMessage(`Hibás! A helyes válaszok: ${currentQ.answer}, ${currentQ.alternativeAnswer}, ${currentQ.thirdAnswer}\n\nEz a feladat később újra megjelenik.${lifeNote}`);

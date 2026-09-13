@@ -472,7 +472,11 @@ export default function Game() {
                                 onUseBooster={useBooster}
                                 comboEarlier={skillPerks.comboEarlier}
                                 extraLives={skillPerks.extraLives}
-                                hideTaskIndex={router.query.kozponti === 'true'}
+                                hideTaskIndex={
+                                    router.query.kozponti === 'true'
+                                    || !!skillNodeById(String(router.query.challenge || ''))?.rules.hideTaskIndex
+                                }
+                                hideTimer={!!skillNodeById(String(router.query.challenge || ''))?.rules.hideTimer}
                                 challengeTitle={skillNodeById(String(router.query.challenge || ''))?.title}
                                 hideBoosters={!!skillNodeById(String(router.query.challenge || ''))?.rules.noBoosters}
                                 maxLives={skillNodeById(String(router.query.challenge || ''))?.rules.lives}
@@ -519,7 +523,11 @@ export default function Game() {
                             />
 
                             <GameCelebrate
-                                open={feedbackPending && (isCorrect || comboBroken)}
+                                open={
+                                    feedbackPending
+                                    && (isCorrect || comboBroken)
+                                    && !skillNodeById(String(router.query.challenge || ''))?.rules.deferFeedback
+                                }
                                 streak={comboBroken && !isCorrect ? brokenStreak : correctStreak}
                                 levelUp={celebrateLevelUp}
                                 multiplier={comboMultiplier(correctStreak, skillPerks.comboEarlier)}

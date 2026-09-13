@@ -32,6 +32,8 @@ export type GameJuiceState = {
     blitzBest: number;
     skillPoints: number;
     unlockedSkills: SkillNodeId[];
+    /** Sikeresen teljesített kihívások. Ez nyitja a következő szintet. */
+    completedChallenges: SkillNodeId[];
     skillMigrated?: boolean;
     /** xp = a fa XP-ből vehető, nincs ingyen perk */
     skillShop?: 'xp' | 'points';
@@ -85,6 +87,7 @@ export function emptyJuice(): GameJuiceState {
         blitzBest: 0,
         skillPoints: 0,
         unlockedSkills: [],
+        completedChallenges: [],
         skillMigrated: true,
         skillShop: 'xp',
     };
@@ -125,6 +128,11 @@ export function normalizeJuice(raw: unknown): GameJuiceState {
         skillPoints: clampInt(data.skillPoints),
         unlockedSkills: Array.from(new Set(
             (Array.isArray(data.unlockedSkills) ? data.unlockedSkills : [])
+                .map(String)
+                .filter(isSkillNodeId)
+        )),
+        completedChallenges: Array.from(new Set(
+            (Array.isArray(data.completedChallenges) ? data.completedChallenges : [])
                 .map(String)
                 .filter(isSkillNodeId)
         )),
@@ -180,6 +188,9 @@ export function mergeJuice(a?: GameJuiceState, b?: GameJuiceState): GameJuiceSta
         blitzBest: Math.max(A.blitzBest, B.blitzBest),
         skillPoints: Math.max(A.skillPoints, B.skillPoints),
         unlockedSkills,
+        completedChallenges: Array.from(
+            new Set([...A.completedChallenges, ...B.completedChallenges])
+        ),
         skillMigrated: Boolean(A.skillMigrated || B.skillMigrated),
         skillShop: A.skillShop === 'xp' || B.skillShop === 'xp' ? 'xp' : 'points',
     };

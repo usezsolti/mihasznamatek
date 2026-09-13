@@ -333,14 +333,19 @@ export function buildBlitzHref(educationLevel: EducationLevelId, grade?: number)
 export function buildChallengeHref(
     id: SkillNodeId,
     educationLevel: EducationLevelId,
-    erettsegiLevel: ErettsegiExamLevel = 'emelt'
+    erettsegiLevel: ErettsegiExamLevel = 'emelt',
+    grade?: number
 ): string {
     const params = new URLSearchParams({
         challenge: id,
         educationLevel,
     });
-    if (educationLevel === 'elementary') params.set('grade', '5');
-    if (educationLevel === 'highschool') params.set('grade', '10');
+    if (educationLevel === 'elementary') {
+        params.set('grade', String(grade && grade >= 1 && grade <= 8 ? grade : 5));
+    }
+    if (educationLevel === 'highschool') {
+        params.set('grade', String(grade && grade >= 9 && grade <= 12 ? grade : 10));
+    }
     if (educationLevel === 'erettsegi') params.set('level', erettsegiLevel);
     return `/game?${params.toString()}`;
 }

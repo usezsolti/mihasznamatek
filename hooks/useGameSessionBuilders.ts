@@ -20,7 +20,7 @@ import {
 } from '../utils/mathTopicsCatalog';
 import { SPRINT_SECONDS, type MascotMood } from '../utils/gameFeedback';
 import { BLITZ_SECONDS } from '../utils/gameJuice';
-import { type SkillNode } from '../utils/skillTree';
+import { challengeSecondsForIndex, type SkillNode } from '../utils/skillTree';
 import { agentDebugLog } from '../utils/agentDebugLog';
 import { shuffleArray } from '../utils/shuffle';
 import { loadUserPracticeProgress } from '../utils/practiceProgress';
@@ -494,7 +494,9 @@ export function useGameSessionBuilders(p: UseGameSessionBuildersParams) {
         p.setIsDailyMode(!!opts.daily);
         p.setIsBlitzMode(!!opts.blitz);
         p.setIsSprintMode(!!opts.sprint || !!opts.blitz || !!opts.challenge);
-        const challengeSec = opts.challenge?.rules.seconds;
+        const challengeSec = opts.challenge
+            ? challengeSecondsForIndex(opts.challenge.rules, 0)
+            : undefined;
         p.setSprintLeft(
             typeof challengeSec === 'number'
                 ? challengeSec
@@ -939,20 +941,45 @@ export function useGameSessionBuilders(p: UseGameSessionBuildersParams) {
             eduLevel === 'elementary' || eduLevel === 'highschool' ? grade : undefined
         );
         const needed = Math.max(1, challenge.rules.questionCount);
-        const picked = [...topics].sort(() => Math.random() - 0.5).slice(0, Math.min(8, Math.max(3, topics.length)));
+        const minStage = Math.max(1, Math.min(6, challenge.rules.minStage || 1));
+        const maxStage = Math.max(minStage, Math.min(6, challenge.rules.maxStage || 6));
+        const spread = challenge.rules.spread || 'mixed';
+        const order = challenge.rules.order || 'shuffle';
+        const pool = [...topics].sort(() => Math.random() - 0.5);
+        const topicPick = spread === 'single'
+            ? pool.slice(0, 1)
+            : spread === 'all'
+                ? pool
+                : pool.slice(0, Math.min(2, pool.length));
+        const stageForIndex = (i: number): PracticeStage => {
+            const span = maxStage - minStage;
+            if (order === 'ramp') {
+                const t = needed <= 1 ? 0 : i / (needed - 1);
+                return Math.round(minStage + span * t) as PracticeStage;
+            }
+            if (order === 'reverse') {
+                const t = needed <= 1 ? 0 : i / (needed - 1);
+                return Math.round(maxStage - span * t) as PracticeStage;
+            }
+            return (minStage + Math.floor(Math.random() * (span + 1))) as PracticeStage;
+        };
         const questions: Question[] = [];
         let guard = 0;
-        while (questions.length < needed + 2 && guard < 80) {
+        while (questions.length < needed && guard < 120) {
             guard++;
-            const t = picked[questions.length % Math.max(1, picked.length)];
+            const t = topicPick.length === 0
+                ? undefined
+                : spread === 'all'
+                    ? topicPick[questions.length % topicPick.length]
+                    : topicPick[questions.length % topicPick.length];
             if (!t) break;
-            const stage = lessonToStage(Math.floor(questions.length / 2) + 1) as PracticeStage;
+            const stage = stageForIndex(questions.length);
             let q: Question | null = generateSkillQuestion(t.id, stage, srsLevel, grade || 10);
             if (!q) {
                 if (eduLevel === 'elementary') {
-                    q = generateElementaryQuestionByTopic(t.id, grade || 5, Math.floor(Math.random() * 4));
+                    q = generateElementaryQuestionByTopic(t.id, grade || 5, Math.max(0, stage - 1));
                 } else if (eduLevel === 'highschool') {
-                    q = generateHighschoolQuestionByTopic(t.id, grade || 10, Math.floor(Math.random() * 4));
+                    q = generateHighschoolQuestionByTopic(t.id, grade || 10, Math.max(0, stage - 1));
                 } else if (eduLevel === 'university') {
                     q = generateUniversityQuestionByTopic(t.id, t.id);
                 } else {
@@ -1001,6 +1028,7 @@ export function useGameSessionBuilders(p: UseGameSessionBuildersParams) {
             blitz: false,
             erettsegi: eduLevel === 'erettsegi',
             daily: false,
+            keepOrder: challenge.rules.order === 'ramp' || challenge.rules.order === 'reverse',
             challenge,
         });
     };

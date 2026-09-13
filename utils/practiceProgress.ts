@@ -32,11 +32,17 @@ import {
     type JuiceSessionEvent,
     BOOSTER_XP_COST,
 } from './gameJuice';
-import { canUnlockSkill, isSkillNodeId, syncSkillsFromXp, type SkillNodeId, skillNodeById } from './skillTree';
+import {
+    isSkillNodeId,
+    skillNodeById,
+    type ChallengeBadgeId,
+    type SkillNodeId,
+} from './skillTree';
 
 export type PracticeStage = 1 | 2 | 3 | 4 | 5 | 6;
 
 export type BadgeId =
+    | ChallengeBadgeId
     | 'parameter_kesz'
     | 'explog_kesz'
     | 'absroot_kesz'
@@ -115,6 +121,17 @@ export interface UserPracticeProgress {
 }
 
 export const BADGE_DEFS: BadgeDef[] = [
+    { id: 'kronoszFel', title: 'Időlovas', description: 'Kronosz ág 5. szintje teljesítve', icon: '⏱️' },
+    { id: 'kronoszMester', title: 'Kronosz', description: 'Az idő ága végigjátszva', icon: '⌛' },
+    { id: 'kristalyFel', title: 'Csiszoló', description: 'Kristály ág 5. szintje teljesítve', icon: '✨' },
+    { id: 'kristalyMester', title: 'Kristály', description: 'A hibátlanság ága végigjátszva', icon: '💎' },
+    { id: 'vandorFel', title: 'Túrázó', description: 'Vándor ág 5. szintje teljesítve', icon: '🥾' },
+    { id: 'vandorMester', title: 'Vándor', description: 'A kitartás ága végigjátszva', icon: '🏔️' },
+    { id: 'arnyekFel', title: 'Sötétben járó', description: 'Árnyék ág 5. szintje teljesítve', icon: '🌒' },
+    { id: 'arnyekMester', title: 'Árnyék', description: 'A vak ág végigjátszva', icon: '🌑' },
+    { id: 'viharFel', title: 'Széljáró', description: 'Vihar ág 5. szintje teljesítve', icon: '🍃' },
+    { id: 'viharMester', title: 'Vihar', description: 'A káosz ága végigjátszva', icon: '🌪️' },
+    { id: 'mihasznaMester', title: 'Mihaszna-mester', description: 'A kihívásfa teteje meghódítva', icon: '👑' },
     { id: 'parameter_kesz', title: 'Paraméter mester', description: 'Paraméteres munkalap teljesítve', icon: 'α' },
     { id: 'explog_kesz', title: 'Exp/Log mester', description: 'Exponenciális–logaritmus munkalap teljesítve', icon: 'log' },
     { id: 'absroot_kesz', title: 'Abszolútérték–gyök mester', description: 'Abszolútérték/gyök munkalap teljesítve', icon: '|√' },
@@ -418,32 +435,15 @@ function mergeTopicProgress(a: TopicProgress, b: TopicProgress): TopicProgress {
     };
 }
 
+/**
+ * A kihívásfa nem nyílik ki magától: a következő szintet a teljesített előző
+ * szint és az XP-küszöb nyitja. Itt csak a régi, már nem létező id-kat dobjuk el.
+ */
 function applySkillsFromXp(progress: UserPracticeProgress): UserPracticeProgress {
     const juice = normalizeJuice(progress.juice);
-    const fromXp = syncSkillsFromXp(progress.xp || 0);
-    const kept = juice.unlockedSkills.filter(isSkillNodeId);
-    const unlocked = Array.from(new Set([...kept, ...fromXp]));
-    juice.unlockedSkills = unlocked;
+    juice.unlockedSkills = juice.unlockedSkills.filter(isSkillNodeId);
+    juice.completedChallenges = juice.completedChallenges.filter(isSkillNodeId);
     juice.skillShop = 'xp';
-    // #region agent log
-    if (kept.length !== unlocked.length) {
-        void import('./agentDebugLog').then(({ agentDebugLog }) => {
-            agentDebugLog({
-                hypothesisId: 'S',
-                location: 'practiceProgress.ts:applySkillsFromXp',
-                message: 'skills synced from XP',
-                data: {
-                    xp: progress.xp || 0,
-                    fromXpN: fromXp.length,
-                    keptN: kept.length,
-                    outN: unlocked.length,
-                    ids: unlocked,
-                },
-                runId: 'skill-xp',
-            });
-        });
-    }
-    // #endregion
     return { ...progress, juice };
 }
 
@@ -975,28 +975,36 @@ export async function spendBoosterOrXp(
     return { ok: false, juice, xpSpent: 0, next: previous };
 }
 
-export async function unlockSkillNode(
+/**
+ * Sikeres kihívás: bekerül a teljesítettek közé, és ha mérföldkő, jár rá a badge.
+ * XP-t nem von le — a fa küszöbökkel dolgozik, nem vásárlással.
+ */
+export async function completeChallenge(
     uid: string | null | undefined,
-    id: SkillNodeId
-): Promise<{ ok: boolean; reason?: string; next: UserPracticeProgress }> {
+    id: SkillNodeId,
+    bonusXp = 0
+): Promise<{ next: UserPracticeProgress; newBadges: BadgeId[]; firstClear: boolean }> {
     const previous = await loadUserPracticeProgress(uid);
     const juice = normalizeJuice(previous.juice);
-    const xp = previous.xp || 0;
-    const check = canUnlockSkill(id, juice.unlockedSkills, xp);
-    if (!check.ok) {
-        return { ok: false, reason: check.reason, next: previous };
-    }
     const node = skillNodeById(id);
-    const cost = node?.cost || 0;
-    const nextXp = Math.max(0, xp - cost);
-    const rankLevel = xpToRankLevel(nextXp);
-    juice.unlockedSkills = Array.from(new Set([...juice.unlockedSkills, id]));
-    juice.skillShop = 'xp';
+    const firstClear = !juice.completedChallenges.includes(id);
+    juice.completedChallenges = Array.from(new Set([...juice.completedChallenges, id]));
+
+    const badges = new Set<BadgeId>(previous.badges);
+    const newBadges: BadgeId[] = [];
+    if (node?.badgeId && !badges.has(node.badgeId)) {
+        badges.add(node.badgeId);
+        newBadges.push(node.badgeId);
+    }
+
+    const xp = Math.max(0, (previous.xp || 0) + Math.max(0, bonusXp));
+    const rankLevel = xpToRankLevel(xp);
     const next: UserPracticeProgress = {
         ...previous,
-        xp: nextXp,
+        xp,
         rankLevel,
         rank: getRankTitle(rankLevel),
+        badges: Array.from(badges),
         juice,
     };
     await persistProgress(uid, next);
@@ -1004,11 +1012,37 @@ export async function unlockSkillNode(
     const { agentDebugLog } = await import('./agentDebugLog');
     agentDebugLog({
         hypothesisId: 'G',
-        location: 'practiceProgress.ts:unlockSkillNode',
-        message: 'skill bought with XP',
-        data: { id, cost, xpLeft: nextXp, unlockedN: juice.unlockedSkills.length },
-        runId: 'skill-xp',
+        location: 'practiceProgress.ts:completeChallenge',
+        message: 'challenge cleared',
+        data: {
+            id,
+            firstClear,
+            bonusXp,
+            doneN: juice.completedChallenges.length,
+            newBadges,
+        },
+        runId: 'challenge-tree',
     });
     // #endregion
-    return { ok: true, next };
+    return { next, newBadges, firstClear };
+}
+
+/** Kihívás XP mentése teljesítés nélkül (bukás, vagy tét nélküli kör). */
+export async function persistChallengeXp(
+    uid: string | null | undefined,
+    amount: number
+): Promise<UserPracticeProgress> {
+    const previous = await loadUserPracticeProgress(uid);
+    const add = Math.max(0, Math.floor(amount));
+    if (add <= 0) return previous;
+    const xp = Math.max(0, (previous.xp || 0) + add);
+    const rankLevel = xpToRankLevel(xp);
+    const next: UserPracticeProgress = {
+        ...previous,
+        xp,
+        rankLevel,
+        rank: getRankTitle(rankLevel),
+    };
+    await persistProgress(uid, next);
+    return next;
 }
