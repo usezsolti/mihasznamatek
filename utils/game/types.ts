@@ -17,8 +17,10 @@ export interface Question {
     /** Spaced repetition: témakör-készség (nem a daily_ álkulcs) */
     srsTopicId?: string;
     srsStage?: PracticeStage;
-    /** Path lecke utolsó 3 feladata */
+    /** Path lecke utolsó 3 feladata, vagy ritka közép-lecke főnök */
     isBoss?: boolean;
+    /** Clutch: egyszer körönként könnyebb megmentő kérdés */
+    isClutch?: boolean;
     expectedSet?: string[]; // Halmaz elemei — sorrend nem számít
     /** Egy ábra (kép / gráf / általános rajz) — bármely témakörnél */
     figure?: QuestionFigure;

@@ -2,7 +2,7 @@ import { topicsForElemNatGrade, type ElemNatGrade } from './elemNatCatalog';
 
 /** Közös témakörök — ugyanaz, mint a játék kezdőképernyőjén + érettségi. */
 
-export type EducationLevelId = 'elementary' | 'highschool' | 'university' | 'erettsegi';
+export type EducationLevelId = 'elementary' | 'highschool' | 'university' | 'erettsegi' | 'kozponti';
 export type ErettsegiExamLevel = 'kozep' | 'emelt';
 
 export type CatalogTopic = {
@@ -26,6 +26,18 @@ export const EDUCATION_LEVELS: Array<{
     { id: 'highschool', name: 'Középiskola', desc: '9-12. osztály', emoji: '🎒' },
     { id: 'university', name: 'Egyetem', desc: 'Felsőbb matematika', emoji: '🎓' },
     { id: 'erettsegi', name: 'Érettségire felkészülés', desc: 'Közép és emelt szint', emoji: '📝' },
+    { id: 'kozponti', name: 'Központi felvételi', desc: '6. és 8. évfolyam', emoji: '🎯' },
+];
+
+export const kozpontiTopics: CatalogTopic[] = [
+    { id: 'szamitas', title: 'Számítás', icon: '🔢', color: '#39ff14' },
+    { id: 'algebra', title: 'Algebra', icon: '📐', color: '#39ff14' },
+    { id: 'geometria', title: 'Geometria', icon: '📏', color: '#39ff14' },
+    { id: 'szoveges', title: 'Szöveges feladatok', icon: '📝', color: '#39ff14' },
+    { id: 'halmazok', title: 'Halmazok', icon: '{}', color: '#39ff14' },
+    { id: 'fuggvenyek', title: 'Függvények', icon: '📈', color: '#39ff14' },
+    { id: 'statisztika', title: 'Statisztika', icon: '📊', color: '#39ff14' },
+    { id: 'valoszinuseg', title: 'Valószínűség', icon: '🎲', color: '#39ff14' },
 ];
 
 export const elementaryTopics: CatalogTopic[] = [
@@ -484,6 +496,7 @@ export function getTopicsForEducationLevel(
     if (level === 'erettsegi') {
         return erettsegiLevel === 'kozep' ? erettsegiKozepTopics : erettsegiEmeltTopics;
     }
+    if (level === 'kozponti') return [];
     return universitySubjects.map(({ id, title, icon, color }) => ({ id, title, icon, color }));
 }
 

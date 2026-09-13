@@ -33,7 +33,7 @@ import {
 import { BME_VALSZAM_PAPERS } from '../../utils/game/bmeValszamPapers';
 
 function parseEducationLevel(value: unknown): EducationLevelId {
-    if (value === 'elementary' || value === 'highschool' || value === 'university' || value === 'erettsegi') {
+    if (value === 'elementary' || value === 'highschool' || value === 'university' || value === 'erettsegi' || value === 'kozponti') {
         return value;
     }
     return 'university';
@@ -201,7 +201,7 @@ export default function TopicStatsPage() {
         [results]
     );
     const path = useMemo(() => pathLessonSummary(topicProgress), [topicProgress]);
-    const practiceHref = buildTopicPracticeHref(topicIdParam, educationLevel, erettsegiLevel);
+    const practiceHref = buildTopicPracticeHref(topicIdParam, educationLevel, erettsegiLevel, pathGrade);
 
     const goPractice = () => {
         router.push(practiceHref);
@@ -289,9 +289,6 @@ export default function TopicStatsPage() {
                     className="main-content topic-stats-page"
                     style={{ ['--topic-color' as string]: topicColor }}
                 >
-                    <Link href="/dashboard" className="topic-stats-back">
-                        ← Vissza a dashboardra
-                    </Link>
                     <Link
                         href="/topic/valszam?educationLevel=university"
                         className="topic-stats-back"
@@ -388,17 +385,18 @@ export default function TopicStatsPage() {
                 className="main-content topic-stats-page"
                 style={{ ['--topic-color' as string]: topicColor }}
             >
-                <Link href="/dashboard" className="topic-stats-back">
-                    ← Vissza a dashboardra
+                <Link
+                    href={
+                        uniNested
+                            ? `/topic/${uniNested.subject.id}?educationLevel=university`
+                            : '/dashboard'
+                    }
+                    className="topic-stats-back"
+                >
+                    {uniNested
+                        ? `← ${uniNested.subject.title} témakörei`
+                        : '← Vissza a dashboardra'}
                 </Link>
-                {uniNested && (
-                    <Link
-                        href={`/topic/${uniNested.subject.id}?educationLevel=university`}
-                        className="topic-stats-back"
-                    >
-                        ← {uniNested.subject.title} témakörei
-                    </Link>
-                )}
 
                 <div className="topic-stats-hero">
                     <div className="topic-stats-icon" aria-hidden="true">
@@ -411,9 +409,28 @@ export default function TopicStatsPage() {
                         </p>
                     </div>
                     {uid && (
-                        <button type="button" className="topic-stats-cta" onClick={goPractice}>
-                            Gyakorlás →
-                        </button>
+                        <div className="topic-stats-hero-actions">
+                            <button type="button" className="topic-stats-cta" onClick={goPractice}>
+                                Gyakorlás indítása
+                            </button>
+                            {path.lessonsDone >= 6 && (
+                                <button
+                                    type="button"
+                                    className="topic-stats-cta topic-stats-cta-secondary"
+                                    onClick={() =>
+                                        router.push(
+                                            buildTopicMixGameHref(
+                                                topicIdParam,
+                                                educationLevel,
+                                                erettsegiLevel
+                                            )
+                                        )
+                                    }
+                                >
+                                    Vegyes feladatmegoldás
+                                </button>
+                            )}
+                        </div>
                     )}
                 </div>
 
@@ -548,28 +565,6 @@ export default function TopicStatsPage() {
                             )}
                         </div>
 
-                        <div className="topic-stats-footer-cta">
-                            <button type="button" className="topic-stats-cta" onClick={goPractice}>
-                                Gyakorlás indítása
-                            </button>
-                            {path.lessonsDone >= 6 && (
-                                <button
-                                    type="button"
-                                    className="topic-stats-cta"
-                                    onClick={() =>
-                                        router.push(
-                                            buildTopicMixGameHref(
-                                                topicIdParam,
-                                                educationLevel,
-                                                erettsegiLevel
-                                            )
-                                        )
-                                    }
-                                >
-                                    Vegyes feladatmegoldás
-                                </button>
-                            )}
-                        </div>
                     </>
                 )}
             </main>

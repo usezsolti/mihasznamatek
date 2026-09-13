@@ -15,11 +15,14 @@ import {
     type PracticeStage,
 } from '../utils/practiceProgress';
 import {
+    applyClutchSwap,
     BOOSTER_LABEL,
     comboMultiplier,
     fiftyFiftyHint,
     FREEZE_SECONDS,
     isComboMilestone,
+    markMidRunBoss,
+    startLivesForRun,
     type BoosterKind,
     type JuiceBoosters,
 } from '../utils/gameJuice';
@@ -28,7 +31,10 @@ import {
     deriveSkillPerks,
     EMPTY_SKILL_PERKS,
     isPerQuestionTimer,
+    newlyStartableChallenges,
     skillNodeById,
+    startableChallenges,
+    type SkillNode,
     type SkillPerks,
 } from '../utils/skillTree';
 import { PATH_LESSON_XP } from '../utils/topicPath';
@@ -70,6 +76,7 @@ export type GameSessionBridge = {
 
 export type UseGamePlayParams = {
     currentUser: any;
+    totalXp: number;
     setTotalXp: Dispatch<SetStateAction<number>>;
     avatarLevel: number;
     setAvatarLevel: Dispatch<SetStateAction<number>>;
@@ -87,10 +94,12 @@ export type UseGamePlayParams = {
     generateUniversityQuestions?: () => void;
     /** Clear picker UI (education level, menus) on reset. */
     onResetPicker?: () => void;
+    playWithLives?: boolean;
 };
 
 export function useGamePlay({
     currentUser,
+    totalXp,
     setTotalXp,
     avatarLevel,
     setAvatarLevel,
@@ -99,9 +108,16 @@ export function useGamePlay({
     educationLevel,
     generateUniversityQuestions,
     onResetPicker,
+    playWithLives = true,
 }: UseGamePlayParams) {
     const router = useRouter();
     const challengeNode = skillNodeById(String(router.query.challenge || ''));
+    const completedChallengesRef = useRef<string[]>([]);
+    const dismissedOffersRef = useRef<Set<string>>(new Set());
+    const prevXpForOfferRef = useRef<number | null>(null);
+    const firstGainOfferedRef = useRef(false);
+    const pendingOfferRef = useRef<SkillNode | null>(null);
+    const [challengeOffer, setChallengeOffer] = useState<SkillNode | null>(null);
 
     const [score, setScore] = useState(0);
     const [level, setLevel] = useState(1);
@@ -150,6 +166,12 @@ export function useGamePlay({
     const [skillPerks, setSkillPerks] = useState<SkillPerks>(EMPTY_SKILL_PERKS);
     const [feedbackPending, setFeedbackPending] = useState(false);
     const [celebrateLevelUp, setCelebrateLevelUp] = useState(false);
+    const [runMaxLives, setRunMaxLives] = useState(3);
+    const [doubleStakeArmed, setDoubleStakeArmed] = useState(false);
+    const [clutchArmed, setClutchArmed] = useState(false);
+    const clutchUsedRef = useRef(false);
+    const runWrongCountRef = useRef(0);
+    const tensionBossOnceRef = useRef(false);
     const feedbackAdvanceRef = useRef<{
         correct: boolean;
         currentQ: Question;
@@ -185,15 +207,18 @@ export function useGamePlay({
         if (!gameActive) return;
         void touchDailyJuice(currentUid()).then((prog) => {
             setJuiceBoosters(prog.juice?.boosters || { fiftyFifty: 0, secondChance: 0, freeze: 0 });
+            completedChallengesRef.current = prog.juice?.completedChallenges || [];
+            if (prevXpForOfferRef.current == null) prevXpForOfferRef.current = prog.xp || 0;
             const perks = deriveSkillPerks(prog.juice?.unlockedSkills);
             setSkillPerks(perks);
             if (!challengeNode && perks.startSecondArmed) {
                 setSecondChanceArmed(true);
             }
-            if (!challengeNode && perks.extraLives > 0) {
+            if (!challengeNode && playWithLives && perks.extraLives > 0 && livesRef.current > 0) {
                 livesRef.current += perks.extraLives;
                 setLives((n) => n + perks.extraLives);
             }
+            setRunMaxLives(livesRef.current);
             if (!challengeNode && perks.blitzBonus > 0 && (isBlitzMode || router.query.blitz === '1')) {
                 setSprintLeft((s) => s + perks.blitzBonus);
             }
@@ -217,6 +242,77 @@ export function useGamePlay({
         }).catch(() => undefined);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [gameActive]);
+
+    useEffect(() => {
+        if (!gameActive) {
+            tensionBossOnceRef.current = false;
+            clutchUsedRef.current = false;
+            runWrongCountRef.current = 0;
+            setClutchArmed(false);
+            setDoubleStakeArmed(false);
+            return;
+        }
+        if (tensionBossOnceRef.current || challengeNode || isPathMode) return;
+        const qs = questionsRef.current;
+        if (qs.length < 8 || qs.some((q) => q.isBoss)) {
+            tensionBossOnceRef.current = true;
+            return;
+        }
+        tensionBossOnceRef.current = true;
+        const next = markMidRunBoss(qs, false);
+        questionsRef.current = next;
+        erettsegiQuestionsRef.current = next;
+        sessionBridgeRef.current.replaceSessionQuestions?.(next);
+    }, [gameActive, challengeNode, isPathMode, questionsRef, sessionBridgeRef]);
+
+    useEffect(() => {
+        if (typeof window === 'undefined') return;
+        try {
+            const raw = sessionStorage.getItem('mzChallengeSkip');
+            const ids = raw ? JSON.parse(raw) : [];
+            if (Array.isArray(ids)) dismissedOffersRef.current = new Set(ids.map(String));
+        } catch {
+            dismissedOffersRef.current = new Set();
+        }
+    }, []);
+
+    useEffect(() => {
+        if (!gameActive || challengeNode) return;
+        const prev = prevXpForOfferRef.current;
+        if (prev == null) {
+            prevXpForOfferRef.current = totalXp;
+            return;
+        }
+        if (totalXp <= prev) return;
+        const skip = dismissedOffersRef.current;
+        const done = completedChallengesRef.current;
+        let pick = newlyStartableChallenges(done, prev, totalXp).find((n) => !skip.has(n.id));
+        if (!pick && !firstGainOfferedRef.current) {
+            firstGainOfferedRef.current = true;
+            pick = startableChallenges(done, totalXp).find((n) => !skip.has(n.id));
+        }
+        prevXpForOfferRef.current = totalXp;
+        if (!pick) return;
+        if (feedbackPending || challengeOffer) {
+            if (!pendingOfferRef.current) pendingOfferRef.current = pick;
+            return;
+        }
+        setChallengeOffer(pick);
+        agentDebugLog({
+            hypothesisId: 'C',
+            location: 'useGamePlay.ts:challengeOffer',
+            message: 'challenge offered in play',
+            data: { id: pick.id, prevXp: prev, nextXp: totalXp },
+            runId: 'challenge-tree',
+        });
+    }, [totalXp, gameActive, challengeNode, feedbackPending, challengeOffer]);
+
+    useEffect(() => {
+        if (feedbackPending || challengeOffer || !pendingOfferRef.current || challengeNode) return;
+        const next = pendingOfferRef.current;
+        pendingOfferRef.current = null;
+        setChallengeOffer(next);
+    }, [feedbackPending, challengeOffer, challengeNode]);
 
     const saveGameResults = async () => {
             try {
@@ -262,6 +358,7 @@ export function useGamePlay({
                     : (stake ? 0 : sessionXp);
                 if (success) {
                     const cleared = await completeChallenge(uid, challengeNode.id, persistXp);
+                    completedChallengesRef.current = cleared.next.juice?.completedChallenges || [];
                     setTotalXp(cleared.next.xp);
                     setAvatarLevel(cleared.next.rankLevel);
                     if (cleared.newBadges.length > 0) {
@@ -473,7 +570,7 @@ export function useGamePlay({
 
     // Sprint visszaszámláló
     useEffect(() => {
-        if (!gameActive || !isSprintMode) return;
+        if (!gameActive || !isSprintMode || challengeOffer) return;
         if (sprintLeft <= 0) {
             if (!sprintEndedRef.current) {
                 sprintEndedRef.current = true;
@@ -487,7 +584,7 @@ export function useGamePlay({
         const id = window.setTimeout(() => setSprintLeft((s) => s - 1), 1000);
         return () => window.clearTimeout(id);
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [gameActive, isSprintMode, sprintLeft]);
+    }, [gameActive, isSprintMode, sprintLeft, challengeOffer]);
 
     useEffect(() => {
         if (!gameActive || !challengeNode || !isPerQuestionTimer(challengeNode.rules)) return;
@@ -536,7 +633,10 @@ export function useGamePlay({
         setGameActive(true);
         setScore(0);
         setLevel(1);
-        setLives(3);
+        const start = startLivesForRun({ playWithLives, xp: totalXp });
+        livesRef.current = start;
+        setLives(start);
+        setRunMaxLives(start);
         setCurrentQuestion(0);
         setUserAnswer('');
         setMessage('');
@@ -553,7 +653,9 @@ export function useGamePlay({
         setGameActive(false);
         setScore(0);
         setLevel(1);
-        setLives(3);
+        livesRef.current = 0;
+        setLives(0);
+        setRunMaxLives(0);
         setCurrentQuestion(0);
         setUserAnswer('');
         setUserAnswer2('');
@@ -579,6 +681,10 @@ export function useGamePlay({
         setHintText(null);
         setSecondChanceArmed(false);
         setComboBroken(false);
+        setDoubleStakeArmed(false);
+        setClutchArmed(false);
+        clutchUsedRef.current = false;
+        runWrongCountRef.current = 0;
         setLastXpGain(10);
         setCorrectStreak(0);
         setMaxStreak(0);
@@ -592,7 +698,24 @@ export function useGamePlay({
         worksheetTopicKeyRef.current = null;
         sprintEndedRef.current = false;
         setMascotMood('idle');
+        setChallengeOffer(null);
+        pendingOfferRef.current = null;
+        firstGainOfferedRef.current = false;
+        prevXpForOfferRef.current = null;
         onResetPicker?.();
+    };
+
+    const dismissChallengeOffer = () => {
+        if (challengeOffer) {
+            dismissedOffersRef.current.add(challengeOffer.id);
+            if (typeof window !== 'undefined') {
+                sessionStorage.setItem(
+                    'mzChallengeSkip',
+                    JSON.stringify(Array.from(dismissedOffersRef.current))
+                );
+            }
+        }
+        setChallengeOffer(null);
     };
 
     const checkSubQuestionAnswers = () => {
@@ -673,6 +796,7 @@ export function useGamePlay({
         setComboBroken(false);
         setHintText(null);
         setSecondChanceArmed(false);
+        setDoubleStakeArmed(false);
 
         // #region agent log
         agentDebugLog({
@@ -735,7 +859,7 @@ export function useGamePlay({
             return;
         }
 
-        if ((isPathMode || isSprintMode || isDailyMode) && livesRef.current <= 0) {
+        if (livesRef.current <= 0 && (challengeNode || playWithLives)) {
             setMessage(challengeNode ? 'A kihívás elbukott.' : 'Elfogyott az életed! Próbáld újra a leckét.');
             setMascotMood('sad');
             setGameActive(false);
@@ -917,13 +1041,21 @@ export function useGamePlay({
         setShowExpression(true);
 
         if (correct) {
-            const newStreak = correctStreak + 1;
+            const clutchSave = clutchArmed && !!currentQ.isClutch;
+            const newStreak = clutchSave ? Math.max(2, correctStreak + 1) : correctStreak + 1;
             const mult = comboMultiplier(newStreak, skillPerks.comboEarlier);
-            const baseXp = 10 * mult + (currentQ.isBoss ? 5 + skillPerks.bossXpBonus : 0) + skillPerks.xpBonus;
+            const bossPay = currentQ.isBoss ? 20 + skillPerks.bossXpBonus : 0;
+            const rawXp = 10 * mult + bossPay + skillPerks.xpBonus;
+            const baseXp = doubleStakeArmed ? rawXp * 2 : rawXp;
             setCorrectStreak(newStreak);
             setMaxStreak((m) => Math.max(m, newStreak));
             setLastXpGain(baseXp);
             setComboBroken(false);
+            if (clutchSave) {
+                setClutchArmed(false);
+                setBadgeToast('Megmentve — a combo megmaradt');
+                setTimeout(() => setBadgeToast(null), 2800);
+            }
             playCorrectSound();
             if (isComboMilestone(newStreak) || currentQ.isBoss) {
                 playBigCelebrateFanfare();
@@ -949,7 +1081,8 @@ export function useGamePlay({
                 setLevel(newLevel);
                 setMessage(`Helyes!\n\nSzint emelkedett! Új szint: ${newLevel}`);
             } else {
-            setMessage(mult > 1 ? `Helyes! ×${mult}` : 'Helyes!');
+                const stakeNote = doubleStakeArmed ? ' Dupla tét!' : '';
+                setMessage(mult > 1 ? `Helyes! ×${mult}${stakeNote}` : `Helyes!${stakeNote}`);
             }
 
             // Avatar progress
@@ -1037,7 +1170,7 @@ export function useGamePlay({
                 }
             }
         } else {
-            if (secondChanceArmed) {
+            if (secondChanceArmed && !doubleStakeArmed) {
                 setSecondChanceArmed(false);
                 setIsCorrect(false);
                 setShowExpression(false);
@@ -1057,7 +1190,12 @@ export function useGamePlay({
                 // #endregion
                 return;
             }
-            const brokeCombo = correctStreak >= 2;
+            if (doubleStakeArmed) {
+                setLastXpGain(0);
+                setBadgeToast('Dupla tét elbukott');
+                setTimeout(() => setBadgeToast(null), 2500);
+            }
+            const brokeCombo = correctStreak >= 2 || doubleStakeArmed;
             if (brokeCombo) {
                 playComboBreakSound();
                 setComboBroken(true);
@@ -1066,7 +1204,13 @@ export function useGamePlay({
                 playWrongSound();
             }
             setMascotMood('sad');
-            setCorrectStreak(0);
+            runWrongCountRef.current += 1;
+            const lastLife = playWithLives && !challengeNode && livesRef.current === 2;
+            const armClutch = !challengeNode
+                && !clutchUsedRef.current
+                && (runWrongCountRef.current >= 2 || lastLife)
+                && currentQuestion < questions.length - 1;
+            setCorrectStreak(armClutch ? 1 : 0);
             // Hibás válasz: hozzáadjuk a hibás feladatok listájához (ha még nincs benne)
             const baseQuestionsCount = questions.length - failedQuestions.length;
             const isFailedQuestion = currentQuestion >= baseQuestionsCount;
@@ -1125,13 +1269,26 @@ export function useGamePlay({
                     const nextWrong = [...wrongFirstIdsRef.current, qid];
                     wrongFirstIdsRef.current = nextWrong;
                     setWrongFirstIds(nextWrong);
-                    if ((isPathMode || isSprintMode || isDailyMode) && !challengeNode?.rules.resetOnWrong) {
+                    if (playWithLives && !challengeNode?.rules.resetOnWrong) {
                         lostLife = true;
                         playLifeLostSound();
                         const nextLives = Math.max(0, livesRef.current - 1);
                         livesRef.current = nextLives;
                         setLives(nextLives);
                     }
+                }
+            }
+
+            if (armClutch) {
+                const swapped = applyClutchSwap(getQuestions(), currentQuestion);
+                if (swapped.swapped) {
+                    clutchUsedRef.current = true;
+                    setClutchArmed(true);
+                    questionsRef.current = swapped.next;
+                    erettsegiQuestionsRef.current = swapped.next;
+                    sessionBridgeRef.current.replaceSessionQuestions?.(swapped.next);
+                    setBadgeToast('Következő: megmentő kérdés');
+                    setTimeout(() => setBadgeToast(null), 2800);
                 }
             }
 
@@ -1255,6 +1412,7 @@ export function useGamePlay({
         setCelebrateLevelUp(false);
         setComboBroken(false);
         setHintText(null);
+        setDoubleStakeArmed(false);
         setUserAnswer('');
         setUserAnswer2('');
         setUserAnswer3('');
@@ -1358,6 +1516,12 @@ export function useGamePlay({
         lastXpGain,
         skillPerks,
         useBooster,
+        runMaxLives,
+        doubleStakeArmed,
+        setDoubleStakeArmed,
+        clutchArmed,
+        challengeOffer,
+        dismissChallengeOffer,
         // refs for generators / orchestration
         worksheetTopicKeyRef,
         pathLessonRef,

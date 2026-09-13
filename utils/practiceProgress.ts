@@ -1046,3 +1046,15 @@ export async function persistChallengeXp(
     await persistProgress(uid, next);
     return next;
 }
+
+export async function persistPlayWithLives(
+    uid: string | null | undefined,
+    on: boolean
+): Promise<UserPracticeProgress> {
+    const previous = await loadUserPracticeProgress(uid);
+    const juice = normalizeJuice(previous.juice);
+    juice.playWithLives = on;
+    const next: UserPracticeProgress = { ...previous, juice };
+    await persistProgress(uid, next);
+    return next;
+}

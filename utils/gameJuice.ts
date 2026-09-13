@@ -37,7 +37,118 @@ export type GameJuiceState = {
     skillMigrated?: boolean;
     /** xp = a fa XP-ből vehető, nincs ingyen perk */
     skillShop?: 'xp' | 'points';
+    /** Sima gyakorlás élettel megy-e. A kihívás saját rules.lives-át nem írja felül. */
+    playWithLives?: boolean;
 };
+
+export const LIVES_XP_THRESHOLDS: Array<{ xp: number; lives: number }> = [
+    { xp: 0, lives: 3 },
+    { xp: 300, lives: 4 },
+    { xp: 1000, lives: 5 },
+    { xp: 2200, lives: 6 },
+    { xp: 4000, lives: 7 },
+];
+
+export function livesFromXp(xp: number): number {
+    let lives = 3;
+    for (const row of LIVES_XP_THRESHOLDS) {
+        if (xp >= row.xp) lives = row.lives;
+    }
+    return lives;
+}
+
+export function nextLifeUnlock(xp: number): { nextXp: number; nextLives: number } | null {
+    const current = livesFromXp(xp);
+    const next = LIVES_XP_THRESHOLDS.find((row) => row.lives > current);
+    return next ? { nextXp: next.xp, nextLives: next.lives } : null;
+}
+
+export const PLAY_WITH_LIVES_KEY = 'mzPlayWithLives';
+
+export function readPlayWithLivesLocal(): boolean {
+    if (typeof window === 'undefined') return true;
+    const raw = localStorage.getItem(PLAY_WITH_LIVES_KEY);
+    if (raw === '0') return false;
+    if (raw === '1') return true;
+    return true;
+}
+
+export function writePlayWithLivesLocal(on: boolean) {
+    if (typeof window === 'undefined') return;
+    localStorage.setItem(PLAY_WITH_LIVES_KEY, on ? '1' : '0');
+}
+
+export function startLivesForRun(opts: {
+    playWithLives: boolean;
+    xp: number;
+    challengeLives?: number;
+}): number {
+    if (typeof opts.challengeLives === 'number') return Math.max(1, opts.challengeLives);
+    if (!opts.playWithLives) return 0;
+    return livesFromXp(opts.xp);
+}
+
+export function nearMissCue(opts: {
+    streak: number;
+    lives: number;
+    playWithLives: boolean;
+    remainingIncludingCurrent: number;
+    comboEarlier?: boolean;
+}): string | null {
+    if (opts.playWithLives && opts.lives === 1) return 'Utolsó élet';
+    if (opts.remainingIncludingCurrent === 1) return 'Még 1 a lecke végéig';
+    const need = opts.comboEarlier ? 2 : 3;
+    if (opts.streak === need - 1 && opts.streak > 0) {
+        return need === 3 ? 'Még 1 a 3-as combóhoz' : 'Még 1 a 2-es combóhoz';
+    }
+    return null;
+}
+
+export function markMidRunBoss<T extends { isBoss?: boolean; stage?: number }>(
+    list: T[],
+    pathMode: boolean
+): T[] {
+    const stamped = list.map((q) => ({ ...q }));
+    if (pathMode && stamped.length >= 3) {
+        for (let i = stamped.length - 3; i < stamped.length; i++) {
+            stamped[i] = { ...stamped[i], isBoss: true };
+        }
+        return stamped;
+    }
+    if (pathMode || stamped.length < 8 || stamped.some((q) => q.isBoss)) return stamped;
+    const idx = Math.min(stamped.length - 2, Math.max(4, Math.round(stamped.length * 0.7)));
+    const q = stamped[idx];
+    const stage = q.stage && q.stage < 6 ? q.stage + 1 : q.stage;
+    stamped[idx] = { ...q, isBoss: true, stage };
+    return stamped;
+}
+
+export function applyClutchSwap<T extends { stage?: number; isClutch?: boolean }>(
+    list: T[],
+    afterIndex: number
+): { next: T[]; swapped: boolean } {
+    const nextI = afterIndex + 1;
+    if (nextI >= list.length) return { next: list, swapped: false };
+    const next = list.map((q) => ({ ...q, isClutch: false }));
+    let best = nextI;
+    let bestStage = next[nextI].stage ?? 99;
+    for (let i = nextI + 1; i < next.length; i++) {
+        const s = next[i].stage ?? 99;
+        if (s < bestStage) {
+            bestStage = s;
+            best = i;
+        }
+    }
+    if (best !== nextI) {
+        const tmp = next[nextI];
+        next[nextI] = next[best];
+        next[best] = tmp;
+    } else if (next[nextI].stage && next[nextI].stage > 1) {
+        next[nextI] = { ...next[nextI], stage: (next[nextI].stage as number) - 1 };
+    }
+    next[nextI] = { ...next[nextI], isClutch: true };
+    return { next, swapped: true };
+}
 
 export type MascotGear = 'none' | 'glasses' | 'hat' | 'cape' | 'crown';
 
@@ -90,6 +201,7 @@ export function emptyJuice(): GameJuiceState {
         completedChallenges: [],
         skillMigrated: true,
         skillShop: 'xp',
+        playWithLives: true,
     };
 }
 
@@ -138,6 +250,7 @@ export function normalizeJuice(raw: unknown): GameJuiceState {
         )),
         skillMigrated: Boolean(data.skillMigrated),
         skillShop: data.skillShop === 'xp' ? 'xp' : 'points',
+        playWithLives: data.playWithLives !== false,
     };
 }
 
@@ -193,6 +306,7 @@ export function mergeJuice(a?: GameJuiceState, b?: GameJuiceState): GameJuiceSta
         ),
         skillMigrated: Boolean(A.skillMigrated || B.skillMigrated),
         skillShop: A.skillShop === 'xp' || B.skillShop === 'xp' ? 'xp' : 'points',
+        playWithLives: later.playWithLives !== false,
     };
 }
 

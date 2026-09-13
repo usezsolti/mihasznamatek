@@ -214,7 +214,7 @@ export function findCatalogTopic(
         }
     }
 
-    const levels: EducationLevelId[] = ['elementary', 'highschool', 'university', 'erettsegi'];
+    const levels: EducationLevelId[] = ['elementary', 'highschool', 'university', 'erettsegi', 'kozponti'];
     for (const level of levels) {
         if (level === 'erettsegi') {
             for (const exam of ['kozep', 'emelt'] as ErettsegiExamLevel[]) {
@@ -257,6 +257,9 @@ export function buildTopicStatsHref(
     if (educationLevel === 'elementary' && grade) {
         params.set('grade', String(grade));
     }
+    if (educationLevel === 'kozponti') {
+        params.set('grade', String(grade === 6 ? 6 : 8));
+    }
     return `/topic/${encodeURIComponent(topicId)}?${params.toString()}`;
 }
 
@@ -280,6 +283,9 @@ export function buildTopicPracticeHref(
     } else if (educationLevel === 'highschool') {
         const g = grade && grade >= 9 && grade <= 12 ? grade : (textbookGradeFromTopicId(topicId) ?? 10);
         params.set('grade', String(g));
+    } else if (educationLevel === 'kozponti') {
+        const g = grade === 6 ? 6 : 8;
+        return `/game?kozponti=true&topic=${encodeURIComponent(topicId)}&grade=${g}`;
     }
     return `/topic/${encodeURIComponent(topicId)}?${params.toString()}`;
 }
@@ -301,6 +307,9 @@ export function buildTopicMixGameHref(
         params.set('educationLevel', educationLevel);
         if (educationLevel === 'elementary') params.set('grade', String(elemNatGradeFromTopicId(topicId) ?? 1));
         else if (educationLevel === 'highschool') params.set('grade', String(textbookGradeFromTopicId(topicId) ?? 10));
+        else if (educationLevel === 'kozponti') {
+            return `/game?kozponti=true&topic=${encodeURIComponent(topicId)}&grade=8`;
+        }
     }
     return `/game?${params.toString()}`;
 }
@@ -315,6 +324,9 @@ export function buildDailyPracticeHref(educationLevel: EducationLevelId, grade?:
         params.set('grade', String(grade && grade >= 1 && grade <= 8 ? grade : 1));
     }
     if (educationLevel === 'highschool') params.set('grade', '10');
+    if (educationLevel === 'kozponti') {
+        return `/game?kozponti=true&topic=szamitas&grade=${grade === 6 ? 6 : 8}`;
+    }
     return `/game?${params.toString()}`;
 }
 
@@ -327,6 +339,9 @@ export function buildBlitzHref(educationLevel: EducationLevelId, grade?: number)
         params.set('grade', String(grade && grade >= 1 && grade <= 8 ? grade : 1));
     }
     if (educationLevel === 'highschool') params.set('grade', '10');
+    if (educationLevel === 'kozponti') {
+        return `/game?kozponti=true&topic=szamitas&grade=${grade === 6 ? 6 : 8}`;
+    }
     return `/game?${params.toString()}`;
 }
 

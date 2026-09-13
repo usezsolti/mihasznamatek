@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import {
     elementaryTopics,
     getElementaryTopicsForGrade,
@@ -6,6 +7,7 @@ import {
     type CatalogTopic,
     type UniversitySubject,
 } from '../../utils/mathTopicsCatalog';
+import { KOZPONTI_GRADES, kozpontiPapersByYear, type KozpontiGrade } from '../../utils/game/kozpontiPapers';
 import { BME_VALSZAM_PAPERS } from '../../utils/game/bmeValszamPapers';
 import { agentDebugLog } from '../../utils/agentDebugLog';
 import { hsTextbookRunId } from '../../utils/hsTextbook';
@@ -40,7 +42,9 @@ export type GameLobbyProps = {
     showSzigorlatMenu: boolean;
     setShowSzigorlatMenu: (show: boolean) => void;
     universitySubjects: UniversitySubject[];
-    onGenerateKozponti: () => void;
+    onGenerateKozponti?: () => void;
+    onSelectKozpontiTopic?: (topicId: string, grade: KozpontiGrade) => void;
+    onSelectKozpontiPaper?: (paperId: string) => void;
     onGenerateVegyesSzigorlat: () => void;
     onSelectUniversityTopic: (subjectId: string, topicId: string) => void;
     onSelectBmePaper?: (paperId: string) => void;
@@ -49,6 +53,10 @@ export type GameLobbyProps = {
     onStartGame: () => void;
     onResetGame: () => void;
     onStartBlitz?: () => void;
+    playWithLives?: boolean;
+    maxLivesFromXp?: number;
+    nextLifeUnlockXp?: number | null;
+    onTogglePlayWithLives?: (on: boolean) => void;
 };
 
 export default function GameLobby({
@@ -79,7 +87,8 @@ export default function GameLobby({
     showSzigorlatMenu,
     setShowSzigorlatMenu,
     universitySubjects,
-    onGenerateKozponti,
+    onSelectKozpontiTopic,
+    onSelectKozpontiPaper,
     onGenerateVegyesSzigorlat,
     onSelectUniversityTopic,
     onSelectBmePaper,
@@ -88,7 +97,14 @@ export default function GameLobby({
     onStartGame,
     onResetGame,
     onStartBlitz,
+    playWithLives = true,
+    maxLivesFromXp = 3,
+    nextLifeUnlockXp = null,
+    onTogglePlayWithLives,
 }: GameLobbyProps) {
+    const [showKozpontiMenu, setShowKozpontiMenu] = useState(false);
+    const [kozpontiGrade, setKozpontiGrade] = useState<KozpontiGrade | null>(null);
+    const kfPapers = kozpontiGrade ? kozpontiPapersByYear(kozpontiGrade) : [];
     return (
         <div className="start-screen">
             <h1 className="game-title">
@@ -118,7 +134,7 @@ export default function GameLobby({
                 </div>
             )}
 
-            {!educationLevel && !showErettsegiMenu ? (
+            {!educationLevel && !showErettsegiMenu && !showKozpontiMenu ? (
                 <div className="level-selector">
                     <h2 className="level-title">Válassz oktatási szintet:</h2>
                     <div className="level-buttons">
@@ -165,14 +181,79 @@ export default function GameLobby({
                             </button>
                         )}
                         <button
-                            className="level-btn kozponti"
-                            onClick={onGenerateKozponti}
+                            className="level-btn"
+                            onClick={() => {
+                                setShowKozpontiMenu(true);
+                                setKozpontiGrade(null);
+                            }}
                         >
                             <span className="level-icon">🎯</span>
                             <span className="level-name">Központi Felvételi</span>
-                            <span className="level-desc">6. és 8. évfolyam · január / február</span>
+                            <span className="level-desc">6. és 8. évfolyam</span>
                         </button>
                     </div>
+                </div>
+            ) : showKozpontiMenu ? (
+                <div className="erettsegi-menu-section">
+                    <button
+                        className="back-to-levels-btn"
+                        onClick={() => {
+                            if (kozpontiGrade) setKozpontiGrade(null);
+                            else setShowKozpontiMenu(false);
+                        }}
+                        style={{ marginBottom: '2rem' }}
+                    >
+                        {kozpontiGrade ? '← Vissza az évfolyamokhoz' : '← Vissza a szintekhez'}
+                    </button>
+                    {!kozpontiGrade ? (
+                        <>
+                            <h2 className="level-title">Válassz évfolyamot:</h2>
+                            <div className="level-buttons">
+                                {KOZPONTI_GRADES.map((grade) => (
+                                    <button
+                                        key={grade}
+                                        className="level-btn"
+                                        onClick={() => setKozpontiGrade(grade)}
+                                    >
+                                        <span className="level-icon">{grade}</span>
+                                        <span className="level-name">{grade}. osztály</span>
+                                        <span className="level-desc">
+                                            {grade === 6 ? '6/8 évfolyamos gimnázium' : '9. évfolyamra'}
+                                        </span>
+                                    </button>
+                                ))}
+                            </div>
+                        </>
+                    ) : (
+                        <>
+                            <h2 className="level-title">Feladatsorok évek szerint</h2>
+                            {kfPapers.map(({ year, papers }) => (
+                                <div key={year} style={{ marginBottom: '1.5rem' }}>
+                                    <h3 className="level-title" style={{ fontSize: '1.15rem', marginBottom: '0.75rem' }}>
+                                        {year}
+                                    </h3>
+                                    <div className="elementary-topics-grid">
+                                        {papers.map((paper) => (
+                                            <div
+                                                key={paper.id}
+                                                className="elementary-topic-card"
+                                                style={{ opacity: paper.ready ? 1 : 0.55 }}
+                                                onClick={() => {
+                                                    if (paper.ready) onSelectKozpontiPaper?.(paper.id);
+                                                }}
+                                            >
+                                                <div className="topic-icon">📄</div>
+                                                <h3 className="topic-title">{paper.title}</h3>
+                                                <div className="topic-arrow">
+                                                    {paper.ready ? '→' : 'Hamarosan'}
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            ))}
+                        </>
+                    )}
                 </div>
             ) : showErettsegiMenu ? (
                 <div className="erettsegi-menu-section">
@@ -522,6 +603,29 @@ export default function GameLobby({
                         </div>
                     )}
 
+                    {onTogglePlayWithLives && (
+                        <div className="lives-toggle">
+                            <button
+                                type="button"
+                                className={`lives-toggle-btn ${playWithLives ? 'on' : ''}`}
+                                onClick={() => onTogglePlayWithLives(true)}
+                            >
+                                Élettel · {maxLivesFromXp} szív
+                            </button>
+                            <button
+                                type="button"
+                                className={`lives-toggle-btn ${!playWithLives ? 'on' : ''}`}
+                                onClick={() => onTogglePlayWithLives(false)}
+                            >
+                                Élet nélkül
+                            </button>
+                            {playWithLives && nextLifeUnlockXp != null && (
+                                <p className="lives-toggle-hint">
+                                    Következő extra szív: {nextLifeUnlockXp} XP
+                                </p>
+                            )}
+                        </div>
+                    )}
                     <button
                         className="start-button"
                         onClick={onStartGame}

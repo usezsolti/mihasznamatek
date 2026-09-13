@@ -3614,14 +3614,17 @@ select.form-input:disabled {
     text-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
 }
 
-.modern-theme .level-btn-kozponti {
-    border: 1px solid rgba(255, 180, 0, 0.45);
-    box-shadow: 0 0 16px rgba(255, 160, 0, 0.18);
+.kf-year-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.6rem;
 }
 
-.modern-theme .level-btn-kozponti:hover {
-    background: rgba(255, 160, 0, 0.22);
-    box-shadow: 0 0 22px rgba(255, 160, 0, 0.4);
+.kf-year-title {
+    margin: 0 0 0.75rem;
+    color: #39ff14;
+    font-size: 1.15rem;
+    font-weight: 800;
 }
 
 /* Neon Green-Pink Card Styles */
@@ -5151,6 +5154,13 @@ select.form-input:disabled {
     text-shadow: none !important;
 }
 
+.topic-stats-hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    flex-shrink: 0;
+}
+
 .topic-stats-cta {
     background: var(--topic-color);
     color: #0a0a0a;
@@ -5162,6 +5172,12 @@ select.form-input:disabled {
     font-size: 1rem;
     flex-shrink: 0;
     transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.topic-stats-cta-secondary {
+    background: transparent;
+    color: var(--topic-color);
+    border: 2px solid var(--topic-color);
 }
 
 .topic-stats-cta:hover {
@@ -6189,7 +6205,7 @@ select.form-input:disabled {
 
 .dash-skill-node {
     display: grid;
-    grid-template-columns: 1.4rem 1.3rem 1fr;
+    grid-template-columns: 1.4rem 1.3rem 1fr auto;
     align-items: center;
     gap: 0.3rem;
     width: 100%;
@@ -6217,6 +6233,14 @@ select.form-input:disabled {
     font-size: 0.78rem;
     font-weight: 800;
     line-height: 1.2;
+}
+
+.dash-skill-node-check {
+    font-size: 0.62rem;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: #58cc02;
 }
 
 .dash-skill-node.done {
@@ -6471,6 +6495,36 @@ select.form-input:disabled {
 .dash-juice-streak {
     font-weight: 800;
     margin-bottom: 0.55rem;
+}
+
+.dash-lives-line {
+    margin: 0 0 0.55rem;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #c4b5fd;
+}
+
+.dash-lives-toggle {
+    display: flex;
+    gap: 0.45rem;
+    margin: 0 0 0.7rem;
+}
+
+.dash-lives-btn {
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    background: rgba(255, 255, 255, 0.06);
+    color: #e5e7eb;
+    border-radius: 10px;
+    padding: 0.35rem 0.7rem;
+    font-size: 0.82rem;
+    font-weight: 800;
+    cursor: pointer;
+}
+
+.dash-lives-btn.on {
+    border-color: #a78bfa;
+    background: rgba(167, 139, 250, 0.18);
+    color: #ddd6fe;
 }
 
 .dash-quests {

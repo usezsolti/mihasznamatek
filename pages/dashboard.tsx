@@ -21,17 +21,18 @@ import {
     type EducationLevelId,
     type ErettsegiExamLevel,
 } from "../utils/mathTopicsCatalog";
+import { kozpontiPapersByYear } from "../utils/game/kozpontiPapers";
 import {
+    persistPlayWithLives,
     resolveProgressStorageKey,
     touchDailyJuice,
 } from "../utils/practiceProgress";
-import type { GameJuiceState } from "../utils/gameJuice";
+import { emptyJuice, livesFromXp, nextLifeUnlock, writePlayWithLivesLocal, type GameJuiceState } from "../utils/gameJuice";
 import SkillTreePanel from "../components/SkillTreePanel";
 import { countDueSrs } from "../utils/srs";
 import { PATH_LESSON_COUNT } from "../utils/topicPath";
 import {
     buildBlitzHref,
-    buildChallengeHref,
     buildDailyPracticeHref,
     buildTopicStatsHref,
     indexBestSessionsByTopic,
@@ -87,6 +88,7 @@ export default function Dashboard() {
     const [educationLevel, setEducationLevel] = useState<EducationLevelId>('university');
     const [highschoolGrade, setHighschoolGrade] = useState(11);
     const [elementaryGrade, setElementaryGrade] = useState(1);
+    const [kozpontiGrade, setKozpontiGrade] = useState<6 | 8>(8);
     const [erettsegiExamLevel, setErettsegiExamLevel] = useState<ErettsegiExamLevel>('emelt');
     const [erettsegiPrepPath, setErettsegiPrepPath] = useState<'choose' | 'topics'>('choose');
     const [isAdmin, setIsAdmin] = useState(false);
@@ -141,7 +143,8 @@ export default function Dashboard() {
             savedLevel === 'elementary' ||
             savedLevel === 'highschool' ||
             savedLevel === 'university' ||
-            savedLevel === 'erettsegi'
+            savedLevel === 'erettsegi' ||
+            savedLevel === 'kozponti'
         ) {
             setEducationLevel(savedLevel);
         }
@@ -153,6 +156,8 @@ export default function Dashboard() {
         if (savedHs >= 9 && savedHs <= 12) setHighschoolGrade(savedHs);
         const savedEl = parseInt(localStorage.getItem('elementaryGrade') || '', 10);
         if (savedEl >= 1 && savedEl <= 8) setElementaryGrade(savedEl);
+        const savedKf = parseInt(localStorage.getItem('kozpontiGrade') || '', 10);
+        if (savedKf === 6 || savedKf === 8) setKozpontiGrade(savedKf);
     }, []);
 
     useEffect(() => {
@@ -834,7 +839,11 @@ export default function Dashboard() {
                 topicId,
                 educationLevel,
                 erettsegiExamLevel,
-                educationLevel === 'elementary' ? elementaryGrade : highschoolGrade
+                educationLevel === 'elementary'
+                    ? elementaryGrade
+                    : educationLevel === 'kozponti'
+                      ? kozpontiGrade
+                      : highschoolGrade
             )
         );
     };
@@ -1139,42 +1148,65 @@ export default function Dashboard() {
                             {t('dashboard.backToPractice')}
                         </button>
                         <ProfilePanel embedded />
+                        <SkillTreePanel
+                            juice={juice || emptyJuice()}
+                            xp={practiceXp}
+                        />
                         {juice && (
-                            <>
-                                <SkillTreePanel
-                                    juice={juice}
-                                    xp={practiceXp}
-                                    onStart={(id) => {
-                                        router.push(buildChallengeHref(
-                                            id,
-                                            educationLevel,
-                                            erettsegiExamLevel,
-                                            educationLevel === 'elementary'
-                                                ? elementaryGrade
-                                                : educationLevel === 'highschool'
-                                                    ? highschoolGrade
-                                                    : undefined
-                                        ));
-                                    }}
-                                />
-                                <div className="dash-juice">
-                                    <div className="dash-juice-streak">
-                                        🔥 {juice.loginStreak} {t('dashboard.loginStreak')}
-                                        {juice.blitzBest > 0 ? ` · ⚡ ${juice.blitzBest}` : ''}
-                                    </div>
-                                    <div className="dash-quests">
-                                        {juice.quests.map((q) => (
-                                            <div
-                                                key={q.id}
-                                                className={`dash-quest ${q.done ? 'done' : ''}`}
-                                            >
-                                                <span>{q.title}</span>
-                                                <b>{q.progress}/{q.target}</b>
-                                            </div>
-                                        ))}
-                                    </div>
+                            <div className="dash-juice">
+                                <div className="dash-juice-streak">
+                                    🔥 {juice.loginStreak} {t('dashboard.loginStreak')}
+                                    {juice.blitzBest > 0 ? ` · ⚡ ${juice.blitzBest}` : ''}
                                 </div>
-                            </>
+                                <p className="dash-lives-line">
+                                    {juice.playWithLives === false
+                                        ? 'Életmód ki'
+                                        : (() => {
+                                            const maxLives = livesFromXp(practiceXp);
+                                            const next = nextLifeUnlock(practiceXp);
+                                            return next
+                                                ? `Életmód · max ${maxLives} szív (következő +1: ${next.nextXp} XP)`
+                                                : `Életmód · max ${maxLives} szív`;
+                                        })()}
+                                </p>
+                                <div className="dash-lives-toggle">
+                                    <button
+                                        type="button"
+                                        className={`dash-lives-btn ${juice.playWithLives !== false ? 'on' : ''}`}
+                                        onClick={() => {
+                                            writePlayWithLivesLocal(true);
+                                            setJuice({ ...juice, playWithLives: true });
+                                            const uid = (window as any).firebase?.auth?.()?.currentUser?.uid;
+                                            void persistPlayWithLives(uid, true);
+                                        }}
+                                    >
+                                        Élettel
+                                    </button>
+                                    <button
+                                        type="button"
+                                        className={`dash-lives-btn ${juice.playWithLives === false ? 'on' : ''}`}
+                                        onClick={() => {
+                                            writePlayWithLivesLocal(false);
+                                            setJuice({ ...juice, playWithLives: false });
+                                            const uid = (window as any).firebase?.auth?.()?.currentUser?.uid;
+                                            void persistPlayWithLives(uid, false);
+                                        }}
+                                    >
+                                        Élet nélkül
+                                    </button>
+                                </div>
+                                <div className="dash-quests">
+                                    {juice.quests.map((q) => (
+                                        <div
+                                            key={q.id}
+                                            className={`dash-quest ${q.done ? 'done' : ''}`}
+                                        >
+                                            <span>{q.title}</span>
+                                            <b>{q.progress}/{q.target}</b>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
                         )}
                     </section>
                 )}
@@ -1203,28 +1235,6 @@ export default function Dashboard() {
                                 </span>
                             </button>
                         ))}
-                        <button
-                            type="button"
-                            className="level-btn level-btn-kozponti"
-                            onClick={() => {
-                                // #region agent log
-                                agentDebugLog({
-                                    hypothesisId: 'K',
-                                    location: 'dashboard.tsx:kozpontiCard',
-                                    message: 'kozponti category opened',
-                                    data: { href: '/kozponti-felkeszules' },
-                                    runId: 'kozponti-dash',
-                                });
-                                // #endregion
-                                router.push('/kozponti-felkeszules');
-                            }}
-                        >
-                            <span style={{ display: 'block', fontSize: '1.35rem' }}>🎯</span>
-                            {t('dashboard.level.kozponti')}
-                            <span style={{ display: 'block', fontSize: '0.8rem', opacity: 0.75, fontWeight: 500 }}>
-                                {t('dashboard.level.kozpontiDesc')}
-                            </span>
-                        </button>
                     </div>
                     {educationLevel === 'elementary' && (
                         <div className="level-selector" style={{ marginTop: '1rem', flexWrap: 'wrap' }}>
@@ -1251,6 +1261,22 @@ export default function Dashboard() {
                                     onClick={() => {
                                         setHighschoolGrade(g);
                                         localStorage.setItem('highschoolGrade', String(g));
+                                    }}
+                                >
+                                    {g}. osztály
+                                </button>
+                            ))}
+                        </div>
+                    )}
+                    {educationLevel === 'kozponti' && (
+                        <div className="level-selector" style={{ marginTop: '1rem', flexWrap: 'wrap' }}>
+                            {([6, 8] as const).map((g) => (
+                                <button
+                                    key={g}
+                                    className={`level-btn ${kozpontiGrade === g ? 'active' : ''}`}
+                                    onClick={() => {
+                                        setKozpontiGrade(g);
+                                        localStorage.setItem('kozpontiGrade', String(g));
                                     }}
                                 >
                                     {g}. osztály
@@ -1311,6 +1337,7 @@ export default function Dashboard() {
                                         : erettsegiExamLevel === 'emelt'
                                           ? t('dashboard.topics.erettsegiEmelt')
                                           : t('dashboard.topics.erettsegiKozep'))}
+                                {educationLevel === 'kozponti' && t('dashboard.topics.kozponti')}
                             </h2>
                             <p className="section-subtitle">
                                 {educationLevel === 'elementary' && t('dashboard.topicsSub.elementary')}
@@ -1320,8 +1347,10 @@ export default function Dashboard() {
                                     (erettsegiPrepPath === 'choose'
                                         ? t('dashboard.erettsegi.chooseSub')
                                         : t('dashboard.topicsSub.erettsegi'))}
+                                {educationLevel === 'kozponti' && t('dashboard.topicsSub.kozponti')}
                             </p>
-                            {(educationLevel !== 'erettsegi' || erettsegiPrepPath === 'topics') && (
+                            {(educationLevel !== 'erettsegi' || erettsegiPrepPath === 'topics') &&
+                                educationLevel !== 'kozponti' && (
                                 <p className="dash-overall-line">
                                     {t('dashboard.overallLine')
                                         .replace('{pct}', String(overallPct))
@@ -1329,12 +1358,16 @@ export default function Dashboard() {
                                 </p>
                             )}
                         </div>
+                        {educationLevel !== 'kozponti' && (
                         <div className="dash-learn-actions">
                             <button
                                 type="button"
                                 className="dash-daily-btn"
                                 onClick={() =>
-                                    router.push(buildDailyPracticeHref(educationLevel, elementaryGrade))
+                                    router.push(buildDailyPracticeHref(
+                                        educationLevel,
+                                        educationLevel === 'kozponti' ? kozpontiGrade : elementaryGrade
+                                    ))
                                 }
                             >
                                 {srsDueCount > 0
@@ -1344,11 +1377,15 @@ export default function Dashboard() {
                             <button
                                 type="button"
                                 className="dash-daily-btn dash-blitz-btn"
-                                onClick={() => router.push(buildBlitzHref(educationLevel, elementaryGrade))}
+                                onClick={() => router.push(buildBlitzHref(
+                                    educationLevel,
+                                    educationLevel === 'kozponti' ? kozpontiGrade : elementaryGrade
+                                ))}
                             >
                                 {t('dashboard.blitz')}
                             </button>
                         </div>
+                        )}
                     </div>
                     {educationLevel === 'erettsegi' && erettsegiPrepPath === 'choose' && (
                         <div className="erettsegi-prep-choice">
@@ -1410,7 +1447,48 @@ export default function Dashboard() {
                         </button>
                     )}
 
-                    {(educationLevel !== 'erettsegi' || erettsegiPrepPath === 'topics') && (
+                    {educationLevel === 'kozponti' && (
+                        <div className="kf-year-list">
+                            {kozpontiPapersByYear(kozpontiGrade).map(({ year, papers }) => (
+                                <div key={year} className="kf-year-block">
+                                    <h3 className="kf-year-title">{year}</h3>
+                                    <div className="topics-grid">
+                                        {papers.map((paper) => (
+                                            <div
+                                                key={paper.id}
+                                                className="topic-card speedometer-card"
+                                                onClick={() => {
+                                                    if (!paper.ready) return;
+                                                    router.push(
+                                                        `/game?kozponti=true&paper=${encodeURIComponent(paper.id)}`
+                                                    );
+                                                }}
+                                                role="button"
+                                                tabIndex={paper.ready ? 0 : -1}
+                                                style={{ opacity: paper.ready ? 1 : 0.55 }}
+                                            >
+                                                <div className="card-header">
+                                                    <div className="topic-icon" style={{ backgroundColor: '#39ff14' }}>
+                                                        📄
+                                                    </div>
+                                                    <div className="topic-info">
+                                                        <h3 className="topic-title">{paper.title}</h3>
+                                                    </div>
+                                                </div>
+                                                <p className="section-subtitle" style={{ marginTop: '0.6rem' }}>
+                                                    {paper.ready
+                                                        ? `${paper.subtitle} · ${paper.questionCount} feladat`
+                                                        : `${paper.subtitle} · Hamarosan`}
+                                                </p>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    )}
+                    {(educationLevel !== 'erettsegi' || erettsegiPrepPath === 'topics') &&
+                        educationLevel !== 'kozponti' && (
                     <div className="topics-grid">
                         {mathTopics.map((topic) => {
                             const successRate = topic.totalAnswers > 0 ? (topic.correctAnswers / topic.totalAnswers) * 100 : 0;

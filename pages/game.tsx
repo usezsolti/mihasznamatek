@@ -12,10 +12,22 @@ import { useGamePlay, type GameSessionBridge } from '../hooks/useGamePlay';
 import { useGameSessionBuilders } from '../hooks/useGameSessionBuilders';
 import { useGameRouteBootstrap } from '../hooks/useGameRouteBootstrap';
 import type { Question } from '../utils/game';
-import { buildBlitzHref, buildTopicPracticeHref } from '../utils/topicStats';
+import { buildBlitzHref, buildChallengeHref, buildTopicPracticeHref } from '../utils/topicStats';
+import GameChallengeOffer from '../components/game/GameChallengeOffer';
+import type { EducationLevelId } from '../utils/mathTopicsCatalog';
 import { getHsTextbookLessonLabel } from '../utils/hsTextbook';
 import { getElemNatLessonLabel } from '../utils/elemNatCatalog';
-import { comboMultiplier, gearFromRank } from '../utils/gameJuice';
+import {
+    comboMultiplier,
+    gearFromRank,
+    livesFromXp,
+    nearMissCue,
+    nextLifeUnlock,
+    readPlayWithLivesLocal,
+    startLivesForRun,
+    writePlayWithLivesLocal,
+} from '../utils/gameJuice';
+import { loadUserPracticeProgress, persistPlayWithLives } from '../utils/practiceProgress';
 import { agentDebugLog } from '../utils/agentDebugLog';
 import { skillNodeById } from '../utils/skillTree';
 
@@ -41,6 +53,7 @@ export default function Game() {
     const [selectedUniversitySubject, setSelectedUniversitySubject] = useState<string | null>(null);
     const [selectedUniversityTopic, setSelectedUniversityTopic] = useState<string | null>(null);
     const [showSzigorlatMenu, setShowSzigorlatMenu] = useState(false);
+    const [playWithLives, setPlayWithLives] = useState(true);
 
     const questionsRef = useRef<Question[]>([]);
     const generateUniversityQuestionsRef = useRef<(() => void) | undefined>(undefined);
@@ -129,6 +142,10 @@ export default function Game() {
         lastXpGain,
         skillPerks,
         useBooster,
+        runMaxLives,
+        doubleStakeArmed,
+        setDoubleStakeArmed,
+        clutchArmed,
         worksheetTopicKeyRef,
         pathLessonRef,
         livesRef,
@@ -141,8 +158,11 @@ export default function Game() {
         checkSubQuestionAnswers,
         submitAnswer,
         skipQuestion,
+        challengeOffer,
+        dismissChallengeOffer,
     } = useGamePlay({
         currentUser,
+        totalXp,
         setTotalXp,
         avatarLevel,
         setAvatarLevel,
@@ -155,6 +175,7 @@ export default function Game() {
             setShowErettsegiMenu(false);
             setSelectedErettsegiMode(null);
         },
+        playWithLives,
     });
 
     const {
@@ -237,6 +258,8 @@ export default function Game() {
         wrongFirstIdsRef,
         worksheetTopicKeyRef,
         erettsegiQuestionsRef,
+        playWithLives,
+        totalXp,
     });
 
     generateUniversityQuestionsRef.current = generateUniversityQuestions;
@@ -257,6 +280,18 @@ export default function Game() {
             setTaskQuestions(qs);
         },
     };
+
+    useEffect(() => {
+        setPlayWithLives(readPlayWithLivesLocal());
+    }, []);
+
+    useEffect(() => {
+        if (!currentUser?.uid) return;
+        void loadUserPracticeProgress(currentUser.uid).then((prog) => {
+            if (prog.juice?.playWithLives === false) setPlayWithLives(false);
+            else if (prog.juice?.playWithLives === true) setPlayWithLives(true);
+        }).catch(() => undefined);
+    }, [currentUser?.uid]);
 
     const { isClient } = useGameRouteBootstrap({
         router,
@@ -298,7 +333,9 @@ export default function Game() {
             setGameActive(true);
             setScore(0);
             setLevel(1);
-            setLives(3);
+            const start = startLivesForRun({ playWithLives, xp: totalXp });
+            livesRef.current = start;
+            setLives(start);
             setCurrentQuestion(0);
             setUserAnswer('');
             setUserAnswer2('');
@@ -402,8 +439,11 @@ export default function Game() {
                             showSzigorlatMenu={showSzigorlatMenu}
                             setShowSzigorlatMenu={setShowSzigorlatMenu}
                             universitySubjects={universitySubjects}
-                            onGenerateKozponti={() => {
-                                router.push('/kozponti-felkeszules');
+                            onSelectKozpontiTopic={(topicId, grade) => {
+                                router.push(`/game?kozponti=true&topic=${encodeURIComponent(topicId)}&grade=${grade}`);
+                            }}
+                            onSelectKozpontiPaper={(paperId) => {
+                                router.push(`/game?kozponti=true&paper=${encodeURIComponent(paperId)}`);
                             }}
                             onGenerateVegyesSzigorlat={generateVegyesSzigorlatQuestions}
                             onSelectUniversityTopic={(_subjectId, topicId) => {
@@ -442,6 +482,14 @@ export default function Game() {
                                 const level = educationLevel || 'highschool';
                                 router.push(buildBlitzHref(level));
                             }}
+                            playWithLives={playWithLives}
+                            maxLivesFromXp={livesFromXp(totalXp)}
+                            nextLifeUnlockXp={nextLifeUnlock(totalXp)?.nextXp ?? null}
+                            onTogglePlayWithLives={(on) => {
+                                setPlayWithLives(on);
+                                writePlayWithLivesLocal(on);
+                                void persistPlayWithLives(currentUser?.uid, on);
+                            }}
                         />
                     ) : (
                         <div className="game-screen">
@@ -479,7 +527,24 @@ export default function Game() {
                                 hideTimer={!!skillNodeById(String(router.query.challenge || ''))?.rules.hideTimer}
                                 challengeTitle={skillNodeById(String(router.query.challenge || ''))?.title}
                                 hideBoosters={!!skillNodeById(String(router.query.challenge || ''))?.rules.noBoosters}
-                                maxLives={skillNodeById(String(router.query.challenge || ''))?.rules.lives}
+                                maxLives={
+                                    skillNodeById(String(router.query.challenge || ''))?.rules.lives
+                                    || runMaxLives
+                                }
+                                showLives={
+                                    !!skillNodeById(String(router.query.challenge || ''))
+                                    || playWithLives
+                                }
+                                nearMiss={nearMissCue({
+                                    streak: correctStreak,
+                                    lives,
+                                    playWithLives:
+                                        playWithLives
+                                        || !!skillNodeById(String(router.query.challenge || '')),
+                                    remainingIncludingCurrent: Math.max(0, questions.length - currentQuestion),
+                                    comboEarlier: skillPerks.comboEarlier,
+                                })}
+                                isClutch={!!questions[currentQuestion]?.isClutch && clutchArmed}
                                 pathStageLabel={
                                     getHsTextbookLessonLabel(
                                         String(router.query.topic || selectedHighschoolTopic || ''),
@@ -520,7 +585,33 @@ export default function Game() {
                                 hideOfficialLabel={
                                     router.query.kozponti === 'true' || Boolean(router.query.paperId)
                                 }
+                                doubleStakeArmed={doubleStakeArmed}
+                                onToggleDoubleStake={
+                                    skillNodeById(String(router.query.challenge || ''))
+                                        ? undefined
+                                        : () => setDoubleStakeArmed((on) => !on)
+                                }
                             />
+
+                            {challengeOffer && !skillNodeById(String(router.query.challenge || '')) && (
+                                <GameChallengeOffer
+                                    node={challengeOffer}
+                                    onAccept={() => {
+                                        const edu = (router.query.educationLevel as EducationLevelId)
+                                            || educationLevel
+                                            || 'erettsegi';
+                                        const gradeRaw = parseInt(String(router.query.grade || ''), 10);
+                                        const examLvl = ((router.query.level as string) === 'kozep' ? 'kozep' : 'emelt') as 'kozep' | 'emelt';
+                                        router.push(buildChallengeHref(
+                                            challengeOffer.id,
+                                            edu,
+                                            examLvl,
+                                            Number.isFinite(gradeRaw) ? gradeRaw : undefined
+                                        ));
+                                    }}
+                                    onSkip={dismissChallengeOffer}
+                                />
+                            )}
 
                             <GameCelebrate
                                 open={

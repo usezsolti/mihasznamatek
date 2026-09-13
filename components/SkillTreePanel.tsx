@@ -15,7 +15,6 @@ import { agentDebugLog } from '../utils/agentDebugLog';
 type Props = {
     juice: GameJuiceState;
     xp: number;
-    onStart: (id: SkillNodeId) => void;
 };
 
 function gateLabel(node: SkillNode, completed: string[], xp: number): string {
@@ -31,7 +30,7 @@ function gateLabel(node: SkillNode, completed: string[], xp: number): string {
     return 'Zárva';
 }
 
-export default function SkillTreePanel({ juice, xp, onStart }: Props) {
+export default function SkillTreePanel({ juice, xp }: Props) {
     const [selected, setSelected] = useState<SkillNodeId>(SKILL_NODES[0].id);
     const completed = juice.completedChallenges || [];
     const points = xp || 0;
@@ -58,32 +57,14 @@ export default function SkillTreePanel({ juice, xp, onStart }: Props) {
         });
     }, [doneN, points]);
 
-    const start = (id: SkillNodeId) => {
-        const target = skillNodeById(id);
-        if (!target || !canStartChallenge(id, completed, points).ok) return;
-        agentDebugLog({
-            hypothesisId: 'C',
-            location: 'SkillTreePanel.tsx:start',
-            message: 'challenge start clicked',
-            data: {
-                id,
-                q: target.rules.questionCount,
-                sec: target.rules.seconds,
-                timer: target.rules.timerMode,
-            },
-            runId: 'challenge-tree',
-        });
-        onStart(id);
-    };
-
     return (
         <section className="dash-skill" aria-label="Kihívásfa">
             <div className="dash-skill-head">
                 <div>
                     <h3>Kihívásfa</h3>
                     <p>
-                        Öt ág, áganként tíz szint. Egy szint akkor indul, ha megvan az XP-küszöb
-                        és az előzőt már megcsináltad. A badge a teljesítéskor jár.
+                        Itt látod, melyik kihívást csináltad meg. Új kört játék közben kapsz,
+                        amikor megvan hozzá az XP.
                     </p>
                 </div>
                 <div className="dash-skill-meta">
@@ -149,6 +130,7 @@ export default function SkillTreePanel({ juice, xp, onStart }: Props) {
                                             <span className="dash-skill-node-lv">{n.level}</span>
                                             <span className="dash-skill-node-icon">{n.icon}</span>
                                             <span className="dash-skill-node-title">{n.title}</span>
+                                            {isDone && <span className="dash-skill-node-check">kész</span>}
                                         </button>
                                     );
                                 })}
@@ -163,7 +145,11 @@ export default function SkillTreePanel({ juice, xp, onStart }: Props) {
                 >
                     <span>{master.icon}</span>
                     <strong>{master.title}</strong>
-                    <em>Mind az öt ág teteje + 4000 XP</em>
+                    <em>
+                        {completed.includes(master.id)
+                            ? 'Kész — a fa teteje megvan'
+                            : 'Mind az öt ág teteje + 4000 XP'}
+                    </em>
                 </button>
             </div>
 
@@ -183,19 +169,13 @@ export default function SkillTreePanel({ juice, xp, onStart }: Props) {
                     <p className="dash-skill-effect">{node.effect}</p>
                     <p>{node.desc}</p>
                 </div>
-                {canPlay ? (
-                    <button
-                        type="button"
-                        className="dash-skill-buy ready"
-                        onClick={() => start(node.id)}
-                    >
-                        {done ? 'Újra' : 'Indítom'}
-                    </button>
-                ) : (
-                    <div className="dash-skill-buy">
-                        {gateLabel(node, completed, points)}
-                    </div>
-                )}
+                <div className={`dash-skill-buy ${done ? 'open' : canPlay ? 'ready' : ''}`}>
+                    {done
+                        ? 'Kész'
+                        : canPlay
+                            ? 'Játék közben indul'
+                            : gateLabel(node, completed, points)}
+                </div>
             </div>
         </section>
     );

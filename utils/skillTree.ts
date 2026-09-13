@@ -694,6 +694,24 @@ export function canStartChallenge(id: string, completed: string[], xp: number): 
     return { ok: true };
 }
 
+/** Még nem teljesített, de már indítható kihívások XP-sorrendben. */
+export function startableChallenges(completed: string[], xp: number): SkillNode[] {
+    return SKILL_NODES
+        .filter((n) => !completed.includes(n.id) && canStartChallenge(n.id, completed, xp).ok)
+        .sort((a, b) => a.minXp - b.minXp || a.level - b.level);
+}
+
+/** Azok a kihívások, amelyek ehhez az XP-emelkedéshez nyíltak ki. */
+export function newlyStartableChallenges(
+    completed: string[],
+    prevXp: number,
+    nextXp: number
+): SkillNode[] {
+    if (nextXp <= prevXp) return [];
+    const before = new Set(startableChallenges(completed, prevXp).map((n) => n.id));
+    return startableChallenges(completed, nextXp).filter((n) => !before.has(n.id));
+}
+
 export function skillEdges(): Array<{ from: SkillNodeId; to: SkillNodeId }> {
     const edges: Array<{ from: SkillNodeId; to: SkillNodeId }> = [];
     for (const node of SKILL_NODES) {

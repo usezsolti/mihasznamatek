@@ -12,6 +12,8 @@ import { getKozponti2022JanQuestions, KOZPONTI_2022_JAN_COUNT } from './kf2022Ja
 import { getKozponti2022FebQuestions, KOZPONTI_2022_FEB_COUNT } from './kf2022FebBank';
 import { getKozponti2022MarQuestions, KOZPONTI_2022_MAR_COUNT } from './kf2022MarBank';
 import { getKozponti2021JanQuestions, KOZPONTI_2021_JAN_COUNT } from './kf2021JanBank';
+import { getKozponti2020JanQuestions, KOZPONTI_2020_JAN_COUNT } from './kf2020JanBank';
+import { getKozponti2020FebQuestions, KOZPONTI_2020_FEB_COUNT } from './kf2020FebBank';
 
 export { getKozponti2026FebQuestions } from './kf2026FebBank';
 export { getKozponti2025JanQuestions } from './kf2025JanBank';
@@ -24,6 +26,8 @@ export { getKozponti2022JanQuestions } from './kf2022JanBank';
 export { getKozponti2022FebQuestions } from './kf2022FebBank';
 export { getKozponti2022MarQuestions } from './kf2022MarBank';
 export { getKozponti2021JanQuestions } from './kf2021JanBank';
+export { getKozponti2020JanQuestions } from './kf2020JanBank';
+export { getKozponti2020FebQuestions } from './kf2020FebBank';
 
 export type KozpontiPaperId = string;
 export type KozpontiGrade = 6 | 8;
@@ -49,7 +53,7 @@ function kfPaperId(year: number, grade: KozpontiGrade, month: KozpontiMonth): st
     return `kf-${year}-g${grade}-${month === 'januar' ? 'jan' : 'feb'}`;
 }
 
-/** 2026 jan. és febr. 8. évfolyam a beküldött hivatalos sorok. */
+/** 8. évfolyam: 2026–2022 mindkét (2022: három) sor, 2021 jan., 2020 jan./pótló. */
 const READY_PAPER_IDS = new Set([
     'kf-2026-g8-jan',
     '2026-mat1',
@@ -88,6 +92,12 @@ const READY_PAPER_IDS = new Set([
     'kf-2021-g8-jan',
     '2021-mat1',
     'kf-2021-jan',
+    'kf-2020-g8-jan',
+    '2020-mat1',
+    'kf-2020-jan',
+    'kf-2020-g8-feb',
+    '2020-mat2',
+    'kf-2020-feb',
 ]);
 
 function readyPaperCopy(id: string, month: KozpontiMonth): { subtitle: string; questionCount: number } {
@@ -160,6 +170,18 @@ function readyPaperCopy(id: string, month: KozpontiMonth): { subtitle: string; q
             questionCount: KOZPONTI_2021_JAN_COUNT,
         };
     }
+    if (id === 'kf-2020-g8-jan') {
+        return {
+            subtitle: '2020. január 18. · 45 perc · OH hivatalos sor',
+            questionCount: KOZPONTI_2020_JAN_COUNT,
+        };
+    }
+    if (id === 'kf-2020-g8-feb') {
+        return {
+            subtitle: '2020. január 23. · 45 perc · OH hivatalos sor',
+            questionCount: KOZPONTI_2020_FEB_COUNT,
+        };
+    }
     return { subtitle: month === 'januar' ? 'rendes írásbeli' : 'pótló írásbeli', questionCount: 0 };
 }
 
@@ -180,9 +202,13 @@ function buildKozpontiPapers(): KozpontiPaperMeta[] {
                             ? 'Január 31'
                             : id === 'kf-2022-g8-feb'
                               ? 'Január 27'
-                              : month === 'januar'
-                              ? 'Január'
-                              : 'Február';
+                              : id === 'kf-2020-g8-jan'
+                                ? 'Január 18'
+                                : id === 'kf-2020-g8-feb'
+                                  ? 'Január 23'
+                                  : month === 'januar'
+                                    ? 'Január'
+                                    : 'Február';
                 const sitting = month === 'januar' ? 'rendes írásbeli' : 'pótló írásbeli';
                 const track = grade === 8 ? '9. évfolyamra' : '6/8 évfolyamos gimnázium';
                 out.push({
@@ -547,6 +573,8 @@ export function getKozpontiPaperQuestions(paperId: string): Question[] | null {
     const is2022G8Feb = id === 'kf-2022-g8-feb' || id === '2022-mat2' || id === 'kf-2022-feb';
     const is2022G8Mar = id === 'kf-2022-g8-mar' || id === '2022-mat3' || id === 'kf-2022-mar';
     const is2021G8Jan = id === 'kf-2021-g8-jan' || id === '2021-mat1' || id === 'kf-2021-jan';
+    const is2020G8Jan = id === 'kf-2020-g8-jan' || id === '2020-mat1' || id === 'kf-2020-jan';
+    const is2020G8Feb = id === 'kf-2020-g8-feb' || id === '2020-mat2' || id === 'kf-2020-feb';
     // #region agent log
     agentDebugLog({
         hypothesisId: 'H2',
@@ -565,6 +593,9 @@ export function getKozpontiPaperQuestions(paperId: string): Question[] | null {
             is2022G8Jan,
             is2022G8Feb,
             is2022G8Mar,
+            is2021G8Jan,
+            is2020G8Jan,
+            is2020G8Feb,
             ready:
                 is2026G8Jan ||
                 is2026G8Feb ||
@@ -576,7 +607,10 @@ export function getKozpontiPaperQuestions(paperId: string): Question[] | null {
                 is2023G8Feb ||
                 is2022G8Jan ||
                 is2022G8Feb ||
-                is2022G8Mar,
+                is2022G8Mar ||
+                is2021G8Jan ||
+                is2020G8Jan ||
+                is2020G8Feb,
         },
         runId: 'kf-tracks',
     });
@@ -625,6 +659,12 @@ export function getKozpontiPaperQuestions(paperId: string): Question[] | null {
     // #endregion
     if (is2021G8Jan) {
         return getKozponti2021JanQuestions();
+    }
+    if (is2020G8Jan) {
+        return getKozponti2020JanQuestions();
+    }
+    if (is2020G8Feb) {
+        return getKozponti2020FebQuestions();
     }
     return null;
 }

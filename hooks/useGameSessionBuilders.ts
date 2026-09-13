@@ -19,7 +19,7 @@ import {
     type EducationLevelId,
 } from '../utils/mathTopicsCatalog';
 import { SPRINT_SECONDS, type MascotMood } from '../utils/gameFeedback';
-import { BLITZ_SECONDS } from '../utils/gameJuice';
+import { BLITZ_SECONDS, markMidRunBoss, startLivesForRun } from '../utils/gameJuice';
 import { challengeSecondsForIndex, type SkillNode } from '../utils/skillTree';
 import { agentDebugLog } from '../utils/agentDebugLog';
 import { shuffleArray } from '../utils/shuffle';
@@ -101,7 +101,19 @@ export type UseGameSessionBuildersParams = {
     wrongFirstIdsRef: MutableRefObject<string[]>;
     worksheetTopicKeyRef: MutableRefObject<string | null>;
     erettsegiQuestionsRef: MutableRefObject<Question[]>;
+    playWithLives: boolean;
+    totalXp: number;
 };
+
+function applyStartLives(p: UseGameSessionBuildersParams, challengeLives?: number) {
+    const n = startLivesForRun({
+        playWithLives: p.playWithLives,
+        xp: p.totalXp,
+        challengeLives,
+    });
+    p.livesRef.current = n;
+    p.setLives(n);
+}
 
 function resetPlayAnswers(p: UseGameSessionBuildersParams) {
     p.setUserAnswer('');
@@ -121,7 +133,7 @@ function startGeneratedRun(p: UseGameSessionBuildersParams, hasQuestions: boolea
     p.setGameActive(true);
     p.setScore(0);
     p.setLevel(1);
-    p.setLives(3);
+    applyStartLives(p);
     p.setCurrentQuestion(0);
     if (extras?.resetSubQuestions) {
         p.setCurrentSubQuestion(0);
@@ -176,7 +188,7 @@ export function useGameSessionBuilders(p: UseGameSessionBuildersParams) {
                     p.setGameActive(true);
                     p.setScore(0);
                     p.setLevel(1);
-                    p.setLives(3);
+                    applyStartLives(p);
                     p.setCurrentQuestion(0);
                 } else {
                     setTaskQuestions([]);
@@ -521,14 +533,12 @@ export function useGameSessionBuilders(p: UseGameSessionBuildersParams) {
             srsTopicId: q.srsTopicId || (opts.daily ? q.srsTopicId : opts.topicId),
             srsStage: q.srsStage || q.stage,
         }));
-        if (pathMode && stamped.length >= 3) {
-            for (let i = stamped.length - 3; i < stamped.length; i++) {
-                stamped[i] = { ...stamped[i], isBoss: true };
-            }
-        }
-        erettsegiQuestionsRef.current = stamped;
-        setErettsegiQuestions(stamped);
-        setTaskQuestions(stamped);
+        const withBoss = opts.challenge
+            ? stamped
+            : markMidRunBoss(stamped, pathMode);
+        erettsegiQuestionsRef.current = withBoss;
+        setErettsegiQuestions(withBoss);
+        setTaskQuestions(withBoss);
 
         // #region agent log
         void import('../utils/agentDebugLog').then(({ agentDebugLog }) => {
@@ -539,16 +549,16 @@ export function useGameSessionBuilders(p: UseGameSessionBuildersParams) {
                 data: {
                     pathMode,
                     lesson: opts.lessonNode,
-                    questionsLength: stamped.length,
+                    questionsLength: withBoss.length,
                     shuffled: !opts.keepOrder,
-                    firstId: stamped[0]?.id || null,
+                    firstId: withBoss[0]?.id || null,
                     topicId: opts.topicId,
                     daily: !!opts.daily,
                     blitz: !!opts.blitz,
                     challenge: opts.challenge?.id || '',
                     challengeQ: opts.challenge?.rules.questionCount || 0,
                     challengeSec: opts.challenge?.rules.seconds || 0,
-                    bossN: stamped.filter((q) => q.isBoss).length,
+                    bossN: withBoss.filter((q) => q.isBoss).length,
                     topicMix: p.router.query.topicMix === '1',
                 },
                 runId: p.router.query.topicMix === '1' ? 'topic-mix' : 'path-20q',
@@ -560,11 +570,7 @@ export function useGameSessionBuilders(p: UseGameSessionBuildersParams) {
             p.setGameActive(true);
             p.setScore(0);
             p.setLevel(1);
-            const startLives = opts.challenge
-                ? opts.challenge.rules.lives
-                : opts.sprint ? 2 : 3;
-            p.livesRef.current = startLives;
-            p.setLives(startLives);
+            applyStartLives(p, opts.challenge?.rules.lives);
             p.setCurrentQuestion(0);
             resetPlayAnswers(p);
         }

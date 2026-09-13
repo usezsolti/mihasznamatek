@@ -51,6 +51,9 @@ export type GamePlayHudProps = {
     hideBoosters?: boolean;
     maxLives?: number;
     pathStageLabel?: string | null;
+    showLives?: boolean;
+    nearMiss?: string | null;
+    isClutch?: boolean;
 };
 
 export default function GamePlayHud({
@@ -86,6 +89,9 @@ export default function GamePlayHud({
     hideBoosters,
     maxLives,
     pathStageLabel,
+    showLives,
+    nearMiss,
+    isClutch,
 }: GamePlayHudProps) {
     const mult = comboMultiplier(correctStreak, comboEarlier);
     const heartMax = maxLives || ((isSprintMode ? 2 : 3) + extraLives);
@@ -117,7 +123,7 @@ export default function GamePlayHud({
                         <span className="hud-value">{currentQuestion + 1}/{questionsLength}</span>
                     </div>
                 )}
-                {(isPathMode || isSprintMode || isDailyMode || isBlitzMode) && (
+                {(showLives ?? (isPathMode || isSprintMode || isDailyMode || isBlitzMode)) && heartMax > 0 && (
                     <div className="hud-item">
                         <span className="hud-label">Élet:</span>
                         <span className="hud-value" style={{ letterSpacing: '0.08em' }}>
@@ -136,6 +142,12 @@ export default function GamePlayHud({
                     <div className="hud-item hud-boss">
                         <span className="hud-label">Mód:</span>
                         <span className="hud-value">👹 Főnök</span>
+                    </div>
+                )}
+                {isClutch && (
+                    <div className="hud-item hud-clutch">
+                        <span className="hud-label">Mód:</span>
+                        <span className="hud-value">Megmentő</span>
                     </div>
                 )}
                 {(isSprintMode || isBlitzMode) && !hideTimer && (
@@ -174,6 +186,10 @@ export default function GamePlayHud({
                     </div>
                 )}
             </div>
+
+            {nearMiss && (
+                <div className="hud-near" role="status">{nearMiss}</div>
+            )}
 
             {onUseBooster && juiceBoosters && !hideBoosters && (
                 <div className="hud-boosters">

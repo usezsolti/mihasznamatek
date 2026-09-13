@@ -33,6 +33,8 @@ export type GameQuestionCardProps = {
     onDismissFeedback?: () => void;
     hintText?: string | null;
     hideOfficialLabel?: boolean;
+    doubleStakeArmed?: boolean;
+    onToggleDoubleStake?: () => void;
 };
 
 export default function GameQuestionCard({
@@ -64,6 +66,8 @@ export default function GameQuestionCard({
     onDismissFeedback,
     hintText,
     hideOfficialLabel,
+    doubleStakeArmed,
+    onToggleDoubleStake,
 }: GameQuestionCardProps) {
     const rawQuestion = question?.question || '';
     const displayQuestion = hideOfficialLabel ? stripOfficialTaskLabel(rawQuestion) : rawQuestion;
@@ -346,6 +350,16 @@ export default function GameQuestionCard({
                                 <span className="button-icon">✅</span>
                                 VÁLASZ
                             </button>
+                            {onToggleDoubleStake && (
+                                <button
+                                    type="button"
+                                    className={`stake-btn ${doubleStakeArmed ? 'on' : ''}`}
+                                    onClick={onToggleDoubleStake}
+                                    disabled={!!feedbackPending}
+                                >
+                                    {doubleStakeArmed ? 'Dupla tét be' : 'Dupla XP ezen a feladaton'}
+                                </button>
+                            )}
                         </div>
                     </div>
 
