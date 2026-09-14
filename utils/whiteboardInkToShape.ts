@@ -84,53 +84,109 @@ function resample(points: WbPoint[], n: number): WbPoint[] {
 }
 
 /**
- * Find sharp corners along a freehand path (for polygon recognition).
+ * Sharp corners only — ignore side wobble from handwriting.
+ * Uses a wider window so a shaky square side does not become extra vertices.
  */
 function detectCorners(raw: WbPoint[]): WbPoint[] {
-    const pts = resample(raw, Math.min(96, Math.max(32, Math.floor(raw.length * 0.6))));
-    if (pts.length < 8) return [];
+    const pts = resample(raw, Math.min(80, Math.max(36, Math.floor(raw.length * 0.5))));
+    if (pts.length < 10) return [];
 
     const size = Math.max(bbox(pts).w, bbox(pts).h) || 1;
+    const closed = dist(pts[0], pts[pts.length - 1]) < size * 0.2;
+    const k = Math.max(2, Math.round(pts.length / 22));
+    const at = (i: number) => pts[(i + pts.length) % pts.length];
     const turns: number[] = new Array(pts.length).fill(0);
-    for (let i = 1; i < pts.length - 1; i++) {
-        turns[i] = turnAngle(pts[i - 1], pts[i], pts[i + 1]);
-    }
-    // Closed path: also score endpoints via wrap
-    if (dist(pts[0], pts[pts.length - 1]) < size * 0.28) {
-        turns[0] = turnAngle(pts[pts.length - 2], pts[0], pts[1]);
-        turns[pts.length - 1] = turns[0];
+    const start = closed ? 0 : k;
+    const end = closed ? pts.length : pts.length - k;
+    for (let i = start; i < end; i++) {
+        turns[i] = turnAngle(at(i - k), pts[i], at(i + k));
     }
 
-    const threshold = 0.48; // ~27° — wobbly circles shouldn't count as corners
+    const threshold = 0.72; // ~41° — square corners stay, side jitter drops
     const candidates: { i: number; t: number }[] = [];
-    for (let i = 1; i < pts.length - 1; i++) {
+    for (let i = 0; i < pts.length; i++) {
         if (turns[i] < threshold) continue;
-        if (turns[i] >= turns[i - 1] && turns[i] >= turns[i + 1]) {
+        const prev = turns[(i - 1 + pts.length) % pts.length];
+        const next = turns[(i + 1) % pts.length];
+        if (turns[i] >= prev && turns[i] >= next) {
             candidates.push({ i, t: turns[i] });
         }
     }
-    if (turns[0] >= threshold) candidates.push({ i: 0, t: turns[0] });
 
-    // Non-max suppression by path distance
     candidates.sort((a, b) => b.t - a.t);
-    const minSep = size * 0.16;
+    const minSep = size * 0.22;
     const kept: { i: number; t: number }[] = [];
     for (const c of candidates) {
         const p = pts[c.i];
-        if (kept.some((k) => dist(pts[k.i], p) < minSep)) continue;
+        if (kept.some((kpt) => dist(pts[kpt.i], p) < minSep)) continue;
         kept.push(c);
     }
 
-    // Order along the stroke
     kept.sort((a, b) => a.i - b.i);
-    let corners = kept.map((k) => pts[k.i]);
-
-    // Drop near-duplicate close of loop
+    let corners = kept.map((kpt) => pts[kpt.i]);
     if (corners.length >= 2 && dist(corners[0], corners[corners.length - 1]) < minSep) {
         corners = corners.slice(0, -1);
     }
-
     return corners;
+}
+
+function hullPerimeter(hull: WbPoint[]): number {
+    let len = 0;
+    for (let i = 0; i < hull.length; i++) len += dist(hull[i], hull[(i + 1) % hull.length]);
+    return len;
+}
+
+function strokeComplexity(pts: WbPoint[]): number {
+    const peri = hullPerimeter(convexHull(pts));
+    if (peri < 1) return 99;
+    return pathLength(pts) / peri;
+}
+
+function orient(a: WbPoint, b: WbPoint, c: WbPoint): number {
+    return (b.x - a.x) * (c.y - a.y) - (b.y - a.y) * (c.x - a.x);
+}
+
+function properIntersect(a: WbPoint, b: WbPoint, c: WbPoint, d: WbPoint): boolean {
+    const o1 = orient(a, b, c);
+    const o2 = orient(a, b, d);
+    const o3 = orient(c, d, a);
+    const o4 = orient(c, d, b);
+    return o1 * o2 < 0 && o3 * o4 < 0;
+}
+
+/** True if the stroke crosses itself (figure-8, 4, 8, scribbles) — not just a closed loop. */
+function hasInteriorSelfIntersection(pts: WbPoint[]): boolean {
+    const p = pts.length > 52 ? resample(pts, 52) : pts;
+    const n = p.length;
+    if (n < 8) return false;
+    const skip = Math.max(2, Math.floor(n * 0.22));
+    for (let i = skip; i < n - 1 - skip; i++) {
+        for (let j = i + 2; j < n - 1 - skip; j++) {
+            if (properIntersect(p[i], p[i + 1], p[j], p[j + 1])) return true;
+        }
+    }
+    return false;
+}
+
+function asRectStroke(stroke: WbStroke, x: number, y: number, w: number, h: number): WbStroke {
+    const aw = Math.abs(w);
+    const ah = Math.abs(h);
+    const ratio = Math.min(aw, ah) / Math.max(aw, ah || 1);
+    if (ratio > 0.86) {
+        const side = (aw + ah) / 2;
+        const cx = x + w / 2;
+        const cy = y + h / 2;
+        return {
+            ...stroke,
+            tool: 'rect',
+            points: [],
+            x: cx - side / 2,
+            y: cy - side / 2,
+            w: side,
+            h: side,
+        };
+    }
+    return { ...stroke, tool: 'rect', points: [], x, y, w, h };
 }
 
 function isRectangleQuad(corners: WbPoint[]): boolean {
@@ -211,10 +267,10 @@ function convexHull(points: WbPoint[]): WbPoint[] {
     return lower.concat(upper);
 }
 
-function reduceToQuad(hull: WbPoint[]): WbPoint[] | null {
-    if (hull.length < 4) return null;
+function reduceToN(hull: WbPoint[], n: number): WbPoint[] | null {
+    if (hull.length < n) return null;
     const verts = hull.map((p) => ({ ...p }));
-    while (verts.length > 4) {
+    while (verts.length > n) {
         let best = 0;
         let bestTurn = Infinity;
         for (let i = 0; i < verts.length; i++) {
@@ -230,6 +286,79 @@ function reduceToQuad(hull: WbPoint[]): WbPoint[] | null {
         verts.splice(best, 1);
     }
     return verts;
+}
+
+function reduceToQuad(hull: WbPoint[]): WbPoint[] | null {
+    return reduceToN(hull, 4);
+}
+
+function vertexAngle(corners: WbPoint[], i: number): number {
+    const n = corners.length;
+    return angleBetween(corners[(i + n - 1) % n], corners[i], corners[(i + 1) % n]);
+}
+
+/** School triangle with a ~90° corner — must not become a circle. */
+function isRightTriangle(corners: WbPoint[], tolDeg = 24): boolean {
+    if (corners.length !== 3) return false;
+    const tol = (tolDeg * Math.PI) / 180;
+    for (let i = 0; i < 3; i++) {
+        if (Math.abs(vertexAngle(corners, i) - Math.PI / 2) <= tol) return true;
+    }
+    return false;
+}
+
+function snapRightTriangle(corners: WbPoint[]): WbPoint[] {
+    if (corners.length !== 3) return corners.map((p) => ({ ...p }));
+    let best = 0;
+    let bestDiff = Infinity;
+    for (let i = 0; i < 3; i++) {
+        const d = Math.abs(vertexAngle(corners, i) - Math.PI / 2);
+        if (d < bestDiff) {
+            bestDiff = d;
+            best = i;
+        }
+    }
+    const C = corners[best];
+    const A = corners[(best + 1) % 3];
+    const B = corners[(best + 2) % 3];
+    const vAx = A.x - C.x;
+    const vAy = A.y - C.y;
+    const vBx = B.x - C.x;
+    const vBy = B.y - C.y;
+    const lenA = Math.hypot(vAx, vAy) || 1;
+    const lenB = Math.hypot(vBx, vBy) || 1;
+    let ux = vAx / lenA;
+    let uy = vAy / lenA;
+    const axisTol = Math.sin((12 * Math.PI) / 180);
+    if (Math.abs(ux) >= Math.abs(uy) && Math.abs(uy) < axisTol) {
+        ux = Math.sign(ux) || 1;
+        uy = 0;
+    } else if (Math.abs(uy) > Math.abs(ux) && Math.abs(ux) < axisTol) {
+        ux = 0;
+        uy = Math.sign(uy) || 1;
+    }
+    const p1 = { x: -uy, y: ux };
+    const p2 = { x: uy, y: -ux };
+    const useP1 = p1.x * vBx + p1.y * vBy >= p2.x * vBx + p2.y * vBy;
+    const px = useP1 ? p1 : p2;
+    const out = corners.map((p) => ({ ...p }));
+    out[best] = { x: C.x, y: C.y };
+    out[(best + 1) % 3] = { x: C.x + ux * lenA, y: C.y + uy * lenA };
+    out[(best + 2) % 3] = { x: C.x + px.x * lenB, y: C.y + px.y * lenB };
+    return out;
+}
+
+function pickTriangle(raw: WbPoint[], corners: WbPoint[]): WbPoint[] | null {
+    const hull = convexHull(raw);
+    // A box with one soft/missed corner still has a 4-vertex hull — don't collapse it.
+    if (hull.length >= 4) {
+        const quad = reduceToN(hull, 4);
+        if (quad && isRectangleQuad(quad)) return null;
+        if (corners.length !== 3) return null;
+    }
+    if (corners.length === 3) return corners.map((p) => ({ ...p }));
+    if (corners.length === 2) return reduceToN(hull, 3);
+    return null;
 }
 
 function pickQuad(raw: WbPoint[], corners: WbPoint[]): WbPoint[] | null {
@@ -402,11 +531,9 @@ function makeRegularPolygon(corners: WbPoint[]): WbPoint[] {
     return out;
 }
 
-function polygonFitScore(raw: WbPoint[], corners: WbPoint[]): number {
-    if (corners.length < 3) return 0;
+function polygonEdgeFit(raw: WbPoint[], corners: WbPoint[]): number {
+    if (corners.length < 3 || raw.length < 2) return 0;
     const size = Math.max(bbox(raw).w, bbox(raw).h) || 1;
-    const closed = dist(raw[0], raw[raw.length - 1]) < size * 0.28;
-    // How well ink hugs the polygon edges
     let err = 0;
     for (const p of raw) {
         let best = Infinity;
@@ -418,7 +545,18 @@ function polygonFitScore(raw: WbPoint[], corners: WbPoint[]): number {
         err += best;
     }
     err /= raw.length;
-    const edgeFit = Math.max(0, 1 - err / (size * 0.12));
+    return Math.max(0, 1 - err / (size * 0.12));
+}
+
+function polygonFitScore(raw: WbPoint[], corners: WbPoint[]): number {
+    if (corners.length < 3) return 0;
+    const size = Math.max(bbox(raw).w, bbox(raw).h) || 1;
+    const closed = dist(raw[0], raw[raw.length - 1]) < size * 0.28;
+    const edgeFit = polygonEdgeFit(raw, corners);
+    // Right / scalene triangles are not regular — don't punish them vs a circle.
+    if (corners.length === 3) {
+        return edgeFit * 0.84 + (closed ? 0.16 : 0.08);
+    }
     const reg = regularityScore(corners);
     return edgeFit * 0.65 + reg * 0.2 + (closed ? 0.15 : 0);
 }
@@ -474,30 +612,48 @@ export function correctInkStroke(stroke: WbStroke): WbStroke {
         return stroke;
     }
 
-    const closed = dist(pts[0], pts[pts.length - 1]) < size * 0.24;
-    const len = pathLength(pts);
+    const gap = dist(pts[0], pts[pts.length - 1]);
+    const closed = gap < size * 0.28;
+    const nearlyClosed = gap < size * 0.42;
     const corners = detectCorners(pts);
-    const looksLoopy = closed || len > size * 2.05;
     const quad = pickQuad(pts, corners);
     const nearlyRect = quad ? isRectangleQuad(quad) : false;
     const trapPair = quad && !nearlyRect ? detectTrapezoidPair(quad) : null;
-    const polyScore = quad ? polygonFitScore(pts, quad) : corners.length >= 3 ? polygonFitScore(pts, corners) : 0;
+    const polyScore = quad
+        ? polygonFitScore(pts, quad)
+        : corners.length >= 3
+          ? polygonFitScore(pts, corners)
+          : 0;
+    const complexity = strokeComplexity(pts);
+    const crossed = hasInteriorSelfIntersection(pts);
+    const rect = scoreRect(pts, box);
+    const circ = scoreCircle(pts);
+    const ell = scoreEllipse(pts, box);
     const inkDebug = {
         cornersN: corners.length,
         hullN: quad?.length || 0,
         closed,
-        looksLoopy,
+        nearlyClosed,
         polyScore: Number(polyScore.toFixed(3)),
         nearlyRect,
         trapPair,
+        complexity: Number(complexity.toFixed(3)),
+        crossed,
+        rectScore: Number(rect.score.toFixed(3)),
+        circScore: Number(circ.score.toFixed(3)),
+        circOk: circ.ok,
+        roundness: Number(circ.roundness.toFixed(3)),
+        ellScore: Number(ell.score.toFixed(3)),
+        ellOk: ell.ok,
     };
     lastInkCorrectionDebug = inkDebug;
 
     // --- Line (strict, fitted) ---
     const lineScore = scoreLine(pts);
     if (
-        !closed &&
+        !nearlyClosed &&
         corners.length <= 1 &&
+        !crossed &&
         lineScore.ok &&
         lineScore.score > 0.9 &&
         lineScore.maxDev / Math.max(1, dist(lineScore.a, lineScore.b)) < 0.07
@@ -510,37 +666,107 @@ export function correctInkStroke(stroke: WbStroke): WbStroke {
         };
     }
 
-    const circ = scoreCircle(pts);
-    const ell = scoreEllipse(pts, box);
-    const rectCandidate = closed && corners.length >= 4 && !!quad && nearlyRect && polyScore > 0.55;
-    lastInkCorrectionDebug = {
-        ...inkDebug,
-        circScore: Number(circ.score.toFixed(3)),
-        circOk: circ.ok,
-        ellScore: Number(ell.score.toFixed(3)),
-        ellOk: ell.ok,
-        rectCandidate,
-    };
+    const looksRound = (circ.ok && circ.roundness > 0.78) || (ell.ok && ell.score > 0.78);
+    const looksLikeRect = (rect.ok && rect.score > 0.52) || nearlyRect;
+    const triVerts = looksLikeRect ? null : pickTriangle(pts, corners);
+    const triFit = triVerts ? polygonFitScore(pts, triVerts) : 0;
+    const triRight = triVerts ? isRightTriangle(triVerts) : false;
+    const looksLikeTriangle =
+        !!triVerts && (triFit > 0.58 || (triRight && triFit > 0.5));
 
-    // --- Rectangle before circle (square-ish rects scored as circles) ---
-    if (rectCandidate && quad) {
-        const b = bbox(quad);
-        lastInkCorrectionDebug = { ...lastInkCorrectionDebug, branch: 'rect' };
-        return {
-            ...stroke,
-            tool: 'rect',
-            points: [],
-            x: b.minX,
-            y: b.minY,
-            w: b.w,
-            h: b.h,
-        };
+    // Figure-8 / scribbled digits: keep ink — but closed geometry still snaps.
+    if ((crossed || complexity > 1.75) && !looksRound && !looksLikeRect && !looksLikeTriangle) {
+        lastInkCorrectionDebug = { ...lastInkCorrectionDebug, branch: 'handwriting' };
+        return stroke;
     }
 
-    // --- Circle: smooth loops only — 4-corner rectangles must not match ---
-    if (looksLoopy && circ.ok && circ.score > 0.82 && corners.length <= 2) {
+    const loopOk = closed || nearlyClosed || looksRound;
+    const boxy = looksLikeRect && rect.ok && rect.score > circ.score + 0.06;
+
+    const emitCircle = () => {
+        const aspect = Math.min(box.w, box.h) / Math.max(box.w, box.h || 1);
+        if (aspect < 0.78 && ell.ok && ell.score >= circ.score - 0.02) {
+            lastInkCorrectionDebug = { ...lastInkCorrectionDebug, branch: 'ellipse' };
+            return {
+                ...stroke,
+                tool: 'ellipse' as const,
+                points: [],
+                x: ell.x,
+                y: ell.y,
+                w: ell.w,
+                h: ell.h,
+            };
+        }
         const r = circ.r;
-        lastInkCorrectionDebug = { ...lastInkCorrectionDebug, branch: 'circle-early' };
+        lastInkCorrectionDebug = { ...lastInkCorrectionDebug, branch: 'circle' };
+        return {
+            ...stroke,
+            tool: 'ellipse' as const,
+            points: [],
+            x: circ.cx - r,
+            y: circ.cy - r,
+            w: r * 2,
+            h: r * 2,
+        };
+    };
+
+    const emitTriangle = (verts: WbPoint[]) => {
+        const snapped = isRightTriangle(verts)
+            ? snapRightTriangle(verts)
+            : regularityScore(verts) > 0.88
+              ? makeRegularPolygon(verts)
+              : verts;
+        const { x: _tx3, y: _ty3, w: _tw3, h: _th3, ...triRest } = stroke;
+        lastInkCorrectionDebug = {
+            ...lastInkCorrectionDebug,
+            branch: 'triangle',
+            triFit: Number(triFit.toFixed(3)),
+            triRight,
+        };
+        return { ...triRest, tool: 'polygon' as const, points: snapped };
+    };
+
+    const emitRect = () => {
+        if (rect.ok && rect.score > 0.55) {
+            lastInkCorrectionDebug = { ...lastInkCorrectionDebug, branch: 'rect-bbox' };
+            return asRectStroke(stroke, rect.x, rect.y, rect.w, rect.h);
+        }
+        if (quad && nearlyRect && polyScore > 0.55) {
+            const axisAligned = [0, 1, 2, 3].every(
+                (i) => nearlyAxisSide(quad[i], quad[(i + 1) % 4]) !== null
+            );
+            if (axisAligned) {
+                const b = bbox(quad);
+                lastInkCorrectionDebug = { ...lastInkCorrectionDebug, branch: 'rect-quad' };
+                return asRectStroke(stroke, b.minX, b.minY, b.w, b.h);
+            }
+            const { x: _rx, y: _ry, w: _rw, h: _rh, ...rotRest } = stroke;
+            lastInkCorrectionDebug = { ...lastInkCorrectionDebug, branch: 'rect-rotated' };
+            return { ...rotRest, tool: 'polygon' as const, points: quad };
+        }
+        return null;
+    };
+
+    // --- Rectangle before triangle (boxes have 90° corners too) ---
+    if (loopOk && looksLikeRect) {
+        const snappedRect = emitRect();
+        if (snappedRect) return snappedRect;
+    }
+
+    // --- Triangle before circle (right / scalene triangles look "round" in a bbox) ---
+    if (looksLikeTriangle && triVerts && (closed || nearlyClosed) && !crossed) {
+        return emitTriangle(triVerts);
+    }
+
+    // --- Circle / ellipse (hand-drawn loops, overlapping close) ---
+    if (looksRound && !boxy && !triRight && triFit < 0.72 && (circ.score > 0.66 || ell.score > 0.72)) {
+        return emitCircle();
+    }
+
+    // --- Circle fallback ---
+    if (loopOk && circ.ok && circ.score > 0.8 && !boxy && triFit < 0.7 && corners.length <= 5) {
+        const r = circ.r;
+        lastInkCorrectionDebug = { ...lastInkCorrectionDebug, branch: 'circle-fallback' };
         return {
             ...stroke,
             tool: 'ellipse',
@@ -553,8 +779,9 @@ export function correctInkStroke(stroke: WbStroke): WbStroke {
     }
 
     // --- Trapezoid (only if not a rectangle; must be a closed loop) ---
-    if (closed && quad && trapPair !== null && polyScore > 0.58 && corners.length >= 3) {
+    if (closed && quad && trapPair !== null && polyScore > 0.74 && corners.length >= 3 && corners.length <= 5) {
         const { x: _tx, y: _ty, w: _tw, h: _th, ...trapRest } = stroke;
+        lastInkCorrectionDebug = { ...lastInkCorrectionDebug, branch: 'trapezoid' };
         return {
             ...trapRest,
             tool: 'polygon',
@@ -562,10 +789,9 @@ export function correctInkStroke(stroke: WbStroke): WbStroke {
         };
     }
 
-    // --- Triangle / n-gon: closed loops with real corners, not letters ---
+    // --- Triangle / n-gon: few real corners, not wobbly sides or letters ---
     if (closed && corners.length >= 3 && corners.length <= 6) {
-        const circleWins =
-            corners.length >= 5 && circ.ok && circ.score >= polyScore - 0.03;
+        const circleWins = corners.length >= 5 && circ.ok && circ.score >= polyScore - 0.03;
         if (circleWins) {
             const r = circ.r;
             lastInkCorrectionDebug = { ...lastInkCorrectionDebug, branch: 'circle-poly' };
@@ -579,10 +805,17 @@ export function correctInkStroke(stroke: WbStroke): WbStroke {
                 h: r * 2,
             };
         }
-        if (polyScore > 0.7) {
+        const minScore = corners.length <= 3 ? 0.58 : 0.84;
+        const minReg = corners.length >= 5 ? 0.76 : 0;
+        if (polyScore > minScore && regularityScore(corners) >= minReg) {
             const verts =
-                regularityScore(corners) > 0.84 ? makeRegularPolygon(corners) : corners;
+                isRightTriangle(corners)
+                    ? snapRightTriangle(corners)
+                    : regularityScore(corners) > 0.84
+                      ? makeRegularPolygon(corners)
+                      : corners;
             const { x: _px, y: _py, w: _pw, h: _ph, ...polyRest } = stroke;
+            lastInkCorrectionDebug = { ...lastInkCorrectionDebug, branch: 'polygon' };
             return {
                 ...polyRest,
                 tool: 'polygon',
@@ -591,8 +824,8 @@ export function correctInkStroke(stroke: WbStroke): WbStroke {
         }
     }
 
-    // --- Ellipse: smooth loops only (rectangles hug the bbox, not an oval) ---
-    if (looksLoopy && ell.ok && ell.score > 0.8 && corners.length <= 2) {
+    // --- Ellipse: smooth loops ---
+    if (loopOk && ell.ok && ell.score > 0.78 && !boxy && triFit < 0.7 && corners.length <= 4) {
         lastInkCorrectionDebug = { ...lastInkCorrectionDebug, branch: 'ellipse-late' };
         return {
             ...stroke,
@@ -737,23 +970,45 @@ function pointLineDistance(p: WbPoint, a: WbPoint, b: WbPoint): number {
     return dist(p, proj);
 }
 
-function scoreCircle(pts: WbPoint[]): { ok: boolean; score: number; cx: number; cy: number; r: number } {
-    const c = centroid(pts);
+function scoreCircle(pts: WbPoint[]): {
+    ok: boolean;
+    score: number;
+    roundness: number;
+    cx: number;
+    cy: number;
+    r: number;
+} {
+    const box = bbox(pts);
+    // BBox center (centroid is biased toward slow handwriting)
+    const c = { x: (box.minX + box.maxX) / 2, y: (box.minY + box.maxY) / 2 };
     const radii = pts.map((p) => dist(p, c));
     const r = radii.reduce((a, b) => a + b, 0) / radii.length;
-    if (r < 18) return { ok: false, score: 0, cx: c.x, cy: c.y, r: 0 };
+    if (r < 16) return { ok: false, score: 0, roundness: 0, cx: c.x, cy: c.y, r: 0 };
 
     let varSum = 0;
     for (const ri of radii) varSum += (ri - r) ** 2;
     const std = Math.sqrt(varSum / radii.length);
     const roundness = Math.max(0, 1 - std / r);
 
-    const box = bbox(pts);
     const aspect = Math.min(box.w, box.h) / Math.max(box.w, box.h || 1);
-    const closed = dist(pts[0], pts[pts.length - 1]) < r * 0.45;
-    const score = roundness * 0.7 + aspect * 0.2 + (closed ? 0.15 : 0);
+    const gap = dist(pts[0], pts[pts.length - 1]);
+    const closedish = gap < Math.max(r * 0.85, Math.max(box.w, box.h) * 0.4);
+    const expected = 2 * Math.PI * r;
+    const pathLen = pathLength(pts);
+    const overshoot = pathLen / (expected || 1);
+    const lengthOk = overshoot > 0.58 && overshoot < 1.65;
+    const lengthFit = 1 - Math.min(1, Math.abs(pathLen - expected) / (expected || 1));
+    const score =
+        roundness * 0.52 + aspect * 0.2 + (closedish ? 0.14 : 0.04) + lengthFit * 0.14;
 
-    return { ok: score > 0.75 && aspect > 0.72, score, cx: c.x, cy: c.y, r };
+    return {
+        ok: score > 0.66 && aspect > 0.58 && roundness > 0.78 && lengthOk,
+        score,
+        roundness,
+        cx: c.x,
+        cy: c.y,
+        r,
+    };
 }
 
 function scoreEllipse(
@@ -794,24 +1049,44 @@ function scoreRect(
 
     const tol = Math.max(6, Math.min(box.w, box.h) * 0.08);
     let near = 0;
+    let left = 0;
+    let right = 0;
+    let top = 0;
+    let bottom = 0;
     for (const p of pts) {
         const dl = Math.abs(p.x - box.minX);
         const dr = Math.abs(p.x - box.maxX);
         const dt = Math.abs(p.y - box.minY);
         const db = Math.abs(p.y - box.maxY);
-        const onVertical = Math.min(dl, dr) <= tol && p.y >= box.minY - tol && p.y <= box.maxY + tol;
-        const onHorizontal = Math.min(dt, db) <= tol && p.x >= box.minX - tol && p.x <= box.maxX + tol;
-        if (onVertical || onHorizontal) near++;
+        const onLeft = dl <= tol && p.y >= box.minY - tol && p.y <= box.maxY + tol;
+        const onRight = dr <= tol && p.y >= box.minY - tol && p.y <= box.maxY + tol;
+        const onTop = dt <= tol && p.x >= box.minX - tol && p.x <= box.maxX + tol;
+        const onBottom = db <= tol && p.x >= box.minX - tol && p.x <= box.maxX + tol;
+        if (onLeft) left++;
+        if (onRight) right++;
+        if (onTop) top++;
+        if (onBottom) bottom++;
+        if (onLeft || onRight || onTop || onBottom) near++;
     }
     const borderRatio = near / pts.length;
+    const minSide = Math.max(3, pts.length * 0.08);
+    const sidesCovered = [left, right, top, bottom].filter((n) => n >= minSide).length;
+    const cornerTol = Math.max(10, Math.min(box.w, box.h) * 0.16);
+    const boxCorners: WbPoint[] = [
+        { x: box.minX, y: box.minY },
+        { x: box.maxX, y: box.minY },
+        { x: box.maxX, y: box.maxY },
+        { x: box.minX, y: box.maxY },
+    ];
+    const cornersHit = boxCorners.filter((c) => pts.some((p) => dist(p, c) <= cornerTol)).length;
     const closed = dist(pts[0], pts[pts.length - 1]) < Math.max(box.w, box.h) * 0.32;
     const perimeter = 2 * (box.w + box.h);
     const len = pathLength(pts);
     const lengthFit = 1 - Math.min(1, Math.abs(len - perimeter) / perimeter);
 
-    const score = borderRatio * 0.55 + lengthFit * 0.25 + (closed ? 0.2 : 0);
+    const score = borderRatio * 0.45 + lengthFit * 0.2 + (closed ? 0.15 : 0) + (cornersHit / 4) * 0.2;
     return {
-        ok: score > 0.55 && borderRatio > 0.48,
+        ok: score > 0.55 && borderRatio > 0.42 && sidesCovered >= 3 && cornersHit >= 3,
         score,
         x: box.minX,
         y: box.minY,

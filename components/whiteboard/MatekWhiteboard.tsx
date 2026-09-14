@@ -15,6 +15,7 @@ import {
     type WbTool,
 } from '../../utils/whiteboardTypes';
 import { correctInkStroke, lastInkCorrectionDebug, polygonLabel } from '../../utils/whiteboardInkToShape';
+import { applyExportView, planWhiteboardExport, unionStrokeBounds } from '../../utils/whiteboardExport';
 import { agentDebugLog } from '../../utils/agentDebugLog';
 
 type MatekWhiteboardProps = {
@@ -320,6 +321,7 @@ export default function MatekWhiteboard({
     onBoardId,
 }: MatekWhiteboardProps) {
     const canvasRef = useRef<HTMLCanvasElement>(null);
+    const inkLayerRef = useRef<HTMLCanvasElement | null>(null);
     const wrapRef = useRef<HTMLDivElement>(null);
     const [boardId, setBoardId] = useState<string | null>(initialBoardId || null);
     const [title, setTitle] = useState('Matek tábla');
@@ -363,7 +365,33 @@ export default function MatekWhiteboard({
         ctx.fillStyle = '#1a1a1a';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-        // subtle charcoal grid (MS Whiteboard–like)
+        // Ink on a separate layer so destination-out eraser never punches the grid.
+        let ink = inkLayerRef.current;
+        if (!ink) {
+            ink = document.createElement('canvas');
+            inkLayerRef.current = ink;
+        }
+        if (ink.width !== canvas.width || ink.height !== canvas.height) {
+            ink.width = canvas.width;
+            ink.height = canvas.height;
+        }
+        const ictx = ink.getContext('2d');
+        if (!ictx) return;
+        ictx.setTransform(1, 0, 0, 1, 0, 0);
+        ictx.clearRect(0, 0, ink.width, ink.height);
+        ictx.setTransform(
+            scale.current,
+            0,
+            0,
+            scale.current,
+            pan.current.x * scale.current,
+            pan.current.y * scale.current
+        );
+        const list = strokesRef.current;
+        for (const s of list) drawStroke(ictx, s);
+        if (current.current) drawStroke(ictx, current.current);
+
+        // subtle charcoal grid (MS Whiteboard–like) — always under the ink
         ctx.save();
         ctx.strokeStyle = 'rgba(255, 255, 255, 0.035)';
         ctx.lineWidth = 1;
@@ -383,11 +411,7 @@ export default function MatekWhiteboard({
             ctx.stroke();
         }
         ctx.restore();
-
-        const list = strokesRef.current;
-        ctx.setTransform(scale.current, 0, 0, scale.current, pan.current.x * scale.current, pan.current.y * scale.current);
-        for (const s of list) drawStroke(ctx, s);
-        if (current.current) drawStroke(ctx, current.current);
+        ctx.drawImage(ink, 0, 0);
         // #region agent log
         if (!drawing.current || !current.current || current.current.points.length <= 2) {
             agentDebugLog({
@@ -897,57 +921,26 @@ export default function MatekWhiteboard({
         return raw || 'whiteboard';
     };
 
-    /** Flat export canvas (all strokes, no pan/zoom) on dark Mihaszna board. */
+    /** Flat export canvas: every stroke, scaled to fit (never clipped at 4096px). */
     const buildExportCanvas = () => {
-        redraw();
         const src = canvasRef.current;
         if (!src) return null;
 
-        // Fit strokes into a clean export size
-        let minX = 0;
-        let minY = 0;
-        let maxX = src.width;
-        let maxY = src.height;
-        if (strokes.length) {
-            minX = Infinity;
-            minY = Infinity;
-            maxX = -Infinity;
-            maxY = -Infinity;
-            const expand = (x: number, y: number, pad = 24) => {
-                minX = Math.min(minX, x - pad);
-                minY = Math.min(minY, y - pad);
-                maxX = Math.max(maxX, x + pad);
-                maxY = Math.max(maxY, y + pad);
-            };
-            for (const s of strokes) {
-                for (const p of s.points) expand(p.x, p.y, s.width + 20);
-                if (s.tool === 'rect' || s.tool === 'ellipse') {
-                    expand(s.x || 0, s.y || 0);
-                    expand((s.x || 0) + (s.w || 0), (s.y || 0) + (s.h || 0));
-                }
-                if (s.tool === 'text') expand(s.x || 0, s.y || 0, 80);
-            }
-            if (!Number.isFinite(minX)) {
-                minX = 0;
-                minY = 0;
-                maxX = src.width;
-                maxY = src.height;
-            }
-        }
+        const list = strokesRef.current.slice();
+        if (current.current) list.push(current.current);
 
-        const pad = 40;
-        const w = Math.max(640, Math.ceil(maxX - minX + pad * 2));
-        const h = Math.max(480, Math.ceil(maxY - minY + pad * 2));
+        const bounds = unionStrokeBounds(list);
+        const plan = planWhiteboardExport(bounds, { width: src.width, height: src.height });
         const out = document.createElement('canvas');
-        out.width = Math.min(w, 4096);
-        out.height = Math.min(h, 4096);
+        out.width = plan.width;
+        out.height = plan.height;
         const ctx = out.getContext('2d');
         if (!ctx) return null;
         ctx.fillStyle = '#1a1a1a';
         ctx.fillRect(0, 0, out.width, out.height);
         ctx.save();
-        ctx.translate(pad - minX, pad - minY);
-        for (const s of strokes) drawStroke(ctx, s);
+        applyExportView(ctx, plan);
+        for (const s of list) drawStroke(ctx, s);
         ctx.restore();
         return out;
     };
