@@ -9,7 +9,7 @@ import CommunityFeedTab from '../components/community/CommunityFeedTab';
 import CommunityGroupsTab from '../components/community/CommunityGroupsTab';
 import CommunityMessagesTab from '../components/community/CommunityMessagesTab';
 import CommunityProfileTab from '../components/community/CommunityProfileTab';
-import CommunityShortsTab from '../components/community/CommunityShortsTab';
+import CommunityReviewTab from '../components/community/CommunityReviewTab';
 import { resolveLikedMap } from '../components/community/CommunityPostCard';
 import type { CommunityTab } from '../components/community/types';
 import {
@@ -23,10 +23,15 @@ import {
     apiLeaveGroup,
     apiListConversations,
     apiListFeed,
+    apiListPendingPosts,
+    apiListUserPosts,
+    apiPurgeSocialJunk,
+    apiReviewPost,
     apiListFollowingIds,
     apiListGroups,
     apiListMessages,
     apiListProfiles,
+    apiReactToMessage,
     apiSendMessage,
     apiUnfollow,
     apiUpdateProfile,
@@ -40,26 +45,25 @@ import {
     type SocialProfile,
     type StudyGroup,
 } from '../utils/socialTypes';
+import { applyFeedRefresh, buildDailyStoryProfiles, isPlaceholderSocialProfile, isPublicSocialPost, toggleMessageReaction } from '../utils/socialDomain';
+import { isAdminEmail } from '../utils/admin';
 import { backendHealth } from '../utils/backendClient';
 import { waitForFirebase } from '../utils/firebaseReady';
 import { agentDebugLog } from '../utils/agentDebugLog';
 import { useLang } from '../utils/i18n';
 
-/** Shorts = csak valódi feltöltött videók; mindenki ugyanazt a nyilvános listát látja. */
-function buildVideoShorts(posts: SocialPost[]): SocialPost[] {
-    return posts
-        .filter((p) => !!p.videoUrl)
-        .sort((a, b) => b.createdAtMs - a.createdAtMs);
-}
 export default function CommunityPage() {
     const router = useRouter();
     const { t } = useLang();
     const [ready, setReady] = useState(false);
     const [uid, setUid] = useState<string | null>(null);
+    const [myEmail, setMyEmail] = useState('');
     const [me, setMe] = useState<SocialProfile | null>(null);
+    const [pendingPosts, setPendingPosts] = useState<SocialPost[]>([]);
     const [rulesBlocked, setRulesBlocked] = useState(false);
     const [tab, setTab] = useState<CommunityTab>('feed');
     const [posts, setPosts] = useState<SocialPost[]>([]);
+    const [profilePosts, setProfilePosts] = useState<SocialPost[]>([]);
     const [likedMap, setLikedMap] = useState<Record<string, boolean>>({});
     const [followingIds, setFollowingIds] = useState<string[]>([]);
     const [profiles, setProfiles] = useState<SocialProfile[]>([]);
@@ -68,7 +72,6 @@ export default function CommunityPage() {
     const [activeChat, setActiveChat] = useState<ConversationPreview | null>(null);
     const [chatDockOpen, setChatDockOpen] = useState(false);
     const [messages, setMessages] = useState<DirectMessage[]>([]);
-    const [shortIndex, setShortIndex] = useState(0);
     const [viewProfile, setViewProfile] = useState<SocialProfile | null>(null);
     const [followingView, setFollowingView] = useState(false);
     const [toast, setToast] = useState('');
@@ -80,6 +83,7 @@ export default function CommunityPage() {
     const [groupDesc, setGroupDesc] = useState('');
     const [groupTopic, setGroupTopic] = useState('');
     const [msgDraft, setMsgDraft] = useState('');
+    const [replyTo, setReplyTo] = useState<DirectMessage | null>(null);
     const [bioDraft, setBioDraft] = useState('');
     const [usernameDraft, setUsernameDraft] = useState('');
 
@@ -90,24 +94,24 @@ export default function CommunityPage() {
 
     useEffect(() => {
         const q = String(router.query.tab || '');
-        if (['feed', 'shorts', 'explore', 'groups', 'messages', 'profile'].includes(q)) {
+        if (['feed', 'explore', 'groups', 'messages', 'profile', 'review'].includes(q)) {
             setTab(q as CommunityTab);
         }
     }, [router.query.tab]);
 
     const refreshFeed = useCallback(async (userId: string, following: string[]) => {
-        // Teljes nyilvános feed — videós shortokat mindenki látja
-        const list = await apiListFeed(80);
-        if (following.length) {
-            const set = new Set([...following, userId]);
-            const followed = list.filter((p) => set.has(p.authorId));
-            const rest = list.filter((p) => !set.has(p.authorId));
-            setPosts([...followed, ...rest]);
-            setLikedMap(await resolveLikedMap([...followed, ...rest], userId));
-            return;
-        }
-        setPosts(list);
-        setLikedMap(await resolveLikedMap(list, userId));
+        // Nyilvános feed
+        const list = (await apiListFeed(80)).filter(isPublicSocialPost);
+        const ordered = following.length
+            ? (() => {
+                const set = new Set([...following, userId]);
+                const followed = list.filter((p) => set.has(p.authorId));
+                const rest = list.filter((p) => !set.has(p.authorId));
+                return [...followed, ...rest];
+            })()
+            : list;
+        setPosts((prev) => applyFeedRefresh(ordered, prev));
+        setLikedMap(await resolveLikedMap(ordered, userId));
     }, []);
 
     useEffect(() => {
@@ -168,12 +172,15 @@ export default function CommunityPage() {
                     });
                     // #endregion
                     setUid(null);
+                    setMyEmail('');
                     setMe(null);
+                    setPendingPosts([]);
                     setReady(true);
                     return;
                 }
                 try {
                     setUid(user.uid);
+                    setMyEmail(String(user.email || ''));
                     const profile = await apiEnsureProfile(user.uid, {
                         name: user.displayName || undefined,
                         photoURL: user.photoURL || undefined,
@@ -194,10 +201,31 @@ export default function CommunityPage() {
                     const following = await apiListFollowingIds(user.uid);
                     if (cancelled) return;
                     setFollowingIds(following);
+                    if (isAdminEmail(user.email)) {
+                        try {
+                            if (sessionStorage.getItem('mmSocialPurgeV1') !== '1') {
+                                await apiPurgeSocialJunk();
+                                sessionStorage.setItem('mmSocialPurgeV1', '1');
+                                setPosts([]);
+                                setPendingPosts([]);
+                                setProfilePosts([]);
+                            }
+                        } catch {
+                            /* purge best-effort */
+                        }
+                    }
+                    if (cancelled) return;
                     await refreshFeed(user.uid, following);
                     if (cancelled) return;
+                    if (isAdminEmail(user.email)) {
+                        const pending = await apiListPendingPosts(80).catch(() => []);
+                        if (cancelled) return;
+                        setPendingPosts(pending);
+                    } else {
+                        setPendingPosts([]);
+                    }
                     const [p, g, c, health] = await Promise.all([
-                        apiListProfiles(30),
+                        apiListProfiles(80),
                         apiListGroups(),
                         apiListConversations(user.uid),
                         backendHealth().catch(() => null),
@@ -206,7 +234,7 @@ export default function CommunityPage() {
                     if (health && (health as any).ok) {
                         console.info('backend health', (health as any).data);
                     }
-                    setProfiles(p);
+                    setProfiles(p.filter((x) => !isPlaceholderSocialProfile(x)));
                     setGroups(g);
                     setConversations(c);
                 } catch (e: any) {
@@ -256,6 +284,11 @@ export default function CommunityPage() {
         setViewProfile(p);
         setFollowingView(await apiIsFollowing(uid, targetUid));
         setTab('profile');
+        try {
+            setProfilePosts(await apiListUserPosts(targetUid, 50));
+        } catch {
+            setProfilePosts([]);
+        }
     };
 
     const startMessage = async (targetUid: string) => {
@@ -274,41 +307,66 @@ export default function CommunityPage() {
                 otherName: other.displayName,
                 otherPhoto: other.photoURL,
                 lastMessage: '',
+                lastSenderId: uid,
+                initiatorId: uid,
                 updatedAtMs: Date.now(),
             };
         }
         setActiveChat(conv);
+        setReplyTo(null);
         setMessages(await apiListMessages(cid).catch(() => []));
         setChatDockOpen(true);
     };
 
-    const onCreatePost = async () => {
+    const onCreatePost = async (fileOverride?: File | null, daily = false) => {
         if (!me || busy) return;
-        if (!postText.trim() && !mediaFile) {
+        const file = fileOverride ?? mediaFile;
+        if (!postText.trim() && !file) {
             showToast(t('community.toast.postNeedsContent'));
+            return;
+        }
+        if (file && (file.type.startsWith('video/') || /\.(mp4|webm|mov|m4v|avi|mkv)$/i.test(file.name))) {
+            showToast(t('community.toast.videoNotAllowed'));
             return;
         }
         setBusy(true);
         try {
             let imageUrl: string | null = null;
-            let videoUrl: string | null = null;
-            if (mediaFile) {
+            if (file) {
                 showToast(t('community.toast.mediaUploading'));
                 const { uploadSocialMedia } = await import('../utils/socialMediaUpload');
-                const uploaded = await uploadSocialMedia(mediaFile, me.uid);
-                if (uploaded.kind === 'video') videoUrl = uploaded.url;
-                else imageUrl = uploaded.url;
+                const uploaded = await uploadSocialMedia(file, me.uid);
+                imageUrl = uploaded.url;
             }
-            const p = await apiCreatePost(me, postText, { imageUrl, videoUrl });
+            showToast(t('community.toast.aiChecking'));
+            const p = await apiCreatePost(me, postText, {
+                imageUrl,
+                videoUrl: null,
+                topic: 'feladat',
+                daily: daily && isAdminEmail(myEmail),
+            });
             setPostText('');
             setMediaFile(null);
-            setPosts((prev) => [p, ...prev]);
-            if (videoUrl) {
-                setShortIndex(0);
-                showToast(t('community.toast.videoShortPublished'));
+            const live = isPublicSocialPost(p);
+            if (live) {
+                setPosts((prev) => [p, ...prev.filter((x) => x.id !== p.id)]);
+                setMe((prev) => (prev ? { ...prev, postCount: (prev.postCount || 0) + 1 } : prev));
             } else {
-                showToast(t('community.toast.postPublished'));
+                setPendingPosts((prev) => [p, ...prev.filter((x) => x.id !== p.id)]);
             }
+            setProfilePosts((prev) =>
+                !viewProfile || viewProfile.uid === me.uid
+                    ? [p, ...prev.filter((x) => x.id !== p.id)]
+                    : prev
+            );
+            void refreshFeed(me.uid, followingIds).catch(() => undefined);
+            showToast(
+                p.dailyKey
+                    ? t('community.toast.dailyPublished')
+                    : live
+                      ? t('community.toast.postPublished')
+                      : t('community.toast.postPending')
+            );
         } catch (e: any) {
             showToast(e?.message || t('community.toast.postError'));
         } finally {
@@ -334,7 +392,7 @@ export default function CommunityPage() {
             }
             const fresh = await apiEnsureProfile(uid);
             setMe(fresh);
-            setProfiles(await apiListProfiles(30));
+            setProfiles(await apiListProfiles(80));
         } catch (e: any) {
             showToast(e?.message || t('community.toast.followError'));
         } finally {
@@ -342,11 +400,11 @@ export default function CommunityPage() {
         }
     };
 
-    const onCreateGroup = async () => {
+    const onCreateGroup = async (memberIds: string[]) => {
         if (!me || busy) return;
         setBusy(true);
         try {
-            const g = await apiCreateGroup(me, groupName, groupDesc, groupTopic);
+            const g = await apiCreateGroup(me, groupName, groupDesc, groupTopic, memberIds);
             setGroups((prev) => [g, ...prev]);
             setGroupName('');
             setGroupDesc('');
@@ -354,6 +412,7 @@ export default function CommunityPage() {
             showToast(t('community.toast.groupCreated'));
         } catch (e: any) {
             showToast(e?.message || t('community.toast.groupError'));
+            throw e;
         } finally {
             setBusy(false);
         }
@@ -386,8 +445,9 @@ export default function CommunityPage() {
                 profiles.find((p) => p.uid === activeChat.otherUid) ||
                 (await apiGetProfile(activeChat.otherUid));
             if (!other) throw new Error(t('community.toast.recipientMissing'));
-            await apiSendMessage(uid, activeChat.otherUid, msgDraft, me, other);
+            await apiSendMessage(uid, activeChat.otherUid, msgDraft, me, other, replyTo);
             setMsgDraft('');
+            setReplyTo(null);
             setMessages(await apiListMessages(activeChat.id));
             setConversations(await apiListConversations(uid));
         } catch (e: any) {
@@ -397,7 +457,23 @@ export default function CommunityPage() {
         }
     };
 
+    const onReactMessage = async (msg: DirectMessage, emoji: string) => {
+        if (!uid || !activeChat) return;
+        const cid = activeChat.id;
+        try {
+            const optimistic = toggleMessageReaction(msg.reactions, uid, emoji);
+            setMessages((prev) => prev.map((m) => (m.id === msg.id ? { ...m, reactions: optimistic } : m)));
+            const next = await apiReactToMessage(cid, msg.id, uid, emoji);
+            setMessages((prev) => prev.map((m) => (m.id === next.id ? next : m)));
+        } catch (e: any) {
+            const fresh = await apiListMessages(cid).catch(() => null);
+            if (fresh) setMessages(fresh);
+            showToast(e?.message || t('community.toast.reactError'));
+        }
+    };
+
     const onSelectConversation = async (c: ConversationPreview) => {
+        setReplyTo(null);
         setActiveChat(c);
         setMessages(await apiListMessages(c.id).catch(() => []));
     };
@@ -427,10 +503,10 @@ export default function CommunityPage() {
         };
     }, [tab, uid, activeChat?.id, chatDockOpen]);
 
-    // Live feed/shorts: új videók mindenkihez eljutnak
+    // Live feed
     useEffect(() => {
         if (!uid) return;
-        if (tab !== 'shorts' && tab !== 'feed') return;
+        if (tab !== 'feed') return;
         let cancelled = false;
         const tick = async () => {
             try {
@@ -447,6 +523,22 @@ export default function CommunityPage() {
             window.clearInterval(id);
         };
     }, [tab, uid, followingIds, refreshFeed]);
+
+    useEffect(() => {
+        if (!uid || tab !== 'profile') return;
+        const target = viewProfile && viewProfile.uid !== uid ? viewProfile.uid : uid;
+        let cancelled = false;
+        void apiListUserPosts(target, 50)
+            .then((list) => {
+                if (!cancelled) setProfilePosts(list);
+            })
+            .catch(() => {
+                if (!cancelled) setProfilePosts([]);
+            });
+        return () => {
+            cancelled = true;
+        };
+    }, [tab, uid, viewProfile?.uid]);
 
     const onSaveProfile = async () => {
         if (!me || busy) return;
@@ -471,22 +563,16 @@ export default function CommunityPage() {
         [profiles]
     );
 
-    const storyProfiles = useMemo(() => {
-        const myUid = me?.uid;
-        if (!myUid) return [];
-        const followed = profiles.filter((p) => followingIds.includes(p.uid) && p.uid !== myUid);
-        const rest = profiles.filter((p) => !followingIds.includes(p.uid) && p.uid !== myUid);
-        return [...followed, ...rest].slice(0, 12);
-    }, [profiles, followingIds, me?.uid]);
+    const storyProfiles = useMemo(
+        () => buildDailyStoryProfiles(posts, profiles, me?.uid),
+        [posts, profiles, me?.uid]
+    );
 
     const suggested = useMemo(() => {
         const myUid = me?.uid;
         if (!myUid) return [];
         return profiles.filter((p) => p.uid !== myUid && !followingIds.includes(p.uid)).slice(0, 5);
     }, [profiles, followingIds, me?.uid]);
-
-    const videoShorts = useMemo(() => buildVideoShorts(posts), [posts]);
-    const currentShort = videoShorts[Math.min(shortIndex, Math.max(0, videoShorts.length - 1))] || null;
 
     if (!ready) {
         return (
@@ -553,15 +639,40 @@ export default function CommunityPage() {
         );
     }
 
+    const isReviewer = isAdminEmail(myEmail);
     const profileShown =
         tab === 'profile' ? (viewProfile && viewProfile.uid !== me.uid ? viewProfile : me) : null;
+
+    const onReviewPost = async (postId: string, decision: 'approved' | 'rejected') => {
+        if (busy) return;
+        setBusy(true);
+        try {
+            const next = await apiReviewPost(postId, decision);
+            setPendingPosts((prev) => prev.filter((p) => p.id !== postId));
+            if (decision === 'approved') {
+                setPosts((prev) => [next, ...prev.filter((x) => x.id !== next.id)]);
+                if (next.authorId === me.uid) {
+                    setMe((prev) => (prev ? { ...prev, postCount: (prev.postCount || 0) + 1 } : prev));
+                }
+                showToast(t('community.toast.postApproved'));
+            } else {
+                showToast(t('community.toast.postRejected'));
+            }
+            setProfilePosts((prev) => prev.map((x) => (x.id === next.id ? next : x)));
+            void refreshFeed(me.uid, followingIds).catch(() => undefined);
+        } catch (e: any) {
+            showToast(e?.message || t('community.toast.postError'));
+        } finally {
+            setBusy(false);
+        }
+    };
 
     const navItems = [
         ['feed', t('community.tab.feed')],
         ['explore', t('community.tab.explore')],
-        ['shorts', t('community.tab.shorts')],
         ['messages', t('community.tab.messages')],
         ['groups', t('community.tab.groups')],
+        ...(isReviewer ? [['review', t('community.tab.review')] as const] : []),
         ['profile', t('community.tab.profile')],
     ] as const;
 
@@ -591,7 +702,10 @@ export default function CommunityPage() {
                             }}
                         >
                             <span className={`mm-ig-ico mm-ig-ico--${id}`} aria-hidden />
-                            <span className="mm-ig-nav-label">{label}</span>
+                            <span className="mm-ig-nav-label">
+                                {label}
+                                {id === 'review' && pendingPosts.length > 0 ? ` (${pendingPosts.length})` : ''}
+                            </span>
                         </button>
                     ))}
                 </nav>
@@ -648,6 +762,7 @@ export default function CommunityPage() {
                             mediaFile={mediaFile}
                             onMediaFileChange={setMediaFile}
                             onCreatePost={onCreatePost}
+                            canPostDaily={isReviewer}
                             busy={busy}
                             posts={posts}
                             likedMap={likedMap}
@@ -658,17 +773,6 @@ export default function CommunityPage() {
                             onPostChanged={(next) =>
                                 setPosts((prev) => prev.map((x) => (x.id === next.id ? next : x)))
                             }
-                        />
-                    )}
-
-                    {tab === 'shorts' && (
-                        <CommunityShortsTab
-                            currentShort={currentShort}
-                            shortIndex={Math.min(shortIndex, Math.max(0, videoShorts.length - 1))}
-                            shortsLength={videoShorts.length}
-                            onPrev={() => setShortIndex((i) => Math.max(0, i - 1))}
-                            onNext={() => setShortIndex((i) => Math.min(videoShorts.length - 1, i + 1))}
-                            onOpenProfile={openProfile}
                         />
                     )}
 
@@ -689,6 +793,8 @@ export default function CommunityPage() {
                         <CommunityGroupsTab
                             uid={uid}
                             me={me}
+                            profiles={profiles}
+                            followingIds={followingIds}
                             groupName={groupName}
                             groupTopic={groupTopic}
                             groupDesc={groupDesc}
@@ -710,15 +816,41 @@ export default function CommunityPage() {
                         <CommunityMessagesTab
                             uid={uid}
                             me={me}
+                            followingIds={followingIds}
                             conversations={conversations}
                             activeChat={activeChat}
                             messages={messages}
                             msgDraft={msgDraft}
                             onMsgDraftChange={setMsgDraft}
+                            replyTo={replyTo}
+                            onReplyTo={setReplyTo}
                             onSelectConversation={onSelectConversation}
                             onBackToInbox={() => setActiveChat(null)}
                             onSendMsg={onSendMsg}
+                            onReactMessage={onReactMessage}
+                            profiles={profiles}
+                            onGetProfile={async (id) =>
+                                profiles.find((p) => p.uid === id) || (await apiGetProfile(id))
+                            }
+                            onListUserPosts={(id) => apiListUserPosts(id, 50)}
+                            onOpenProfile={openProfile}
                             busy={busy}
+                        />
+                    )}
+
+                    {tab === 'review' && isReviewer && (
+                        <CommunityReviewTab
+                            me={me}
+                            posts={pendingPosts}
+                            likedMap={likedMap}
+                            busy={busy}
+                            onApprove={(id) => onReviewPost(id, 'approved')}
+                            onReject={(id) => onReviewPost(id, 'rejected')}
+                            onOpenProfile={openProfile}
+                            onMessage={startMessage}
+                            onPostChanged={(next) =>
+                                setPendingPosts((prev) => prev.map((x) => (x.id === next.id ? next : x)))
+                            }
                         />
                     )}
 
@@ -730,8 +862,9 @@ export default function CommunityPage() {
                             busy={busy}
                             usernameDraft={usernameDraft}
                             bioDraft={bioDraft}
-                            posts={posts.filter((p) => p.authorId === profileShown.uid)}
+                            posts={profilePosts}
                             likedMap={likedMap}
+                            onCreatePost={onCreatePost}
                             onUsernameDraftChange={setUsernameDraft}
                             onBioDraftChange={setBioDraft}
                             onToggleFollow={onToggleFollow}
@@ -739,9 +872,10 @@ export default function CommunityPage() {
                             onSaveProfile={onSaveProfile}
                             onOpenProfile={openProfile}
                             onMessage={startMessage}
-                            onPostChanged={(next) =>
-                                setPosts((prev) => prev.map((x) => (x.id === next.id ? next : x)))
-                            }
+                            onPostChanged={(next) => {
+                                setPosts((prev) => prev.map((x) => (x.id === next.id ? next : x)));
+                                setProfilePosts((prev) => prev.map((x) => (x.id === next.id ? next : x)));
+                            }}
                         />
                     )}
                 </div>
@@ -814,7 +948,10 @@ export default function CommunityPage() {
                         }}
                     >
                         <span className={`mm-ig-ico mm-ig-ico--${id}`} aria-hidden />
-                        <span className="mm-social-tab-label">{label}</span>
+                        <span className="mm-social-tab-label">
+                            {label}
+                            {id === 'review' && pendingPosts.length > 0 ? ` (${pendingPosts.length})` : ''}
+                        </span>
                     </button>
                 ))}
             </nav>
@@ -826,7 +963,10 @@ export default function CommunityPage() {
                     messages={messages}
                     msgDraft={msgDraft}
                     onMsgDraftChange={setMsgDraft}
+                    replyTo={replyTo}
+                    onReplyTo={setReplyTo}
                     onSend={onSendMsg}
+                    onReactMessage={onReactMessage}
                     busy={busy}
                     onClose={() => setChatDockOpen(false)}
                     onExpand={() => {

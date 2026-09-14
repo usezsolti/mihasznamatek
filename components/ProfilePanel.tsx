@@ -21,6 +21,9 @@ import {
 import { downloadLessonPackPdf } from '../utils/lessonPackPdf';
 import { readLessonPacks } from '../utils/saveLessonPack';
 import type { LessonPackRecord } from '../utils/lessonPack';
+import ProfileGameSummaries from './ProfileGameSummaries';
+import SuccessSpeedometer, { speedometerColor } from './SuccessSpeedometer';
+import type { RawGameResult } from '../utils/topicStats';
 
 interface GameResult {
     id: string;
@@ -119,7 +122,9 @@ export default function ProfilePanel({ embedded = false }: { embedded?: boolean 
         topicsPlayed: [],
         educationLevels: {}
     });
-    const [selectedFilter, setSelectedFilter] = useState<'all' | 'elementary' | 'highschool' | 'university' | 'erettsegi'>('all');
+    const [selectedFilter, setSelectedFilter] = useState<
+        'all' | 'elementary' | 'highschool' | 'university' | 'erettsegi' | 'kozponti'
+    >('all');
     const [myBookings, setMyBookings] = useState<BookingPayload[]>([]);
     const [lessonPacks, setLessonPacks] = useState<LessonPackRecord[]>([]);
     const [bookingsLoading, setBookingsLoading] = useState(false);
@@ -397,7 +402,10 @@ export default function ProfilePanel({ embedded = false }: { embedded?: boolean 
         if (selectedFilter === 'elementary') return result.educationLevel === 'elementary';
         if (selectedFilter === 'highschool') return result.educationLevel === 'highschool';
         if (selectedFilter === 'university') return result.educationLevel === 'university';
-        if (selectedFilter === 'erettsegi') return result.gameMode === 'erettsegi' || result.level;
+        if (selectedFilter === 'erettsegi') return result.gameMode === 'erettsegi' || !!result.level;
+        if (selectedFilter === 'kozponti') {
+            return result.educationLevel === 'kozponti' || result.gameMode === 'kozponti';
+        }
         return true;
     });
 
@@ -762,38 +770,44 @@ export default function ProfilePanel({ embedded = false }: { embedded?: boolean 
                             }} />
                         </div>
                         <h3 style={{ margin: '0 0 0.75rem 0', color: '#fff', fontSize: '1.1rem' }}>Badge-ek</h3>
+                        {(() => {
+                            const unlockedBadges = BADGE_DEFS.filter((badge) =>
+                                practiceProgress.badges.includes(badge.id)
+                            );
+                            if (unlockedBadges.length === 0) {
+                                return (
+                                    <p style={{ margin: 0, color: '#aaa', fontSize: '0.95rem' }}>
+                                        Még nincs megszerzett badge.
+                                    </p>
+                                );
+                            }
+                            return (
                         <div style={{
                             display: 'grid',
                             gridTemplateColumns: 'repeat(auto-fill, minmax(140px, 1fr))',
                             gap: '0.75rem'
                         }}>
-                            {BADGE_DEFS.map((badge) => {
-                                const unlocked = practiceProgress.badges.includes(badge.id);
-                                return (
+                            {unlockedBadges.map((badge) => (
                                     <div
                                         key={badge.id}
                                         title={badge.description}
                                         style={{
                                             padding: '0.75rem',
                                             borderRadius: '14px',
-                                            border: unlocked
-                                                ? '1px solid rgba(255, 215, 0, 0.7)'
-                                                : '1px solid rgba(255,255,255,0.15)',
-                                            background: unlocked
-                                                ? 'rgba(255, 215, 0, 0.12)'
-                                                : 'rgba(0,0,0,0.25)',
-                                            opacity: unlocked ? 1 : 0.45,
+                                            border: '1px solid rgba(255, 215, 0, 0.7)',
+                                            background: 'rgba(255, 215, 0, 0.12)',
                                             textAlign: 'center'
                                         }}
                                     >
                                         <div style={{ fontSize: '1.4rem', marginBottom: '0.25rem' }}>{badge.icon}</div>
-                                        <div style={{ fontSize: '0.85rem', fontWeight: 700, color: unlocked ? '#ffd700' : '#ccc' }}>
+                                        <div style={{ fontSize: '0.85rem', fontWeight: 700, color: '#ffd700' }}>
                                             {badge.title}
                                         </div>
                                     </div>
-                                );
-                            })}
+                            ))}
                         </div>
+                            );
+                        })()}
                     </div>
 
                     {/* Óráim — foglalások */}
@@ -1076,6 +1090,47 @@ export default function ProfilePanel({ embedded = false }: { embedded?: boolean 
                         </div>
                     )}
 
+                    <div className="profile-game-overview">
+                        <h2 className="profile-game-heading">Játékaid összegzője</h2>
+                        <p className="profile-game-lead">
+                            Minden lejátszott játékból összesítjük, mennyi sikerült és mennyit hibáztál.
+                        </p>
+                        {stats.totalGames > 0 && (
+                        <div className="profile-game-overall-card topic-card speedometer-card">
+                            <div className="card-header">
+                                <div className="topic-icon" style={{ backgroundColor: speedometerColor(
+                                    stats.totalQuestions > 0
+                                        ? Math.round((stats.totalCorrect / stats.totalQuestions) * 100)
+                                        : 0
+                                ) }}>
+                                    🎯
+                                </div>
+                                <div className="topic-info">
+                                    <h3 className="topic-title">Összes játék</h3>
+                                </div>
+                            </div>
+                            <SuccessSpeedometer
+                                percent={
+                                    stats.totalQuestions > 0
+                                        ? Math.round((stats.totalCorrect / stats.totalQuestions) * 100)
+                                        : 0
+                                }
+                                color={speedometerColor(
+                                    stats.totalQuestions > 0
+                                        ? Math.round((stats.totalCorrect / stats.totalQuestions) * 100)
+                                        : 0
+                                )}
+                                label={`${stats.totalCorrect} helyes · ${stats.totalWrong} hibás`}
+                                sublabel={`${stats.totalGames} játék · ${stats.totalQuestions} kérdés`}
+                            />
+                        </div>
+                        )}
+                        <ProfileGameSummaries
+                            results={gameResults as RawGameResult[]}
+                            onOpen={(href) => router.push(href)}
+                        />
+                    </div>
+
                     {/* Statistics */}
                     <div style={{
                         display: 'grid',
@@ -1126,6 +1181,29 @@ export default function ProfilePanel({ embedded = false }: { embedded?: boolean 
                                 fontSize: '1rem'
                             }}>
                                 Helyes válaszok
+                            </div>
+                        </div>
+
+                        <div style={{
+                            background: 'rgba(255, 105, 180, 0.12)',
+                            border: '2px solid rgba(255, 105, 180, 0.55)',
+                            borderRadius: '20px',
+                            padding: '1.5rem',
+                            textAlign: 'center'
+                        }}>
+                            <div style={{
+                                fontSize: '2.5rem',
+                                fontWeight: 'bold',
+                                color: '#ff69b4',
+                                marginBottom: '0.5rem'
+                            }}>
+                                {stats.totalWrong}
+                            </div>
+                            <div style={{
+                                color: '#ffffff',
+                                fontSize: '1rem'
+                            }}>
+                                Hibás válaszok
                             </div>
                         </div>
 
@@ -1298,6 +1376,24 @@ export default function ProfilePanel({ embedded = false }: { embedded?: boolean 
                         >
                             📝 Érettségire felkészülés
                         </button>
+                        <button
+                            onClick={() => setSelectedFilter('kozponti')}
+                            style={{
+                                padding: '0.75rem 1.5rem',
+                                background: selectedFilter === 'kozponti'
+                                    ? 'rgba(57, 255, 20, 0.3)'
+                                    : 'rgba(255, 255, 255, 0.1)',
+                                border: `2px solid ${selectedFilter === 'kozponti' ? '#39ff14' : 'rgba(57, 255, 20, 0.5)'}`,
+                                borderRadius: '15px',
+                                color: '#ffffff',
+                                fontSize: '1rem',
+                                fontWeight: '600',
+                                cursor: 'pointer',
+                                transition: 'all 0.3s ease'
+                            }}
+                        >
+                            📄 Központi felvételi
+                        </button>
                     </div>
 
                     {/* Game Results */}
@@ -1402,7 +1498,7 @@ export default function ProfilePanel({ embedded = false }: { embedded?: boolean 
                                                     fontSize: '0.8rem',
                                                     color: '#ffffff'
                                                 }}>
-                                                    Helyes/Összes
+                                                    {result.correct} helyes · {Math.max(0, (result.total || 0) - (result.correct || 0))} hibás
                                                 </div>
                                             </div>
                                             <div style={{ textAlign: 'center' }}>

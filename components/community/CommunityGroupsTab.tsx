@@ -1,18 +1,21 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import type { SocialProfile, StudyGroup } from '../../utils/socialTypes';
 import { useLang } from '../../utils/i18n';
 import CommunityGroupRoom from './CommunityGroupRoom';
+import CommunityAvatar from './CommunityAvatar';
 
 type CommunityGroupsTabProps = {
     uid: string;
     me: SocialProfile;
+    profiles: SocialProfile[];
+    followingIds: string[];
     groupName: string;
     groupTopic: string;
     groupDesc: string;
     onGroupNameChange: (value: string) => void;
     onGroupTopicChange: (value: string) => void;
     onGroupDescChange: (value: string) => void;
-    onCreateGroup: () => void;
+    onCreateGroup: (memberIds: string[]) => void | Promise<void>;
     groups: StudyGroup[];
     onJoinLeave: (g: StudyGroup) => void;
     onGroupUpdated: (next: StudyGroup) => void;
@@ -23,6 +26,8 @@ type CommunityGroupsTabProps = {
 export default function CommunityGroupsTab({
     uid,
     me,
+    profiles,
+    followingIds,
     groupName,
     groupTopic,
     groupDesc,
@@ -38,6 +43,31 @@ export default function CommunityGroupsTab({
 }: CommunityGroupsTabProps) {
     const { t } = useLang();
     const [active, setActive] = useState<StudyGroup | null>(null);
+    const [pickedIds, setPickedIds] = useState<string[]>([]);
+    const [peopleQ, setPeopleQ] = useState('');
+
+    const candidates = useMemo(() => {
+        const q = peopleQ.trim().toLowerCase();
+        return profiles
+            .filter((p) => p.uid !== uid)
+            .filter((p) => {
+                if (!q) return true;
+                return (
+                    p.displayName.toLowerCase().includes(q) ||
+                    p.username.toLowerCase().includes(q)
+                );
+            })
+            .sort((a, b) => {
+                const af = followingIds.includes(a.uid) ? 1 : 0;
+                const bf = followingIds.includes(b.uid) ? 1 : 0;
+                if (af !== bf) return bf - af;
+                return a.displayName.localeCompare(b.displayName, 'hu');
+            });
+    }, [profiles, uid, peopleQ, followingIds]);
+
+    const togglePerson = (id: string) => {
+        setPickedIds((prev) => (prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]));
+    };
 
     if (active && active.memberIds.includes(uid)) {
         return (
@@ -80,7 +110,85 @@ export default function CommunityGroupsTab({
                     maxLength={200}
                     rows={2}
                 />
-                <button type="button" className="mm-social-primary" onClick={onCreateGroup} disabled={busy}>
+
+                <div className="mm-group-people">
+                    <div className="mm-group-people-head">
+                        <strong>{t('community.groups.peopleTitle')}</strong>
+                        <span className="mm-social-muted">
+                            {t('community.groups.selectedCount', { n: String(pickedIds.length) })}
+                        </span>
+                    </div>
+                    <p className="mm-social-muted" style={{ margin: 0 }}>
+                        {t('community.groups.peopleHint')}
+                    </p>
+                    <input
+                        value={peopleQ}
+                        onChange={(e) => setPeopleQ(e.target.value)}
+                        placeholder={t('community.groups.peopleSearch')}
+                        maxLength={60}
+                    />
+                    <div className="mm-group-people-list" role="list">
+                        <div className="mm-group-person is-self" role="listitem">
+                            <CommunityAvatar url={me.photoURL} name={me.displayName} size={36} />
+                            <span className="mm-group-person-meta">
+                                <strong>{me.displayName}</strong>
+                                <small>{t('community.groups.youOwner')}</small>
+                            </span>
+                            <span className="mm-group-person-mark" aria-hidden>
+                                ✓
+                            </span>
+                        </div>
+                        {candidates.length === 0 && (
+                            <p className="mm-social-empty">
+                                {profiles.filter((p) => p.uid !== uid).length === 0
+                                    ? t('community.groups.peopleEmpty')
+                                    : t('community.groups.peopleNoneMatch')}
+                            </p>
+                        )}
+                        {candidates.map((p) => {
+                            const on = pickedIds.includes(p.uid);
+                            return (
+                                <button
+                                    key={p.uid}
+                                    type="button"
+                                    role="listitem"
+                                    className={`mm-group-person${on ? ' is-on' : ''}`}
+                                    onClick={() => togglePerson(p.uid)}
+                                    aria-pressed={on}
+                                >
+                                    <CommunityAvatar url={p.photoURL} name={p.displayName} size={36} />
+                                    <span className="mm-group-person-meta">
+                                        <strong>{p.displayName}</strong>
+                                        <small>
+                                            @{p.username}
+                                            {followingIds.includes(p.uid)
+                                                ? ` · ${t('community.explore.following')}`
+                                                : ''}
+                                        </small>
+                                    </span>
+                                    <span className="mm-group-person-mark" aria-hidden>
+                                        {on ? '✓' : '+'}
+                                    </span>
+                                </button>
+                            );
+                        })}
+                    </div>
+                </div>
+
+                <button
+                    type="button"
+                    className="mm-social-primary"
+                    onClick={async () => {
+                        try {
+                            await onCreateGroup(pickedIds);
+                            setPickedIds([]);
+                            setPeopleQ('');
+                        } catch {
+                            /* a szülő már jelezte a hibát */
+                        }
+                    }}
+                    disabled={busy}
+                >
                     {t('community.groups.create')}
                 </button>
             </div>

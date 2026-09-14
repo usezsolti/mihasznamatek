@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useRef, useState, type ChangeEvent } from 'react';
 import type { SocialPost, SocialProfile } from '../../utils/socialTypes';
+import { socialPostModerationStatus } from '../../utils/socialDomain';
 import { useLang } from '../../utils/i18n';
 import CommunityAvatar from './CommunityAvatar';
 import CommunityPostCard from './CommunityPostCard';
@@ -21,9 +22,10 @@ type CommunityProfileTabProps = {
     onOpenProfile: (uid: string) => void;
     onMessage: (uid: string) => void;
     onPostChanged: (next: SocialPost) => void;
+    onCreatePost?: (file?: File | null) => void;
 };
 
-type ProfileView = 'grid' | 'reels' | 'saved' | 'tagged';
+type ProfileView = 'grid' | 'saved' | 'tagged';
 
 export default function CommunityProfileTab({
     me,
@@ -42,12 +44,14 @@ export default function CommunityProfileTab({
     onOpenProfile,
     onMessage,
     onPostChanged,
+    onCreatePost,
 }: CommunityProfileTabProps) {
     const { t } = useLang();
     const isSelf = profileShown.uid === me.uid;
     const [editing, setEditing] = useState(false);
     const [view, setView] = useState<ProfileView>('grid');
     const [lightbox, setLightbox] = useState<SocialPost | null>(null);
+    const fileRef = useRef<HTMLInputElement>(null);
 
     const bioLines = (profileShown.bio || '')
         .split(/\n|•/)
@@ -61,9 +65,6 @@ export default function CommunityProfileTab({
         <div className="mm-ig-profile">
             <div className="mm-ig-profile-head">
                 <div className="mm-ig-profile-avatar-wrap">
-                    <span className="mm-ig-profile-note" aria-hidden>
-                        Note…
-                    </span>
                     <CommunityAvatar url={profileShown.photoURL} name={profileShown.displayName} size={150} />
                 </div>
 
@@ -170,18 +171,35 @@ export default function CommunityProfileTab({
                 </div>
             )}
 
-            <div className="mm-ig-highlights" aria-label={t('community.profile.highlights')}>
-                <button type="button" className="mm-ig-highlight is-new" disabled title={t('community.messages.comingSoon')}>
-                    <span>+</span>
-                    <small>{t('community.profile.new')}</small>
-                </button>
-            </div>
+            {isSelf && onCreatePost && (
+                <div className="mm-ig-highlights" aria-label={t('community.profile.highlights')}>
+                    <input
+                        ref={fileRef}
+                        type="file"
+                        accept="image/*"
+                        hidden
+                        onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                            const file = e.target.files?.[0] || null;
+                            e.target.value = '';
+                            if (file) onCreatePost(file);
+                        }}
+                    />
+                    <button
+                        type="button"
+                        className="mm-ig-highlight is-new"
+                        disabled={busy}
+                        title={t('community.feed.share')}
+                        onClick={() => fileRef.current?.click()}
+                    >
+                        <span>+</span>
+                    </button>
+                </div>
+            )}
 
             <div className="mm-ig-profile-tabs" role="tablist">
                 {(
                     [
                         ['grid', '▦', t('community.profile.tabPosts')],
-                        ['reels', '▶', t('community.profile.tabShorts')],
                         ['saved', '🔖', t('community.profile.tabSaved')],
                         ['tagged', '👤', t('community.profile.tabTagged')],
                     ] as const
@@ -225,6 +243,12 @@ export default function CommunityProfileTab({
                             ) : (
                                 <span className="mm-ig-grid-text">{p.text.slice(0, 80)}</span>
                             )}
+                            {socialPostModerationStatus(p) === 'pending' && (
+                                <span className="mm-ig-grid-pending">{t('community.post.pending')}</span>
+                            )}
+                            {socialPostModerationStatus(p) === 'rejected' && (
+                                <span className="mm-ig-grid-pending is-rejected">{t('community.post.rejected')}</span>
+                            )}
                         </button>
                     ))}
                 </div>
@@ -232,11 +256,9 @@ export default function CommunityProfileTab({
 
             {view !== 'grid' && (
                 <p className="mm-ig-profile-empty">
-                    {view === 'reels'
-                        ? t('community.profile.comingShorts')
-                        : view === 'saved'
-                          ? t('community.profile.comingSaved')
-                          : t('community.profile.comingTagged')}
+                    {view === 'saved'
+                        ? t('community.profile.comingSaved')
+                        : t('community.profile.comingTagged')}
                 </p>
             )}
 

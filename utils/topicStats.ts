@@ -12,6 +12,8 @@ import { PATH_LESSON_COUNT } from './topicPath';
 import { textbookGradeFromTopicId } from './hsTextbook';
 import { elemNatGradeFromTopicId } from './elemNatCatalog';
 import { isSkillNodeId, type SkillNodeId } from './skillTree';
+import { KOZPONTI_PAPERS } from './game/kozpontiPapers';
+import { ERETTSEGI_PAPERS } from './game/erettsegiPapers';
 
 export type RawGameResult = {
     id?: string;
@@ -26,8 +28,9 @@ export type RawGameResult = {
     educationLevel?: string;
     gameMode?: string;
     level?: string;
-    grade?: string;
+    grade?: string | number;
     subject?: string;
+    paperId?: string;
 };
 
 export type BestSession = {
@@ -150,6 +153,141 @@ export function aggregateTopicStats(results: RawGameResult[]): TopicSessionAggre
 
 export function sortResultsNewestFirst(results: RawGameResult[]): RawGameResult[] {
     return [...results].sort((a, b) => toMs(b.completedAt) - toMs(a.completedAt));
+}
+
+export type PlayedGameSummary = {
+    key: string;
+    title: string;
+    icon: string;
+    color: string;
+    educationLevel?: string;
+    gameMode?: string;
+    topicId?: string;
+    paperId?: string;
+    totalGames: number;
+    totalCorrect: number;
+    totalQuestions: number;
+    totalWrong: number;
+    successRate: number;
+    lastPlayedAt: any | null;
+};
+
+function paperMetaTitle(paperId: string): string | null {
+    const id = String(paperId || '').toLowerCase();
+    if (!id) return null;
+    const kf = KOZPONTI_PAPERS.find((p) => p.id === id || p.id === paperId);
+    if (kf) return `Központi ${kf.year} · ${kf.title}`;
+    const er = ERETTSEGI_PAPERS.find((p) => p.id === id || p.id === paperId);
+    if (er) {
+        const level = er.level === 'emelt' ? 'emelt' : 'közép';
+        return `Érettségi ${er.year} ${er.title} · ${level}`;
+    }
+    return null;
+}
+
+export function playedGameTitle(result: RawGameResult): string {
+    const paperTitle = paperMetaTitle(String(result.paperId || ''));
+    if (result.topicTitle && !/unknown|ismeretlen/i.test(result.topicTitle)) {
+        return result.topicTitle;
+    }
+    if (paperTitle) return paperTitle;
+    const topicId = String(result.topicId || result.topic || '');
+    const level = result.educationLevel as EducationLevelId | undefined;
+    const catalog = topicId ? findCatalogTopic(topicId, level) : null;
+    if (catalog?.title) return catalog.title;
+    if (result.gameMode === 'blitz') return 'Villámjáték';
+    if (result.gameMode === 'daily') return 'Napi gyakorlás';
+    if (result.gameMode === 'kozponti' || result.educationLevel === 'kozponti') {
+        return topicId ? `Központi · ${topicId}` : 'Központi felvételi';
+    }
+    return topicId || result.topicTitle || 'Játék';
+}
+
+export function playedGameLooks(result: RawGameResult): { icon: string; color: string } {
+    const topicId = String(result.topicId || result.topic || '');
+    const level = result.educationLevel as EducationLevelId | undefined;
+    const catalog = topicId ? findCatalogTopic(topicId, level) : null;
+    if (catalog) return { icon: catalog.icon, color: catalog.color };
+    if (result.gameMode === 'erettsegi' || result.level) return { icon: '📝', color: '#ffd700' };
+    if (result.gameMode === 'kozponti' || result.educationLevel === 'kozponti' || result.paperId) {
+        return { icon: '📄', color: '#39ff14' };
+    }
+    if (result.educationLevel === 'elementary') return { icon: '🎒', color: '#39ff14' };
+    if (result.educationLevel === 'highschool') return { icon: '📚', color: '#4fc3f7' };
+    if (result.educationLevel === 'university') return { icon: '🎓', color: '#ff69b4' };
+    if (result.gameMode === 'blitz') return { icon: '⚡', color: '#ffd700' };
+    return { icon: '🧮', color: '#39ff14' };
+}
+
+export function gameResultGroupKey(result: RawGameResult): string {
+    const paper = String(result.paperId || '').trim().toLowerCase();
+    if (paper) return `paper:${paper}`;
+    const topic = String(result.topicId || result.topic || '').trim().toLowerCase();
+    if (topic) return `topic:${topic}`;
+    const title = String(result.topicTitle || '').trim().toLowerCase();
+    if (title) return `title:${title}`;
+    return `mode:${String(result.gameMode || result.educationLevel || 'other').toLowerCase()}`;
+}
+
+export function aggregatePlayedGames(results: RawGameResult[]): PlayedGameSummary[] {
+    const groups = new Map<string, RawGameResult[]>();
+    for (const result of results) {
+        const key = gameResultGroupKey(result);
+        const list = groups.get(key) || [];
+        list.push(result);
+        groups.set(key, list);
+    }
+
+    const summaries: PlayedGameSummary[] = [];
+    for (const [key, list] of groups) {
+        const agg = aggregateTopicStats(list);
+        const newest = sortResultsNewestFirst(list)[0];
+        const looks = playedGameLooks(newest || list[0]);
+        summaries.push({
+            key,
+            title: playedGameTitle(newest || list[0]),
+            icon: looks.icon,
+            color: looks.color,
+            educationLevel: newest?.educationLevel || newest?.gameMode,
+            gameMode: newest?.gameMode,
+            topicId: newest?.topicId || newest?.topic,
+            paperId: newest?.paperId,
+            totalGames: agg.totalGames,
+            totalCorrect: agg.totalCorrect,
+            totalQuestions: agg.totalQuestions,
+            totalWrong: agg.totalWrong,
+            successRate: agg.averageSuccessRate,
+            lastPlayedAt: agg.lastPlayedAt,
+        });
+    }
+
+    return summaries.sort((a, b) => toMs(b.lastPlayedAt) - toMs(a.lastPlayedAt));
+}
+
+export function playedGameHref(summary: PlayedGameSummary): string | null {
+    const paperId = String(summary.paperId || '');
+    if (paperId.startsWith('kf-') || paperId.startsWith('2020-') || /g[68]/.test(paperId)) {
+        return `/game?kozponti=true&paper=${encodeURIComponent(paperId)}`;
+    }
+    if (paperId.startsWith('er-')) {
+        const level = paperId.includes('emelt') ? 'emelt' : 'kozep';
+        return `/game?erettsegi=true&paperId=${encodeURIComponent(paperId)}&level=${level}`;
+    }
+    const topicId = String(summary.topicId || '');
+    if (!topicId) return null;
+    const level = (summary.educationLevel || 'university') as EducationLevelId;
+    const safeLevel: EducationLevelId =
+        level === 'elementary' ||
+        level === 'highschool' ||
+        level === 'university' ||
+        level === 'erettsegi' ||
+        level === 'kozponti'
+            ? level
+            : 'university';
+    if (safeLevel === 'kozponti') {
+        return `/game?kozponti=true&paper=${encodeURIComponent(topicId)}`;
+    }
+    return buildTopicStatsHref(topicId, safeLevel);
 }
 
 export function pathLessonSummary(tp?: TopicProgress | null): {

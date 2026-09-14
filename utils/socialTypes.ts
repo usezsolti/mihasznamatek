@@ -15,6 +15,8 @@ export type SocialProfile = {
     updatedAt?: unknown;
 };
 
+export type SocialPostModeration = 'pending' | 'approved' | 'rejected';
+
 export type SocialPost = {
     id: string;
     authorId: string;
@@ -22,18 +24,44 @@ export type SocialPost = {
     authorUsername: string;
     authorPhoto: string;
     text: string;
+    topic?: string | null;
     imageUrl?: string | null;
     videoUrl?: string | null;
     likeCount: number;
     commentCount: number;
     createdAt?: unknown;
     createdAtMs: number;
+    moderationStatus?: SocialPostModeration | null;
+    /** Budapest YYYY-MM-DD — ha kitöltött, az aznapi kiemelt poszt. */
+    dailyKey?: string | null;
 };
 
 export type PostMedia = {
     imageUrl?: string | null;
     videoUrl?: string | null;
+    topic?: string | null;
+    daily?: boolean;
 };
+
+export const MATH_POST_TOPICS = [
+    'feladat',
+    'megoldas',
+    'kerdes',
+    'algebra',
+    'geometria',
+    'fuggvenyek',
+    'szamitas',
+    'valoszinuseg',
+    'erettsegi',
+    'felveteli',
+    'egyetem',
+] as const;
+
+export type MathPostTopic = (typeof MATH_POST_TOPICS)[number];
+
+export function isMathPostTopic(value: string | null | undefined): value is MathPostTopic {
+    return !!value && (MATH_POST_TOPICS as readonly string[]).includes(value);
+}
 
 export type SocialComment = {
     id: string;
@@ -66,11 +94,20 @@ export type GroupMessage = {
     createdAtMs: number;
 };
 
+export type MessageReaction = {
+    emoji: string;
+    uids: string[];
+};
+
 export type DirectMessage = {
     id: string;
     senderId: string;
     text: string;
     createdAtMs: number;
+    replyToId?: string | null;
+    replyToText?: string | null;
+    replyToSenderId?: string | null;
+    reactions?: MessageReaction[];
 };
 
 export type ConversationPreview = {
@@ -80,6 +117,8 @@ export type ConversationPreview = {
     otherPhoto: string;
     lastMessage: string;
     updatedAtMs: number;
+    lastSenderId?: string | null;
+    initiatorId?: string | null;
 };
 
 export type MathShort = {

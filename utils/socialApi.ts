@@ -83,10 +83,38 @@ export async function apiListFeed(limit = 40): Promise<SocialPost[]> {
     return viaBackend('listFeed', { limit }, () => clientSocial.listFeedPosts({ limit }));
 }
 
+export async function apiListUserPosts(uid: string, limit = 40): Promise<SocialPost[]> {
+    return viaBackend('listUserPosts', { uid, limit }, () => clientSocial.listUserPosts(uid, limit));
+}
+
+export async function apiListPendingPosts(limit = 80): Promise<SocialPost[]> {
+    return viaBackend('listPendingPosts', { limit }, async () => {
+        throw new Error('A jóváhagyási lista csak a szerveren érhető el.');
+    });
+}
+
+export async function apiReviewPost(
+    postId: string,
+    decision: 'approved' | 'rejected'
+): Promise<SocialPost> {
+    return viaBackend('reviewPost', { postId, decision }, async () => {
+        throw new Error('A bírálat csak a szerveren történhet.');
+    });
+}
+
+export async function apiPurgeSocialJunk(): Promise<{
+    deletedPosts: number;
+    deletedProfiles: number;
+}> {
+    return viaBackend('purgeSocialJunk', {}, async () => {
+        throw new Error('A törlés csak a szerveren történhet.');
+    });
+}
+
 export async function apiCreatePost(
     author: SocialProfile,
     text: string,
-    media?: { imageUrl?: string | null; videoUrl?: string | null }
+    media?: { imageUrl?: string | null; videoUrl?: string | null; topic?: string | null; daily?: boolean }
 ): Promise<SocialPost> {
     return viaBackend(
         'createPost',
@@ -94,8 +122,12 @@ export async function apiCreatePost(
             text,
             imageUrl: media?.imageUrl || null,
             videoUrl: media?.videoUrl || null,
+            topic: media?.topic || null,
+            daily: !!media?.daily,
         },
-        () => clientSocial.createPost(author, text, media?.imageUrl, media?.videoUrl)
+        async () => {
+            throw new Error('A posztot a szerver AI-szűrője ellenőrzi. Próbáld újra.');
+        }
     );
 }
 
@@ -114,7 +146,9 @@ export async function apiAddComment(
     author: SocialProfile,
     text: string
 ): Promise<SocialComment> {
-    return viaBackend('addComment', { postId, text }, () => clientSocial.addComment(postId, author, text));
+    return viaBackend('addComment', { postId, text }, async () => {
+        throw new Error('A hozzászólást a szerver AI-szűrője ellenőrzi. Próbáld újra.');
+    });
 }
 
 export async function apiListComments(postId: string): Promise<SocialComment[]> {
@@ -147,10 +181,11 @@ export async function apiCreateGroup(
     owner: SocialProfile,
     name: string,
     description: string,
-    topic: string
+    topic: string,
+    memberIds: string[] = []
 ): Promise<StudyGroup> {
-    return viaBackend('createGroup', { name, description, topic }, () =>
-        clientSocial.createStudyGroup(owner, name, description, topic)
+    return viaBackend('createGroup', { name, description, topic, memberIds }, () =>
+        clientSocial.createStudyGroup(owner, name, description, topic, memberIds)
     );
 }
 
@@ -171,10 +206,19 @@ export async function apiSendMessage(
     toUid: string,
     text: string,
     from: SocialProfile,
-    to: SocialProfile
+    to: SocialProfile,
+    reply?: DirectMessage | null
 ): Promise<void> {
-    await viaBackend('sendMessage', { toUid, text }, () =>
-        clientSocial.sendDirectMessage(fromUid, toUid, text, from, to)
+    await viaBackend(
+        'sendMessage',
+        {
+            toUid,
+            text,
+            replyToId: reply?.id || '',
+            replyToText: reply?.text || '',
+            replyToSenderId: reply?.senderId || '',
+        },
+        () => clientSocial.sendDirectMessage(fromUid, toUid, text, from, to, reply)
     );
 }
 
@@ -184,6 +228,19 @@ export async function apiListConversations(uid: string): Promise<ConversationPre
 
 export async function apiListMessages(conversationId: string): Promise<DirectMessage[]> {
     return viaBackend('listMessages', { conversationId }, () => clientSocial.listMessages(conversationId));
+}
+
+export async function apiReactToMessage(
+    conversationId: string,
+    messageId: string,
+    uid: string,
+    emoji: string
+): Promise<DirectMessage> {
+    return viaBackend(
+        'reactToMessage',
+        { conversationId, messageId, emoji },
+        () => clientSocial.reactToMessage(conversationId, messageId, uid, emoji)
+    );
 }
 
 export { clientSocial };

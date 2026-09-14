@@ -209,14 +209,51 @@ service cloud.firestore {
     }
 
     match /posts/{postId} {
-      allow read: if signedIn();
+      allow read: if signedIn() && (
+        isAdmin()
+        || resource.data.authorId == request.auth.uid
+        || !('moderationStatus' in resource.data)
+        || resource.data.moderationStatus == 'approved'
+      );
       allow create: if signedIn()
         && request.resource.data.authorId == request.auth.uid
         && request.resource.data.text is string
-        && request.resource.data.text.size() <= 2000;
-      allow update: if signedIn() && resource.data.authorId == request.auth.uid
-        && request.resource.data.text is string
-        && request.resource.data.text.size() <= 2000;
+        && request.resource.data.text.size() <= 2000
+        && (
+          !('videoUrl' in request.resource.data)
+          || request.resource.data.videoUrl == null
+          || request.resource.data.videoUrl == ''
+        )
+        && (
+          (isAdmin() && (
+            !('moderationStatus' in request.resource.data)
+            || request.resource.data.moderationStatus in ['pending', 'approved']
+          ))
+          || request.resource.data.moderationStatus == 'pending'
+        )
+        && (
+          isAdmin()
+          || !('dailyKey' in request.resource.data)
+          || request.resource.data.dailyKey == null
+          || request.resource.data.dailyKey == ''
+        );
+      allow update: if signedIn() && (
+        (isAdmin()
+          && request.resource.data.diff(resource.data).affectedKeys()
+            .hasOnly(['moderationStatus', 'dailyKey']))
+        || (resource.data.authorId == request.auth.uid
+          && request.resource.data.text is string
+          && request.resource.data.text.size() <= 2000
+          && request.resource.data.moderationStatus == resource.data.moderationStatus
+          && (
+            !('videoUrl' in request.resource.data)
+            || request.resource.data.videoUrl == resource.data.videoUrl
+            || request.resource.data.videoUrl == null
+            || request.resource.data.videoUrl == ''
+          ))
+        || request.resource.data.diff(resource.data).affectedKeys()
+            .hasOnly(['likeCount', 'commentCount'])
+      );
       allow delete: if isAdmin() || (signedIn() && resource.data.authorId == request.auth.uid);
 
       match /likes/{likeUid} {
@@ -241,7 +278,9 @@ service cloud.firestore {
       allow read: if signedIn();
       allow create: if signedIn()
         && request.resource.data.ownerId == request.auth.uid
-        && request.auth.uid in request.resource.data.memberIds;
+        && request.auth.uid in request.resource.data.memberIds
+        && request.resource.data.memberIds.size() <= 50
+        && request.resource.data.memberCount == request.resource.data.memberIds.size();
       // Owner teljes update; tag: join/leave VAGY whiteboardId csatolás
       allow update: if signedIn() && (
         resource.data.ownerId == request.auth.uid
@@ -288,7 +327,7 @@ service cloud.firestore {
       allow update: if signedIn()
         && request.auth.uid in resource.data.participants
         && request.resource.data.diff(resource.data).affectedKeys()
-             .hasOnly(['lastMessage', 'updatedAtMs', 'updatedAt', 'meta']);
+             .hasOnly(['lastMessage', 'updatedAtMs', 'updatedAt', 'meta', 'participantMeta', 'lastSenderId', 'initiatorId']);
 
       match /messages/{messageId} {
         allow read: if signedIn()
@@ -296,6 +335,9 @@ service cloud.firestore {
         allow create: if signedIn()
           && request.resource.data.senderId == request.auth.uid
           && request.auth.uid in get(/databases/$(database)/documents/conversations/$(conversationId)).data.participants;
+        allow update: if signedIn()
+          && request.auth.uid in get(/databases/$(database)/documents/conversations/$(conversationId)).data.participants
+          && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['reactions']);
       }
     }
 

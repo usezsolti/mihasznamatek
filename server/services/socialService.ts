@@ -49,10 +49,23 @@ import {
     normalizeCommentText,
 
     normalizeGroupInput,
+    resolveGroupMemberIds,
 
     normalizeMessageText,
+    buildMessageReply,
+    mapDirectMessage,
+    toggleMessageReaction,
+    assertConversationParticipant,
 
-    normalizePostText,
+    assertMathOnlyPost,
+    assertNoVideoPost,
+    assertPublicSocialPost,
+    canViewSocialPost,
+    isPublicSocialPost,
+    socialTodayKey,
+    sortSocialFeed,
+    isPlaceholderSocialProfile,
+    isInvalidSocialAuthor,
 
     normalizeUsernameOrThrow,
 
@@ -307,30 +320,89 @@ export async function listProfiles(token: string, limit = 30): Promise<SocialPro
 
 
 
+function sortPostsNewest(posts: SocialPost[]): SocialPost[] {
+    return sortSocialFeed(posts);
+}
+
 export async function listFeed(token: string, limit = 40): Promise<SocialPost[]> {
-
     try {
-
         const rows = await runQuery(token, {
-
             from: [{ collectionId: 'posts' }],
-
             orderBy: [{ field: { fieldPath: 'createdAtMs' }, direction: 'DESCENDING' }],
-
             limit,
-
         });
-
-        return rows.map(mapSocialPost);
-
+        const mapped = rows.map(mapSocialPost).filter((p) => p.id && p.authorId && isPublicSocialPost(p));
+        if (mapped.length) return sortPostsNewest(mapped).slice(0, limit);
     } catch {
-
-        const rows = await listCollection('posts', token, { pageSize: limit });
-
-        return rows.map(mapSocialPost).sort((a, b) => b.createdAtMs - a.createdAtMs);
-
+        /* fallback below */
     }
+    const rows = await listCollection('posts', token, { pageSize: Math.max(limit, 80) });
+    return sortPostsNewest(
+        rows.map(mapSocialPost).filter((p) => p.id && p.authorId && isPublicSocialPost(p))
+    ).slice(0, limit);
+}
 
+export async function listUserPosts(
+    token: string,
+    authorId: string,
+    limit = 40,
+    viewer?: { uid?: string; isAdmin?: boolean }
+): Promise<SocialPost[]> {
+    const uid = String(authorId || '');
+    if (!uid) return [];
+    try {
+        const rows = await runQuery(token, {
+            from: [{ collectionId: 'posts' }],
+            where: {
+                fieldFilter: {
+                    field: { fieldPath: 'authorId' },
+                    op: 'EQUAL',
+                    value: { stringValue: uid },
+                },
+            },
+            orderBy: [{ field: { fieldPath: 'createdAtMs' }, direction: 'DESCENDING' }],
+            limit,
+        });
+        const mapped = rows.map(mapSocialPost).filter((p) => p.id && canViewSocialPost(p, viewer));
+        if (mapped.length) return sortPostsNewest(mapped).slice(0, limit);
+    } catch {
+        /* try without orderBy (no composite index yet) */
+    }
+    try {
+        const rows = await runQuery(token, {
+            from: [{ collectionId: 'posts' }],
+            where: {
+                fieldFilter: {
+                    field: { fieldPath: 'authorId' },
+                    op: 'EQUAL',
+                    value: { stringValue: uid },
+                },
+            },
+            limit,
+        });
+        const mapped = rows.map(mapSocialPost).filter((p) => p.id && canViewSocialPost(p, viewer));
+        if (mapped.length) return sortPostsNewest(mapped).slice(0, limit);
+    } catch {
+        /* last resort: scan */
+    }
+    const rows = await listCollection('posts', token, { pageSize: 120 });
+    return sortPostsNewest(
+        rows.map(mapSocialPost).filter((p) => p.authorId === uid && canViewSocialPost(p, viewer))
+    ).slice(0, limit);
+}
+
+export async function listPendingPosts(token: string, limit = 80): Promise<SocialPost[]> {
+    const rows = await listCollection('posts', token, { pageSize: Math.max(limit, 120) });
+    return sortPostsNewest(
+        rows
+            .map(mapSocialPost)
+            .filter(
+                (p) =>
+                    p.id &&
+                    String(p.moderationStatus || '') === 'pending' &&
+                    !isInvalidSocialAuthor(p)
+            )
+    ).slice(0, limit);
 }
 
 
@@ -339,25 +411,102 @@ export async function createPost(
     token: string,
     author: SocialProfile,
     text: string,
-    media?: { imageUrl?: string | null; videoUrl?: string | null }
+    media?: { imageUrl?: string | null; videoUrl?: string | null; topic?: string | null; daily?: boolean },
+    opts?: { autoApprove?: boolean; daily?: boolean }
 ): Promise<SocialPost> {
-    const hasMedia = !!(media?.imageUrl || media?.videoUrl);
-    const cleaned = normalizePostText(text, { allowEmpty: hasMedia });
+    assertNoVideoPost(media?.videoUrl);
+    const hasMedia = !!media?.imageUrl;
+    const cleaned = assertMathOnlyPost(text, media?.topic, hasMedia);
     const createdAtMs = nowMs();
+    const approved = !!opts?.autoApprove;
+    const daily = !!(opts?.daily || media?.daily);
+    if (daily && !approved) {
+        throw new Error('Napi posztot csak a tanár tehet ki.');
+    }
+    const dailyKey = daily ? socialTodayKey() : null;
     const payload = buildPostFields(
         author,
         cleaned,
         createdAtMs,
         media?.imageUrl || null,
-        media?.videoUrl || null
+        null,
+        media?.topic || null,
+        approved ? 'approved' : 'pending',
+        dailyKey
     );
+    if (dailyKey) {
+        const existing = await listCollection('posts', token, { pageSize: 80 });
+        for (const row of existing) {
+            const id = String(row.__id || row.id || '');
+            if (!id || String(row.dailyKey || '') !== dailyKey) continue;
+            await setDocument(`posts/${id}`, token, { dailyKey: null }, true).catch(() => undefined);
+        }
+    }
     const id = await createDocument('posts', token, payload);
-    try {
-        await commitIncrement(token, `socialProfiles/${author.uid}`, 'postCount', 1);
-    } catch {
-        /* ignore counter fail */
+    if (approved) {
+        try {
+            await commitIncrement(token, `socialProfiles/${author.uid}`, 'postCount', 1);
+        } catch {
+            /* ignore counter fail */
+        }
     }
     return { id, ...payload };
+}
+
+export async function reviewPost(
+    token: string,
+    postId: string,
+    decision: 'approved' | 'rejected'
+): Promise<SocialPost> {
+    const raw = await getDocument(`posts/${postId}`, token);
+    if (!raw) throw new Error('Poszt nem található.');
+    const current = mapSocialPost({ ...raw, __id: postId, id: postId });
+    if (String(current.moderationStatus || '') !== 'pending') {
+        throw new Error('Ez a poszt már el lett bírálva.');
+    }
+    await setDocument(`posts/${postId}`, token, { moderationStatus: decision }, true);
+    if (decision === 'approved') {
+        try {
+            await commitIncrement(token, `socialProfiles/${current.authorId}`, 'postCount', 1);
+        } catch {
+            /* ignore */
+        }
+    }
+    return { ...current, moderationStatus: decision };
+}
+
+export async function purgeSocialJunk(
+    token: string,
+    keepUid?: string
+): Promise<{ deletedPosts: number; deletedProfiles: number }> {
+    const keep = String(keepUid || '');
+    const posts = await listCollection('posts', token, { pageSize: 200 });
+    let deletedPosts = 0;
+    for (const row of posts) {
+        const id = String(row.__id || row.id || '');
+        if (!id) continue;
+        try {
+            await deleteDocument(`posts/${id}`, token);
+            deletedPosts += 1;
+        } catch {
+            /* skip locked */
+        }
+    }
+    const profiles = await listCollection('socialProfiles', token, { pageSize: 200 });
+    let deletedProfiles = 0;
+    for (const row of profiles) {
+        const uid = String(row.__id || row.uid || '');
+        if (!uid || uid === keep) continue;
+        const profile = mapSocialProfile(uid, row);
+        if (!isPlaceholderSocialProfile(profile)) continue;
+        try {
+            await deleteDocument(`socialProfiles/${uid}`, token);
+            deletedProfiles += 1;
+        } catch {
+            /* skip locked */
+        }
+    }
+    return { deletedPosts, deletedProfiles };
 }
 
 export async function hasLiked(token: string, postId: string, uid: string): Promise<boolean> {
@@ -379,6 +528,9 @@ export async function toggleLike(
     uid: string
 
 ): Promise<{ liked: boolean; likeCount: number }> {
+    const raw = await getDocument(`posts/${postId}`, token);
+    if (!raw) throw new Error('Poszt nem található.');
+    assertPublicSocialPost(mapSocialPost({ ...raw, __id: postId, id: postId }));
 
     const liked = await hasLiked(token, postId, uid);
 
@@ -415,6 +567,9 @@ export async function addComment(
     text: string
 
 ): Promise<SocialComment> {
+    const raw = await getDocument(`posts/${postId}`, token);
+    if (!raw) throw new Error('Poszt nem található.');
+    assertPublicSocialPost(mapSocialPost({ ...raw, __id: postId, id: postId }));
 
     const cleaned = normalizeCommentText(text);
 
@@ -560,11 +715,21 @@ export async function createGroup(
 
     description: string,
 
-    topic: string
+    topic: string,
+
+    invitedIds?: string[]
 
 ): Promise<StudyGroup> {
 
     const input = normalizeGroupInput(name, description, topic);
+
+    const requested = resolveGroupMemberIds(owner.uid, invitedIds);
+
+    const extras = requested.slice(1);
+
+    const found = await Promise.all(extras.map((id) => getProfile(token, id)));
+
+    const memberIds = [owner.uid, ...extras.filter((_, i) => !!found[i])];
 
     const payload = {
 
@@ -574,9 +739,9 @@ export async function createGroup(
 
         ownerName: owner.displayName,
 
-        memberIds: [owner.uid],
+        memberIds,
 
-        memberCount: 1,
+        memberCount: memberIds.length,
 
         createdAtMs: nowMs(),
 
@@ -684,15 +849,21 @@ export async function sendMessage(
 
     to: SocialProfile,
 
-    text: string
+    text: string,
+
+    reply?: { id?: string | null; text?: string | null; senderId?: string | null } | null
 
 ): Promise<void> {
 
     const cleaned = normalizeMessageText(text);
 
+    const quoted = buildMessageReply(reply);
+
     const cid = conversationIdFor(from.uid, to.uid);
 
     const createdAtMs = nowMs();
+
+    const existing = await getDocument(`conversations/${cid}`, token);
 
     await setDocument(
 
@@ -714,6 +885,10 @@ export async function sendMessage(
 
             lastMessage: cleaned,
 
+            lastSenderId: from.uid,
+
+            initiatorId: String(existing?.initiatorId || from.uid),
+
             updatedAtMs: createdAtMs,
 
         },
@@ -729,6 +904,8 @@ export async function sendMessage(
         text: cleaned,
 
         createdAtMs,
+
+        ...(quoted || {}),
 
     });
 
@@ -776,6 +953,10 @@ export async function listConversations(token: string, uid: string): Promise<Con
 
                 lastMessage: String(d.lastMessage || ''),
 
+                lastSenderId: String(d.lastSenderId || ''),
+
+                initiatorId: String(d.initiatorId || ''),
+
                 updatedAtMs: Number(d.updatedAtMs || 0),
 
             });
@@ -806,20 +987,31 @@ export async function listMessages(
 
     return rows
 
-        .map((d) => ({
-
-            id: String(d.__id || ''),
-
-            senderId: String(d.senderId || ''),
-
-            text: String(d.text || ''),
-
-            createdAtMs: Number(d.createdAtMs || 0),
-
-        }))
+        .map((d) => mapDirectMessage(d))
 
         .sort((a, b) => a.createdAtMs - b.createdAtMs);
 
+}
+
+export async function reactToMessage(
+    token: string,
+    conversationId: string,
+    messageId: string,
+    uid: string,
+    emoji: string
+): Promise<DirectMessage> {
+    const cid = String(conversationId || '').trim();
+    const mid = String(messageId || '').trim();
+    if (!cid || !mid) throw new Error('Hiányzó üzenet.');
+    const conv = await getDocument(`conversations/${cid}`, token);
+    if (!conv) throw new Error('Beszélgetés nem található.');
+    assertConversationParticipant(conv.participants, uid);
+    const raw = await getDocument(`conversations/${cid}/messages/${mid}`, token);
+    if (!raw) throw new Error('Üzenet nem található.');
+    const current = mapDirectMessage({ ...raw, __id: mid, id: mid });
+    const reactions = toggleMessageReaction(current.reactions, uid, emoji);
+    await setDocument(`conversations/${cid}/messages/${mid}`, token, { reactions }, true);
+    return { ...current, reactions };
 }
 
 

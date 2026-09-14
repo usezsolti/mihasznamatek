@@ -47,6 +47,7 @@ import {
     mapSocialComment,
 
     mapSocialPost,
+    isPublicSocialPost,
 
     mapSocialProfile,
 
@@ -55,10 +56,16 @@ import {
     normalizeCommentText,
 
     normalizeGroupInput,
+    resolveGroupMemberIds,
 
     normalizeMessageText,
+    buildMessageReply,
+    mapDirectMessage,
+    toggleMessageReaction,
+    assertConversationParticipant,
 
-    normalizePostText,
+    assertMathOnlyPost,
+    assertNoVideoPost,
 
     normalizeUsernameOrThrow,
 
@@ -463,14 +470,24 @@ export async function createPost(
     author: SocialProfile,
     text: string,
     imageUrl?: string | null,
-    videoUrl?: string | null
+    videoUrl?: string | null,
+    topic?: string | null
 ): Promise<SocialPost> {
     const firebase = fb();
     const firestore = db();
-    const hasMedia = !!(imageUrl || videoUrl);
-    const cleaned = normalizePostText(text, { allowEmpty: hasMedia });
+    assertNoVideoPost(videoUrl);
+    const hasMedia = !!imageUrl;
+    const cleaned = assertMathOnlyPost(text, topic, hasMedia);
     const createdAtMs = Date.now();
-    const fields = buildPostFields(author, cleaned, createdAtMs, imageUrl || null, videoUrl || null);
+    const fields = buildPostFields(
+        author,
+        cleaned,
+        createdAtMs,
+        imageUrl || null,
+        null,
+        topic || null,
+        'pending'
+    );
     const ref = firestore.collection('posts').doc();
     const payload = {
         ...fields,
@@ -478,11 +495,6 @@ export async function createPost(
     };
     const batch = firestore.batch();
     batch.set(ref, payload);
-    batch.set(
-        firestore.collection('socialProfiles').doc(author.uid),
-        { postCount: firebase.firestore.FieldValue.increment(1) },
-        { merge: true }
-    );
     await batch.commit();
     return { id: ref.id, ...fields, createdAt: payload.createdAt };
 }
@@ -505,7 +517,7 @@ export async function listFeedPosts(opts?: {
 
     const snap = await firestore.collection('posts').orderBy('createdAtMs', 'desc').limit(limit).get();
 
-    let posts = snap.docs.map(mapPost);
+    let posts = snap.docs.map(mapPost).filter(isPublicSocialPost);
 
     if (opts?.authorIds?.length) {
 
@@ -707,7 +719,9 @@ export async function createStudyGroup(
 
     description: string,
 
-    topic: string
+    topic: string,
+
+    invitedIds?: string[]
 
 ): Promise<StudyGroup> {
 
@@ -717,6 +731,8 @@ export async function createStudyGroup(
 
     const ref = db().collection('studyGroups').doc();
 
+    const memberIds = resolveGroupMemberIds(owner.uid, invitedIds);
+
     const payload = {
 
         ...input,
@@ -725,9 +741,9 @@ export async function createStudyGroup(
 
         ownerName: owner.displayName,
 
-        memberIds: [owner.uid],
+        memberIds,
 
-        memberCount: 1,
+        memberCount: memberIds.length,
 
         createdAt: firebase.firestore.FieldValue.serverTimestamp(),
 
@@ -879,7 +895,9 @@ export async function sendDirectMessage(
 
     fromProfile: SocialProfile,
 
-    toProfile: SocialProfile
+    toProfile: SocialProfile,
+
+    reply?: { id?: string | null; text?: string | null; senderId?: string | null } | null
 
 ): Promise<void> {
 
@@ -889,11 +907,17 @@ export async function sendDirectMessage(
 
     const cleaned = normalizeMessageText(text);
 
+    const quoted = buildMessageReply(reply);
+
     const cid = conversationIdFor(fromUid, toUid);
 
     const convRef = firestore.collection('conversations').doc(cid);
 
     const msgRef = convRef.collection('messages').doc();
+
+    const existing = await convRef.get();
+
+    const initiatorId = String(existing.data()?.initiatorId || fromUid);
 
     const batch = firestore.batch();
 
@@ -915,6 +939,10 @@ export async function sendDirectMessage(
 
             lastMessage: cleaned,
 
+            lastSenderId: fromUid,
+
+            initiatorId,
+
             updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
 
             updatedAtMs: Date.now(),
@@ -934,6 +962,8 @@ export async function sendDirectMessage(
         createdAt: firebase.firestore.FieldValue.serverTimestamp(),
 
         createdAtMs: Date.now(),
+
+        ...(quoted || {}),
 
     });
 
@@ -958,6 +988,10 @@ export async function listConversations(uid: string): Promise<ConversationPrevie
             meta: d.participantMeta || {},
 
             lastMessage: String(d.lastMessage || ''),
+
+            lastSenderId: String(d.lastSenderId || ''),
+
+            initiatorId: String(d.initiatorId || ''),
 
             updatedAtMs: Number(d.updatedAtMs || tsMs(d.updatedAt)),
 
@@ -1025,20 +1059,31 @@ export async function listMessages(conversationId: string, limit = 80): Promise<
 
         const d = doc.data() || {};
 
-        return {
-
-            id: doc.id,
-
-            senderId: String(d.senderId || ''),
-
-            text: String(d.text || ''),
-
-            createdAtMs: Number(d.createdAtMs || tsMs(d.createdAt)),
-
-        } as DirectMessage;
+        return mapDirectMessage({ ...d, __id: doc.id, id: doc.id });
 
     });
 
+}
+
+export async function reactToMessage(
+    conversationId: string,
+    messageId: string,
+    uid: string,
+    emoji: string
+): Promise<DirectMessage> {
+    const cid = String(conversationId || '').trim();
+    const mid = String(messageId || '').trim();
+    if (!cid || !mid) throw new Error('Hiányzó üzenet.');
+    const convRef = db().collection('conversations').doc(cid);
+    const msgRef = convRef.collection('messages').doc(mid);
+    const [convSnap, msgSnap] = await Promise.all([convRef.get(), msgRef.get()]);
+    if (!convSnap.exists) throw new Error('Beszélgetés nem található.');
+    assertConversationParticipant(convSnap.data()?.participants, uid);
+    if (!msgSnap.exists) throw new Error('Üzenet nem található.');
+    const current = mapDirectMessage({ ...(msgSnap.data() || {}), __id: mid, id: mid });
+    const reactions = toggleMessageReaction(current.reactions, uid, emoji);
+    await msgRef.update({ reactions });
+    return { ...current, reactions };
 }
 
 

@@ -1140,13 +1140,6 @@ export default function Dashboard() {
                 )}
                 {activeTab === 'profil' && (
                     <section className="dash-profile-tab">
-                        <button
-                            type="button"
-                            className="erettsegi-prep-back"
-                            onClick={() => switchTab('tanulas')}
-                        >
-                            {t('dashboard.backToPractice')}
-                        </button>
                         <ProfilePanel embedded />
                         <SkillTreePanel
                             juice={juice || emptyJuice()}

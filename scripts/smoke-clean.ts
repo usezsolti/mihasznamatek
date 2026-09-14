@@ -491,7 +491,10 @@ async function main() {
     try {
         const created = await runSocialAction(store, 'ensureProfile', 'dry-uid', { name: 'Dry Tester' });
         const feed = await runSocialAction(store, 'listFeed', 'dry-uid', { limit: 3 });
-        const post = await runSocialAction(store, 'createPost', 'dry-uid', { text: 'DRY smoke post' });
+        const post = await runSocialAction(store, 'createPost', 'dry-uid', {
+            text: 'DRY smoke matek feladat 2+2',
+            topic: 'feladat',
+        });
         profileOk = !!(created.data as any)?.username;
         feedN = Array.isArray(feed.data) ? feed.data.length : -1;
         postOk = !!(post.data as any)?.text;

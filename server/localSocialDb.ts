@@ -43,20 +43,33 @@ import {
     createBlankSocialProfile,
 
     mapConversationPreview,
+    mapDirectMessage,
+    toggleMessageReaction,
+    assertConversationParticipant,
 
     normalizeCommentText,
 
     normalizeGroupInput,
+    resolveGroupMemberIds,
 
     normalizeMessageText,
+    buildMessageReply,
 
-    normalizePostText,
+    assertMathOnlyPost,
+    assertNoVideoPost,
+    assertPublicSocialPost,
+    canViewSocialPost,
+    isPublicSocialPost,
+    socialTodayKey,
+    sortSocialFeed,
 
     normalizeUsernameOrThrow,
 
     participantMetaFromProfile,
 
     publicSocialProfiles,
+    isPlaceholderSocialProfile,
+    isInvalidSocialAuthor,
 
 } from '../utils/socialDomain';
 
@@ -88,6 +101,10 @@ type DbShape = {
 
             lastMessage: string;
 
+            lastSenderId?: string;
+
+            initiatorId?: string;
+
             updatedAtMs: number;
 
             messages: DirectMessage[];
@@ -100,7 +117,13 @@ type DbShape = {
 
 
 
-const DB_PATH = path.join(process.cwd(), 'data', 'social-local.json');
+function dbPath(): string {
+    const override = String(process.env.SOCIAL_LOCAL_DB_PATH || '').trim();
+    if (override) {
+        return path.isAbsolute(override) ? override : path.join(process.cwd(), override);
+    }
+    return path.join(process.cwd(), 'data', 'social-local.json');
+}
 
 
 
@@ -132,9 +155,11 @@ function readDb(): DbShape {
 
     try {
 
-        if (!fs.existsSync(DB_PATH)) return emptyDb();
+        const file = dbPath();
 
-        return { ...emptyDb(), ...JSON.parse(fs.readFileSync(DB_PATH, 'utf8')) };
+        if (!fs.existsSync(file)) return emptyDb();
+
+        return { ...emptyDb(), ...JSON.parse(fs.readFileSync(file, 'utf8')) };
 
     } catch {
 
@@ -148,11 +173,13 @@ function readDb(): DbShape {
 
 function writeDb(db: DbShape) {
 
-    const dir = path.dirname(DB_PATH);
+    const file = dbPath();
+
+    const dir = path.dirname(file);
 
     if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
 
-    fs.writeFileSync(DB_PATH, JSON.stringify(db, null, 2), 'utf8');
+    fs.writeFileSync(file, JSON.stringify(db, null, 2), 'utf8');
 
 }
 
@@ -259,8 +286,49 @@ export const localSocial = {
 
     listFeed(limit = 40): SocialPost[] {
 
-        return [...readDb().posts].sort((a, b) => b.createdAtMs - a.createdAtMs).slice(0, limit);
+        return sortSocialFeed(
+            [...readDb().posts].filter((p) => isPublicSocialPost(p) && !isInvalidSocialAuthor(p))
+        ).slice(0, limit);
 
+    },
+
+    listUserPosts(
+        uid: string,
+        limit = 40,
+        viewer?: { uid?: string; isAdmin?: boolean }
+    ): SocialPost[] {
+        return [...readDb().posts]
+            .filter((p) => p.authorId === uid && canViewSocialPost(p, viewer))
+            .sort((a, b) => b.createdAtMs - a.createdAtMs)
+            .slice(0, limit);
+    },
+
+    listPendingPosts(limit = 80): SocialPost[] {
+        return [...readDb().posts]
+            .filter(
+                (p) =>
+                    String(p.moderationStatus || '') === 'pending' && !isInvalidSocialAuthor(p)
+            )
+            .sort((a, b) => b.createdAtMs - a.createdAtMs)
+            .slice(0, limit);
+    },
+
+    purgeSocialJunk(keepUid?: string): { deletedPosts: number; deletedProfiles: number } {
+        const db = readDb();
+        const deletedPosts = db.posts.length;
+        const keep = String(keepUid || '');
+        const removedUids = Object.values(db.profiles)
+            .filter((p) => p.uid !== keep && isPlaceholderSocialProfile(p))
+            .map((p) => p.uid);
+        db.posts = [];
+        db.likes = {};
+        db.comments = {};
+        for (const uid of removedUids) delete db.profiles[uid];
+        db.follows = db.follows.filter(
+            (f) => !removedUids.includes(f.followerId) && !removedUids.includes(f.followingId)
+        );
+        writeDb(db);
+        return { deletedPosts, deletedProfiles: removedUids.length };
     },
 
 
@@ -268,11 +336,19 @@ export const localSocial = {
     createPost(
         author: SocialProfile,
         text: string,
-        media?: { imageUrl?: string | null; videoUrl?: string | null }
+        media?: { imageUrl?: string | null; videoUrl?: string | null; topic?: string | null; daily?: boolean },
+        opts?: { autoApprove?: boolean; daily?: boolean }
     ): SocialPost {
-        const hasMedia = !!(media?.imageUrl || media?.videoUrl);
-        const cleaned = normalizePostText(text, { allowEmpty: hasMedia });
+        assertNoVideoPost(media?.videoUrl);
+        const hasMedia = !!media?.imageUrl;
+        const cleaned = assertMathOnlyPost(text, media?.topic, hasMedia);
         const db = readDb();
+        const approved = !!opts?.autoApprove;
+        const daily = !!(opts?.daily || media?.daily);
+        if (daily && !approved) {
+            throw new Error('Napi posztot csak a tanár tehet ki.');
+        }
+        const dailyKey = daily ? socialTodayKey() : null;
         const post: SocialPost = {
             id: `p_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`,
             ...buildPostFields(
@@ -280,11 +356,34 @@ export const localSocial = {
                 cleaned,
                 Date.now(),
                 media?.imageUrl || null,
-                media?.videoUrl || null
+                null,
+                media?.topic || null,
+                approved ? 'approved' : 'pending',
+                dailyKey
             ),
         };
+        if (dailyKey) {
+            for (const p of db.posts) {
+                if (p.dailyKey === dailyKey) p.dailyKey = null;
+            }
+        }
         db.posts.unshift(post);
-        if (db.profiles[author.uid]) db.profiles[author.uid].postCount += 1;
+        if (approved && db.profiles[author.uid]) db.profiles[author.uid].postCount += 1;
+        writeDb(db);
+        return post;
+    },
+
+    reviewPost(postId: string, decision: 'approved' | 'rejected'): SocialPost {
+        const db = readDb();
+        const post = db.posts.find((p) => p.id === postId);
+        if (!post) throw new Error('Poszt nem található.');
+        if (String(post.moderationStatus || '') !== 'pending') {
+            throw new Error('Ez a poszt már el lett bírálva.');
+        }
+        post.moderationStatus = decision;
+        if (decision === 'approved' && db.profiles[post.authorId]) {
+            db.profiles[post.authorId].postCount += 1;
+        }
         writeDb(db);
         return post;
     },
@@ -306,6 +405,7 @@ export const localSocial = {
         const post = db.posts.find((p) => p.id === postId);
 
         if (!post) throw new Error('Poszt nem található.');
+        assertPublicSocialPost(post);
 
         const set = new Set(db.likes[postId] || []);
 
@@ -346,6 +446,7 @@ export const localSocial = {
         const post = db.posts.find((p) => p.id === postId);
 
         if (!post) throw new Error('Poszt nem található.');
+        assertPublicSocialPost(post);
 
         const c: SocialComment = {
 
@@ -435,36 +536,31 @@ export const localSocial = {
 
 
 
-    createGroup(owner: SocialProfile, name: string, description: string, topic: string): StudyGroup {
-
+    createGroup(
+        owner: SocialProfile,
+        name: string,
+        description: string,
+        topic: string,
+        invitedIds?: string[]
+    ): StudyGroup {
         const input = normalizeGroupInput(name, description, topic);
-
         const db = readDb();
-
+        const existing = new Set(Object.keys(db.profiles));
+        const memberIds = resolveGroupMemberIds(owner.uid, invitedIds).filter(
+            (id, i) => i === 0 || existing.has(id)
+        );
         const g: StudyGroup = {
-
             id: `g_${Date.now()}_${Math.random().toString(36).slice(2, 7)}`,
-
             ...input,
-
             ownerId: owner.uid,
-
             ownerName: owner.displayName,
-
-            memberIds: [owner.uid],
-
-            memberCount: 1,
-
+            memberIds,
+            memberCount: memberIds.length,
             createdAtMs: Date.now(),
-
         };
-
         db.groups.unshift(g);
-
         writeDb(db);
-
         return g;
-
     },
 
 
@@ -519,56 +615,45 @@ export const localSocial = {
 
 
 
-    sendMessage(from: SocialProfile, to: SocialProfile, text: string): void {
-
+    sendMessage(
+        from: SocialProfile,
+        to: SocialProfile,
+        text: string,
+        reply?: { id?: string | null; text?: string | null; senderId?: string | null } | null
+    ): void {
         const cleaned = normalizeMessageText(text);
-
+        const quoted = buildMessageReply(reply);
         const db = readDb();
-
         const cid = conversationIdFor(from.uid, to.uid);
-
         if (!db.conversations[cid]) {
-
             db.conversations[cid] = {
-
                 participants: [from.uid, to.uid].sort(),
-
                 meta: {},
-
                 lastMessage: '',
-
+                lastSenderId: from.uid,
+                initiatorId: from.uid,
                 updatedAtMs: Date.now(),
-
                 messages: [],
-
             };
-
         }
-
         const conv = db.conversations[cid];
-
+        if (!conv.initiatorId) conv.initiatorId = from.uid;
+        conv.lastSenderId = from.uid;
         conv.meta[from.uid] = participantMetaFromProfile(from);
-
         conv.meta[to.uid] = participantMetaFromProfile(to);
-
         conv.messages.push({
-
             id: `m_${Date.now()}_${Math.random().toString(36).slice(2, 7)}`,
-
             senderId: from.uid,
-
             text: cleaned,
-
             createdAtMs: Date.now(),
-
+            replyToId: quoted?.replyToId || null,
+            replyToText: quoted?.replyToText || null,
+            replyToSenderId: quoted?.replyToSenderId || null,
+            reactions: [],
         });
-
         conv.lastMessage = cleaned;
-
         conv.updatedAtMs = Date.now();
-
         writeDb(db);
-
     },
 
 
@@ -590,11 +675,24 @@ export const localSocial = {
 
 
     listMessages(conversationId: string): DirectMessage[] {
-
         const c = readDb().conversations[conversationId];
+        return c
+            ? [...c.messages]
+                  .map((m) => mapDirectMessage(m as unknown as Record<string, unknown>))
+                  .sort((a, b) => a.createdAtMs - b.createdAtMs)
+            : [];
+    },
 
-        return c ? [...c.messages].sort((a, b) => a.createdAtMs - b.createdAtMs) : [];
-
+    reactToMessage(conversationId: string, messageId: string, uid: string, emoji: string): DirectMessage {
+        const db = readDb();
+        const conv = db.conversations[conversationId];
+        if (!conv) throw new Error('Beszélgetés nem található.');
+        assertConversationParticipant(conv.participants, uid);
+        const msg = conv.messages.find((m) => m.id === messageId);
+        if (!msg) throw new Error('Üzenet nem található.');
+        msg.reactions = toggleMessageReaction(msg.reactions, uid, emoji);
+        writeDb(db);
+        return mapDirectMessage(msg as unknown as Record<string, unknown>);
     },
 
 };

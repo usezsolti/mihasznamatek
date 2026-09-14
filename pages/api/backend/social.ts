@@ -25,7 +25,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     try {
         const store = createSocialStore(token);
-        const result = await runSocialAction(store, action, user.uid, body);
+        const result = await runSocialAction(store, action, user.uid, body, { email: user.email });
         return sendOk(res, result.data, result.status || 200);
     } catch (e: any) {
         const status = typeof e?.status === 'number' ? e.status : 500;

@@ -48,7 +48,12 @@ function run(cmd: string, args: string[]): { status: number; stdout: string; std
         cwd: ROOT,
         encoding: 'utf8',
         shell: true,
-        env: { ...process.env, SOCIAL_DATA_STORE: process.env.SOCIAL_DATA_STORE || 'local' },
+        env: {
+            ...process.env,
+            SOCIAL_DATA_STORE: process.env.SOCIAL_DATA_STORE || 'local',
+            SOCIAL_AI_FILTER: process.env.SOCIAL_AI_FILTER || '0',
+            SOCIAL_SKIP_MODERATION_MAIL: process.env.SOCIAL_SKIP_MODERATION_MAIL || '1',
+        },
     });
     return {
         status: r.status ?? 1,

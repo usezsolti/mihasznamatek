@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import type { SocialComment, SocialPost, SocialProfile } from '../../utils/socialTypes';
+import { isPublicSocialPost, isTodaysDailyPost, socialPostModerationStatus } from '../../utils/socialDomain';
 import { apiAddComment, apiHasLiked, apiListComments, apiToggleLike } from '../../utils/socialApi';
 import { useLang } from '../../utils/i18n';
 import CommunityAvatar from './CommunityAvatar';
@@ -66,6 +67,9 @@ export default function CommunityPostCard({ post, me, liked: likedProp, onOpenPr
         }
     };
 
+    const publicPost = isPublicSocialPost(post);
+    const status = socialPostModerationStatus(post);
+
     const timeLabel = useMemo(() => {
         const diff = Date.now() - post.createdAtMs;
         const m = Math.floor(diff / 60000);
@@ -76,8 +80,10 @@ export default function CommunityPostCard({ post, me, liked: likedProp, onOpenPr
         return t('community.time.daysLong', { n: String(Math.floor(h / 24)) });
     }, [post.createdAtMs, t]);
 
+    const daily = isTodaysDailyPost(post);
+
     return (
-        <div className="mm-social-post">
+        <div className={`mm-social-post${daily ? ' is-daily' : ''}`}>
             <div className="mm-social-post-head">
                 <button type="button" className="mm-social-userbtn" onClick={() => onOpenProfile(post.authorId)}>
                     <CommunityAvatar url={post.authorPhoto} name={post.authorName} />
@@ -94,6 +100,16 @@ export default function CommunityPostCard({ post, me, liked: likedProp, onOpenPr
                     </button>
                 )}
             </div>
+            {daily && <p className="mm-social-post-status is-daily">{t('community.post.daily')}</p>}
+            {status === 'pending' && (
+                <p className="mm-social-post-status is-pending">{t('community.post.pending')}</p>
+            )}
+            {status === 'rejected' && (
+                <p className="mm-social-post-status is-rejected">{t('community.post.rejected')}</p>
+            )}
+            {post.topic ? (
+                <p className="mm-social-post-topic">{t(`community.topic.${post.topic}`)}</p>
+            ) : null}
             {post.text ? <p className="mm-social-post-text">{post.text}</p> : null}
             {post.imageUrl ? (
                 // eslint-disable-next-line @next/next/no-img-element
@@ -104,10 +120,15 @@ export default function CommunityPostCard({ post, me, liked: likedProp, onOpenPr
                 <video className="mm-social-post-video" src={post.videoUrl} controls playsInline preload="metadata" />
             ) : null}
             <div className="mm-social-post-actions">
-                <button type="button" className={liked ? 'is-on' : ''} onClick={onLike} disabled={busy}>
+                <button
+                    type="button"
+                    className={liked ? 'is-on' : ''}
+                    onClick={onLike}
+                    disabled={busy || !publicPost}
+                >
                     {liked ? '♥' : '♡'} {likeCount}
                 </button>
-                <button type="button" onClick={onToggleComments}>
+                <button type="button" onClick={onToggleComments} disabled={!publicPost}>
                     💬 {post.commentCount}
                 </button>
                 {post.authorId !== me.uid && (

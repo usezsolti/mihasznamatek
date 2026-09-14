@@ -53,6 +53,8 @@ import {
 import { buildTopicPracticeHref } from '../utils/topicStats';
 import type { EducationLevelId } from '../utils/mathTopicsCatalog';
 import type { Question } from '../utils/game';
+import { KOZPONTI_PAPERS } from '../utils/game/kozpontiPapers';
+import { ERETTSEGI_PAPERS } from '../utils/game/erettsegiPapers';
 import { parseStudentNumber } from '../utils/parseStudentNumber';
 import { studentSetMatches } from '../utils/parseStudentSet';
 import { agentDebugLog } from '../utils/agentDebugLog';
@@ -532,6 +534,42 @@ export function useGamePlay({
                 else {
                     resultData.gameMode = ctx.educationLevel || 'unknown';
                 }
+            }
+
+            const paperFromQuery = String(router.query.paper || router.query.paperId || '');
+            if (paperFromQuery) {
+                resultData.paperId = paperFromQuery;
+                resultData.topicId = resultData.topicId || paperFromQuery;
+            }
+            if (router.query.kozponti === 'true') {
+                resultData.educationLevel = 'kozponti';
+                resultData.gameMode = 'kozponti';
+                if (paperFromQuery) {
+                    const meta = KOZPONTI_PAPERS.find((p) => p.id === paperFromQuery);
+                    if (meta) {
+                        resultData.topicTitle = `Központi ${meta.year} · ${meta.title}`;
+                        resultData.grade = meta.grade;
+                    }
+                }
+            } else if (isErettsegiMode && paperFromQuery) {
+                const meta = ERETTSEGI_PAPERS.find((p) => p.id === paperFromQuery);
+                if (meta) {
+                    resultData.topicTitle = `Érettségi ${meta.year} ${meta.title} · ${
+                        meta.level === 'emelt' ? 'emelt' : 'közép'
+                    }`;
+                    resultData.level = meta.level;
+                }
+            }
+            if (isBlitzMode) {
+                resultData.gameMode = 'blitz';
+                resultData.topicTitle = resultData.topicTitle || 'Villámjáték';
+            } else if (isDailyMode) {
+                resultData.gameMode = resultData.gameMode || 'daily';
+                resultData.topicTitle = resultData.topicTitle || 'Napi gyakorlás';
+            }
+            if (!resultData.topicTitle) {
+                resultData.topicTitle =
+                    topicFromQuery || resultData.topic || resultData.topicId || 'Játék';
             }
 
             await db.collection('gameResults').add(resultData);

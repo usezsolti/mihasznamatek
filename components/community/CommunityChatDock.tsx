@@ -2,6 +2,12 @@ import { useEffect, useRef } from 'react';
 import type { DirectMessage } from '../../utils/socialTypes';
 import { useLang } from '../../utils/i18n';
 import CommunityAvatar from './CommunityAvatar';
+import {
+    CommunityChatEmojiPicker,
+    CommunityChatReactionChips,
+    CommunityChatReplyBar,
+    insertTextAtCursor,
+} from './CommunityChatTools';
 
 type CommunityChatDockProps = {
     uid: string;
@@ -13,6 +19,9 @@ type CommunityChatDockProps = {
     messages: DirectMessage[];
     msgDraft: string;
     onMsgDraftChange: (value: string) => void;
+    replyTo: DirectMessage | null;
+    onReplyTo: (msg: DirectMessage | null) => void;
+    onReactMessage: (msg: DirectMessage, emoji: string) => void;
     onSend: () => void;
     onClose: () => void;
     onExpand: () => void;
@@ -25,6 +34,9 @@ export default function CommunityChatDock({
     messages,
     msgDraft,
     onMsgDraftChange,
+    replyTo,
+    onReplyTo,
+    onReactMessage,
     onSend,
     onClose,
     onExpand,
@@ -42,7 +54,10 @@ export default function CommunityChatDock({
 
     useEffect(() => {
         inputRef.current?.focus();
-    }, [peer.otherUid]);
+    }, [peer.otherUid, replyTo?.id]);
+
+    const replyName = (senderId?: string | null) =>
+        senderId === uid ? t('community.chat.you') : peer.otherName;
 
     return (
         <div className="mm-chat-dock" role="dialog" aria-label={`Chat: ${peer.otherName}`}>
@@ -66,15 +81,70 @@ export default function CommunityChatDock({
                 {messages.map((m) => {
                     const mine = m.senderId === uid;
                     return (
-                        <div key={m.id} className={`mm-chat-dock-msg${mine ? ' is-mine' : ''}`}>
+                        <div
+                            key={m.id}
+                            id={`msg-${m.id}`}
+                            className={`mm-chat-dock-msg${mine ? ' is-mine' : ''}`}
+                        >
                             {!mine && (
                                 <CommunityAvatar url={peer.otherPhoto} name={peer.otherName} size={22} />
                             )}
-                            <span className="mm-chat-dock-bubble">{m.text}</span>
+                            <div className="mm-chat-dock-col">
+                                {m.replyToText && (
+                                    <button
+                                        type="button"
+                                        className="mm-chat-quote"
+                                        onClick={() =>
+                                            document
+                                                .getElementById(`msg-${m.replyToId || ''}`)
+                                                ?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+                                        }
+                                    >
+                                        <small>{replyName(m.replyToSenderId)}</small>
+                                        <span>{m.replyToText}</span>
+                                    </button>
+                                )}
+                                <div className="mm-chat-dock-row">
+                                    <span className="mm-chat-dock-bubble">{m.text}</span>
+                                    <div className="mm-chat-msg-tools">
+                                        <CommunityChatEmojiPicker
+                                            className="is-msg"
+                                            icon="☺"
+                                            label={t('community.chat.react')}
+                                            onPick={(emoji) => onReactMessage(m, emoji)}
+                                        />
+                                        <button
+                                            type="button"
+                                            className="mm-chat-reply-btn"
+                                            title={t('community.chat.reply')}
+                                            aria-label={t('community.chat.reply')}
+                                            onClick={() => {
+                                                onReplyTo(m);
+                                                inputRef.current?.focus();
+                                            }}
+                                        >
+                                            ↩
+                                        </button>
+                                    </div>
+                                </div>
+                                <CommunityChatReactionChips
+                                    reactions={m.reactions}
+                                    uid={uid}
+                                    onToggle={(emoji) => onReactMessage(m, emoji)}
+                                />
+                            </div>
                         </div>
                     );
                 })}
             </div>
+
+            {replyTo && (
+                <CommunityChatReplyBar
+                    name={replyName(replyTo.senderId)}
+                    text={replyTo.text}
+                    onCancel={() => onReplyTo(null)}
+                />
+            )}
 
             <form
                 className="mm-chat-dock-compose"
@@ -83,7 +153,11 @@ export default function CommunityChatDock({
                     onSend();
                 }}
             >
-                <span aria-hidden>☺</span>
+                <CommunityChatEmojiPicker
+                    onPick={(emoji) =>
+                        onMsgDraftChange(insertTextAtCursor(msgDraft, emoji, inputRef.current))
+                    }
+                />
                 <input
                     ref={inputRef}
                     value={msgDraft}
@@ -97,9 +171,14 @@ export default function CommunityChatDock({
                         {t('common.send')}
                     </button>
                 ) : (
-                    <span className="mm-chat-dock-tools" aria-hidden>
+                    <button
+                        type="button"
+                        className="mm-chat-dock-reply-hint"
+                        onClick={() => inputRef.current?.focus()}
+                        aria-label={t('community.chat.emoji')}
+                    >
                         ♡
-                    </span>
+                    </button>
                 )}
             </form>
         </div>

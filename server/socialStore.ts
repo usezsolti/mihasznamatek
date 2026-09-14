@@ -10,8 +10,11 @@ import type {
     SocialProfile,
     StudyGroup,
 } from '../utils/socialTypes';
+import { isAdminEmail } from '../utils/admin';
 import { isLocalSocialStore, localSocial } from './localSocialDb';
 import * as firestoreSocial from './services/socialService';
+import { assertSocialContentAllowed } from './socialAiFilter';
+import { notifyAdminPendingPost } from './socialModerationMail';
 
 export type ProfileHints = { name?: string; photoURL?: string };
 export type ProfilePatch = {
@@ -28,11 +31,20 @@ export type SocialStore = {
     updateProfile(uid: string, patch: ProfilePatch): Promise<SocialProfile>;
     listProfiles(limit?: number): Promise<SocialProfile[]>;
     listFeed(limit?: number): Promise<SocialPost[]>;
+    listUserPosts(
+        uid: string,
+        limit?: number,
+        viewer?: { uid?: string; isAdmin?: boolean }
+    ): Promise<SocialPost[]>;
+    listPendingPosts(limit?: number): Promise<SocialPost[]>;
     createPost(
         author: SocialProfile,
         text: string,
-        media?: { imageUrl?: string | null; videoUrl?: string | null }
+        media?: { imageUrl?: string | null; videoUrl?: string | null; topic?: string | null },
+        opts?: { autoApprove?: boolean; daily?: boolean }
     ): Promise<SocialPost>;
+    reviewPost(postId: string, decision: 'approved' | 'rejected'): Promise<SocialPost>;
+    purgeSocialJunk(keepUid?: string): Promise<{ deletedPosts: number; deletedProfiles: number }>;
     toggleLike(postId: string, uid: string): Promise<{ liked: boolean; likeCount: number }>;
     hasLiked(postId: string, uid: string): Promise<boolean>;
     addComment(postId: string, author: SocialProfile, text: string): Promise<SocialComment>;
@@ -45,14 +57,26 @@ export type SocialStore = {
         owner: SocialProfile,
         name: string,
         description: string,
-        topic: string
+        topic: string,
+        memberIds?: string[]
     ): Promise<StudyGroup>;
     listGroups(): Promise<StudyGroup[]>;
     joinGroup(groupId: string, uid: string): Promise<void>;
     leaveGroup(groupId: string, uid: string): Promise<void>;
-    sendMessage(from: SocialProfile, to: SocialProfile, text: string): Promise<void>;
+    sendMessage(
+        from: SocialProfile,
+        to: SocialProfile,
+        text: string,
+        reply?: { id?: string | null; text?: string | null; senderId?: string | null } | null
+    ): Promise<void>;
     listConversations(uid: string): Promise<ConversationPreview[]>;
     listMessages(conversationId: string): Promise<DirectMessage[]>;
+    reactToMessage(
+        conversationId: string,
+        messageId: string,
+        uid: string,
+        emoji: string
+    ): Promise<DirectMessage>;
 };
 
 const localStore: SocialStore = {
@@ -61,7 +85,11 @@ const localStore: SocialStore = {
     updateProfile: async (uid, patch) => localSocial.updateProfile(uid, patch),
     listProfiles: async (limit) => localSocial.listProfiles(limit),
     listFeed: async (limit) => localSocial.listFeed(limit),
-    createPost: async (author, text, media) => localSocial.createPost(author, text, media),
+    listUserPosts: async (uid, limit, viewer) => localSocial.listUserPosts(uid, limit, viewer),
+    listPendingPosts: async (limit) => localSocial.listPendingPosts(limit),
+    createPost: async (author, text, media, opts) => localSocial.createPost(author, text, media, opts),
+    reviewPost: async (postId, decision) => localSocial.reviewPost(postId, decision),
+    purgeSocialJunk: async (keepUid) => localSocial.purgeSocialJunk(keepUid),
     toggleLike: async (postId, uid) => localSocial.toggleLike(postId, uid),
     hasLiked: async (postId, uid) => localSocial.hasLiked(postId, uid),
     addComment: async (postId, author, text) => localSocial.addComment(postId, author, text),
@@ -74,8 +102,8 @@ const localStore: SocialStore = {
     },
     isFollowing: async (a, b) => localSocial.isFollowing(a, b),
     listFollowingIds: async (uid) => localSocial.listFollowingIds(uid),
-    createGroup: async (owner, name, description, topic) =>
-        localSocial.createGroup(owner, name, description, topic),
+    createGroup: async (owner, name, description, topic, memberIds) =>
+        localSocial.createGroup(owner, name, description, topic, memberIds),
     listGroups: async () => localSocial.listGroups(),
     joinGroup: async (groupId, uid) => {
         localSocial.joinGroup(groupId, uid);
@@ -83,11 +111,13 @@ const localStore: SocialStore = {
     leaveGroup: async (groupId, uid) => {
         localSocial.leaveGroup(groupId, uid);
     },
-    sendMessage: async (from, to, text) => {
-        localSocial.sendMessage(from, to, text);
+    sendMessage: async (from, to, text, reply) => {
+        localSocial.sendMessage(from, to, text, reply);
     },
     listConversations: async (uid) => localSocial.listConversations(uid),
     listMessages: async (conversationId) => localSocial.listMessages(conversationId),
+    reactToMessage: async (conversationId, messageId, uid, emoji) =>
+        localSocial.reactToMessage(conversationId, messageId, uid, emoji),
 };
 
 function firestoreStore(token: string): SocialStore {
@@ -97,7 +127,12 @@ function firestoreStore(token: string): SocialStore {
         updateProfile: (uid, patch) => firestoreSocial.updateProfile(token, uid, patch),
         listProfiles: (limit) => firestoreSocial.listProfiles(token, limit),
         listFeed: (limit) => firestoreSocial.listFeed(token, limit),
-        createPost: (author, text, media) => firestoreSocial.createPost(token, author, text, media),
+        listUserPosts: (uid, limit, viewer) => firestoreSocial.listUserPosts(token, uid, limit, viewer),
+        listPendingPosts: (limit) => firestoreSocial.listPendingPosts(token, limit),
+        createPost: (author, text, media, opts) =>
+            firestoreSocial.createPost(token, author, text, media, opts),
+        reviewPost: (postId, decision) => firestoreSocial.reviewPost(token, postId, decision),
+        purgeSocialJunk: (keepUid) => firestoreSocial.purgeSocialJunk(token, keepUid),
         toggleLike: (postId, uid) => firestoreSocial.toggleLike(token, postId, uid),
         hasLiked: (postId, uid) => firestoreSocial.hasLiked(token, postId, uid),
         addComment: (postId, author, text) => firestoreSocial.addComment(token, postId, author, text),
@@ -106,14 +141,16 @@ function firestoreStore(token: string): SocialStore {
         unfollow: (a, b) => firestoreSocial.unfollow(token, a, b),
         isFollowing: (a, b) => firestoreSocial.isFollowing(token, a, b),
         listFollowingIds: (uid) => firestoreSocial.listFollowingIds(token, uid),
-        createGroup: (owner, name, description, topic) =>
-            firestoreSocial.createGroup(token, owner, name, description, topic),
+        createGroup: (owner, name, description, topic, memberIds) =>
+            firestoreSocial.createGroup(token, owner, name, description, topic, memberIds),
         listGroups: () => firestoreSocial.listGroups(token),
         joinGroup: (groupId, uid) => firestoreSocial.joinGroup(token, groupId, uid),
         leaveGroup: (groupId, uid) => firestoreSocial.leaveGroup(token, groupId, uid),
-        sendMessage: (from, to, text) => firestoreSocial.sendMessage(token, from, to, text),
+        sendMessage: (from, to, text, reply) => firestoreSocial.sendMessage(token, from, to, text, reply),
         listConversations: (uid) => firestoreSocial.listConversations(token, uid),
         listMessages: (conversationId) => firestoreSocial.listMessages(token, conversationId),
+        reactToMessage: (conversationId, messageId, uid, emoji) =>
+            firestoreSocial.reactToMessage(token, conversationId, messageId, uid, emoji),
     };
 }
 
@@ -122,14 +159,17 @@ export function createSocialStore(token: string): SocialStore {
 }
 
 export type SocialActionResult = { data: unknown; status?: number };
+export type SocialActionCtx = { email?: string };
 
 /** Egy helyen az összes social action — a HTTP route csak ezt hívja. */
 export async function runSocialAction(
     store: SocialStore,
     action: string,
     uid: string,
-    body: Record<string, unknown>
+    body: Record<string, unknown>,
+    ctx: SocialActionCtx = {}
 ): Promise<SocialActionResult> {
+    const isReviewer = isAdminEmail(ctx.email);
     switch (action) {
         case 'ensureProfile':
             return {
@@ -153,22 +193,73 @@ export async function runSocialAction(
             return { data: await store.listProfiles(Number(body.limit) || 30) };
         case 'listFeed':
             return { data: await store.listFeed(Number(body.limit) || 40) };
+        case 'listUserPosts':
+            return {
+                data: await store.listUserPosts(String(body.uid || uid), Number(body.limit) || 40, {
+                    uid,
+                    isAdmin: isReviewer,
+                }),
+            };
+        case 'listPendingPosts':
+            if (!isReviewer) {
+                throw Object.assign(new Error('Csak a tanár bírálhatja a posztokat.'), { status: 403 });
+            }
+            return { data: await store.listPendingPosts(Number(body.limit) || 80) };
         case 'createPost': {
             const me = await store.ensureProfile(uid);
-            return {
-                data: await store.createPost(me, String(body.text || ''), {
-                    imageUrl: (body.imageUrl as string) || null,
+            const imageUrl = (body.imageUrl as string) || null;
+            await assertSocialContentAllowed({
+                kind: 'post',
+                text: String(body.text || ''),
+                imageUrl,
+            });
+            const daily = body.daily === true;
+            if (daily && !isReviewer) {
+                throw Object.assign(new Error('Napi posztot csak a tanár tehet ki.'), { status: 403 });
+            }
+            const post = await store.createPost(
+                me,
+                String(body.text || ''),
+                {
+                    imageUrl,
                     videoUrl: (body.videoUrl as string) || null,
-                }),
-                status: 201,
-            };
+                    topic: (body.topic as string) || null,
+                    daily,
+                },
+                { autoApprove: isReviewer, daily }
+            );
+            if (post.moderationStatus === 'pending') {
+                void notifyAdminPendingPost(post).catch((err) =>
+                    console.warn('pending-post mail', err?.message || err)
+                );
+            }
+            return { data: post, status: 201 };
         }
+        case 'reviewPost': {
+            if (!isReviewer) {
+                throw Object.assign(new Error('Csak a tanár bírálhatja a posztokat.'), { status: 403 });
+            }
+            const decision = String(body.decision || '');
+            if (decision !== 'approved' && decision !== 'rejected') {
+                throw Object.assign(new Error('Érvénytelen döntés.'), { status: 400 });
+            }
+            return { data: await store.reviewPost(String(body.postId || ''), decision) };
+        }
+        case 'purgeSocialJunk':
+            if (!isReviewer) {
+                throw Object.assign(new Error('Csak a tanár törölheti a szemetet.'), { status: 403 });
+            }
+            return { data: await store.purgeSocialJunk(uid) };
         case 'toggleLike':
             return { data: await store.toggleLike(String(body.postId || ''), uid) };
         case 'hasLiked':
             return { data: { liked: await store.hasLiked(String(body.postId || ''), uid) } };
         case 'addComment': {
             const me = await store.ensureProfile(uid);
+            await assertSocialContentAllowed({
+                kind: 'comment',
+                text: String(body.text || ''),
+            });
             return {
                 data: await store.addComment(String(body.postId || ''), me, String(body.text || '')),
                 status: 201,
@@ -195,7 +286,8 @@ export async function runSocialAction(
                     me,
                     String(body.name || ''),
                     String(body.description || ''),
-                    String(body.topic || '')
+                    String(body.topic || ''),
+                    Array.isArray(body.memberIds) ? body.memberIds.map(String) : []
                 ),
                 status: 201,
             };
@@ -212,13 +304,26 @@ export async function runSocialAction(
             const me = await store.ensureProfile(uid);
             const to = await store.getProfile(String(body.toUid || ''));
             if (!to) throw new Error('Címzett nem található.');
-            await store.sendMessage(me, to, String(body.text || ''));
+            await store.sendMessage(me, to, String(body.text || ''), {
+                id: String(body.replyToId || ''),
+                text: String(body.replyToText || ''),
+                senderId: String(body.replyToSenderId || ''),
+            });
             return { data: { sent: true } };
         }
         case 'listConversations':
             return { data: await store.listConversations(uid) };
         case 'listMessages':
             return { data: await store.listMessages(String(body.conversationId || '')) };
+        case 'reactToMessage':
+            return {
+                data: await store.reactToMessage(
+                    String(body.conversationId || ''),
+                    String(body.messageId || ''),
+                    uid,
+                    String(body.emoji || '')
+                ),
+            };
         default:
             throw Object.assign(new Error(`Ismeretlen action: ${action}`), { status: 400 });
     }
