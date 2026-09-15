@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import AdminBookingCalendar from "../components/AdminBookingCalendar";
+import AdminEmailBookingAgent from "../components/AdminEmailBookingAgent";
 import AdminTeacherConsole from "../components/AdminTeacherConsole";
 import AdminWorkingHoursEditor from "../components/AdminWorkingHoursEditor";
 import BookingAttachments from "../components/BookingAttachments";
@@ -987,6 +988,8 @@ export default function Dashboard() {
                                 </div>
                             </div>
                         )}
+
+                        <AdminEmailBookingAgent />
 
                         <AdminWorkingHoursEditor
                             onSaved={() => setWorkingHoursVersion((v) => v + 1)}

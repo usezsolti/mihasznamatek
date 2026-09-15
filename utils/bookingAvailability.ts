@@ -280,3 +280,14 @@ export function formatAvailabilityReply(avail: DayAvailability, lang: 'hu' | 'en
         ? `Zsolti's free hours on ${dateKey} (${weekdayHu}): ${list}.${partial}\n\n${bookHint}`
         : `Zsolti szabad órái ${dateKey}-én (${weekdayHu}): ${list}.${partial}\n\n${bookHint}`;
 }
+
+/** Next N calendar days of free/taken slots (Budapest). */
+export async function getAvailabilityRange(dayCount = 14): Promise<DayAvailability[]> {
+    const n = Math.max(1, Math.min(21, dayCount));
+    const days: DayAvailability[] = [];
+    for (let i = 0; i < n; i++) {
+        const dateKey = getBudapestDateKeyOffset(i);
+        days.push(await getDayAvailability(dateKey));
+    }
+    return days;
+}
