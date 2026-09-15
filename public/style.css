@@ -122,6 +122,33 @@ nav.site-navbar {
   display: none;
 }
 
+.close-btn-x {
+  position: relative;
+  display: block;
+  width: 16px;
+  height: 16px;
+}
+
+.close-btn-x::before,
+.close-btn-x::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 16px;
+  height: 2px;
+  border-radius: 2px;
+  background: currentColor;
+}
+
+.close-btn-x::before {
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.close-btn-x::after {
+  transform: translate(-50%, -50%) rotate(-45deg);
+}
+
 @media (max-width: 768px) {
   .nav-close {
     display: block;
@@ -131,20 +158,27 @@ nav.site-navbar {
   }
 
   .close-btn {
-    display: block;
-    background: none;
-    border: none;
-    color: var(--text-color);
-    font-size: 1.5rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    border-radius: 12px;
+    border: 1px solid rgba(57, 255, 20, 0.4);
+    background: rgba(18, 24, 33, 0.96);
+    color: #d7e6dc;
     cursor: pointer;
-    padding: 0.5rem;
-    border-radius: 50%;
-    transition: all 0.3s ease;
+    box-shadow: 0 0 16px rgba(57, 255, 20, 0.12);
+    transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
   }
 
-  .close-btn:hover {
-    color: var(--neon-green);
-    background: rgba(57, 255, 20, 0.1);
+  .close-btn:hover,
+  .close-btn:focus {
+    color: #39ff14;
+    border-color: #39ff14;
+    background: rgba(57, 255, 20, 0.12);
+    outline: none;
   }
 }
 
@@ -1963,9 +1997,42 @@ h1 {
   transform: translateX(0) !important;
 }
 
-.site-navbar--dash .nav-close,
+.site-navbar--dash .nav-close {
+  display: flex;
+  justify-content: flex-end;
+  position: absolute;
+  top: 0.9rem;
+  right: 0.9rem;
+  z-index: 3;
+  padding: 0;
+  margin: 0;
+  border: none;
+  list-style: none;
+  width: auto;
+}
+
 .site-navbar--dash .close-btn {
-  display: block;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border-radius: 12px;
+  border: 1px solid rgba(57, 255, 20, 0.4);
+  background: rgba(18, 24, 33, 0.96);
+  color: #d7e6dc;
+  cursor: pointer;
+  box-shadow: 0 0 16px rgba(57, 255, 20, 0.12);
+  transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
+}
+
+.site-navbar--dash .close-btn:hover,
+.site-navbar--dash .close-btn:focus {
+  color: #39ff14;
+  border-color: #39ff14;
+  background: rgba(57, 255, 20, 0.12);
+  outline: none;
 }
 
 .site-navbar--dash .nav-links li a {
@@ -2371,20 +2438,27 @@ h1 {
   }
 
   .close-btn {
-    display: block;
-    background: none;
-    border: none;
-    color: #ffffff;
-    font-size: 1.5rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    border-radius: 12px;
+    border: 1px solid rgba(57, 255, 20, 0.4);
+    background: rgba(18, 24, 33, 0.96);
+    color: #d7e6dc;
     cursor: pointer;
-    padding: 0.5rem;
-    border-radius: 50%;
-    transition: all 0.3s ease;
+    box-shadow: 0 0 16px rgba(57, 255, 20, 0.12);
+    transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
   }
 
-  .close-btn:hover {
-    color: var(--neon-green);
-    background: rgba(57, 255, 20, 0.1);
+  .close-btn:hover,
+  .close-btn:focus {
+    color: #39ff14;
+    border-color: #39ff14;
+    background: rgba(57, 255, 20, 0.12);
+    outline: none;
   }
 
   .nav-links li a {

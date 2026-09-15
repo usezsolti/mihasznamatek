@@ -925,8 +925,11 @@ export default function Dashboard() {
                                 ? 'tasks'
                                 : router.query.view === 'lessons'
                                   ? 'lessons'
-                                  : 'schedule'
+                                  : router.query.view === 'email'
+                                    ? 'email'
+                                    : 'schedule'
                         }
+                        emailPanel={<AdminEmailBookingAgent />}
                         schedulePanel={({ createLobbyFromBooking, lobbyBusy }) => (
                             <>
                         {emailStatus && (
@@ -988,8 +991,6 @@ export default function Dashboard() {
                                 </div>
                             </div>
                         )}
-
-                        <AdminEmailBookingAgent />
 
                         <AdminWorkingHoursEditor
                             onSaved={() => setWorkingHoursVersion((v) => v + 1)}

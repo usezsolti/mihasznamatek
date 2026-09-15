@@ -397,8 +397,13 @@ export default function Navbar() {
                     )}
                     <ul className={`nav-links ${isMenuOpen ? "open" : "closed"}`}>
                         <li className="nav-close">
-                            <button onClick={toggleMenu} className="close-btn">
-                                ✕
+                            <button
+                                type="button"
+                                onClick={toggleMenu}
+                                className="close-btn"
+                                aria-label="Menü bezárása"
+                            >
+                                <span className="close-btn-x" aria-hidden="true" />
                             </button>
                         </li>
                         {isDash && (

@@ -34,7 +34,7 @@ import {
 } from '../utils/teacherConsole';
 import { downloadLessonPackPdf } from '../utils/lessonPackPdf';
 
-type ConsoleTab = 'students' | 'tasks' | 'lessons' | 'schedule';
+type ConsoleTab = 'students' | 'tasks' | 'lessons' | 'schedule' | 'email';
 type LevelFilter = 'all' | 'elementary' | 'highschool' | 'erettsegi' | 'university';
 
 type ScheduleLobbyApi = {
@@ -49,6 +49,7 @@ type Props = {
     adminEmail?: string;
     initialTab?: ConsoleTab;
     schedulePanel: ReactNode | ((api: ScheduleLobbyApi) => ReactNode);
+    emailPanel?: ReactNode;
 };
 
 function formatWhen(ms: number): string {
@@ -86,8 +87,13 @@ export default function AdminTeacherConsole({
     adminEmail,
     initialTab = 'schedule',
     schedulePanel,
+    emailPanel,
 }: Props) {
     const [tab, setTab] = useState<ConsoleTab>(initialTab);
+
+    useEffect(() => {
+        setTab(initialTab);
+    }, [initialTab]);
     const [students, setStudents] = useState<TeacherStudent[]>([]);
     const [query, setQuery] = useState('');
     const [selectedId, setSelectedId] = useState<string | null>(null);
@@ -597,10 +603,13 @@ export default function AdminTeacherConsole({
                     {(
                         [
                             ['schedule', 'Naptár'],
+                            ['email', 'E-mail ügynök'],
                             ['tasks', 'Feladatok'],
                             ['lessons', 'Órák'],
                         ] as const
-                    ).map(([id, label]) => (
+                    )
+                        .filter(([id]) => id !== 'email' || !!emailPanel)
+                        .map(([id, label]) => (
                         <button
                             key={id}
                             type="button"
@@ -630,6 +639,17 @@ export default function AdminTeacherConsole({
                             ) : null}
                         </p>
                     ) : null}
+                    {emailPanel ? (
+                    <div className="atc-actions" style={{ margin: '0 0 0.85rem' }}>
+                        <button
+                            type="button"
+                            className="atc-btn primary"
+                            onClick={() => setTab('email')}
+                        >
+                            E-mail ügynök →
+                        </button>
+                    </div>
+                    ) : null}
                     {typeof schedulePanel === 'function'
                         ? schedulePanel({
                               createLobbyFromBooking: async (booking) => {
@@ -648,6 +668,14 @@ export default function AdminTeacherConsole({
                               lessonStartMsg,
                           })
                         : schedulePanel}
+                </div>
+            ) : null}
+
+            {tab === 'email' ? (
+                <div className="atc-schedule">
+                    {emailPanel || (
+                        <p className="atc-muted">Az e-mail ügynök itt jelenik meg.</p>
+                    )}
                 </div>
             ) : null}
 
