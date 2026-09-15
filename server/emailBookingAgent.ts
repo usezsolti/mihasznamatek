@@ -11,8 +11,16 @@ import {
     suggestPackedSlots,
     type PackedSlot,
 } from '../utils/bookingPackedSlots';
+import { AsyncLocalStorage } from 'node:async_hooks';
 import { composeBookingDraft } from './emailBookingCompose';
+import { FIRESTORE_DOCS_BASE } from './config';
 import { getAdminDb } from './firebaseAdmin';
+import {
+    deleteDocument,
+    getDocument,
+    listCollection,
+    setDocument,
+} from './firestoreRest';
 import {
     appendDraftReply,
     fetchUnprocessedInbox,
@@ -20,8 +28,19 @@ import {
     markProcessed,
     type InboundMail,
 } from './gmailImap';
+import { resolveFirebaseWebApiKey } from '../utils/firebasePublicConfig';
 
 import type { EmailBookingThread, EmailThreadStatus } from '../utils/emailBookingThread';
+
+const authStore = new AsyncLocalStorage<{ token?: string }>();
+
+export function withEmailAgentAuth<T>(token: string | undefined, fn: () => Promise<T>): Promise<T> {
+    return authStore.run({ token: token || undefined }, fn);
+}
+
+function userToken(): string {
+    return authStore.getStore()?.token || '';
+}
 
 const SETTINGS_DOC = 'emailAgent';
 const THREADS = 'emailBookingThreads';
@@ -40,62 +59,125 @@ function ownAddress(): string {
     return String(process.env.GMAIL_USER || ADMIN_BOOKING_EMAIL).toLowerCase();
 }
 
-export async function isEmailAgentEnabled(): Promise<boolean> {
+function asThread(id: string, data: Record<string, unknown>): EmailBookingThread {
+    return { id, ...(data as Omit<EmailBookingThread, 'id'>) };
+}
+
+async function writeDoc(collection: string, id: string, data: Record<string, unknown>): Promise<void> {
     const db = getAdminDb();
-    if (!db) return false;
+    if (db) {
+        await db.collection(collection).doc(id).set(data, { merge: true });
+        return;
+    }
+    const token = userToken();
+    if (!token) throw new Error('Bejelentkezés kell az e-mail ügynök Firestore írásához.');
+    await setDocument(`${collection}/${id}`, token, data, true);
+}
+
+async function readSettingsEnabledPublic(): Promise<boolean> {
+    const key = resolveFirebaseWebApiKey();
+    if (!key) return false;
     try {
-        const snap = await db.collection('settings').doc(SETTINGS_DOC).get();
-        if (!snap.exists) return false;
-        return snap.data()?.enabled === true;
+        const res = await fetch(
+            `${FIRESTORE_DOCS_BASE}/settings/${SETTINGS_DOC}?key=${encodeURIComponent(key)}`
+        );
+        if (!res.ok) return false;
+        const json = await res.json();
+        return json?.fields?.enabled?.booleanValue === true;
     } catch {
         return false;
     }
 }
 
-export async function setEmailAgentEnabled(enabled: boolean): Promise<void> {
+export async function isEmailAgentEnabled(): Promise<boolean> {
     const db = getAdminDb();
-    if (!db) throw new Error('Firebase Admin kell az e-mail ügynökhöz.');
-    await db.collection('settings').doc(SETTINGS_DOC).set(
-        { enabled, updatedAt: new Date().toISOString() },
-        { merge: true }
-    );
+    if (db) {
+        try {
+            const snap = await db.collection('settings').doc(SETTINGS_DOC).get();
+            if (!snap.exists) return false;
+            return snap.data()?.enabled === true;
+        } catch {
+            return false;
+        }
+    }
+    const token = userToken();
+    if (token) {
+        try {
+            const doc = await getDocument(`settings/${SETTINGS_DOC}`, token);
+            return doc?.enabled === true;
+        } catch {
+            return false;
+        }
+    }
+    return readSettingsEnabledPublic();
+}
+
+export async function setEmailAgentEnabled(enabled: boolean): Promise<void> {
+    await writeDoc('settings', SETTINGS_DOC, {
+        enabled,
+        updatedAt: new Date().toISOString(),
+    });
 }
 
 export async function listEmailAgentThreads(limit = 30): Promise<EmailBookingThread[]> {
     const db = getAdminDb();
-    if (!db) return [];
+    if (db) {
+        try {
+            const snap = await db.collection(THREADS).orderBy('updatedAtMs', 'desc').limit(limit).get();
+            return snap.docs.map((d) => asThread(d.id, d.data() as Record<string, unknown>));
+        } catch {
+            const snap = await db.collection(THREADS).limit(limit).get();
+            return snap.docs.map((d) => asThread(d.id, d.data() as Record<string, unknown>));
+        }
+    }
+    const token = userToken();
+    if (!token) return [];
     try {
-        const snap = await db.collection(THREADS).orderBy('updatedAtMs', 'desc').limit(limit).get();
-        return snap.docs.map((d) => ({ id: d.id, ...(d.data() as Omit<EmailBookingThread, 'id'>) }));
+        const docs = await listCollection(THREADS, token, {
+            pageSize: limit,
+            orderBy: 'updatedAtMs desc',
+        });
+        return docs.map((d) => asThread(String(d.__id || ''), d));
     } catch {
-        const snap = await db.collection(THREADS).limit(limit).get();
-        return snap.docs.map((d) => ({ id: d.id, ...(d.data() as Omit<EmailBookingThread, 'id'>) }));
+        const docs = await listCollection(THREADS, token, { pageSize: limit });
+        return docs.map((d) => asThread(String(d.__id || ''), d));
     }
 }
 
 async function loadThread(id: string): Promise<EmailBookingThread | null> {
     const db = getAdminDb();
-    if (!db) return null;
-    const snap = await db.collection(THREADS).doc(id).get();
-    if (!snap.exists) return null;
-    return { id: snap.id, ...(snap.data() as Omit<EmailBookingThread, 'id'>) };
+    if (db) {
+        const snap = await db.collection(THREADS).doc(id).get();
+        if (!snap.exists) return null;
+        return asThread(snap.id, snap.data() as Record<string, unknown>);
+    }
+    const token = userToken();
+    if (!token) return null;
+    const doc = await getDocument(`${THREADS}/${id}`, token);
+    if (!doc) return null;
+    return asThread(String(doc.__id || id), doc);
 }
 
 async function saveThread(thread: EmailBookingThread): Promise<void> {
-    const db = getAdminDb();
-    if (!db) return;
-    await db.collection(THREADS).doc(thread.id).set(thread, { merge: true });
+    try {
+        await writeDoc(THREADS, thread.id, { ...thread });
+    } catch {
+        /* cron Admin SDK nélkül: IMAP zászló akkor is megmarad */
+    }
 }
 
 async function isKnownCustomer(email: string): Promise<boolean> {
+    if (!email) return false;
     const db = getAdminDb();
-    if (!db || !email) return false;
-    try {
-        const snap = await db.collection('bookings').where('customerEmail', '==', email).limit(1).get();
-        return !snap.empty;
-    } catch {
-        return false;
+    if (db) {
+        try {
+            const snap = await db.collection('bookings').where('customerEmail', '==', email).limit(1).get();
+            return !snap.empty;
+        } catch {
+            return false;
+        }
     }
+    return false;
 }
 
 async function holdSlot(opts: {
@@ -105,8 +187,6 @@ async function holdSlot(opts: {
     dateKey: string;
     time: string;
 }): Promise<string> {
-    const db = getAdminDb();
-    if (!db) throw new Error('Nincs Admin SDK a sáv félrerakásához.');
     const id = `booking_email_${opts.threadId}`.replace(/[^\w.-]+/g, '_').slice(0, 80);
     const now = new Date().toISOString();
     const doc = {
@@ -126,22 +206,30 @@ async function holdSlot(opts: {
         emailThreadId: opts.threadId,
         updatedAt: now,
     };
-    await db.collection('bookings').doc(id).set(doc, { merge: true });
-    await db.collection('pendingBookings').doc(id).set(doc, { merge: true }).catch(() => undefined);
+    await writeDoc('bookings', id, doc);
+    try {
+        await writeDoc('pendingBookings', id, doc);
+    } catch {
+        /* opcionális */
+    }
     return id;
 }
 
 export async function releaseEmailHold(threadId: string): Promise<void> {
-    const db = getAdminDb();
-    if (!db) throw new Error('Nincs Admin SDK.');
     const thread = await loadThread(threadId);
     if (!thread?.bookingId) return;
     const now = new Date().toISOString();
-    await db.collection('bookings').doc(thread.bookingId).set(
-        { status: 'cancelled', cancelledAt: now, updatedAt: now },
-        { merge: true }
-    );
-    await db.collection('pendingBookings').doc(thread.bookingId).delete().catch(() => undefined);
+    await writeDoc('bookings', thread.bookingId, {
+        status: 'cancelled',
+        cancelledAt: now,
+        updatedAt: now,
+    });
+    const db = getAdminDb();
+    if (db) {
+        await db.collection('pendingBookings').doc(thread.bookingId).delete().catch(() => undefined);
+    } else if (userToken()) {
+        await deleteDocument(`pendingBookings/${thread.bookingId}`, userToken()).catch(() => undefined);
+    }
     await saveThread({
         ...thread,
         status: 'negotiating',
@@ -304,9 +392,6 @@ export async function runEmailBookingAgent(): Promise<AgentRunResult> {
     }
     if (!imapReady) {
         return { enabled, imapReady, scanned: 0, drafts: 0, skipped: 0, errors: ['GMAIL_USER / GMAIL_APP_PASSWORD hiányzik'] };
-    }
-    if (!getAdminDb()) {
-        return { enabled, imapReady, scanned: 0, drafts: 0, skipped: 0, errors: ['Firebase Admin hiányzik'] };
     }
 
     let mails: InboundMail[] = [];

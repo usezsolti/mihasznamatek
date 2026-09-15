@@ -12,10 +12,28 @@ import { FIREBASE_PROJECT_ID } from './config';
 
 let initTried = false;
 
+function parseServiceAccountJson(raw: string): Record<string, unknown> {
+    let s = raw.trim().replace(/^\uFEFF/, '');
+    if (
+        (s.startsWith('"') && s.endsWith('"')) ||
+        (s.startsWith("'") && s.endsWith("'"))
+    ) {
+        s = s.slice(1, -1).replace(/\\"/g, '"');
+    }
+    if (!s.startsWith('{')) {
+        throw new Error('FIREBASE_SERVICE_ACCOUNT_JSON nem JSON objektum.');
+    }
+    const parsed = JSON.parse(s) as Record<string, unknown>;
+    if (typeof parsed.private_key === 'string') {
+        parsed.private_key = parsed.private_key.replace(/\\n/g, '\n');
+    }
+    return parsed;
+}
+
 function loadServiceAccount(): Record<string, unknown> | null {
     const raw = process.env.FIREBASE_SERVICE_ACCOUNT_JSON;
     if (raw) {
-        return JSON.parse(raw);
+        return parseServiceAccountJson(raw);
     }
     const filePath =
         process.env.FIREBASE_SERVICE_ACCOUNT_PATH ||

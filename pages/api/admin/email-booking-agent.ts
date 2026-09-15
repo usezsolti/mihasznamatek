@@ -1,12 +1,13 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { sendErr, sendOk } from '../../../server/http';
-import { requireAdmin } from '../../../utils/apiSecurity';
+import { extractBearerToken, requireAdmin } from '../../../utils/apiSecurity';
 import {
     isEmailAgentEnabled,
     listEmailAgentThreads,
     releaseEmailHold,
     runEmailBookingAgent,
     setEmailAgentEnabled,
+    withEmailAgentAuth,
 } from '../../../server/emailBookingAgent';
 import { gmailImapReady } from '../../../server/gmailImap';
 
@@ -16,6 +17,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const admin = await requireAdmin(req, res);
     if (!admin) return;
 
+    const token = extractBearerToken(req) || '';
+    return withEmailAgentAuth(token, () => handle(req, res));
+}
+
+async function handle(req: NextApiRequest, res: NextApiResponse) {
     if (req.method === 'GET') {
         try {
             const [enabled, threads] = await Promise.all([
