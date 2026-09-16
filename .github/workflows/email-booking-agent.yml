@@ -1,0 +1,23 @@
+# Tartalék, ha a Vercel Hobby cron csak naponta fut.
+# GitHub Secrets: CRON_SECRET (ugyanaz mint Vercelen), SITE_URL=https://mihasznamatek.hu
+name: Email agent poll
+on:
+  schedule:
+    - cron: '* * * * *'
+  workflow_dispatch:
+jobs:
+  poll:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run email booking agent
+        env:
+          CRON_SECRET: ${{ secrets.CRON_SECRET }}
+          SITE_URL: ${{ secrets.SITE_URL }}
+        run: |
+          if [ -z "$CRON_SECRET" ] || [ -z "$SITE_URL" ]; then
+            echo "Hiányzik a CRON_SECRET vagy a SITE_URL GitHub secret."
+            exit 1
+          fi
+          curl -fsS -X GET \
+            -H "Authorization: Bearer ${CRON_SECRET}" \
+            "${SITE_URL%/}/api/cron/email-booking-agent"

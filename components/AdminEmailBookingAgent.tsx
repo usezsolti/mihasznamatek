@@ -8,7 +8,41 @@ type AgentState = {
     enabled: boolean;
     imapReady: boolean;
     threads: EmailBookingThread[];
+    lastRunAt?: string;
+    lastRunDrafts?: number;
+    lastRunScanned?: number;
+    cronEveryMinute?: boolean;
 };
+
+function formatLastRun(iso?: string): string {
+    if (!iso) return 'még nem futott';
+    const d = new Date(iso);
+    if (Number.isNaN(d.getTime())) return 'még nem futott';
+    return d.toLocaleString('hu-HU', { dateStyle: 'short', timeStyle: 'short' });
+}
+
+export function AdminEmailAgentChip({ onOpen }: { onOpen: () => void }) {
+    const [label, setLabel] = useState('E-mail ügynök');
+    useEffect(() => {
+        let cancelled = false;
+        void apiGetAuth<AgentState>('/api/admin/email-booking-agent').then((res) => {
+            if (cancelled || !res.ok || !res.data) return;
+            setLabel(
+                res.data.enabled
+                    ? `Automata · ${formatLastRun(res.data.lastRunAt)}`
+                    : 'E-mail ki'
+            );
+        });
+        return () => {
+            cancelled = true;
+        };
+    }, []);
+    return (
+        <button type="button" className="atc-mail-chip" onClick={onOpen}>
+            {label}
+        </button>
+    );
+}
 
 export default function AdminEmailBookingAgent() {
     const [allowed, setAllowed] = useState(false);
@@ -84,8 +118,10 @@ export default function AdminEmailBookingAgent() {
                     <p className="mm-agent-kicker">Tanári automata</p>
                     <h2 className="mm-agent-title">E-mail ügynök</h2>
                     <p className="mm-agent-sub">
-                        Foglalós levelekre Gmail-piszkozatot ír, egymás mellé pakolt sávokkal. Nem
-                        küld magától — te nyomod el a piszkozatot.
+                        Bekapcsolva perceként magától nézi a Gmailt — új matekórás levélre
+                        azonnal (max. 1 percen belül) HTML-piszkozatot készít. Ha a diák
+                        időpontot választ, lefoglalja, és neked is készít piszkozatot. Semmit
+                        nem küld magától.
                     </p>
                 </div>
                 <button
@@ -107,8 +143,17 @@ export default function AdminEmailBookingAgent() {
             </div>
 
             <div className="mm-agent-meta">
+                <span className={`mm-agent-pill ${enabled ? 'ok' : 'bad'}`}>
+                    {enabled ? 'Automata perceként' : 'Kikapcsolva — nincs automata'}
+                </span>
                 <span className={`mm-agent-pill ${data?.imapReady ? 'ok' : 'bad'}`}>
                     IMAP {data?.imapReady ? 'kész' : 'nincs Gmail jelszó'}
+                </span>
+                <span className="mm-agent-pill">
+                    Utolsó futás: {formatLastRun(data?.lastRunAt)}
+                    {data?.lastRunAt
+                        ? ` · ${data.lastRunScanned ?? 0} levél / ${data.lastRunDrafts ?? 0} piszkozat`
+                        : ''}
                 </span>
                 <button
                     type="button"
@@ -116,7 +161,7 @@ export default function AdminEmailBookingAgent() {
                     disabled={!!busy || !enabled}
                     onClick={() => void act('run')}
                 >
-                    {busy === 'run' ? 'Futtatás…' : 'Futtasd most'}
+                    {busy === 'run' ? 'Futtatás…' : 'Most is fusson'}
                 </button>
             </div>
             {err ? <div className="mm-agent-err">{err}</div> : null}

@@ -923,78 +923,71 @@ export default function Dashboard() {
                         initialTab={
                             router.query.view === 'tasks'
                                 ? 'tasks'
-                                : router.query.view === 'lessons'
-                                  ? 'lessons'
-                                  : router.query.view === 'email'
-                                    ? 'email'
-                                    : 'schedule'
+                                : router.query.view === 'students'
+                                  ? 'students'
+                                  : router.query.view === 'schedule'
+                                    ? 'schedule'
+                                    : 'home'
                         }
-                        emailPanel={<AdminEmailBookingAgent />}
+                        emailPanel={
+                            <>
+                                {emailStatus ? (
+                                    <div className="admin-mail-tools">
+                                        <span>
+                                            E-mail:{' '}
+                                            <strong style={{ color: emailStatus.hasGmail ? '#39ff14' : '#ff69b4' }}>
+                                                {emailStatus.hasGmail ? 'kész' : 'nincs beállítva'}
+                                            </strong>
+                                            {reminderInfo ? ` — ${reminderInfo}` : ''}
+                                        </span>
+                                        <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
+                                            <button
+                                                type="button"
+                                                onClick={sendTestBookingEmail}
+                                                disabled={emailTestLoading || !emailStatus.hasGmail}
+                                                className="atc-inline-btn"
+                                                style={{
+                                                    background: 'rgba(57,255,20,0.12)',
+                                                    color: '#39ff14',
+                                                    border: '1px solid #39ff14',
+                                                    borderRadius: '8px',
+                                                    padding: '0.4rem 0.75rem',
+                                                    fontWeight: 700,
+                                                    cursor: emailTestLoading || !emailStatus.hasGmail ? 'not-allowed' : 'pointer',
+                                                }}
+                                            >
+                                                {emailTestLoading ? '…' : 'Teszt e-mail'}
+                                            </button>
+                                            <button
+                                                type="button"
+                                                onClick={() => runLessonReminders()}
+                                                disabled={reminderLoading || !emailStatus.hasGmail}
+                                                style={{
+                                                    background: 'rgba(57,255,20,0.12)',
+                                                    color: '#39ff14',
+                                                    border: '1px solid #39ff14',
+                                                    borderRadius: '8px',
+                                                    padding: '0.4rem 0.75rem',
+                                                    fontWeight: 700,
+                                                    cursor: reminderLoading || !emailStatus.hasGmail ? 'not-allowed' : 'pointer',
+                                                }}
+                                            >
+                                                {reminderLoading ? '…' : 'Holnapi emlékeztető'}
+                                            </button>
+                                        </div>
+                                    </div>
+                                ) : null}
+                                <AdminEmailBookingAgent />
+                            </>
+                        }
                         schedulePanel={({ createLobbyFromBooking, lobbyBusy }) => (
                             <>
-                        {emailStatus && (
-                            <div style={{
-                                display: 'flex',
-                                flexWrap: 'wrap',
-                                gap: '0.65rem',
-                                alignItems: 'center',
-                                justifyContent: 'space-between',
-                                background: 'rgba(18, 24, 33, 0.9)',
-                                border: '1px solid rgba(57,255,20,0.25)',
-                                borderRadius: '12px',
-                                padding: '0.75rem 1rem',
-                                margin: '0 0 1rem',
-                                color: '#ddd',
-                                fontSize: '0.9rem',
-                            }}>
-                                <span>
-                                    E-mail:{' '}
-                                    <strong style={{ color: emailStatus.hasGmail ? '#39ff14' : '#ff69b4' }}>
-                                        {emailStatus.hasGmail ? 'kész' : 'nincs beállítva'}
-                                    </strong>
-                                    {reminderInfo ? (' - ' + reminderInfo) : ''}
-                                </span>
-                                <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
-                                    <button
-                                        type="button"
-                                        onClick={sendTestBookingEmail}
-                                        disabled={emailTestLoading || !emailStatus.hasGmail}
-                                        className="atc-inline-btn"
-                                        style={{
-                                            background: 'rgba(57,255,20,0.12)',
-                                            color: '#39ff14',
-                                            border: '1px solid #39ff14',
-                                            borderRadius: '8px',
-                                            padding: '0.4rem 0.75rem',
-                                            fontWeight: 700,
-                                            cursor: emailTestLoading || !emailStatus.hasGmail ? 'not-allowed' : 'pointer',
-                                        }}
-                                    >
-                                        {emailTestLoading ? '…' : 'Teszt e-mail'}
-                                    </button>
-                                    <button
-                                        type="button"
-                                        onClick={() => runLessonReminders()}
-                                        disabled={reminderLoading || !emailStatus.hasGmail}
-                                        style={{
-                                            background: 'rgba(57,255,20,0.12)',
-                                            color: '#39ff14',
-                                            border: '1px solid #39ff14',
-                                            borderRadius: '8px',
-                                            padding: '0.4rem 0.75rem',
-                                            fontWeight: 700,
-                                            cursor: reminderLoading || !emailStatus.hasGmail ? 'not-allowed' : 'pointer',
-                                        }}
-                                    >
-                                        {reminderLoading ? '…' : 'Holnapi emlékeztető'}
-                                    </button>
-                                </div>
-                            </div>
-                        )}
-
-                        <AdminWorkingHoursEditor
-                            onSaved={() => setWorkingHoursVersion((v) => v + 1)}
-                        />
+                        <details className="admin-hours-fold">
+                            <summary>Munkaidő (heti elérhetőség)</summary>
+                            <AdminWorkingHoursEditor
+                                onSaved={() => setWorkingHoursVersion((v) => v + 1)}
+                            />
+                        </details>
 
                         <AdminBookingCalendar
                             key={workingHoursVersion}
@@ -1007,137 +1000,6 @@ export default function Dashboard() {
                             }}
                         />
 
-                        {pendingBookings.length > 0 ? (
-                            <section className="pending-bookings-section">
-                                <h2 className="section-title">Függő foglalások</h2>
-                                <div className="pending-bookings-grid">
-                                    {pendingBookings.map(booking => (
-                                        <div key={booking.id} className="pending-booking-card">
-                                            <div className="booking-header">
-                                                <h3>{new Date(booking.date).toLocaleDateString('hu-HU')}</h3>
-                                                <span className="booking-status pending">Függőben</span>
-                                            </div>
-                                            <div className="booking-content">
-                                                <div className="booking-info">
-                                                    <p><strong>Név:</strong> {booking.customerName}</p>
-                                                    <p><strong>Email:</strong> {booking.customerEmail}</p>
-                                                    <p><strong>Idő:</strong> {(booking.times || []).join(', ')}</p>
-                                                    <p><strong>Típus:</strong> {booking.lessonType === 'online' ? 'Online' : 'Személyes'}</p>
-                                                    <p><strong>Szint:</strong> {booking.selectedSubject}</p>
-                                                    {booking.preparingForLabel || booking.preparingFor ? (
-                                                        <p>
-                                                            <strong>Mire készül:</strong>{' '}
-                                                            {booking.preparingForLabel || booking.preparingFor}
-                                                        </p>
-                                                    ) : null}
-                                                    {(booking.topicTitle || (booking.hobby && booking.hobby !== '—')) ? (
-                                                        <p>
-                                                            <strong>Konkrét téma:</strong>{' '}
-                                                            {booking.topicTitle || booking.hobby}
-                                                        </p>
-                                                    ) : null}
-                                                    {booking.topicNote ? (
-                                                        <p><strong>Megjegyzés:</strong> {booking.topicNote}</p>
-                                                    ) : null}
-                                                    {booking.lessonPack?.title ? (
-                                                        <p>
-                                                            <strong>Óraanyag:</strong>{' '}
-                                                            {booking.lessonPack.title}
-                                                            {booking.lessonPack.content ? (
-                                                                <button
-                                                                    type="button"
-                                                                    style={{
-                                                                        marginLeft: 8,
-                                                                        cursor: 'pointer',
-                                                                    }}
-                                                                    onClick={async () => {
-                                                                        const { downloadLessonPackPdf } =
-                                                                            await import('../utils/lessonPackPdf');
-                                                                        downloadLessonPackPdf(
-                                                                            booking.lessonPack!.content!,
-                                                                            `oraanyag-${booking.topicTitle || 'matek'}`
-                                                                        );
-                                                                    }}
-                                                                >
-                                                                    PDF
-                                                                </button>
-                                                            ) : null}
-                                                        </p>
-                                                    ) : null}
-                                                    <p><strong>Ár:</strong> {booking.totalPrice} Ft</p>
-                                                    <p>
-                                                        <strong>Fizetés:</strong>{' '}
-                                                        {paymentStatusLabel(booking.paymentStatus)}
-                                                    </p>
-                                                    <BookingAttachments files={booking.uploadedFiles} />
-                                                </div>
-                                                <div className="booking-actions">
-                                                    <button className="approve-btn" onClick={() => approveBooking(booking.id)}>
-                                                        Jóváhagyás
-                                                    </button>
-                                                    <button className="reject-btn" onClick={() => rejectBooking(booking.id)}>
-                                                        Elutasítás
-                                                    </button>
-                                                    <div style={{ display: 'grid', gap: '0.35rem', marginTop: '0.4rem' }}>
-                                                        <input
-                                                            type="date"
-                                                            value={proposeDraft[booking.id]?.date || booking.date}
-                                                            onChange={(e) =>
-                                                                setProposeDraft((prev) => ({
-                                                                    ...prev,
-                                                                    [booking.id]: {
-                                                                        date: e.target.value,
-                                                                        time:
-                                                                            prev[booking.id]?.time ||
-                                                                            (booking.times || [])[0] ||
-                                                                            '17:00',
-                                                                    },
-                                                                }))
-                                                            }
-                                                        />
-                                                        <input
-                                                            type="time"
-                                                            value={
-                                                                proposeDraft[booking.id]?.time ||
-                                                                (booking.times || [])[0] ||
-                                                                '17:00'
-                                                            }
-                                                            onChange={(e) =>
-                                                                setProposeDraft((prev) => ({
-                                                                    ...prev,
-                                                                    [booking.id]: {
-                                                                        date: prev[booking.id]?.date || booking.date,
-                                                                        time: e.target.value,
-                                                                    },
-                                                                }))
-                                                            }
-                                                        />
-                                                        <button
-                                                            type="button"
-                                                            className="approve-btn"
-                                                            onClick={() => void proposeOtherTime(booking.id)}
-                                                        >
-                                                            Másik időpontot javaslok
-                                                        </button>
-                                                    </div>
-                                                    <button
-                                                        type="button"
-                                                        className="approve-btn"
-                                                        disabled={lobbyBusy}
-                                                        onClick={() => void createLobbyFromBooking(booking)}
-                                                        style={{ background: 'linear-gradient(135deg,#39ff14,#b8ff5a)', color: '#061008', border: 'none' }}
-                                                    >
-                                                        Lobby
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    ))}
-                                </div>
-                            </section>
-                        ) : (
-                            <p style={{ textAlign: 'center', color: '#a0a0a0' }}>Nincs függő foglalás.</p>
-                        )}
                             </>
                         )}
                     />

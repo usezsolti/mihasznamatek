@@ -1,5 +1,7 @@
 import { useCallback, useEffect, useMemo, useState, type ReactNode } from 'react';
 import AdminHomeInbox from './AdminHomeInbox';
+import AdminStudentCards from './AdminStudentCards';
+import { AdminEmailAgentChip } from './AdminEmailBookingAgent';
 import { assignTaskToStudent, gameUrlForAssignedTask } from '../utils/assignedTasks';
 import type { BookingPayload } from '../utils/bookingNotify';
 import {
@@ -34,7 +36,8 @@ import {
 } from '../utils/teacherConsole';
 import { downloadLessonPackPdf } from '../utils/lessonPackPdf';
 
-type ConsoleTab = 'students' | 'tasks' | 'lessons' | 'schedule' | 'email';
+type ConsoleTab = 'home' | 'schedule' | 'students' | 'tasks';
+type DossierSection = 'overview' | 'practice' | 'billing';
 type LevelFilter = 'all' | 'elementary' | 'highschool' | 'erettsegi' | 'university';
 
 type ScheduleLobbyApi = {
@@ -85,11 +88,12 @@ function initials(name: string, email: string): string {
 export default function AdminTeacherConsole({
     adminUid,
     adminEmail,
-    initialTab = 'schedule',
+    initialTab = 'home',
     schedulePanel,
     emailPanel,
 }: Props) {
     const [tab, setTab] = useState<ConsoleTab>(initialTab);
+    const [dossierSection, setDossierSection] = useState<DossierSection>('overview');
 
     useEffect(() => {
         setTab(initialTab);
@@ -130,10 +134,6 @@ export default function AdminTeacherConsole({
     const [lessonStartMsg, setLessonStartMsg] = useState('');
     const [lastLessonLink, setLastLessonLink] = useState('');
 
-    useEffect(() => {
-        setTab(initialTab);
-    }, [initialTab]);
-
     const loadStudents = useCallback(async (forceRetry = false) => {
         setLoadingList(true);
         try {
@@ -143,7 +143,7 @@ export default function AdminTeacherConsole({
             }
             const { students: list } = await loadTeacherStudents();
             setStudents(list);
-            setSelectedId((prev) => prev || list[0]?.uid || null);
+            setSelectedId((prev) => (prev && list.some((s) => s.uid === prev) ? prev : null));
         } catch {
             setStudents([]);
         } finally {
@@ -177,6 +177,7 @@ export default function AdminTeacherConsole({
                 setAssignMsg('');
                 setNoteMsg('');
                 setSelectedTopicKeys([]);
+                setDossierSection('overview');
             })
             .finally(() => {
                 if (!cancelled) setLoadingDossier(false);
@@ -187,7 +188,7 @@ export default function AdminTeacherConsole({
     }, [selectedId, students]);
 
     useEffect(() => {
-        if (tab !== 'lessons') return;
+        if (tab !== 'home') return;
         let cancelled = false;
         setLoadingLessons(true);
         void loadLessonDayBookings(lessonDay)
@@ -209,6 +210,23 @@ export default function AdminTeacherConsole({
             (s) => s.name.toLowerCase().includes(q) || s.email.toLowerCase().includes(q)
         );
     }, [students, query]);
+
+    const unpaidCount = useMemo(
+        () =>
+            students.filter(
+                (s) => s.paymentStatus === 'unpaid' || s.paymentStatus === 'transfer_pending'
+            ).length,
+        [students]
+    );
+
+    const tabSubtitle =
+        tab === 'home'
+            ? 'Mai órák, függő foglalások és e-mail piszkozatok.'
+            : tab === 'schedule'
+              ? 'Naptár → Óra létrehozása (diák + idő), vagy meglévő foglalás → Élő óra.'
+              : tab === 'students'
+                ? 'Diákok statisztikái, számlázás és dosszié.'
+                : 'Feladatok kiosztása témakörönként.';
 
     const filteredTasks = useMemo(() => {
         if (levelFilter === 'all') return taskBank;
@@ -591,36 +609,45 @@ export default function AdminTeacherConsole({
                 <button
                     type="button"
                     className="atc-platform-brand"
-                    onClick={() => setTab('students')}
+                    onClick={() => {
+                        setSelectedId(null);
+                        setTab('home');
+                    }}
                 >
                     <p className="atc-platform-kicker">Mihaszna Matek</p>
                     <h1 className="atc-platform-title">Admin platform</h1>
                     <p className="atc-muted" style={{ margin: '0.2rem 0 0' }}>
-                        Naptár → Óra létrehozása (diák + idő), vagy meglévő foglalás → Élő óra.
+                        {tabSubtitle}
                     </p>
                 </button>
+                <div className="atc-tabs-wrap">
                 <div className="atc-tabs" role="tablist" aria-label="Admin eszközök">
                     {(
                         [
+                            ['home', 'Ma'],
                             ['schedule', 'Naptár'],
-                            ['email', 'E-mail ügynök'],
+                            ['students', 'Diákok'],
                             ['tasks', 'Feladatok'],
-                            ['lessons', 'Órák'],
                         ] as const
-                    )
-                        .filter(([id]) => id !== 'email' || !!emailPanel)
-                        .map(([id, label]) => (
+                    ).map(([id, label]) => (
                         <button
                             key={id}
                             type="button"
                             role="tab"
                             aria-selected={tab === id}
                             className={tab === id ? 'active' : ''}
-                            onClick={() => setTab(id)}
+                            onClick={() => {
+                                if (id === 'students') setSelectedId(null);
+                                setTab(id);
+                            }}
                         >
                             {label}
                         </button>
                     ))}
+                </div>
+                    {emailPanel ? (
+                        <AdminEmailAgentChip onOpen={() => setTab('home')} />
+                    ) : null}
                 </div>
             </div>
 
@@ -638,17 +665,6 @@ export default function AdminTeacherConsole({
                                 </>
                             ) : null}
                         </p>
-                    ) : null}
-                    {emailPanel ? (
-                    <div className="atc-actions" style={{ margin: '0 0 0.85rem' }}>
-                        <button
-                            type="button"
-                            className="atc-btn primary"
-                            onClick={() => setTab('email')}
-                        >
-                            E-mail ügynök →
-                        </button>
-                    </div>
                     ) : null}
                     {typeof schedulePanel === 'function'
                         ? schedulePanel({
@@ -671,16 +687,18 @@ export default function AdminTeacherConsole({
                 </div>
             ) : null}
 
-            {tab === 'email' ? (
-                <div className="atc-schedule">
-                    {emailPanel || (
-                        <p className="atc-muted">Az e-mail ügynök itt jelenik meg.</p>
-                    )}
-                </div>
-            ) : null}
-
-            {tab === 'lessons' ? (
-                <section className="atc-panel">
+            {tab === 'home' ? (
+                <div className="atc-home">
+                    <AdminHomeInbox
+                        students={students}
+                        unpaidCount={unpaidCount}
+                        onOpenStudent={(uid) => {
+                            setSelectedId(uid);
+                            setTab('students');
+                        }}
+                        onOpenSchedule={() => setTab('schedule')}
+                    />
+                    <section className="atc-panel">
                     <div className="atc-row-between">
                         <h2>{lessonDay === 0 ? 'Mai órák' : 'Holnapi órák'}</h2>
                         <div className="atc-seg">
@@ -701,8 +719,7 @@ export default function AdminTeacherConsole({
                         </div>
                     </div>
                     <p className="atc-muted" style={{ marginBottom: '0.75rem' }}>
-                        Preferált: <strong>Naptár</strong> → diák kiválasztása → Lobby (automatikus
-                        e-mail). Itt gyors lista a nap foglalásaira.
+                        Lobby e-mailt küld a diáknak. Új óra a Naptárban hozható létre.
                     </p>
                     <div className="atc-actions" style={{ margin: '0.75rem 0' }}>
                         <button
@@ -817,6 +834,8 @@ export default function AdminTeacherConsole({
                         </ul>
                     )}
                 </section>
+                    {emailPanel ? <div className="atc-home-mail">{emailPanel}</div> : null}
+                </div>
             ) : null}
 
             {tab === 'tasks' ? (
@@ -867,7 +886,7 @@ export default function AdminTeacherConsole({
                                     className="atc-btn"
                                     onClick={() => setTab('students')}
                                 >
-                                    ← Admin
+                                    ← Diákok
                                 </button>
                             )}
                             <button
@@ -1148,80 +1167,33 @@ export default function AdminTeacherConsole({
                 </section>
             ) : null}
 
-            {tab === 'students' ? (
+            {tab === 'students' && !selectedId ? (
                 <div>
-                    <AdminHomeInbox
-                        students={students}
-                        onOpenStudent={(uid) => {
-                            setSelectedId(uid);
-                            setTab('students');
-                        }}
-                        onOpenSchedule={() => setTab('schedule')}
-                        onOpenLessons={() => setTab('lessons')}
+                    <AdminStudentCards
+                        students={filteredStudents}
+                        loading={loadingList}
+                        query={query}
+                        onQueryChange={setQuery}
+                        onRefresh={() => void refreshStudents()}
+                        onOpenStudent={(uid) => setSelectedId(uid)}
                     />
-                <div className="atc-grid">
-                    <aside className="atc-panel">
-                        <div className="atc-row-between" style={{ marginBottom: '0.55rem' }}>
-                            <strong>Diákok</strong>
-                            <button
-                                type="button"
-                                className="atc-btn"
-                                onClick={() => void refreshStudents()}
-                            >
-                                Frissítés
-                            </button>
-                        </div>
-                        <input
-                            className="atc-search"
-                            value={query}
-                            onChange={(e) => setQuery(e.target.value)}
-                            placeholder="Keresés…"
-                            aria-label="Diák keresés"
-                        />
-                        {loadingList ? (
-                            <p className="atc-muted">Betöltés…</p>
-                        ) : filteredStudents.length === 0 ? (
-                            <p className="atc-muted">Nincs diák a listában.</p>
-                        ) : (
-                            <ul className="atc-student-list">
-                                {filteredStudents.map((s) => (
-                                    <li key={s.uid}>
-                                        <button
-                                            type="button"
-                                            className={selectedId === s.uid ? 'active' : ''}
-                                            onClick={() => setSelectedId(s.uid)}
-                                        >
-                                            <span className="atc-avatar-sm" aria-hidden>
-                                                {s.photoURL ? (
-                                                    // eslint-disable-next-line @next/next/no-img-element
-                                                    <img src={s.photoURL} alt="" />
-                                                ) : (
-                                                    initials(s.name, s.email)
-                                                )}
-                                            </span>
-                                            <span className="atc-student-meta">
-                                                <span>{s.name}</span>
-                                                <em>{s.email || '—'}</em>
-                                            </span>
-                                        </button>
-                                    </li>
-                                ))}
-                            </ul>
-                        )}
-                    </aside>
+                </div>
+            ) : null}
 
-                    <section className="atc-panel">
-                        {!selectedId ? (
-                            <div>
-                                <p className="atc-muted" style={{ marginBottom: '0.75rem' }}>
-                                    {students.length === 0
-                                        ? 'Még nincs diák a listában.'
-                                        : 'Válassz diákot a bal oldali listából.'}
-                                </p>
-                            </div>
-                        ) : loadingDossier || !dossier ? (
+            {tab === 'students' && selectedId ? (
+                <section className="atc-panel">
+                    <div className="atc-actions" style={{ marginBottom: '0.75rem' }}>
+                        <button
+                            type="button"
+                            className="atc-btn"
+                            onClick={() => setSelectedId(null)}
+                        >
+                            ← Diákok
+                        </button>
+                    </div>
+                    {loadingDossier || !dossier ? (
                             <p className="atc-muted">Dosszié betöltése…</p>
-                        ) : (
+                    ) : (
                             <>
                                 <div className="atc-profile-head">
                                     <div className="atc-avatar-lg" aria-hidden>
@@ -1264,6 +1236,31 @@ export default function AdminTeacherConsole({
                                     <p className="atc-bio">{dossier.profile.bio}</p>
                                 ) : null}
 
+                                <div className="atc-seg atc-dossier-tabs" role="tablist" aria-label="Dosszié szekciók">
+                                    <button
+                                        type="button"
+                                        className={dossierSection === 'overview' ? 'active' : ''}
+                                        onClick={() => setDossierSection('overview')}
+                                    >
+                                        Áttekintés
+                                    </button>
+                                    <button
+                                        type="button"
+                                        className={dossierSection === 'practice' ? 'active' : ''}
+                                        onClick={() => setDossierSection('practice')}
+                                    >
+                                        Gyakorlás
+                                    </button>
+                                    <button
+                                        type="button"
+                                        className={dossierSection === 'billing' ? 'active' : ''}
+                                        onClick={() => setDossierSection('billing')}
+                                    >
+                                        Számlázás
+                                    </button>
+                                </div>
+
+                                {dossierSection === 'overview' ? (
                                 <div className="atc-prep">
                                     <h3>Következő óra előkészítő</h3>
                                     {dossier.profile.nextLesson ? (
@@ -1366,7 +1363,10 @@ export default function AdminTeacherConsole({
                                         <p className="atc-muted">Még nincs órajegyzet.</p>
                                     )}
                                 </div>
+                                ) : null}
 
+                                {dossierSection === 'billing' ? (
+                                <>
                                 <h3>Jelenlét és fizetés</h3>
                                 <div className="atc-admin-meta">
                                     <label>
@@ -1446,8 +1446,16 @@ export default function AdminTeacherConsole({
                                     ) : null}
                                 </div>
 
-                                <h3>Profil adatok</h3>
+                                <h3>Számlázási adatok</h3>
                                 <dl className="atc-info-grid">
+                                    <div>
+                                        <dt>Név</dt>
+                                        <dd>{dossier.profile.displayName || dossier.student.name || '—'}</dd>
+                                    </div>
+                                    <div>
+                                        <dt>E-mail</dt>
+                                        <dd>{dossier.profile.email || dossier.student.email || '—'}</dd>
+                                    </div>
                                     <div>
                                         <dt>Iskolaszint</dt>
                                         <dd>{educationLabel(dossier.profile.educationLevel)}</dd>
@@ -1457,46 +1465,49 @@ export default function AdminTeacherConsole({
                                         <dd>{dossier.profile.phone || '—'}</dd>
                                     </div>
                                     <div>
-                                        <dt>UID</dt>
-                                        <dd className="atc-mono">{dossier.student.uid}</dd>
-                                    </div>
-                                    <div>
-                                        <dt>Regisztráció</dt>
-                                        <dd>{formatWhen(dossier.profile.createdAtMs)}</dd>
-                                    </div>
-                                    <div>
-                                        <dt>Utolsó belépés</dt>
-                                        <dd>{formatWhen(dossier.profile.lastLoginMs)}</dd>
-                                    </div>
-                                    <div>
-                                        <dt>Utolsó frissítés</dt>
-                                        <dd>{formatWhen(dossier.profile.updatedAtMs)}</dd>
-                                    </div>
-                                    <div>
-                                        <dt>Közösség</dt>
+                                        <dt>Számlázási cím</dt>
                                         <dd>
-                                            {dossier.profile.followerCount} követő ·{' '}
-                                            {dossier.profile.followingCount} követés ·{' '}
-                                            {dossier.profile.postCount} poszt
+                                            {[
+                                                dossier.profile.postalCode,
+                                                dossier.profile.street,
+                                                dossier.profile.houseNumber,
+                                            ]
+                                                .filter(Boolean)
+                                                .join(' ') || '—'}
                                         </dd>
                                     </div>
                                     <div>
-                                        <dt>Social XP / rang</dt>
+                                        <dt>Irányítószám</dt>
+                                        <dd>{dossier.profile.postalCode || '—'}</dd>
+                                    </div>
+                                    <div>
+                                        <dt>Utca</dt>
+                                        <dd>{dossier.profile.street || '—'}</dd>
+                                    </div>
+                                    <div>
+                                        <dt>Házszám</dt>
+                                        <dd>{dossier.profile.houseNumber || '—'}</dd>
+                                    </div>
+                                    <div>
+                                        <dt>Témakör</dt>
+                                        <dd>{dossier.profile.preferredSubject || '—'}</dd>
+                                    </div>
+                                    <div>
+                                        <dt>Óratípus</dt>
                                         <dd>
-                                            {dossier.profile.socialXp || 0} XP
-                                            {dossier.profile.socialRank
-                                                ? ` · ${dossier.profile.socialRank}`
-                                                : ''}
+                                            {dossier.profile.preferredLessonType === 'personal'
+                                                ? 'Személyes'
+                                                : dossier.profile.preferredLessonType === 'online'
+                                                  ? 'Online'
+                                                  : '—'}
                                         </dd>
                                     </div>
-                                    {dossier.profile.extraFields.map((f) => (
-                                        <div key={f.key}>
-                                            <dt>{f.key}</dt>
-                                            <dd>{f.value}</dd>
-                                        </div>
-                                    ))}
                                 </dl>
+                                </>
+                                ) : null}
 
+                                {dossierSection === 'practice' ? (
+                                <>
                                 <div className="atc-stats">
                                     <div>
                                         <strong>
@@ -1538,7 +1549,11 @@ export default function AdminTeacherConsole({
                                         );
                                     })}
                                 </div>
+                                </>
+                                ) : null}
 
+                                {dossierSection === 'overview' ? (
+                                <>
                                 <h3>Foglalások</h3>
                                 {dossier.profile.bookings.length === 0 ? (
                                     <p className="atc-muted">Nincs foglalás ehhez az e-mailhez.</p>
@@ -1557,7 +1572,11 @@ export default function AdminTeacherConsole({
                                         ))}
                                     </ul>
                                 )}
+                                </>
+                                ) : null}
 
+                                {dossierSection === 'practice' ? (
+                                <>
                                 <h3>Témakörök ({dossier.topics.length})</h3>
                                 <p className="atc-muted" style={{ marginBottom: '0.55rem' }}>
                                     Több témát is kijelölhetsz (kattints a kártyára), majd kioszthatod
@@ -1672,7 +1691,11 @@ export default function AdminTeacherConsole({
                                         ))}
                                     </ul>
                                 )}
+                                </>
+                                ) : null}
 
+                                {dossierSection === 'overview' ? (
+                                <>
                                 <h3>Órajegyzet</h3>
                                 <textarea
                                     value={noteDraft}
@@ -1691,11 +1714,11 @@ export default function AdminTeacherConsole({
                                     </button>
                                     {noteMsg ? <span className="atc-msg">{noteMsg}</span> : null}
                                 </div>
+                                </>
+                                ) : null}
                             </>
-                        )}
-                    </section>
-                </div>
-                </div>
+                    )}
+                </section>
             ) : null}
 
             <style jsx>{`
@@ -1752,17 +1775,26 @@ export default function AdminTeacherConsole({
                     font-weight: 800;
                     color: #e8f0ea;
                 }
-                .atc-tabs {
+                .atc-tabs-wrap {
                     display: flex;
                     flex-wrap: wrap;
                     gap: 0.4rem;
+                    align-items: center;
+                }
+                .atc-tabs {
+                    display: flex;
+                    flex-wrap: nowrap;
+                    gap: 0.4rem;
                     position: static;
-                    width: 100%;
+                    width: auto;
+                    flex: 1;
+                    min-width: 0;
                     height: auto;
                     background: transparent;
                     padding: 0;
                     margin: 0;
                     z-index: auto;
+                    overflow-x: auto;
                 }
                 .atc-tabs button {
                     border: 1px solid var(--line);
@@ -1772,11 +1804,25 @@ export default function AdminTeacherConsole({
                     border-radius: 10px;
                     font-weight: 700;
                     cursor: pointer;
+                    white-space: nowrap;
+                    flex-shrink: 0;
                 }
                 .atc-tabs button.active {
                     background: rgba(57, 255, 20, 0.15);
                     color: #39ff14 !important;
                     border-color: rgba(57, 255, 20, 0.45);
+                }
+                .atc-tabs-wrap :global(.atc-mail-chip) {
+                    margin-left: auto;
+                    border: 1px solid rgba(57, 255, 20, 0.35);
+                    background: rgba(57, 255, 20, 0.1);
+                    color: #39ff14;
+                    padding: 0.45rem 0.8rem;
+                    border-radius: 999px;
+                    font-weight: 800;
+                    font-size: 0.78rem;
+                    cursor: pointer;
+                    white-space: nowrap;
                 }
                 .atc-grid {
                     display: grid;
@@ -1793,6 +1839,48 @@ export default function AdminTeacherConsole({
                     border: 1px solid var(--line);
                     border-radius: 14px;
                     padding: 0.9rem;
+                }
+                .atc-home {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 0.85rem;
+                }
+                .atc-home-mail {
+                    margin-top: 1rem;
+                }
+                .atc-home-mail :global(.admin-mail-tools) {
+                    display: flex;
+                    flex-wrap: wrap;
+                    gap: 0.65rem;
+                    align-items: center;
+                    justify-content: space-between;
+                    background: rgba(18, 24, 33, 0.9);
+                    border: 1px solid rgba(57, 255, 20, 0.25);
+                    border-radius: 12px;
+                    padding: 0.75rem 1rem;
+                    margin: 0 0 1rem;
+                    color: #ddd;
+                    font-size: 0.9rem;
+                }
+                .atc-schedule :global(.admin-hours-fold) {
+                    margin: 0 0 1rem;
+                    padding: 0.75rem 1rem;
+                    border: 1px solid var(--line);
+                    border-radius: 14px;
+                    background: rgba(12, 16, 22, 0.92);
+                    color: #e8f0ea;
+                }
+                .atc-schedule :global(.admin-hours-fold summary) {
+                    cursor: pointer;
+                    font-weight: 800;
+                    color: #39ff14;
+                    list-style: none;
+                }
+                .atc-schedule :global(.admin-hours-fold summary::-webkit-details-marker) {
+                    display: none;
+                }
+                .atc-dossier-tabs {
+                    margin: 0.85rem 0 1rem;
                 }
                 .atc-muted {
                     color: var(--muted) !important;

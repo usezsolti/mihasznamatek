@@ -36,6 +36,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             educationLevel?: string;
             photoURL?: string;
             lastSeenMs?: number;
+            paymentStatus?: 'unpaid' | 'transfer_pending' | 'paid' | '';
         }> = [];
         let pending: Array<Record<string, unknown>> = [];
         let source: 'admin-sdk' | 'user-token' = 'user-token';
@@ -56,6 +57,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                     educationLevel: String(data.educationLevel || ''),
                     photoURL: String(data.photoURL || ''),
                     lastSeenMs: toMs(data.updatedAt || data.lastLogin || data.createdAt),
+                    paymentStatus: paymentStatusFromUser(data),
                 });
             });
             students.sort((a, b) => (b.lastSeenMs || 0) - (a.lastSeenMs || 0));
@@ -77,6 +79,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                             educationLevel: String(d.educationLevel || ''),
                             photoURL: String(d.photoURL || ''),
                             lastSeenMs: toMs(d.updatedAt || d.lastLogin || d.createdAt),
+                            paymentStatus: paymentStatusFromUser(d),
                         };
                     })
                     .filter((s) => s.uid && !(s.email && isAdminEmail(s.email)))
@@ -137,6 +140,16 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     } catch (e: any) {
         return sendErr(res, String(e?.message || e), 500);
     }
+}
+
+function paymentStatusFromUser(
+    data: Record<string, unknown>
+): 'unpaid' | 'transfer_pending' | 'paid' | '' {
+    const raw = data.teacherAdmin;
+    const nested = raw && typeof raw === 'object' ? (raw as Record<string, unknown>) : {};
+    const p = String(nested.paymentStatus || '');
+    if (p === 'unpaid' || p === 'transfer_pending' || p === 'paid') return p;
+    return '';
 }
 
 function toMs(value: any): number {

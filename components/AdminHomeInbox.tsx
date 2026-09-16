@@ -8,16 +8,16 @@ import {
 
 type Props = {
     students: TeacherStudent[];
+    unpaidCount?: number;
     onOpenStudent: (uid: string) => void;
     onOpenSchedule: () => void;
-    onOpenLessons: () => void;
 };
 
 export default function AdminHomeInbox({
     students,
+    unpaidCount = 0,
     onOpenStudent,
     onOpenSchedule,
-    onOpenLessons,
 }: Props) {
     const [pending, setPending] = useState<BookingPayload[]>([]);
     const [todayLessons, setTodayLessons] = useState<Array<BookingPayload & { dateKey: string }>>(
@@ -103,6 +103,20 @@ export default function AdminHomeInbox({
                     Frissítés
                 </button>
             </div>
+            <div className="ahi-kpi">
+                <div>
+                    <b>{todayLessons.length}</b>
+                    <span>Mai óra</span>
+                </div>
+                <div>
+                    <b>{pending.length}</b>
+                    <span>Függő</span>
+                </div>
+                <div>
+                    <b>{unpaidCount}</b>
+                    <span>Kifizetetlen</span>
+                </div>
+            </div>
             {msg ? <p className="ahi-msg">{msg}</p> : null}
 
             <div className="ahi-grid">
@@ -163,43 +177,6 @@ export default function AdminHomeInbox({
 
                 <div className="ahi-card">
                     <div className="ahi-card-top">
-                        <strong>Mai órák</strong>
-                        <span>{todayLessons.length}</span>
-                    </div>
-                    {todayLessons.length === 0 ? (
-                        <p className="ahi-empty">Ma nincs óra a listában.</p>
-                    ) : (
-                        <ul>
-                            {todayLessons.slice(0, 6).map((b) => {
-                                const st = findStudentForBooking(students, b);
-                                return (
-                                    <li key={b.id}>
-                                        <div>
-                                            <b>
-                                                {(b.times || [])[0] || '—'} · {b.customerName}
-                                            </b>
-                                            <small>{b.selectedSubject || 'Téma nincs'}</small>
-                                        </div>
-                                        {st ? (
-                                            <button
-                                                type="button"
-                                                onClick={() => onOpenStudent(st.uid)}
-                                            >
-                                                Dosszié
-                                            </button>
-                                        ) : null}
-                                    </li>
-                                );
-                            })}
-                        </ul>
-                    )}
-                    <button type="button" className="ahi-link" onClick={onOpenLessons}>
-                        Órák →
-                    </button>
-                </div>
-
-                <div className="ahi-card">
-                    <div className="ahi-card-top">
                         <strong>Figyelem</strong>
                         <span>{needAttention.length}</span>
                     </div>
@@ -247,9 +224,31 @@ export default function AdminHomeInbox({
                     font-size: 0.85rem;
                     margin: 0 0 0.5rem;
                 }
-                .ahi-grid {
+                .ahi-kpi {
                     display: grid;
                     grid-template-columns: repeat(3, minmax(0, 1fr));
+                    gap: 0.55rem;
+                    margin: 0 0 0.75rem;
+                }
+                .ahi-kpi div {
+                    border: 1px solid rgba(57, 255, 20, 0.22);
+                    border-radius: 12px;
+                    padding: 0.55rem 0.7rem;
+                    background: rgba(0, 0, 0, 0.22);
+                }
+                .ahi-kpi b {
+                    display: block;
+                    font-size: 1.25rem;
+                    color: #39ff14;
+                }
+                .ahi-kpi span {
+                    color: #8b9a93;
+                    font-size: 0.78rem;
+                    font-weight: 700;
+                }
+                .ahi-grid {
+                    display: grid;
+                    grid-template-columns: repeat(2, minmax(0, 1fr));
                     gap: 0.65rem;
                 }
                 @media (max-width: 900px) {

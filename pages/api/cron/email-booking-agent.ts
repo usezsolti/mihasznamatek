@@ -15,7 +15,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     if (req.method !== 'GET' && req.method !== 'POST') {
         return sendErr(res, 'Method not allowed', 405);
     }
-    if (!cronAuthorized(req)) {
+    const authorized = cronAuthorized(req);
+    // #region agent log
+    fetch('http://127.0.0.1:7785/ingest/aea5f5c4-876a-4e2f-82d7-0264bfca90ad',{method:'POST',headers:{'Content-Type':'application/json','X-Debug-Session-Id':'c04d6a'},body:JSON.stringify({sessionId:'c04d6a',runId:'mail-cron',hypothesisId:'H-auth',location:'pages/api/cron/email-booking-agent.ts',message:'cron hit',data:{method:req.method,authorized,hasSecret:Boolean(String(process.env.CRON_SECRET||'').trim())},timestamp:Date.now()})}).catch(()=>{});
+    // #endregion
+    if (!authorized) {
         return sendErr(res, 'Cron titok hibás vagy hiányzik.', 401);
     }
     try {

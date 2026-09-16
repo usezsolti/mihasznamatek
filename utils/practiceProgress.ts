@@ -572,7 +572,19 @@ export async function loadRemotePracticeProgress(uid: string): Promise<UserPract
             .collection('progress')
             .doc('summary')
             .get();
-        if (!snap.exists) return emptyProgress();
+        if (!snap.exists) {
+            // #region agent log
+            const { agentDebugLog } = await import('./agentDebugLog');
+            agentDebugLog({
+                hypothesisId: 'B',
+                location: 'practiceProgress.ts:loadRemotePracticeProgress',
+                message: 'progress summary missing',
+                data: { uidLen: String(uid).length, exists: false },
+                runId: 'lilla-xp',
+            });
+            // #endregion
+            return emptyProgress();
+        }
         const data = snap.data() || {};
         const xp = Number(data.xp) || 0;
         const rankLevel = Number(data.rankLevel) || xpToRankLevel(xp);
@@ -581,7 +593,7 @@ export async function loadRemotePracticeProgress(uid: string): Promise<UserPract
         Object.keys(rawTopics).forEach((k) => {
             topics[k] = normalizeLoadedTopic(rawTopics[k]);
         });
-        return {
+        const result = {
             xp,
             rank: data.rank || getRankTitle(rankLevel),
             rankLevel,
@@ -591,7 +603,43 @@ export async function loadRemotePracticeProgress(uid: string): Promise<UserPract
             juice: normalizeJuice(data.juice),
             updatedAt: data.updatedAt,
         };
-    } catch {
+        // #region agent log
+        {
+            const { agentDebugLog } = await import('./agentDebugLog');
+            agentDebugLog({
+                hypothesisId: 'A',
+                location: 'practiceProgress.ts:loadRemotePracticeProgress',
+                message: 'progress summary loaded',
+                data: {
+                    uidLen: String(uid).length,
+                    exists: true,
+                    xp,
+                    topicKeys: Object.keys(topics).length,
+                    juiceXp: Number((data.juice as any)?.xp) || 0,
+                    dataKeys: Object.keys(data).slice(0, 12),
+                },
+                runId: 'lilla-xp',
+            });
+        }
+        // #endregion
+        return result;
+    } catch (err: any) {
+        // #region agent log
+        {
+            const { agentDebugLog } = await import('./agentDebugLog');
+            agentDebugLog({
+                hypothesisId: 'A',
+                location: 'practiceProgress.ts:loadRemotePracticeProgress',
+                message: 'progress summary failed',
+                data: {
+                    uidLen: String(uid).length,
+                    code: String(err?.code || '').slice(0, 80),
+                    msg: String(err?.message || err).slice(0, 120),
+                },
+                runId: 'lilla-xp',
+            });
+        }
+        // #endregion
         return emptyProgress();
     }
 }

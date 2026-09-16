@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import { describe, it } from 'node:test';
 import { classifyBookingMailIntent } from '../../utils/bookingMailIntent';
 import {
+    parseChoiceFromOffers,
     parseStudentWindow,
     shouldOfferPackedInsteadOfRequested,
     suggestPackedSlots,
@@ -45,6 +46,42 @@ describe('booking mail intent', () => {
         );
     });
 
+    it('ignores casual mail even if it mentions Zsolt or a weekday', () => {
+        assert.equal(
+            classifyBookingMailIntent({
+                subject: 'Szia Zsolt',
+                text: 'Hétfőn találkozunk a családdal. Köszi!',
+                fromEmail: 'anna@pelda.hu',
+                knownCustomer: true,
+            }),
+            'ignore'
+        );
+    });
+
+    it('ignores a thanks-only reply in an agent thread', () => {
+        assert.equal(
+            classifyBookingMailIntent({
+                subject: 'Re: Óra',
+                text: 'Köszi!',
+                fromEmail: 'anna@pelda.hu',
+                inAgentThread: true,
+            }),
+            'ignore'
+        );
+    });
+
+    it('treats a slot confirmation in an agent thread as booking', () => {
+        assert.equal(
+            classifyBookingMailIntent({
+                subject: 'Re: Óra',
+                text: 'Az első időpont jó, csütörtök 16:00.',
+                fromEmail: 'anna@pelda.hu',
+                inAgentThread: true,
+            }),
+            'booking'
+        );
+    });
+
     it('escalates complaints and invoice fights', () => {
         assert.equal(
             classifyBookingMailIntent({
@@ -70,6 +107,15 @@ describe('packed slots', () => {
     it('does not suggest a taken hour', () => {
         const packed = suggestPackedSlots([thu], null, 10);
         assert.ok(!packed.some((s) => s.time === '16:00'));
+    });
+
+    it('picks the first offered slot from Hungarian ordinal', () => {
+        const choice = parseChoiceFromOffers('Az első jó nekem', [
+            { dateKey: '2026-09-17', time: '15:00', weekdayHu: 'csütörtök', packScore: 50, reason: 'adjacent' },
+            { dateKey: '2026-09-18', time: '16:00', weekdayHu: 'péntek', packScore: 0, reason: 'earliest-free' },
+        ]);
+        assert.equal(choice?.dateKey, '2026-09-17');
+        assert.equal(choice?.time, '15:00');
     });
 
     it('parses weekday-afternoon window', () => {

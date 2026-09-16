@@ -172,6 +172,7 @@ export async function appendDraftReply(opts: {
     inReplyTo: string;
     references: string;
     body: string;
+    html?: string;
 }): Promise<void> {
     if (!gmailImapReady()) throw new Error('Gmail IMAP nincs beállítva.');
     const client = await connect();
@@ -179,9 +180,14 @@ export async function appendDraftReply(opts: {
         const drafts = await resolveDraftsPath(client);
         const subj = /^re:/i.test(opts.subject) ? opts.subject : `Re: ${opts.subject}`;
         const refs = [opts.references, opts.inReplyTo].filter(Boolean).join(' ').trim();
-        const rfc = `From: ${emailFromHeader()}\r\nTo: ${opts.toEmail}\r\nSubject: ${subj}\r\n${
-            opts.inReplyTo ? `In-Reply-To: ${opts.inReplyTo}\r\n` : ''
-        }${refs ? `References: ${refs}\r\n` : ''}MIME-Version: 1.0\r\nContent-Type: text/plain; charset=utf-8\r\nContent-Transfer-Encoding: 8bit\r\n\r\n${opts.body}\r\n`;
+        const rfc = buildRfcMessage({
+            toEmail: opts.toEmail,
+            subject: subj,
+            inReplyTo: opts.inReplyTo,
+            references: refs,
+            body: opts.body,
+            html: opts.html,
+        });
         await client.append(drafts, rfc, ['\\Draft']);
     } finally {
         try {
@@ -190,4 +196,53 @@ export async function appendDraftReply(opts: {
             client.close();
         }
     }
+}
+
+export async function appendStandaloneDraft(opts: {
+    toEmail: string;
+    subject: string;
+    body: string;
+    html?: string;
+}): Promise<void> {
+    if (!gmailImapReady()) throw new Error('Gmail IMAP nincs beállítva.');
+    const client = await connect();
+    try {
+        const drafts = await resolveDraftsPath(client);
+        const rfc = buildRfcMessage({
+            toEmail: opts.toEmail,
+            subject: opts.subject,
+            body: opts.body,
+            html: opts.html,
+        });
+        await client.append(drafts, rfc, ['\\Draft']);
+    } finally {
+        try {
+            await client.logout();
+        } catch {
+            client.close();
+        }
+    }
+}
+
+function buildRfcMessage(opts: {
+    toEmail: string;
+    subject: string;
+    body: string;
+    html?: string;
+    inReplyTo?: string;
+    references?: string;
+}): string {
+    const headers = [
+        `From: ${emailFromHeader()}`,
+        `To: ${opts.toEmail}`,
+        `Subject: ${opts.subject}`,
+        opts.inReplyTo ? `In-Reply-To: ${opts.inReplyTo}` : '',
+        opts.references ? `References: ${opts.references}` : '',
+    ].filter(Boolean);
+
+    if (opts.html) {
+        const b = `mm${Date.now().toString(36)}`;
+        return `${headers.join('\r\n')}\r\nMIME-Version: 1.0\r\nContent-Type: multipart/alternative; boundary="${b}"\r\n\r\n--${b}\r\nContent-Type: text/plain; charset=utf-8\r\nContent-Transfer-Encoding: 8bit\r\n\r\n${opts.body}\r\n--${b}\r\nContent-Type: text/html; charset=utf-8\r\nContent-Transfer-Encoding: 8bit\r\n\r\n${opts.html}\r\n--${b}--\r\n`;
+    }
+    return `${headers.join('\r\n')}\r\nMIME-Version: 1.0\r\nContent-Type: text/plain; charset=utf-8\r\nContent-Transfer-Encoding: 8bit\r\n\r\n${opts.body}\r\n`;
 }

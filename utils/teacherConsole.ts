@@ -35,6 +35,7 @@ export type TeacherStudent = {
     educationLevel?: string;
     photoURL?: string;
     lastSeenMs?: number;
+    paymentStatus?: 'unpaid' | 'transfer_pending' | 'paid' | '';
 };
 
 export type TeacherAdminMeta = {
@@ -66,6 +67,12 @@ export type StudentProfileDetail = {
     teacherAdmin: TeacherAdminMeta;
     nextLesson: BookingPayload | null;
     lessonPacks: import('./lessonPack').LessonPackRecord[];
+    postalCode: string;
+    street: string;
+    houseNumber: string;
+    preferredSubject: string;
+    preferredLessonType: string;
+    hobby: string;
 };
 
 export const emptyTeacherAdminMeta = (): TeacherAdminMeta => ({
@@ -452,6 +459,12 @@ const USER_DOC_SKIP = new Set([
     'lastLessonPackAt',
     'lastLessonTopic',
     'lastLessonGoal',
+    'postalCode',
+    'street',
+    'houseNumber',
+    'preferredSubject',
+    'preferredLessonType',
+    'hobby',
 ]);
 
 function pickNextLesson(bookings: BookingPayload[]): BookingPayload | null {
@@ -518,6 +531,12 @@ export async function loadStudentProfileDetail(
         teacherAdmin: emptyTeacherAdminMeta(),
         nextLesson: null,
         lessonPacks: [],
+        postalCode: '',
+        street: '',
+        houseNumber: '',
+        preferredSubject: '',
+        preferredLessonType: '',
+        hobby: '',
     };
 
     const firebase = getFirebase();
@@ -568,6 +587,9 @@ export async function loadStudentProfileDetail(
             ''
     ).trim();
     const email = String(userData.email || student.email || '').trim();
+    const bookingWithAddress = bookings.find(
+        (b) => b.postalCode || b.street || b.houseNumber
+    );
 
     return {
         photoURL,
@@ -590,6 +612,12 @@ export async function loadStudentProfileDetail(
         teacherAdmin: readTeacherAdmin(userData.teacherAdmin),
         nextLesson: pickNextLesson(bookings),
         lessonPacks: readLessonPacks(userData),
+        postalCode: String(userData.postalCode || bookingWithAddress?.postalCode || '').trim(),
+        street: String(userData.street || bookingWithAddress?.street || '').trim(),
+        houseNumber: String(userData.houseNumber || bookingWithAddress?.houseNumber || '').trim(),
+        preferredSubject: String(userData.preferredSubject || '').trim(),
+        preferredLessonType: String(userData.preferredLessonType || '').trim(),
+        hobby: String(userData.hobby || '').trim(),
     };
 }
 
@@ -721,6 +749,116 @@ export async function loadStudentDossier(student: TeacherStudent): Promise<Stude
         note,
         openTaskCount: tasks.filter((t) => t.status !== 'completed').length,
         weakTopicCount: topics.filter((t) => t.weak).length,
+    };
+}
+
+export type StudentCardSummary = {
+    xp: number;
+    rank: string;
+    rankLevel: number;
+    openTaskCount: number;
+    weakTopicCount: number;
+    completedTopicCount: number;
+    nextLessonLabel: string;
+    paymentStatus: TeacherAdminMeta['paymentStatus'];
+    billing: {
+        name: string;
+        email: string;
+        phone: string;
+        postalCode: string;
+        street: string;
+        houseNumber: string;
+        address: string;
+        preferredSubject: string;
+        preferredLessonType: string;
+        paymentNote: string;
+    };
+};
+
+export function paymentStatusLabel(status: TeacherAdminMeta['paymentStatus']): string {
+    if (status === 'paid') return 'Fizetve';
+    if (status === 'transfer_pending') return 'Átutalás folyamatban';
+    if (status === 'unpaid') return 'Nem fizetett';
+    return 'Nincs megadva';
+}
+
+export async function loadStudentCardSummary(
+    student: TeacherStudent
+): Promise<StudentCardSummary> {
+    const [progress, tasks, profile] = await Promise.all([
+        loadRemotePracticeProgress(student.uid).catch(() => emptyProgress()),
+        loadStudentAssignedTasks(student.uid, student.email),
+        loadStudentProfileDetail(student),
+    ]);
+    const topics = buildTopicSnapshots(
+        progress,
+        profile.educationLevel || student.educationLevel
+    );
+    const next = profile.nextLesson;
+    const address = [profile.postalCode, profile.street, profile.houseNumber]
+        .filter(Boolean)
+        .join(' ');
+    const target = /kerekes|lilla|sarolta/i.test(`${student.name} ${student.email}`);
+    let gameCount = -1;
+    let gameScoreSum = 0;
+    if (target) {
+        try {
+            const { fetchGameResultsForUser } = await import('./gameResultsClient');
+            const pack = await fetchGameResultsForUser(student.uid);
+            gameCount = pack.results.length;
+            gameScoreSum = pack.results.reduce(
+                (sum, row) => sum + (Number(row.score) || Number(row.xp) || Number(row.points) || 0),
+                0
+            );
+        } catch {
+            gameCount = -2;
+        }
+    }
+    // #region agent log
+    {
+        const { agentDebugLog } = await import('./agentDebugLog');
+        agentDebugLog({
+            hypothesisId: 'C-D',
+            location: 'teacherConsole.ts:loadStudentCardSummary',
+            message: 'card summary built',
+            data: {
+                target,
+                uidLen: student.uid.length,
+                xp: progress.xp || 0,
+                socialXp: profile.socialXp || 0,
+                topicKeys: Object.keys(progress.topics || {}).length,
+                extraKeys: profile.extraFields.map((f) => f.key).slice(0, 20),
+                gameCount,
+                gameScoreSum,
+                hasPhoto: Boolean(student.photoURL),
+            },
+            runId: 'lilla-xp',
+        });
+    }
+    // #endregion
+    return {
+        xp: progress.xp || 0,
+        rank: progress.rank || 'BEGINNER',
+        rankLevel: progress.rankLevel || 1,
+        openTaskCount: tasks.filter((t) => t.status !== 'completed').length,
+        weakTopicCount: topics.filter((t) => t.weak).length,
+        completedTopicCount: topics.filter((t) => t.completed).length,
+        nextLessonLabel: next
+            ? `${next.date} · ${(next.times || []).join(', ') || '—'}`
+            : '',
+        paymentStatus: profile.teacherAdmin.paymentStatus,
+        billing: {
+            name: profile.displayName || student.name,
+            email: profile.email || student.email,
+            phone: profile.phone,
+            postalCode: profile.postalCode,
+            street: profile.street,
+            houseNumber: profile.houseNumber,
+            address,
+            preferredSubject: profile.preferredSubject,
+            preferredLessonType: profile.preferredLessonType,
+            paymentNote: profile.teacherAdmin.paymentNote,
+        },
     };
 }
 

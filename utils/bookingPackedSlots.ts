@@ -259,6 +259,45 @@ export function parseRequestedSlots(text: string, todayKey: string): RequestedSl
     return [...uniq.values()];
 }
 
+const ORDINAL: Array<{ re: RegExp; index: number }> = [
+    { re: /\b(elso|1\.|az\s+elso)\b/, index: 0 },
+    { re: /\b(masodik|2\.|a\s+masodik)\b/, index: 1 },
+    { re: /\b(harmadik|3\.|a\s+harmadik)\b/, index: 2 },
+];
+
+const CONFIRM_YES =
+    /\b(igen|jo|az\s+jo|azt\s+ker(nem|nem)|mehet|foglald|lefoglal|rendben|ok(?:e)?|azt\s+valasztom)\b/;
+
+/** "az első jó" / "a második mehet" a felkínált sávokból. */
+export function parseChoiceFromOffers(
+    text: string,
+    offered: Array<RequestedSlot | PackedSlot>
+): RequestedSlot | null {
+    if (!offered.length) return null;
+    const f = foldHu(text);
+    for (const { re, index } of ORDINAL) {
+        if (re.test(f) && offered[index]) {
+            const s = offered[index];
+            return { dateKey: s.dateKey, time: s.time };
+        }
+    }
+    for (const s of offered) {
+        const day = foldHu(
+            'weekdayHu' in s && s.weekdayHu ? String(s.weekdayHu) : ''
+        );
+        if (day && f.includes(day) && f.includes(s.time.replace(/^0/, ''))) {
+            return { dateKey: s.dateKey, time: s.time };
+        }
+        if (f.includes(s.time) && CONFIRM_YES.test(f)) {
+            return { dateKey: s.dateKey, time: s.time };
+        }
+    }
+    if (offered.length === 1 && CONFIRM_YES.test(f) && !/\b(de\b|kiveve|nem\b|masik)\b/.test(f)) {
+        return { dateKey: offered[0].dateKey, time: offered[0].time };
+    }
+    return null;
+}
+
 export function findDay(days: DaySlots[], dateKey: string): DaySlots | undefined {
     return days.find((d) => d.dateKey === dateKey);
 }

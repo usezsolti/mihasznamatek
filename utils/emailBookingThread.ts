@@ -15,6 +15,7 @@ export type EmailBookingThread = {
     bookingId?: string;
     holdDate?: string;
     holdTime?: string;
+    offeredSlots?: Array<{ dateKey: string; time: string; weekdayHu?: string }>;
     updatedAtMs: number;
     createdAtMs: number;
 };

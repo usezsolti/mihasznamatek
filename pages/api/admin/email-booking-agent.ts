@@ -2,7 +2,7 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import { sendErr, sendOk } from '../../../server/http';
 import { extractBearerToken, requireAdmin } from '../../../utils/apiSecurity';
 import {
-    isEmailAgentEnabled,
+    getEmailAgentSettings,
     listEmailAgentThreads,
     releaseEmailHold,
     runEmailBookingAgent,
@@ -24,14 +24,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 async function handle(req: NextApiRequest, res: NextApiResponse) {
     if (req.method === 'GET') {
         try {
-            const [enabled, threads] = await Promise.all([
-                isEmailAgentEnabled(),
+            const [settings, threads] = await Promise.all([
+                getEmailAgentSettings(),
                 listEmailAgentThreads(40),
             ]);
             return sendOk(res, {
-                enabled,
+                ...settings,
                 imapReady: gmailImapReady(),
                 threads,
+                cronEveryMinute: true,
             });
         } catch (e: any) {
             return sendErr(res, e?.message || 'Betöltés sikertelen', 500);

@@ -308,6 +308,8 @@ export default function Navbar() {
     const displayLabel =
         currentUser?.displayName || currentUser?.email || t('nav.user');
     const isDash = router.pathname === '/dashboard';
+    const isAdminNav = isClient && isAdminEmail(currentUser?.email);
+    const homeHref = isAdminNav ? '/dashboard?tab=admin' : '/dashboard?tab=profil';
 
     return (
         <>
@@ -361,10 +363,15 @@ export default function Navbar() {
                     </Link>
                     {isClient && currentUser && (
                         <Link
-                            href="/dashboard?tab=profil"
+                            href={homeHref}
                             className="nav-user-chip nav-user-chip-left"
                             title={displayLabel}
-                            onClick={() => setIsMenuOpen(false)}
+                            onClick={() => {
+                                setIsMenuOpen(false);
+                                // #region agent log
+                                fetch('http://127.0.0.1:7785/ingest/aea5f5c4-876a-4e2f-82d7-0264bfca90ad',{method:'POST',headers:{'Content-Type':'application/json','X-Debug-Session-Id':'c04d6a'},body:JSON.stringify({sessionId:'c04d6a',runId:'name-click',hypothesisId:'A',location:'Navbar.tsx:onNameClick',message:'name chip click',data:{isAdminNav,homeHref,tab:String(router.query.tab||'')},timestamp:Date.now()})}).catch(()=>{});
+                                // #endregion
+                            }}
                         >
                             <span className="nav-user-avatar" aria-hidden>
                                 {currentUser.photoURL ? (
@@ -473,7 +480,7 @@ export default function Navbar() {
                         </li>
                         {isClient && currentUser && (
                             <li className="nav-auth-mobile">
-                                <Link href="/dashboard" onClick={toggleMenu}>
+                                <Link href={homeHref} onClick={toggleMenu}>
                                     {displayLabel}
                                 </Link>
                             </li>
