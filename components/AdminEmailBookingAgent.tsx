@@ -118,10 +118,9 @@ export default function AdminEmailBookingAgent() {
                     <p className="mm-agent-kicker">Tanári automata</p>
                     <h2 className="mm-agent-title">E-mail ügynök</h2>
                     <p className="mm-agent-sub">
-                        Bekapcsolva perceként magától nézi a Gmailt — új matekórás levélre
-                        azonnal (max. 1 percen belül) HTML-piszkozatot készít. Ha a diák
-                        időpontot választ, lefoglalja, és neked is készít piszkozatot. Semmit
-                        nem küld magától.
+                        Bekapcsolva a szerver magától nézi a Gmailt, és matekórás levélre
+                        HTML-piszkozatot készít (nem küldi el). Ehhez a GitHubon kell egy
+                        CRON_SECRET (ugyanaz, mint a Vercelen).
                     </p>
                 </div>
                 <button
