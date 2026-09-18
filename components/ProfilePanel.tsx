@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useMemo, useRef } from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 import Link from 'next/link';
@@ -22,8 +22,10 @@ import { downloadLessonPackPdf } from '../utils/lessonPackPdf';
 import { readLessonPacks } from '../utils/saveLessonPack';
 import type { LessonPackRecord } from '../utils/lessonPack';
 import ProfileGameSummaries from './ProfileGameSummaries';
+import ExamTopicGauges from './ExamTopicGauges';
 import SuccessSpeedometer, { speedometerColor } from './SuccessSpeedometer';
 import type { RawGameResult } from '../utils/topicStats';
+import { aggregateExamTopicGauges } from '../utils/examTopicStats';
 
 interface GameResult {
     id: string;
@@ -39,6 +41,8 @@ interface GameResult {
     level?: string;
     grade?: number;
     subject?: string;
+    paperId?: string;
+    topicBreakdown?: Record<string, { title: string; correct: number; wrong: number }>;
 }
 
 interface UserStats {
@@ -408,6 +412,11 @@ export default function ProfilePanel({ embedded = false }: { embedded?: boolean 
         }
         return true;
     });
+
+    const examTopicGauges = useMemo(
+        () => aggregateExamTopicGauges(gameResults as RawGameResult[]),
+        [gameResults]
+    );
 
     const formatDate = (timestamp: any) => {
         if (!timestamp) return 'Ismeretlen dátum';
@@ -1129,6 +1138,7 @@ export default function ProfilePanel({ embedded = false }: { embedded?: boolean 
                             results={gameResults as RawGameResult[]}
                             onOpen={(href) => router.push(href)}
                         />
+                        <ExamTopicGauges gauges={examTopicGauges} />
                     </div>
 
                     {/* Statistics */}

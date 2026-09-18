@@ -1,4 +1,5 @@
 import type { Question } from './types';
+import { applyPaperTopicTags } from './paperTopicTags';
 import { agentDebugLog } from '../agentDebugLog';
 import {
     ERETTSEGI_2026_MAJ_KOZEP_COUNT,
@@ -384,31 +385,31 @@ export function getErettsegiPaperQuestions(paperId: string): Question[] | null {
         runId: 'er-emelt-batch',
     });
     // #endregion
-    if (is2026MajKozep) return getErettsegi2026MajKozepQuestions();
-    if (is2025OktKozep) return getErettsegi2025OktKozepQuestions();
-    if (is2025MajKozep) return getErettsegi2025MajKozepQuestions();
-    if (is2024OktKozep) return getErettsegi2024OktKozepQuestions();
-    if (is2024MajKozep) return getErettsegi2024MajKozepQuestions();
-    if (is2023OktKozep) return getErettsegi2023OktKozepQuestions();
-    if (is2023MajKozep) return getErettsegi2023MajKozepQuestions();
-    if (is2022OktKozep) return getErettsegi2022OktKozepQuestions();
-    if (is2022MajKozep) return getErettsegi2022MajKozepQuestions();
-    if (is2021OktKozep) return getErettsegi2021OktKozepQuestions();
-    if (is2021MajKozep) return getErettsegi2021MajKozepQuestions();
-    if (is2020OktKozep) return getErettsegi2020OktKozepQuestions();
-    if (is2020MajKozep) return getErettsegi2020MajKozepQuestions();
-    if (is2026MajEmelt) return getErettsegi2026MajEmeltQuestions();
-    if (is2025OktEmelt) return getErettsegi2025OktEmeltQuestions();
-    if (is2025MajEmelt) return getErettsegi2025MajEmeltQuestions();
-    if (is2024OktEmelt) return getErettsegi2024OktEmeltQuestions();
-    if (is2024MajEmelt) return getErettsegi2024MajEmeltQuestions();
-    if (is2023OktEmelt) return getErettsegi2023OktEmeltQuestions();
-    if (is2023MajEmelt) return getErettsegi2023MajEmeltQuestions();
-    if (is2022OktEmelt) return getErettsegi2022OktEmeltQuestions();
-    if (is2022MajEmelt) return getErettsegi2022MajEmeltQuestions();
-    if (is2021OktEmelt) return getErettsegi2021OktEmeltQuestions();
-    if (is2021MajEmelt) return getErettsegi2021MajEmeltQuestions();
-    if (is2020OktEmelt) return getErettsegi2020OktEmeltQuestions();
-    if (is2020MajEmelt) return getErettsegi2020MajEmeltQuestions();
+    if (is2026MajKozep) return applyPaperTopicTags(getErettsegi2026MajKozepQuestions(), 'kozep');
+    if (is2025OktKozep) return applyPaperTopicTags(getErettsegi2025OktKozepQuestions(), 'kozep');
+    if (is2025MajKozep) return applyPaperTopicTags(getErettsegi2025MajKozepQuestions(), 'kozep');
+    if (is2024OktKozep) return applyPaperTopicTags(getErettsegi2024OktKozepQuestions(), 'kozep');
+    if (is2024MajKozep) return applyPaperTopicTags(getErettsegi2024MajKozepQuestions(), 'kozep');
+    if (is2023OktKozep) return applyPaperTopicTags(getErettsegi2023OktKozepQuestions(), 'kozep');
+    if (is2023MajKozep) return applyPaperTopicTags(getErettsegi2023MajKozepQuestions(), 'kozep');
+    if (is2022OktKozep) return applyPaperTopicTags(getErettsegi2022OktKozepQuestions(), 'kozep');
+    if (is2022MajKozep) return applyPaperTopicTags(getErettsegi2022MajKozepQuestions(), 'kozep');
+    if (is2021OktKozep) return applyPaperTopicTags(getErettsegi2021OktKozepQuestions(), 'kozep');
+    if (is2021MajKozep) return applyPaperTopicTags(getErettsegi2021MajKozepQuestions(), 'kozep');
+    if (is2020OktKozep) return applyPaperTopicTags(getErettsegi2020OktKozepQuestions(), 'kozep');
+    if (is2020MajKozep) return applyPaperTopicTags(getErettsegi2020MajKozepQuestions(), 'kozep');
+    if (is2026MajEmelt) return applyPaperTopicTags(getErettsegi2026MajEmeltQuestions(), 'emelt');
+    if (is2025OktEmelt) return applyPaperTopicTags(getErettsegi2025OktEmeltQuestions(), 'emelt');
+    if (is2025MajEmelt) return applyPaperTopicTags(getErettsegi2025MajEmeltQuestions(), 'emelt');
+    if (is2024OktEmelt) return applyPaperTopicTags(getErettsegi2024OktEmeltQuestions(), 'emelt');
+    if (is2024MajEmelt) return applyPaperTopicTags(getErettsegi2024MajEmeltQuestions(), 'emelt');
+    if (is2023OktEmelt) return applyPaperTopicTags(getErettsegi2023OktEmeltQuestions(), 'emelt');
+    if (is2023MajEmelt) return applyPaperTopicTags(getErettsegi2023MajEmeltQuestions(), 'emelt');
+    if (is2022OktEmelt) return applyPaperTopicTags(getErettsegi2022OktEmeltQuestions(), 'emelt');
+    if (is2022MajEmelt) return applyPaperTopicTags(getErettsegi2022MajEmeltQuestions(), 'emelt');
+    if (is2021OktEmelt) return applyPaperTopicTags(getErettsegi2021OktEmeltQuestions(), 'emelt');
+    if (is2021MajEmelt) return applyPaperTopicTags(getErettsegi2021MajEmeltQuestions(), 'emelt');
+    if (is2020OktEmelt) return applyPaperTopicTags(getErettsegi2020OktEmeltQuestions(), 'emelt');
+    if (is2020MajEmelt) return applyPaperTopicTags(getErettsegi2020MajEmeltQuestions(), 'emelt');
     return null;
 }

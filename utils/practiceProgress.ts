@@ -327,6 +327,28 @@ export function emptyProgress(): UserPracticeProgress {
     return { xp: 0, rank: 'BEGINNER', rankLevel: 1, badges: [], topics: {}, srs: {}, juice: emptyJuice() };
 }
 
+/** Firestore `users/{uid}/progress/summary` → tanári / kliens progress. */
+export function parseProgressDoc(data: Record<string, unknown> | null | undefined): UserPracticeProgress {
+    if (!data) return emptyProgress();
+    const xp = Number(data.xp) || 0;
+    const rankLevel = Number(data.rankLevel) || xpToRankLevel(xp);
+    const rawTopics = (data.topics || {}) as Record<string, unknown>;
+    const topics: Record<string, TopicProgress> = {};
+    Object.keys(rawTopics).forEach((k) => {
+        topics[k] = normalizeLoadedTopic(rawTopics[k]);
+    });
+    return {
+        xp,
+        rank: String(data.rank || getRankTitle(rankLevel)),
+        rankLevel,
+        badges: Array.isArray(data.badges) ? (data.badges as BadgeId[]) : [],
+        topics,
+        srs: normalizeSrsMap(data.srs),
+        juice: normalizeJuice(data.juice),
+        updatedAt: data.updatedAt,
+    };
+}
+
 const LOCAL_PROGRESS_KEY = 'mihaszna_practice_progress_v1';
 
 function normalizeLoadedTopic(raw: any): TopicProgress {
@@ -572,57 +594,8 @@ export async function loadRemotePracticeProgress(uid: string): Promise<UserPract
             .collection('progress')
             .doc('summary')
             .get();
-        if (!snap.exists) {
-            // #region agent log
-            const { agentDebugLog } = await import('./agentDebugLog');
-            agentDebugLog({
-                hypothesisId: 'B',
-                location: 'practiceProgress.ts:loadRemotePracticeProgress',
-                message: 'progress summary missing',
-                data: { uidLen: String(uid).length, exists: false },
-                runId: 'lilla-xp',
-            });
-            // #endregion
-            return emptyProgress();
-        }
-        const data = snap.data() || {};
-        const xp = Number(data.xp) || 0;
-        const rankLevel = Number(data.rankLevel) || xpToRankLevel(xp);
-        const rawTopics = data.topics || {};
-        const topics: Record<string, TopicProgress> = {};
-        Object.keys(rawTopics).forEach((k) => {
-            topics[k] = normalizeLoadedTopic(rawTopics[k]);
-        });
-        const result = {
-            xp,
-            rank: data.rank || getRankTitle(rankLevel),
-            rankLevel,
-            badges: Array.isArray(data.badges) ? data.badges : [],
-            topics,
-            srs: normalizeSrsMap(data.srs),
-            juice: normalizeJuice(data.juice),
-            updatedAt: data.updatedAt,
-        };
-        // #region agent log
-        {
-            const { agentDebugLog } = await import('./agentDebugLog');
-            agentDebugLog({
-                hypothesisId: 'A',
-                location: 'practiceProgress.ts:loadRemotePracticeProgress',
-                message: 'progress summary loaded',
-                data: {
-                    uidLen: String(uid).length,
-                    exists: true,
-                    xp,
-                    topicKeys: Object.keys(topics).length,
-                    juiceXp: Number((data.juice as any)?.xp) || 0,
-                    dataKeys: Object.keys(data).slice(0, 12),
-                },
-                runId: 'lilla-xp',
-            });
-        }
-        // #endregion
-        return result;
+        if (!snap.exists) return emptyProgress();
+        return parseProgressDoc(snap.data() || {});
     } catch (err: any) {
         // #region agent log
         {

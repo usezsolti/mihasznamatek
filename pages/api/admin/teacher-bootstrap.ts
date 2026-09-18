@@ -4,6 +4,7 @@ import { getAdminDb } from '../../../server/firebaseAdmin';
 import { listCollection, runQuery } from '../../../server/firestoreRest';
 import { requireAdmin } from '../../../utils/apiSecurity';
 import { isAdminEmail } from '../../../utils/admin';
+import { loadStudentProgressSummaries } from '../../../server/studentProgress';
 
 let warnedUsersOnce = false;
 let warnedPendingOnce = false;
@@ -37,6 +38,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             photoURL?: string;
             lastSeenMs?: number;
             paymentStatus?: 'unpaid' | 'transfer_pending' | 'paid' | '';
+            xp?: number;
+            gameCount?: number;
+            lastPlayedMs?: number;
+            startedTopicCount?: number;
+            completedTopicCount?: number;
         }> = [];
         let pending: Array<Record<string, unknown>> = [];
         let source: 'admin-sdk' | 'user-token' = 'user-token';
@@ -128,6 +134,29 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 new Date(String(b.submittedAt || 0)).getTime() -
                 new Date(String(a.submittedAt || 0)).getTime()
         );
+
+        try {
+            const summaries = await loadStudentProgressSummaries({ students, token });
+            students = students.map((s) => {
+                const p = summaries[s.uid];
+                if (!p) return s;
+                return {
+                    ...s,
+                    xp: p.xp,
+                    gameCount: p.gameCount,
+                    lastPlayedMs: p.lastPlayedMs,
+                    startedTopicCount: p.startedTopicCount,
+                    completedTopicCount: p.completedTopicCount,
+                    lastSeenMs: Math.max(s.lastSeenMs || 0, p.lastPlayedMs || 0) || s.lastSeenMs,
+                };
+            });
+            students.sort(
+                (a, b) =>
+                    (b.lastPlayedMs || b.lastSeenMs || 0) - (a.lastPlayedMs || a.lastSeenMs || 0)
+            );
+        } catch (e) {
+            console.warn('teacher-bootstrap progress:', String((e as Error)?.message || e).slice(0, 160));
+        }
 
         return sendOk(res, {
             students,

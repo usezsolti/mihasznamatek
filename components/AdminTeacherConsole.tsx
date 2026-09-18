@@ -35,6 +35,7 @@ import {
     type TeacherStudent,
 } from '../utils/teacherConsole';
 import { downloadLessonPackPdf } from '../utils/lessonPackPdf';
+import ExamTopicGauges from './ExamTopicGauges';
 
 type ConsoleTab = 'home' | 'schedule' | 'students' | 'tasks';
 type DossierSection = 'overview' | 'practice' | 'billing';
@@ -93,7 +94,8 @@ export default function AdminTeacherConsole({
     emailPanel,
 }: Props) {
     const [tab, setTab] = useState<ConsoleTab>(initialTab);
-    const [dossierSection, setDossierSection] = useState<DossierSection>('overview');
+    const [dossierSection, setDossierSection] = useState<DossierSection>('practice');
+    const [showIdleTopics, setShowIdleTopics] = useState(false);
 
     useEffect(() => {
         setTab(initialTab);
@@ -177,7 +179,8 @@ export default function AdminTeacherConsole({
                 setAssignMsg('');
                 setNoteMsg('');
                 setSelectedTopicKeys([]);
-                setDossierSection('overview');
+                setDossierSection('practice');
+                setShowIdleTopics(false);
             })
             .finally(() => {
                 if (!cancelled) setLoadingDossier(false);
@@ -1521,6 +1524,10 @@ export default function AdminTeacherConsole({
                                         <span>Rang</span>
                                     </div>
                                     <div>
+                                        <strong>{dossier.sessions.length}</strong>
+                                        <span>Játék</span>
+                                    </div>
+                                    <div>
                                         <strong>{dossier.weakTopicCount}</strong>
                                         <span>Gyenge</span>
                                     </div>
@@ -1577,12 +1584,61 @@ export default function AdminTeacherConsole({
 
                                 {dossierSection === 'practice' ? (
                                 <>
-                                <h3>Témakörök ({dossier.topics.length})</h3>
+                                <ExamTopicGauges
+                                    gauges={dossier.examTopicGauges}
+                                    title="Témakörök a dolgozatokból"
+                                    lead="Érettségi és központi feladatok helyes/hibás aránya témakörönként. A gyengébb témák elöl."
+                                />
+                                {dossier.examTopicGauges.length === 0 &&
+                                dossier.sessions.some(
+                                    (s) =>
+                                        s.paperId ||
+                                        s.gameMode === 'erettsegi' ||
+                                        s.gameMode === 'kozponti'
+                                ) ? (
+                                    <p className="atc-muted">
+                                        A témakörös sebességmérő akkor jelenik meg, ha a diák újra
+                                        megír egy érettségi vagy központi dolgozatot.
+                                    </p>
+                                ) : null}
+                                <h3>Játéktörténet ({dossier.sessions.length})</h3>
+                                {dossier.sessions.length === 0 ? (
+                                    <p className="atc-muted">Még nincs rögzített játékfutam ehhez a diákhoz.</p>
+                                ) : (
+                                    <ul className="atc-plain-list">
+                                        {dossier.sessions.slice(0, 40).map((s) => {
+                                            const pct =
+                                                s.total > 0
+                                                    ? Math.round((s.correct / s.total) * 100)
+                                                    : 0;
+                                            return (
+                                                <li key={s.id}>
+                                                    <strong>{s.topic}</strong>
+                                                    <span className="atc-muted">
+                                                        {formatWhen(s.atMs)} · {s.correct}/{s.total || '—'} helyes
+                                                        {s.total ? ` (${pct}%)` : ''}
+                                                        {s.xpEarned ? ` · +${s.xpEarned} XP` : ''}
+                                                        {s.gameMode ? ` · ${s.gameMode}` : ''}
+                                                    </span>
+                                                </li>
+                                            );
+                                        })}
+                                    </ul>
+                                )}
+
+                                <h3>Témakörök ({dossier.topics.filter((t) => t.started || t.completed).length}/{dossier.topics.length})</h3>
                                 <p className="atc-muted" style={{ marginBottom: '0.55rem' }}>
-                                    Több témát is kijelölhetsz (kattints a kártyára), majd kioszthatod
-                                    egyszerre.
+                                    Először az elkezdett témák látszanak. Több témát is kijelölhetsz
+                                    (kattints a kártyára), majd kioszthatod egyszerre.
                                 </p>
                                 <div className="atc-actions" style={{ marginBottom: '0.65rem' }}>
+                                    <button
+                                        type="button"
+                                        className="atc-btn"
+                                        onClick={() => setShowIdleTopics((v) => !v)}
+                                    >
+                                        {showIdleTopics ? 'Csak elkezdett témák' : 'Nem kezdett témák is'}
+                                    </button>
                                     <button
                                         type="button"
                                         className="atc-btn primary"
@@ -1610,7 +1666,10 @@ export default function AdminTeacherConsole({
                                     ) : null}
                                 </div>
                                 <div className="atc-topics">
-                                    {dossier.topics.map((t) => {
+                                    {(showIdleTopics
+                                        ? dossier.topics
+                                        : dossier.topics.filter((t) => t.started || t.completed || t.weak)
+                                    ).map((t) => {
                                         const pct = Math.round(
                                             (t.lessonsDone / Math.max(1, t.lessonsTotal)) * 100
                                         );
@@ -1657,9 +1716,9 @@ export default function AdminTeacherConsole({
                                     })}
                                 </div>
 
-                                <h3>Hibák</h3>
+                                <h3>Hibás futamok</h3>
                                 {dossier.mistakes.filter((m) => m.wrong > 0).length === 0 ? (
-                                    <p className="atc-muted">Nincs hibás futam.</p>
+                                    <p className="atc-muted">Nincs hibás futam a játéktörténetben.</p>
                                 ) : (
                                     <ul className="atc-plain-list">
                                         {dossier.mistakes
@@ -2089,7 +2148,7 @@ export default function AdminTeacherConsole({
                 }
                 .atc-stats {
                     display: grid;
-                    grid-template-columns: repeat(4, 1fr);
+                    grid-template-columns: repeat(auto-fit, minmax(72px, 1fr));
                     gap: 0.4rem;
                     margin: 0.85rem 0;
                 }

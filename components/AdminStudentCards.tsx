@@ -1,7 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { EDUCATION_LEVELS } from '../utils/mathTopicsCatalog';
 import { getRankEmoji } from '../utils/practiceProgress';
-import { agentDebugLog } from '../utils/agentDebugLog';
 import {
     loadStudentCardSummary,
     paymentStatusLabel,
@@ -38,6 +37,16 @@ function initials(name: string, email: string): string {
     return src.slice(0, 2).toUpperCase();
 }
 
+function formatPlayed(ms?: number): string {
+    if (!ms) return '';
+    return new Date(ms).toLocaleString('hu-HU', {
+        month: 'short',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+    });
+}
+
 function paymentClass(status: StudentCardSummary['paymentStatus']): string {
     if (status === 'paid') return 'ok';
     if (status === 'transfer_pending') return 'wait';
@@ -45,7 +54,7 @@ function paymentClass(status: StudentCardSummary['paymentStatus']): string {
     return 'muted';
 }
 
-type CardFilter = 'all' | 'unpaid' | 'transfer' | 'paid' | 'next' | 'opentask';
+type CardFilter = 'all' | 'unpaid' | 'transfer' | 'paid' | 'next' | 'opentask' | 'played';
 
 export default function AdminStudentCards({
     students,
@@ -65,32 +74,8 @@ export default function AdminStudentCards({
                 .then((data) => {
                     if (cancelled) return;
                     setSummaries((prev) => ({ ...prev, [student.uid]: data }));
-                    // #region agent log
-                    agentDebugLog({
-                        hypothesisId: 'E',
-                        location: 'AdminStudentCards.tsx:list',
-                        message: 'card summary on screen',
-                        data: {
-                            target: /kerekes|lilla|sarolta/i.test(
-                                `${student.name} ${student.email}`
-                            ),
-                            xp: data.xp,
-                            cancelled,
-                        },
-                        runId: 'lilla-xp',
-                    });
-                    // #endregion
                 })
-                .catch((err) => {
-                    // #region agent log
-                    agentDebugLog({
-                        hypothesisId: 'E',
-                        location: 'AdminStudentCards.tsx:list',
-                        message: 'card summary threw',
-                        data: { msg: String(err?.message || err).slice(0, 120) },
-                        runId: 'lilla-xp',
-                    });
-                    // #endregion
+                .catch(() => {
                     if (!cancelled) setSummaries((prev) => ({ ...prev, [student.uid]: null }));
                 });
         });
@@ -108,6 +93,9 @@ export default function AdminStudentCards({
             if (filter === 'paid') return pay === 'paid';
             if (filter === 'next') return Boolean(summary?.nextLessonLabel);
             if (filter === 'opentask') return (summary?.openTaskCount || 0) > 0;
+            if (filter === 'played') {
+                return (summary?.gameCount || student.gameCount || 0) > 0 || (summary?.xp || student.xp || 0) > 0;
+            }
             return true;
         });
     }, [students, summaries, filter]);
@@ -119,6 +107,7 @@ export default function AdminStudentCards({
         { id: 'paid', label: 'Rendben' },
         { id: 'next', label: 'Van órája' },
         { id: 'opentask', label: 'Nyitott feladat' },
+        { id: 'played', label: 'Játszott' },
     ];
 
     return (
@@ -126,7 +115,7 @@ export default function AdminStudentCards({
             <div className="asc-toolbar">
                 <div>
                     <h2>Diákok</h2>
-                    <p>Gyakorlás, feladatok és a következő óra egy kártyán.</p>
+                    <p>XP, játéktörténet és a következő óra egy kártyán.</p>
                 </div>
                 <button type="button" className="asc-refresh" onClick={onRefresh}>
                     Frissítés
@@ -254,6 +243,11 @@ function StudentCard({
 
     const billing = summary?.billing;
 
+    const xp = summary?.xp ?? student.xp ?? null;
+    const games = summary?.gameCount ?? student.gameCount ?? null;
+    const lastPlayed = summary?.lastPlayedMs ?? student.lastPlayedMs ?? 0;
+    const completed = summary?.completedTopicCount ?? student.completedTopicCount ?? null;
+
     return (
         <article className="card">
             <button
@@ -283,27 +277,32 @@ function StudentCard({
                 <div className="stats">
                     <span>
                         <b>
-                            {summary
-                                ? `${getRankEmoji(summary.rankLevel)} ${summary.xp}`
+                            {xp != null
+                                ? `${getRankEmoji(summary?.rankLevel || 1)} ${xp}`
                                 : '…'}
                         </b>
                         XP
+                    </span>
+                    <span>
+                        <b>{games != null ? games : '…'}</b>
+                        játék
                     </span>
                     <span>
                         <b>{summary ? summary.openTaskCount : '…'}</b>
                         feladat
                     </span>
                     <span>
-                        <b>{summary ? summary.weakTopicCount : '…'}</b>
-                        gyenge
-                    </span>
-                    <span>
-                        <b>{summary ? summary.completedTopicCount : '…'}</b>
+                        <b>{completed != null ? completed : '…'}</b>
                         kész
                     </span>
                 </div>
                 <div className={`pay ${paymentClass(summary?.paymentStatus || '')}`}>
                     {summary ? paymentStatusLabel(summary.paymentStatus) : 'Fizetés…'}
+                </div>
+                <div className="next">
+                    {lastPlayed
+                        ? `Utolsó játék: ${formatPlayed(lastPlayed)}`
+                        : 'Még nem játszott a játékkal'}
                 </div>
                 <div className="next">
                     {summary?.nextLessonLabel

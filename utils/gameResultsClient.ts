@@ -30,23 +30,32 @@ export async function fetchGameResultsForUser(userId: string): Promise<{
         return rows;
     };
 
+    const byId = new Map<string, GameResultDoc>();
+    let permissionDenied = false;
+    let source: 'userId' | 'uid' | 'empty' = 'empty';
+
     try {
         const snap = await db.collection('gameResults').where('userId', '==', userId).get();
-        return { results: mapSnap(snap), source: 'userId', permissionDenied: false };
+        mapSnap(snap).forEach((row) => byId.set(row.id, row));
+        if (byId.size) source = 'userId';
     } catch (err) {
-        const denied = isPermissionError(err);
-        try {
-            const snap = await db.collection('gameResults').where('uid', '==', userId).get();
-            return { results: mapSnap(snap), source: 'uid', permissionDenied: false };
-        } catch (err2) {
-            if (!denied && !isPermissionError(err2)) {
-                console.warn('gameResults load failed:', err2);
-            }
-            return {
-                results: [],
-                source: 'empty',
-                permissionDenied: denied || isPermissionError(err2),
-            };
+        permissionDenied = isPermissionError(err);
+    }
+
+    try {
+        const snap = await db.collection('gameResults').where('uid', '==', userId).get();
+        mapSnap(snap).forEach((row) => byId.set(row.id, row));
+        if (source === 'empty' && byId.size) source = 'uid';
+    } catch (err) {
+        permissionDenied = permissionDenied || isPermissionError(err);
+        if (!permissionDenied && !isPermissionError(err)) {
+            console.warn('gameResults load failed:', err);
         }
     }
+
+    return {
+        results: Array.from(byId.values()),
+        source: byId.size ? source : 'empty',
+        permissionDenied: permissionDenied && byId.size === 0,
+    };
 }

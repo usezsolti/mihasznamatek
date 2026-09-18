@@ -30,6 +30,8 @@ export interface Question {
     graph?: GraphFigure;
     /** Rövidítés: imageSrc: '/figures/tema/abra.png' */
     imageSrc?: string;
+    /** Érettségi / központi dolgozat: katalógus témakör (pl. trigonometria). */
+    catalogTopicId?: string;
     subQuestions?: Array<{ // Részfeladatok külön válaszmezőkkel
         question: string;
         rubric: string;

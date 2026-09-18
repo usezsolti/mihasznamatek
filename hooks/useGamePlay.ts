@@ -51,6 +51,7 @@ import {
     type MascotMood,
 } from '../utils/gameFeedback';
 import { buildTopicPracticeHref } from '../utils/topicStats';
+import { buildTopicBreakdown } from '../utils/examTopicStats';
 import type { EducationLevelId } from '../utils/mathTopicsCatalog';
 import type { Question } from '../utils/game';
 import { KOZPONTI_PAPERS } from '../utils/game/kozpontiPapers';
@@ -570,6 +571,22 @@ export function useGamePlay({
             if (!resultData.topicTitle) {
                 resultData.topicTitle =
                     topicFromQuery || resultData.topic || resultData.topicId || 'Játék';
+            }
+
+            if (paperFromQuery) {
+                const paperKind =
+                    resultData.gameMode === 'kozponti' || router.query.kozponti === 'true'
+                        ? 'kozponti'
+                        : resultData.level === 'emelt' || router.query.level === 'emelt'
+                          ? 'emelt'
+                          : 'kozep';
+                const breakdown = buildTopicBreakdown(baseList, correctIds, wrongIds, paperKind);
+                resultData.topicBreakdown = breakdown;
+                resultData.correctQuestionIds = correctIds.slice(0, 120);
+                resultData.wrongQuestionIds = baseList
+                    .map((q) => String(q.id || ''))
+                    .filter((id) => id && !correctIds.includes(id))
+                    .slice(0, 120);
             }
 
             await db.collection('gameResults').add(resultData);

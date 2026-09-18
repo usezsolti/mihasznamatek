@@ -1,4 +1,5 @@
 import type { Question } from './types';
+import { applyPaperTopicTags } from './paperTopicTags';
 import { coordPlaneFigure, imageFigure } from './questionFigure';
 import { agentDebugLog } from '../agentDebugLog';
 import { getKozponti2026FebQuestions, KOZPONTI_2026_FEB_COUNT } from './kf2026FebBank';
@@ -616,37 +617,37 @@ export function getKozpontiPaperQuestions(paperId: string): Question[] | null {
     });
     // #endregion
     if (is2026G8Jan) {
-        return getKozponti2026Mat1Questions();
+        return applyPaperTopicTags(getKozponti2026Mat1Questions(), 'kozponti');
     }
     if (is2026G8Feb) {
-        return getKozponti2026FebQuestions();
+        return applyPaperTopicTags(getKozponti2026FebQuestions(), 'kozponti');
     }
     if (is2025G8Jan) {
-        return getKozponti2025JanQuestions();
+        return applyPaperTopicTags(getKozponti2025JanQuestions(), 'kozponti');
     }
     if (is2025G8Feb) {
-        return getKozponti2025FebQuestions();
+        return applyPaperTopicTags(getKozponti2025FebQuestions(), 'kozponti');
     }
     if (is2024G8Jan) {
-        return getKozponti2024JanQuestions();
+        return applyPaperTopicTags(getKozponti2024JanQuestions(), 'kozponti');
     }
     if (is2024G8Feb) {
-        return getKozponti2024FebQuestions();
+        return applyPaperTopicTags(getKozponti2024FebQuestions(), 'kozponti');
     }
     if (is2023G8Jan) {
-        return getKozponti2023JanQuestions();
+        return applyPaperTopicTags(getKozponti2023JanQuestions(), 'kozponti');
     }
     if (is2023G8Feb) {
-        return getKozponti2023FebQuestions();
+        return applyPaperTopicTags(getKozponti2023FebQuestions(), 'kozponti');
     }
     if (is2022G8Jan) {
-        return getKozponti2022JanQuestions();
+        return applyPaperTopicTags(getKozponti2022JanQuestions(), 'kozponti');
     }
     if (is2022G8Feb) {
-        return getKozponti2022FebQuestions();
+        return applyPaperTopicTags(getKozponti2022FebQuestions(), 'kozponti');
     }
     if (is2022G8Mar) {
-        return getKozponti2022MarQuestions();
+        return applyPaperTopicTags(getKozponti2022MarQuestions(), 'kozponti');
     }
     // #region agent log
     agentDebugLog({
@@ -658,13 +659,13 @@ export function getKozpontiPaperQuestions(paperId: string): Question[] | null {
     });
     // #endregion
     if (is2021G8Jan) {
-        return getKozponti2021JanQuestions();
+        return applyPaperTopicTags(getKozponti2021JanQuestions(), 'kozponti');
     }
     if (is2020G8Jan) {
-        return getKozponti2020JanQuestions();
+        return applyPaperTopicTags(getKozponti2020JanQuestions(), 'kozponti');
     }
     if (is2020G8Feb) {
-        return getKozponti2020FebQuestions();
+        return applyPaperTopicTags(getKozponti2020FebQuestions(), 'kozponti');
     }
     return null;
 }

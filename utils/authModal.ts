@@ -15,7 +15,7 @@ export function openAuthModal(detail?: OpenAuthModalDetail) {
     if (typeof window === "undefined") return;
     window.dispatchEvent(
         new CustomEvent(OPEN_AUTH_MODAL_EVENT, {
-            detail: detail || { mode: "login" },
+            detail: { mode: "login", ...(detail || {}) },
         })
     );
 }

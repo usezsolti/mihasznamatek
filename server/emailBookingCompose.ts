@@ -1,6 +1,5 @@
 import type { PackedSlot, RequestedSlot, StudentWindow } from '../utils/bookingPackedSlots';
-import { formatSlotHu } from '../utils/bookingPackedSlots';
-import { LESSON_PRICE_PER_HOUR } from '../utils/booking/types';
+import { CANCEL_POLICY_HU, LESSON_PRICE_PER_HOUR } from '../utils/booking/types';
 
 export type DraftKind = 'ask_window' | 'offer' | 'confirm';
 
@@ -8,6 +7,9 @@ export type ComposedMail = {
     text: string;
     html: string;
 };
+
+const WEEKDAY_HU = ['vasárnap', 'hétfő', 'kedd', 'szerda', 'csütörtök', 'péntek', 'szombat'];
+const SIGN_OFF = 'Üdvözlettel,\nLieszkofszki Zsolt\nMihaszna Matek';
 
 function escapeHtml(s: string): string {
     return s
@@ -17,32 +19,71 @@ function escapeHtml(s: string): string {
         .replace(/"/g, '&quot;');
 }
 
-function greeting(studentName: string): string {
+function nl2br(s: string): string {
+    return escapeHtml(s).replace(/\n/g, '<br>');
+}
+
+export function greeting(studentName: string): string {
     const name = studentName.trim();
-    if (!name || name.toLowerCase() === 'szia') return 'Szia!';
-    return `Szia ${name}!`;
+    if (!name || name.toLowerCase() === 'szia' || name.includes('@')) {
+        return 'Kedves Érdeklődő!';
+    }
+    return `Kedves ${name}!`;
 }
 
 function priceLine(): string {
-    return `Egy óra 60 perc, ${LESSON_PRICE_PER_HOUR.toLocaleString('hu-HU')} Ft.`;
+    return `Egy alkalom 60 perc, díja ${LESSON_PRICE_PER_HOUR.toLocaleString('hu-HU')} Ft.`;
 }
 
-function slotListText(slots: Array<PackedSlot | RequestedSlot>): string {
-    return slots.map((s, i) => `${i + 1}. ${formatSlotHu(s)}`).join('\n');
+export function formatSlotProfessional(slot: PackedSlot | RequestedSlot): string {
+    const weekday =
+        'weekdayHu' in slot && slot.weekdayHu
+            ? slot.weekdayHu
+            : WEEKDAY_HU[new Date(`${slot.dateKey}T12:00:00`).getDay()] || '';
+    const date = new Date(`${slot.dateKey}T12:00:00`).toLocaleDateString('hu-HU', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+    });
+    const day = weekday ? weekday.charAt(0).toUpperCase() + weekday.slice(1) : '';
+    return day ? `${day}, ${date}, ${slot.time}` : `${date}, ${slot.time}`;
 }
 
-function slotPills(slots: Array<PackedSlot | RequestedSlot>): string {
-    return `<table role="presentation" cellspacing="0" cellpadding="0" style="margin:12px 0 16px;width:100%;">
+function slotListText(slots: Array<PackedSlot | RequestedSlot>, nearestLabel = true): string {
+    return slots
+        .map((s, i) => {
+            const label = i === 0 && nearestLabel ? ' (legközelebbi szabad)' : '';
+            return `${i + 1}. ${formatSlotProfessional(s)}${label}`;
+        })
+        .join('\n');
+}
+
+function slotPills(slots: Array<PackedSlot | RequestedSlot>, nearestLabel = true): string {
+    return `<table role="presentation" cellspacing="0" cellpadding="0" style="margin:4px 0 18px;width:100%;">
       ${slots
-          .map(
-              (s, i) => `<tr><td style="padding:0 0 8px;">
-        <div style="background:#0c1016;border:1px solid rgba(57,255,20,0.35);border-radius:12px;padding:12px 14px;color:#e8f0ea;font-size:15px;font-weight:700;">
-          ${i + 1}. ${escapeHtml(formatSlotHu(s))}
+          .map((s, i) => {
+              const nearest = i === 0 && nearestLabel;
+              return `<tr><td style="padding:0 0 8px;">
+        <div style="background:${nearest ? '#f3faf6' : '#f7f8fa'};border:1px solid ${
+            nearest ? '#0b6e4f' : '#e4e7ec'
+        };border-radius:10px;padding:12px 14px;">
+          <p style="margin:0;font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:${
+              nearest ? '#0b6e4f' : '#667085'
+          };font-weight:700;">${nearest ? 'Legközelebbi szabad időpont' : `${i + 1}. szabad időpont`}</p>
+          <p style="margin:4px 0 0;font-size:16px;font-weight:700;color:#101828;">${escapeHtml(
+              formatSlotProfessional(s)
+          )}</p>
         </div>
-      </td></tr>`
-          )
+      </td></tr>`;
+          })
           .join('')}
     </table>`;
+}
+
+function askBox(html: string): string {
+    return `<div style="background:#f3faf6;border-left:4px solid #0b6e4f;border-radius:0 10px 10px 0;padding:14px 16px;margin:4px 0 18px;">
+      ${html}
+    </div>`;
 }
 
 export function wrapMihasznaMailHtml(opts: {
@@ -54,21 +95,21 @@ export function wrapMihasznaMailHtml(opts: {
     return `<!DOCTYPE html>
 <html lang="hu">
 <head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head>
-<body style="margin:0;padding:0;background:#07090c;font-family:Segoe UI,Roboto,Helvetica,Arial,sans-serif;color:#1a1a1a;">
-  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#07090c;padding:28px 12px;">
+<body style="margin:0;padding:0;background:#f4f6f5;font-family:Segoe UI,Roboto,Helvetica,Arial,sans-serif;color:#1a1a1a;">
+  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f4f6f5;padding:28px 12px;">
     <tr><td align="center">
       <table role="presentation" width="100%" style="max-width:560px;border-collapse:separate;">
-        <tr><td style="background:#0c1016;border:1px solid rgba(57,255,20,0.28);border-radius:16px 16px 0 0;padding:20px 24px;">
-          <p style="margin:0;font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:#39ff14;font-weight:800;">${escapeHtml(opts.kicker || 'Mihaszna Matek')}</p>
-          <p style="margin:6px 0 0;font-size:22px;font-weight:800;color:#e8f0ea;">${escapeHtml(opts.title)}</p>
+        <tr><td style="background:#0b6e4f;border-radius:14px 14px 0 0;padding:20px 24px;">
+          <p style="margin:0;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:#d8f3e6;font-weight:700;">${escapeHtml(opts.kicker || 'Mihaszna Matek')}</p>
+          <p style="margin:6px 0 0;font-size:22px;font-weight:750;color:#ffffff;">${escapeHtml(opts.title)}</p>
         </td></tr>
-        <tr><td style="background:#ffffff;border-left:1px solid rgba(57,255,20,0.18);border-right:1px solid rgba(57,255,20,0.18);padding:24px;">
+        <tr><td style="background:#ffffff;border-left:1px solid #e4e7ec;border-right:1px solid #e4e7ec;padding:26px 24px;">
           ${opts.innerHtml}
         </td></tr>
-        <tr><td style="background:#0c1016;border:1px solid rgba(57,255,20,0.28);border-top:0;border-radius:0 0 16px 16px;padding:14px 24px;">
-          <p style="margin:0;font-size:12px;color:#a8b8b0;line-height:1.5;">
-            Zsolt · Mihaszna Matek<br>
-            <a href="${site}" style="color:#39ff14;text-decoration:none;">mihasznamatek.hu</a>
+        <tr><td style="background:#f8faf9;border:1px solid #e4e7ec;border-top:0;border-radius:0 0 14px 14px;padding:16px 24px;">
+          <p style="margin:0;font-size:12px;color:#667085;line-height:1.55;">
+            Lieszkofszki Zsolt · Mihaszna Matek<br>
+            <a href="${site}" style="color:#0b6e4f;text-decoration:none;">mihasznamatek.hu</a>
           </p>
         </td></tr>
       </table>
@@ -78,17 +119,45 @@ export function wrapMihasznaMailHtml(opts: {
 </html>`;
 }
 
-function studentHtml(hi: string, paragraphs: string[], slots?: Array<PackedSlot | RequestedSlot>): string {
-    const paras = paragraphs
+function studentHtml(opts: {
+    title: string;
+    hi: string;
+    paragraphs: string[];
+    ask?: string;
+    slots?: Array<PackedSlot | RequestedSlot>;
+    nearestLabel?: boolean;
+    afterSlots?: string[];
+}): string {
+    const paras = opts.paragraphs
         .map(
             (p) =>
-                `<p style="margin:0 0 14px;font-size:15px;line-height:1.6;color:#222;">${escapeHtml(p)}</p>`
+                `<p style="margin:0 0 14px;font-size:15px;line-height:1.65;color:#344054;">${escapeHtml(p)}</p>`
         )
         .join('');
+    const after = (opts.afterSlots || [])
+        .map(
+            (p) =>
+                `<p style="margin:0 0 14px;font-size:15px;line-height:1.65;color:#344054;">${escapeHtml(p)}</p>`
+        )
+        .join('');
+    const ask = opts.ask
+        ? askBox(
+              `<p style="margin:0 0 4px;font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:#0b6e4f;font-weight:700;">Kérdés</p><p style="margin:0;font-size:15px;line-height:1.6;color:#101828;font-weight:600;">${escapeHtml(opts.ask)}</p>`
+          )
+        : '';
     return wrapMihasznaMailHtml({
-        title: 'Matekóra',
-        innerHtml: `<p style="margin:0 0 14px;font-size:16px;font-weight:700;line-height:1.5;color:#111;">${escapeHtml(hi)}</p>${paras}${slots?.length ? slotPills(slots) : ''}<p style="margin:18px 0 0;font-size:14px;color:#444;">Üdv,<br><strong>Zsolt</strong></p>`,
+        title: opts.title,
+        innerHtml: `<p style="margin:0 0 16px;font-size:16px;font-weight:700;line-height:1.5;color:#101828;">${escapeHtml(opts.hi)}</p>${paras}${ask}${
+            opts.slots?.length ? slotPills(opts.slots, opts.nearestLabel !== false) : ''
+        }${after}<p style="margin:18px 0 0;font-size:14px;color:#475467;line-height:1.6;">${nl2br(SIGN_OFF)}</p>`,
     });
+}
+
+function mail(textParas: string[], html: string): ComposedMail {
+    return {
+        text: `${textParas.join('\n\n')}\n\n${SIGN_OFF}`,
+        html,
+    };
 }
 
 export function composeBookingDraft(opts: {
@@ -102,71 +171,94 @@ export function composeBookingDraft(opts: {
     const hi = greeting(opts.studentName);
 
     if (opts.kind === 'ask_window') {
+        const ask =
+            'Melyik a számodra legközelebbi időpont, amikor tudnál jönni? Ezt összevetem a naptárammal, és ha szabad, azt egyeztetjük.';
         const paras = [
-            hi,
-            'Köszönöm a leveledet — matekórát egyeztetünk.',
-            'Írd meg, mikor a legkorábbi, amikor jó lenne: napokat és sávot, pl. hétköznap 14 után, vagy szombat délelőtt.',
-            'Ezekből olyan időpontot választok, ami a többi órához simul, hogy tömbben haladjunk.',
+            'Köszönöm a leveledet. Örülök, hogy matekórát szeretnél — szívesen egyeztetünk időpontot.',
+            'Ahhoz, hogy a lehető leghamarabb találjunk helyet, írd meg, kérlek, a számodra legközelebbi napot és órát. Elég egy sáv is, például: hétköznap 15 óra után, vagy szombat délelőtt.',
+            'A válaszod alapján megnézem, hogy ez az időpont szabad-e. Ha foglalt, a naptáramban ehhez legközelebbi szabad órát ajánlom.',
             priceLine(),
         ];
-        return {
-            text: `${paras.join('\n\n')}\n\nÜdv,\nZsolt`,
-            html: studentHtml(hi, paras.slice(1)),
-        };
+        return mail([hi, ...paras, ask], studentHtml({
+            title: 'Időpont-egyeztetés',
+            hi,
+            paragraphs: paras,
+            ask,
+        }));
     }
 
     if (opts.kind === 'confirm' && opts.confirm) {
-        const when = formatSlotHu(opts.confirm);
+        const when = formatSlotProfessional(opts.confirm);
         const paras = [
-            hi,
-            `Akkor ezt az időpontot lefoglaltam neked: ${when}.`,
+            `Köszönöm a visszajelzésed. Ezt az időpontot lefoglaltam számodra: ${when}.`,
             priceLine(),
-            'Ha mégsem jó, írd meg minél előbb — addig ezt a sávot nem adom ki másnak.',
-            'Találkozunk az órán!',
+            CANCEL_POLICY_HU,
+            'Ha mégsem tudsz jönni, írj minél előbb, hogy a sávot fel tudjam oldani.',
+            'Várlak az órán.',
         ];
-        return {
-            text: `${paras.join('\n\n')}\n\nÜdv,\nZsolt`,
-            html: studentHtml(hi, paras.slice(1), [opts.confirm]),
-        };
+        return mail([hi, ...paras], studentHtml({
+            title: 'Óra lefoglalva',
+            hi,
+            paragraphs: paras,
+            slots: [opts.confirm],
+            nearestLabel: false,
+        }));
     }
 
     if (opts.requestedButPacked?.length) {
         const slots = opts.requestedButPacked;
-        const paras = [
-            hi,
-            'A kért idő szabad lenne, de jobban belefér, ha a többi órához kapcsolódik. Ezek jönnének egymás után:',
-            'Melyik a legkorábbi, ami neked is jó? Írd meg a sorszámot vagy a napot és az órát.',
-            priceLine(),
+        const ask =
+            'Melyik a számodra legközelebbi időpont ezek közül, amelyik jó is, és a naptáramban is szabad? Elég a sorszám.';
+        const before = [
+            'A kért időpont önmagában szabad lenne. A naptáram szerint azonban ezek a közeli, már meglévő órákhoz kapcsolódó szabad sávok jobban illeszkednek — így tudunk a lehető leghamarabb találkozni.',
         ];
-        return {
-            text: `${hi}\n\n${paras[1]}\n\n${slotListText(slots)}\n\n${paras[2]}\n\n${paras[3]}\n\nÜdv,\nZsolt`,
-            html: studentHtml(hi, [paras[1], paras[2], paras[3]], slots),
-        };
+        const after = [priceLine()];
+        return mail(
+            [hi, ...before, slotListText(slots), ask, ...after],
+            studentHtml({
+                title: 'Szabad időpontok',
+                hi,
+                paragraphs: before,
+                ask,
+                slots,
+                afterSlots: after,
+            })
+        );
     }
 
     const packed = opts.packed || [];
     if (packed.length) {
-        const paras = [
-            hi,
-            'Ezek a legkorábbi sávok, amik nálam egymáshoz simulnak:',
-            'Melyik a legjobb? Írd meg a sorszámot (1, 2, 3) vagy a pontos időt.',
-            priceLine(),
+        const ask =
+            'A legközelebbi szabad időpont megfelel? Ha nem, melyik a számodra legkorábbi ezek közül, amelyik jó? Elég a sorszám.';
+        const before = [
+            'Köszönöm a visszajelzésed. A naptáramban ezek a számodra elérhető, legközelebbi szabad órák — az első a lehető leghamarabbi szabad sáv.',
         ];
-        return {
-            text: `${hi}\n\n${paras[1]}\n\n${slotListText(packed)}\n\n${paras[2]}\n\n${paras[3]}\n\nÜdv,\nZsolt`,
-            html: studentHtml(hi, [paras[1], paras[2], paras[3]], packed),
-        };
+        const after = [priceLine()];
+        return mail(
+            [hi, ...before, slotListText(packed), ask, ...after],
+            studentHtml({
+                title: 'Szabad időpontok',
+                hi,
+                paragraphs: before,
+                ask,
+                slots: packed,
+                afterSlots: after,
+            })
+        );
     }
 
+    const ask =
+        'Melyik a következő, számodra legközelebbi időszak, amikor tudnál jönni? Újra megnézem, melyik sáv szabad.';
     const paras = [
-        hi,
-        'Most nem találtam szabad, egymás utáni sávot a megadott ablakban.',
-        'Írd meg, van-e másik nap vagy későbbi hét, és újra nézem.',
+        'Köszönöm, hogy írtál. A megadott időszakban jelenleg nincs szabad órám.',
+        'Írd meg, kérlek, a következő napot vagy hetet, amikor jó lenne, és újra átnézem a naptárt.',
     ];
-    return {
-        text: `${paras.join('\n\n')}\n\nÜdv,\nZsolt`,
-        html: studentHtml(hi, paras.slice(1)),
-    };
+    return mail([hi, ...paras, ask], studentHtml({
+        title: 'Időpont-egyeztetés',
+        hi,
+        paragraphs: paras,
+        ask,
+    }));
 }
 
 export function composeTeacherBookedDraft(opts: {
@@ -175,29 +267,30 @@ export function composeTeacherBookedDraft(opts: {
     slot: RequestedSlot | PackedSlot;
     bookingId: string;
 }): ComposedMail {
-    const when = formatSlotHu(opts.slot);
+    const when = formatSlotProfessional(opts.slot);
     const text = [
-        'E-mail ügynök: időpont lefoglalva (piszkozat — te küldöd el, ha rendben van).',
+        'E-mail ügynök: időpont rögzítve.',
+        'Ez piszkozat — csak akkor küldd el magadnak / a naplódba, ha a foglalás rendben van. A diáknak szánt választ külön küldöd.',
         '',
         `Diák: ${opts.studentName}`,
         `E-mail: ${opts.studentEmail}`,
         `Időpont: ${when}`,
         `Foglalás ID: ${opts.bookingId}`,
-        `Ár: ${LESSON_PRICE_PER_HOUR.toLocaleString('hu-HU')} Ft / 60 perc`,
+        `Díj: ${LESSON_PRICE_PER_HOUR.toLocaleString('hu-HU')} Ft / 60 perc`,
         '',
-        'A naptárban pending/approved foglalásként szerepel, a sávot másnak nem ajánlja.',
+        'A naptárban approved foglalásként szerepel, a sávot másnak nem ajánlja.',
     ].join('\n');
     const html = wrapMihasznaMailHtml({
-        kicker: 'Tanári értesítő',
-        title: 'Időpont lefoglalva',
+        kicker: 'Tanári értesítő · piszkozat',
+        title: 'Időpont rögzítve',
         innerHtml: `
-          <p style="margin:0 0 14px;font-size:15px;line-height:1.6;">Az ügynök rögzítette a diák választott sávját. Ez a levél piszkozat — te küldöd el, ha rendben van.</p>
-          ${slotPills([opts.slot])}
-          <table role="presentation" style="font-size:14px;line-height:1.5;">
-            <tr><td style="padding:4px 12px 4px 0;color:#666;">Diák</td><td style="font-weight:700;">${escapeHtml(opts.studentName)}</td></tr>
-            <tr><td style="padding:4px 12px 4px 0;color:#666;">E-mail</td><td style="font-weight:700;">${escapeHtml(opts.studentEmail)}</td></tr>
-            <tr><td style="padding:4px 12px 4px 0;color:#666;">Foglalás</td><td style="font-weight:700;">${escapeHtml(opts.bookingId)}</td></tr>
-            <tr><td style="padding:4px 12px 4px 0;color:#666;">Ár</td><td style="font-weight:700;">${LESSON_PRICE_PER_HOUR.toLocaleString('hu-HU')} Ft</td></tr>
+          <p style="margin:0 0 14px;font-size:15px;line-height:1.65;color:#344054;">Az ügynök lefoglalta a diák választott, szabad sávját. Ez a levél piszkozat marad, amíg Te el nem küldöd.</p>
+          ${slotPills([opts.slot], false)}
+          <table role="presentation" style="font-size:14px;line-height:1.6;">
+            <tr><td style="padding:4px 12px 4px 0;color:#667085;">Diák</td><td style="font-weight:700;color:#101828;">${escapeHtml(opts.studentName)}</td></tr>
+            <tr><td style="padding:4px 12px 4px 0;color:#667085;">E-mail</td><td style="font-weight:700;color:#101828;">${escapeHtml(opts.studentEmail)}</td></tr>
+            <tr><td style="padding:4px 12px 4px 0;color:#667085;">Foglalás</td><td style="font-weight:700;color:#101828;">${escapeHtml(opts.bookingId)}</td></tr>
+            <tr><td style="padding:4px 12px 4px 0;color:#667085;">Díj</td><td style="font-weight:700;color:#101828;">${LESSON_PRICE_PER_HOUR.toLocaleString('hu-HU')} Ft</td></tr>
           </table>
         `,
     });

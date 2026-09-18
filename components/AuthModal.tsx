@@ -32,6 +32,7 @@ import { safeAppPath } from "../utils/safePath";
 import { agentDebugLog } from "../utils/agentDebugLog";
 import { apiPost, apiPostAuth } from "../utils/apiClient";
 import { SHOW_EMAIL_PASSWORD_UI } from "../utils/authModal";
+import { signInWithGooglePopup } from "../utils/googleSignIn";
 import { bindAutofillInput, preferFilled, syncInputsFromDom } from "../utils/formAutofill";
 
 type AuthMode = "login" | "register";
@@ -81,6 +82,7 @@ export default function AuthModal({
     const wasOpenRef = useRef(false);
     const onCloseRef = useRef(onClose);
     const googleProfilePendingRef = useRef(false);
+    const googleBusyRef = useRef(false);
     onCloseRef.current = onClose;
     googleProfilePendingRef.current = googleProfilePending;
 
@@ -133,6 +135,11 @@ export default function AuthModal({
             return;
         }
         onClose();
+        try {
+            sessionStorage.setItem("mihaszna:justLoggedIn", "1");
+        } catch {
+            /* ignore */
+        }
         if (redirectTo === false) return;
         const safe = typeof redirectTo === "string" ? safeAppPath(redirectTo) : null;
         if (safe) {
@@ -632,6 +639,8 @@ export default function AuthModal({
     };
 
     const handleGoogle = async () => {
+        if (googleBusyRef.current) return;
+        googleBusyRef.current = true;
         setError("");
         setLoading(true);
         try {
@@ -640,10 +649,7 @@ export default function AuthModal({
                 setError(t("auth.errorFirebase"));
                 return;
             }
-            const provider = new firebase.auth.GoogleAuthProvider();
-            provider.addScope("email");
-            provider.addScope("profile");
-            const result = await firebase.auth().signInWithPopup(provider);
+            const result = await signInWithGooglePopup(firebase);
             const user = result.user;
             if (!user) {
                 setError(t("auth.errorGeneric"));
@@ -654,11 +660,11 @@ export default function AuthModal({
             setEmail(String(user.email || ""));
             if (displayName && !name.trim()) setName(displayName);
 
-            let alreadyDone = false;
+            let alreadyDone = isAdminEmail(user.email);
             try {
                 const snap = await firebase.firestore().collection("users").doc(user.uid).get();
                 const d = snap.exists ? snap.data() || {} : {};
-                alreadyDone = hasCompletedRegistrationOnce(d);
+                alreadyDone = alreadyDone || hasCompletedRegistrationOnce(d);
                 if (snap.exists) {
                     if (!name.trim() && d.name) setName(String(d.name));
                     if (d.username) setUsername(String(d.username));
@@ -672,7 +678,7 @@ export default function AuthModal({
                     if (d.hobby) setHobby(String(d.hobby));
                 }
             } catch {
-                alreadyDone = false;
+                alreadyDone = alreadyDone || isAdminEmail(user.email);
             }
 
             if (alreadyDone) {
@@ -681,7 +687,7 @@ export default function AuthModal({
                     hypothesisId: 'G',
                     location: 'AuthModal.tsx:handleGoogle',
                     message: 'google user already completed profile',
-                    data: { alreadyDone: true },
+                    data: { alreadyDone: true, admin: isAdminEmail(user.email) },
                     runId: 'reg-save',
                 });
                 // #endregion
@@ -713,9 +719,26 @@ export default function AuthModal({
             setInfoMessage("");
             setError("");
         } catch (err: any) {
-            console.error(err);
-            setError(formatAuthError(err) || mapFirebaseAuthError(err?.code));
+            const code = String(err?.code || '');
+            try {
+                const firebase = (typeof window !== "undefined" && (window as any).firebase) || null;
+                const current = firebase?.auth?.()?.currentUser;
+                if (current) {
+                    googleProfilePendingRef.current = false;
+                    setGoogleProfilePending(false);
+                    setPassword("");
+                    finishAuthSuccess();
+                    return;
+                }
+            } catch {
+                /* ignore */
+            }
+            if (code !== "auth/popup-closed-by-user" && code !== "auth/cancelled-popup-request") {
+                console.error(err);
+                setError(formatAuthError(err) || mapFirebaseAuthError(err?.code));
+            }
         } finally {
+            googleBusyRef.current = false;
             setLoading(false);
         }
     };

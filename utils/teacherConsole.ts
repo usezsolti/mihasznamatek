@@ -6,6 +6,7 @@ import {
 } from './assignedTasks';
 import { getBudapestDateKeyOffset, type BookingPayload } from './bookingNotify';
 import { fetchGameResultsForUser, type GameResultDoc } from './gameResultsClient';
+import { apiGetAuth } from './apiClient';
 import {
     elementaryTopics,
     getElementaryTopicsForGrade,
@@ -21,12 +22,19 @@ import {
 } from './mathTopicsCatalog';
 import {
     emptyProgress,
+    getRankTitle,
     loadRemotePracticeProgress,
+    xpToRankLevel,
     type TopicProgress,
     type UserPracticeProgress,
 } from './practiceProgress';
 import { PATH_LESSON_COUNT } from './topicPath';
 import { readLessonPacks } from './saveLessonPack';
+import {
+    aggregateExamTopicGauges,
+    parseTopicBreakdown,
+    type ExamTopicGauge,
+} from './examTopicStats';
 
 export type TeacherStudent = {
     uid: string;
@@ -36,6 +44,11 @@ export type TeacherStudent = {
     photoURL?: string;
     lastSeenMs?: number;
     paymentStatus?: 'unpaid' | 'transfer_pending' | 'paid' | '';
+    xp?: number;
+    gameCount?: number;
+    lastPlayedMs?: number;
+    startedTopicCount?: number;
+    completedTopicCount?: number;
 };
 
 export type TeacherAdminMeta = {
@@ -105,12 +118,28 @@ export type MistakeSnapshot = {
     label: string;
 };
 
+export type GameSessionSnapshot = {
+    id: string;
+    topic: string;
+    topicId: string;
+    gameMode: string;
+    correct: number;
+    total: number;
+    score: number;
+    xpEarned: number;
+    atMs: number;
+    paperId?: string;
+    topicBreakdown?: Record<string, { title: string; correct: number; wrong: number }>;
+};
+
 export type StudentDossier = {
     student: TeacherStudent;
     profile: StudentProfileDetail;
     progress: UserPracticeProgress;
     topics: TopicSnapshot[];
     mistakes: MistakeSnapshot[];
+    sessions: GameSessionSnapshot[];
+    examTopicGauges: ExamTopicGauge[];
     tasks: AssignedTaskDoc[];
     note: string;
     openTaskCount: number;
@@ -719,18 +748,62 @@ export async function notifyStudentLessonLobby(params: {
 }
 
 export async function loadStudentDossier(student: TeacherStudent): Promise<StudentDossier> {
-    const [progress, gamePack, tasks, note, profile] = await Promise.all([
-        loadRemotePracticeProgress(student.uid).catch(() => emptyProgress()),
+    const [progressPack, gamePack, tasks, note, profile] = await Promise.all([
+        apiGetAuth<{
+            progress?: UserPracticeProgress;
+            sessions?: GameSessionSnapshot[];
+            xp?: number;
+            gameCount?: number;
+            lastPlayedMs?: number;
+            examTopicGauges?: ExamTopicGauge[];
+        }>(`/api/admin/student-progress?uid=${encodeURIComponent(student.uid)}`).catch(() => ({
+            ok: false as const,
+            error: 'progress api',
+        })),
         fetchGameResultsForUser(student.uid),
         loadStudentAssignedTasks(student.uid, student.email),
         loadTeacherNote(student.uid),
         loadStudentProfileDetail(student),
     ]);
+
+    let progress = emptyProgress();
+    let sessions: GameSessionSnapshot[] = [];
+    if (progressPack.ok && progressPack.data?.progress) {
+        progress = progressPack.data.progress;
+        sessions = Array.isArray(progressPack.data.sessions) ? progressPack.data.sessions : [];
+    } else {
+        progress = await loadRemotePracticeProgress(student.uid).catch(() => emptyProgress());
+        sessions = gamePack.results.map((r) => ({
+            id: String(r.id),
+            topic: String(r.topicTitle || r.topic || r.topicId || 'Játék'),
+            topicId: String(r.topicId || r.topic || ''),
+            gameMode: String(r.gameMode || r.educationLevel || ''),
+            correct: Number(r.correct) || 0,
+            total: Number(r.total) || 0,
+            score: Number(r.score) || 0,
+            xpEarned: Number(r.xpEarned) || Number(r.score) || 0,
+            atMs: toMs(r.completedAt || r.timestamp || r.createdAt),
+            paperId: String(r.paperId || '').trim() || undefined,
+            topicBreakdown: parseTopicBreakdown(r.topicBreakdown),
+        }));
+        const sessionXp = sessions.reduce((sum, row) => sum + (row.xpEarned || 0), 0);
+        if (sessionXp > (progress.xp || 0)) progress = { ...progress, xp: sessionXp };
+    }
+
     const topics = buildTopicSnapshots(
         progress,
         profile.educationLevel || student.educationLevel
     );
-    const mistakes = buildMistakes(gamePack.results);
+    const mistakes = buildMistakes(
+        sessions.map((s) => ({
+            id: s.id,
+            topicTitle: s.topic,
+            topicId: s.topicId,
+            correct: s.correct,
+            total: s.total,
+            completedAt: s.atMs,
+        }))
+    );
     const mergedStudent: TeacherStudent = {
         ...student,
         name: profile.displayName || student.name,
@@ -738,6 +811,9 @@ export async function loadStudentDossier(student: TeacherStudent): Promise<Stude
         educationLevel: profile.educationLevel || student.educationLevel,
         photoURL: profile.photoURL || student.photoURL,
         lastSeenMs: profile.updatedAtMs || profile.lastLoginMs || student.lastSeenMs,
+        xp: progress.xp,
+        gameCount: sessions.length,
+        lastPlayedMs: sessions[0]?.atMs || student.lastPlayedMs,
     };
     return {
         student: mergedStudent,
@@ -745,6 +821,8 @@ export async function loadStudentDossier(student: TeacherStudent): Promise<Stude
         progress,
         topics,
         mistakes,
+        sessions,
+        examTopicGauges: aggregateExamTopicGauges(sessions),
         tasks,
         note,
         openTaskCount: tasks.filter((t) => t.status !== 'completed').length,
@@ -759,6 +837,8 @@ export type StudentCardSummary = {
     openTaskCount: number;
     weakTopicCount: number;
     completedTopicCount: number;
+    gameCount: number;
+    lastPlayedMs: number;
     nextLessonLabel: string;
     paymentStatus: TeacherAdminMeta['paymentStatus'];
     billing: {
@@ -785,64 +865,25 @@ export function paymentStatusLabel(status: TeacherAdminMeta['paymentStatus']): s
 export async function loadStudentCardSummary(
     student: TeacherStudent
 ): Promise<StudentCardSummary> {
-    const [progress, tasks, profile] = await Promise.all([
-        loadRemotePracticeProgress(student.uid).catch(() => emptyProgress()),
+    const [tasks, profile] = await Promise.all([
         loadStudentAssignedTasks(student.uid, student.email),
         loadStudentProfileDetail(student),
     ]);
-    const topics = buildTopicSnapshots(
-        progress,
-        profile.educationLevel || student.educationLevel
-    );
+    const xp = Math.max(Number(student.xp) || 0, Number(profile.socialXp) || 0);
+    const rankLevel = xpToRankLevel(xp);
     const next = profile.nextLesson;
     const address = [profile.postalCode, profile.street, profile.houseNumber]
         .filter(Boolean)
         .join(' ');
-    const target = /kerekes|lilla|sarolta/i.test(`${student.name} ${student.email}`);
-    let gameCount = -1;
-    let gameScoreSum = 0;
-    if (target) {
-        try {
-            const { fetchGameResultsForUser } = await import('./gameResultsClient');
-            const pack = await fetchGameResultsForUser(student.uid);
-            gameCount = pack.results.length;
-            gameScoreSum = pack.results.reduce(
-                (sum, row) => sum + (Number(row.score) || Number(row.xp) || Number(row.points) || 0),
-                0
-            );
-        } catch {
-            gameCount = -2;
-        }
-    }
-    // #region agent log
-    {
-        const { agentDebugLog } = await import('./agentDebugLog');
-        agentDebugLog({
-            hypothesisId: 'C-D',
-            location: 'teacherConsole.ts:loadStudentCardSummary',
-            message: 'card summary built',
-            data: {
-                target,
-                uidLen: student.uid.length,
-                xp: progress.xp || 0,
-                socialXp: profile.socialXp || 0,
-                topicKeys: Object.keys(progress.topics || {}).length,
-                extraKeys: profile.extraFields.map((f) => f.key).slice(0, 20),
-                gameCount,
-                gameScoreSum,
-                hasPhoto: Boolean(student.photoURL),
-            },
-            runId: 'lilla-xp',
-        });
-    }
-    // #endregion
     return {
-        xp: progress.xp || 0,
-        rank: progress.rank || 'BEGINNER',
-        rankLevel: progress.rankLevel || 1,
+        xp,
+        rank: getRankTitle(rankLevel),
+        rankLevel,
         openTaskCount: tasks.filter((t) => t.status !== 'completed').length,
-        weakTopicCount: topics.filter((t) => t.weak).length,
-        completedTopicCount: topics.filter((t) => t.completed).length,
+        weakTopicCount: 0,
+        completedTopicCount: student.completedTopicCount || 0,
+        gameCount: student.gameCount || 0,
+        lastPlayedMs: student.lastPlayedMs || 0,
         nextLessonLabel: next
             ? `${next.date} · ${(next.times || []).join(', ') || '—'}`
             : '',

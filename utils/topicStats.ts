@@ -31,6 +31,7 @@ export type RawGameResult = {
     grade?: string | number;
     subject?: string;
     paperId?: string;
+    topicBreakdown?: Record<string, { title?: string; correct?: number; wrong?: number }>;
 };
 
 export type BestSession = {

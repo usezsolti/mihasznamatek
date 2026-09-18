@@ -40,6 +40,8 @@ import {
     lookupBestSessionForTopic,
     type RawGameResult,
 } from "../utils/topicStats";
+import { aggregateExamTopicGauges, type ExamTopicGauge } from "../utils/examTopicStats";
+import ExamTopicGauges from "../components/ExamTopicGauges";
 import { useLang } from "../utils/i18n";
 import { waitForFirebase } from "../utils/firebaseReady";
 import { agentDebugLog } from "../utils/agentDebugLog";
@@ -113,6 +115,7 @@ export default function Dashboard() {
     const [srsDueCount, setSrsDueCount] = useState(0);
     const [juice, setJuice] = useState<GameJuiceState | null>(null);
     const [practiceXp, setPracticeXp] = useState(0);
+    const [examTopicGauges, setExamTopicGauges] = useState<ExamTopicGauge[]>([]);
     const [showNewTopicForm, setShowNewTopicForm] = useState(false);
     const [newTopic, setNewTopic] = useState({
         title: '',
@@ -184,6 +187,7 @@ export default function Dashboard() {
     useEffect(() => {
         let unsub: (() => void) | undefined;
         let cancelled = false;
+        let nullTimer: ReturnType<typeof setTimeout> | undefined;
 
         const checkAuth = async () => {
             const firebase = await waitForFirebase();
@@ -199,6 +203,10 @@ export default function Dashboard() {
                 const auth = firebase.auth();
                 unsub = auth.onAuthStateChanged(async (user: any) => {
                     if (cancelled) return;
+                    if (nullTimer) {
+                        clearTimeout(nullTimer);
+                        nullTimer = undefined;
+                    }
                     if (!user) {
                         // #region agent log
                         agentDebugLog({
@@ -211,17 +219,24 @@ export default function Dashboard() {
                         // #endregion
                         setMe(null);
                         setIsAdmin(false);
-                        setLoading(false);
-                        if (router.pathname === '/dashboard') {
+                        // A Google-popup után az első callback lehet null — ne dobjuk /?auth=1-re (fehér kör).
+                        nullTimer = window.setTimeout(() => {
+                            if (cancelled || auth.currentUser) return;
+                            setLoading(false);
+                            if (router.pathname !== '/dashboard') return;
                             let justOut = false;
+                            let justIn = false;
                             try {
                                 justOut = sessionStorage.getItem('mihaszna:justLoggedOut') === '1';
+                                justIn = sessionStorage.getItem('mihaszna:justLoggedIn') === '1';
                                 if (justOut) sessionStorage.removeItem('mihaszna:justLoggedOut');
+                                if (justIn) sessionStorage.removeItem('mihaszna:justLoggedIn');
                             } catch {
                                 /* ignore */
                             }
-                            router.replace(justOut ? '/' : '/?auth=1');
-                        }
+                            if (justIn) return;
+                            void router.replace(justOut ? '/' : '/?auth=1');
+                        }, 1500);
                         return;
                     }
 
@@ -268,6 +283,11 @@ export default function Dashboard() {
                     });
                     setIsAdmin(isAdminEmail(user.email));
                     setLoading(false);
+                    try {
+                        sessionStorage.removeItem('mihaszna:justLoggedIn');
+                    } catch {
+                        /* ignore */
+                    }
                 });
             } catch (err) {
                 setError("Hiba történt.");
@@ -278,6 +298,7 @@ export default function Dashboard() {
         void checkAuth();
         return () => {
             cancelled = true;
+            if (nullTimer) clearTimeout(nullTimer);
             if (unsub) unsub();
         };
     }, [router]);
@@ -701,9 +722,26 @@ export default function Dashboard() {
                 pathCompleted: false,
             }));
 
+        const applyExamGauges = (rows: RawGameResult[]) => {
+            const level = educationLevel;
+            const filtered = rows.filter((r) => {
+                const mode = String(r.gameMode || r.educationLevel || '').toLowerCase();
+                const paperId = String(r.paperId || '');
+                if (level === 'erettsegi') {
+                    return mode === 'erettsegi' || paperId.startsWith('er-');
+                }
+                if (level === 'kozponti') {
+                    return mode === 'kozponti' || paperId.startsWith('kf-');
+                }
+                return false;
+            });
+            setExamTopicGauges(aggregateExamTopicGauges(filtered));
+        };
+
         try {
             if (!(window as any).firebase) {
                 setMathTopics(zeroed(baseTopics));
+                applyExamGauges([]);
                 return;
             }
 
@@ -711,6 +749,7 @@ export default function Dashboard() {
 
             if (!uid) {
                 setMathTopics(zeroed(baseTopics));
+                applyExamGauges([]);
                 return;
             }
 
@@ -737,6 +776,7 @@ export default function Dashboard() {
             gameResultsSnapshot.forEach((doc: any) => {
                 rows.push({ id: doc.id, ...doc.data() });
             });
+            applyExamGauges(rows);
             const bestByKey = indexBestSessionsByTopic(rows);
 
             let practiceTopics: Record<string, { lessonsCompleted?: number[]; completed?: boolean }> = {};
@@ -799,6 +839,7 @@ export default function Dashboard() {
         } catch (error) {
             console.error('Error loading game results:', error);
             setMathTopics(zeroed(baseTopics));
+            setExamTopicGauges([]);
         }
     };
 
@@ -1246,6 +1287,9 @@ export default function Dashboard() {
                         </div>
                         )}
                     </div>
+                    {(educationLevel === 'erettsegi' || educationLevel === 'kozponti') && (
+                        <ExamTopicGauges gauges={examTopicGauges} />
+                    )}
                     {educationLevel === 'erettsegi' && erettsegiPrepPath === 'choose' && (
                         <div className="erettsegi-prep-choice">
                             <button

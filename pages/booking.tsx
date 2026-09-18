@@ -23,6 +23,7 @@ import {
     toDateKey,
 } from "../utils/bookingSlots";
 import { openAuthModal, SHOW_EMAIL_PASSWORD_UI } from "../utils/authModal";
+import { signInWithGooglePopup } from "../utils/googleSignIn";
 import { useLang } from "../utils/i18n";
 import { LESSON_SUBJECTS } from "../utils/registrationProfile";
 import { bindAutofillInput, preferFilled, syncInputsFromDom } from "../utils/formAutofill";
@@ -235,10 +236,7 @@ export default function BookingPage() {
                 setError(t("auth.errorFirebase"));
                 return;
             }
-            const provider = new firebase.auth.GoogleAuthProvider();
-            provider.addScope("email");
-            provider.addScope("profile");
-            const result = await firebase.auth().signInWithPopup(provider);
+            const result = await signInWithGooglePopup(firebase);
             const user = result.user;
             const isNewUser = result.additionalUserInfo?.isNewUser;
             if (user) {
