@@ -1,0 +1,724 @@
+----- FL PAGE 3 -----
+
+Matematika 
+középszint 
+2011 írásbeli vizsga, I. összetevő 
+3 / 8 
+2020. május 5. 
+Név:  ...........................................................  osztály:...... 
+ 
+1. 
+Egy téglatest egy csúcsból kiinduló három élének hossza: 3 dm, 2 dm és 2,5 dm.  
+Hány négyzetdeciméter a test felszíne? 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+A =                 dm2 
+ 
+2 pont 
+ 
+ 
+2. 
+Az alábbi ábra egy érettségiző évfolyam diákjainak a halmazát szemlélteti. A jelöli az 
+angol nyelvből, B a biológiából, F pedig a fizikából érettségiző diákok halmazát. 
+Színezze be az ábrának azt a részét, amely azon diákok halmazát jelöli, akik angol nyelv-
+ből és biológiából érettségiznek, de fizikából nem! 
+ 
+ 
+2 pont 
+ 
+ 
+3. 
+A 2 hányadik hatványával egyenlő az alábbi kifejezés? 
+ 
+(
+)
+4
+7
+3
+5
+2
+2
+2
+⋅
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+2 pont 
+ 
+
+
+----- FL PAGE 4 -----
+
+Matematika 
+középszint 
+2011 írásbeli vizsga, I. összetevő 
+4 / 8 
+2020. május 5. 
+Név:  ...........................................................  osztály:...... 
+ 
+4. 
+Egy nemzetközi konferencia 5 résztvevője áll egy asztal körül a kávészünetben (jelölje 
+őket A, B, C, D, illetve E). Tudjuk, hogy A ismer mindenkit az asztalnál. B nem ismeri 
+E-t, de a többieket ismeri. C két résztvevőt ismer, D pedig hármat.  
+Ábrázolja az ötfős társaság tagjai közötti ismeretségeket egy gráffal, és adja meg, hogy 
+kiket ismer az asztalnál az E-vel jelölt személy! (Minden ismeretség kölcsönös.) 
+ 
+ 
+ 
+ 
+ 
+ 
+2 pont 
+ 
+ 
+E ismerősei: 
+1 pont 
+ 
+ 
+5. 
+Adja meg az alábbi állítások logikai értékét (igaz vagy hamis)!  
+A: Ha egy pozitív egész szám osztója 24-nek, akkor osztója 12-nek is. 
+B: Ha egy pozitív egész szám osztható 12-vel, akkor osztható 6-tal is. 
+C: Ha egy pozitív egész szám osztható 2-vel és 4-gyel, akkor osztható 8-cal is. 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+A: 
+B: 
+C: 
+2 pont 
+ 
+ 
+
+
+----- FL PAGE 5 -----
+
+Matematika 
+középszint 
+2011 írásbeli vizsga, I. összetevő 
+5 / 8 
+2020. május 5. 
+Név:  ...........................................................  osztály:...... 
+ 
+6. 
+Ábrázolja a [−1; 2] intervallumon értelmezett 
+2
+(
+1)
+x
+x −
+
+ függvényt! 
+ 
+ 
+ 
+3 pont 
+ 
+ 
+7. 
+Egy több száz fős gimnázium diákjai életkorának eloszlását mutatja az alábbi kördiagram. 
+Állapítsa meg a diákok életkorának terjedelmét, móduszát és mediánját! 
+ 
+ 
+ 
+ 
+Terjedelem:             év 
+1 pont 
+ 
+Módusz:              év 
+1 pont 
+ 
+Medián:            év 
+1 pont 
+ 
+ 
+ 
+
+
+----- FL PAGE 6 -----
+
+Matematika 
+középszint 
+2011 írásbeli vizsga, I. összetevő 
+6 / 8 
+2020. május 5. 
+Név:  ...........................................................  osztály:...... 
+ 
+8. 
+Hány olyan egész szám van, amelynek az abszolút értéke kisebb 6-nál? 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+2 pont 
+ 
+ 
+9. 
+Tudjuk, hogy az 5
+0,714285
+7 =
+
+ végtelen szakaszos tizedes tört. 
+Adja meg a tizedesvessző utáni századik számjegyet! Válaszát indokolja! 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+2 pont 
+ 
+ 
+A kérdezett számjegy: 
+1 pont 
+ 
+ 
+10. Egy háromszög 11 cm hosszú oldalával szemközti szöge 45°-os. Ennek a háromszögnek 
+van egy 122°-os szöge is. 
+Hány cm hosszú a háromszög 122°-os szögével szemközti oldala? Válaszát indokolja! 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+2 pont 
+ 
+ 
+Az oldal hossza                  cm. 
+1 pont 
+ 
+
+
+----- FL PAGE 7 -----
+
+Matematika 
+középszint 
+2011 írásbeli vizsga, I. összetevő 
+7 / 8 
+2020. május 5. 
+Név:  ...........................................................  osztály:...... 
+ 
+11. Egy mértani sorozat első tagja 1
+2 , második tagja 3. Határozza meg a sorozat harmadik 
+tagját! 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+A sorozat harmadik tagja: 
+2 pont 
+ 
+ 
+12. Egy szabályos dobókockával háromszor dobunk, majd a dobott számokat (a dobások sor-
+rendjében) balról jobbra egymás mellé írjuk. Így egy háromjegyű számot kapunk.  
+Mennyi a valószínűsége annak, hogy a kapott háromjegyű szám 500-nál nagyobb lesz? 
+Válaszát indokolja! 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+2 pont 
+ 
+ 
+A valószínűség: 
+1 pont 
+ 
+
+
+----- FL PAGE 12 -----
+
+Matematika 
+középszint 
+2011 írásbeli vizsga, II. összetevő 
+4 / 16 
+2020. május 5. 
+Név:  ...........................................................  osztály:...... 
+ 
+A 
+ 
+13. 
+a) Oldja meg az alábbi egyenletet a valós számok halmazán! 
+ 
+2
+2
+4
+4
+2
+4
+x
+x
+x
+−
++
+=
+−
+ 
+ 
+Legyenek f, g és h függvények a valós számok halmazán értelmezve úgy, hogy 
+ 
+f(x) = x – 1, 
+ 
+g(x) = 2x , 
+ 
+( )
+3
+h x
+x
+=
+−. 
+ 
+b) Adja meg annak a függvénynek a betűjelét, amely a (–2)-höz (–1)-et rendel! 
+ 
+c) Töltse ki az alábbi táblázatot az „igaz” és „hamis” szavakkal annak megfelelően, 
+hogy az adott kijelentés igaz vagy hamis az adott függvény esetén! 
+ 
+ 
+van zérushelye 
+monoton növekvő  
+a teljes értelmezési 
+tartományon 
+van minimuma 
+f 
+ 
+ 
+ 
+g 
+ 
+ 
+ 
+h 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+a) 
+6 pont 
+ 
+b) 
+2 pont 
+ 
+c) 
+5 pont 
+ 
+Ö.: 
+13 pont 
+ 
+
+
+----- FL PAGE 14 -----
+
+Matematika 
+középszint 
+2011 írásbeli vizsga, II. összetevő 
+6 / 16 
+2020. május 5. 
+Név:  ...........................................................  osztály:...... 
+ 
+14.  A 2016-os nyári olimpiai játékok női súlylökés versenyszámának döntője alapján készült 
+az alábbi, hiányosan kitöltött táblázat, amely az első öt helyezett dobásainak hosszát mu-
+tatja. Egy adott versenyző eredménye az érvényes dobásai közül a legnagyobb. A táblá-
+zatban az × az érvénytelen dobást jelzi. 
+   
+Név (ország) 
+1. dobás 
+(m) 
+2. dobás 
+(m) 
+3. dobás 
+(m) 
+4. dobás 
+(m) 
+5. dobás 
+(m) 
+6. dobás 
+(m) 
+Eredmény  
+(m) 
+Helyezés 
+Valerie Adams 
+Új-Zéland 
+19,79 
+20,42 
+19,80 
+× 
+× 
+20,39 
+ 
+ 
+Michelle Carter 
+Egyesült Államok 
+19,12 
+19,82 
+19,44 
+19,87 
+19,84 
+20,63 
+ 
+ 
+Kung Li-csiao 
+Kína 
+18,98 
+ 
+19,18 
+× 
+× 
+× 
+19,39 
+ 
+Márton Anita 
+Magyarország 
+17,60 
+18,72 
+19,39 
+19,38 
+19,10 
+19,87 
+ 
+ 
+Raven Saunders 
+Egyesült Államok 
+18,88 
+× 
+× 
+× 
+× 
+19,35 
+ 
+ 
+ 
+a) Töltse ki a táblázat tíz üres mezőjét! 
+ 
+b) Számítsa ki Márton Anita hat dobásának átlagát és szórását! 
+ 
+A súlylökés, mint versenyszám hivatalos leírásában ez szerepel: „A súlylökés a nőknél 
+4 kg-os, vasból vagy sárgarézből készült, gömb alakú, tömör fémgolyóval történik, mely-
+nek átmérője nagyobb, mint 9,5 cm, de kisebb, mint 11 cm.” 
+ 
+c) Hány centiméter a sárgarézből készülő 4 kg-os golyó átmérője, ha 1 cm3 sárgaréz 
+tömege 8,73 gramm? 
+  
+ 
+ 
+a) 
+3 pont 
+ 
+b) 
+3 pont 
+ 
+c) 
+6 pont 
+ 
+Ö.: 
+12 pont 
+ 
+
+
+----- FL PAGE 16 -----
+
+Matematika 
+középszint 
+2011 írásbeli vizsga, II. összetevő 
+8 / 16 
+2020. május 5. 
+Név:  ...........................................................  osztály:...... 
+ 
+15.  Egy textilgyár felmérést készített, hogy a vásárlói igényeknek megfelelő arányban gyárt-
+hassa le törölközőit. Megkérdeztek 500 járókelőt arról, hogy négy lehetséges szín közül 
+melyik színben vásárolnának legszívesebben ilyen törölközőt. Az alábbi táblázatban lát-
+ható a felmérés eredménye. 
+ 
+ 
+kék 
+sárga 
+piros 
+zöld 
+válaszok száma 
+176 
+153 
+124 
+47 
+ 
+A gyár a válaszoknak megfelelő arányban határozta meg az egyes színekből készülő tö-
+rölközők darabszámát. 
+ 
+a) Számítsa ki, hogy hány kék, sárga, piros, illetve zöld törölközőt gyártottak, ha  
+összesen 10 000 darab készült! A darabszámokat százasokra kerekítve adja meg! 
+ 
+Négy kék, két sárga és egy piros törölköző közül (visszatevés nélkül) véletlenszerűen 
+kiválasztunk kettőt. 
+ 
+b) Mennyi annak a valószínűsége, hogy mindkét törölköző sárga lesz? 
+ 
+A textilgyárban dolgozók között tavaly háromszor annyi nő volt, mint férfi. Idén felvettek 
+még 70 nőt és 6 férfit, így már négyszer annyi nő dolgozik a gyárban, mint férfi. 
+ 
+c) Hány nő és hány férfi dolgozója van a gyárnak idén? 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+a) 
+3 pont 
+ 
+b) 
+3 pont 
+ 
+c) 
+5 pont 
+ 
+Ö.: 
+11 pont 
+ 
+
+
+----- FL PAGE 18 -----
+
+Matematika 
+középszint 
+2011 írásbeli vizsga, II. összetevő 
+10 / 16 
+2020. május 5. 
+Név:  ...........................................................  osztály:...... 
+ 
+B 
+ 
+A 16-18. feladatok közül tetszése szerint választott kettőt kell megoldania.  
+A kihagyott feladat sorszámát írja be a 3. oldalon lévő üres négyzetbe! 
+ 
+16. Egy háromszög csúcsai a koordináta-rendszerben A(–8; –12), B(8; 0) és C(–1; 12).  
+Az A pontnak a B pontra vonatkozó tükörképe a D pont. 
+ 
+a) Számítsa ki a D pont koordinátáit! 
+ 
+b) Írja fel az ABC háromszög B csúcsán áthaladó magasságvonalának egyenletét! 
+ 
+c) Igazolja, hogy az ABC háromszög B csúcsánál derékszög van!  
+ 
+Az A, B és C pontokat szeretnénk a kék, zöld és sárga színekkel színezni úgy, hogy mind-
+három pontot színezzük valamelyik színnel, de egy színezésen belül nem használjuk fel 
+mindhárom színt. 
+ 
+d) Hány különböző színezés lehetséges ezekkel a feltételekkel? 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+a) 
+3 pont 
+ 
+b) 
+4 pont 
+ 
+c) 
+4 pont 
+ 
+d) 
+6 pont 
+ 
+Ö.: 
+17 pont 
+ 
+
+
+----- FL PAGE 20 -----
+
+Matematika 
+középszint 
+2011 írásbeli vizsga, II. összetevő 
+12 / 16 
+2020. május 5. 
+Név:  ...........................................................  osztály:...... 
+ 
+A 16-18. feladatok közül tetszése szerint választott kettőt kell megoldania.  
+A kihagyott feladat sorszámát írja be a 3. oldalon lévő üres négyzetbe! 
+ 
+17. Egy erdészetben azt tervezték, hogy 30 nap alatt összesen 3000 fát ültetnek el úgy, hogy a 
+második naptól kezdve minden nap 2-vel több fát ültetnek el, mint az azt megelőző 
+napon. 
+ 
+a) Hány fát kellett elültetni az első napon, és hány fát kellett elültetni a 30. napon a terv 
+teljesítéséhez?  
+ 
+A telepítés után egy évvel három szempontból vizsgálják meg a telepített fák állapotát. 
+Ha valamelyik nem fejlődik megfelelően, akkor az N jelet kapja. Ha fertőző betegség 
+tünetei mutatkoznak rajta, akkor a B jelet, ha pedig valamilyen fizikai kár érte (pl. a szél 
+megrongálta), akkor az F jelet kapja. Egy fa több jelet is kaphat. 
+Az összes jelölés elvégzése és összesítése után kiderült, hogy a telepített 3000 fa közül 
+N jelet 45, B jelet 30, F jelet 20 fa kapott. Ezeken belül N és B jelet 21, N és F jelet 13,  
+B és F jelet 4 fának adtak. 2 olyan fa van, amely mindhárom jelet megkapta. 
+ 
+b) Töltse ki az alábbi halmazábrát a megfelelő adatokkal!  
+Állapítsa meg, hogy hány olyan fa van a telepítettek között, amelyik nem kapott 
+semmilyen jelet! 
+ 
+ 
+Egy erdő faállománya az elmúlt időszakban évről évre 3%-kal növekedett. A faállomány 
+most 10 000 m3. 
+ 
+c) Hány év múlva éri el az erdő faállománya a 16 000 m3-t, ha az továbbra is évről évre 
+3%-kal növekszik? 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+a) 
+5 pont 
+ 
+b) 
+6 pont 
+ 
+c) 
+6 pont 
+ 
+Ö.: 
+17 pont 
+ 
+
+
+----- FL PAGE 22 -----
+
+Matematika 
+középszint 
+2011 írásbeli vizsga, II. összetevő 
+14 / 16 
+2020. május 5. 
+Név:  ...........................................................  osztály:...... 
+ 
+A 16-18. feladatok közül tetszése szerint választott kettőt kell megoldania.  
+A kihagyott feladat sorszámát írja be a 3. oldalon lévő üres négyzetbe! 
+ 
+18. Egy sétálóutca díszburkolatát ötszög alapú egyenes hasáb 
+alakú kövekkel készítik el. (Az ábrán négy ilyen követ lehet 
+látni a burkolaton megfigyelhető elrendezésben.) 
+ 
+A kő alapját képező ABCDE ötszög tengelyesen szimmetri-
+kus (egy, a D csúcson átmenő egyenesre), négy oldala 10 cm 
+hosszú, három szöge 120°-os, az ábrának megfelelően.  
+ 
+a) Számítással igazolja, hogy az AED és a BCD háromszög derékszögű!  
+ 
+b) Számítsa ki az ABCDE ötszög területét! 
+ 
+Róbert egy járdaszakaszt egyedül 20 óra alatt burkolna le ezzel a kővel, Sándor ugyanazt 
+a munkát egyedül 30 óra alatt végezné el. 
+ 
+c) Mennyi idő alatt végeznek, ha együtt dolgoznak? 
+ 
+Ezt a követ szürke és sárga színben árulják a kereskedésben. A dobozokon matrica jelzi 
+a dobozban lévő kövek színét. Átlagosan minden századik dobozon rossz a matrica: 
+szürke helyett sárga vagy fordítva. (Ezt tekinthetjük úgy, hogy 0,01 annak a valószínű-
+sége, hogy rossz matrica került a dobozra.) 
+Péter kiválaszt 21 szürke jelzésű dobozt, és ellenőrzi a dobozokban lévő kövek színét.  
+ 
+d) Mennyi a valószínűsége annak, hogy a 21 kiválasztott doboz közül legalább 20 do-
+bozban valóban szürke kő van? 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+a) 
+2 pont 
+ 
+b) 
+6 pont 
+ 
+c) 
+4 pont 
+ 
+d) 
+5 pont 
+ 
+Ö.: 
+17 pont 
+ 
+

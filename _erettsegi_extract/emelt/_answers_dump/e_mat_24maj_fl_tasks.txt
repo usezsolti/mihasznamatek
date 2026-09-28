@@ -1,0 +1,105 @@
+30: 2024. május 7. 9:00 
+47: 2024. május 7. 
+75: 2024. május 7. 
+95: 1. A feladatok megoldására 240 perc fordítható, az idő leteltével a munkát be kell fejeznie. 
+97: 2. A feladatok megoldási sorrendje tetszőleges. 
+99: 3. A II. részben kitűzött öt feladat közül csak négyet kell megoldania. A nem választott fel-
+106: 4. A feladatok megoldásához szöveges adatok tárolására és megjelenítésére nem alkalmas 
+110: 5. A megoldások gondolatmenetét minden esetben írja le, mert a feladatra adható pont-
+113: 6. Ügyeljen arra, hogy a lényegesebb részszámítások is nyomon követhetők legyenek! 
+115: 7. A gondolatmenet kifejtése során a zsebszámológép használata – további matematikai 
+134: 8. A feladatok megoldásánál használt tételek közül az iskolában tanult, névvel ellátott tételeket 
+141: 9. A feladatok végeredményét (a feltett kérdésre adandó választ) szöveges megfogalmazásban 
+144: 10. A dolgozatot tollal írja, de az ábrákat ceruzával is rajzolhatja. Az ábrákon kívül a ceruzával 
+148: 11. Minden feladatnak csak egy megoldása értékelhető. Több megoldási próbálkozás esetén 
+151: 12. Kérjük, hogy a szürkített téglalapokba semmit ne írjon! 
+162: 2024. május 7. 
+183: 1. 
+184: a) Oldja meg az alábbi egyenletet a valós számok halmazán! 
+218: b) A két függvény grafikonját egy számítógépes programmal közös koordináta-rend-
+231: c) Határozza meg a h függvény inverzfüggvényének az értelmezési tartományát! 
+233: a) 
+236: b) 
+239: c) 
+257: 2024. május 7. 
+286: 2024. május 7. 
+305: 2. 
+306: a) Hány olyan hétjegyű szám van a kettes számrendszerben, amelyben legfeljebb két 
+311: b) Hány olyan 4 elemű részhalmaza van H-nak, amelynek az 1 vagy a 2 eleme? 
+313: c) A és B legyen a fenti H alaphalmaz két részhalmaza. Adja meg az alábbi (igaz) 
+321: a) 
+324: b) 
+327: c) 
+344: 2024. május 7. 
+372: 2024. május 7. 
+391: 3. 
+404: a) Számítsa ki annak a valószínűségét, hogy egy játékos első dobása Sor lesz! 
+409: b) Számítsa ki annak a valószínűségét, hogy a játékos második dobása után kapott 
+416: c) Számítsa ki p értékét! 
+418: a) 
+421: b) 
+424: c) 
+440: 2024. május 7. 
+468: 2024. május 7. 
+487: 4. 
+492: a) Határozza meg, hogy az AFQ háromszög területe hányadrésze 
+497: b) Igazolja, hogy az FPQ háromszögben 
+505: c) Igazolja, hogy az AFQ háromszög és az FPQ háromszög hasonló! 
+507: a) 
+510: b) 
+513: c) 
+530: 2024. május 7. 
+558: 2024. május 7. 
+582: 5. 
+583: a) Határozza meg az 
+593: b) Igazolja, hogy az an sorozat szigorúan monoton csökkenő! 
+595: c) Határozza meg azokat az n pozitív egész számokat, amelyekre teljesül, hogy 
+613: d) Határozza meg a valós számok halmazán értelmezett f (x) = 24(x + 1)(x + 3)  
+616: a) 
+619: b) 
+622: c) 
+625: d) 
+641: 2024. május 7. 
+669: 2024. május 7. 
+691: 6. 
+696: a) Hány felülést végzett Domi a legelső napon, és hányat a legutolsón? 
+703: b) Határozza meg Dalma átlagsebességét az első, illetve a második körben! 
+705: c) Írja a következő mondatban a pontozott vonalakra a megadottak közül a megfelelő 
+710: a) 
+713: b) 
+716: c) 
+732: 2024. május 7. 
+760: 2024. május 7. 
+782: 7. 
+787: a) Határozza meg, hány homokszem található a 2 dl-es pohárban! Válaszát millióra 
+793: b) Határozza meg a homokkupac térfogatát, ha alapkörének átmérője 3,1 méter! 
+795: c) Határozza meg az 1,8 méter alkotójú forgáskúpok közül annak a sugarát és a ma-
+798: a) 
+801: b) 
+804: c) 
+821: 2024. május 7. 
+849: 2024. május 7. 
+871: 8. 
+888: a) Határozza meg a k1 kör sugarát és középpontjának koordinátáit! 
+892: b) Határozza meg a húrtrapéz magasságát és szögeit! 
+904: c) Hány olyan pont található a k2 körvonalon, amelynek mindkét koordinátája egész 
+907: a) 
+910: b) 
+913: c) 
+930: 2024. május 7. 
+958: 2024. május 7. 
+980: 9. 
+983: a) Határozza meg k értékét! 
+990: b) Határozza meg annak a valószínűségét, hogy lesz olyan csapat, amelyik mindhárom 
+997: c) Hány kézfogás történhetett eddig összesen? 
+999: a) 
+1002: b) 
+1005: c) 
+1021: 2024. május 7. 
+1049: 2024. május 7. 
+1077: 2024. május 7. 
+1131: 2024. május 7. 
+1161: 1. 
+1166: 2. 
+1169: 3. 
+1172: 4. 

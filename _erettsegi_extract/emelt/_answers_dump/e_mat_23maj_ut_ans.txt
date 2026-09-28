@@ -1,0 +1,395 @@
+--- line 175 ---
+nem megoldás. 
+1 pont Ez a 2 pont akkor is jár, 
+ha a vizsgázó behelyette-
+sítéssel ellenőriz. 
+Az 1 eleme az értelmezési tartománynak, és (az értel-
+mezési tartományon) ekvivalens átalakításokat vé-
+geztünk, tehát az 1 megoldás. 
+1 pont 
+Összesen: 
+7 pont  
+
+--- line 336 ---
+k
+π
+= −
++
+π k ∈ Z. 
+Ekvivalens átalakításokat végeztünk, ezért mindegyik 
+kapott szám megoldása az eredeti egyenletnek. 
+1 pont  
+Összesen: 
+7 pont  
+
+--- line 430 ---
+k
+π
+= −
++ π k ∈ Z 
+1 pont  
+Ekvivalens átalakításokat végeztünk, ezért mindegyik 
+kapott szám megoldása az eredeti egyenletnek. 
+1 pont  
+Összesen: 
+7 pont  
+
+--- line 450 ---
+Ezért 100 km megtételéhez 100 : 40,89 ≈ 2,45 gallon 
+üzemanyag szükséges. 
+1 pont  
+Ez 2,45 ∙ 3,79 ≈ 9,29 liter, 
+1 pont  
+tehát (a kért kerekítéssel) 9,3 liter/100 km az átlagfo-
+gyasztás. 
+1 pont  
+Összesen: 
+4 pont  
+
+--- line 465 ---
+azaz 6,70 ⋅ 1,61 ≈ 10,79 km tehető meg.  
+1 pont  
+Ezért a 100 km megtételéhez szükséges üzemanyag 
+100 : 10,79 ≈ 9,27 liter, 
+1 pont  
+tehát (a kért kerekítéssel) 9,3 liter/100 km az átlagfo-
+gyasztás. 
+1 pont  
+Összesen: 
+4 pont  
+
+--- line 495 ---
+Ez összesen 25 + 434 = 459 lehetőség. 
+1 pont*  
+A rendszám további része 26 ∙ 26 ∙ 999 
+(= 675 324)-féleképpen folytatható. 
+1 pont  
+Tehát összesen 459 ∙ 675 324 = 309 973 716 rend-
+szám felel meg az összes feltételnek. 
+1 pont  
+Összesen: 
+6 pont  
+
+--- line 517 ---
+a rendszám, ez 7 eset. 
+2 pont  
+Ez összesen 676 – (2 ∙ 105 + 7) = 459 lehetőség. 
+1 pont  
+ 
+2. c)  
+C 
+2 pont Nem bontható. 
+Összesen: 
+2 pont  
+
+--- line 566 ---
+2
+2
+T
+⋅
+⋅
+=
++
+= 242 m2 
+Összesen: 
+4 pont  
+
+--- line 578 ---
+A henger alakú kút sugara 0,05 méter. 
+1 pont  
+Ha a kút mélysége (a henger magassága) h méter, 
+akkor a kút térfogata: 0,1 = 0,052
+ ⋅ π ⋅ h. 
+1 pont  
+h ≈ 12,7 (méter mély a kút). 
+1 pont  
+Összesen: 
+3 pont  
+
+--- line 760 ---
+19
+d
+−
+=
+= 
+1 pont  
+= 5,5. 
+1 pont  
+Összesen: 
+5 pont  
+
+--- line 807 ---
+1
+(108 19 5,5 ) 3,5
+a =
+−
+⋅
+=
+ 
+1 pont  
+Összesen: 
+5 pont  
+
+--- line 866 ---
+−
+=
+ 
+1 pont  
+n = –30 vagy n = 29. 
+1 pont  
+(n ∈ Z+ miatt) az n értéke 29 (ami valóban megfelel). 
+1 pont  
+Összesen: 
+7 pont  
+
+--- line 887 ---
+II. 
+ 
+5. a)  
+A Kocka 2 + 3 = 5 pontot, A kör 1 + 2 = 3 pontot, 
+a Képlet pedig 3 + 1 = 4 pontot kapna. 
+1 pont  
+A kör című filmet néznék meg. 
+1 pont  
+Összesen: 
+2 pont  
+
+--- line 904 ---
+egy másik film Palitól és Lillától is 2 pontot kap; 
+a harmadik film Palitól 3 és Lillától 1 pontot kap.) 
+Tehát a Pali által adott pontszámok egyértelműen 
+meghatározzák a Lilla által adott pontszámokat. 
+1 pont  
+Pali az 1, 2, 3 pontszámokat 3! = 6-féleképp oszthatja 
+ki a három film között, tehát 6 ilyen eset van. 
+1 pont  
+Összesen: 
+3 pont  
+
+--- line 966 ---
+ges esetből 4-ben néznek filmet, ezért) a kérdezett 
+valószínűség 4
+2.
+6
+3
+=
+ 
+1 pont  
+Összesen: 
+6 pont  
+
+--- line 1007 ---
+A kérdezett valószínűség így 12 12
+2.
+36
+3
++
+=
+ 
+1 pont  
+Összesen: 
+6 pont  
+
+--- line 1063 ---
+−
+=
+
+
+
+
+ 
+1 pont  
+Összesen: 
+6 pont  
+
+--- line 1127 ---
+=
+≈ 
+1 pont 
+Ez a pont akkor is jár, ha 
+a vizsgázó számológéppel 
+helyesen számol. 
+≈ 4,46. 
+1 pont  
+Összesen: 
+5 pont  
+
+--- line 1178 ---
+5 (
+125)
++
++
+=
+≈ 11,2 cm. 
+1 pont 
+ 
+Összesen: 
+3 pont  
+
+--- line 1195 ---
+a két trapéz területe együtt (8 ∙ 7 =) 56 cm2. 
+1 pont  
+A test hálójának területe (90 + 56 =) 146 cm2,  
+1 pont  
+ez a téglalap területének (146 : 240 ≈) 60,8%-a, 
+1 pont  
+tehát 39,2% hulladék keletkezik. 
+1 pont  
+Összesen: 
+5 pont  
+
+--- line 1212 ---
+két 2 × 5 cm-es téglalap, melyek összterülete 20 cm2; 
+két derékszögű háromszög, melyek befogói 3 cm és 
+8 cm hosszúak, ezek összterülete 24 cm2. 
+2 pont  
+A hulladék területe összesen (50 + 20 + 24 =) 94 cm2, 
+1 pont  
+tehát (94 : 240 ≈) 39,2% hulladék keletkezik. 
+1 pont  
+Összesen: 
+5 pont  
+
+--- line 1327 ---
+10
+5
+x =
+=
+, ezért a legkisebb területű kar-
+tonlap méretei (5 + 2 ⋅ 2 =) 9 cm, 
+illetve (10 + 2 ⋅ 4 =) 18 cm. 
+1 pont  
+Összesen: 
+8 pont  
+
+--- line 1504 ---
+0
+T′ >
+, 
+ezért a 9 abszolút mini-
+mumhelye a T-nek. 
+Ha a = 9, akkor b = 18, tehát a legkisebb területű kar-
+tonlap oldalhosszai 9 cm, illetve 18 cm. 
+1 pont  
+Összesen: 
+8 pont  
+
+--- line 1571 ---
+
+
+
+
+
+
+ ≈ 0,859. 
+1 pont  
+Összesen: 
+3 pont  
+
+--- line 1597 ---
+586
+⋅
+⋅
+⋅
+ ≈ 
+1 pont  
+≈ 0,859. 
+1 pont  
+Összesen: 
+3 pont  
+
+--- line 1642 ---
+
+ (≈ 0,0699), 
+2 pont  
+tehát a kérdezett valószínűség 
+1 – P(0) – P(1) = 0,0025. 
+1 pont  
+Ez valóban kisebb 1%-nál. 
+1 pont  
+Összesen: 
+6 pont  
+
+--- line 1720 ---
+⋅
+-nél, 
+ezért az összeg kisebb 
+(0,0025 + 13 ∙ 5,4 ∙ 10 –5 =) 0,003202-nál. 
+2 pont  
+A keresett valószínűség így valóban biztosan kisebb 
+1%-nál. 
+1 pont  
+Összesen: 
+6 pont  
+
+--- line 1851 ---
+1 pont  
+Végül a (2) egyenletből: 
+20 + 5 + z = 40, tehát z = 15. 
+1 pont  
+Tehát a selejtraktárban 3 ⋅ 20 + 3 ⋅ 5 + 15 = 90 selejtes 
+termék van. 
+1 pont 
+ 
+Összesen: 
+7 pont  
+
+--- line 1949 ---
+=
+ 
+Amiből x = 1 (amely eleme mindkét függvény értel-
+mezési tartományának). 
+1 pont  
+Ellenőrzés behelyettesítéssel, vagy (az értelmezési 
+tartományon) ekvivalens átalakításokra hivatkozással. 
+1 pont  
+Összesen: 
+7 pont  
+
+--- line 2017 ---
+=
+−
++
+−
+−
+= 
+= (b – a)(b + a – 1) valóban. 
+2 pont  
+Összesen: 
+4 pont  
+
+--- line 2077 ---
+8 
+5 
+4 
+ 
+2 pont  
+Mivel a és b egészek, így két megoldása van a fel-
+adatnak: a = –3, b = 5 vagy a = 4, b = 5. 
+1 pont  
+Összesen: 
+5 pont  
+
+--- line 2185 ---
+)
+=
+ 144 m2. 
+1 pont  
+A medence területe 7 144
+12 ⋅
+= 84 m2 lesz. 
+1 pont  
+Összesen: 
+8 pont  
+
+--- line 2240 ---
+1 pont  
+A metszéspont első koordinátája tehát (k értékétől 
+függetlenül) 
+14
+9
+x =
+ valóban. 
+1 pont  
+Összesen: 
+8 pont  

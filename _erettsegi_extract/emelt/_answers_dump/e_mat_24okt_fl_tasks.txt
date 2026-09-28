@@ -1,0 +1,105 @@
+30: 2024. október 15. 8:00 
+47: 2024. október 15. 
+75: 2024. október 15. 
+95: 1. A feladatok megoldására 240 perc fordítható, az idő leteltével a munkát be kell fejeznie. 
+97: 2. A feladatok megoldási sorrendje tetszőleges. 
+99: 3. A II. részben kitűzött öt feladat közül csak négyet kell megoldania. A nem választott fel-
+106: 4. A feladatok megoldásához szöveges adatok tárolására és megjelenítésére nem alkalmas 
+110: 5. A megoldások gondolatmenetét minden esetben írja le, mert a feladatra adható pont-
+113: 6. Ügyeljen arra, hogy a lényegesebb részszámítások is nyomon követhetők legyenek! 
+115: 7. A gondolatmenet kifejtése során a zsebszámológép használata – további matematikai 
+133: 8. A feladatok megoldásánál használt tételek közül az iskolában tanult, névvel ellátott tételeket 
+140: 9. A feladatok végeredményét (a feltett kérdésre adandó választ) szöveges megfogalmazásban 
+143: 10. A dolgozatot tollal írja, de az ábrákat ceruzával is rajzolhatja. Az ábrákon kívül a ceruzával 
+147: 11. Minden feladatnak csak egy megoldása értékelhető. Több megoldási próbálkozás esetén 
+150: 12. Kérjük, hogy a szürkített téglalapokba semmit ne írjon! 
+161: 2024. október 15. 
+182: 1. 
+183: a) Legyen a és b két pozitív valós szám. Határozza meg az alábbi állítás logikai értékét 
+187: b) Fogalmazza meg az előbbi állítás megfordítását, és határozza meg a megfordított 
+190: c) Határozza meg az x pozitív valós szám értékét úgy, hogy a 7-nek és az x-nek a har-
+193: d) Tudjuk, hogy az (A  B)  (A  C) kijelentés logikai értéke igaz. 
+200: a) 
+203: b) 
+206: c) 
+209: d) 
+243: 2024. október 15. 
+272: 2024. október 15. 
+291: 2. 
+314: a) Számítsa ki, hogy negyedóra múlva milyen hőmérsékletű lesz a kávé! 
+316: b) A vizsgálat kezdetétől számítva mennyi idő múlva hűl le a kávé 25,5 °C hőmérsék-
+322: c) Határozza meg a szoba hőmérsékletét! 
+324: a) 
+327: b) 
+330: c) 
+347: 2024. október 15. 
+375: 2024. október 15. 
+394: 3. 
+395: a) Oldja meg az alábbi egyenletet a valós számok halmazán! 
+409: b) Határozza meg az f: R  R, 
+429: a) 
+432: b) 
+448: 2024. október 15. 
+476: 2024. október 15. 
+495: 4. 
+499: a) Adott egy ilyen tulajdonságú háromszög, melynek legnagyobb szöge 120. Hatá-
+502: b) Adott egy ilyen tulajdonságú háromszög, melynek leghosszabb oldala 24 cm hosszú. 
+505: c) Igazolja, hogy minden ilyen tulajdonságú háromszög kerülete nagyobb, mint 24 cm! 
+507: a) 
+510: b) 
+513: c) 
+530: 2024. október 15. 
+558: 2024. október 15. 
+582: 5. 
+586: a) Határozza meg a dobott számok átlagát és szórását! 
+588: b) Hány olyan különböző dobássorozat van, amely egy darab 1-esből, két darab 2-esből 
+593: c) Határozza meg annak a valószínűségét, hogy a két dobott szám szorzata 2-vel oszt-
+607: d) Satírozással jelölje a Venn-diagramon a H-nak 
+613: a) 
+616: b) 
+619: c) 
+622: d) 
+638: 2024. október 15. 
+666: 2024. október 15. 
+688: 6. 
+694: a) Határozza meg a szürkére színezett tartomány területét és ke-
+699: b) Határozza meg az így keletkező forgástest térfogatát! 
+704: c) Hányféleképpen színezhetjük ki a négy tartományt, ha szom-
+709: a) 
+712: b) 
+715: c) 
+732: 2024. október 15. 
+760: 2024. október 15. 
+782: 7. 
+788: a) Legyen az A esemény az, hogy a három üresen maradó szekrény egy sorban talál-
+795: b) Határozza meg a leghosszabb egyenes pálca hosszát, ami elhelyezhető a szekrényben! 
+801: c) Határozza meg annak a valószínűségét, hogy legalább két lány a saját kulcsát kapja 
+804: a) 
+807: b) 
+810: c) 
+826: 2024. október 15. 
+854: 2024. október 15. 
+876: 8. 
+880: a) Kb. hány darab magot tartalmaz egy tonna zabmag ebből a fajtából? Válaszát nor-
+893: b) Hány óra alatt végez Jancsi a zabhegyezéssel, ha 8 egyenlő részre osztja az 1000 kg 
+896: c) Az 1000 kg zabot n egyenlő részre osztjuk (n  Z+). Határozza meg n értékét úgy, 
+900: a) 
+903: b) 
+906: c) 
+923: 2024. október 15. 
+951: 2024. október 15. 
+973: 9. 
+990: a) Határozza meg azt a legkisebb n értéket, amelyre 
+999: b) Határozza meg a mértani sorozat első 10 tagjának összegét! Válaszát 
+1024: c) Igazolja, hogy (minden pozitív egész n-re) 
+1042: a) 
+1045: b) 
+1048: c) 
+1064: 2024. október 15. 
+1092: 2024. október 15. 
+1120: 2024. október 15. 
+1174: 2024. október 15. 
+1204: 1. 
+1209: 2. 
+1212: 3. 
+1215: 4. 

@@ -1,0 +1,467 @@
+--- line 175 ---
+(2x mindig pozitív, ezért) az első eset nem lehetséges, 
+1 pont  
+a másodikból (az exponenciális függvény kölcsönös 
+egyértelműsége miatt) x = 3. 
+1 pont  
+Ellenőrzés behelyettesítéssel vagy ekvivalenciára hi-
+vatkozással. 
+1 pont  
+Összesen: 
+7 pont  
+
+--- line 208 ---
+−
++
+
+ másodfokú függvény grafikonja 
+„felfelé nyitott” parabola, tehát ha x > 7, akkor  
+( )
+f x > 0 teljesül. 
+2 pont 
+Összesen: 
+4 pont  
+
+--- line 223 ---
+A megfordítás hamis. 
+1 pont  
+Egy ellenpélda. 
+(Például x = 0 esetén f (x) = 14 > 0, de x ≤ 7.) 
+1 pont 
+(A b) rész megoldása 
+alapján:) ha x < 2, akkor 
+f (x) > 0. 
+Összesen: 
+3 pont  
+
+--- line 236 ---
+tott az autó,  
+1 pont  
+a benzintartályban (45 – 20 =) 25 liter benzin maradt. 
+1 pont  
+A hátralévő távolságot a 10 literes átlagfogyasztással 
+számítja ki a fedélzeti számítógép: 25
+10 ⋅ 100 = 250 km. 
+1 pont  
+Összesen: 
+3 pont  
+
+--- line 258 ---
+A számítógép a városi átlagfogyasztás alapján a 45 
+liter benzint 45 100
+10 ⋅
+ = 450 km-re elégnek számítja. 
+2 pont  
+Már megtettek 200 km-t, így a hátralévő távolság 
+(450 – 200 =) 250 km. 
+1 pont  
+Összesen: 
+3 pont  
+
+--- line 279 ---
+(és a városban megtett 200 km-en 20 litert fogyasz-
+tott az autó),  
+1 pont  
+a kirándulás során (27 – 20 =) 7 liter benzin fogyott. 
+1 pont  
+Ezen a szakaszon tehát 7 liter/100 km volt az átlagfo-
+gyasztás. 
+1 pont  
+Összesen: 
+6 pont  
+
+--- line 323 ---
++
++
+⋅
+=
+. 
+Ebből x = 7, tehát a 100 km-es kiránduláson 
+7 liter/100 km volt az átlagfogyasztás. 
+2 pont  
+Összesen: 
+6 pont  
+
+--- line 375 ---
+1 pont  
+ezek száma 12 (legkisebb a 2 ⋅ 72 = 144, legnagyobb 
+a 13 ⋅ 72 = 936). 
+1 pont 13 – 1 = 12 
+(A 72-vel oszthatókat a 8-cal és a 9-cel oszthatók 
+megszámolásánál is megszámoltuk, így)  
+a keresett számok száma 112 + 100 – 12 = 200. 
+2 pont  
+Összesen: 
+7 pont  
+
+--- line 400 ---
+jegyű szám nem lehet négyjegyű a 9-es számrend-
+szerben) az 511. 
+1 pont  
+A kedvező esetek száma tehát 511 – 80 = 431. 
+1 pont  
+A keresett valószínűség 431
+448 (≈ 0,962). 
+1 pont  
+Összesen: 
+7 pont  
+
+--- line 408 ---
+Összesen: 
+7 pont  
+ 
+3. b) második megoldás 
+Egy 8-as számrendszerben háromjegyű szám első 
+számjegye 7-féle, a másik két számjegye 8-8-féle 
+lehet. 
+2 pont  
+Összesen tehát 7 ⋅ 8 ⋅ 8 = 448 háromjegyű szám van a 
+8-as számrendszerben. 
+
+--- line 443 ---
+−
+= 
+1 pont  
+431
+448
+=
+ (≈ 0,962). 
+1 pont  
+Összesen: 
+7 pont  
+
+--- line 470 ---
+
+
+
+
+
+= 210 
+(1024 > 400, így) mindenkinek jut különböző kártya. 
+1 pont  
+Összesen: 
+3 pont  
+
+--- line 552 ---
++
+−⋅
+⋅
+⋅
+° . 
+1 pont  
+Ebből a kerítés hossza: CD ≈ 92,4 méter. 
+1 pont  
+Összesen: 
+7 pont  
+
+--- line 634 ---
+
+=
++ 
+
+
+
+≈ 92,4 méter. 
+1 pont  
+Összesen: 
+ 7 pont  
+
+--- line 659 ---
+. 
+2 pont  
+18 280 = 200x + 9320 
+200x = 8960 
+1 pont  
+x = 44,8 (tehát a magyar résztvevők életkorának át-
+laga  44,8 év). 
+1 pont  
+Összesen: 
+4 pont  
+
+--- line 711 ---
+1 pont 
+Ez a pont akkor is jár, ha 
+a vizsgázó számológéppel 
+számolva helyesen adja 
+meg a szórást. 
+(=
+25,2 ) ≈ 5,02. 
+1 pont  
+Összesen: 
+4 pont  
+
+--- line 799 ---
+A (bn) sorozat határértéke 
+1
+0
+1
+1
++
+=
+. 
+Összesen: 
+4 pont  
+
+--- line 874 ---
+2 pont  
+Az első egyenletet kivonjuk a másodikból: 
+0,25n2 = 100, azaz n2 = 400. 
+2 pont  
+Az egyenlet megoldása n = 20 (n = –20 nem lehet). 
+1 pont  
+Ellenőrzés (c1 = 2,625, S20 = 100, S40 = 300 valóban). 
+1 pont  
+Összesen: 
+8 pont  
+
+--- line 983 ---
+400
+n =
+. 
+1 pont  
+Az egyenlet megoldása n = 20 (n = –20 nem lehet). 
+1 pont  
+Ellenőrzés (c1 = 2,625, S20 = 100, S40 = 300 valóban). 
+1 pont  
+Összesen: 
+8 pont  
+
+--- line 1020 ---
+Innen 100 = n2d. 
+1 pont  
+Mivel d = 0,25, így n2 = 400. 
+1 pont  
+Az egyenlet megoldása n = 20 (n = –20 nem lehet). 
+1 pont  
+Ellenőrzés (c1 = 2,625, S20 = 100, S40 = 300 valóban). 
+1 pont  
+Összesen: 
+8 pont  
+
+--- line 1134 ---
+>
+=
+, 
+2 pont  
+innen b > 15. 
+A háromszög szára tehát nagyobb, mint 15 cm. 
+(Ilyen háromszög mindig létezik.) 
+1 pont  
+Összesen: 
+9 pont  
+
+--- line 1252 ---
+15
+b >
++
+=
+. 
+A háromszög szára tehát nagyobb, mint 15 cm. 
+(Ilyen háromszög mindig létezik.) 
+1 pont  
+Összesen: 
+9 pont  
+
+--- line 1293 ---
+1 pont  
+200
+m <
+≈ 14,1, 
+1 pont  
+tehát 14 olyan 1000-nél kisebb pozitív egész szám 
+van, amelyik a feltételeknek megfelel. 
+1 pont  
+Összesen: 
+7 pont  
+
+--- line 1315 ---
+7. a) 
+Az egyenes 4 abszcisszájú pontja (4; 3). 
+1 pont 
+ 
+Az R függőleges távolsága 3 – 2 = 1,  
+1 pont 
+az S függőleges távolsága 5 – 3 = 2. 
+1 pont 
+Összesen: 
+3 pont  
+
+--- line 1424 ---
+=
+.) 
+1 pont 
+52m – 68 = 0 
+68
+52
+m =
+ 
+Összesen: 
+6 pont  
+
+--- line 1591 ---
+⋅
+=
+
+
+
+
+  
+1 pont  
+Összesen: 
+7 pont  
+
+--- line 1622 ---
+1 színezési lehetőség. 
+1 pont 
+ 
+Ha a sárga lapok száma 4 vagy 5, akkor a kék lapok 
+száma rendre 2, illetve 1, így ilyen színezésből is 2, 
+illetve 1 van (ugyanúgy, mint 2, illetve 1 sárga lap 
+esetén). 
+1 pont  
+Összesen 1 + 2 + 2 + 2 + 1 = 8 különböző kocka ké-
+szíthető valóban. 
+
+--- line 1625 ---
+Ha a sárga lapok száma 4 vagy 5, akkor a kék lapok 
+száma rendre 2, illetve 1, így ilyen színezésből is 2, 
+illetve 1 van (ugyanúgy, mint 2, illetve 1 sárga lap 
+esetén). 
+1 pont  
+Összesen 1 + 2 + 2 + 2 + 1 = 8 különböző kocka ké-
+szíthető valóban. 
+1 pont  
+Összesen: 
+6 pont  
+
+--- line 1678 ---
+−
+
+
+
+, 
+1 pont  
+ami kb. 0,330. 
+1 pont  
+Összesen: 
+4 pont  
+
+--- line 1755 ---
+
+
+
+≈ 0,287. 
+1 pont  
+A kérdezett valószínűség tehát (körülbelül): 
+0,002 + 0,041 + 0,287 = 0,330. 
+1 pont  
+Összesen: 
+4 pont  
+
+--- line 1840 ---
+50 2
+5 5 2
+5 3
+r =
++
++
+≈ 3,41 egység. 
+1 pont  
+Összesen: 
+6 pont  
+
+--- line 1906 ---
+5(1
+2
+3)
+=
++
+−
+) ≈ 3,41 egység. 
+1 pont  
+Összesen: 
+6 pont  
+
+--- line 1973 ---
+1 pont  
+A beírt kör sugara 
+10
+ctg 27,35
+1
+r =
+°+ ≈ 3,41 egység. 
+1 pont  
+Összesen: 
+6 pont  
+
+--- line 2071 ---
+r
+R
+−
+≥
+, ami igaz. 
+Ekvivalens átalakításokat 
+végeztünk, az állítást te-
+hát beláttuk. 
+Összesen: 
+5 pont  
+
+--- line 2130 ---
+=
+−
+π
+=
+π
+−π
+ valóban.  
+2 pont  
+Összesen: 
+4 pont  
+
+--- line 2285 ---
+3
+π⋅
+=
+π
+ (≈4081
+7069 ) ≈ 0,577-szerese, 
+ami valóban kisebb 0,6-nél. Az állítás tehát igaz. 
+1 pont  
+Összesen: 
+7 pont  
+
+--- line 2439 ---
+150
+r =
+ esetén van (ez 
+a maximális térfogatú 
+torta sugara). 
+Mivel 753 = 421 875 < 455 625, és lépéseink ekviva-
+lensek voltak, az állítást beláttuk. 
+1 pont*  
+Összesen: 
+7 pont  
+
+--- line 2752 ---
+3
+π⋅
+=
+π
+(≈4081
+7069 ) ≈ 0,577-szerese, ami 
+valóban kisebb 0,6-nél. Az állítás tehát igaz. 
+1 pont  
+Összesen: 
+7 pont  
+
+--- line 2935 ---
+3
+π⋅
+=
+π
+ (≈4081
+7069 ) ≈ 0,577-szerese, 
+ami valóban kisebb 0,6-nél. Az állítás tehát igaz. 
+1 pont  
+Összesen: 
+7 pont  

@@ -1,0 +1,1257 @@
+
+===== PAGE 1 =====
+Matematika 
+középszint 
+ 
+Javítási-értékelési útmutató 2312 
+ 
+OKTATÁSI HIVATAL 
+MATEMATIKA 
+ 
+KÖZÉPSZINTŰ 
+ÍRÁSBELI VIZSGA 
+minden vizsgázó számára 
+JAVÍTÁSI-ÉRTÉKELÉSI 
+ÚTMUTATÓ 
+ 
+É R E T T S É G I V I Z S G A • 2 0 2 3 . m á j u s 9 . 
+
+===== PAGE 2 =====
+Matematika — középszint 
+Javítási-értékelési útmutató 
+2312 írásbeli vizsga 
+2 / 14 
+2023. május 9. 
+Fontos tudnivalók 
+ 
+Formai előírások: 
+ 
+1. Kérjük, hogy a dolgozatot a vizsgázó által használt színűtől eltérő színű tollal, olvas-
+hatóan javítsa ki. 
+2. A feladatok mellett található szürke téglalapok közül az elsőben a feladatra adható ma-
+ximális pontszám van, a javító által adott pontszám a mellette levő téglalapba 
+kerüljön. 
+3. Kifogástalan megoldás esetén kérjük, hogy a maximális pontszám feltüntetése mellett 
+kipipálással jelezze, hogy az adott gondolati egységet látta, és jónak minősítette. 
+4. Hiányos/hibás megoldás esetén kérjük, hogy a hiba jelzése mellett az egyes részpont-
+számokat is írja rá a dolgozatra. Ha a dolgozat javítását jobban követhetővé teszi, akkor 
+a vizsgázó által elvesztett részpontszámok jelzése is elfogadható. Ne maradjon olyan 
+részlet a megoldásban, amelyről a javítás után nem nyilvánvaló, hogy helyes, hibás vagy 
+fölösleges. 
+5. A javítás során alkalmazza az alábbi jelöléseket. 
+• helyes lépés: kipipálás 
+• elvi hiba: kétszeres aláhúzás 
+• számolási hiba vagy más, nem elvi hiba: egyszeres aláhúzás 
+• rossz kiinduló adattal végzett helyes lépés: szaggatott vagy áthúzott kipipálás 
+• hiányos indoklás, hiányos felsorolás vagy más hiány: hiányjel 
+• nem érthető rész: kérdőjel és/vagy hullámvonal 
+6. Az ábrán kívül ceruzával írt részeket ne értékelje. 
+ 
+Tartalmi kérések: 
+ 
+1. Egyes feladatoknál több megoldás pontozását is megadtuk. Amennyiben azoktól eltérő 
+megoldás születik, keresse meg ezen megoldásoknak az útmutató egyes részleteivel 
+egyenértékű részeit, és ennek alapján pontozzon. 
+2. A pontozási útmutató pontjai tovább bonthatók, hacsak az útmutató másképp nem 
+rendelkezik. Az adható pontszámok azonban csak egész pontok lehetnek. 
+3. Ha a megoldásban számolási hiba, pontatlanság van, akkor csak arra a részre nem jár 
+pont, ahol a tanuló a hibát elkövette. Ha a hibás részeredménnyel helyes gondolatmenet 
+alapján tovább dolgozik, és a megoldandó probléma lényegében nem változik meg, ak-
+kor a következő részpontszámokat meg kell adni. 
+4. Elvi hibát követően egy gondolati egységen belül (ezeket az útmutatóban kettős vonal 
+jelzi) a formálisan helyes matematikai lépésekre sem jár pont. Ha azonban a tanuló  
+az elvi hibával kapott rossz eredménnyel – mint kiinduló adattal – helyesen számol to-
+vább a következő gondolati egységekben vagy részkérdésekben, akkor ezekre a részekre 
+kapja meg a maximális pontot, ha a megoldandó probléma lényegében nem változott 
+meg. 
+5. Ha az útmutatóban egy megjegyzés zárójelben szerepel, akkor ennek hiánya esetén is 
+teljes értékű a megoldás. 
+
+===== PAGE 3 =====
+Matematika — középszint 
+Javítási-értékelési útmutató 
+2312 írásbeli vizsga 
+3 / 14 
+2023. május 9. 
+ 
+6. Mértékegység hiánya esetén csak akkor jár pontlevonás, ha a hiányzó mértékegység 
+válaszban vagy mértékegység-átváltásban szerepel (zárójel nélkül). 
+7. Egy feladatra adott többféle megoldási próbálkozás közül a vizsgázó által megjelölt 
+változat értékelhető. A javítás során egyértelműen jelezze, hogy melyik változatot ér-
+tékelte, és melyiket nem. 
+8. A megoldásokért jutalompont (az adott feladatra vagy feladatrészre előírt maximális 
+pontszámot meghaladó pont) nem adható. 
+9. Egy feladatra vagy részfeladatra adott összpontszám nem lehet negatív. 
+10. Az olyan részszámításokért, részlépésekért nem jár pontlevonás, melyek hibásak, de 
+amelyeket a feladat megoldásához a vizsgázó ténylegesen nem használ fel. 
+11. A gondolatmenet kifejtése során a zsebszámológép használata – további matemati-
+kai indoklás nélkül – a következő műveletek elvégzésére fogadható el: összeadás, 
+kivonás, szorzás, osztás, hatványozás, gyökvonás, n!, 
+
+
+
+
+
+
+k
+n kiszámítása, a függvénytáb-
+lázatban fellelhető táblázatok helyettesítése (sin, cos, tg, log és ezek inverzei), a π és az 
+e szám közelítő értékének megadása, nullára rendezett másodfokú egyenlet gyökeinek 
+meghatározása. További matematikai indoklás nélkül használhatók a számológépek bi-
+zonyos statisztikai mutatók kiszámítására (átlag, szórás) abban az esetben, ha a feladat 
+szövege kifejezetten nem követeli meg az ezzel kapcsolatos részletszámítások bemuta-
+tását is. Egyéb esetekben a géppel elvégzett számítások indoklás nélküli lépéseknek 
+számítanak, azokért nem jár pont. 
+12. Az ábrák bizonyító erejű felhasználása (például adatok leolvasása méréssel) nem elfo-
+gadható. 
+13. Valószínűségek megadásánál (ha a feladat szövege másképp nem rendelkezik) a száza-
+lékban megadott helyes válasz is elfogadható. 
+14. Ha egy feladat szövege nem ír elő kerekítési kötelezettséget, akkor az útmutatóban meg-
+adottól eltérő, észszerű és helyes kerekítésekkel kapott rész- és végeredmény is elfo-
+gadható. 
+15. A vizsgafeladatsor II. B részében kitűzött 3 feladat közül csak 2 feladat megoldása 
+értékelhető. A vizsgázó az erre a célra szolgáló négyzetben – feltehetőleg – megjelölte 
+annak a feladatnak a sorszámát, amelynek értékelése nem fog beszámítani az összpont-
+számába. Ennek megfelelően a megjelölt feladatra esetlegesen adott megoldást nem is 
+kell javítani. Ha a vizsgázó nem jelölte meg, hogy melyik feladat értékelését nem kéri, 
+és a választás ténye a dolgozatból sem derül ki egyértelműen, akkor a nem értékelendő 
+feladat automatikusan a kitűzött sorrend szerinti utolsó feladat lesz. 
+ 
+ 
+ 
+
+===== PAGE 4 =====
+Matematika — középszint 
+Javítási-értékelési útmutató 
+2312 írásbeli vizsga 
+4 / 14 
+2023. május 9. 
+ 
+I. 
+ 
+1. 
+(21 000 ∙ 0,8 =) 16 800 Ft 
+2 pont  
+Összesen: 
+2 pont  
+ 
+2. 
+7 6
+2
+⋅
+
+
+=
+
+
+
+
+ 21 
+2 pont  
+Összesen: 
+2 pont  
+ 
+3. 
+B = {1; 2; 4; 5; 7; 8} 
+1 pont  
+A \ B = {2; 5; 7} 
+2 pont  
+Összesen: 
+3 pont  
+ 
+4. 
+A vizsgázó az x
+x
+
+ függvény grafikonjából 
+kiindulva, 
+1 pont 
+ 
+eltolta azt az y tengely mentén 1 egységgel negatív 
+irányba. 
+1 pont 
+Összesen: 
+2 pont  
+ 
+5. 
+420 = 2
+2
+ ∙ 3 ∙ 5 ∙ 7 
+1 pont  
+504 = 2
+3
+ ∙ 3
+2
+ ∙ 7 
+1 pont  
+A két szám legnagyobb közös osztója: 2
+2
+ ∙ 3 ∙ 7 = 84. 
+1 pont  
+Összesen: 
+3 pont  
+ 
+6. 
+(1; 5)
+AB
+−
+
+ 
+2 pont  
+Összesen: 
+2 pont  
+ 
+7. 
+9
+1,5
+6
+q =
+=
+ 
+1 pont  
+1
+(6:1,5 )4
+a =
+=
+ 
+1 pont  
+6
+6
+1,5
+1
+4
+83,125.
+1,5 1
+−
+=
+⋅
+=
+−
+S
+ 
+2 pont 4 + 6 + 9 + 13,5 + 20,25 + 
++ 30,375 = 83,125 
+Összesen: 
+4 pont  
+
+===== PAGE 5 =====
+Matematika — középszint 
+Javítási-értékelési útmutató 
+2312 írásbeli vizsga 
+5 / 14 
+2023. május 9. 
+ 
+8. 
+(5 ∙ 4 ∙ 3 =) 60 
+2 pont  
+Összesen: 
+2 pont  
+ 
+9. 
+B, D  
+2 pont 
+Egy helyes válasz, vagy 
+két helyes és egy hibás 
+válasz esetén 1 pont, min-
+den más esetben 0 pont 
+jár. 
+Összesen: 
+2 pont  
+ 
+10. 
+(–3; 5)  
+2 pont  
+Összesen: 
+2 pont  
+ 
+11. 
+(
+3 1989 3
+π
+4
+r =
+⋅
+≈) 7,8 (cm) 
+2 pont  
+Összesen: 
+2 pont  
+ 
+12. első megoldás 
+Két kockával 36-féle számpárt dobhatunk (összes eset 
+száma).  
+1 pont 
+ p k 1 2 3 4 5 6 
+1  
+ 
+ 
+ 
+ 
+ 
+2  
+ 
+ 
+ 
+ 
+ 
+3  
+ 
+ 
+ 
+ 
+ 
+4  
+ 
+ 
+ 
+ 
+ 
+5  
+ 
+ 
+ 
+ 
+ 
+6  
+ 
+ 
+ 
+ 
+ 
+ 
+A kedvező esetek (kék; piros): 
+(6; 1), (6; 2), (6; 3), (6; 4), (6; 5), (5; 1), (5; 2), (5; 3),  
+(5; 4), (4; 1), (4; 2), (4; 3), (3; 1), (3; 2), (2; 1), 
+összesen 15. 
+2 pont 
+A kérdéses valószínűség 15
+36
+ ≈ 0,417. 
+1 pont  
+Összesen: 
+4 pont  
+ 
+12. második megoldás 
+Két kockával 36-féle számpárt dobhatunk (összes eset 
+száma). 
+1 pont  
+Ezek között 6 eset van, amikor két egyforma számot 
+dobunk, így 36
+6
+15
+2
+−
+=
+ olyan eset van, amikor a kék 
+dobás nagyobb, mint a piros. 
+2 pont  
+A kérdéses valószínűség 15
+36
+ ≈ 0,417. 
+1 pont  
+Összesen: 
+4 pont  
+ 
+ 
+
+===== PAGE 6 =====
+Matematika — középszint 
+Javítási-értékelési útmutató 
+2312 írásbeli vizsga 
+6 / 14 
+2023. május 9. 
+ 
+II. A 
+ 
+13. a)  
+( f (1) = (1 + 3)
+2 – 2,25 =) 13,75 
+2 pont  
+Összesen: 
+2 pont  
+ 
+13. b)  
+(x + 3)
+2 – 2,25 = 0 
+1 pont |x + 3| = 1,5 
+x
+2 + 6x + 6,75 = 0 
+1 pont x + 3 = 1,5 vagy  
+x + 3 = –1,5 
+x = –1,5 és x = –4,5. 
+2 pont  
+Összesen: 
+4 pont  
+ 
+13. c)  
+Az f függvénynek az x = –3 helyen minimuma van, 
+melynek értéke –2,25. 
+1-1 pont  
+Összesen: 
+3 pont  
+ 
+13. d)  
+Az állítás hamis. 
+1 pont  
+Helyes indoklás (pl.: az f függvény minimuma –2,25). 
+1 pont  
+Összesen: 
+2 pont  
+ 
+ 
+ 
+
+===== PAGE 7 =====
+Matematika — középszint 
+Javítási-értékelési útmutató 
+2312 írásbeli vizsga 
+7 / 14 
+2023. május 9. 
+ 
+14. a) első megoldás 
+A feladat szövege alapján: AE = EC = x, EB = 12 – x. 
+2 pont EB = y, AE = EC = 12 – y  
+Az EBC derékszögű háromszögben a Pitagorasz-tétel 
+alapján: 
+2
+2
+2
+(12
+)
+6
+x
+x
+−
++
+=
+. 
+1 pont 
+2
+2
+2
+6
+(12
+)
+y
+y
++
+=
+−
+  
+180 = 24x 
+1 pont y = 4,5 
+x = 7,5 cm valóban. 
+1 pont  
+Összesen: 
+5 pont  
+ 
+14. a) második megoldás 
+Ha AE = 7,5 cm, akkor EB = 12 – 7,5 = 4,5 cm. 
+1 pont  
+Mivel 
+2
+2
+2
+4,5
+6
+7,5
++
+=
+, ezért ekkor EC = 7,5 cm való-
+ban (tehát AECF négyszög valóban egy 7,5 cm oldalú 
+rombusz). 
+2 pont  
+Ha AE rövidebb (hosszabb) lenne, mint 7,5 cm,  
+akkor EB hosszabb (rövidebb) lenne, mint 4,5 cm,  
+így ekkor EC hosszabb (rövidebb) lenne, mint 7,5 cm,  
+tehát AECF nem lenne rombusz. 
+(Tehát a rombusz oldalhosszának az egyetlen lehetsé-
+ges értéke valóban 7,5 cm.)  
+2 pont  
+Összesen: 
+5 pont  
+ 
+14. b)  
+A rombusz A és C csúcsnál lévő α belső szöge 
+egyenlő a BEC szöggel. 
+1 pont 
+Ez a pont akkor is jár, ha 
+ez a gondolat csak a meg-
+oldásból derül ki. 
+6
+sin α = 7,5 
+1 pont 
+A rombusz AC átlója fe-
+lezi az α szöget, így
+6
+tg 2
+12
+α =
+ . 
+Ebből α ≈ 53,1°. 
+1 pont  
+Az E és F csúcsnál lévő belső szögek nagysága  
+(180° – 53,1° =) 126,9°. 
+1 pont  
+Összesen: 
+4 pont  
+ 
+14. c)  
+A téglalap területe 12 ∙ 6 = 72 cm2,  
+1 pont 
+rombusz
+téglalap
+T
+AE
+T
+AB
+=
+  
+a rombusz területe 7,5 ∙ 6 = 45 cm2. 
+1 pont 
+45
+0,625
+72 =
+ 
+1 pont 
+7,5
+0,625
+12 =
+ 
+Így a rombusz területe 62,5%-a a téglalap területének. 
+1 pont  
+Összesen: 
+4 pont  
+Megjegyzés: Ha a vizsgázó megoldásában közelítő értékeket is használ, akkor ezért ne ve-
+szítsen pontot. 
+
+===== PAGE 8 =====
+Matematika — középszint 
+Javítási-értékelési útmutató 
+2312 írásbeli vizsga 
+8 / 14 
+2023. május 9. 
+ 
+15. a)  
+2022-től 2100-ig 78 év telik el, 
+1 pont  
+így 8 ∙ 1,01
+78 ≈ 
+1 pont  
+≈ 17,38 milliárd fő élne 2100 végén a Földön. 
+1 pont  
+Összesen: 
+3 pont  
+ 
+15. b)  
+(Jelölje n a 2022 után eltelő évek számát.) 
+A feladat szövege alapján 8 ∙ 1,01n = 12. 
+1 pont  
+1,01n = 1,5 
+1 pont  
+n = log1,011,5 
+lg1,5
+lg1,01
+
+
+=
+
+
+
+
+ ≈ 40,75 
+2 pont  
+Tehát (2022 + 41 =) 2063-ban érné el a Föld népes-
+sége a 12 milliárd főt.  
+1 pont  
+Összesen: 
+5 pont  
+Megjegyzés: Ha a vizsgázó évről évre (helyes kerekítéssel) kiszámolja a Föld népességét, és 
+ez alapján helyes választ ad, akkor a teljes pontszám jár. 
+ 
+15. c) első megoldás 
+(2100 – 2022 = 78, így) ha q-val jelöljük azt, hogy év-
+ről évre hányszorosára nő a népesség, akkor  
+8 ∙ q78 = 10,35. 
+1 pont  
+78 10,35
+8
+q =
+≈ 1,0033 
+2 pont  
+Évente kb. 0,33%-kal kellene növekednie a népesség-
+nek. 
+1 pont  
+Összesen: 
+4 pont  
+ 
+15. c) második megoldás 
+(2100 – 2022 = 78, így) ha p a növekedés százalékos 
+értéke, akkor 
+78
+8
+1
+10,35
+100
+p
+
+
+⋅
++
+=
+
+
+
+
+. 
+2 pont  
+78 10,35
+1 100
+8
+p
++
+=
+ 
+1 pont  
+p ≈ 0,33 (Tehát évente kb. 0,33%-kal kellene növe-
+kednie a népességnek.) 
+1 pont  
+Összesen: 
+4 pont  
+ 
+ 
+ 
+
+===== PAGE 9 =====
+Matematika — középszint 
+Javítási-értékelési útmutató 
+2312 írásbeli vizsga 
+9 / 14 
+2023. május 9. 
+ 
+II. B 
+ 
+16. a) első megoldás 
+Nem választotta a 16-os feladatot a vizsgázók 25%-a 
+(6 fő), nem választotta a 17-es feladatot a vizsgázók 
+37,5%-a (9 fő). 
+2 pont  
+Így a 18-ast (100 – 25 – 37,5 =) 37,5% (9 fő) nem vá-
+lasztotta, 
+1 pont A vizsgázóknak ez a  
+(25 + 37,5 =) 62,5 
+százaléka választotta a 
+18-as feladatot. 
+azaz 15 fő, tehát a vizsgázók 62,5%-a választotta a 
+18-as feladatot. 
+1 pont 
+Összesen: 
+4 pont  
+ 
+16. a) második megoldás 
+Ha a 18-as feladatot választók százalékos aránya x, 
+akkor a 75, a 62,5 és az x összeadásakor minden vizs-
+gázót kétszer számolunk. 
+1 pont 
+Ez a pont akkor is jár, ha 
+ez a gondolat csak a meg-
+oldásból derül ki. 
+Megoldandó az 75 + 62,5 + x = 200 egyenlet,  
+2 pont  
+amelyből x = 62,5, azaz a vizsgázók 62,5%-a válasz-
+totta a 18-as feladatot. 
+1 pont  
+Összesen: 
+4 pont  
+ 
+16. b)  
+Az osztályzatok átlaga: 2 2
+9 3 6 4
+7 5
+24
+⋅+ ⋅+ ⋅+ ⋅
+ = 
+1 pont  
+= 3,75. 
+1 pont  
+Összesen: 
+2 pont  
+ 
+16. c)  
+Az adatok módusza 3, 
+1 pont  
+mediánja 4, 
+1 pont  
+terjedelme 3. 
+1 pont  
+Összesen: 
+3 pont  
+ 
+16. d)  
+Az egy diákhoz tartozó középponti szög 360
+15
+24
+° =
+°. 
+1 pont 
+Ez a pont akkor is jár, ha 
+ez a gondolat csak a meg-
+oldásból derül ki. 
+Az egyes osztályzatokhoz tartozó középponti szögek 
+nagysága: 2-es: 30°, 3-as: 135°, 4-es: 90°, 5-ös: 105°. 
+1 pont  
+ 
+ 
+ 
+
+===== PAGE 10 =====
+Matematika — középszint 
+Javítási-értékelési útmutató 
+2312 írásbeli vizsga 
+10 / 14 
+2023. május 9. 
+ 
+Helyes kördiagram, például: 
+ 
+2 pont  
+Összesen: 
+4 pont  
+ 
+16. e)  
+A két kettes osztályzatú dolgozatot mindenképpen ki-
+választja.  
+1 pont 
+Ez a pont akkor is jár, ha 
+ez a gondolat csak a meg-
+oldásból derül ki. 
+A többi osztályzat esetében 9
+36
+2
+=
+
+
+, 6
+15
+2
+=
+
+
+,  
+illetve 7
+21
+2
+=
+
+
+ lehetőség van. 
+2 pont  
+A megfelelő kiválasztások száma: 
+36 ∙ 15 ∙ 21 = 11 340. 
+1 pont  
+Összesen: 
+4 pont  
+ 
+17. a) első megoldás 
+A trapéz D-ből induló magasságának T talppontja az 
+AB alapot egy 24 12
+2
+−
+
+
+=
+
+
+
+
+ 6 cm hosszú és egy 
+(24 – 6 =) 18 cm hosszú szakaszra osztja. 
+ 
+1 pont  
+Az így keletkező ATD derékszögű háromszög egy 
+szabályos háromszög fele, így a kérdéses szög 
+valóban 60°-os. 
+2 pont 
+6
+1
+cosα
+12
+2
+=
+=
+, 
+így α = 60°. 
+Összesen: 
+3 pont  
+ 
+ 
+
+===== PAGE 11 =====
+Matematika — középszint 
+Javítási-értékelési útmutató 
+2312 írásbeli vizsga 
+11 / 14 
+2023. május 9. 
+ 
+17. a) második megoldás 
+A D csúcson keresztül párhuzamost húzunk a BC 
+szárral, ami az AB alapot az E pontban metszi.  
+Mivel az EBCD négyszög paralelogramma,  
+ezért EB = 12 cm. 
+ 
+1 pont  
+Az AED háromszög minden oldala 12 cm hosszú, 
+azaz a háromszög szabályos, így a kérdéses szög 
+valóban 60°-os. 
+2 pont  
+Összesen: 
+3 pont  
+ 
+17. b) első megoldás 
+Az ABD háromszögben a koszinusztétel alapján: 
+2
+2
+2
+24
+12
+2 24 12 cos60
+BD =
++
+−⋅
+⋅
+⋅
+° , 
+1 pont 
+A BCD háromszögben a 
+koszinusztétel alapján: 
+2
+2
+2
+12
+12
+2 12 12 cos120 .
+BD =
++
+−
+−⋅
+⋅
+⋅
+°
+ 
+amiből 
+432
+BD =
+≈ 20,8 cm. 
+2 pont  
+Összesen: 
+3 pont  
+ 
+17. b) második megoldás 
+ 
+A trapéz DT magasságának hossza (például a 
+Pitagorasz-tétel alapján): 108
+6 3
+=
+≈ 10,4 cm. 
+1 pont  
+A DTB háromszögben a Pitagorasz-tétel alapján: 
+2
+2
+2
+18
+108
+432
+BD =
++
+=
+, 
+1 pont  
+amiből 
+432
+BD =
+≈ 20,8 cm. 
+1 pont  
+Összesen: 
+3 pont  
+ 
+ 
+ 
+
+===== PAGE 12 =====
+Matematika — középszint 
+Javítási-értékelési útmutató 
+2312 írásbeli vizsga 
+12 / 14 
+2023. május 9. 
+ 
+17. c)  
+A keletkező test egy csonkakúp. A csonkakúp alapkö-
+rének sugara 12 cm, fedőkörének sugara 6 cm. 
+1 pont 
+Ez a pont akkor is jár, ha 
+ez a gondolat csak a meg-
+oldásból derül ki. 
+A csonkakúp magassága:  
+2
+2
+12
+6
+108
+−
+=
+ (≈ 10,4) cm.  
+1 pont  
+A csonkakúp térfogata:  
+2
+2
+108
+(12
+12 6
+6 )
+3
+V
+⋅π
+=
+⋅
++
+⋅+
+ ≈ 2742 cm3. 
+2 pont  
+Összesen: 
+4 pont  
+ 
+17. d) első megoldás 
+Az egyes sorokba kerülő szőlőtőkék darabszámai egy 
+olyan számtani sorozat egymást követő tagjai, 
+amelynek első tagja 120, n-edik tagja 240. 
+1 pont 
+Ez a pont akkor is jár, ha 
+ez a gondolat csak a meg-
+oldásból derül ki. 
+A feladat szövege alapján 
+120
+240
+7380
+2
+n
+S
+n
++
+=
+⋅
+=
+, 
+1 pont  
+amiből n = 41 (≥ 20). 
+1 pont  
+Ekkor 240 = 120 + (41 – 1) ∙ d, 
+1 pont  
+amiből d = 3. 
+1 pont  
+Az első 20 sorba 
+20
+2 120
+19 3 20
+2970
+2
+S
+⋅
++
+⋅
+=
+⋅
+=
+ tőkét 
+ültettek, ennyi tehát az olaszrizlingtőkék száma. 
+2 pont 
+20
+120 19 3 177
+a
+=
++
+⋅=
+ 
+20
+120 177 20
+2970
+2
+S
++
+=
+⋅
+=
+ 
+Összesen: 
+7 pont  
+ 
+17. d) második megoldás 
+Az egyes sorokba kerülő szőlőtőkék darabszámai egy 
+olyan számtani sorozat egymást követő tagjai, 
+amelynek első tagja 120, n-edik tagja 240. 
+1 pont 
+Ez a pont akkor is jár, ha 
+ez a gondolat csak a meg-
+oldásból derül ki. 
+Ha a sorozat differenciája d (≠ 0), akkor a tagok 
+száma 
+240 120
+1
+n
+d
+−
+=
++  
+1 pont 
+240
+120
+(
+1)
+n
+d
+=
++
+−
+ 
+120
+1
+d
+n
+=
+− (mivel n ≠ 1). 
+120
+2 120
+1 1
+120
+1
+2
+120
+180
+1
+7380
+n
+d
+d
+S
+d
+d
+
+
+⋅
++
++ −
+
+
+
+
+
+
+=
+⋅
++
+=
+
+
+
+
+
+
+=
+⋅
++
+=
+
+
+
+
+ 
+1 pont 
+120
+2 120
+(
+1)
+1
+2
+180
+7380
+n
+n
+n
+n
+⋅
++
+−
+⋅
+−⋅
+=
+=
+⋅
+=
+ 
+Ebből d = 3, 
+1 pont n = 41 
+és n = 41 (≥ 20). 
+1 pont d = 3 
+Az első 20 sorba 
+20
+2 120
+19 3 20
+2970
+2
+S
+⋅
++
+⋅
+=
+⋅
+=
+ tőkét 
+ültettek, ennyi tehát az olaszrizlingtőkék száma. 
+2 pont  
+Összesen: 
+7 pont  
+
+===== PAGE 13 =====
+Matematika — középszint 
+Javítási-értékelési útmutató 
+2312 írásbeli vizsga 
+13 / 14 
+2023. május 9. 
+ 
+18. a)  
+ 
+2 pont  
+Összesen: 
+2 pont  
+ 
+18. b)  
+Egy négyszögöl 10000
+2780 ≈ 3,597 m2, 
+1 pont  
+tehát egy öl 3,597 ≈ 1,9 méter.  
+2 pont  
+Összesen: 
+3 pont  
+ 
+18. c) első megoldás 
+A 14 család közül a 12 nyertest 14
+12
+
+
+
+
+
+
+ = 91-féleképpen 
+lehet kiválasztani (összes eset száma). 
+2 pont A 2 vesztest 14
+2
+
+
+
+
+
+
+-féle-
+képpen lehet kiválasztani. 
+Ha mindkét család nyer, akkor a többi 10 nyertest a 
+többi 12 család közül 12
+10
+
+
+
+
+
+
+ = 66-féleképpen lehet 
+kiválasztani (kedvező esetek száma). 
+2 pont 
+12
+2
+
+
+
+
+
+
+ olyan eset van, 
+amikor a 2 vesztes család 
+a többi 12 család közül 
+kerül ki.  
+A kérdéses valószínűség 66
+91 ≈ 0,725. 
+1 pont  
+Összesen: 
+5 pont  
+ 
+ 
+ 
+
+===== PAGE 14 =====
+Matematika — középszint 
+Javítási-értékelési útmutató 
+2312 írásbeli vizsga 
+14 / 14 
+2023. május 9. 
+ 
+18. c) második megoldás 
+Rendezzük meg úgy a sorsolást, hogy 12 „nyert” és 
+2 „nem nyert” feliratú cédula közül húznak egyet-
+egyet a családok. Feltehetjük, hogy a Kovács és a 
+Szabó család húz először. 
+1 pont 
+Ez a pont akkor is jár, ha 
+ez a gondolat csak a meg-
+oldásból derül ki. 
+Annak valószínűsége, hogy a Kovács család nyer: 12
+14 . 
+1 pont  
+Annak valószínűsége, hogy miután a Kovács család 
+nyert, a Szabó család is nyer: 11
+13 . 
+1 pont  
+A kérdéses valószínűség ezek szorzata, azaz 
+12 11
+14 13
+⋅
+ ≈ 0,725. 
+2 pont  
+Összesen: 
+5 pont  
+ 
+18. d)  
+Jelölje (méterben) egy telek rövidebb oldalát a, 
+hosszabb oldalát b. Ekkor a feladat szövege alapján: 
+2
+4
+228
+4
+2
+156
+a
+b
+a
+b
++
+=
+
+
++
+=
+
+. 
+2 pont  
+Az első egyenletből a = 114 – 2b, 
+1 pont 
+Az első egyenlet kétszere-
+séből a második egyenle-
+tet kivonva: 
+amit a másodikba helyettesítve és a zárójelet 
+felbontva kapjuk, hogy 456 – 8b + 2b = 156, 
+1 pont 6b = 300, 
+amiből b = 50 méter, 
+1 pont  
+így a = (114 – 2 ∙ 50 =) 14 méter. 
+1 pont  
+Egy telek területe 14 ∙ 50 = 700 m2. 
+1 pont  
+Összesen: 
+7 pont  
+ 

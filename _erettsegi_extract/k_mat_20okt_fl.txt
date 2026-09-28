@@ -1,0 +1,1082 @@
+
+===== PAGE 1 =====
+ 
+Matematika 
+ 
+középszint — írásbeli vizsga 2012 
+ 
+ 
+I. összetevő 
+EMBERI ERŐFORRÁSOK MINISZTÉRIUMA 
+Név:  ...........................................................  osztály:...... 
+MATEMATIKA 
+ 
+KÖZÉPSZINTŰ 
+ÍRÁSBELI VIZSGA 
+2020. október 20. 8:00 
+I. 
+Időtartam: 45 perc 
+Pótlapok száma 
+Tisztázati 
+ 
+Piszkozati 
+ 
+ 
+É R E T T S É G I V I Z S G A • 2 0 2 0 . o k t ó b e r 2 0 . 
+
+===== PAGE 2 =====
+Matematika 
+középszint 
+2012 írásbeli vizsga, I. összetevő 
+2 / 8 
+2020. október 20. 
+Név:  ...........................................................  osztály:...... 
+Fontos tudnivalók 
+ 
+1. A feladatok megoldására 45 percet fordíthat, az idő leteltével a munkát be kell fejeznie. 
+ 
+ 
+2. A megoldások sorrendje tetszőleges. 
+ 
+ 
+3. A feladatok megoldásához szöveges adatok tárolására és megjelenítésére nem alkalmas 
+zsebszámológépet és bármilyen négyjegyű függvénytáblázatot használhat, más elektroni-
+kus vagy írásos segédeszköz használata tilos! 
+ 
+ 
+4. A feladatok végeredményét az erre a célra szolgáló keretbe írja, a megoldást csak akkor 
+kell részleteznie, ha erre a feladat szövege utasítást ad! 
+ 
+ 
+5. A dolgozatot tollal írja, az ábrákat ceruzával is rajzolhatja. Az ábrákon kívül a ceruzával írt 
+részeket a javító tanár nem értékelheti. Ha valamilyen megoldást vagy megoldásrészletet 
+áthúz, akkor az nem értékelhető. 
+ 
+ 
+6. Minden feladatnak csak egy megoldása értékelhető. Több megoldási próbálkozás esetén 
+egyértelműen jelölje, hogy melyiket tartja érvényesnek! 
+ 
+ 
+7. Kérjük, hogy a szürkített téglalapokba semmit ne írjon! 
+ 
+ 
+ 
+
+===== PAGE 3 =====
+Matematika 
+középszint 
+2012 írásbeli vizsga, I. összetevő 
+3 / 8 
+2020. október 20. 
+Név:  ...........................................................  osztály:...... 
+ 
+1. 
+Adottak a következő halmazok: 
+A = {1; 3; 6; 10; 15};  
+B = {1; 4; 10; 20}. 
+Elemei felsorolásával adja meg az A ∩ B és az A \ B halmazt! 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+A ∩ B = 
+1 pont 
+ 
+A \ B = 
+1 pont 
+ 
+ 
+2. 
+Anna öt napon át egy 200 méter hosszú futókörre jár futni. Az első nap 5 kört fut, majd a 
+második naptól kezdve minden nap 1 körrel többet fut, mint az előző napon. 
+Hány métert fut Anna összesen az öt nap alatt? 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Összesen                      métert fut. 
+2 pont 
+ 
+ 
+3. 
+Milyen számjegyet írjunk az x helyére, hogy a 202x négyjegyű szám osztható legyen  
+12-vel? 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+x =  
+2 pont 
+ 
+ 
+
+===== PAGE 4 =====
+Matematika 
+középszint 
+2012 írásbeli vizsga, I. összetevő 
+4 / 8 
+2020. október 20. 
+Név:  ...........................................................  osztály:...... 
+ 
+4. 
+Az alábbi számok közül melyik az, amelyik a 2
+100 szám kétszeresével egyenlő? 
+ 
+2
+101 
+ 
+ 
+2
+102 
+ 
+ 
+2
+200 
+ 
+ 
+4
+100 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+2 pont 
+ 
+ 
+5. 
+Az egyik héten a következő számokat húzták ki az ötös lottón: 16, 24, 36, 54, 81. 
+Adja meg az alábbi állítások logikai értékét (igaz vagy hamis)! 
+A: A héten kihúzott öt lottószám mindegyike osztható 3-mal. 
+B: A héten kihúzott öt lottószám közül három négyzetszám. 
+C: A héten kihúzott öt lottószám tekinthető egy mértani sorozat első öt tagjának. 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+A: 
+ 
+B: 
+ 
+C: 
+2 pont 
+ 
+ 
+6. 
+Adott a valós számok halmazán értelmezett f függvény: 
+4
+( )
+10
+x
+f x =
+. 
+a) Határozza meg f (12) értékét! 
+b) Adja meg azt az x valós számot, amelyre f (x) = 100. 
+ 
+ 
+ 
+ 
+ 
+a) f (12) = 
+1 pont 
+ 
+b) x = 
+2 pont 
+ 
+
+===== PAGE 5 =====
+Matematika 
+középszint 
+2012 írásbeli vizsga, I. összetevő 
+5 / 8 
+2020. október 20. 
+Név:  ...........................................................  osztály:...... 
+ 
+7. 
+Egy 15 000 Ft-os termék árát a kereskedő október végén 25%-kal felemelte. 
+Hány százalékos „kedvezménnyel” adja a terméket a november végi leárazáskor, ha 
+ekkor újra 15 000 Ft-os áron hirdeti? 
+Megoldását részletezze! 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+2 pont 
+ 
+ 
+                   %-os kedvezménnyel 
+1 pont 
+ 
+ 
+8. 
+Egy b élhosszúságú kocka felszíne 13,5 cm2. 
+Mekkora a felszíne egy 2b élhosszúságú kockának? 
+Megoldását részletezze! 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+2 pont 
+ 
+ 
+A felszín: 
+1 pont 
+ 
+ 
+
+===== PAGE 6 =====
+Matematika 
+középszint 
+2012 írásbeli vizsga, I. összetevő 
+6 / 8 
+2020. október 20. 
+Név:  ...........................................................  osztály:...... 
+ 
+9. 
+Hány különböző hatjegyű szám készíthető két darab 2-es és négy darab 4-es számjegy 
+felhasználásával? 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+2 pont 
+ 
+ 
+10. Adott a [–2; 2] zárt intervallumon értelmezett x ↦ x2 – 1 függvény. 
+a) Határozza meg a függvény értékkészletét! 
+b) Adja meg a függvény zérushelyeit! 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+a) 
+2 pont 
+ 
+b) 
+2 pont 
+ 
+ 
+
+===== PAGE 7 =====
+Matematika 
+középszint 
+2012 írásbeli vizsga, I. összetevő 
+7 / 8 
+2020. október 20. 
+Név:  ...........................................................  osztály:...... 
+ 
+11. Négy osztálytárs megmérte, hogy hány perc alatt érnek be kedden reggel az iskolába.  
+A kapott adatok: 38, 30, 26, 26. 
+Számítsa ki az időtartamok átlagát és szórását! 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Az átlag: 
+1 pont 
+ 
+A szórás: 
+2 pont 
+ 
+ 
+12. Két szabályos dobókockával egyszerre dobva mennyi annak a valószínűsége, hogy két 
+különböző számot dobunk? 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+2 pont 
+ 
+ 
+
+===== PAGE 8 =====
+Matematika 
+középszint 
+2012 írásbeli vizsga, I. összetevő 
+8 / 8 
+2020. október 20. 
+Név:  ...........................................................  osztály:...... 
+ 
+ 
+ 
+pontszám 
+maximális 
+elért 
+I. rész 
+1. feladat 
+2 
+ 
+2. feladat 
+2 
+ 
+3. feladat 
+2 
+ 
+4. feladat 
+2 
+ 
+5. feladat 
+2 
+ 
+6. feladat 
+3 
+ 
+7. feladat 
+3 
+ 
+8. feladat 
+3 
+ 
+9. feladat 
+2 
+ 
+10. feladat 
+4 
+ 
+11. feladat 
+3 
+ 
+12. feladat 
+2 
+ 
+ 
+ÖSSZESEN 
+30 
+ 
+ 
+dátum 
+ 
+javító tanár 
+ 
+ __________________________________________________________________________  
+ 
+ 
+ 
+pontszáma egész 
+számra kerekítve 
+elért 
+programba  
+beírt 
+I. rész 
+  
+  
+ 
+dátum 
+ 
+dátum 
+ 
+ 
+ 
+ 
+ 
+ 
+javító tanár 
+ 
+jegyző 
+ 
+Megjegyzések: 
+1. Ha a vizsgázó a II. írásbeli összetevő megoldását elkezdte, akkor ez a táblázat és az aláírási rész 
+üresen marad! 
+2. Ha a vizsga az I. összetevő teljesítése közben megszakad, illetve nem folytatódik a II. összetevővel, 
+akkor ez a táblázat és az aláírási rész kitöltendő! 
+
+===== PAGE 9 =====
+ 
+Matematika 
+ 
+középszint — írásbeli vizsga 2012 
+ 
+ 
+II. összetevő 
+EMBERI ERŐFORRÁSOK MINISZTÉRIUMA 
+Név:  ...........................................................  osztály:...... 
+MATEMATIKA 
+ 
+KÖZÉPSZINTŰ 
+ÍRÁSBELI VIZSGA 
+2020. október 20. 8:00 
+II. 
+Időtartam: 135 perc 
+Pótlapok száma 
+Tisztázati 
+ 
+Piszkozati 
+ 
+ 
+É R E T T S É G I V I Z S G A • 2 0 2 0 . o k t ó b e r 2 0 . 
+
+===== PAGE 10 =====
+Matematika 
+középszint 
+2012 írásbeli vizsga, II. összetevő 
+2 / 16 
+2020. október 20. 
+Név:  ...........................................................  osztály:...... 
+ 
+ 
+
+===== PAGE 11 =====
+Matematika 
+középszint 
+2012 írásbeli vizsga, II. összetevő 
+3 / 16 
+2020. október 20. 
+Név:  ...........................................................  osztály:...... 
+ 
+Fontos tudnivalók 
+ 
+1. A feladatok megoldására 135 percet fordíthat, az idő leteltével a munkát be kell fejeznie. 
+ 
+2. A feladatok megoldási sorrendje tetszőleges. 
+ 
+3. A B részben kitűzött három feladat közül csak kettőt kell megoldania. A nem választott 
+feladat sorszámát írja be a dolgozat befejezésekor az alábbi négyzetbe! Ha a javító 
+tanár számára nem derül ki egyértelműen, hogy melyik feladat értékelését nem kéri, akkor 
+a kitűzött sorrend szerinti legutolsó feladatra nem kap pontot. 
+ 
+ 
+ 
+4. A feladatok megoldásához szöveges adatok tárolására és megjelenítésére nem alkalmas 
+zsebszámológépet és bármilyen négyjegyű függvénytáblázatot használhat, más elektroni-
+kus vagy írásos segédeszköz használata tilos! 
+ 
+5. A megoldások gondolatmenetét minden esetben írja le, mert a feladatra adható pont-
+szám jelentős része erre jár! 
+ 
+6. Ügyeljen arra, hogy a lényegesebb részszámítások is nyomon követhetők legyenek! 
+ 
+7. A gondolatmenet kifejtése során a zsebszámológép használata – további matematikai 
+indoklás nélkül – a következő műveletek elvégzésére fogadható el: összeadás, kivonás, 
+szorzás, osztás, hatványozás, gyökvonás, n!, 
+
+
+
+
+
+
+k
+n kiszámítása, a függvénytáblázatban fel-
+lelhető táblázatok helyettesítése (sin, cos, tg, log és ezek inverzei), a π és az e szám közelítő 
+értékének megadása, nullára rendezett másodfokú egyenlet gyökeinek meghatározása. To-
+vábbi matematikai indoklás nélkül használhatók a számológépek bizonyos statisztikai mu-
+tatók kiszámítására (átlag, szórás) abban az esetben, ha a feladat szövege kifejezetten nem 
+követeli meg az ezzel kapcsolatos részletszámítások bemutatását is. Egyéb esetekben a 
+géppel elvégzett számítások indoklás nélküli lépéseknek számítanak, azokért nem jár 
+pont. 
+ 
+8. A feladatok megoldásánál használt tételek közül az iskolában tanult, névvel ellátott tételeket 
+(pl. Pitagorasz-tétel, magasságtétel) nem kell pontosan megfogalmazva kimondania, elég 
+csak a tétel megnevezését említenie, de alkalmazhatóságát röviden indokolnia kell. 
+ 
+9. A feladatok végeredményét (a feltett kérdésre adandó választ) szöveges megfogalmazásban 
+is közölje! 
+ 
+10. A dolgozatot tollal írja, az ábrákat ceruzával is rajzolhatja. Az ábrákon kívül a ceruzával írt 
+részeket a javító tanár nem értékelheti. Ha valamilyen megoldást vagy megoldásrészletet 
+áthúz, akkor az nem értékelhető. 
+ 
+11. Minden feladatnak csak egy megoldása értékelhető. Több megoldási próbálkozás esetén 
+egyértelműen jelölje, hogy melyiket tartja érvényesnek! 
+ 
+12. Kérjük, hogy a szürkített téglalapokba semmit ne írjon! 
+ 
+ 
+
+===== PAGE 12 =====
+Matematika 
+középszint 
+2012 írásbeli vizsga, II. összetevő 
+4 / 16 
+2020. október 20. 
+Név:  ...........................................................  osztály:...... 
+ 
+A 
+ 
+13. 
+a) Gondoltam egy számra. A szám feléből kivontam 5-öt, a különbséget megszoroztam 
+4-gyel, majd az így kapott számhoz hozzáadtam 8-at. Így éppen az eredeti számot 
+kaptam eredményül. Melyik számra gondoltam? 
+ 
+b) Egy számtani sorozat tizedik tagja 18, harmincadik tagja 48. Adja meg a sorozat 
+első tagját és differenciáját! 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+a) 
+5 pont 
+ 
+b) 
+5 pont 
+ 
+Ö.: 
+10 pont 
+ 
+
+===== PAGE 13 =====
+Matematika 
+középszint 
+2012 írásbeli vizsga, II. összetevő 
+5 / 16 
+2020. október 20. 
+Név:  ...........................................................  osztály:...... 
+ 
+ 
+ 
+
+===== PAGE 14 =====
+Matematika 
+középszint 
+2012 írásbeli vizsga, II. összetevő 
+6 / 16 
+2020. október 20. 
+Név:  ...........................................................  osztály:...... 
+ 
+14.  Az ABC derékszögű háromszög BC befogójának hossza 40 cm, AB átfogójának hossza 
+41 cm.   
+ 
+a) Mekkora a háromszög területe? Válaszát dm2-ben adja meg! 
+ 
+b) Mekkorák a háromszög hegyesszögei? 
+ 
+c) Mekkora a háromszög köré írt kör kerülete? Válaszát egész centiméterre kerekítve 
+adja meg! 
+ 
+  
+ 
+ 
+a) 
+5 pont 
+ 
+b) 
+3 pont 
+ 
+c) 
+4 pont 
+ 
+Ö.: 
+12 pont 
+ 
+
+===== PAGE 15 =====
+Matematika 
+középszint 
+2012 írásbeli vizsga, II. összetevő 
+7 / 16 
+2020. október 20. 
+Név:  ...........................................................  osztály:...... 
+ 
+ 
+
+===== PAGE 16 =====
+Matematika 
+középszint 
+2012 írásbeli vizsga, II. összetevő 
+8 / 16 
+2020. október 20. 
+Név:  ...........................................................  osztály:...... 
+ 
+15.  Egy klímakutató a globális éves középhőmérséklet alakulását vizsgálja. Rendelkezésére 
+állnak a Föld évenkénti középhőmérsékleti adatai 1900-tól kezdve. A kutató az adatok 
+alapján az alábbi f függvénnyel modellezi az éves középhőmérséklet alakulását: 
+ 
+f (x) = 0,0001x
+2 – 0,0063x + 15,2. 
+ 
+A képletben x az 1900 óta eltelt évek számát, f (x) pedig az adott év középhőmérsékletét 
+jelöli Celsius-fokban (0 ≤ x ≤ 119). 
+ 
+a) Számítsa ki, hogy a modell szerint 2018-ban hány fokkal volt magasabb az éves 
+középhőmérséklet, mint 1998-ban! 
+ 
+b) Melyik évben volt az éves középhőmérséklet 15,42 °C? 
+ 
+A kutató (a 2000 óta mért adatok alapján tett) egyik feltételezése szerint 2018 utáni né-
+hány évtizedben a globális éves középhőmérséklet alakulását a következő függvénnyel 
+lehet előre jelezni: 
+g(t) = 15,92 · 1,002t. 
+ 
+Ebben a képletben t a 2018 óta eltelt évek számát, g(t) pedig az adott év becsült közép-
+hőmérsékletét jelöli Celsius-fokban (0 ≤ t). 
+ 
+c) Ezt a modellt alkalmazva számítsa ki, hogy melyik évben lesz az éves középhőmér-
+séklet 16,7 °C! 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+a) 
+4 pont 
+ 
+b) 
+5 pont 
+ 
+c) 
+5 pont 
+ 
+Ö.: 
+14 pont 
+ 
+
+===== PAGE 17 =====
+Matematika 
+középszint 
+2012 írásbeli vizsga, II. összetevő 
+9 / 16 
+2020. október 20. 
+Név:  ...........................................................  osztály:...... 
+ 
+ 
+
+===== PAGE 18 =====
+Matematika 
+középszint 
+2012 írásbeli vizsga, II. összetevő 
+10 / 16 
+2020. október 20. 
+Név:  ...........................................................  osztály:...... 
+ 
+B 
+ 
+A 16-18. feladatok közül tetszése szerint választott kettőt kell megoldania.  
+A kihagyott feladat sorszámát írja be a 3. oldalon lévő üres négyzetbe! 
+ 
+16. A Föld Nap körüli pályájának hossza kb. 939 millió km. A Föld egy teljes Nap körüli 
+„kört” kb. 365,25 nap alatt tesz meg. 
+ 
+a) Számítsa ki, hogy hány km/h a Föld átlagsebessége egy teljes kör megtétele során! 
+ 
+A Naprendszer Naptól legtávolabbi bolygója a Neptunusz, mely kb. 4,2 fényóra távol-
+ságra van a Naptól. A fényóra az a távolság, melyet a fény egy óra alatt megtesz. 
+ 
+b) Számítsa ki a Neptunusz kilométerben mért távolságát a Naptól! Válaszát normál-
+alakban adja meg! (A fény egy másodperc alatt kb. 300 000 km-t tesz meg.) 
+ 
+A Naprendszer bolygói: Merkúr, Vénusz, Föld, Mars, Jupiter, Szaturnusz, Uránusz és 
+Neptunusz. Egy földrajzdolgozatban a Naptól való távolságuk sorrendjében kell megadni 
+a bolygókat. Judit csak abban biztos, hogy a Föld a harmadik a sorban, a Neptunusz pedig 
+a legutolsó. Ezeket helyesen írja a megfelelő helyre. Emlékszik még arra is, hogy a Nap-
+hoz a Merkúr és a Vénusz van a legközelebb, de a sorrendjüket nem tudja, így e két bolygó 
+sorrendjére is csak tippel. Végül a többi négy bolygó nevét véletlenszerűen írja be a meg-
+maradt helyekre. 
+ 
+c) Határozza meg annak a valószínűségét, hogy Judit éppen a helyes sorrendben adja 
+meg a bolygókat! 
+ 
+A nyolc bolygó nevét egy-egy cédulára felírjuk, és ezeket beletesszük egy kalapba. Két-
+szer húzunk a kalapból véletlenszerűen egy-egy cédulát.  
+ 
+d) Visszatevéses vagy visszatevés nélküli húzás esetén nagyobb a valószínűsége an-
+nak, hogy legalább az egyik kihúzott cédulán a Föld neve szerepel? (Visszatevéses 
+húzás esetén az először húzott cédulát a második húzás előtt visszatesszük, vissza-
+tevés nélküli húzás esetén nem tesszük vissza.) 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+a) 
+3 pont 
+ 
+b) 
+3 pont 
+ 
+c) 
+4 pont 
+ 
+d) 
+7 pont 
+ 
+Ö.: 
+17 pont 
+ 
+
+===== PAGE 19 =====
+Matematika 
+középszint 
+2012 írásbeli vizsga, II. összetevő 
+11 / 16 
+2020. október 20. 
+Név:  ...........................................................  osztály:...... 
+ 
+ 
+ 
+
+===== PAGE 20 =====
+Matematika 
+középszint 
+2012 írásbeli vizsga, II. összetevő 
+12 / 16 
+2020. október 20. 
+Név:  ...........................................................  osztály:...... 
+ 
+A 16-18. feladatok közül tetszése szerint választott kettőt kell megoldania.  
+A kihagyott feladat sorszámát írja be a 3. oldalon lévő üres négyzetbe! 
+ 
+17. Tekintsük az A, B, C, D és E pontokat egy gráf csúcsainak. 
+ 
+ 
+ 
+a) Egészítse ki élekkel a fenti ábrát úgy, hogy a kapott gráfban minden csúcs fokszáma 
+2 vagy 3 legyen! 
+ 
+b) Lehet-e olyan 5 csúcsú gráfot rajzolni, amelyben minden csúcs fokszáma pontosan 3? 
+ 
+Az A, B, C, D pontok egy paralelogrammát alkotnak, az E pont az átlók metszéspontja.  
+ 
+ 
+ 
+c) Fejezze ki az AB
+
+ vektort a DA
+
+ és DE
+
+ vektorok segítségével! 
+ 
+Egy ABCD paralelogrammát elhelyeztünk a koordináta-rendszerben. Tudjuk, hogy az AB 
+egyenes egyenlete 2x – 5y = – 4, az AD egyenes egyenlete pedig 3x – 2y = – 6.  
+A C pont koordinátái (5; 5), a B pont első koordinátája 3. 
+ 
+d) Határozza meg a paralelogramma A, B és D csúcsának koordinátáit! 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+a) 
+2 pont 
+ 
+b) 
+3 pont 
+ 
+c) 
+3 pont 
+ 
+d) 
+9 pont 
+ 
+Ö.: 
+17 pont 
+ 
+
+===== PAGE 21 =====
+Matematika 
+középszint 
+2012 írásbeli vizsga, II. összetevő 
+13 / 16 
+2020. október 20. 
+Név:  ...........................................................  osztály:...... 
+ 
+ 
+ 
+
+===== PAGE 22 =====
+Matematika 
+középszint 
+2012 írásbeli vizsga, II. összetevő 
+14 / 16 
+2020. október 20. 
+Név:  ...........................................................  osztály:...... 
+ 
+A 16-18. feladatok közül tetszése szerint választott kettőt kell megoldania.  
+A kihagyott feladat sorszámát írja be a 3. oldalon lévő üres négyzetbe! 
+ 
+18. Egy huszonnyolcas acélszög három forgástestre bontható. A feje egy olyan csonkakúp, 
+amelynek alapköre 5 mm, fedőköre 2 mm átmérőjű, magassága pedig 1 mm. A szög hen-
+geres része 25 mm hosszú, átmérője szintén 2 mm. Végül a szög hegye egy olyan forgás-
+kúpnak tekinthető, melynek magassága 2,5 mm, alapkörének átmérője pedig 2 mm. 
+ 
+ 
+ 
+a) Mekkora egy ilyen acélszög teljes hossza? 
+ 
+A barkácsboltban 10 dkg huszonnyolcas acélszöget kérünk.  
+ 
+b) Körülbelül hány darab szöget kapunk, ha a szög anyagának sűrűsége 7,8 g/cm3? 
+(Tömeg = sűrűség × térfogat.) 
+ 
+Megkértünk 50 embert, hogy egy barkácsboltban vegyenek egy-egy marék (kb. 10 dkg) 
+acélszöget ugyanabból a fajtából, majd megszámoltuk, hogy hány darab szöget vásárol-
+tak. Az alábbi táblázat mutatja a darabszámok eloszlását. 
+ 
+a vásárolt szögek 
+száma (db) 
+gyakorisága  a vásárolt szögek 
+száma (db) 
+gyakorisága 
+120-124 
+1 
+ 
+140-144 
+10 
+125-129 
+2 
+ 
+145-149 
+7 
+130-134 
+6 
+ 
+150-154 
+5 
+135-139 
+17 
+ 
+155-159 
+2 
+ 
+c) Készítsen oszlopdiagramot a táblázat alapján! 
+ 
+d) Számítsa ki az 50 adat mediánját és átlagát! Mindkét esetben az osztályközepekkel 
+(az egyes osztályok alsó és felső határának átlagával) számoljon! 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+a) 
+2 pont 
+ 
+b) 
+8 pont 
+ 
+c) 
+3 pont 
+ 
+d) 
+4 pont 
+ 
+Ö.: 
+17 pont 
+ 
+
+===== PAGE 23 =====
+Matematika 
+középszint 
+2012 írásbeli vizsga, II. összetevő 
+15 / 16 
+2020. október 20. 
+Név:  ...........................................................  osztály:...... 
+ 
+ 
+ 
+ 
+
+===== PAGE 24 =====
+Matematika 
+középszint 
+2012 írásbeli vizsga, II. összetevő 
+16 / 16 
+2020. október 20. 
+Név:  ...........................................................  osztály:...... 
+ 
+ 
+a feladat 
+sorszáma 
+pontszám 
+maximális 
+elért 
+összesen 
+II. A rész 
+13. 
+10 
+ 
+ 
+14. 
+12 
+ 
+15. 
+14 
+ 
+II. B rész 
+ 
+17 
+ 
+ 
+ 
+17 
+ 
+ 
+← nem választott feladat 
+ ÖSSZESEN 
+70 
+ 
+ 
+ 
+ 
+ 
+pontszám 
+maximális 
+elért 
+I. rész 
+30 
+ 
+II. rész 
+70 
+ 
+Az írásbeli vizsgarész pontszáma 
+100 
+ 
+ 
+dátum 
+ 
+javító tanár 
+ 
+ __________________________________________________________________________  
+ 
+ 
+ 
+pontszáma egész 
+számra kerekítve 
+elért 
+programba  
+beírt 
+I. rész 
+  
+  
+II. rész 
+  
+  
+ 
+dátum 
+ 
+dátum 
+ 
+ 
+ 
+ 
+ 
+ 
+javító tanár 
+ 
+jegyző 
+ 

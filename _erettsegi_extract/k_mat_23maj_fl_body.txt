@@ -1,0 +1,646 @@
+----- FL PAGE 3 -----
+
+Matematika 
+középszint 
+2312 írásbeli vizsga, I. összetevő 
+3 / 8 
+2023. május 9. 
+Név:  ...........................................................  osztály:...... 
+ 
+1. 
+Egy akció során az eredetileg 21 000 Ft-os cipő árát 20%-kal csökkentették. Mennyi a 
+cipő csökkentett ára? 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ A csökkentett ár:                      Ft. 
+2 pont 
+ 
+ 
+2. 
+Hány éle van egy hétpontú teljes gráfnak? 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+2 pont 
+ 
+ 
+3. 
+Az alaphalmaz legyen az egyjegyű pozitív egész számok halmaza. Az alaphalmaz 
+részhalmazai közül az A halmaz legyen a prímszámok halmaza, a B halmaz pedig legyen 
+a 3-mal osztható számok halmaza.  
+Elemei felsorolásával adja meg a B és az A \ B halmazt!  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+B = 
+1 pont 
+ 
+A \ B = 
+2 pont 
+ 
+
+
+----- FL PAGE 4 -----
+
+Matematika 
+középszint 
+2312 írásbeli vizsga, I. összetevő 
+4 / 8 
+2023. május 9. 
+Név:  ...........................................................  osztály:...... 
+ 
+4. 
+Ábrázolja a nemnegatív valós számok halmazán értelmezett 
+1
+x
+x −
+
+ függvényt!  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+2 pont 
+ 
+ 
+5. 
+Adja meg a 420 és az 504 legnagyobb közös osztóját! Megoldását részletezze!   
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+2 pont 
+ 
+ A legnagyobb közös osztó: 
+1 pont 
+ 
+ 
+
+
+----- FL PAGE 5 -----
+
+Matematika 
+középszint 
+2312 írásbeli vizsga, I. összetevő 
+5 / 8 
+2023. május 9. 
+Név:  ...........................................................  osztály:...... 
+ 
+6. 
+Adott az A(2; 4) és a B(3; –1) pont a koordináta-rendszerben. Írja fel az AB
+
+ vektort a 
+koordinátáival!  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ AB
+
+(      ;      ) 
+2 pont 
+ 
+ 
+7. 
+Egy mértani sorozat második tagja 6, harmadik tagja 9. Számítsa ki a sorozat első hat 
+tagjának az összegét! Megoldását részletezze!  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+3 pont 
+ 
+ S6 = 
+1 pont 
+ 
+ 
+
+
+----- FL PAGE 6 -----
+
+Matematika 
+középszint 
+2312 írásbeli vizsga, I. összetevő 
+6 / 8 
+2023. május 9. 
+Név:  ...........................................................  osztály:...... 
+ 
+8. 
+Hány olyan háromjegyű pozitív egész szám van, amelynek számjegyei különböző 
+páratlan számok?  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+2 pont 
+ 
+ 
+9. 
+Tekintsük a következő állítást: Minden út Rómába vezet. 
+Az alábbi állítások közül válassza ki azokat, amelyek tagadásai ennek az állításnak! 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+A: Nincs olyan út, ami Rómába vezet. 
+B: Van olyan út, amelyik nem Rómába vezet. 
+C: Semelyik út nem vezet Rómába. 
+D: Nem minden út vezet Rómába. 
+ 
+ 
+ 
+ 
+ 
+ 
+2 pont 
+ 
+ 
+10. Adott a 2x + 5y = 19 egyenletű f egyenes. Adja meg az f egyenes és az y = 5 egyenletű 
+egyenes metszéspontjának koordinátáit!  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ A metszéspont: (      ;      ) 
+2 pont 
+ 
+ 
+
+
+----- FL PAGE 7 -----
+
+Matematika 
+középszint 
+2312 írásbeli vizsga, I. összetevő 
+7 / 8 
+2023. május 9. 
+Név:  ...........................................................  osztály:...... 
+ 
+11. Számítsa ki az 1989 cm3 térfogatú gömb sugarának hosszát!  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+2 pont 
+ 
+ 
+12. Egy kék és egy piros szabályos dobókockával dobva mennyi a valószínűsége annak, hogy 
+a kék kockával nagyobb számot dobunk, mint a pirossal? Válaszát indokolja!  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+3 pont 
+ 
+ 
+1 pont 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+
+----- FL PAGE 12 -----
+
+Matematika 
+középszint 
+2312 írásbeli vizsga, II. összetevő 
+4 / 16 
+2023. május 9. 
+Név:  ...........................................................  osztály:...... 
+ 
+A 
+ 
+13.  Adott a valós számok halmazán értelmezett f függvény: 
+2
+(
+3)
+2,25
+x
+x +
+−
+
+. 
+  
+a) Mit rendel az f függvény az x = 1-hez?  
+ 
+b) Adja meg az f függvény zérushelyeit!  
+ 
+c) Az alábbi mondatban húzza alá a megfelelő szót (maximuma vagy minimuma), és 
+egészítse ki a mondatot a pontozott helyeken a hiányzó számokkal úgy, hogy igaz 
+állítást kapjon! 
+Az f függvénynek az x = …… helyen 
+maximuma 
+ van, melynek értéke ..…. . 
+minimuma 
+ 
+d) Adja meg az alábbi állítás logikai értékét (igaz vagy hamis)! Válaszát indokolja! 
+ 
+Az f függvény értékkészlete a valós számok halmaza. 
+a) 
+2 pont 
+ 
+b) 
+4 pont 
+ 
+c) 
+3 pont 
+ 
+d) 
+2 pont 
+ 
+Ö.: 
+11 pont 
+ 
+
+
+----- FL PAGE 14 -----
+
+Matematika 
+középszint 
+2312 írásbeli vizsga, II. összetevő 
+6 / 16 
+2023. május 9. 
+Név:  ...........................................................  osztály:...... 
+ 
+14.  Az ABCD téglalap AB oldalának hossza 12 cm, a BC oldal hossza 6 cm. A téglalapba az 
+AECF rombuszt írjuk az ábrán látható módon (E az AB oldal, F a CD oldal egy pontja).  
+ 
+ 
+ 
+a) Igazolja, hogy a rombusz oldalainak hossza 7,5 cm!  
+ 
+b) Számítsa ki a rombusz belső szögeinek nagyságát!  
+ 
+c) Hány százaléka a rombusz területe a téglalap területének?  
+ 
+ 
+ 
+  
+ 
+ 
+a) 
+5 pont 
+ 
+b) 
+4 pont 
+ 
+c) 
+4 pont 
+ 
+Ö.: 
+13 pont 
+ 
+
+
+----- FL PAGE 16 -----
+
+Matematika 
+középszint 
+2312 írásbeli vizsga, II. összetevő 
+8 / 16 
+2023. május 9. 
+Név:  ...........................................................  osztály:...... 
+ 
+15.  Az ENSZ felmérése szerint a Föld népessége 8 milliárd fő volt 2022 végén.1 A Földön a 
+népességnövekedés mértéke jelenleg körülbelül évi 1%.  
+ 
+a) Hány fő élne 2100 végén a Földön, ha addig folyamatosan évi 1% lenne a népesség-
+növekedés?  
+ 
+b) Melyik évben érné el a 12 milliárd főt a Föld népessége évi 1%-os növekedés mel-
+lett? 
+ 
+Az ENSZ becslése szerint 2100 végére 10,35 milliárd fő lesz a Föld népessége.  
+ 
+c) 2022 végétől kezdve évente hány százalékkal kellene növekednie a népességnek 
+ennek eléréséhez, ha minden évben ugyanannyi százalékkal nőne a népesség?  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+                                                 
+1 forrás: https://www.ksh.hu/interaktiv/grafikonok/vilag_nepessege.html (utolsó letöltés dátuma: 2023.01.31.) 
+a) 
+3 pont 
+ 
+b) 
+5 pont 
+ 
+c) 
+4 pont 
+ 
+Ö.: 
+12 pont 
+ 
+
+
+----- FL PAGE 18 -----
+
+Matematika 
+középszint 
+2312 írásbeli vizsga, II. összetevő 
+10 / 16 
+2023. május 9. 
+Név:  ...........................................................  osztály:...... 
+ 
+B 
+ 
+A 16-18. feladatok közül tetszése szerint választott kettőt kell megoldania.  
+A kihagyott feladat sorszámát írja be a 3. oldalon lévő üres négyzetbe! 
+ 
+16. A középszintű matematika érettségi vizsgán minden vizsgázó pontosan két feladatot vá-
+laszt a 16-17-18. feladatok közül. Az egyik 24 fős érettségiző csoportban a vizsgázók 
+75%-a választotta a 16-os, 62,5%-a pedig a 17-es feladatot. 
+ 
+a) A csoportban a vizsgázók hány százaléka választotta a 18-as feladatot?   
+ 
+A csoportban az alábbi osztályzatok születtek a matematika középszintű vizsgán. 
+ 
+Osztályzat 
+1 
+2 
+3 
+4 
+5 
+Darabszám 
+0 
+2 
+9 
+6 
+7 
+ 
+b) Számítsa ki az osztályzatok átlagát ebben a csoportban! 
+ 
+c) Adja meg az osztályzatok móduszát, mediánját és terjedelmét ebben a csoportban! 
+ 
+d) Ábrázolja kördiagramon az osztályzatok eloszlását ebben a csoportban! 
+ 
+Az érettségi elnök a javítások átnézése céljából a fenti 24 matematikadolgozat közül ki-
+választ nyolcat úgy, hogy 2-esből, 3-asból, 4-esből és 5-ösből is pontosan kettő szerepel-
+jen a kiválasztottak között. 
+ 
+e) Hányféleképpen választhat ki ilyen módon nyolc dolgozatot? 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+a) 
+4 pont 
+ 
+b) 
+2 pont 
+ 
+c) 
+3 pont 
+ 
+d) 
+4 pont 
+ 
+e) 
+4 pont 
+ 
+Ö.: 
+17 pont 
+ 
+
+
+----- FL PAGE 20 -----
+
+Matematika 
+középszint 
+2312 írásbeli vizsga, II. összetevő 
+12 / 16 
+2023. május 9. 
+Név:  ...........................................................  osztály:...... 
+ 
+A 16-18. feladatok közül tetszése szerint választott kettőt kell megoldania.  
+A kihagyott feladat sorszámát írja be a 3. oldalon lévő üres négyzetbe! 
+ 
+17. Az ABCD trapéz AB alapja 24 cm, a többi oldala 12 cm hosszú.  
+ 
+a) Igazolja, hogy a trapéz A csúcsánál lévő belső szög 60°-os! 
+ 
+b) Számítsa ki a BD átló hosszát! 
+ 
+A trapézt megforgatjuk a szimmetriatengelye körül.  
+ 
+c) Számítsa ki a keletkező forgástest térfogatát! 
+ 
+Egy trapéz alakú területre szőlőt telepítettek, az első sorba 120 szőlőtőkét, az utolsóba 
+240-et. A második sortól kezdve minden sorba ugyanannyival több szőlőtőke került, mint 
+az előzőbe. Összesen 7380 darab szőlőtőkét ültettek el.  
+ 
+d) Az első 20 sorba kizárólag olaszrizlingtőke került, és máshova ebből a fajtából nem 
+ültettek. Számítsa ki a telepített olaszrizlingtőkék számát! 
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+a) 
+3 pont 
+ 
+b) 
+3 pont 
+ 
+c) 
+4 pont 
+ 
+d) 
+7 pont 
+ 
+Ö.: 
+17 pont 
+ 
+
+
+----- FL PAGE 22 -----
+
+Matematika 
+középszint 
+2312 írásbeli vizsga, II. összetevő 
+14 / 16 
+2023. május 9. 
+Név:  ...........................................................  osztály:...... 
+ 
+A 16-18. feladatok közül tetszése szerint választott kettőt kell megoldania.  
+A kihagyott feladat sorszámát írja be a 3. oldalon lévő üres négyzetbe! 
+ 
+18. A vázlatos ábra egy szántóföld felosztását mutatja az öt tulajdo-
+nos között. Szeretnénk elkészíteni a szántóföldhöz tartozó szom-
+szédsági gráfot, amelyben két csúcs pontosan akkor van össze-
+kötve éllel, ha a két csúcs által jelölt földterület szomszédos. (Két 
+földterület szomszédos, ha van közös határolószakasza.) 
+  
+a) Rajzolja fel ehhez a szántóföldhöz a szomszédsági gráfot! 
+ 
+A négyszögöl a mai napig használt (nem hivatalos) mértékegység a telkek, szántóföldek 
+területének mérésére. 1 négyszögöl egyenlő az 1 öl oldalhosszúságú négyzet területével. 
+Tudjuk, hogy egy hektár (10 000 m2) kb. 2780 négyszögöl. 
+ 
+b) Számítsa ki, hogy egy öl hány méter! 
+ 
+Egy falu vezetése úgy dönt, hogy a falu határában egy sík területet felparcelláznak 12 egy-
+forma telekre, és ezen a területen a faluban letelepülő fiatal családoknak jelképes, 1 Ft-os 
+áron adnak el 1-1 telket. Az akcióra végül 14 család jelentkezik (köztük a Kovács és a 
+Szabó család), ezért a 14 család közül sorsolják ki a 12 nyertest.  
+  
+ 
+c) Számítsa ki annak a valószínűségét, hogy a Kovács és a Szabó család is a nyertesek 
+között lesz! 
+ 
+Az alábbi ábra vázlatosan mutatja a 12 egybevágó, téglalap alakú telek elhelyezkedését. 
+Végül a nyertesek közé bekerült két, egymással jó viszonyban lévő család, akik úgy dön-
+töttek, hogy két szomszédos telket vesznek meg, és a két telek köré úgy építenek kerítést, 
+hogy a két telket nem választják el egymástól kerítéssel. Tudjuk, hogy ha a két szomszé-
+dos telek a rövidebb oldalával csatlakozik egymáshoz, akkor 228 méter kerítésre, ha a 
+hosszabb oldallal csatlakozik egymáshoz, akkor 156 méter kerítésre lesz szükségük ösz-
+szesen. (Az ábrán vastag vonallal jelöltük a kerítést a két esetben.)  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+d) Mekkora egy telek területe? 
+ 
+ 
+A 
+B 
+C 
+D 
+E 
+

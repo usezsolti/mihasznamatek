@@ -1,0 +1,2937 @@
+
+===== PAGE 1 =====
+Matematika 
+emelt szint 
+ 
+Javítási-értékelési útmutató 2113 
+ 
+EMBERI ERŐFORRÁSOK MINISZTÉRIUMA 
+MATEMATIKA 
+ 
+EMELT SZINTŰ 
+ÍRÁSBELI VIZSGA 
+JAVÍTÁSI-ÉRTÉKELÉSI 
+ÚTMUTATÓ 
+ 
+É R E T T S É G I V I Z S G A • 2 0 2 1 . o k t ó b e r 1 9 . 
+
+===== PAGE 2 =====
+Matematika — emelt szint 
+Javítási-értékelési útmutató 
+2113 írásbeli vizsga 
+2 / 21 
+2021. október 19. 
+Fontos tudnivalók 
+ 
+ 
+Formai előírások: 
+ 
+1. Kérjük, hogy a dolgozatot a vizsgázó által használt színűtől eltérő színű tollal, olvas-
+hatóan javítsa ki. 
+2. A feladatok mellett található szürke téglalapok közül az elsőben a feladatra adható ma-
+ximális pontszám van, a javító által adott pontszám a mellette levő téglalapba 
+kerüljön. 
+3. Kifogástalan megoldás esetén kérjük, hogy a maximális pontszám feltüntetése mellett 
+kipipálással jelezze, hogy az adott gondolati egységet látta, és jónak minősítette. 
+4. Hiányos/hibás megoldás esetén kérjük, hogy a hiba jelzése mellett az egyes részpont-
+számokat is írja rá a dolgozatra. Ha a dolgozat javítását jobban követhetővé teszi, akkor 
+a vizsgázó által elvesztett részpontszámok jelzése is elfogadható. Ne maradjon olyan 
+részlet a megoldásban, amelyről a javítás után nem nyilvánvaló, hogy helyes, hibás vagy 
+fölösleges. 
+5. A javítás során alkalmazza az alábbi jelöléseket. 
+• helyes lépés: kipipálás 
+• elvi hiba: kétszeres aláhúzás 
+• számolási hiba vagy más, nem elvi hiba: egyszeres aláhúzás 
+• rossz kiinduló adattal végzett helyes lépés: szaggatott vagy áthúzott kipipálás 
+• hiányos indoklás, hiányos felsorolás vagy más hiány: hiányjel 
+• nem érthető rész: kérdőjel és/vagy hullámvonal 
+6. Az ábrán kívül ceruzával írt részeket ne értékelje. 
+ 
+Tartalmi kérések: 
+ 
+1. Egyes feladatoknál több megoldás pontozását is megadtuk. Amennyiben azoktól eltérő 
+megoldás születik, keresse meg ezen megoldásoknak az útmutató egyes részleteivel 
+egyenértékű részeit, és ennek alapján pontozzon. 
+2. A pontozási útmutató pontjai tovább bonthatók, hacsak az útmutató másképp nem 
+rendelkezik. Az adható pontszámok azonban csak egész pontok lehetnek. 
+3. Ha a megoldásban számolási hiba, pontatlanság van, akkor csak arra a részre nem jár 
+pont, ahol a tanuló a hibát elkövette. Ha a hibás részeredménnyel helyes gondolatmenet 
+alapján tovább dolgozik, és a megoldandó probléma lényegében nem változik meg, ak-
+kor a következő részpontszámokat meg kell adni. 
+4. Elvi hibát követően egy gondolati egységen belül (ezeket az útmutatóban kettős vonal 
+jelzi) a formálisan helyes matematikai lépésekre sem jár pont. Ha azonban a tanuló  
+az elvi hibával kapott rossz eredménnyel – mint kiinduló adattal – helyesen számol to-
+vább a következő gondolati egységekben vagy részkérdésekben, akkor ezekre a részekre 
+kapja meg a maximális pontot, ha a megoldandó probléma lényegében nem változott 
+meg. 
+5. Ha a megoldási útmutatóban zárójelben szerepel egy megjegyzés vagy mértékegység, 
+akkor ennek hiánya esetén is teljes értékű a megoldás. 
+
+===== PAGE 3 =====
+Matematika — emelt szint 
+Javítási-értékelési útmutató 
+2113 írásbeli vizsga 
+3 / 21 
+2021. október 19. 
+ 
+6. Egy feladatra adott többféle megoldási próbálkozás közül a vizsgázó által megjelölt 
+változat értékelhető. A javítás során egyértelműen jelezze, hogy melyik változatot ér-
+tékelte, és melyiket nem. 
+7. A megoldásokért jutalompont (az adott feladatra vagy feladatrészre előírt maximális 
+pontszámot meghaladó pont) nem adható. 
+8. Egy feladatra vagy részfeladatra adott összpontszám nem lehet negatív. 
+9. Az olyan részszámításokért, részlépésekért nem jár pontlevonás, melyek hibásak, de 
+amelyeket a feladat megoldásához a vizsgázó ténylegesen nem használ fel. 
+10. A gondolatmenet kifejtése során a zsebszámológép használata – további matemati-
+kai indoklás nélkül – a következő műveletek elvégzésére fogadható el: összeadás, 
+kivonás, szorzás, osztás, hatványozás, gyökvonás, n!, 
+
+
+
+
+
+
+k
+n
+ kiszámítása, a függvénytáb-
+lázatban fellelhető táblázatok helyettesítése (sin, cos, tg, log és ezek inverzei), a π és az 
+e szám közelítő értékének megadása, nullára rendezett másodfokú egyenlet gyökeinek 
+meghatározása. További matematikai indoklás nélkül használhatók a számológépek az 
+átlag és a szórás kiszámítására abban az esetben, ha a feladat szövege kifejezetten nem 
+követeli meg az ezzel kapcsolatos részletszámítások bemutatását is. Egyéb esetekben 
+a géppel elvégzett számítások indoklás nélküli lépéseknek számítanak, így azokért 
+nem jár pont. 
+11. Az ábrák bizonyító erejű felhasználása (például adatok leolvasása méréssel) nem elfo-
+gadható. 
+12. Valószínűségek megadásánál (ha a feladat szövege másképp nem rendelkezik) a száza-
+lékban megadott helyes válasz is elfogadható. 
+13. Ha egy feladat szövege nem ír elő kerekítési kötelezettséget, akkor az útmutatóban meg-
+adottól eltérő, észszerű és helyes kerekítésekkel kapott rész- és végeredmény is elfo-
+gadható. 
+14. A vizsgafeladatsor II. részében kitűzött 5 feladat közül csak 4 feladat megoldása 
+értékelhető. A vizsgázó az erre a célra szolgáló négyzetben – feltehetőleg – megjelölte 
+annak a feladatnak a sorszámát, amelynek értékelése nem fog beszámítani az összpont-
+számába. Ennek megfelelően a megjelölt feladatra esetlegesen adott megoldást nem is 
+kell javítani. Ha a vizsgázó nem jelölte meg, hogy melyik feladat értékelését nem kéri, 
+és a választás ténye a dolgozatból sem derül ki egyértelműen, akkor a nem értékelendő 
+feladat automatikusan a kitűzött sorrend szerinti utolsó feladat lesz. 
+ 
+ 
+
+===== PAGE 4 =====
+Matematika — emelt szint 
+Javítási-értékelési útmutató 
+2113 írásbeli vizsga 
+4 / 21 
+2021. október 19. 
+ 
+I. 
+ 
+1. a)  
+2
+(2 )
+6 2
+9
+2 2
+9
+x
+x
+x
+−⋅
++
+=
+⋅
++
+ 
+2 pont  
+Ez az egyenlet 2x -ben másodfokú.  
+Nullára rendezve: 
+2
+(2 )
+8 2
+0
+x
+x
+−⋅
+=
+. 
+1 pont  
+2
+0
+x =
+ vagy 2
+8
+x =
+ 
+1 pont  
+(2x mindig pozitív, ezért) az első eset nem lehetséges, 
+1 pont  
+a másodikból (az exponenciális függvény kölcsönös 
+egyértelműsége miatt) x = 3. 
+1 pont  
+Ellenőrzés behelyettesítéssel vagy ekvivalenciára hi-
+vatkozással. 
+1 pont  
+Összesen: 
+7 pont  
+ 
+1. b)  
+Az állítás igaz. 
+1 pont  
+2
+9
+14
+0
+x
+x
+−
++
+=
+ valós gyökei 2 és 7. 
+1 pont 
+ 
+Az 
+2
+9
+14
+x
+x
+x
+−
++
+
+ másodfokú függvény grafikonja 
+„felfelé nyitott” parabola, tehát ha x > 7, akkor  
+( )
+f x > 0 teljesül. 
+2 pont 
+Összesen: 
+4 pont  
+ 
+1. c)  
+Megfordítás: Ha ( )
+f x > 0, akkor x > 7. 
+1 pont  
+A megfordítás hamis. 
+1 pont  
+Egy ellenpélda. 
+(Például x = 0 esetén f (x) = 14 > 0, de x ≤ 7.) 
+1 pont 
+(A b) rész megoldása 
+alapján:) ha x < 2, akkor 
+f (x) > 0. 
+Összesen: 
+3 pont  
+ 
+2. a) első megoldás 
+A 200 km-es városi úton (2 ⋅ 10 =) 20 litert fogyasz-
+tott az autó,  
+1 pont  
+a benzintartályban (45 – 20 =) 25 liter benzin maradt. 
+1 pont  
+A hátralévő távolságot a 10 literes átlagfogyasztással 
+számítja ki a fedélzeti számítógép: 25
+10 ⋅ 100 = 250 km. 
+1 pont  
+Összesen: 
+3 pont  
+ 
+ 
+ 
+
+===== PAGE 5 =====
+Matematika — emelt szint 
+Javítási-értékelési útmutató 
+2113 írásbeli vizsga 
+5 / 21 
+2021. október 19. 
+ 
+2. a) második megoldás 
+A számítógép a városi átlagfogyasztás alapján a 45 
+liter benzint 45 100
+10 ⋅
+ = 450 km-re elégnek számítja. 
+2 pont  
+Már megtettek 200 km-t, így a hátralévő távolság 
+(450 – 200 =) 250 km. 
+1 pont  
+Összesen: 
+3 pont  
+ 
+2. b) első megoldás 
+Az első 300 km után a számítógép szerint 45 liter 
+benzinnel 300 + 200 = 500 km-t lehet megtenni. 
+1 pont  
+Ezért a gép szerinti átlagfogyasztás a 300 km során 
+45 100
+500 ⋅
+= 9 liter/100 km. 
+2 pont  
+A 300 km-en elfogyasztott benzin (3 ⋅ 9 =) 27 liter  
+(és a városban megtett 200 km-en 20 litert fogyasz-
+tott az autó),  
+1 pont  
+a kirándulás során (27 – 20 =) 7 liter benzin fogyott. 
+1 pont  
+Ezen a szakaszon tehát 7 liter/100 km volt az átlagfo-
+gyasztás. 
+1 pont  
+Összesen: 
+6 pont  
+ 
+2. b) második megoldás  
+Ha a 100 km-es kiránduláson x liter volt a benzinfo-
+gyasztás, akkor az első 300 km-es szakaszon 
+20 + x liter benzin fogyott, így az átlagfogyasztás 
+20
+3
+x
++
+ liter/100 km. 
+2 pont*  
+A számítógép szerint ezzel az átlagfogyasztással  
+500 km-re elegendő a 45 liter benzin: 
+20
+45
+5
+3
+x
++
+=
+⋅
+. 
+2 pont* 
+Ezzel az átlagfogyasztás-
+sal még további 200 km-
+re elegendő a benzin:
+20
+20
+2
+45
+3
+x
+x
++
++
++
+⋅
+=
+. 
+Ebből x = 7, tehát a 100 km-es kiránduláson 
+7 liter/100 km volt az átlagfogyasztás. 
+2 pont  
+Összesen: 
+6 pont  
+ 
+Megjegyzés: A *-gal jelzett pontokat az alábbi gondolatmenetért is megkaphatja a vizsgázó. 
+Ha a 100 km-es kiránduláson x liter volt a benzinfo-
+gyasztás, akkor az első 300 km-en 20 + x liter benzint 
+fogyasztott az autó, így 25 – x liter maradt az üzem-
+anyagtartályban. 
+2 pont   
+A számítógép szerint az első 300 km-en mért átlagfo-
+gyasztás egyenlő a hátralévő 200 km-en tervezett át-
+lagfogyasztással: 20
+25
+3
+2
+x
+x
++
+−
+=
+ (liter/100 km). 
+2 pont  
+
+===== PAGE 6 =====
+Matematika — emelt szint 
+Javítási-értékelési útmutató 
+2113 írásbeli vizsga 
+6 / 21 
+2021. október 19. 
+ 
+3. a) 
+A (13 ⋅ 8 =) 104 a legkisebb, a (124 ⋅ 8 =) 992 a legna-
+gyobb 8-cal osztható háromjegyű szám,  
+1 pont  
+így összesen 992 104
+1
+8
+−
++ = 112 db ilyen szám van. 
+1 pont 124 – 12 = 112 
+(900 darab háromjegyű szám van, ezért) a 9-cel oszt-
+ható háromjegyű számok száma 100. 
+1 pont  
+A 8-cal és 9-cel osztható számok 72-vel is oszthatók, 
+1 pont  
+ezek száma 12 (legkisebb a 2 ⋅ 72 = 144, legnagyobb 
+a 13 ⋅ 72 = 936). 
+1 pont 13 – 1 = 12 
+(A 72-vel oszthatókat a 8-cal és a 9-cel oszthatók 
+megszámolásánál is megszámoltuk, így)  
+a keresett számok száma 112 + 100 – 12 = 200. 
+2 pont  
+Összesen: 
+7 pont  
+ 
+3. b) első megoldás 
+A 8-as számrendszerben a legkisebb háromjegyű 
+szám 1008 = 64, 
+1 pont  
+a legnagyobb 7778 = (10008 – 1 =) 511, 
+1 pont  
+összesen tehát 511 – 63 = 448 háromjegyű szám van 
+(összes eset). 
+1 pont  
+(A 8-as számrendszerben 3 jegyű számokat tekintve) 
+a 9-es számrendszerben a legkisebb háromjegyű 
+szám 1009 = 81, 
+1 pont  
+a legnagyobb (mivel a 8-as számrendszerben három-
+jegyű szám nem lehet négyjegyű a 9-es számrend-
+szerben) az 511. 
+1 pont  
+A kedvező esetek száma tehát 511 – 80 = 431. 
+1 pont  
+A keresett valószínűség 431
+448 (≈ 0,962). 
+1 pont  
+Összesen: 
+7 pont  
+ 
+3. b) második megoldás 
+Egy 8-as számrendszerben háromjegyű szám első 
+számjegye 7-féle, a másik két számjegye 8-8-féle 
+lehet. 
+2 pont  
+Összesen tehát 7 ⋅ 8 ⋅ 8 = 448 háromjegyű szám van a 
+8-as számrendszerben. 
+1 pont  
+Ezek közül a 9-es számrendszerben nem háromje-
+gyűek a (92 =) 81-nél kisebb számok (a többi igen, 
+mert a 8-as számrendszerben háromjegyű szám nem 
+lehet négyjegyű a 9-es számrendszerben). 
+1 pont  
+ 
+ 
+ 
+
+===== PAGE 7 =====
+Matematika — emelt szint 
+Javítási-értékelési útmutató 
+2113 írásbeli vizsga 
+7 / 21 
+2021. október 19. 
+ 
+Mivel a 8-as számrendszerben a legkisebb háromje-
+gyű szám a 64, ezért a kedvezőtlen esetek száma  
+80 – 63 = 17. 
+1 pont  
+A keresett valószínűség 
+17
+1
+448
+−
+= 
+1 pont  
+431
+448
+=
+ (≈ 0,962). 
+1 pont  
+Összesen: 
+7 pont  
+ 
+4. a)  
+Az ötszögnek 5 oldala és 5 átlója van.  
+A 10 szakasz mindegyike kétféle lehet (vastagított 
+vagy nem vastagított). 
+1 pont  
+Az összes különböző lehetőség száma ezért  
+210 = 1024. 
+1 pont 
+10
+0
+10
+k
+k
+=
+
+
+
+
+
+
+
+= 210 
+(1024 > 400, így) mindenkinek jut különböző kártya. 
+1 pont  
+Összesen: 
+3 pont  
+ 
+4. b) első megoldás 
+ 
+ 
+ 
+Az ábra jelöléseit használjuk. 
+1 pont  
+Az ABF derékszögű háromszögben  
+50
+cos
+130
+β =
+ (≈ 0,3846), 
+1 pont AF =
+2
+2
+130
+50
+120
+−
+=
+ 
+ahonnan β ≈ 67,4°. 
+1 pont 
+120
+12
+sin
+130
+13
+β =
+=
+ 
+50
+5
+cos
+130
+13
+β =
+=
+ 
+A BCD háromszög területe 2000 m2, 
+ezért 
+100 sin 67,4
+2000
+2
+BD ⋅
+⋅
+° =
+. 
+1 pont 
+12
+100 13
+2000
+2
+BD ⋅
+⋅
+=
+ 
+Ebből BD ≈ 43,3 (méter). 
+1 pont 
+130
+3
+BD =
+ 
+A BCD háromszögben felírva a koszinusztételt: 
+2
+2
+2
+43,3
+100
+2 43,3 100 cos67,4
+CD =
++
+−⋅
+⋅
+⋅
+° . 
+1 pont  
+Ebből a kerítés hossza: CD ≈ 92,4 méter. 
+1 pont  
+Összesen: 
+7 pont  
+ 
+ 
+
+===== PAGE 8 =====
+Matematika — emelt szint 
+Javítási-értékelési útmutató 
+2113 írásbeli vizsga 
+8 / 21 
+2021. október 19. 
+ 
+4. b) második megoldás 
+ 
+ 
+ 
+Az ábra jelöléseit használjuk. 
+1 pont  
+Az ABC háromszög AF magassága Pitagorasz-tétel-
+lel: 
+2
+2
+130
+50
+120
+−
+=
+(méter). 
+1 pont  
+Az ABC egyenlő szárú háromszög területe: 
+100 120
+6000
+2
+⋅
+=
+(m2). 
+1 pont  
+Mivel a BCD háromszög területe 2000 m2, ezért az 
+ABC háromszöggel közös BC oldalához tartozó  
+magassága harmada az ABC háromszögének:  
+DE (= 120 : 3) = 40 (méter). 
+1 pont 
+A BCD háromszög BC ol-
+dalához tartozó magas-
+sága: 
+2 2000
+100
+DE
+⋅
+=
+ = 40.  
+BDEΔ ~ BAFΔ, mert mindkettő derékszögű, 
+és közös az egyik hegyesszögük.  
+1 pont  
+A háromszögek hasonlóságának aránya  
+DE : AF = 1: 3, ezért 
+50
+3
+BE =
+, így 
+250
+3
+EC =
+. 
+1 pont  
+A DEC derékszögű háromszögből Pitagorasz-tétellel 
+számítható a CD kerítés hossza:  
+2
+2
+250
+40
+3
+CD
+
+
+=
++ 
+
+
+
+≈ 92,4 méter. 
+1 pont  
+Összesen: 
+ 7 pont  
+ 
+4. c)  
+Ha a magyar résztvevők életkorának átlaga x év,  
+akkor 45,7 = 200
+70 44
+130 48
+200
+70
+130
+x +
+⋅
++
+⋅
++
++
+. 
+2 pont  
+18 280 = 200x + 9320 
+200x = 8960 
+1 pont  
+x = 44,8 (tehát a magyar résztvevők életkorának át-
+laga  44,8 év). 
+1 pont  
+Összesen: 
+4 pont  
+ 
+ 
+ 
+
+===== PAGE 9 =====
+Matematika — emelt szint 
+Javítási-értékelési útmutató 
+2113 írásbeli vizsga 
+9 / 21 
+2021. október 19. 
+ 
+II. 
+ 
+5. a) 
+A sorozat első 5 tagja 1, 3, 6, 10, 15; 
+1 pont  
+az átlaguk 7. 
+1 pont  
+A szórás: 
+2
+2
+2
+2
+2
+(1 7)
+(3 7)
+(6
+7)
+(10
+7)
+(15 7)
+5
+−
++
+−
++
+−
++
+−
++
+−
+=  
+1 pont 
+Ez a pont akkor is jár, ha 
+a vizsgázó számológéppel 
+számolva helyesen adja 
+meg a szórást. 
+(=
+25,2 ) ≈ 5,02. 
+1 pont  
+Összesen: 
+4 pont  
+ 
+5. b) 
+1
+2
+(
+2)(
+1)
+2
+2
+(
+1)
+1
+2
+2
+n
+n
+n
+n
+n
+n
+a
+b
+n
+n
+n
+a
++
++
+
+
++
++
+
+
+
+
+=
+=
+=
+=
++
++
+
+
+
+
+
+
+ 
+1 pont  
+= 
+2
+n
+n
++
+ = 
+1 pont  
+= 
+2
+1
+n
++
+ 
+1 pont 
+2
+n
+n
+n
+n
+n
++
+=
+ 
+(Az n 2
+n
+ sorozat határértéke 0, ezért) 
+a (bn) sorozat határértéke 1. 
+1 pont 
+A (bn) sorozat határértéke 
+1
+0
+1
+1
++
+=
+. 
+Összesen: 
+4 pont  
+ 
+5. c) első megoldás 
+A számtani sorozat összegképlete alapján 
+az első n tag összege  
+100 = (
+)
+1
+2
+(
+1) 0,25
+2
+c
+n
+n
++
+−
+⋅
+⋅
+,  
+az első 2n tag összege  
+300 = (
+)
+1
+2
+(2
+1) 0,25
+2
+2
+c
+n
+n
++
+−
+⋅
+⋅
+. 
+2 pont  
+Az első egyenletből 
+2
+1
+2
+0,25
+0,25
+200
+c n
+n
+n
++
+−
+=
+,  
+a második egyenletből 
+2
+1
+2
+0,5
+0,25
+300
+c n
+n
+n
++
+−
+=
+. 
+2 pont  
+Az első egyenletet kivonjuk a másodikból: 
+0,25n2 = 100, azaz n2 = 400. 
+2 pont  
+Az egyenlet megoldása n = 20 (n = –20 nem lehet). 
+1 pont  
+Ellenőrzés (c1 = 2,625, S20 = 100, S40 = 300 valóban). 
+1 pont  
+Összesen: 
+8 pont  
+
+===== PAGE 10 =====
+Matematika — emelt szint 
+Javítási-értékelési útmutató 
+2113 írásbeli vizsga 
+10 / 21 
+2021. október 19. 
+ 
+5. c) második megoldás 
+A számtani sorozat összegképlete alapján 
+az első n tag összege  
+(
+)
+1
+2
+(
+1) 0,25
+100
+2
+c
+n
+n
++
+−
+⋅
+⋅
+=
+,  
+az első 2n tag összege 
+(
+)
+1
+2
+(2
+1) 0,25
+2
+300
+2
+c
+n
+n
++
+−
+⋅
+⋅
+=
+. 
+2 pont  
+(Kifejezzük 2c1-et:)  
+Az első egyenletből 
+1
+200
+2
+(
+1) 0,25
+c
+n
+n
+=
+−
+−
+⋅
+, 
+a második egyenletből 
+1
+300
+2
+(2
+1) 0,25
+c
+n
+n
+=
+−
+−
+⋅
+,  
+2 pont  
+így 200
+300
+(
+1) 0,25
+(2
+1) 0,25
+n
+n
+n
+n
+−
+−
+⋅
+=
+−
+−
+⋅
+. 
+1 pont  
+Szorzunk 4n-nel, és rendezünk: 
+2
+400
+n =
+. 
+1 pont  
+Az egyenlet megoldása n = 20 (n = –20 nem lehet). 
+1 pont  
+Ellenőrzés (c1 = 2,625, S20 = 100, S40 = 300 valóban). 
+1 pont  
+Összesen: 
+8 pont  
+ 
+5. c) harmadik megoldás 
+Jelölje d a sorozat differenciáját! 
+1
+1
+nc
+c
+nd
++ =
++
+, 
+2
+2
+nc
+c
+nd
++ =
++
+, és így tovább:  
+a sorozat első n tagja összegénél n ⋅ nd = n2d-vel  
+nagyobb a sorozat második n tagjának az összege. 
+2 pont  
+A második n tag összege 300 – 100 = 200, 
+1 pont  
+ez pedig 200 – 100 = 100-zal nagyobb az első n tag 
+összegénél. 
+1 pont  
+Innen 100 = n2d. 
+1 pont  
+Mivel d = 0,25, így n2 = 400. 
+1 pont  
+Az egyenlet megoldása n = 20 (n = –20 nem lehet). 
+1 pont  
+Ellenőrzés (c1 = 2,625, S20 = 100, S40 = 300 valóban). 
+1 pont  
+Összesen: 
+8 pont  
+ 
+ 
+ 
+
+===== PAGE 11 =====
+Matematika — emelt szint 
+Javítási-értékelési útmutató 
+2113 írásbeli vizsga 
+11 / 21 
+2021. október 19. 
+ 
+6. a) első megoldás 
+Legyen a háromszög szára (cm-ben mérve) b. 
+Az egyiptomi számítás szerint a terület közelítőleg
+18
+9
+2
+b
+b
+⋅
+=
+. 
+1 pont 
+ 
+ 
+ 
+ 
+ 
+ 
+A háromszög alapjához tartozó magassága (Pitago-
+rasz-tétellel) 
+2
+2
+9
+m
+b
+=
+−
+. 
+1 pont 
+A háromszög területe valójában 
+2
+18
+9
+81
+2
+m
+b
+⋅
+=
+⋅
+−
+. 
+1 pont  
+A valódi terület (m < b miatt) kisebb, mint a közelítő 
+érték, 
+1 pont 
+Ez a pont akkor is jár, ha 
+ez a gondolat csak a meg-
+oldásból derül ki. 
+ezért, ha a számításban elkövetett hiba kisebb,  
+mint 25%, akkor 
+2
+9
+1,25
+9
+81
+b
+b
+<
+−
+⋅
+.  
+1 pont  
+Rendezve: 
+2
+1,25
+81
+b
+b
+<
+⋅
+−
+. 
+1 pont  
+(Mindkét oldal pozitív, a négyzetre emelés ekvivalens 
+átalakítás:) 
+2
+2
+1,5625 (
+81)
+b
+b
+<
+⋅
+−
+, 
+ahonnan 
+2
+1,5625 81
+225
+0,5625
+b
+⋅
+>
+=
+, 
+2 pont  
+innen b > 15. 
+A háromszög szára tehát nagyobb, mint 15 cm. 
+(Ilyen háromszög mindig létezik.) 
+1 pont  
+Összesen: 
+9 pont  
+ 
+6. a) második megoldás  
+Legyen a háromszög alapjához tartozó magassága 
+(cm-ben mérve) m. 
+A háromszög területe valójában 18
+9
+2
+m
+m
+⋅
+=
+. 
+1 pont 
+ 
+ 
+ 
+ 
+ 
+ 
+A háromszög szára (Pitagorasz-tétellel) 
+2
+2
+9
+b
+m
+=
++
+. 
+1 pont 
+Az egyiptomi számítás szerint a terület közelítőleg
+2
+18
+9
+81
+2
+b
+m
+⋅
+=
+⋅
++
+. 
+1 pont  
+A valódi terület (m < b miatt) kisebb, mint a közelítő 
+érték, 
+1 pont 
+Ez a pont akkor is jár, ha 
+ez a gondolat csak a meg-
+oldásból derül ki. 
+ezért ha a számításban elkövetett hiba kisebb,  
+mint 25%, akkor 
+2
+9
+81
+1,25
+9
+m
+m
+⋅
++
+<
+. 
+1 pont  
+ 
+ 
+ 
+
+===== PAGE 12 =====
+Matematika — emelt szint 
+Javítási-értékelési útmutató 
+2113 írásbeli vizsga 
+12 / 21 
+2021. október 19. 
+ 
+Rendezve: 
+2
+81
+1,25
+m
+m
++
+<
+. 
+1 pont  
+(Mindkét oldal pozitív, a négyzetre emelés ekviva-
+lens átalakítás:) 
+2
+2
+81 1,5625
+m
+m
++
+<
+, 
+ahonnan 
+2
+81
+144
+0,5625
+m >
+=
+, tehát m > 12, 
+2 pont  
+és így 
+2
+2
+12
+9
+15
+b >
++
+=
+. 
+A háromszög szára tehát nagyobb, mint 15 cm. 
+(Ilyen háromszög mindig létezik.) 
+1 pont  
+Összesen: 
+9 pont  
+ 
+Megjegyzés: A grafikonon látható, hogy mely esetekben 
+„működik jól” az ókori egyiptomiak közelítése  
+(a = alap hossza, b = szár hossza).  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+6. b) 
+1 · 2 · 3 · 4 · 5 · 6 = 6! = 24
+ · 32
+ · 5 (= 5 · 122) 
+1 pont  
+6! · k pontosan akkor (pozitív) négyzetszám, ha a 
+prímtényezős felbontásában minden prímszám kite-
+vője páros szám, 
+1 pont 
+Ez a pont akkor is jár, ha 
+ez a gondolat csak a meg-
+oldásból derül ki. 
+ezért k csak 5m2 alakú lehet (k, m ∈ N+). 
+(Ekkor 6! · k  = 5 · 122
+ · 5 · m2 = (60m)2.)  
+2 pont  
+Megoldandó az 5m2 < 1000 egyenlet. 
+1 pont  
+200
+m <
+≈ 14,1, 
+1 pont  
+tehát 14 olyan 1000-nél kisebb pozitív egész szám 
+van, amelyik a feltételeknek megfelel. 
+1 pont  
+Összesen: 
+7 pont  
+Megjegyzés: A feltételnek megfelelő számok a négyzetszámok ötszörösei közül az 1000-nél ki-
+sebbek, tehát 5 (= 5 ⋅ 12), 20, 45, 80, 125, 180, 245, 320, 405, 500, 605, 720, 845, 980 (= 5 ⋅ 142). 
+ 
+ 
+
+===== PAGE 13 =====
+Matematika — emelt szint 
+Javítási-értékelési útmutató 
+2113 írásbeli vizsga 
+13 / 21 
+2021. október 19. 
+ 
+7. a) 
+Az egyenes 4 abszcisszájú pontja (4; 3). 
+1 pont 
+ 
+Az R függőleges távolsága 3 – 2 = 1,  
+1 pont 
+az S függőleges távolsága 5 – 3 = 2. 
+1 pont 
+Összesen: 
+3 pont  
+ 
+7. b) 
+Az A pontnak az y = mx egyenestől mért függőleges 
+távolsága az (1; 3) és az (1; m) pontok távolsága. 
+Ugyanígy a B pont függőleges távolsága a (3; 5) és a 
+(3; 3m), a C ponté pedig a (4; 4) és a (4; 4m) pontok 
+távolsága. 
+1 pont 
+Ez a pont akkor is jár, ha 
+ez a gondolat csak a meg-
+oldásból derül ki. 
+Tehát az alábbi összeg minimumát keressük: 
+2
+2
+2
+(
+3)
+(3
+5)
+(4
+4)
+m
+m
+m
+−
++
+−
++
+−
+= 
+2 pont  
+= 
+2
+26
+68
+50
+m
+m
+−
++
+. 
+1 pont  
+Az 
+2
+( )
+f x
+ax
+bx
+c
+=
++
++
+ másodfokú f függvénynek mi-
+nimuma van, ha a > 0, és ezt a minimumot 
+2
+b
+x
+a
+= −
+-
+nál veszi fel. 
+1 pont* 
+A konkrét esetben:
+( )
+52
+68
+f
+m
+m
+′
+=
+−
+, ennek 
+a zérushelyénél minimális 
+lesz f értéke (mert f fő-
+együtthatója pozitív). 
+A 
+2
+26
+68
+50
+m
+m
+−
++
+ kifejezés tehát 
+68
+17
+52
+13
+m =
+=
+-nál 
+lesz minimális. 
+(A keresett egyenes egyenlete 
+17
+13
+y
+x
+=
+.) 
+1 pont 
+52m – 68 = 0 
+68
+52
+m =
+ 
+Összesen: 
+6 pont  
+ 
+Megjegyzések: 1. A *-gal jelölt pontot az alábbi gondolatért is megkaphatja a vizsgázó. 
+2
+2
+17
+26
+68
+50
+26
+13
+m
+m
+m
+k
+
+
+−
++
+=
+−
++
+
+
+
+
+ (ahol k = 72
+13 ). 
+1 pont  
+ 
+2. A pontokra legjobban illeszkedő (origón átmenő) egyenest és az et-
+től az egyenestől mért függőleges távolságokat szemlélteti az ábra. 
+A legkisebb négyzetösszeg kb. 5,54. 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 14 =====
+Matematika — emelt szint 
+Javítási-értékelési útmutató 
+2113 írásbeli vizsga 
+14 / 21 
+2021. október 19. 
+ 
+7. c) 
+A h egyenes egyenlete y = x. 
+1 pont  
+Megkeressük g (parabola) és h közös pontjait: 
+2
+1 ( 2
+11 )
+3
+x
+x
+x
+−
++
+=
+. 
+1 pont  
+Nullára rendezve: 
+2
+0
+2
+8
+x
+x
+=
+−
+, 
+ahonnan x = 0, illetve x = 4. 
+(Két közös pont van, az origó és a C(4; 4) pont.) 
+1 pont  
+A két metszéspont között a parabola az egyenes fö-
+lött helyezkedik el, ezért a keresett területet az  
+4
+2
+0
+1 ( 2
+11 )
+3
+x
+x
+x dx
+
+
+−
++
+−
+
+
+
+
+
+ integrál értéke adja. 
+1 pont 
+ 
+4
+4
+2
+3
+2
+0
+0
+1
+2
+4
+( 2
+11 )
+3
+9
+3
+x
+x
+x dx
+x
+x
+
+
+
+
+−
++
+−
+= −
++
+=
+
+
+
+
+
+
+
+
+
+  
+2 pont  
+3
+2
+2
+4
+64
+4
+4
+9
+3
+9
+
+
+= −
+⋅
++
+⋅
+=
+
+
+
+
+  
+1 pont  
+Összesen: 
+7 pont  
+ 
+8. a)  
+Ha a sárga lapok száma 1, akkor 1 megfelelő kocka 
+van. 
+1 pont 
+ 
+Ha a sárga lapok száma 2, akkor 2 lehetőség van: 
+ezek lehetnek egymással szemközti vagy élben szom-
+szédos lapok. 
+1 pont 
+              
+ 
+Ha a sárga lapok száma 3, akkor ezek elhelyezkedé-
+sét tekintve két eset lehetséges: 
+1. eset: Ha van közöttük két szemközti sárga lap, ak-
+kor a forgásszimmetria miatt a harmadik sárga lap 
+egyértelmű, ezért ez 1 színezési lehetőség. 
+1 pont 
+ 
+2. eset: Ha nincsenek szemközti sárga lapok, akkor a 
+három sárga lapnak egy közös csúcsa van, tehát ez is 
+1 színezési lehetőség. 
+1 pont 
+ 
+Ha a sárga lapok száma 4 vagy 5, akkor a kék lapok 
+száma rendre 2, illetve 1, így ilyen színezésből is 2, 
+illetve 1 van (ugyanúgy, mint 2, illetve 1 sárga lap 
+esetén). 
+1 pont  
+Összesen 1 + 2 + 2 + 2 + 1 = 8 különböző kocka ké-
+szíthető valóban. 
+1 pont  
+Összesen: 
+6 pont  
+ 
+ 
+ 
+
+===== PAGE 15 =====
+Matematika — emelt szint 
+Javítási-értékelési útmutató 
+2113 írásbeli vizsga 
+15 / 21 
+2021. október 19. 
+ 
+8. b) első megoldás 
+Dóri egy csokoládé vásárlása esetén 1
+8 valószínűség-
+gel kapja meg a hiányzó kockát ( 7
+8 valószínűséggel 
+nem). 
+1 pont 
+Ez a pont akkor is jár, ha 
+ez a gondolat csak a meg-
+oldásból derül ki. 
+(A komplementer esemény valószínűségét számítjuk 
+ki.) Annak valószínűsége, hogy egyik ajándék sem 
+megfelelő: 
+3
+7
+8
+
+
+
+
+
+
+. 
+1 pont  
+Annak valószínűsége tehát, hogy valamelyik ajándék 
+megfelelő: 
+3
+7
+1
+8
+
+
+−
+
+
+
+, 
+1 pont  
+ami kb. 0,330. 
+1 pont  
+Összesen: 
+4 pont  
+ 
+8. b) második megoldás 
+Dóri egy csokoládé vásárlása esetén 1
+8 valószínűség-
+gel kapja meg a hiányzó kockát. Így annak valószínű-
+sége, hogy mindhárom csoki a hiányzó kockát tartal-
+mazza: 
+3
+1
+8
+
+
+
+
+
+
+≈ 0,002. 
+1 pont  
+Lehet, hogy a három csoki közül kettőben is a hi-
+ányzó kocka van, de a harmadikban nem.  
+Ennek a valószínűsége 
+2
+3
+1
+7
+2
+8
+8
+
+
+
+
+
+⋅
+⋅
+
+
+
+
+
+
+
+
+
+
+
+ ≈ 0,041. 
+1 pont  
+Lehet, hogy a három csoki közül egyben a hiányzó 
+kocka van, de a másik kettőben nem.  
+Ennek a valószínűsége 
+2
+3
+1
+7
+1
+8
+8
+
+
+
+⋅
+⋅
+
+
+
+
+
+
+
+≈ 0,287. 
+1 pont  
+A kérdezett valószínűség tehát (körülbelül): 
+0,002 + 0,041 + 0,287 = 0,330. 
+1 pont  
+Összesen: 
+4 pont  
+ 
+ 
+ 
+
+===== PAGE 16 =====
+Matematika — emelt szint 
+Javítási-értékelési útmutató 
+2113 írásbeli vizsga 
+16 / 21 
+2021. október 19. 
+ 
+8. c) első megoldás 
+Az ABG háromszögben BG = 10 2 ,  
+és (például a térbeli Pitagorasz-tétellel)  
+AG =
+2
+2
+2
+10
+10
+10
+10 3
++
++
+=
+. 
+1 pont  
+ABG= 90° (mert AB merőleges a BCGF síkra,  
+és így merőleges annak bármely egyenesére). 
+1 pont 
+2
+2
+2
+AB
+BG
+AG
++
+=
+, 
+ezért ABG= 90°. 
+(A beírt kör sugarát az 
+t
+r
+s
+=
+ képletből számítjuk ki.) 
+Az ABG háromszög területe  
+2
+AB BG
+t
+⋅
+=
+10 10 2
+50 2
+2
+⋅
+=
+=
+.  
+2 pont  
+A háromszög kerülete 10 10 2
+10 3
++
++
+,  
+innen a félkerület hossza 
+5
+5 2
+5 3
+s =
++
++
+. 
+1 pont  
+A beírt kör sugara 
+50 2
+5 5 2
+5 3
+r =
++
++
+≈ 3,41 egység. 
+1 pont  
+Összesen: 
+6 pont  
+ 
+8. c) második megoldás 
+Az ABG háromszögben BG =10 2 ,  
+és (például a térbeli Pitagorasz-tétellel)  
+AG =
+2
+2
+2
+10
+10
+10
+10 3
++
++
+=
+. 
+1 pont  
+ABG= 90° (mert AB merőleges a BCGF síkra,  
+és így merőleges annak bármely egyenesére). 
+1 pont  
+Az ABG derékszögű háromszög 
+beírt körének középpontját je-
+lölje O, sugarát r, a kör az olda-
+lakat érintse rendre a P, Q, R 
+pontokban az ábra szerint. 
+Egy körhöz adott külső pontból 
+húzott két érintőszakasz hossza 
+megegyezik, továbbá az érintési 
+pontba húzott sugár merőleges az érintőre.  
+Így PORB egy r oldalú négyzet, AR = AQ = 10 – r,  
+GP = GQ =10 2
+r
+−
+.  
+2 pont  
+Az AG átfogó a két érintőszakasz összege, tehát 
+10 3
+10
+10 2
+r
+r
+=
+−
++
+−,  
+1 pont  
+ebből a beírt kör sugara: 
+10 10 2
+10 3
+2
+r
++
+−
+=
+ 
+(
+5(1
+2
+3)
+=
++
+−
+) ≈ 3,41 egység. 
+1 pont  
+Összesen: 
+6 pont  
+ 
+ 
+ 
+
+===== PAGE 17 =====
+Matematika — emelt szint 
+Javítási-értékelési útmutató 
+2113 írásbeli vizsga 
+17 / 21 
+2021. október 19. 
+ 
+8. c) harmadik megoldás  
+Az ABG háromszögben BG = 10 2 . 
+1 pont  
+ABG= 90° (mert AB merőleges a BCGF síkra,  
+és így merőleges annak bármely egyenesére). 
+1 pont  
+ 
+Az ábra szerint az ABG derék-
+szögű háromszög beírt körének kö-
+zéppontja O, sugara r, és a kör az 
+AB befogót az R pontban érinti.  
+Legyen továbbá BAG= α.  
+ 
+tg α =10 2
+2
+10
+=
+, innen α ≈ 54,7°. 
+Mivel a beírt kör középpontja a szögfelezők metszés-
+pontja, ezért BAO= 
+2
+α és OBA= 45°. 
+2 pont  
+(Az ARO derékszögű háromszögből) 
+ctg 2
+AR
+r
+α
+=
+⋅
+, 
+másrészt RB = r miatt 
+ctg
+10
+2
+AR
+RB
+r
+r
+α
++
+=
+⋅
++
+=
+. 
+1 pont  
+A beírt kör sugara 
+10
+ctg 27,35
+1
+r =
+°+ ≈ 3,41 egység. 
+1 pont  
+Összesen: 
+6 pont  
+ 
+ 
+ 
+
+===== PAGE 18 =====
+Matematika — emelt szint 
+Javítási-értékelési útmutató 
+2113 írásbeli vizsga 
+18 / 21 
+2021. október 19. 
+ 
+9. a) 
+Az összeolvasztás után kapott gyertya V térfogata 
+2
+2
+2
+2
+(
+)
+V
+r
+h
+R
+h
+r
+R
+h
+=
+π +
+π =
++
+⋅π , 
+1 pont  
+alapkörének sugara 
+2
+2
+V
+r
+R
+h =
++
+π
+. 
+1 pont  
+Bizonyítandó, hogy 
+2
+2
+2
+r
+R
+rR
++
+≥
+. 
+1 pont  
+2 -vel osztva kapjuk, hogy 
+2
+2
+2
+r
+R
+rR
++
+≥
+, ami 
+éppen a két pozitív szám négyzetes és mértani kö-
+zepe közti egyenlőtlenség, így igaz.  
+(Az új gyertya sugara valóban legalább 
+2rR , 
+és egyenlőség csak r = R esetén áll fenn). 
+2 pont 
+Négyzetre emelés és ren-
+dezés után kapjuk, hogy
+2
+2
+2
+0
+r
+R
+rR
++
+−
+≥
+, azaz
+2
+(
+)
+0
+r
+R
+−
+≥
+, ami igaz. 
+Ekvivalens átalakításokat 
+végeztünk, az állítást te-
+hát beláttuk. 
+Összesen: 
+5 pont  
+ 
+9. b) 
+(A hosszúságokat cm-ben, a 
+területeket cm2-ben, a térfo-
+gatot cm3-ben adjuk meg.) 
+Az ábra az m magasságú hen-
+ger forgástengelyén áthaladó 
+egyik síkmetszetét mutatja. A búra sugara 15, a torta 
+alapkörének sugara r (0 < r < 15). 
+1 pont 
+Ez a pont akkor is jár, ha 
+a vizsgázó ábra nélkül 
+helyesen számol. 
+Pitagorasz-tétellel: 
+2
+2
+2
+15
+r
+m
++
+=
+, 
+ahonnan 
+2
+2
+225
+r
+m
+=
+−
+. 
+1 pont  
+Az m magasságú torta térfogata 
+2
+2
+3
+(225
+)
+225
+V
+r
+m
+m
+m
+m
+m
+=
+π
+=
+−
+π
+=
+π
+−π
+ valóban.  
+2 pont  
+Összesen: 
+4 pont  
+ 
+9. c) első megoldás 
+(A hosszúságokat cm-ben, a területeket cm2-ben, a 
+térfogatot cm3-ben adjuk meg.) A búra alatt elhelyez-
+hető legnagyobb térfogatú tortát keressük. 
+A 0 < m < 15 nyílt intervallumon értelmezett 
+3
+( )
+225
+V m
+m
+m
+=
+π
+−π
+ függvénynek ott lehet maxi-
+muma, ahol a deriváltja 0. 
+2
+( )
+(225
+3
+)
+V m
+m
+′
+= π
+−
+. 
+1 pont  
+2
+225 3
+0
+m
+−
+=
+, azaz 
+2
+75
+m =
+, 
+75
+5 3
+m =
+=
+  
+(ez eleme az értelmezési tartománynak). 
+1 pont  
+( )
+6
+V
+m
+m
+′′
+= −π
+ 
+Ez negatív, ha 0 < m < 15, 
+tehát V-nek maximuma van, ha 
+5 3
+m =
+. 
+1 pont 
+Ha 
+2
+75
+m <
+, akkor
+(
+)
+0
+V
+m
+′
+>
+, ha 
+2
+75
+m >
+, 
+akkor 
+(
+)
+0
+V
+m
+′
+<
+, ezért  
+V-nek maximuma van,  
+ha 
+2
+75
+m =
+. 
+ 
+
+===== PAGE 19 =====
+Matematika — emelt szint 
+Javítási-értékelési útmutató 
+2113 írásbeli vizsga 
+19 / 21 
+2021. október 19. 
+A maximális térfogatú forgáshenger magasságára 
+5 3
+m =
+ (≈ 8,66), 
+alapkörének sugarára 
+2
+225 75 150
+r =
+−
+=
+ teljesül, 
+1 pont  
+ezért a maximális térfogat
+2
+max
+150
+5 3
+750
+3
+V
+r
+m
+=
+π
+=
+π⋅
+=
+π⋅
+ (≈ 4081). 
+1 pont  
+A félgömb alakú búra térfogata  
+3
+2 15
+2250
+3
+⋅
+π =
+π (≈ 7069), 
+1 pont  
+az alatta elhelyezhető legnagyobb torta térfogata  
+ennek 750
+3
+3
+2250
+3
+π⋅
+=
+π
+ (≈4081
+7069 ) ≈ 0,577-szerese, 
+ami valóban kisebb 0,6-nél. Az állítás tehát igaz. 
+1 pont  
+Összesen: 
+7 pont  
+ 
+9. c) második megoldás 
+(A hosszúságokat cm-ben, a területeket cm2-ben, a 
+térfogatot cm3-ben adjuk meg.)  
+Mivel 
+2
+2
+15
+m
+r
+=
+−
+, ezért a henger térfogata  
+r függvényében: 
+2
+2
+2
+( )
+225
+V r
+r
+m
+r
+r
+=
+π
+=
+π⋅
+−
+  
+(0 < r < 15). 
+1 pont  
+A félgömb alakú búra térfogata  
+3
+2 15
+2250
+3
+⋅
+π =
+π, 
+1 pont  
+így be kell látni, hogy 
+2
+2
+225
+0,6
+2250
+r
+r
+π⋅
+−
+<
+π
+. 
+1 pont   
+Rendezés után 
+2
+2
+225
+1350
+r
+r
+⋅
+−
+<
+. 
+1 pont  
+Mivel mindkét oldal pozitív, négyzetre emelhetünk, 
+majd osztunk 4-gyel: 
+2
+2
+2
+(225
+)
+455 625
+2
+2
+r
+r
+r
+⋅
+⋅
+−
+<
+. 
+1 pont*  
+A bal oldal három pozitív tényezőjére alkalmazzuk a 
+mértani és számtani közép közti egyenlőtlenséget: 
+3
+2
+2
+2
+2
+2
+2
+3
+(225
+)
+2
+2
+(225
+)
+75
+2
+2
+3
+r
+r
+r
+r
+r
+r
+
+
++
++
+−
+
+
+⋅
+⋅
+−
+≤
+=
+
+
+
+
+
+
+
+
+ 
+1 pont* 
+Egyenlőség csak 
+2
+2
+225
+2
+r
+r
+=
+−
+, tehát
+150
+r =
+ esetén van (ez 
+a maximális térfogatú 
+torta sugara). 
+Mivel 753 = 421 875 < 455 625, és lépéseink ekviva-
+lensek voltak, az állítást beláttuk. 
+1 pont*  
+Összesen: 
+7 pont  
+ 
+ 
+ 
+
+===== PAGE 20 =====
+Matematika — emelt szint 
+Javítási-értékelési útmutató 
+2113 írásbeli vizsga 
+20 / 21 
+2021. október 19. 
+ 
+Megjegyzés: A *-gal jelölt pontokat az alábbi gondolatmenetért is megkaphatja a vizsgázó: 
+2-vel osztva mindkét oldalt 
+2
+225
+675
+2
+2
+r
+r
+r
+⋅
+⋅
+−
+<
+. 
+1 pont  
+A bal oldal három pozitív tényezőjére alkalmazzuk a 
+mértani és négyzetes közép közti egyenlőtlenséget: 
+3
+2
+2
+2
+2
+3
+2
+2
+225
+2
+2
+225
+75
+3
+2
+2
+r
+r
+r
+r
+r
+r
+
+
++
++
+−
+
+
+⋅
+⋅
+−
+≤
+=
+
+
+
+
+
+
+
+
+. 
+1 pont 
+Egyenlőség csak 
+2
+225
+2
+r
+r
+=
+−
+, tehát
+150
+r =
+ esetén van (ez 
+a maximális térfogatú 
+torta sugara). 
+Mivel 
+3
+2
+75 ≈ 649,52  < 675, és lépéseink ekvivalen-
+sek voltak, az állítást beláttuk. 
+1 pont  
+ 
+9. c) harmadik megoldás 
+(A hosszúságokat cm-ben, a területeket cm2-ben, a 
+térfogatot cm3-ben adjuk meg.)  
+Mivel 
+2
+2
+15
+m
+r
+=
+−
+, ezért a henger térfogata  
+r függvényében: 
+2
+2
+2
+( )
+225
+V r
+r
+m
+r
+r
+=
+π
+=
+π⋅
+−
+  
+(0 < r < 15). 
+1 pont  
+A 0 < r < 15 nyílt intervallumon értelmezett 
+2
+2
+( )
+225
+V r
+r
+r
+=
+π⋅
+−
+ függvénynek ott lehet maxi-
+muma, ahol a deriváltja 0. 
+2
+2
+2
+( )
+2
+225
+( 2 )
+2 225
+r
+V r
+r
+r
+r
+r
+π
+′
+=
+π⋅
+−
++
+⋅−
+−
+ 
+1 pont 
+2
+2
+(450
+3
+)
+( )
+225
+r
+r
+V r
+r
+π
+−
+′
+=
+−
+ 
+Ez 0, ha 
+2
+2
+2
+2
+225
+2
+2 225
+r
+r
+r
+r
+r
+π
+π⋅
+−
+=
+⋅
+−
+, azaz
+2
+2
+2(225
+)
+r
+r
+−
+=
+, ahonnan
+150
+r =
+ (mert r ≠ 0). 
+1 pont 
+2
+2
+(450
+3
+)
+0
+225
+r
+r
+r
+π
+−
+=
+−
+ 
+r = 0 vagy r = 150  
+2
+2
+(450
+3
+)
+( )
+225
+r
+r
+V r
+r
+π
+−
+′
+=
+−
+, ez pozitívból negatívba vált 
+az 
+150
+r =
+ (r2 = 150) helyen. 
+V-nek tehát valóban maximuma van itt. 
+1 pont  
+Ekkor 
+225 150
+75
+5 3
+m =
+−
+=
+=
+ (≈ 8,66), 
+és így a maximális térfogat 
+2
+max
+150
+5 3
+750
+3
+V
+r
+m
+=
+π
+=
+π⋅
+=
+π⋅
+ (≈ 4081). 
+1 pont  
+A félgömb alakú búra térfogata  
+3
+2 15
+2250
+3
+⋅
+π =
+π (≈ 7069), 
+1 pont  
+ 
+ 
+ 
+
+===== PAGE 21 =====
+Matematika — emelt szint 
+Javítási-értékelési útmutató 
+2113 írásbeli vizsga 
+21 / 21 
+2021. október 19. 
+ 
+az alatta elhelyezhető legnagyobb torta térfogata  
+ennek 750
+3
+3
+2250
+3
+π⋅
+=
+π
+(≈4081
+7069 ) ≈ 0,577-szerese, ami 
+valóban kisebb 0,6-nél. Az állítás tehát igaz. 
+1 pont  
+Összesen: 
+7 pont  
+ 
+9. c) negyedik megoldás 
+(A hosszúságokat cm-ben, a 
+területeket cm2-ben, a térfo-
+gatot cm3-ben adjuk meg.)  
+Az ábra jelöléseit használva  
+m = 15 sin α és r = 15 cos α. 
+Az m magasságú torta térfogata: 
+3
+( )
+225
+V
+m
+m
+α =
+π
+−π
+= 3375π(sin α – sin3α)  
+(0 < α < 
+2
+π ). 
+A búra alatt elhelyezhető legnagyobb térfogatú tortát 
+keressük. 
+1 pont 
+2
+( )
+V
+r
+m
+α =
+π
+= 
+2
+225 cos
+15sin
+=
+π
+α⋅
+α 
+(0 < α < 
+2
+π ). 
+A V függvénynek ott lehet maximuma,  
+ahol a deriváltja 0.  
+2
+( )
+3375 (cos
+3sin
+cos )
+V′ α =
+π
+α −
+α
+α 
+1 pont 
+( )
+3375
+V′ α =
+π⋅
+3
+2
+(cos
+2cos
+sin
+)
+⋅
+α −
+α
+α 
+2
+2
+cos
+3sin
+cos
+cos (1 3sin
+)
+0
+α −
+α
+α =
+α
+−
+α =
+,  
+ha cos α = 0, vagy sin α = 1
+3
+ (hiszen sin α > 0). 
+1 pont 
+3
+2
+cos
+2cos
+sin
+α−
+α
+α = 
+2
+2
+cos (cos
+2sin
+)
+=
+α
+α −
+α =
+2
+cos (1 3sin
+)
+0
+=
+α
+−
+α =
+ 
+cos α = 0 nem lehet (mert 0 < α < 
+2
+π ),  
+sin α = 1
+3
+ helyen 
+( )
+V′ α pozitívból negatívba vált, 
+így V-nek itt maximuma van (α ≈ 0,6155 radián). 
+1 pont  
+A maximumhelyen  
+1
+15
+5 3
+3
+m =
+⋅
+=
+ (≈ 8,66), 
+2
+2
+225
+150
+3
+r =
+⋅
+=
+,  
+2
+max
+150
+5 3
+750
+3
+V
+r
+m
+=
+π
+=
+π⋅
+=
+π⋅
+(≈ 4081). 
+1 pont  
+A félgömb alakú búra térfogata  
+3
+2 15
+2250
+3
+⋅
+π =
+π (≈ 7069), 
+1 pont  
+az alatta elhelyezhető legnagyobb torta térfogata  
+ennek 750
+3
+3
+2250
+3
+π⋅
+=
+π
+ (≈4081
+7069 ) ≈ 0,577-szerese, 
+ami valóban kisebb 0,6-nél. Az állítás tehát igaz. 
+1 pont  
+Összesen: 
+7 pont  
+ 

@@ -1,0 +1,901 @@
+
+===== PAGE 1 =====
+Matematika 
+középszint — írásbeli vizsga 2313 
+I. összetevő
+Név:  ...........................................................  osztály: ...... 
+OKTATÁSI HIVATAL 
+MATEMATIKA 
+KÖZÉPSZINTŰ 
+ÍRÁSBELI VIZSGA 
+minden vizsgázó számára 
+2023. október 17. 8:00 
+I. 
+Időtartam: 45 perc 
+Pótlapok száma 
+Tisztázati 
+Piszkozati 
+É R E T T S É G I V I Z S G A • 2 0 2 3 . o k t ó b e r 1 7 .
+
+===== PAGE 2 =====
+Matematika 
+középszint 
+2313 írásbeli vizsga, I. összetevő 
+2 / 8 
+2023. október 17. 
+Név:  ...........................................................  osztály: ...... 
+Fontos tudnivalók 
+ 
+1. A feladatok megoldására 45 percet fordíthat, az idő leteltével a munkát be kell fejeznie. 
+ 
+ 
+2. A megoldások sorrendje tetszőleges. 
+ 
+ 
+3. A feladatok megoldásához szöveges adatok tárolására és megjelenítésére nem alkalmas 
+zsebszámológépet és bármilyen négyjegyű függvénytáblázatot használhat, más elektroni-
+kus vagy írásos segédeszköz használata tilos! 
+ 
+ 
+4. A feladatok végeredményét az erre a célra szolgáló keretbe írja, a megoldást csak akkor 
+kell részleteznie, ha erre a feladat szövege utasítást ad! 
+ 
+ 
+5. A dolgozatot tollal írja, az ábrákat ceruzával is rajzolhatja. Az ábrákon kívül a ceruzával írt 
+részeket a javító tanár nem értékelheti. Ha valamilyen megoldást vagy megoldásrészletet 
+áthúz, akkor az nem értékelhető. 
+ 
+ 
+6. Minden feladatnak csak egy megoldása értékelhető. Több megoldási próbálkozás esetén 
+egyértelműen jelölje, hogy melyiket tartja érvényesnek! 
+ 
+ 
+7. Kérjük, hogy a szürkített téglalapokba semmit ne írjon! 
+ 
+ 
+ 
+
+===== PAGE 3 =====
+Matematika 
+középszint 
+2313 írásbeli vizsga, I. összetevő 
+3 / 8 
+2023. október 17. 
+Név:  ...........................................................  osztály: ...... 
+ 
+1. 
+Adja meg az 1848 prímtényezős felbontását! 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 1848  
+2 pont 
+ 
+ 
+2. 
+Egy építkezésre teherautókkal szállítják a homokot. Öt egyforma teherautó mindegyiké-
+nek nyolcszor kellene fordulnia, hogy az összes homokot odaszállítsák. Hány fordulóval 
+tudná odaszállítani ugyanezt a mennyiségű homokot négy ugyanekkora teherautó? 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+2 pont 
+ 
+ 
+3. 
+Egy derékszögű háromszög két befogója 10 és 24 cm hosszú. Számítsa ki az átfogó 
+hosszát, és a 10 cm-es befogóval szemközti szög nagyságát! Válaszát indokolja!  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+2 pont 
+ 
+Az átfogó hossza             cm. 
+1 pont 
+ 
+A 10 cm-es befogóval szemközti 
+szög nagysága             fok. 
+1 pont 
+ 
+
+===== PAGE 4 =====
+Matematika 
+középszint 
+2313 írásbeli vizsga, I. összetevő 
+4 / 8 
+2023. október 17. 
+Név:  ...........................................................  osztály: ...... 
+ 
+4. 
+Válassza ki az alábbi, a valós számok halmazán értelmezett függvények közül azt, 
+amelyik nem vesz fel negatív értéket! 
+ 
+A) 
+3
+x
+x  
+B) 
+2 3
+x
+x  
+C) 
+3
+x
+x 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+2 pont 
+ 
+ 
+5. 
+Egy autók bérbeadásával foglalkozó cég honlapja szerint ha legfeljebb 5 napra bérlünk 
+egy bizonyos típust, akkor a bérlés díja 7500 Ft/nap. Ha legalább 6 napra béreljük 
+ugyanezt a típust, akkor a bérlés díja csak 6300 Ft/nap. 
+Mennyivel magasabb a teljes bérleti díj, ha 5 nap helyett 6 napra béreljük ezt a típust? 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+A teljes bérleti díj 6 napra 
+           Ft-tal magasabb, mint 5 napra. 
+2 pont 
+ 
+
+===== PAGE 5 =====
+Matematika 
+középszint 
+2313 írásbeli vizsga, I. összetevő 
+5 / 8 
+2023. október 17. 
+Név:  ...........................................................  osztály: ...... 
+ 
+6. 
+Egy meteorológiai állomáson november első hetében az alábbi napi hőmérsékleti maxi-
+mumokat mérték (C-ban): 9, 5, 6, 9, 6, 6, 8. Adja meg az adatok átlagát, terjedelmét és 
+mediánját! 
+ 
+ 
+ 
+ 
+ 
+Az átlag:              C 
+1 pont 
+ 
+A terjedelem:              C 
+1 pont 
+ 
+A medián:              C 
+1 pont 
+ 
+ 
+7. Egy dobozban 10 piros és néhány zöld golyó van. Tudjuk, hogy ha egy golyót kihúzunk 
+véletlenszerűen a dobozból, akkor 2
+3
+ annak a valószínűsége, hogy a golyó piros. 
+Hány zöld golyó van a dobozban?  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+A dobozban           zöld golyó van. 
+2 pont 
+ 
+ 
+8. 
+Bontsa fel a zárójeleket az alábbi kifejezésben, és végezze el a lehetséges összevonásokat! 
+Megoldását részletezze! 
+2
+(
+1)(
+1)
+(
+4)
+a
+a
+a
+
+
+
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+2 pont 
+ 
+A kifejezés összevont alakja: 
+ 
+1 pont 
+ 
+
+===== PAGE 6 =====
+Matematika 
+középszint 
+2313 írásbeli vizsga, I. összetevő 
+6 / 8 
+2023. október 17. 
+Név:  ...........................................................  osztály: ...... 
+9.
+Egy vasúti tartálykocsi tömege üres tartállyal 23,8 tonna. Ebben a tartálykocsiban maxi-
+mum 60 000 liter üzemanyagot szállíthatnak. Egy liter üzemanyag tömege 0,85 kg.
+Hány tonna a tartálykocsi tömege tele tartállyal? Megoldását részletezze!
+2 pont 
+A tartálykocsi tömege tele 
+tartállyal             t. 
+1 pont 
+10.
+Egy kör egyenlete: 
+2
+2
+(
+2)
+(
+4)
+25.
+x
+y
+
+
+
+
+ 
+Adja meg a kör középpontjának koordinátáit és a kör sugarát!
+A kör középpontja: 
+1 pont 
+A kör sugara: 
+1 pont 
+
+===== PAGE 7 =====
+Matematika 
+középszint 
+2313 írásbeli vizsga, I. összetevő 
+7 / 8 
+2023. október 17. 
+Név:  ...........................................................  osztály: ...... 
+ 
+11. Adja meg a nemnegatív valós számok halmazán értelmezett 
+3
+
+x
+x
+ függvény 
+zérushelyét!  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+A függvény zérushelye: 
+2 pont 
+ 
+ 
+12. Egy szabályos pénzérmét háromszor feldobunk. Határozza meg annak a valószínűségét, 
+hogy a három dobás közül pontosan egy lesz fej! Válaszát indokolja!  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+2 pont 
+ 
+A keresett valószínűség: 
+1 pont 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 8 =====
+Matematika 
+középszint 
+2313 írásbeli vizsga, I. összetevő 
+8 / 8 
+2023. október 17. 
+Név:  ...........................................................  osztály: ...... 
+ 
+ 
+pontszám 
+maximális 
+elért 
+I. rész 
+1. feladat 
+2 
+ 
+2. feladat 
+2 
+ 
+3. feladat 
+4 
+ 
+4. feladat 
+2 
+ 
+5. feladat 
+2 
+ 
+6. feladat 
+3 
+ 
+7. feladat 
+2 
+ 
+8. feladat 
+3 
+ 
+9. feladat 
+3 
+ 
+10. feladat 
+2 
+ 
+11. feladat 
+2 
+ 
+12. feladat 
+3 
+ 
+ 
+ÖSSZESEN 
+30 
+ 
+ 
+dátum 
+ 
+javító tanár 
+ 
+ __________________________________________________________________________  
+ 
+ 
+ 
+pontszáma egész 
+számra kerekítve 
+elért 
+programba  
+beírt 
+I. rész 
+  
+  
+ 
+dátum 
+ 
+dátum 
+ 
+ 
+ 
+ 
+ 
+ 
+javító tanár 
+ 
+jegyző 
+ 
+Megjegyzések: 
+1. Ha a vizsgázó a II. írásbeli összetevő megoldását elkezdte, akkor ez a táblázat és az aláírási rész 
+üresen marad! 
+2. Ha a vizsga az I. összetevő teljesítése közben megszakad, illetve nem folytatódik a II. összetevővel, 
+akkor ez a táblázat és az aláírási rész kitöltendő! 
+
+===== PAGE 9 =====
+Matematika 
+középszint — írásbeli vizsga 2313 
+II. összetevő
+Név:  ...........................................................  osztály:...... 
+OKTATÁSI HIVATAL 
+MATEMATIKA 
+KÖZÉPSZINTŰ 
+ÍRÁSBELI VIZSGA 
+minden vizsgázó számára 
+2023. október 17. 8:00 
+II. 
+Időtartam: 135 perc 
+Pótlapok száma 
+Tisztázati 
+Piszkozati 
+ 
+É R E T T S É G I V I Z S G A • 2 0 2 3 . o k t ó b e r 1 7 .
+
+===== PAGE 10 =====
+Matematika 
+középszint 
+2313 írásbeli vizsga, II. összetevő 
+2 / 16 
+2023. október 17. 
+Név:  ...........................................................  osztály:...... 
+
+===== PAGE 11 =====
+Matematika 
+középszint 
+2313 írásbeli vizsga, II. összetevő 
+3 / 16 
+2023. október 17. 
+Név:  ...........................................................  osztály:...... 
+ 
+Fontos tudnivalók 
+ 
+1. A feladatok megoldására 135 percet fordíthat, az idő leteltével a munkát be kell fejeznie. 
+ 
+2. A feladatok megoldási sorrendje tetszőleges. 
+ 
+3. A B részben kitűzött három feladat közül csak kettőt kell megoldania. A nem választott 
+feladat sorszámát írja be a dolgozat befejezésekor az alábbi négyzetbe! Ha a javító 
+tanár számára nem derül ki egyértelműen, hogy melyik feladat értékelését nem kéri, akkor 
+a kitűzött sorrend szerinti legutolsó feladatra nem kap pontot. 
+ 
+ 
+ 
+4. A feladatok megoldásához szöveges adatok tárolására és megjelenítésére nem alkalmas 
+zsebszámológépet és bármilyen négyjegyű függvénytáblázatot használhat, más elektroni-
+kus vagy írásos segédeszköz használata tilos! 
+ 
+5. A megoldások gondolatmenetét minden esetben írja le, mert a feladatra adható pont-
+szám jelentős része erre jár! 
+ 
+6. Ügyeljen arra, hogy a lényegesebb részszámítások is nyomon követhetők legyenek! 
+ 
+7. A gondolatmenet kifejtése során a zsebszámológép használata – további matematikai 
+indoklás nélkül – a következő műveletek elvégzésére fogadható el: összeadás, kivonás, 
+szorzás, osztás, hatványozás, gyökvonás, n!, 
+
+
+
+
+
+
+k
+n
+ kiszámítása, a függvénytáblázatban fel-
+lelhető táblázatok helyettesítése (sin, cos, tg, log és ezek inverzei), a π és az e szám közelítő 
+értékének megadása, nullára rendezett másodfokú egyenlet gyökeinek meghatározása. To-
+vábbi matematikai indoklás nélkül használhatók a számológépek bizonyos statisztikai mu-
+tatók kiszámítására (átlag, szórás) abban az esetben, ha a feladat szövege kifejezetten nem 
+követeli meg az ezzel kapcsolatos részletszámítások bemutatását is. Egyéb esetekben a 
+géppel elvégzett számítások indoklás nélküli lépéseknek számítanak, azokért nem jár 
+pont. 
+ 
+8. A feladatok megoldásánál használt tételek közül az iskolában tanult, névvel ellátott tételeket 
+(pl. Pitagorasz-tétel, magasságtétel) nem kell pontosan megfogalmazva kimondania, elég 
+csak a tétel megnevezését említenie, de alkalmazhatóságát röviden indokolnia kell. 
+ 
+9. A feladatok végeredményét (a feltett kérdésre adandó választ) szöveges megfogalmazásban 
+is közölje! 
+ 
+10. A dolgozatot tollal írja, az ábrákat ceruzával is rajzolhatja. Az ábrákon kívül a ceruzával írt 
+részeket a javító tanár nem értékelheti. Ha valamilyen megoldást vagy megoldásrészletet 
+áthúz, akkor az nem értékelhető. 
+ 
+11. Minden feladatnak csak egy megoldása értékelhető. Több megoldási próbálkozás esetén 
+egyértelműen jelölje, hogy melyiket tartja érvényesnek! 
+ 
+12. Kérjük, hogy a szürkített téglalapokba semmit ne írjon! 
+ 
+ 
+
+===== PAGE 12 =====
+Matematika 
+középszint 
+2313 írásbeli vizsga, II. összetevő 
+4 / 16 
+2023. október 17. 
+Név:  ...........................................................  osztály:...... 
+ 
+A 
+ 
+13.  Adott a valós számok halmazán értelmezett f függvény: 
+2
+( )
+(
+3)
+2
+f x
+x
+
+
+
+. 
+ 
+a) Mit rendel az f függvény az x  3,5-hez? 
+ 
+b) Mely számokhoz rendeli az f függvény a 6-ot?  
+ 
+c) Válassza ki az alábbiak közül az f függvény értékkészletét! 
+A:  [–3;  [ 
+B:  [2;  [ 
+C:  [3;  [ 
+D:  [2; 3] 
+E:  R 
+ 
+d) Oldja meg az 
+2
+6
+11
+3
+
+
+
+x
+x
+ egyenlőtlenséget az egész számok halmazán! 
+a) 
+2 pont 
+ 
+b) 
+4 pont 
+ 
+c) 
+2 pont 
+ 
+d) 
+4 pont 
+ 
+Ö.: 
+12 pont 
+ 
+
+===== PAGE 13 =====
+Matematika 
+középszint 
+2313 írásbeli vizsga, II. összetevő 
+5 / 16 
+2023. október 17. 
+Név:  ...........................................................  osztály:...... 
+
+===== PAGE 14 =====
+Matematika 
+középszint 
+2313 írásbeli vizsga, II. összetevő 
+6 / 16 
+2023. október 17. 
+Név:  ...........................................................  osztály:...... 
+ 
+14.  Az ABCD paralelogramma AB oldala 8 cm, AC átlója 11 cm hosszú. 
+Az AB oldal és az AC átló 32-os szöget zár be egymással.  
+ 
+a) Számítsa ki a BC oldal hosszát!  
+ 
+b) Számítsa ki a paralelogramma területét!  
+ 
+Az AC átló felezőpontjából az AB-re bocsátott merőleges szakasz talppontját jelölje T.  
+ 
+c) Számítsa ki, mekkora részekre osztja az AB oldalt a T pont!  
+ 
+Az ABCD paralelogrammát a két átlója négy tartományra osztja. 
+Ezeket kiszínezzük pirosra, sárgára vagy kékre úgy, hogy minden 
+színt legalább egy tartomány kiszínezéséhez felhasználunk, és ol-
+dalszomszédos tartományok nem lehetnek azonos színűek. 
+(Minden tartományt egy színnel színezünk ki.) 
+ 
+d) Hányféleképpen színezhető ki a feltételeknek megfelelően a paralelogramma? 
+(Két színezést különbözőnek tekintünk, ha van olyan tartomány, amelyik a két szí-
+nezésben eltérő színű.) 
+ 
+ 
+  
+ 
+ 
+a) 
+3 pont 
+ 
+b) 
+3 pont 
+ 
+c) 
+3 pont 
+ 
+d) 
+4 pont 
+ 
+Ö.: 
+13 pont 
+ 
+
+===== PAGE 15 =====
+Matematika 
+középszint 
+2313 írásbeli vizsga, II. összetevő 
+7 / 16 
+2023. október 17. 
+Név:  ...........................................................  osztály:...... 
+ 
+ 
+
+===== PAGE 16 =====
+Matematika 
+középszint 
+2313 írásbeli vizsga, II. összetevő 
+8 / 16 
+2023. október 17. 
+Név:  ...........................................................  osztály:...... 
+15.
+a)  A H alaphalmaz a négyszögek halmaza. Az alábbi Venn-diagramon a H három
+részhalmaza látható. Írja be az alábbi négyszögek betűjelét a diagram megfelelő  
+részébe! 
+N: Egy négyzet. 
+T: Egy téglalap, melynek oldalai 3, illetve 5 cm hosszúak. 
+R: Egy rombusz, melynek egyik szöge 60 fokos. 
+P: Egy paralelogramma, melynek oldalai 3, illetve 5 cm hosszúak, és egyik szöge 
+60 fokos. 
+b) Határozza meg az alábbi állítások logikai értékét (igaz vagy hamis)! Válaszait indo-
+kolja!
+I. Ha az A és a B halmaznak is két eleme van, akkor az A B halmaz négyelemű.
+II. A kétjegyű négyzetszámok halmazának hat eleme van.
+a) 
+7 pont 
+b) 
+4 pont 
+Ö.: 
+11 pont 
+
+===== PAGE 17 =====
+Matematika 
+középszint 
+2313 írásbeli vizsga, II. összetevő 
+9 / 16 
+2023. október 17. 
+Név:  ...........................................................  osztály:...... 
+
+===== PAGE 18 =====
+Matematika 
+középszint 
+2313 írásbeli vizsga, II. összetevő 
+10 / 16 
+2023. október 17. 
+Név:  ...........................................................  osztály:...... 
+B 
+A 16-18. feladatok közül tetszése szerint választott kettőt kell megoldania. 
+A kihagyott feladat sorszámát írja be a 3. oldalon lévő üres négyzetbe! 
+16.
+Az előző tanévben Janka történelemből kapott első három jegye 3, 3, 4 volt. A tanév
+hátralevő részében már csak ötösöket kapott.
+a) Hány ötöst kapott összesen történelemből Janka, ha tudjuk, hogy a tanév végén
+éppen 4,5 lett az átlaga?
+Janka a szüleitől minden hónapban annyiszor 1000 Ft zsebpénzt kap, ahányadik évfo-
+lyamra éppen jár. (Az elsőtől a tizenkettedikig Janka egy-egy évfolyamra mindig 12 hó-
+napig jár.)  
+b) Összesen mennyi zsebpénzt kap Janka a 12 év alatt, amíg elvégzi az általános és a
+középiskolát?
+Egy mértani sorozat hányadosa 3, a sorozat első kilenc tagjának az összege 59 046. 
+c) Határozza meg a sorozat első és kilencedik tagját!
+Egy bankban 50 000 Ft-ot helyezünk el évi p százalékos kamatos kamatra. Három év 
+elteltével a kamatokkal növelt összeg 59 046 Ft. 
+d) Számítsa ki p értékét!
+a) 
+4 pont 
+b) 
+4 pont 
+c) 
+4 pont 
+d) 
+5 pont 
+Ö.: 
+17 pont 
+
+===== PAGE 19 =====
+Matematika 
+középszint 
+2313 írásbeli vizsga, II. összetevő 
+11 / 16 
+2023. október 17. 
+Név:  ...........................................................  osztály:...... 
+ 
+ 
+ 
+
+===== PAGE 20 =====
+Matematika 
+középszint 
+2313 írásbeli vizsga, II. összetevő 
+12 / 16 
+2023. október 17. 
+Név:  ...........................................................  osztály:...... 
+A 16-18. feladatok közül tetszése szerint választott kettőt kell megoldania. 
+A kihagyott feladat sorszámát írja be a 3. oldalon lévő üres négyzetbe! 
+17.
+Egy gyorsvonat (a mozdony mögött) öt másodosztályú személykocsiból, egy kerékpár-
+szállító kocsiból, valamint egy étkezőkocsiból áll.
+a) Hányféle sorrendben állíthatják össze a hét kocsit, ha a másodosztályú személyko-
+csikat nem különböztetjük meg egymástól?
+Ha jegykiadó automatából vásároljuk meg a vonatjegyünket, akkor a jegy árából 5% ked-
+vezményt kapunk.  
+b) Hány Ft annak a vonatjegynek a kedvezmény nélküli ára, melyért (jegykiadó auto-
+matából vásárolva) 3040 Ft-ot fizettünk?
+2022 januárjában egy havi vasúti tanulóbérlet ára 30 km-es távolságra 2140 Ft volt (erre 
+további kedvezmény nem járt). Ugyanerre a távolságra egy tanulónak a menetjegy ára 
+280 Ft volt, amelyből 5% kedvezményt kapott az utas, ha jegykiadó automatából vásá-
+rolta meg a jegyet. 
+A középiskolás Ábel ebben a hónapban többször utazott vonattal ezen a 30 km-es távol-
+ságon, így már jobban megérte neki havi tanulóbérletet venni. Ha eggyel kevesebbszer 
+utazott volna, akkor viszont olcsóbb lett volna egyesével (jegykiadó automatából) jegye-
+ket vásárolnia. 
+c) Hányszor utazott ebben a hónapban Ábel ezen a 30 km-es távolságon?
+A négytagú Kiss és az öttagú Nagy család vonattal utazott közös nyaralásuk helyszínére. 
+A Kiss család két teljes árú, egy 20%-os mérséklésű és egy 50%-os mérséklésű menetje-
+gyet, valamint négy gyorsvonati pótjegyet vett a jegypénztárban. Ezekért összesen 
+7960 Ft-ot fizettek. 
+A Nagy család öt 90%-os mérséklésű menetjegyet és öt gyorsvonati pótjegyet vett a jegy-
+pénztárban. Ők ezekért összesen 1975 Ft-ot fizettek. 
+(A gyorsvonati pótjegyek ára egységes. A 20%-os, 50%-os, illetve 90%-os mérséklésű 
+menetjegy azt jelenti, hogy a jegy ára a teljes árú menetjegy áránál rendre annak 20, 50, 
+illetve 90%-ával kevesebb.) 
+d) Mennyibe került az adott utazáson egy teljes árú menetjegy, és mennyibe került egy
+gyorsvonati pótjegy?
+a) 
+3 pont 
+b) 
+2 pont 
+c) 
+4 pont 
+d) 
+8 pont 
+Ö.: 
+17 pont 
+
+===== PAGE 21 =====
+Matematika 
+középszint 
+2313 írásbeli vizsga, II. összetevő 
+13 / 16 
+2023. október 17. 
+Név:  ...........................................................  osztály:...... 
+ 
+ 
+
+===== PAGE 22 =====
+Matematika 
+középszint 
+2313 írásbeli vizsga, II. összetevő 
+14 / 16 
+2023. október 17. 
+Név:  ...........................................................  osztály:...... 
+A 16-18. feladatok közül tetszése szerint választott kettőt kell megoldania. 
+A kihagyott feladat sorszámát írja be a 3. oldalon lévő üres négyzetbe! 
+18.
+Egy párnákat gyártó cég a képen látható ülőpár-
+nát szivacsból készíti, majd szövettel befedi. A
+szivacsból először egy 42 cm átmérőjű, 7 cm
+magasságú körhengert vágnak ki. Ezután a hen-
+ger közepéből kivágnak egy 18 cm átmérőjű ki-
+sebb körhengert. (A két henger alapkörének kö-
+zéppontja egybeesik.)
+a) Számítsa ki a párna szivacsos részének tér-
+fogatát!
+b) Mennyi szövetre van szükség 30 párna befedéséhez? Válaszát négyzetméterben,
+egészre kerekítve adja meg! (A veszteségektől itt eltekintünk.)
+A gyártás során egy párna 0,03 valószínűséggel selejtes lesz.  
+c) Határozza meg annak a valószínűségét, hogy 30 legyártott párnából legfeljebb egy
+lesz selejtes!
+a) 
+4 pont 
+b) 
+8 pont 
+c) 
+5 pont 
+Ö.: 
+17 pont 
+
+===== PAGE 23 =====
+Matematika 
+középszint 
+2313 írásbeli vizsga, II. összetevő 
+15 / 16 
+2023. október 17. 
+Név:  ...........................................................  osztály:...... 
+
+===== PAGE 24 =====
+Matematika 
+középszint 
+2313 írásbeli vizsga, II. összetevő 
+16 / 16 
+2023. október 17. 
+Név:  ...........................................................  osztály:...... 
+a feladat 
+sorszáma 
+pontszám 
+maximális 
+elért 
+összesen 
+II. A rész
+13. 
+12 
+14. 
+13 
+15. 
+11 
+II. B rész
+17 
+17 
+ nem választott feladat 
+ÖSSZESEN 
+70 
+pontszám 
+maximális 
+elért 
+I. rész
+30 
+II. rész
+70 
+Az írásbeli vizsgarész pontszáma 
+100 
+dátum 
+javító tanár 
+ __________________________________________________________________________ 
+pontszáma egész 
+számra kerekítve 
+elért 
+programba  
+beírt 
+I. rész
+II. rész
+dátum 
+dátum 
+javító tanár 
+jegyző 

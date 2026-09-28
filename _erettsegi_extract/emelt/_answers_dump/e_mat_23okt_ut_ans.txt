@@ -1,0 +1,419 @@
+--- line 153 ---
+(3; 4), (4; 3). 
+3 pont 
+4 vagy 5 jó megoldás ese-
+tén 2 pont, 3 jó megoldás 
+esetén 1 pont jár. 
+Hibás számpár(ok) meg-
+adásáért 1 pontot veszít-
+sen a vizsgázó. 
+Összesen: 
+4 pont  
+
+--- line 201 ---
+1 pont  
+Az első esetben x  2, 
+1 pont  
+a második esetben x  –1. 
+1 pont  
+Ellenőrzés behelyettesítéssel vagy ekvivalenciára hi-
+vatkozással. 
+1 pont  
+Összesen: 
+7 pont  
+
+--- line 233 ---
+A két téglalap alakú tetőfelület területe együtt: 
+A  2  5,4  8,5 ≈ 
+1 pont  
+≈ 92 m2. 
+1 pont 
+Ez a pont nem jár, ha a 
+vizsgázó nem kerekít, 
+vagy rosszul kerekít. 
+Összesen: 
+4 pont  
+
+--- line 266 ---
+2
+
+
+ ≈ 122 m3. 
+1 pont  
+A ház teljes térfogata: 
+V  Vf + Vt  218 + 122  340 m3. 
+1 pont  
+Összesen: 
+4 pont  
+
+--- line 291 ---
+2  2,1  8,5 ≈ 36 m2. 
+A földszint alapterülete 8  8,5  68 m2. 
+1 pont 
+A földszint és a tetőtér 
+teljes alapterülete 
+2  8  8,5  136 m2. 
+A ház teljes lakóterülete 68 + 32  100 m2. 
+1 pont 136 – 36  100 m2 
+Összesen: 
+4 pont  
+
+--- line 330 ---
+ ≈  
+1 pont 
+Ez a pont akkor is jár, 
+ha a vizsgázó a szórást 
+számológéppel helyesen 
+számolja ki. 
+≈ 1,98. 
+1 pont  
+Összesen: 
+3 pont  
+
+--- line 374 ---
+tétel teljesül (a 6 az egyetlen módusz). 
+1 pont  
+Tehát az utolsó három értékelés (valamilyen sorrend-
+ben) 3, 6 és 10 volt. 
+1 pont 
+A tíz értékelés növekvő 
+sorrendben: 
+2, 3, 6, 6, 6, 6, 8, 8, 8, 10. 
+Összesen: 
+7 pont  
+
+--- line 405 ---
+A lehetőségek: 19  6 + 3 + 10  6 + 4 + 9  6 + 6 + 7. 
+1 pont  
+A terjedelem miatt (ami rendre 8, 7, 6 lenne) a három 
+lehetőség közül az első az egyetlen megfelelő. 
+1 pont  
+Tehát az utolsó három értékelés (valamilyen sorrend-
+ben) 3, 6 és 10 volt. 
+1 pont  
+Összesen: 
+7 pont  
+
+--- line 432 ---
+
+
+. 
+1 pont  
+630 + 10x  693 – 11x 
+1 pont  
+x  3 (A 11. mérkőzés értékelése 3.)  
+1 pont  
+Összesen: 
+3 pont  
+
+--- line 469 ---
+IV. 
+igaz 
+hamis 
+igaz 
+ 
+5 pont*  
+Az f függvény grafikonja a III. grafikon lehet. 
+1 pont  
+Összesen: 
+6 pont  
+
+--- line 492 ---
+2p + q  2 és 
+2p  4.  
+2 pont  
+Innen p  2, q  – 2 és r  1 (így g(x) 
+2
+2x – 2x + 1, 
+ami valamennyi feltételnek megfelel). 
+2 pont  
+Összesen: 
+6 pont  
+
+--- line 573 ---
+
+
+
+
+
+
+ 
+2 pont  
+Összesen: 
+3 pont  
+
+--- line 598 ---
+ötszög A csúcsnál fekvő szögének fele 60°-os. 
+1 pont cos BAF∢  0,5, 
+ezért BAF∢  60°. 
+Így BAE∢  120° és ABE∢  AEB∢  30°. 
+1 pont  
+(Mivel a húrtrapéz szögei 40°, 40°, 140°, 140°, ezért) 
+az ötszög szögei: 120°, 70°, 140°, 140°, 70°. 
+1 pont  
+Összesen: 
+4 pont  
+
+--- line 660 ---
+
+
+
+
+ ≈ 212,4 cm2. 
+1 pont  
+Az ötszög területe (173,2 + 212,4 ) 385,6 cm2. 
+1 pont  
+Összesen: 
+8 pont  
+
+--- line 696 ---
+BAEBCDE, BAEDCBE, 
+BEDCBAE, BEABCDE  
+A B-ből indulva tehát 3 ∙ 2  6 lehetőség van a gráf 
+éleinek bejárására. 
+1 pont 
+Az E-ből indulva ugyanennyi, 
+összesen tehát 12 bejárási lehetőség van. 
+1 pont  
+Összesen: 
+4 pont  
+
+--- line 728 ---
+szerepel, ahányféleképpen a három csapat sorba ren-
+dezhető (mert ezek sorrendje nem számít), 
+1 pont  
+ezért 90
+3!
+ 15 lehetőség van valóban a három csapat 
+kialakítására. 
+1 pont  
+Összesen: 
+5 pont  
+
+--- line 752 ---
+ 
+Mivel A bármely csapattársa esetén 3-féleképpen 
+szervezhető további 2 darab kétfős csapat, és A csa-
+pattársa 5-féle lehet,  
+2 pont  
+ezért 5 · 3  15 lehetőség van valóban a három csapat 
+kialakítására. 
+1 pont  
+Összesen: 
+5 pont  
+
+--- line 776 ---
+Ezért 
+6!
+15
+2 2 2 3! 
+
+ lehetőség van valóban a három 
+csapat kialakítására. 
+1 pont  
+Összesen: 
+5 pont  
+
+--- line 800 ---
+1
+5 3
+5
+
+
+ a valószínűsége, hogy minden csa-
+patba egy fiú és egy lány kerül. 
+2 pont  
+Összesen: 
+4 pont  
+
+--- line 829 ---
+a kezdőbetűikkel jelölve): 
+AB, CD, EF;  AB, CF, ED; 
+AD, CB, EF;  AD, CF, EB; 
+AF, CB, ED;  AF, CD, EB. 
+(Mivel az összes csapatalkotási lehetőség száma 15, 
+ezért) a kérdezett valószínűség 6
+15  0,4. 
+1 pont  
+Összesen: 
+4 pont  
+
+--- line 866 ---
+9
+2
+1 15
+5
+
+
+. 
+1 pont  
+Összesen: 
+4 pont  
+
+--- line 906 ---
+játékos, akinek 1 mérkőzése van,  
+1 pont* 
+s ha B-nek 1 mérkőzése lenne, akkor nem lenne 
+olyan játékos, akinek 3 mérkőzése van. 
+1 pont* 
+Ezek alapján Boróka csak 2 mérkőzést játszhatott 
+(és ez lehetséges is). 
+1 pont 
+Összesen: 
+7 pont  
+
+--- line 947 ---
+
+
+
+
+ 
+1 pont  
+ 0,5 m magas volt a fenyőfa. 
+1 pont  
+Összesen: 
+2 pont  
+
+--- line 983 ---
+ 
+1 pont t ≈ lg0,034
+lg0,905 
+t ≈ 33,9 
+1 pont  
+A megfigyelés kezdetétől számítva körülbelül 34 év 
+múlva lesz a fa magassága 10 m. 
+1 pont  
+Összesen: 
+5 pont  
+
+--- line 1007 ---
+1
+
+
+
+
+
+30. 
+2 pont  
+Összesen: 
+3 pont  
+
+--- line 1092 ---
+14 / 17 
+2023. október 17. 
+ 
+A 400 ezer Ft-ból elkeríthető legnagyobb területű ül-
+tetvény 5 ezer Ft/m költségű oldala 40 m, 
+a 10 ezer Ft/m költségű oldala 20 m hosszú. 
+(Az ültetvény területe ekkor 800 m2.)  
+1 pont  
+Összesen: 
+6 pont  
+
+--- line 1173 ---
+p
+p
+p
+
+
+
+ valóban. 
+1 pont  
+Összesen: 
+3 pont  
+
+--- line 1237 ---
+Tehát 0,9
+( 1)
+p
+
+
+ esetén lesz legfeljebb 0,01 
+az E0 esemény valószínűsége. 
+1 pont  
+Összesen: 
+3 pont  
+
+--- line 1323 ---
+p
+
+
+
+
+
+ valóban. 
+1 pont*  
+Összesen: 
+5 pont  
+
+--- line 1459 ---
+
+
+
+
+
+
+ (≈ 0,296). 
+1 pont  
+Összesen: 
+5 pont  
+
+--- line 1470 ---
+===== PAGE 16 =====
+Matematika — emelt szint 
+Javítási-értékelési útmutató 
+2311 írásbeli vizsga 
+16 / 17 
+2023. október 17. 
+ 
+9. a) 
+(Összesen 5
+2
+
+--- line 1484 ---
+2 · 4,  2 · 6,  2 · 8,  2 · 10, 
+4 · 6,  4 · 8,  4 · 10, 
+6 · 8,  6 · 10, 
+8 · 10. 
+3 pont  
+Ezek összege (8 + 12 + 16 + 20 + 24 + 32 + 40 + 
++ 48 + 60 + 80 ) 340. 
+1 pont  
+Összesen: 
+4 pont  
+
+--- line 1561 ---
+
+
+
+
+
+
+ valóban. 
+1 pont  
+Összesen: 
+4 pont  
+
+--- line 1723 ---
+S 
+
+
+
+
+, 
+ami azt jelenti, hogy igaz az eredeti állítás. 
+1 pont  
+Összesen: 
+8 pont  
+
+--- line 1963 ---
+
+
+
+
+. 
+1 pont  
+2-vel való osztás után a bizonyítandó állítást kapjuk. 
+1 pont  
+Összesen: 
+8 pont  

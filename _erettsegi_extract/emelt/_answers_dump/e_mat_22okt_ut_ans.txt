@@ -1,0 +1,359 @@
+--- line 162 ---
+y
++
++
++
+=
+. 
+1 pont
+ 
+Összesen:
+2 pont
+
+--- line 182 ---
+CP
+
+, 
+1 pont
+ 
+egyenlete 3x + 4y = –1. 
+1 pont
+ 
+Összesen:
+3 pont
+
+--- line 233 ---
+ képlettel: 
+4,5 6 7,5
+3,75
+4 13,5
+⋅⋅
+=
+⋅
+ egység.
+Összesen:
+6 pont
+
+--- line 299 ---
+3
+x
+k
+π
+= −
++ π , k ∈ Z. 
+2 pont
+ 
+Összesen:
+6 pont
+
+--- line 374 ---
+=
++ π vagy 
+3
+x
+k
+π
+= −
++ π , k ∈ Z 
+Összesen:
+6 pont
+
+--- line 446 ---
+ 
+melyek közül csak a 4 megoldás (mert –7 ≤ 2). 
+1 pont
+ 
+Ellenőrzés behelyettesítéssel, vagy az értelmezési tar-
+tományon ekvivalens átalakításokra hivatkozással. 
+1 pont
+ 
+Összesen:
+8 pont
+
+--- line 534 ---
+Ez a pont akkor is jár, ha 
+a vizsgázó számológéppel 
+helyesen számol. 
+2
+=
+ (≈ 1,41) (hónap). 
+1 pont
+ 
+Összesen:
+5 pont
+
+--- line 588 ---
+
+(≈ 0,285) 
+2 pont
+ 
+A kérdezett valószínűség tehát 
+P(0) + P(1) + P(2) ≈ 0,677. 
+1 pont
+ 
+Összesen:
+5 pont
+
+--- line 609 ---
+1 pont
+ 
+Innen 1 – p (= 5 0,75 ) ≈ 0,944, 
+1 pont
+ 
+a kérdezett valószínűség tehát p ≈ 0,056. 
+1 pont
+ 
+Összesen:
+3 pont
+
+--- line 686 ---
+
+
+
+ 
+(Tehát az állítás igaz.) 
+3 pont
+Egy hiba esetén 2 pont, 
+két hiba esetén 1 pont jár. 
+Összesen:
+3 pont
+
+--- line 787 ---
+=
+1
+6
+π
+−
++ (≈ 0,476). 
+1 pont
+ 
+Összesen:
+5 pont
+
+--- line 848 ---
+
+
+ sorozat határértéke 0, 
+1 pont
+ 
+ezért a megadott sorozat határértéke (0 + 2π =) 2π. 
+1 pont
+ 
+Összesen:
+5 pont
+
+--- line 900 ---
+akkor F piros vagy kék). Az E és az F megfelelő szí-
+nezéseinek száma ekkor 2 ∙ 2. 
+1 pont
+Ha E piros, akkor C színe 
+2-féle lehet (zöld vagy 
+sárga), és F is 2-féle 
+színű lehet (kék vagy 
+sárga). 
+Összesen tehát 4 ∙ 3 ∙ 2 ∙ (2 + 2 ∙ 2) = 
+1 pont
+
+--- line 906 ---
+színű lehet (kék vagy 
+sárga). 
+Összesen tehát 4 ∙ 3 ∙ 2 ∙ (2 + 2 ∙ 2) = 
+1 pont
+ 
+= 144 megfelelő színezés van. 
+1 pont
+ 
+Összesen:
+7 pont
+
+--- line 959 ---
+Ha az összes eset számából (4 ∙ 3 ∙ 2 ∙ 2 ∙ 2 ∙ 2) levonjuk 
+a rossz esetek számát (4 ∙ 3 ∙ 2 ∙ 2), akkor a megfelelő 
+színezések számát kapjuk meg.  
+1 pont
+ 
+A megfelelő színezések száma 4 ∙ 3 ∙ 2 ∙ (8 – 2) = 144. 
+1 pont
+192 – 48 = 144 
+Összesen:
+7 pont
+
+--- line 1099 ---
+ 
+A második esetben az ismeretlen számok: 
+B = 11, C = 16, E = 18, F =12. 
+1 pont
+ 
+Ellenőrzés a szövegbe helyettesítéssel. 
+1 pont
+ 
+Összesen:
+9 pont
+
+--- line 1173 ---
+ 
+A legelő területe (3454 + 6000 =) 9454 m2 = 0,9454 ha.
+1 pont
+ 
+0,9454 : 0,9 ≈ 1,05, tehát a legelő valódi területe 
+kb. 5%-kal nagyobb a meghirdetettnél. 
+1 pont
+ 
+Összesen:
+6 pont
+
+--- line 1207 ---
+t ⋅
+, 
+azaz kb. 15 006 cm3, 
+1 pont
+ 
+ami a kért kerekítéssel valóban 15 liter. 
+1 pont
+ 
+Összesen:
+5 pont
+
+--- line 1250 ---
+ 
+ezért a kérdezett magasság 
+3
+2
+x⋅
+ ≈ 19 cm. 
+1 pont
+ 
+Összesen:
+5 pont
+
+--- line 1293 ---
+
+
+
+
+
+cm. 
+1 pont
+ 
+Összesen:
+5 pont
+
+--- line 1344 ---
+243
+f
+−
+=
+=
+=
+∈Q Z 
+1 pont
+Összesen:
+3 pont
+
+--- line 1475 ---
+ 
+Egy racionális és egy irracionális szám összege irra-
+cionális, ezért több él nincs. 
+1 pont
+ 
+A gráfnak tehát összesen 4 éle van. 
+1 pont
+ 
+Összesen:
+5 pont
+
+--- line 1576 ---
+⋅
+−
+ ≈ 
+1 pont
+ 
+≈ 0,5 a téglalapok területének összege. 
+1 pont
+ 
+Összesen:
+8 pont
+
+--- line 1608 ---
+
+
+ 9 (dm), 
+1 pont
+ 
+a téglatest felszíne (2 ∙ (4 ∙ 2 + 4 ∙ 9 + 2 ∙ 9) =) 124 dm2. 
+1 pont
+ 
+Összesen:
+2 pont
+
+--- line 1708 ---
+=
++
+>
+ 
+A minimális felszínű téglatest élei 3 dm, 6 dm, illetve 
+(36 : 9 =) 4 dm hosszúak. 
+1 pont
+ 
+Összesen:
+8 pont
+
+--- line 1816 ---
+Ezekhez a másik lapról úgy kell harmadik csúcsot 
+választanunk, hogy egyikkel se legyen élszomszédos, 
+ezt minden esetben 2-féleképpen tehetjük meg. 
+1 pont
+ 
+A megfelelő kiválasztások száma tehát 2 ⋅ 2 ⋅ 2 = 8. 
+1 pont
+ 
+Összesen:
+6 pont
+
+--- line 1851 ---
+4-4 csúcs közül választunk 3-at. Tehát itt is 24 nem 
+megfelelő választás van.  
+1 pont
+ 
+A maradék 56 – 24 – 24 = 8 választás (a téglatest 
+8 csúcsából induló 3-3 él végpontja) megfelelő.  
+1 pont
+ 
+Összesen:
+6 pont
+
+--- line 1885 ---
+Amiből z = 900, egy zöld sorsjegy ára tehát 900 Ft. 
+1 pont
+ 
+Ellenőrzés:  
+5 kék és 3 zöld sorsjegy 4000 + 2700 = 6700 Ft-ba,  
+3 kék és 2 zöld pedig 2400 + 1800 = 4200 Ft-ba kerül. 
+1 pont
+ 
+Összesen:
+5 pont
+
+--- line 1955 ---
+1 pont
+P(B | A) ≠ P(B), 
+vagy P(A | B) ≠ P(A) 
+Mivel P(A) ∙ P(B) ≠ P(AB), 
+1 pont
+ezért A és B nem független események. 
+1 pont
+ 
+Összesen:
+8 pont
+
+--- line 1984 ---
+9. c) 
+Az egy kék sorsjegyre jutó nyeremény várható értéke: 
+(0,4 ∙ 0 +) 0,35 ∙ 500 + 0,2 ∙ 1000 + 0,05 ∙ 5000 =  
+2 pont
+ 
+= 625 Ft. 
+1 pont
+ 
+Összesen:
+3 pont

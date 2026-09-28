@@ -1,0 +1,1101 @@
+
+===== PAGE 1 =====
+Matematika 
+középszint 
+ 
+Javítási-értékelési útmutató 2112 
+ 
+EMBERI ERŐFORRÁSOK MINISZTÉRIUMA 
+MATEMATIKA 
+ 
+KÖZÉPSZINTŰ 
+ÍRÁSBELI VIZSGA 
+JAVÍTÁSI-ÉRTÉKELÉSI 
+ÚTMUTATÓ 
+ 
+É R E T T S É G I V I Z S G A • 2 0 2 1 . m á j u s 4 . 
+
+===== PAGE 2 =====
+Matematika — középszint 
+Javítási-értékelési útmutató 
+2112 írásbeli vizsga 
+2 / 13 
+2021. május 4. 
+Fontos tudnivalók 
+ 
+ 
+Formai előírások: 
+ 
+1. Kérjük, hogy a dolgozatot a vizsgázó által használt színűtől eltérő színű tollal, olvas-
+hatóan javítsa ki. 
+2. A feladatok mellett található szürke téglalapok közül az elsőben a feladatra adható ma-
+ximális pontszám van, a javító által adott pontszám a mellette levő téglalapba 
+kerüljön. 
+3. Kifogástalan megoldás esetén kérjük, hogy a maximális pontszám feltüntetése mellett 
+kipipálással jelezze, hogy az adott gondolati egységet látta, és jónak minősítette. 
+4. Hiányos/hibás megoldás esetén kérjük, hogy a hiba jelzése mellett az egyes részpont-
+számokat is írja rá a dolgozatra. Ha a dolgozat javítását jobban követhetővé teszi, akkor 
+a vizsgázó által elvesztett részpontszámok jelzése is elfogadható. Ne maradjon olyan 
+részlet a megoldásban, amelyről a javítás után nem nyilvánvaló, hogy helyes, hibás vagy 
+fölösleges. 
+5. A javítás során alkalmazza az alábbi jelöléseket. 
+• helyes lépés: kipipálás 
+• elvi hiba: kétszeres aláhúzás 
+• számolási hiba vagy más, nem elvi hiba: egyszeres aláhúzás 
+• rossz kiinduló adattal végzett helyes lépés: szaggatott vagy áthúzott kipipálás 
+• hiányos indoklás, hiányos felsorolás vagy más hiány: hiányjel 
+• nem érthető rész: kérdőjel és/vagy hullámvonal 
+6. Az ábrán kívül ceruzával írt részeket ne értékelje. 
+ 
+Tartalmi kérések: 
+ 
+1. Egyes feladatoknál több megoldás pontozását is megadtuk. Amennyiben azoktól eltérő 
+megoldás születik, keresse meg ezen megoldásoknak az útmutató egyes részleteivel 
+egyenértékű részeit, és ennek alapján pontozzon. 
+2. A pontozási útmutató pontjai tovább bonthatók, hacsak az útmutató másképp nem 
+rendelkezik. Az adható pontszámok azonban csak egész pontok lehetnek. 
+3. Ha a megoldásban számolási hiba, pontatlanság van, akkor csak arra a részre nem jár 
+pont, ahol a tanuló a hibát elkövette. Ha a hibás részeredménnyel helyes gondolatmenet 
+alapján tovább dolgozik, és a megoldandó probléma lényegében nem változik meg, ak-
+kor a következő részpontszámokat meg kell adni. 
+4. Elvi hibát követően egy gondolati egységen belül (ezeket az útmutatóban kettős vonal 
+jelzi) a formálisan helyes matematikai lépésekre sem jár pont. Ha azonban a tanuló  
+az elvi hibával kapott rossz eredménnyel – mint kiinduló adattal – helyesen számol to-
+vább a következő gondolati egységekben vagy részkérdésekben, akkor ezekre a részekre 
+kapja meg a maximális pontot, ha a megoldandó probléma lényegében nem változott 
+meg. 
+5. Ha a megoldási útmutatóban zárójelben szerepel egy megjegyzés vagy mértékegység, 
+akkor ennek hiánya esetén is teljes értékű a megoldás. 
+
+===== PAGE 3 =====
+Matematika — középszint 
+Javítási-értékelési útmutató 
+2112 írásbeli vizsga 
+3 / 13 
+2021. május 4. 
+ 
+6. Egy feladatra adott többféle megoldási próbálkozás közül a vizsgázó által megjelölt 
+változat értékelhető. A javítás során egyértelműen jelezze, hogy melyik változatot ér-
+tékelte, és melyiket nem. 
+7. A megoldásokért jutalompont (az adott feladatra vagy feladatrészre előírt maximális 
+pontszámot meghaladó pont) nem adható. 
+8. Egy feladatra vagy részfeladatra adott összpontszám nem lehet negatív. 
+9. Az olyan részszámításokért, részlépésekért nem jár pontlevonás, melyek hibásak, de 
+amelyeket a feladat megoldásához a vizsgázó ténylegesen nem használ fel. 
+10. A gondolatmenet kifejtése során a zsebszámológép használata – további matemati-
+kai indoklás nélkül – a következő műveletek elvégzésére fogadható el: összeadás, 
+kivonás, szorzás, osztás, hatványozás, gyökvonás, n!, 
+
+
+
+
+
+
+k
+n kiszámítása, a függvénytáb-
+lázatban fellelhető táblázatok helyettesítése (sin, cos, tg, log és ezek inverzei), a π és az 
+e szám közelítő értékének megadása, nullára rendezett másodfokú egyenlet gyökeinek 
+meghatározása. További matematikai indoklás nélkül használhatók a számológépek bi-
+zonyos statisztikai mutatók kiszámítására (átlag, szórás) abban az esetben, ha a feladat 
+szövege kifejezetten nem követeli meg az ezzel kapcsolatos részletszámítások bemuta-
+tását is. Egyéb esetekben a géppel elvégzett számítások indoklás nélküli lépéseknek 
+számítanak, azokért nem jár pont. 
+11. Az ábrák bizonyító erejű felhasználása (például adatok leolvasása méréssel) nem elfo-
+gadható. 
+12. Valószínűségek megadásánál (ha a feladat szövege másképp nem rendelkezik) a száza-
+lékban megadott helyes válasz is elfogadható. 
+13. Ha egy feladat szövege nem ír elő kerekítési kötelezettséget, akkor az útmutatóban meg-
+adottól eltérő, észszerű és helyes kerekítésekkel kapott rész- és végeredmény is elfo-
+gadható. 
+14. A vizsgafeladatsor II. B részében kitűzött 3 feladat közül csak 2 feladat megoldása 
+értékelhető. A vizsgázó az erre a célra szolgáló négyzetben – feltehetőleg – megjelölte 
+annak a feladatnak a sorszámát, amelynek értékelése nem fog beszámítani az összpont-
+számába. Ennek megfelelően a megjelölt feladatra esetlegesen adott megoldást nem is 
+kell javítani. Ha a vizsgázó nem jelölte meg, hogy melyik feladat értékelését nem kéri, 
+és a választás ténye a dolgozatból sem derül ki egyértelműen, akkor a nem értékelendő 
+feladat automatikusan a kitűzött sorrend szerinti utolsó feladat lesz. 
+ 
+ 
+ 
+
+===== PAGE 4 =====
+Matematika — középszint 
+Javítási-értékelési útmutató 
+2112 írásbeli vizsga 
+4 / 13 
+2021. május 4. 
+ 
+I. 
+ 
+1. 
+3 
+2 pont  
+Összesen: 
+2 pont  
+ 
+2. 
+9 
+2 pont A 29 válasz is elfogadható. 
+Összesen: 
+2 pont  
+ 
+3. 
+A ∩ B = {12; 18; 24; 30; 36} 
+2 pont  
+Összesen: 
+2 pont  
+ 
+4. 
+(Mivel egy négyszög belső szögeinek összege 360°, 
+a legkisebb szöget α-val jelölve:) 
+α + 2α + 3α + 4α = 360°. 
+2 pont  
+Ebből α = 36°. 
+1 pont  
+A legnagyobb szög: (4 ⋅ 36° =) 144°. 
+1 pont  
+Összesen: 
+4 pont  
+ 
+5. 
+B és C 
+2 pont 
+1 jó válasz, vagy 2 jó és 
+1 rossz válasz esetén 
+1 pont jár. 
+Összesen: 
+2 pont  
+ 
+6. 
+Terjedelem: 600 Ft 
+1 pont  
+Módusz: 1000 Ft 
+1 pont  
+Medián: 1200 Ft 
+1 pont  
+Átlag: 1300 Ft 
+1 pont  
+Összesen: 
+4 pont  
+ 
+7. 
+(150 000 ⋅ 0,94 =) 141 000 (Ft) 
+2 pont  
+Összesen: 
+2 pont  
+ 
+8. 
+Például (1; 2). 
+2 pont  
+Összesen: 
+2 pont  
+
+===== PAGE 5 =====
+Matematika — középszint 
+Javítási-értékelési útmutató 
+2112 írásbeli vizsga 
+5 / 13 
+2021. május 4. 
+ 
+9. 
+8 
+2 pont 
+ 
+Összesen: 
+2 pont  
+ 
+10. 
+x1 = 5 
+1 pont  
+x2 = 3 
+1 pont  
+Összesen: 
+2 pont  
+ 
+11. 
+π
+2
+2
+f 
+= −
+
+
+
+
+ 
+2 pont  
+Összesen: 
+2 pont  
+ 
+12. első megoldás 
+Összesen (9 ∙ 10 ∙ 10 =) 900 darab háromjegyű pozitív 
+egész szám van (összes eset száma). 
+1 pont  
+Ezek közül 9 ∙ 9 ∙ 8 = 648 olyan, amelynek a számje-
+gyei különbözők (kedvező esetek száma). 
+2 pont  
+A keresett valószínűség: 648
+900 (= 0,72).  
+1 pont  
+Összesen: 
+4 pont  
+ 
+12. második megoldás 
+Annak valószínűsége, hogy egy véletlenszerűen vá-
+lasztott szám második számjegye különbözik az első-
+től: 9
+10 . 
+1 pont  
+Annak valószínűsége, hogy a harmadik számjegye 
+különbözik az első kettőtől: 8
+10 . 
+1 pont  
+A keresett valószínűség ezek szorzata: 9
+8
+10 10
+⋅
+= 0,72. 
+2 pont  
+Összesen: 
+4 pont  
+ 
+ 
+
+===== PAGE 6 =====
+Matematika — középszint 
+Javítási-értékelési útmutató 
+2112 írásbeli vizsga 
+6 / 13 
+2021. május 4. 
+ 
+II. A 
+ 
+13. a)  
+A zárójelek felbontása után:
+2
+2
+8
+16
+3
+2
+9
+x
+x
+x
+x
++
++
++
++
++
+=
+. 
+2 pont  
+2
+2
+11
+9
+0
+x
+x
++
++
+=
+ 
+1 pont  
+x1 = –1, x2 = –4,5 
+2 pont  
+Ellenőrzés behelyettesítéssel vagy ekvivalens átalakí-
+tásokra való hivatkozással. 
+1 pont  
+Összesen: 
+6 pont  
+ 
+13. b) első megoldás 
+Az első egyenletből: y = 7 – 2x. 
+1 pont  
+A második egyenletbe behelyettesítve: 
+3x – 7 ⋅ (7 – 2x) = 36. 
+1 pont  
+17x – 49 = 36 
+1 pont  
+x = 5 
+1 pont  
+y = –3 
+1 pont  
+Ellenőrzés. 
+1 pont  
+Összesen: 
+6 pont  
+ 
+13. b) második megoldás 
+Az első egyenletet 3-mal, a másodikat 2-vel szorozva: 
+6
+3
+21
+6
+14
+72
+x
+y
+x
+y
++
+=
+
+
+−
+=
+
+. 
+2 pont 
+Az első egyenletet 7-tel 
+szorozva:  
+14x + 7y = 49. 
+Az elsőből a másodikat kivonva: 
+17y = –51. 
+1 pont Ehhez a második egyenle-
+tet hozzáadva: 17x = 85. 
+y = –3  
+1 pont x = 5 
+Valamelyik eredeti egyenletbe behelyettesítve: x = 5. 
+1 pont y = –3 
+Ellenőrzés. 
+1 pont  
+Összesen: 
+6 pont  
+ 
+14. a)  
+ABC= 70° 
+1 pont  
+ 
+A BCT három-
+szögben: 
+sin 70
+6
+m
+° =
+ 
+1 pont  
+AD = CT = m ≈ 5,64 cm 
+1 pont  
+ 
+ 
+ 
+
+===== PAGE 7 =====
+Matematika — középszint 
+Javítási-értékelési útmutató 
+2112 írásbeli vizsga 
+7 / 13 
+2021. május 4. 
+ 
+Pitagorasz-tétellel: 
+2
+2
+36
+TB
+m
++
+=
+, 
+1 pont 
+cos 70
+6
+TB
+° =
+ 
+amiből TB ≈ 2,05 (cm). 
+1 pont  
+AB ≈ 12 + 2,05 = 14,05 cm 
+1 pont  
+Összesen: 
+6 pont  
+ 
+14. b) első megoldás 
+ 
+A BCD háromszögben a koszinusztételt felírva:   
+BD
+2 = 12
+2 + 6
+2 – 2 ⋅ 12 ⋅ 6 ⋅ cos110°. 
+1 pont  
+BD ≈ 15,14 cm 
+1 pont  
+A BCD háromszögben a szinusztételt felírva: 
+6
+sin
+15,14
+sin110
+δ
+=
+° . 
+1 pont 
+12
+sin
+15,14
+sin110
+β
+=
+° 
+sin δ ≈ 0,3724 
+1 pont sin β ≈ 0,7448 
+(Mivel δ < 90°, így) δ ≈ 21,9° 
+1 pont β ≈ 48,1° 
+β = 180° – 110° – 21,9° = 48,1° 
+1 pont δ = 21,9° 
+Összesen: 
+6 pont  
+ 
+14. b) második megoldás 
+ 
+(Az a) részfeladatban kapott eredményekből, az ABD 
+háromszögben a Pitagorasz-tételt felírva:) 
+2
+2
+2
+2
+5,64
+14,05
+BD
+AD
+AB
+=
++
+=
++
+≈ 15,14 cm. 
+2 pont  
+ABD
+BDC
+=
+
+, mert váltószögek. 
+1 pont 
+Ez a pont akkor is jár, ha 
+ez a gondolat csak a meg-
+oldásból derül ki.  
+Az ABD háromszögben: 
+5,64
+tg 
+14,05
+δ =
+. 
+1 pont  
+δ ≈ 21,9° 
+1 pont  
+β = 180° – 110° – 21,9° = 48,1° 
+1 pont β = 70° – δ 
+Összesen: 
+6 pont  
+Megjegyzés: Ha a vizsgázó valamelyik válaszát mértékegység nélkül adja meg, akkor ezért a 
+feladatban összesen 1 pontot veszítsen. 
+ 
+
+===== PAGE 8 =====
+Matematika — középszint 
+Javítási-értékelési útmutató 
+2112 írásbeli vizsga 
+8 / 13 
+2021. május 4. 
+ 
+ 
+15. a)  
+70 = 37 ⋅ lg K + 31 
+1 pont  
+39
+lg
+37
+K
+=
+ 
+1 pont  
+39
+37
+10
+K =
+≈ 11,325 
+2 pont  
+0,325 év megfelel 0,325 ⋅ 12 = 3,9 hónapnak, 
+1 pont  
+tehát kerekítve 11 éves és 4 hónapos az a kutya, 
+amely emberévekben mérve 70 éves. 
+1 pont 
+Ez a pont nem jár, ha a 
+vizsgázó nem kerekít, 
+vagy rosszul kerekít. 
+Összesen: 
+6 pont  
+ 
+15. b)  
+A 8 éves kutya a második számítási módszer szerint 
+5,5 ⋅ 8 + 12 = 56 éves emberévekben mérve, 
+2 pont  
+az amerikai képlet szerint pedig 
+37 ⋅ lg 8 + 31 ≈ 64,4 éves. 
+2 pont  
+Ez az érték az 56-nak 64,4
+56
+
+
+=
+
+
+
+
+1,15-szorosa, 
+1 pont  
+tehát 15%-kal nagyobb. 
+1 pont  
+Összesen: 
+6 pont  
+ 
+ 
+ 
+
+===== PAGE 9 =====
+Matematika — középszint 
+Javítási-értékelési útmutató 
+2112 írásbeli vizsga 
+9 / 13 
+2021. május 4. 
+ 
+II. B 
+ 
+16. a) 
+Egy betűhármas megadása az {ABE, ACD, ACE, 
+AEF, BGH, DGH} halmazból. 
+2 pont  
+Összesen: 
+2 pont  
+ 
+16. b) első megoldás 
+A fokszámok összege 30, 
+1 pont Ezek a pontok akkor is 
+járnak, ha a vizsgázó az 
+ábra alapján helyesen 
+megadja az élek számát. 
+az eddig lejátszott mérkőzések száma ennek fele,  
+azaz 15. 
+1 pont 
+Az 5 forduló alatt megrendezendő mérkőzések száma 
+8 5
+20
+2
+⋅
+=
+. 
+1 pont  
+Tehát (20 – 15 =) 5 mérkőzés maradt el. 
+1 pont  
+Összesen: 
+4 pont  
+ 
+16. b) második megoldás 
+Ha eddig minden mérkőzést lejátszottak volna, akkor 
+minden fokszám 5 lenne. 
+1 pont 
+Ez a pont akkor is jár, ha 
+ez a gondolat csak a meg-
+oldásból derül ki.  
+Az ehhez „hiányzó” fokszámok rendre: 
+0, 1, 2, 1, 1, 2, 2, 1. 
+1 pont  
+Az elmaradt mérkőzések száma a hiányzó fokszámok 
+összegének (10) a fele,  
+1 pont  
+tehát 5 mérkőzés maradt el. 
+1 pont  
+Összesen: 
+4 pont  
+ 
+16. c) 
+Annak a valószínűsége, hogy a játékos egy büntető-
+lövésből nem szerez gólt: (1 – 0,3 =) 0,7. 
+1 pont 
+Ez a pont akkor is jár, ha 
+ez a gondolat csak a meg-
+oldásból derül ki. 
+A kérdezett valószínűség binomiális eloszlással szá-
+molva (4-szer szerez gólt és 6-szor nem): 
+4
+6
+10
+0,3
+0,7
+4
+
+⋅
+⋅
+
+
+
+
+ ≈ 
+2 pont  
+≈ 0,200. 
+1 pont  
+Összesen: 
+4 pont  
+ 
+ 
+ 
+
+===== PAGE 10 =====
+Matematika — középszint 
+Javítási-értékelési útmutató 
+2112 írásbeli vizsga 
+10 / 13 
+2021. május 4. 
+ 
+16. d) első megoldás 
+1 m
+3 = 1 000 000 cm
+3  
+1 pont 
+Ez a pont akkor is jár, ha 
+a vizsgázó méterben he-
+lyesen számol, és méter-
+ben adja meg a választ.  
+A szabványos korong sugara: r = 3,81 (cm). 
+1 pont  
+A szabványos korong térfogata: 
+V = 3,81
+2
+ ⋅ π ⋅ 2,54 ≈ 115,8 (cm3). 
+1 pont 
+Ha a hasonlóság aránya 
+k, akkor a nagyméretű 
+korong térfogata: 
+V = (3,81 ⋅ k)
+2
+ ⋅ π ⋅ (2,54 ⋅ k)  
+A k-szorosra nagyított korong térfogata az eredetinek 
+k 3-szorosa: 1 000 000 = 115,8 ⋅ k 3. 
+1 pont  
+Ebből k ≈ 3 8636 ≈ 20,5.  
+1 pont  
+A nagyméretű korong magassága: 
+(20,5 ⋅ 2,54 ≈) 52 cm, 
+1 pont  
+alapkörének átmérője pedig: (20,5 ⋅ 7,62 ≈) 156 cm. 
+1 pont  
+Összesen: 
+7 pont  
+ 
+16. d) második megoldás 
+A feladat szövege alapján (a szabványos és a nagy-
+méretű korong esetében is) az alapkör r sugarára,  
+d átmérőjére és a korong m magasságára egyaránt  
+2r = d = 3m teljesül. 
+1 pont  
+Azaz (mindkét korong esetében) 
+2
+3
+m
+r
+=
+. 
+1 pont  
+Ha a nagyméretű korong sugarát (méterben mérve) R 
+jelöli, akkor a feladat szövege alapján: 
+2
+2
+π
+1
+3
+R
+R
+⋅
+= .  
+1 pont  
+Ebből R ≈ 3 0,4775 ≈ 0,78 (m).  
+2 pont  
+A nagyméretű korong alapkörének átmérője:  
+(2 ⋅ 0,78 =) 1,56 m, 
+1 pont  
+magassága pedig: 2 0,78
+3
+
+
+⋅
+=
+
+
+
+
+ 0,52 m. 
+1 pont  
+Összesen: 
+7 pont  
+ 
+ 
+ 
+
+===== PAGE 11 =====
+Matematika — középszint 
+Javítási-értékelési útmutató 
+2112 írásbeli vizsga 
+11 / 13 
+2021. május 4. 
+ 
+17. a) első megoldás 
+A feladat szövege alapján megoldandó a következő 
+egyenletrendszer: 
+200
+21
+5200
+m
+b
+m
+b
++
+=
+
+
++
+=
+
+.  
+2 pont  
+A második egyenletből az elsőt kivonva:  
+20m = 5000. 
+1 pont  
+Az egyenletrendszer megoldása: m = 250 
+1 pont  
+és b = –50. 
+(Tehát a hozzárendelési szabály: 
+250
+50
+x
+x −
+
+.) 
+1 pont  
+Összesen: 
+5 pont  
+ 
+17. a) második megoldás 
+A kérdéses lineáris függvény grafikonjának meredek-
+ségére: 
+5200
+200
+21 1
+m
+−
+=
+=
+−
+  
+2 pont  
+= 250. 
+1 pont  
+200 = 250 + b  
+1 pont 5200 = 21 ∙ 250 + b 
+Ebből b = –50. 
+(Tehát a hozzárendelési szabály: 
+250
+50
+x
+x −
+
+.) 
+1 pont  
+Összesen: 
+5 pont  
+ 
+17. b) 
+Számtani sorozat esetén (a1 = 200, a21 = 5200): 
+21
+(200
+5200) 21
+2
+S
++
+⋅
+=
+= 
+2 pont  
+= 56 700 métert úszna Anna a teljes felkészülés alatt. 
+1 pont  
+Mértani sorozat esetén (b1 = 200, b21 = 5200): 
+5200 = 200 ⋅ q20. 
+1 pont  
+q20 = 26 
+1 pont  
+q ≈ 1,177 
+1 pont  
+21
+21
+1,177
+1
+200
+1,177 1
+S
+−
+=
+⋅
+−
+≈ 
+1 pont  
+≈ 33 500 métert úszna Anna. 
+1 pont  
+Összesen: 
+8 pont  
+ 
+17. c) első megoldás 
+A résztvevők száma legyen n,  
+ekkor a nők száma 0,36n, a férfiak száma 0,64n. 
+1 pont  
+Az életkorok összege 0,36n ⋅ 35 + 0,64n ⋅ 38 = 36,92n, 
+2 pont  
+átlaga pedig 36,92n
+n
+
+
+=
+
+
+
+
+36,92 év. 
+1 pont  
+Összesen: 
+4 pont  
+ 
+
+===== PAGE 12 =====
+Matematika — középszint 
+Javítási-értékelési útmutató 
+2112 írásbeli vizsga 
+12 / 13 
+2021. május 4. 
+ 
+17. c) második megoldás 
+A résztvevők 0,36 része nő, 0,64 része férfi. 
+1 pont  
+Súlyozott átlaggal számolva: 0,36 ⋅ 35 + 0,64 ⋅ 38 ≈ 
+2 pont  
+≈ 37 év az összes induló átlagéletkora. 
+1 pont  
+Összesen: 
+4 pont  
+ 
+18. a) 
+5 ⋅ 2 = 10 olyan egyenes van, amely illeszkedik az 
+A, B, C, D, E pontok valamelyikére, illetve az F, G 
+pontok valamelyikére. 
+2 pont  
+Az A, B, C, D, E pontokra, valamint az F és G pon-
+tokra is illeszkedik 1-1 egyenes, összesen tehát 12 
+megfelelő egyenes van. 
+1 pont  
+Összesen: 
+3 pont  
+ 
+18. b) első megoldás 
+A három kiválasztott pont akkor alkot háromszöget, 
+ha nem esnek egy egyenesre. (Az A, B, C, D, E pon-
+tok közül vagy 2-t választunk, vagy 1-et.) 
+1 pont 
+Ez a pont akkor is jár, ha 
+ez a gondolat csak a meg-
+oldásból derül ki. 
+Az A, B, C, D, E pontok közül 2-t 5
+2
+
+
+
+ = 10-félekép-
+pen választhatunk ki, 
+1 pont  
+és ezekhez a harmadik csúcsot 2-féleképpen (F és G 
+közül) választhatjuk ki. Ebben az esetben tehát 20 
+különböző háromszög van. 
+1 pont  
+Az A, B, C, D, E pontok közül 1-et 5-féleképpen vá-
+laszthatunk ki, és ezt kötjük össze F-fel és G-vel. 
+Ebben az esetben tehát 5 különböző háromszög van. 
+1 pont  
+Így összesen 20 + 5 = 25 háromszög létezik. 
+1 pont  
+Összesen: 
+5 pont  
+ 
+18. b) második megoldás 
+(Komplementer összeszámolást alkalmazunk.)  
+A 7 pont közül 3-at 7
+3
+
+
+
+ = 35-féleképpen választha-
+tunk ki, 
+2 pont  
+de ezek közül az egy egyenesre illeszkedő 
+5
+3
+
+
+
+ = 10 darab ponthármas nem alkot háromszöget. 
+2 pont  
+Így összesen 35 – 10 = 25 háromszög létezik. 
+1 pont  
+Összesen: 
+5 pont  
+Megjegyzés: Teljes pontszámot kapjon a vizsgázó, ha rendezetten felsorolja a lehetséges há-
+romszögeket, és ez alapján helyesen válaszol. 
+ 
+ 
+
+===== PAGE 13 =====
+Matematika — középszint 
+Javítási-értékelési útmutató 
+2112 írásbeli vizsga 
+13 / 13 
+2021. május 4. 
+ 
+18. c) első megoldás 
+2
+2
+( ( 2)
+4
+) 20
+LK =
+−
++
+=
+
+  
+1 pont  
+2
+2
+( 4
+2
+) 20
+LM =
++
+=
+
+ 
+1 pont  
+2
+2
+( 6
+( 2)
+) 40
+KM =
++ −
+=
+
+ 
+1 pont  
+2
+2
+2
+20
+20
+40
++
+=
+, tehát (a Pitagorasz-tétel meg-
+fordítása miatt) az L-nél valóban derékszög van. 
+1 pont  
+Összesen: 
+4 pont  
+ 
+18. c) második megoldás 
+LK =
+
+(–2; 4) 
+1 pont  
+LM =
+
+(4; 2) 
+1 pont  
+Az LK
+
+ vektor az LM
+
+ vektor 90°-os elforgatottja, 
+1 pont Skaláris szorzatuk: 
+–2 ⋅ 4 + 4 ⋅ 2 = 0. 
+tehát L-nél valóban derékszög van. 
+1 pont  
+Összesen: 
+4 pont  
+ 
+18. c) harmadik megoldás 
+A KL egyenes meredeksége: 1 5
+2
+1 ( 1)
+−
+= −
+−−
+. 
+1 pont  
+Az LM egyenes meredeksége: 3 1
+1
+5 1
+2
+−
+=
+−
+. 
+1 pont  
+Ezek szorzata –1, 
+1 pont  
+tehát az egyenesek merőlegesek (így L-nél valóban 
+derékszög van). 
+1 pont  
+Összesen: 
+4 pont  
+ 
+18. d) 
+(A Thalész-tétel, illetve a megfordítása miatt) derék-
+szögű háromszögben a körülírt kör középpontja az át-
+fogó felezőpontja, sugara pedig az átfogó fele. 
+1 pont  
+Az átfogó felezőpontja: FKM = (2; 4). 
+1 pont  
+2
+2
+6
+( 2)
+40
+10
+2
+2
+2
+KM
+r
++ −
+=
+=
+=
+=
+  
+1 pont  
+A körülírt kör egyenlete: 
+2
+2
+(
+2)
+(
+4)
+10
+x
+y
+−
++
+−
+=
+. 
+2 pont  
+Összesen: 
+5 pont  
+Megjegyzés: A KM oldal felezőmerőlegesének egyenlete: y = 3x – 2, a KL oldalé: y = 0,5x + 3, 
+az LM oldalé: y = –2x + 8.  
+ 
+ 

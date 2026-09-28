@@ -1,0 +1,105 @@
+30: 2023. október 17. 8:00 
+45: 2023. október 17. 
+71: 2023. október 17. 
+91: 1. A feladatok megoldására 240 perc fordítható, az idő leteltével a munkát be kell fejeznie. 
+93: 2. A feladatok megoldási sorrendje tetszőleges. 
+95: 3. A II. részben kitűzött öt feladat közül csak négyet kell megoldania. A nem választott fel-
+102: 4. A feladatok megoldásához szöveges adatok tárolására és megjelenítésére nem alkalmas 
+106: 5. A megoldások gondolatmenetét minden esetben írja le, mert a feladatra adható pont-
+109: 6. Ügyeljen arra, hogy a lényegesebb részszámítások is nyomon követhetők legyenek! 
+111: 7. A gondolatmenet kifejtése során a zsebszámológép használata – további matematikai 
+129: 8. A feladatok megoldásánál használt tételek közül az iskolában tanult, névvel ellátott tételeket 
+136: 9. A feladatok végeredményét (a feltett kérdésre adandó választ) szöveges megfogalmazásban 
+139: 10. A dolgozatot tollal írja, de az ábrákat ceruzával is rajzolhatja. Az ábrákon kívül a ceruzával 
+143: 11. Minden feladatnak csak egy megoldása értékelhető. Több megoldási próbálkozás esetén 
+146: 12. Kérjük, hogy a szürkített téglalapokba semmit ne írjon! 
+155: 2023. október 17. 
+176: 1. 
+177: a) Oldja meg az egyenletet, ha x és y pozitív egész számok! 
+186: b) Oldja meg az egyenletet a valós számok halmazán! 
+204: a) 
+207: b) 
+223: 2023. október 17. 
+250: 2023. október 17. 
+269: 2. 
+277: a) A teljes tetőfelületet cseréppel fedik. Mekkora ez a felület? 
+280: b) Hány köbméter a ház teljes térfogata (földszint és tetőtér összesen)? 
+285: c) Hány négyzetméter a ház teljes lakóterülete (a földszinti és tetőtérbeli lakóterület 
+296: a) 
+299: b) 
+302: c) 
+317: 2023. október 17. 
+343: 2023. október 17. 
+362: 3. 
+367: a) Számítsa ki az első hét értékelés átlagát és szórását!  
+372: b) Határozza meg, hogy hányas értékeléseket kapott Tomi ezen a három mérkőzésen! 
+377: c) Hányas értékelést kapott Tomi a 11. mérkőzésen? 
+379: a) 
+382: b) 
+385: c) 
+399: 2023. október 17. 
+425: 2023. október 17. 
+444: 4. 
+459: a) Az alábbi ábrákon négy másodfokú függvény grafikonja látható. Ezek alapján töltse 
+493: b) A másodfokú g függvény értékét az x  R helyen a 
+512: c) Számítsa ki 
+533: a) 
+536: b) 
+539: c) 
+554: 2023. október 17. 
+580: 2023. október 17. 
+604: 5. 
+609: a) Mekkorák az ötszög (belső) szögei? 
+611: b) Mekkora az ötszög területe? 
+613: c) Hányféleképpen járható be az ábrán látható ABCDE ötpontú gráf, ha mindegyik élén 
+619: a) 
+622: b) 
+625: c) 
+639: 2023. október 17. 
+665: 2023. október 17. 
+687: 6. 
+691: a) Igazolja, hogy 15 különböző lehetőség van a három csapat kialakítására! 
+695: b) Ha véletlenszerűen (például sorsolással) hozzák létre a három csapatot, akkor meny-
+705: c) Hány mérkőzést játszott eddig Boróka? 
+707: a) 
+710: b) 
+713: c) 
+727: 2023. október 17. 
+754: 2023. október 17. 
+777: 7. 
+787: a) Hány méter magas volt a fa a megfigyelés kezdetekor? 
+789: b) A megfigyelés kezdetétől számítva hány év múlva lesz a fa 10 méter magas? 
+791: c) Számítsa ki az {an} sorozat határértékét, ha 
+809: d) Hogyan kell megválasztani a két kerítésszakasz hosszát, hogy a rendelkezésre álló 
+812: a) 
+815: b) 
+818: c) 
+821: d) 
+836: 2023. október 17. 
+862: 2023. október 17. 
+884: 8. 
+894: a) Mutassa meg, hogy az E0 esemény valószínűsége 
+902: b) Hogyan kell megválasztani a p értékét úgy, hogy az E0 esemény valószínűsége leg-
+909: c) Igazolja, hogy az E1 esemény valószínűsége 
+931: d) Határozza meg a p valószínűség értékét úgy, hogy az E1 esemény valószínűsége a 
+934: a) 
+937: b) 
+940: c) 
+943: d) 
+957: 2023. október 17. 
+983: 2023. október 17. 
+1005: 9. 
+1010: a) Számítsa ki ezt az összeget! 
+1018: b) Igazolja, hogy 
+1035: c) Igazolja (teljes indukcióval vagy más módszerrel), hogy tetszőleges 1-nél nagyobb 
+1053: a) 
+1056: b) 
+1059: c) 
+1073: 2023. október 17. 
+1099: 2023. október 17. 
+1125: 2023. október 17. 
+1177: 2023. október 17. 
+1205: 1. 
+1210: 2. 
+1213: 3. 
+1216: 4. 

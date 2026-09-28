@@ -1,0 +1,1362 @@
+
+===== PAGE 1 =====
+Matematika 
+középszint 
+ 
+Javítási-értékelési útmutató 2011 
+ 
+EMBERI ERŐFORRÁSOK MINISZTÉRIUMA 
+MATEMATIKA 
+ 
+KÖZÉPSZINTŰ 
+ÍRÁSBELI VIZSGA 
+JAVÍTÁSI-ÉRTÉKELÉSI 
+ÚTMUTATÓ 
+ 
+É R E T T S É G I V I Z S G A • 2 0 2 0 . m á j u s 5 . 
+
+===== PAGE 2 =====
+Matematika — középszint 
+Javítási-értékelési útmutató 
+2011 írásbeli vizsga 
+2 / 16 
+2020. május 5. 
+Fontos tudnivalók 
+ 
+ 
+Formai előírások: 
+ 
+1. Kérjük, hogy a dolgozatot a vizsgázó által használt színűtől eltérő színű tollal, olvas-
+hatóan javítsa ki. 
+2. A feladatok mellett található szürke téglalapok közül az elsőben a feladatra adható ma-
+ximális pontszám van, a javító által adott pontszám a mellette levő téglalapba 
+kerüljön. 
+3. Kifogástalan megoldás esetén kérjük, hogy a maximális pontszám feltüntetése mellett 
+kipipálással jelezze, hogy az adott gondolati egységet látta, és jónak minősítette. 
+4. Hiányos/hibás megoldás esetén kérjük, hogy a hiba jelzése mellett az egyes részpont-
+számokat is írja rá a dolgozatra. Ha a dolgozat javítását jobban követhetővé teszi, akkor 
+a vizsgázó által elvesztett részpontszámok jelzése is elfogadható. Ne maradjon olyan 
+részlet a megoldásban, amelyről a javítás után nem nyilvánvaló, hogy helyes, hibás vagy 
+fölösleges. 
+5. A javítás során alkalmazza az alábbi jelöléseket. 
+• helyes lépés: kipipálás 
+• elvi hiba: kétszeres aláhúzás 
+• számolási hiba vagy más, nem elvi hiba: egyszeres aláhúzás 
+• rossz kiinduló adattal végzett helyes lépés: szaggatott vagy áthúzott kipipálás 
+• hiányos indoklás, hiányos felsorolás vagy más hiány: hiányjel 
+• nem érthető rész: kérdőjel és/vagy hullámvonal 
+6. Az ábrán kívül ceruzával írt részeket ne értékelje. 
+ 
+Tartalmi kérések: 
+ 
+1. Egyes feladatoknál több megoldás pontozását is megadtuk. Amennyiben azoktól eltérő 
+megoldás születik, keresse meg ezen megoldásoknak az útmutató egyes részleteivel 
+egyenértékű részeit, és ennek alapján pontozzon. 
+2. A pontozási útmutató pontjai tovább bonthatók, hacsak az útmutató másképp nem 
+rendelkezik. Az adható pontszámok azonban csak egész pontok lehetnek. 
+3. Ha a megoldásban számolási hiba, pontatlanság van, akkor csak arra a részre nem jár 
+pont, ahol a tanuló a hibát elkövette. Ha a hibás részeredménnyel helyes gondolatmenet 
+alapján tovább dolgozik, és a megoldandó probléma lényegében nem változik meg, ak-
+kor a következő részpontszámokat meg kell adni. 
+4. Elvi hibát követően egy gondolati egységen belül (ezeket az útmutatóban kettős vonal 
+jelzi) a formálisan helyes matematikai lépésekre sem jár pont. Ha azonban a tanuló  
+az elvi hibával kapott rossz eredménnyel – mint kiinduló adattal – helyesen számol to-
+vább a következő gondolati egységekben vagy részkérdésekben, akkor ezekre a részekre 
+kapja meg a maximális pontot, ha a megoldandó probléma lényegében nem változott 
+meg. 
+5. Ha a megoldási útmutatóban zárójelben szerepel egy megjegyzés vagy mértékegység, 
+akkor ennek hiánya esetén is teljes értékű a megoldás. 
+
+===== PAGE 3 =====
+Matematika — középszint 
+Javítási-értékelési útmutató 
+2011 írásbeli vizsga 
+3 / 16 
+2020. május 5. 
+ 
+6. Egy feladatra adott többféle megoldási próbálkozás közül a vizsgázó által megjelölt 
+változat értékelhető. A javítás során egyértelműen jelezze, hogy melyik változatot ér-
+tékelte, és melyiket nem. 
+7. A megoldásokért jutalompont (az adott feladatra vagy feladatrészre előírt maximális 
+pontszámot meghaladó pont) nem adható. 
+8. Egy feladatra vagy részfeladatra adott összpontszám nem lehet negatív. 
+9. Az olyan részszámításokért, részlépésekért nem jár pontlevonás, melyek hibásak, de 
+amelyeket a feladat megoldásához a vizsgázó ténylegesen nem használ fel. 
+10. A gondolatmenet kifejtése során a zsebszámológép használata – további matemati-
+kai indoklás nélkül – a következő műveletek elvégzésére fogadható el: összeadás, 
+kivonás, szorzás, osztás, hatványozás, gyökvonás, n!, 
+
+
+
+
+
+
+k
+n kiszámítása, a függvénytáb-
+lázatban fellelhető táblázatok helyettesítése (sin, cos, tg, log és ezek inverzei), a π és az 
+e szám közelítő értékének megadása, nullára rendezett másodfokú egyenlet gyökeinek 
+meghatározása. További matematikai indoklás nélkül használhatók a számológépek bi-
+zonyos statisztikai mutatók kiszámítására (átlag, szórás) abban az esetben, ha a feladat 
+szövege kifejezetten nem követeli meg az ezzel kapcsolatos részletszámítások bemuta-
+tását is. Egyéb esetekben a géppel elvégzett számítások indoklás nélküli lépéseknek 
+számítanak, azokért nem jár pont. 
+11. Az ábrák bizonyító erejű felhasználása (például adatok leolvasása méréssel) nem elfo-
+gadható. 
+12. Valószínűségek megadásánál (ha a feladat szövege másképp nem rendelkezik) a száza-
+lékban megadott helyes válasz is elfogadható. 
+13. Ha egy feladat szövege nem ír elő kerekítési kötelezettséget, akkor az útmutatóban meg-
+adottól eltérő, észszerű és helyes kerekítésekkel kapott rész- és végeredmény is elfo-
+gadható. 
+14. A vizsgafeladatsor II. B részében kitűzött 3 feladat közül csak 2 feladat megoldása 
+értékelhető. A vizsgázó az erre a célra szolgáló négyzetben – feltehetőleg – megjelölte 
+annak a feladatnak a sorszámát, amelynek értékelése nem fog beszámítani az összpont-
+számába. Ennek megfelelően a megjelölt feladatra esetlegesen adott megoldást nem is 
+kell javítani. Ha a vizsgázó nem jelölte meg, hogy melyik feladat értékelését nem kéri, 
+és a választás ténye a dolgozatból sem derül ki egyértelműen, akkor a nem értékelendő 
+feladat automatikusan a kitűzött sorrend szerinti utolsó feladat lesz. 
+ 
+ 
+ 
+
+===== PAGE 4 =====
+Matematika — középszint 
+Javítási-értékelési útmutató 
+2011 írásbeli vizsga 
+4 / 16 
+2020. május 5. 
+ 
+I. 
+ 
+1. 
+37 (dm2) 
+2 pont  
+Összesen: 
+2 pont  
+ 
+2. 
+ 
+2 pont  
+Összesen: 
+2 pont  
+ 
+3. 
+14 
+2 pont A 214 válasz is elfogadható. 
+Összesen: 
+2 pont  
+ 
+4.  
+ 
+2 pont  
+E ismerősei: A és D. 
+1 pont  
+Összesen: 
+3 pont  
+ 
+5. 
+A: hamis 
+B: igaz 
+C: hamis 
+2 pont 
+2 jó válasz esetén 1 pont, 
+1 jó válasz esetén 0 pont 
+jár. 
+ Összesen: 
+2 pont  
+ 
+ 
+ 
+
+===== PAGE 5 =====
+Matematika — középszint 
+Javítási-értékelési útmutató 
+2011 írásbeli vizsga 
+5 / 16 
+2020. május 5. 
+ 
+6. 
+A megrajzolt grafikon egy felfelé nyíló normálpara-
+bola íve, 
+1 pont 
+ 
+melynek tengelypontja (1; 0).  
+1 pont 
+A függvény a megfelelő intervallumon van ábrá-
+zolva. 
+1 pont 
+ Összesen: 
+3 pont  
+ 
+7. 
+A terjedelem: 6 (év)  
+1 pont  
+A módusz: 17 (év)  
+1 pont  
+A medián: 16 (év) 
+1 pont  
+Összesen: 
+3 pont  
+ 
+8. 
+11 
+2 pont  
+Összesen: 
+2 pont  
+ 
+9.  
+A végtelen szakaszos tizedes törtben a szakasz hosz-
+sza 6 számjegy. 
+1 pont 
+Ez a pont akkor is jár, ha 
+ez a gondolat csak a meg-
+oldásból derül ki. 
+100 = 6 · 16 + 4 
+1 pont A 96. számjegy az 5. 
+Így a 100. számjegy a 2. 
+1 pont  
+Összesen: 
+3 pont  
+ 
+10. 
+(A kérdezett oldal hosszát a-val jelölve, a szinuszté-
+tel alapján:) 
+sin122
+11
+sin45
+a
+°
+=
+° .  
+2 pont  
+Ebből 
+sin122
+11
+sin 45
+a
+°
+
+
+=
+⋅
+≈
+
+
+°
+
+
+13,2 cm. 
+1 pont  
+Összesen: 
+3 pont  
+ 
+11. 
+18 
+2 pont 
+A hányados (6) helyes 
+meghatározásáért 1 pont 
+jár. 
+Összesen: 
+2 pont  
+ 
+ 
+ 
+
+===== PAGE 6 =====
+Matematika — középszint 
+Javítási-értékelési útmutató 
+2011 írásbeli vizsga 
+6 / 16 
+2020. május 5. 
+ 
+12. első megoldás 
+63 (= 216)-féle háromjegyű számot kaphatunk (összes 
+eset száma).  
+1 pont  
+500-nál nagyobb szám közülük 2 ⋅ 6 ⋅ 6 (= 72) szám, 
+mert az első számjegye 5 vagy 6 lehet (kedvező ese-
+tek száma).  
+1 pont  
+A keresett valószínűség: 
+3
+2 6 6
+1
+6
+3
+⋅⋅
+=
+. 
+1 pont  
+Összesen: 
+3 pont  
+ 
+12. második megoldás 
+Csak az első dobást kell figyelnünk, mert a kapott 
+szám akkor lesz 500-nál nagyobb, ha az első dobás 
+5 vagy 6 (a kedvező esetek száma 2).  
+1 pont  
+Az első dobás összesen 6-féle lehet. 
+1 pont  
+A keresett valószínűség: 2
+1
+6
+3
+=
+. 
+1 pont  
+Összesen: 
+3 pont  
+ 
+ 
+
+===== PAGE 7 =====
+Matematika — középszint 
+Javítási-értékelési útmutató 
+2011 írásbeli vizsga 
+7 / 16 
+2020. május 5. 
+ 
+II. A 
+ 
+13. a) első megoldás 
+Értelmezési tartomány: x ≠ 2 és x ≠ −2. 
+1 pont 
+Ez a pont akkor is jár, ha 
+a vizsgázó behelyettesí-
+téssel ellenőriz.  
+Az egyenletet rendezve: x
+2 − 4x + 4 = 2x
+2 − 8. 
+1 pont  
+x
+2 + 4x − 12 = 0 
+1 pont  
+x1 = 2, x2 = −6 
+2 pont  
+Ellenőrzés behelyettesítéssel: a –6 megoldása az 
+egyenletnek, a 2 nem.  
+1 pont 
+Ez a pont jár, ha a vizs-
+gázó az értelmezési tarto-
+mány megadása mellett 
+ekvivalens átalakításokra 
+hivatkozva jól válaszol. 
+Összesen: 
+6 pont  
+ 
+13. a) második megoldás 
+Értelmezési tartomány: x ≠ 2 és x ≠ −2. 
+1 pont 
+Ez a pont akkor is jár, ha 
+a vizsgázó behelyettesí-
+téssel ellenőriz. 
+A tört számlálóját és nevezőjét szorzattá alakítva: 
+2
+(
+2)
+2
+(
+2)(
+2)
+x
+x
+x
+−
+=
++
+−
+. 
+1 pont  
+A törtet egyszerűsítve (x ≠ 2): 
+2
+2
+2
+x
+x
+−
+=
++
+. 
+1 pont  
+Az egyenletet rendezve: x − 2 = 2x + 4, 
+1 pont  
+amiből x = −6. 
+1 pont  
+Ellenőrzés behelyettesítéssel vagy az értelmezési tar-
+tomány feltüntetése mellett ekvivalens átalakításokra 
+való hivatkozással. 
+1 pont  
+Összesen: 
+6 pont  
+ 
+13. b)  
+h 
+2 pont 
+Egy jó és egy rossz válasz 
+esetén 1 pont, minden 
+más esetben 0 pont jár. 
+Összesen: 
+2 pont  
+ 
+ 
+ 
+
+===== PAGE 8 =====
+Matematika — középszint 
+Javítási-értékelési útmutató 
+2011 írásbeli vizsga 
+8 / 16 
+2020. május 5. 
+ 
+13. c)  
+ 
+van  
+zérushelye 
+monoton  
+növekvő 
+a teljes ért. 
+tartományon 
+van  
+minimuma 
+f 
+igaz 
+igaz 
+hamis 
+g 
+hamis 
+igaz 
+hamis 
+h 
+igaz 
+hamis 
+igaz 
+ 
+5 pont 
+8 helyes válasz esetén 4, 
+7 helyes válasz esetén 3, 
+6 helyes válasz esetén 2, 
+5 helyes válasz esetén 1 
+pont jár. 
+5-nél kevesebb helyes vá-
+lasz esetén nem jár pont.  
+Összesen: 
+5 pont  
+ 
+14. a)  
+Kung Li-csiao 2. dobása 19,39 (m).  
+1 pont  
+A hiányzó eredmények: 20,42; 20,63; 19,87; 19,35. 
+1 pont  
+A helyezések rendre: 2., 1., 4., 3., 5. 
+1 pont  
+Összesen: 
+3 pont  
+ 
+14. b)  
+Az átlag (m): 
+17,60 18,72 19,39 19,38 19,10 19,87
+19,01
+6
++
++
++
++
++
+=
+. 
+1 pont Ez a 2 pont akkor is jár, 
+ha a vizsgázó az átlagot 
+és a szórást számológép-
+pel helyesen számolja ki. 
+A szórás (m): 
+2
+2
+2
+2
+2
+2
+1,41
+0,29
+0,38
+0,37
+0,09
+0,86
+6
++
++
++
++
++
+≈ 
+1 pont 
+≈ 0,72. 
+1 pont  
+Összesen: 
+3 pont  
+ 
+14. c)  
+4 kg = 4000 g  
+1 pont  
+A golyó térfogata 4000 : 8,73 ≈ 458,19 (cm3). 
+1 pont  
+Ha r cm sugarú a golyó (gömb), akkor  
+3
+4
+π
+3 r
+ = 458,19,  
+1 pont  
+(r3 ≈ 109,38) ahonnan r ≈ 4,782 (cm). 
+2 pont  
+A golyó átmérője (2r ≈) 9,6 cm. 
+1 pont  
+Összesen: 
+6 pont  
+ 
+ 
+ 
+
+===== PAGE 9 =====
+Matematika — középszint 
+Javítási-értékelési útmutató 
+2011 írásbeli vizsga 
+9 / 16 
+2020. május 5. 
+ 
+15. a)  
+A felmérés alapján (kerekítés nélkül) a kék törölkö-
+zők darabszáma: 176 10000
+500 ⋅
+ = 3520. Ugyanígy szá-
+molva 3060 sárga, 2480 piros és 940 zöld törölköző 
+készülne. 
+2 pont 
+ 
+ 
+ 
+ 
+A kért kerekítéssel 3500 kék, 3100 sárga, 2500 piros 
+és 900 zöld színű törölköző készült. 
+1 pont 
+Ez a pont nem jár, ha a 
+vizsgázó nem kerekít, 
+vagy rosszul kerekít. 
+Összesen: 
+3 pont  
+ 
+15. b) első megoldás 
+(A kiválasztás sorrendjét figyelembe véve) 
+7 ⋅ 6 (= 42)-féleképpen választhatunk ki két törölközőt 
+(összes eset).  
+1 pont  
+A kedvező esetek száma 2. 
+1 pont   
+A keresett valószínűség 2
+42 ≈ 0,048. 
+1 pont  
+Összesen: 
+3 pont  
+ 
+15. b) második megoldás 
+(A kiválasztás sorrendjét figyelmen kívül hagyva) 
+7
+2
+
+
+
+ (= 21)-féleképpen választhatunk ki két törölkö-
+zőt (összes eset). 
+1 pont  
+A kedvező esetek száma ebben az esetben 1. 
+1 pont  
+A keresett valószínűség 1
+21 ≈ 0,048. 
+1 pont  
+Összesen: 
+3 pont  
+ 
+15. b) harmadik megoldás 
+2
+7 annak a valószínűsége, hogy elsőre sárga törölkö-
+zőt húzunk. 
+1 pont  
+Ezután 1
+6 annak a valószínűsége, hogy másodikra is 
+sárga törölközőt húzunk. 
+1 pont  
+A keresett valószínűség ezek szorzata,  
+azaz 2 1
+7 6
+⋅
+ ≈ 0,048. 
+1 pont  
+Összesen: 
+3 pont  
+ 
+ 
+ 
+
+===== PAGE 10 =====
+Matematika — középszint 
+Javítási-értékelési útmutató 
+2011 írásbeli vizsga 
+10 / 16 
+2020. május 5. 
+ 
+15. c) első megoldás 
+Jelölje a gyárban tavaly dolgozó férfiak számát x.  
+A nők száma tavaly 3x volt.  
+Idén x + 6 férfi és 3x + 70 nő dolgozik a gyárban. 
+1 pont* 
+Ez a pont akkor is jár, ha 
+ezek a gondolatok csak a 
+megoldásból derülnek ki. 
+A szöveg alapján: 4(x + 6) = 3x + 70,  
+1 pont*  
+amiből x = 46.  
+1 pont*  
+Idén (46 + 6 =) 52 férfi és (3 · 46 + 70 =) 208 nő dol-
+gozik a gyárban. 
+1 pont  
+Ellenőrzés: 208 = 4 · 52, továbbá tavaly 46 férfi és 
+208 – 70 = 138 nő dolgozott a gyárban, ami megfelel 
+a feltételeknek (138 = 46 · 3). 
+1 pont  
+Összesen: 
+5 pont  
+ 
+Megjegyzés: A *-gal jelölt pontokat az alábbi gondolatmenetért is megkaphatja a vizsgázó. 
+Jelölje a gyárban idén dolgozó férfiak számát y. 
+A nők száma idén 4y.  
+Tavaly y – 6 férfi és 4y – 70 nő dolgozott a gyárban. 
+1 pont 
+Ez a pont akkor is jár, ha 
+ezek a gondolatok csak a 
+megoldásból derülnek ki. 
+A szöveg alapján: 3(y – 6) = 4y – 70,  
+1 pont  
+amiből y = 52.  
+1 pont  
+ 
+15. c) második megoldás 
+Ha idén a gyár összes dolgozójának száma z, akkor 
+tavaly a dolgozók száma z – 76 volt. Tavaly a dolgo-
+zók negyede volt férfi, idén pedig az ötöde. 
+1 pont 
+Ez a pont akkor is jár, ha 
+ezek a gondolatok csak a 
+megoldásból derülnek ki. 
+A szöveg alapján: 
+76
+6
+4
+5
+z
+z
+−
++
+=
+, 
+1 pont  
+amiből z = 260.  
+1 pont  
+Idén (260 : 5 =) 52 férfi és (260 – 52 =) 208 nő dolgo-
+zik a gyárban. 
+1 pont  
+Ellenőrzés: 208 = 4 · 52, továbbá tavaly 46 férfi és 
+208 – 70 = 138 nő dolgozott a gyárban, ami megfelel 
+a feltételeknek (138 = 46 · 3). 
+1 pont  
+Összesen: 
+5 pont  
+ 
+ 
+
+===== PAGE 11 =====
+Matematika — középszint 
+Javítási-értékelési útmutató 
+2011 írásbeli vizsga 
+11 / 16 
+2020. május 5. 
+ 
+II. B 
+ 
+16. a) első megoldás 
+A B pont az AD szakasz felezőpontja, ezért ha 
+D(d1; d2), akkor 
+1
+( 8)
+8
+2
+d + −
+=
+, amiből d1 = 24. 
+1 pont  
+Ugyanígy 
+2
+( 12)
+0
+2
+d + −
+=
+, amiből d2 = 12. 
+1 pont  
+Tehát D(24; 12). 
+1 pont  
+Összesen: 
+3 pont  
+ 
+16. a) második megoldás 
+A tükrözés miatt AB
+BD
+=
+
+
+. 
+1 pont 
+Ez a pont akkor is jár, ha 
+ez a gondolat csak a meg-
+oldásból derül ki. 
+AB
+BD
+=
+=
+
+
+ (16; 12) 
+1 pont  
+Így a D-be mutató helyvektornak (egyben D-nek) a 
+koordinátái: d = b + AB =
+
+ (24; 12). 
+1 pont  
+Összesen: 
+3 pont  
+ 
+16. a) harmadik megoldás 
+A B pont az AD szakasz felezőpontja, ezért a hely-
+vektorokra teljesül: 
+2
++
+= a
+d
+b
+. 
+1 pont  
+Az origóból a D-be mutató helyvektornak (egyben 
+D-nek) a koordinátái:  
+d = 2b − a = 2 · (8; 0) − (−8; −12) = 
+1 pont  
+= (24; 12). 
+1 pont  
+Összesen: 
+3 pont  
+ 
+16. a) negyedik megoldás 
+A B pont első koordinátája 16-tal nagyobb, mint az A 
+pont első koordinátája, tehát a D pont első koordiná-
+tája is 16-tal nagyobb, mint a B első koordinátája. 
+1 pont  
+A B pont második koordinátája 12-vel nagyobb, mint 
+az A pont második koordinátája, tehát a D pont máso-
+dik koordinátája is 12-vel nagyobb, mint a B második 
+koordinátája. 
+1 pont  
+Tehát a D pont koordinátái: (24; 12). 
+1 pont  
+Összesen: 
+3 pont  
+ 
+ 
+ 
+
+===== PAGE 12 =====
+Matematika — középszint 
+Javítási-értékelési útmutató 
+2011 írásbeli vizsga 
+12 / 16 
+2020. május 5. 
+ 
+16. b)  
+A háromszög magasságvonala a csúcson áthaladó, 
+a szemközti oldal egyenesére merőleges egyenes. 
+1 pont 
+Ez a pont akkor is jár, ha 
+ez a gondolat csak a meg-
+oldásból derül ki. 
+A B csúcson átmenő magasságvonal egyik normál-
+vektora AC =
+
+(7; 24), 
+1 pont  
+tehát egyenlete 7x + 24y = 7 ⋅ 8 + 24 ⋅ 0 = 56.  
+2 pont  
+Összesen: 
+4 pont   
+ 
+16. c) első megoldás 
+A háromszög oldalainak hossza: 
+2
+2
+16
+12
+20
+AB =
++
+=
+, 
+2
+2
+9
+12
+15
+BC =
++
+=
+, 
+2
+2
+7
+24
+25
+CA =
++
+=
+. 
+2 pont 
+Egy hiba esetén 1 pont, 
+több hiba esetén 0 pont 
+jár. 
+Mivel 
+2
+2
+2
+15
+20
+25
++
+=
+, ezért (a Pitagorasz-tétel meg-
+fordítása miatt) a háromszög valóban derékszögű (és 
+a derékszög a B csúcsnál van).  
+2 pont  
+Összesen: 
+4 pont  
+ 
+16. c) második megoldás 
+A háromszög két oldalvektora: 
+( 16;
+12)
+BA = −
+−
+
+ és 
+( 9;12)
+BC = −
+
+. 
+2 pont  
+A két vektor skaláris szorzata: 
+( 16;
+12) ( 9;12)
+BA BC
+⋅
+= −
+−
+⋅−
+=
+
+144 − 144 = 0, tehát 
+valóban derékszög van a háromszög B csúcsánál. 
+2 pont  
+Összesen: 
+4 pont  
+ 
+16. c) harmadik megoldás 
+Az AC oldal felezőpontja K(–4,5; 0),  
+1 pont  
+melynek távolsága a három csúcstól egyenlő: 
+2
+2
+3,5
+12
+12,5
+CK
+AK
+=
+=
++
+=
+, és BK = 12,5. 
+2 pont  
+A Thalész-tétel miatt ekkor valóban derékszög van a 
+háromszög B csúcsánál. 
+1 pont  
+Összesen: 
+4 pont  
+ 
+16. c) negyedik megoldás 
+Az AB oldalegyenes meredeksége 0
+( 12)
+12
+3
+8 ( 8)
+16
+4
+−−
+=
+=
+−−
+, 
+a BC oldalegyenes meredeksége 12 0
+12
+4
+1 8
+9
+3
+−
+=
+= −
+−−
+−
+. 
+2 pont  
+ 
+ 
+ 
+
+===== PAGE 13 =====
+Matematika — középszint 
+Javítási-értékelési útmutató 
+2011 írásbeli vizsga 
+13 / 16 
+2020. május 5. 
+ 
+A két meredekség szorzata: 3
+4
+1
+4
+3
+
+
+⋅−
+= −
+
+
+
+
+, tehát a 
+két oldalegyenes merőleges egymásra, azaz valóban 
+derékszög van a háromszög B csúcsánál. 
+2 pont  
+Összesen: 
+4 pont  
+ 
+ 
+16. d) első megoldás 
+Ha mindhárom pontot ugyanazzal a színnel színez-
+zük, akkor három különböző színezés lehetséges. 
+1 pont  
+Ha két színt használunk fel, akkor ezt a két színt há-
+romféleképpen választhatjuk ki. 
+1 pont  
+Legyen a két szín például a kék és a zöld. Ezzel a két 
+színnel a három pontot 6-féleképpen színezhetjük ki: 
+KKZ, KZK, ZKK, ZZK, ZKZ, KZZ. 
+2 pont 
+Ha minden pont kék vagy 
+zöld, akkor 2
+3 lehetőség 
+van, de ebből a 8-ból 2 
+eset olyan, amikor min-
+den pont azonos színű. 
+Így két színnel (3 ⋅ 6 =) 18 különböző színezés létezik. 
+1 pont  
+A lehetséges színezések száma (3 + 18 =) 21. 
+1 pont  
+Összesen: 
+6 pont  
+ 
+16. d) második megoldás 
+Megszámoljuk a három pont három színnel történő 
+színezési lehetőségeinek a számát, és ebből kivonjuk 
+azokat, amikor mindhárom színt felhasználjuk. 
+1 pont 
+Ez a pont akkor is jár, ha 
+ez a gondolat csak a meg-
+oldásból derül ki. 
+Három pontot három színnel 3
+3 = 27-féleképpen lehet 
+kiszínezni. 
+2 pont  
+Ezek között 3! = 6 olyan színezés van, amikor a há-
+rom pont különböző színű. 
+2 pont  
+A lehetséges színezések száma (27 – 6 =) 21. 
+1 pont  
+Összesen: 
+6 pont  
+Megjegyzés: Ha a vizsgázó rendezetten felsorolja az összes lehetőséget, és ez alapján helyes 
+választ ad, akkor teljes pontszámot kapjon. 
+
+===== PAGE 14 =====
+Matematika — középszint 
+Javítási-értékelési útmutató 
+2011 írásbeli vizsga 
+14 / 16 
+2020. május 5. 
+ 
+17. a) első megoldás 
+Az egymás utáni napokon elültetett fák száma egy 
+olyan {an} számtani sorozat első 30 tagját alkotja, 
+melynek differenciája 2.  
+1 pont 
+Ez a pont akkor is jár, ha 
+ez a gondolat csak a meg-
+oldásból derül ki.  
+A feladat szövege alapján:
+1
+30
+2
+29 2 30
+3000
+2
+a
+S
++
+⋅
+=
+⋅
+=
+. 
+1 pont  
+Ebből kapjuk, hogy az első napon 
+1
+71
+a =
+,  
+2 pont  
+a 30. napon pedig 
+30
+71
+29 2
+129
+a
+=
++
+⋅
+=
+ fát kellett el-
+ültetni a terv teljesítéséhez. (Ezek megfelelnek a  
+feladat feltételeinek.) 
+1 pont  
+Összesen: 
+5 pont  
+ 
+17. a) második megoldás 
+Az egymás utáni napokon elültetett fák száma egy 
+olyan {an} számtani sorozat első 30 tagját alkotja, 
+melynek differenciája 2.  
+1 pont 
+Ez a pont akkor is jár, ha 
+ez a gondolat csak a meg-
+oldásból derül ki.  
+A számtani sorozat tulajdonsága alapján:
+1
+30
+2
+29
+15
+16
+3000
+...
+200
+15
+a
+a
+a
+a
+a
+a
++
+=
++
+=
+=
++
+=
+=
+. 
+1 pont  
+1
+1
+58
+200
+a
+a
++
++
+=
+, így az első napon 
+1
+71
+a =
+, 
+2 pont   
+a 30. napon pedig 
+30
+200
+71
+129
+a
+=
+−
+=
+ fát kellett el-
+ültetni a terv teljesítéséhez. (Ezek megfelelnek a  
+feladat feltételeinek.) 
+1 pont  
+Összesen: 
+5 pont  
+ 
+17. b)  
+Helyesen kitöltött halmazábra. 
+ 
+4 pont  
+Összesen (13 + 11 + 5 + 19 + 2 + 2 + 7 =) 59 fa ka-
+pott valamilyen jelölést. 
+1 pont 45 + 30 + 20 –  
+– (21 + 13 + 4) + 2  
+Így (3000 – 59 =) 2941 fa nem kapott semmilyen je-
+lölést a telepítettek között. 
+1 pont  
+Összesen: 
+6 pont  
+ 
+17. c)  
+Egy év alatt a faállomány az 1,03-szorosára változik.  
+1 pont 
+Ez a pont akkor is jár, ha 
+ez a gondolat csak a meg-
+oldásból derül ki.  
+
+===== PAGE 15 =====
+Matematika — középszint 
+Javítási-értékelési útmutató 
+2011 írásbeli vizsga 
+15 / 16 
+2020. május 5. 
+ 
+(Ha x év múlva lesz 16 000 m3 a faállomány, akkor) 
+10 000 ⋅ 1,03x = 16 000 
+1 pont  
+1,03x = 1,6 
+1 pont  
+x = 
+1,03
+log
+1,6
+lg1,6
+lg1,03
+
+
+=
+
+
+
+
+ ≈ 15,9 
+2 pont 
+Mindkét oldal 10-es 
+alapú logaritmusát véve 
+és a megfelelő azonossá-
+got alkalmazva: 
+lg1,03
+lg1,6
+x ⋅
+=
+,  
+amiből x ≈ 15,9. 
+Tehát kb. 16 év múlva éri el a faállomány a 16 000 m3-t.  
+1 pont  
+Összesen: 
+6 pont  
+Megjegyzések:  
+1. Ha a vizsgázó évről évre helyes kerekítéssel kiszámolja a faállományt, és ez alapján helye-
+sen válaszol, akkor teljes pontszámot kapjon. 
+2. Ha a vizsgázó egyenlet helyett egyenlőtlenséggel dolgozik, akkor a megfelelő pontok járnak. 
+ 
+18. a)  
+Az ötszög belső szögeinek összege 3 · 180° = 540°. 
+1 pont  
+A hiányzó szögek nagysága (a szimmetria miatt) 
+(540°− 3 ⋅ 120°) : 2 = 90° valóban. 
+1 pont  
+Összesen: 
+2 pont  
+ 
+18. b)  
+Az AD és BD átlók az ötszöget két egyenlő szárú de-
+rékszögű háromszögre és egy harmadik (egyenlő 
+szárú) háromszögre bontják.  
+ 
+1 pont  
+TAED = TBCD = 10 10
+2
+⋅
+= 50 (cm2) 
+1 pont  
+Az AD és a BD szakasz hossza Pitagorasz-tétellel: 
+2
+2
+10
+10
+200
+10 2
++
+=
+=
+ ≈ 14,14 (cm). 
+1 pont  
+Az ADB háromszögben a szárak által bezárt szög 
+30°-os, így a háromszög területe: 
+TADB 
+10 2 10 2 sin30
+2
+⋅
+⋅
+°
+=
+= 50 (cm2). 
+2 pont 
+Az ADB háromszögben az 
+AD oldalhoz tartozó ma-
+gasság hossza:  
+m ≈ 14,14 sin 30
+⋅
+° = 7,07,  
+így TADB ≈ 49,98 (cm2). 
+TABCDE  = 2 · 50 + 50 = 150 cm2 
+1 pont  
+Összesen: 
+6 pont  
+
+===== PAGE 16 =====
+Matematika — középszint 
+Javítási-értékelési útmutató 
+2011 írásbeli vizsga 
+16 / 16 
+2020. május 5. 
+ 
+Megjegyzések:  
+1. 1-1 pont jár az EDC háromszög területének (T ≈ 43,3 cm2), az EC oldal hosszának  
+(EC ≈ 17,32 cm), az ABCE trapéz magasságának (m ≈ 8,66 cm), az AB oldal hosszának  
+(AB ≈ 7,32 cm) és a trapéz területének (t ≈ 106,7 cm2) kiszámításáért. További 1 pont jár a 
+helyes válaszért (T + t ≈ 150 cm2). 
+ 
+2. Az ötszöget téglalapba foglalva, a téglalap területe 
+(
+)
+10 3 5
+5 3
+50 3
+150
++
+=
++
+. 
+A négy kiegészítő derékszögű háromszög egybevágó, 
+együttes területük: 
+25 3
+4
+50 3
+2
+⋅
+=
+. 
+Az ötszög területe tehát 150 cm2. 
+ 
+18. c) 
+1 óra alatt külön-külön elvégzik a munka 1
+20 ,  
+illetve 1
+30 részét.  
+1 pont  
+1 óra alatt együtt az 1
+1
+20
+30
++
+részét végzik el a mun-
+kának. 
+1 pont 
+Az együtt végzett munká-
+hoz szükséges időt (órá-
+ban mérve) jelölje x. 
+Ekkor 1
+1
+1
+20
+30
+x
+x
++
+= . 
+1
+1
+3
+2
+5
+20
+30
+60
+60
++
++
+=
+=
+  
+1 pont 
+5
+1
+60 x = 
+Együtt dolgozva 60
+5 = 12 óra alatt végeznek. 
+1 pont  
+Összesen: 
+4 pont  
+ 
+18. d)  
+Annak a valószínűsége, hogy egy adott matricával 
+jelzett dobozban a matricán szereplő színű kő van  
+1 – 0,01 = 0,99. 
+1 pont 
+Ez a pont akkor is jár, ha 
+ez a gondolat csak a meg-
+oldásból derül ki. 
+Annak a valószínűsége, hogy mind a 21 kiválasztott 
+dobozban szürke kő lesz 0,99
+21
+ ≈ 0,8097.  
+1 pont  
+Annak a valószínűsége, hogy 20 dobozban szürke, 
+egy dobozban sárga színű kő lesz: 
+20
+21
+0,99
+0,01
+20
+
+⋅
+⋅
+
+
+
+
+ ≈ 0,1718. 
+2 pont  
+A keresett valószínűség ezek összege:  
+0,8097 + 0,1718 ≈ 0,9815. 
+1 pont  
+Összesen: 
+5 pont  
+ 

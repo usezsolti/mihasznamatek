@@ -1,0 +1,99 @@
+30: 2023. május 9. 9:00 
+45: 2023. május 9. 
+71: 2023. május 9. 
+91: 1. A feladatok megoldására 240 perc fordítható, az idő leteltével a munkát be kell fejeznie. 
+93: 2. A feladatok megoldási sorrendje tetszőleges. 
+95: 3. A II. részben kitűzött öt feladat közül csak négyet kell megoldania. A nem választott fel-
+102: 4. A feladatok megoldásához szöveges adatok tárolására és megjelenítésére nem alkalmas 
+106: 5. A megoldások gondolatmenetét minden esetben írja le, mert a feladatra adható pont-
+109: 6. Ügyeljen arra, hogy a lényegesebb részszámítások is nyomon követhetők legyenek! 
+111: 7. A gondolatmenet kifejtése során a zsebszámológép használata – további matematikai 
+129: 8. A feladatok megoldásánál használt tételek közül az iskolában tanult, névvel ellátott tételeket 
+136: 9. A feladatok végeredményét (a feltett kérdésre adandó választ) szöveges megfogalmazásban 
+139: 10. A dolgozatot tollal írja, de az ábrákat ceruzával is rajzolhatja. Az ábrákon kívül a ceruzával 
+143: 11. Minden feladatnak csak egy megoldása értékelhető. Több megoldási próbálkozás esetén 
+146: 12. Kérjük, hogy a szürkített téglalapokba semmit ne írjon! 
+155: 2023. május 9. 
+176: 1. 
+179: a) 
+192: b) 
+203: a) 
+206: b) 
+222: 2023. május 9. 
+249: 2023. május 9. 
+268: 2. 
+283: a) Fejezze ki ezt a fogyasztást 
+297: b) Hány különböző, a fenti szabályok mindegyikének megfelelő rendszám készíthető? 
+299: c) Jelölje meg annak az állításnak a betűjelét, amely tagadása a következő állításnak: 
+306: a) 
+309: b) 
+312: c) 
+327: 2023. május 9. 
+353: 2023. május 9. 
+372: 3. 
+377: a) Mekkora a kert kerülete és területe?  
+381: b) Hány méter mély lett a kút, ha a térfogata 0,1 köbméter? 
+386: c) Az A ponttól mekkora távolságra metszi az e egyenes az AC átlót? 
+388: a) 
+391: b) 
+394: c) 
+408: 2023. május 9. 
+434: 2023. május 9. 
+453: 4. 
+456: a) Számítsa ki a sorozat első tagját és differenciáját! 
+463: b) Számítsa ki n értékét! 
+465: a) 
+468: b) 
+483: 2023. május 9. 
+509: 2023. május 9. 
+533: 5. 
+541: a) Melyik filmet néznék meg a testvérek, ha az alábbi táblázat szerint adnák a pontjai-
+553: b) Hányféleképpen oszthatják ki a pontokat a testvérek úgy, hogy mindhárom film 
+556: c) Ha Pali és Lilla is véletlenszerűen osztja ki a pontszámokat a filmek között, akkor 
+563: d) Számítsa ki a 83 értékelés szórását! 
+565: a) 
+568: b) 
+571: c) 
+574: d) 
+588: 2023. május 9. 
+614: 2023. május 9. 
+636: 6. 
+644: a) Számítsa ki a doboz testátlóinak hosszát! 
+651: b) Hány százalék hulladék keletkezik? 
+659: c) Mekkorának válasszuk a kartonlap oldalainak hosszát, hogy a te-
+663: a) 
+666: b) 
+669: c) 
+683: 2023. május 9. 
+710: 2023. május 9. 
+732: 7. 
+737: a) Ha a 600 termék között 6 hibás van, akkor mennyi annak a valószínűsége, hogy a 
+744: b) Tegyük fel, hogy a cég termékeinek pontosan 0,5%-a hibás! 
+759: c) Hány selejtes termék van a selejtraktárban? 
+761: a) 
+764: b) 
+767: c) 
+782: 2023. május 9. 
+808: 2023. május 9. 
+830: 8. 
+831: a) Legyen f : [1; ∞[ → [1; ∞[, 
+846: b) Igazolja, hogy tetszőleges a < b paraméterek esetén (2
+866: c) Határozza meg az a és b egész paraméterek lehetséges értékeit, ha tudjuk, hogy 
+879: a) 
+882: b) 
+885: c) 
+900: 2023. május 9. 
+926: 2023. május 9. 
+948: 9. 
+961: a) Számítsa ki, hogy mekkora a tervezett medence alapte-
+982: b) Igazolja, hogy a két érintő metszéspontjának első koordinátája (a k paraméter érté-
+986: a) 
+989: b) 
+1003: 2023. május 9. 
+1029: 2023. május 9. 
+1055: 2023. május 9. 
+1107: 2023. május 9. 
+1137: 1. 
+1142: 2. 
+1145: 3. 
+1148: 4. 

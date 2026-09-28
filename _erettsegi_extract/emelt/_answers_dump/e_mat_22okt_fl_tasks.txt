@@ -1,0 +1,99 @@
+30: 2022. október 18. 8:00 
+45: 2022. október 18. 
+71: 2022. október 18. 
+91: 1. A feladatok megoldására 240 perc fordítható, az idő leteltével a munkát be kell fejeznie. 
+93: 2. A feladatok megoldási sorrendje tetszőleges. 
+95: 3. A II. részben kitűzött öt feladat közül csak négyet kell megoldania. A nem választott fel-
+102: 4. A feladatok megoldásához szöveges adatok tárolására és megjelenítésére nem alkalmas 
+106: 5. A megoldások gondolatmenetét minden esetben írja le, mert a feladatra adható pont-
+109: 6. Ügyeljen arra, hogy a lényegesebb részszámítások is nyomon követhetők legyenek! 
+111: 7. A gondolatmenet kifejtése során a zsebszámológép használata – további matematikai 
+129: 8. A feladatok megoldásánál használt tételek közül az iskolában tanult, névvel ellátott tételeket 
+136: 9. A feladatok végeredményét (a feltett kérdésre adandó választ) szöveges megfogalmazásban 
+139: 10. A dolgozatot tollal írja, de az ábrákat ceruzával is rajzolhatja. Az ábrákon kívül a ceruzával 
+143: 11. Minden feladatnak csak egy megoldása értékelhető. Több megoldási próbálkozás esetén 
+146: 12. Kérjük, hogy a szürkített téglalapokba semmit ne írjon! 
+155: 2022. október 18. 
+176: 1. 
+179: a) Írja fel a C középpontú, P ponton átmenő k kör egyenletét! 
+181: b) Írja fel a k kör P pontra illeszkedő érintőegyenesének egyenletét! 
+186: c) Határozza meg a háromszög köré írható kör sugarának hosszát! 
+188: a) 
+191: b) 
+194: c) 
+210: 2022. október 18. 
+238: 2022. október 18. 
+257: 2. 
+260: a) 
+270: b) 
+292: a) 
+295: b) 
+310: 2022. október 18. 
+336: 2022. október 18. 
+355: 3. 
+360: a) Töltse ki az alábbi táblázatot, és határozza meg a 24 darab töltő élettartamának átla-
+370: b) Mekkora a valószínűsége annak, hogy egy szakboltba kiszállított 20 darab töltő kö-
+377: c) Mekkora a valószínűsége annak, hogy egy darab véletlenszerűen kiválasztott töltő 
+380: a) 
+383: b) 
+386: c) 
+414: 2022. október 18. 
+440: 2022. október 18. 
+459: 4. 
+481: a) Igazolja, hogy mindkét függvény grafikonja áthalad az origón és a π ; 1
+491: b) Határozza meg a két függvény grafikonja által közbezárt síkidom területét, 
+513: c) Igazolja, hogy ez a sorozat szigorúan monoton csökkenő és korlátos, és adja meg a 
+516: a) 
+519: b) 
+522: c) 
+537: 2022. október 18. 
+563: 2022. október 18. 
+587: 5. 
+595: a) Hányféleképpen színezhető ki a téglalap úgy, hogy az A és C tartományok színe 
+605: b) Határozza meg az ismeretlen számok értékét! 
+607: a) 
+610: b) 
+624: 2022. október 18. 
+650: 2022. október 18. 
+672: 6. 
+678: a) Hány százalékkal nagyobb a legelő valódi területe a meghirdetettnél? 
+693: b) Igazolja, hogy ekkor a vályúban (egészre kerekítve) 15 liter víz van! 
+697: c) Hány cm magasan áll a víz a vályúban ekkor? 
+701: a) 
+704: b) 
+707: c) 
+721: 2022. október 18. 
+748: 2022. október 18. 
+770: 7. 
+771: a) Az f függvény hozzárendelési szabálya 
+793: b) Hány éle van ennek az ötpontú gráfnak? 
+812: c) Számítsa ki az első n téglalap területének összegét! 
+814: a) 
+817: b) 
+820: c) 
+835: 2022. október 18. 
+861: 2022. október 18. 
+883: 8. 
+886: a) Határozza meg a téglatest felszínét! 
+891: b) Határozza meg az ilyen tulajdonságú téglatestek közül a minimális felszínű téglatest 
+894: c) Hányféleképpen választhatunk ki egy téglatest csúcsai közül hármat úgy, hogy a 
+898: a) 
+901: b) 
+904: c) 
+919: 2022. október 18. 
+945: 2022. október 18. 
+967: 9. 
+971: a) Mennyibe kerül külön-külön egy kék, illetve egy zöld sorsjegy? 
+986: b) Igazolja, hogy P(A) = 0,38. 
+991: c) Határozza meg az egy kék sorsjegyre eső nyeremény várható értékét, ha a tárgynye-
+994: a) 
+997: b) 
+1000: c) 
+1025: 2022. október 18. 
+1049: 2022. október 18. 
+1075: 2022. október 18. 
+1127: 2022. október 18. 
+1156: 1. 
+1161: 2. 
+1164: 3. 
+1167: 4. 

@@ -1,0 +1,515 @@
+--- line 194 ---
+1
+3 
+x
+ egyenlet megoldása x  –2. 
+1 pont  
+Ellenőrzés behelyettesítéssel vagy ekvivalenciára hi-
+vatkozással. 
+1 pont  
+Összesen: 
+6 pont  
+
+--- line 291 ---
+log
+312 500
+n 
+ ≈ 31,2.  
+1 pont  
+n  32,2 (azaz a sorozat 32-nél nagyobb indexű tagjai 
+nagyobbak, mint 107). 
+1 pont n ≥ 33 (n  N) 
+Összesen: 
+7 pont  
+
+--- line 328 ---
+1 pont  
+Ebből x  742 (jegyet vettek meg elővételben), 
+1 pont  
+és (917 – 742 ) 175 jegyet vettek meg a helyszínen. 
+1 pont  
+Ellenőrzés: 
+2500  742 + 3000  175  2 380 000 valóban. 
+1 pont  
+Összesen: 
+6 pont  
+
+--- line 382 ---
+y  175 (jegyet vettek meg a helyszínen). 
+1 pont  
+Innen x  (917 – 175 ) 742 (jegyet vettek meg elő-
+vételben). 
+1 pont  
+Ellenőrzés: (742 + 175  917 és) 
+2500  742 + 3000  175  2 380 000 valóban. 
+1 pont  
+Összesen: 
+6 pont  
+
+--- line 457 ---
+
+
+
+ ≈ 0,224. 
+1 pont 
+350
+1560
+ ≈ 0,224 
+Összesen: 
+3 pont  
+
+--- line 496 ---
+
+
+
+
+
+
+ ≈ 0,224. 
+1 pont  
+Összesen: 
+3 pont  
+
+--- line 519 ---
+lyen van holtverseny. 
+1 pont 
+a hely (1-2. vagy 2-3.) pe-
+dig 2-féleképpen választ-
+ható ki. 
+Végül lehetséges a hármas holtverseny is, ez 1 lehe-
+tőség. 
+1 pont  
+Összesen tehát (6 + 2 ꞏ 3 + 1 ) 13-féle sorrendben 
+végezhetett a három versenyző. 
+
+--- line 522 ---
+dig 2-féleképpen választ-
+ható ki. 
+Végül lehetséges a hármas holtverseny is, ez 1 lehe-
+tőség. 
+1 pont  
+Összesen tehát (6 + 2 ꞏ 3 + 1 ) 13-féle sorrendben 
+végezhetett a három versenyző. 
+1 pont  
+Összesen: 
+5 pont  
+
+--- line 546 ---
+Felsoroljuk a megfelelő utakat (például az utak hossza 
+alapján). 
+3 hosszú utak: ABDF, ACDF, ACEF (3 lehetőség). 
+4 hosszú utak: ABCDF, ABCEF, ABDEF, ACBDF, 
+ACDEF, ACEDF (6 lehetőség). 
+5 hosszú utak: ABCDEF, ABCEDF, ABDCEF, 
+ACBDEF (4 lehetőség).  
+4 pont  
+Összesen (3 + 6 + 4 13 megfelelő út van. 
+1 pont  
+
+--- line 548 ---
+3 hosszú utak: ABDF, ACDF, ACEF (3 lehetőség). 
+4 hosszú utak: ABCDF, ABCEF, ABDEF, ACBDF, 
+ACDEF, ACEDF (6 lehetőség). 
+5 hosszú utak: ABCDEF, ABCEDF, ABDCEF, 
+ACBDEF (4 lehetőség).  
+4 pont  
+Összesen (3 + 6 + 4 13 megfelelő út van. 
+1 pont  
+Összesen: 
+5 pont  
+
+--- line 576 ---
+jük be az utat (DF vagy DEF). Ez 2 ꞏ 2  4 lehetőség. 
+1 pont  
+A D→C irány esetén D-be csak az ABD úton jutha-
+tunk el, és C-ből is egyértelmű a befejezés (CEF), így 
+ekkor 1 lehetőség van. 
+1 pont  
+A megfelelő utak száma tehát 2 ꞏ 4 + 4 + 1  13. 
+1 pont  
+Összesen: 
+5 pont  
+
+--- line 597 ---
+innen 2 befejezés lehetséges (E vagy F folytatás). 
+1 pont  
+IV. eset: ACD vagy ACE kezdés esetén egyaránt 2-2 
+befejezés lehetséges (E vagy F, illetve D vagy F 
+folytatás). 
+1 pont  
+A megfelelő utak száma tehát 4 + 3 + 2 + 2 ꞏ 2  13. 
+1 pont  
+Összesen: 
+5 pont  
+
+--- line 641 ---
+1 pont  
+ (a + b + c)(a + b – c)  
+1 pont  
+A háromszög-egyenlőtlenség miatt a + b  c teljesül,  
+1 pont  
+így a szorzat mindkét tényezője pozitív, 
+tehát az állítás valóban igaz. 
+1 pont  
+Összesen: 
+4 pont  
+
+--- line 691 ---
+
+ 
+1 pont  
+Tetszőleges háromszögben –1  cos   1,  
+1 pont  
+így a szorzat minden tényezője pozitív, 
+tehát az állítás valóban igaz. 
+1 pont  
+Összesen: 
+4 pont  
+
+--- line 728 ---
+1 pont  
+Mivel a + b és c is pozitív, ezért a + b  c, 
+1 pont  
+ami a háromszög-egyenlőtlenség miatt teljesül. 
+1 pont  
+Ekvivalens átalakításokat végeztünk, ezért az eredeti 
+állítás is valóban igaz.  
+1 pont  
+Összesen: 
+4 pont  
+
+--- line 754 ---
+a
+, akkor van olyan háromszög, 
+amelynek az oldalai (cm-ben) a, b, c hosszúak.” 
+1 pont  
+Az állítás hamis.  
+1 pont  
+Egy ellenpélda (például a  2, b  1, c  1). 
+1 pont  
+Összesen: 
+3 pont  
+
+--- line 819 ---
+4
+
+, 
+1 pont*  
+innen  ≈ 36,9°. 
+1 pont*  
+Az y tengely és f bezárt szöge  pótszöge, kb. 53,1°. 
+1 pont*  
+Összesen: 
+6 pont  
+
+--- line 926 ---
+16
+(
+
+
+y
+x
+. 
+2 pont  
+Összesen: 
+6 pont  
+
+--- line 1018 ---
+16
+(
+
+
+y
+x
+. 
+2 pont  
+Összesen: 
+6 pont  
+
+--- line 1062 ---
+19
+6
+12
+
+
+
+ ≈ 1,26. 
+2 pont 
+Összesen: 
+3 pont  
+
+--- line 1066 ---
+
+
+ ≈ 1,26. 
+2 pont 
+Összesen: 
+3 pont  
+ 
+5. b) 
+Összesen 6
+ 4  1296 különböző négyjegyű számot 
+
+--- line 1097 ---
+ 
+Tehát (1296 – 360 ) 936 megfelelő szám van. 
+1 pont*  
+(Mivel 936
+1296
+ ≈ 0,722, így) ez az összes ilyen módon 
+megkapható négyjegyű számnak a 72,2 százaléka. 
+1 pont  
+Összesen: 
+5 pont  
+
+--- line 1145 ---
+van. 
+1 pont  
+ 
+5. c) 
+n  13 (A dobókockával 6-félét dobhatunk, így a ska-
+tulyaelv miatt 6 ∙ 2 + 1  13 dobás között már bizto-
+san lesz legalább 3 egyforma.) 
+2 pont  
+Összesen: 
+2 pont  
+
+--- line 1254 ---
+
+
+
+i
+P i
+i
+ ≈ 3,775. 
+2 pont  
+Összesen: 
+6 pont  
+
+--- line 1279 ---
+1 pont 
+ 
+A deltoid B és D csúcsánál levő szögei 
+360° : 4  90°-osak, 
+1 pont 
+így az A csúcsnál lévő szöge 
+(360° – 120° – 2  90° ) 60° valóban. 
+1 pont 
+Összesen: 
+3 pont  
+
+--- line 1295 ---
+1 pont 
+ 
+A deltoid B és D csúcsánál levő szögei 
+360° : 4  90°-osak. 
+1 pont 
+Ezért a deltoid C csúcsnál lévő szöge  
+(360° – 60° – 2  90° ) 120° valóban. 
+1 pont 
+Összesen: 
+3 pont  
+
+--- line 1373 ---
+x
+
+
+
+
+
+. 
+1 pont  
+Összesen: 
+7 pont  
+
+--- line 1412 ---
+1 pont  
+II. eset: Ha D és B különböző színű, akkor E színe 
+csak egyféle lehet (A színével megegyező). Ez 1 eset. 
+1 pont  
+Tehát összesen 6  23
+  (2 + 1)  144-féleképpen lehet 
+kiszínezni a kalapot. 
+1 pont  
+Összesen: 
+6 pont  
+
+--- line 1438 ---
+csak egyféle lehet (A színével megegyező). Ez 1 eset. 
+1 pont  
+G és H színe egyenként 2-féle lehet (G különbözik A-
+tól, H különbözik G-től). 
+1 pont  
+Tehát összesen 3  2  2  (2 + 1)  22  144-féleképpen 
+lehet kiszínezni a kalapot. 
+1 pont  
+Összesen: 
+6 pont  
+
+--- line 1476 ---
+75
+12
+
+ dukát. 
+1 pont  
+A 10 km-es útra eső teljes üzemeltetési költség tehát 
+12 km/h sebesség esetén (144 + 75 ) 219 dukát. 
+1 pont  
+Összesen: 
+4 pont  
+
+--- line 1567 ---
+
+f
+v
+v
+ 
+A 10 km-re eső teljes üzemeltetési költség tehát 
+8,66 km/h sebesség esetén minimális, kb. 208 dukát. 
+1 pont  
+Összesen: 
+9 pont  
+
+--- line 1637 ---
+1562,5
+50
+70
+
+
+
+ Ft-ba került egy jegy. 
+1 pont  
+Összesen: 
+3 pont  
+
+--- line 1696 ---
+y
+x
+x
+
+
+
+ 
+1 pont  
+Összesen: 
+5 pont  
+
+--- line 1707 ---
+8. a) második megoldás 
+Felhasználva az f megadott zérushelyeit, a parabola 
+egyenletét az y  a(x + 3)(x – 4) alakban keressük.  
+2 pont  
+f (0)  6, innen 6  –12a, azaz a  – 0,5. 
+2 pont  
+A parabola egyenlete y  – 0,5(x + 3)(x – 4). 
+1 pont  
+Összesen: 
+5 pont  
+
+--- line 1778 ---
+y
+x
+x
+
+
+
+ 
+1 pont  
+Összesen: 
+5 pont  
+
+--- line 1825 ---
+6,125.
+y
+x
+
+
+
+ 
+1 pont  
+Összesen: 
+5 pont  
+
+--- line 1845 ---
+(4)
+2.
+g
+
+ 
+1 pont  
+Az érintő egyenlete y + 6  2(x – 4). 
+1 pont y  2x – 14 
+Összesen: 
+4 pont  
+
+--- line 1982 ---
+128
+3
+
+. 
+(A síkidom területe tehát 128
+3
+ ≈ 42,67 területegység.) 
+1 pont  
+Összesen: 
+7 pont  
+
+--- line 1991 ---
+7 pont  
+ 
+ 
+9. a) 
+3  (2 + 1 + 5 + 7) + 7  (4 + 6 + 3 + 9)  199 
+1 pont  
+Az ellenőrző számjegy tehát 9. 
+1 pont  
+Összesen: 
+2 pont  
+
+--- line 2005 ---
+1 pont  
+ 3x + 184. 
+1 pont  
+Ennek az ellenőrző számjegy alapján 7-re kell vég-
+ződnie, tehát 3x-nek 3-ra kell végződnie. 
+1 pont  
+Ez csak akkor lehet, ha x  1 (mivel x számjegy). 
+1 pont  
+Összesen: 
+4 pont  
+
+--- line 2030 ---
+1 pont  
+(Mivel 10b + 80 végződése 0, és az ellenőrző szám-
+jegy értéke a, ezért) 7a utolsó számjegye a. 
+1 pont  
+Ez akkor lehetséges, ha a  0, 
+1 pont  
+vagy a  5. 
+1 pont  
+Összesen: 
+5 pont  
+
+--- line 2053 ---
+Annak a valószínűsége, hogy a 20 darab TAJ szám-
+ból pontosan egy hibás: 20  0,985
+19
+  0,015 ≈ 0,225. 
+2 pont  
+A kérdezett valószínűség (komplementer módszerrel 
+számolva) így 1 – 0,739 – 0,225 ≈ 0,036. 
+1 pont  
+Összesen: 
+5 pont  
+
+--- line 2132 ---
+
+ ≈ 0,00001, 
+ezért) annak a valószínűsége már elhanyagolható, 
+hogy a 20 darab TAJ számból 4-nél több hibás. 
+1 pont  
+A kérdezett valószínűség így (0,0326 + 0,0030 + 
++ 0,0002 ≈) 0,036. 
+1 pont  
+Összesen: 
+5 pont  

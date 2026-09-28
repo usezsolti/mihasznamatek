@@ -1,0 +1,1215 @@
+
+===== PAGE 1 =====
+ 
+Matematika 
+ 
+emelt szint — írásbeli vizsga 2113 
+EMBERI ERŐFORRÁSOK MINISZTÉRIUMA 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+MATEMATIKA 
+ 
+EMELT SZINTŰ 
+ÍRÁSBELI VIZSGA 
+2021. október 19. 8:00 
+ 
+Időtartam: 240 perc 
+Pótlapok száma 
+Tisztázati 
+ 
+Piszkozati 
+ 
+É R E T T S É G I V I Z S G A • 2 0 2 1 . o k t ó b e r 1 9 . 
+
+===== PAGE 2 =====
+Matematika 
+emelt szint 
+2113 írásbeli vizsga 
+2 / 24 
+2021. október 19. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 3 =====
+Matematika 
+emelt szint 
+2113 írásbeli vizsga 
+3 / 24 
+2021. október 19. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Fontos tudnivalók 
+1. A feladatok megoldására 240 perc fordítható, az idő leteltével a munkát be kell fejeznie. 
+ 
+2. A feladatok megoldási sorrendje tetszőleges. 
+ 
+3. A II. részben kitűzött öt feladat közül csak négyet kell megoldania. A nem választott fel-
+adat sorszámát írja be a dolgozat befejezésekor az alábbi négyzetbe! Ha a javító tanár 
+számára nem derül ki egyértelműen, hogy melyik feladat értékelését nem kéri, akkor  
+a kitűzött sorrend szerinti legutolsó feladatra nem kap pontot. 
+ 
+ 
+ 
+4. A feladatok megoldásához szöveges adatok tárolására és megjelenítésére nem alkalmas 
+zsebszámológépet és bármilyen négyjegyű függvénytáblázatot használhat, más elektroni-
+kus vagy írásos segédeszköz használata tilos! 
+ 
+5. A megoldások gondolatmenetét minden esetben írja le, mert a feladatra adható pont-
+szám jelentős része erre jár! 
+ 
+6. Ügyeljen arra, hogy a lényegesebb részszámítások is nyomon követhetők legyenek! 
+ 
+7. A gondolatmenet kifejtése során a zsebszámológép használata – további matematikai 
+indoklás nélkül – a következő műveletek elvégzésére fogadható el: összeadás, kivonás, 
+szorzás, osztás, hatványozás, gyökvonás, n!, 
+
+
+
+
+
+
+k
+n kiszámítása, a függvénytáblázatban fel-
+lelhető táblázatok helyettesítése (sin, cos, tg, log és ezek inverzei), a π és az e szám közelítő 
+értékének megadása, nullára rendezett másodfokú egyenlet gyökeinek meghatározása.  
+További matematikai indoklás nélkül használhatók a számológépek az átlag és a szórás ki-
+számítására abban az esetben, ha a feladat szövege kifejezetten nem követeli meg az ezzel 
+kapcsolatos részletszámítások bemutatását is. Egyéb esetekben a géppel elvégzett számí-
+tások indoklás nélküli lépéseknek számítanak, így azokért nem jár pont. 
+ 
+8. A feladatok megoldásánál használt tételek közül az iskolában tanult, névvel ellátott tételeket 
+(pl. Pitagorasz-tétel, magasságtétel) nem kell pontosan megfogalmazva kimondania, elég 
+csak a tétel megnevezését említenie, de az alkalmazhatóságát röviden indokolnia kell. 
+Egyéb tétel(ek)re való hivatkozás csak akkor fogadható el teljes értékűnek, ha az állítást 
+minden feltételével együtt pontosan mondja ki (bizonyítás nélkül), és az adott problémában 
+az alkalmazhatóságát indokolja. 
+ 
+9. A feladatok végeredményét (a feltett kérdésre adandó választ) szöveges megfogalmazásban 
+is közölje! 
+ 
+10. A dolgozatot tollal írja, de az ábrákat ceruzával is rajzolhatja. Az ábrákon kívül a ceruzával 
+írt részeket a javító tanár nem értékelheti. Ha valamilyen megoldást vagy megoldásrészletet 
+áthúz, akkor az nem értékelhető. 
+ 
+11. Minden feladatnak csak egy megoldása értékelhető. Több megoldási próbálkozás esetén 
+egyértelműen jelölje, hogy melyiket tartja érvényesnek! 
+ 
+12. Kérjük, hogy a szürkített téglalapokba semmit ne írjon! 
+ 
+ 
+
+===== PAGE 4 =====
+Matematika 
+emelt szint 
+2113 írásbeli vizsga 
+4 / 24 
+2021. október 19. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+I. 
+ 
+1. 
+a) Oldja meg az alábbi egyenletet a valós számok halmazán! 
+2
+1
+(2
+3)
+2
+9
+x
+x+
+−
+=
++ 
+ 
+Legyen 
+2
+( )
+9
+14
+f x
+x
+x
+=
+−
++
+, ahol x valós szám. 
+Tekintsük a következő állítást: „Ha x > 7, akkor f (x) > 0.” 
+ 
+b) Adja meg az állítás logikai értékét (igaz vagy hamis)! Válaszát indokolja! 
+ 
+c) Fogalmazza meg az állítás megfordítását! Igaz-e az állítás megfordítása? Válaszát 
+indokolja! 
+ 
+a) 
+7 pont 
+ 
+b) 
+4 pont 
+ 
+c) 
+3 pont 
+ 
+Ö.: 
+14 pont 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 5 =====
+Matematika 
+emelt szint 
+2113 írásbeli vizsga 
+5 / 24 
+2021. október 19. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 6 =====
+Matematika 
+emelt szint 
+2113 írásbeli vizsga 
+6 / 24 
+2021. október 19. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+2. 
+Margiték autójában a fedélzeti számítógép kiszámítja, hogy az autó üzemanyagtartályá-
+ban lévő benzin még hány kilométer megtételéhez elegendő. Nevezzük ezt hátralévő tá-
+volságnak. A számításhoz a gép a legutolsó tankolás óta mért átlagos fogyasztást veszi 
+alapul, és úgy számol, hogy az autó a jövőben is ezzel az átlagfogyasztással fog haladni. 
+A legutóbbi tankolás alkalmával teletöltötték az autó üzemanyagtartályát, így 45 liter 
+benzin volt benne. A tankolás óta éppen 200 kilométert tettek meg a városban, ekkor az 
+autó átlagfogyasztása 10 liter volt 100 kilométerenként. 
+ 
+a) Számítsa ki a városi autózás után a hátralévő távolságot! 
+ 
+A 200 kilométeres városi autóhasználatot követően Margiték egynapos autós kirándulást 
+tettek vidéken, ezalatt összesen 100 kilométert autóztak (újabb tankolás nélkül). A kirán-
+dulás végén a kijelző alapján 200 kilométerre elegendő benzin maradt, azaz ennyi lett a 
+hátralévő távolság. 
+ 
+b) Mennyi volt az autó 100 km-re vonatkozó átlagfogyasztása a kirándulás során? 
+ 
+a) 
+3 pont 
+ 
+b) 
+6 pont 
+ 
+Ö.: 
+9 pont 
+ 
+ 
+ 
+ 
+
+===== PAGE 7 =====
+Matematika 
+emelt szint 
+2113 írásbeli vizsga 
+7 / 24 
+2021. október 19. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 8 =====
+Matematika 
+emelt szint 
+2113 írásbeli vizsga 
+8 / 24 
+2021. október 19. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+3. 
+a) Hány olyan pozitív háromjegyű szám van a tízes számrendszerben, amely a 8 és a 9 
+számok közül legalább az egyikkel osztható? 
+ 
+b) A 8-as számrendszerben háromjegyű pozitív egész számok közül véletlenszerűen 
+kiválasztunk egyet. Mennyi a valószínűsége annak, hogy a kiválasztott szám a 9-es 
+számrendszerben is háromjegyű? 
+ 
+a) 
+7 pont 
+ 
+b) 
+7 pont 
+ 
+Ö.: 
+14 pont 
+ 
+ 
+ 
+
+===== PAGE 9 =====
+Matematika 
+emelt szint 
+2113 írásbeli vizsga 
+9 / 24 
+2021. október 19. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 10 =====
+Matematika 
+emelt szint 
+2113 írásbeli vizsga 
+10 / 24 
+2021. október 19. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+4. 
+Egy többnapos nemzetközi matematikakonferencia minden 
+résztvevője belépőkártyát kap, amelyen a PQRST konvex öt-
+szög és annak átlói láthatók. A szervezők úgy tervezik, hogy 
+egy-egy belépőkártyán az ötszög oldalai és átlói közül vala-
+hányat (egyet vagy többet, akár az összeset, de az is lehet, 
+hogy egyet sem) megvastagítanak, így a különböző szemé-
+lyek különböző ábrájú kártyát kapnak. Az elektronikus kapu 
+optikai leolvasója ez alapján engedélyezi a belépést, és el-
+végzi a személy regisztrációját. (Két belépőkártya külön-
+böző, ha az egyiken szerepel olyan megvastagított szakasz, 
+amelyik a másikon nem.) 
+A konferenciának 400 résztvevője lesz. 
+ 
+a) Jut-e mindenkinek különböző belépőkártya? 
+ 
+A konferencia épülete egy háromszög alakú területen van. Ha a háromszög csúcsai A, B 
+és C, akkor AB = AC = 130 méter, és BC = 100 méter. A háromszög alakú területet ketté-
+osztja az egyenes CD kerítés úgy, hogy a BCD háromszög alakú rész területe 2000 m2. 
+(D az AB oldalon van.) 
+ 
+b) Milyen hosszú a CD kerítés?  
+ 
+A konferencián 200 magyar, 70 angol és 130 német matematikus vesz részt. Az angolok 
+életkorának átlaga 44 év, a németeké 48 év, az összes résztvevő életkorának átlaga  
+45,7 év. 
+ 
+c) Mennyi a magyar résztvevők életkorának átlaga?  
+ 
+a) 
+3 pont 
+ 
+b) 
+7 pont 
+ 
+c) 
+4 pont 
+ 
+Ö.: 
+14 pont 
+ 
+ 
+ 
+ 
+
+===== PAGE 11 =====
+Matematika 
+emelt szint 
+2113 írásbeli vizsga 
+11 / 24 
+2021. október 19. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 12 =====
+Matematika 
+emelt szint 
+2113 írásbeli vizsga 
+12 / 24 
+2021. október 19. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+II. 
+ 
+Az 5-9. feladatok közül tetszése szerint választott négyet kell megoldania.  
+A kihagyott feladat sorszámát írja be a 3. oldalon található üres négyzetbe! 
+ 
+5. 
+Tekintsük az (an) sorozatot: 
+1
+2
+1
+2
+a
+
+=
+=
+
+
+, 
+2
+3
+3
+2
+a
+
+=
+=
+
+
+, 
+3
+4
+6
+2
+a
+
+=
+=
+
+
+ és így tovább, 
+1
+2
+n
+n
+a
++
+
+
+= 
+
+
+
+ (n ∈ N+). 
+ 
+a) Számítsa ki az (an) sorozat első öt tagjából álló számsokaság átlagát és szórását! 
+ 
+b) A fenti (an) sorozatból képezzük a (bn) sorozatot: 
+1
+n
+n
+n
+a
+b
+a
++
+=
+. 
+Mennyi a (bn) sorozat határértéke? 
+ 
+A (cn) számtani sorozat differenciája 0,25. A sorozat első n tagjának összege 100, első 2n 
+tagjának összege 300 (n ∈ N+). 
+ 
+c) Határozza meg n értékét! 
+ 
+a) 
+4 pont 
+ 
+b) 
+4 pont 
+ 
+c) 
+8 pont 
+ 
+Ö.: 
+16 pont 
+ 
+ 
+ 
+
+===== PAGE 13 =====
+Matematika 
+emelt szint 
+2113 írásbeli vizsga 
+13 / 24 
+2021. október 19. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 14 =====
+Matematika 
+emelt szint 
+2113 írásbeli vizsga 
+14 / 24 
+2021. október 19. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Az 5-9. feladatok közül tetszése szerint választott négyet kell megoldania.  
+A kihagyott feladat sorszámát írja be a 3. oldalon található üres négyzetbe! 
+ 
+6. 
+Az ókori egyiptomiak az egyenlő szárú háromszög területét (közelítő módszerrel) úgy 
+számolták ki, hogy az alap és a szár szorzatának a felét vették.1 
+ 
+a) Egy egyenlő szárú háromszög alapja 18 cm hosszú. Mekkora lehet a szára, ha az 
+ókori egyiptomiak módszere e háromszög valódi területét 25%-nál kisebb hibával 
+adja meg? 
+ 
+Az ókori Egyiptom matematikájában a számok négyzetének is jelentős szerep jutott. 
+ 
+b) Hány olyan 1000-nél kisebb pozitív egész szám van, amellyel az 1 2 3 4 5 6
+⋅⋅⋅⋅⋅ szá-
+mot megszorozva négyzetszámot kapunk? 
+ 
+a) 
+9 pont 
+ 
+b) 
+7 pont 
+ 
+Ö.: 
+16 pont 
+ 
+ 
+ 
+                                                 
+1 Forrás: Dr. Lévárdi László – Sain Márton: Matematikatörténeti feladatok, Budapest, Tankönyvkiadó, 1982. 
+
+===== PAGE 15 =====
+Matematika 
+emelt szint 
+2113 írásbeli vizsga 
+15 / 24 
+2021. október 19. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 16 =====
+Matematika 
+emelt szint 
+2113 írásbeli vizsga 
+16 / 24 
+2021. október 19. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Az 5-9. feladatok közül tetszése szerint választott négyet kell megoldania.  
+A kihagyott feladat sorszámát írja be a 3. oldalon található üres négyzetbe! 
+ 
+7. 
+A statisztikai értékelések során szükség van az adatokat 
+és összefüggéseket szemléltető pontok és egyenesek köl-
+csönös helyzetének jellemzésére. Egy ilyen jellemző lehet 
+a pontnak egy megadott egyenestől mért függőleges tá-
+volsága. 
+Az ábrán látható P1, P2, P3, P4 pontok esetén a függőleges 
+távolságok rendre a d1, d2, d3, d4 szakaszok hosszával 
+egyenlők. (A távolságokat megadó szakaszok párhuza-
+mosak az y tengellyel.) 
+ 
+a) Határozza meg az R(4; 2) és az S(4; 5) pontok füg-
+gőleges távolságát az 
+1
+5
+3
+3
+y
+x
+=
++
+ egyenestől! 
+ 
+Ha a derékszögű koordináta-rendszerben az adatokat pontokkal jelenítjük meg, és külön-
+böző egyeneseket veszünk fel, akkor mindegyik egyeneshez kiszámítható a pontok füg-
+gőleges távolságainak négyzetösszege (az ábrán látható példában 
+2
+2
+2
+2
+1
+2
+3
+4
+d
+d
+d
+d
++
++
++
+). 
+Tekintsük azt az egyenest a pontokra legjobban illeszkedő egyenesnek, amelyre ez a négy-
+zetösszeg a lehető legkisebb. 
+Adott három pont a koordináta-rendszerben: A(1; 3), B(3; 5) és C(4; 4). 
+ 
+b) Adja meg az m értékét úgy, hogy az y = mx egyenletű (origón átmenő) egyenes a 
+megadott módszer szerint a legjobban illeszkedjen az A, B és C pontokra! (m ∈ R) 
+ 
+Az 
+2
+1 ( 2
+11 )
+3
+y
+x
+x
+=
+−
++
+ egyenletű g görbe áthalad a megadott A és B pontokon, a h egyenes 
+pedig az origón és a C ponton. 
+ 
+c) Mekkora a g és h által közbezárt korlátos alakzat területe? 
+ 
+a) 
+3 pont 
+ 
+b) 
+6 pont 
+ 
+c) 
+7 pont 
+ 
+Ö.: 
+16 pont 
+ 
+ 
+ 
+ 
+
+===== PAGE 17 =====
+Matematika 
+emelt szint 
+2113 írásbeli vizsga 
+17 / 24 
+2021. október 19. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 18 =====
+Matematika 
+emelt szint 
+2113 írásbeli vizsga 
+18 / 24 
+2021. október 19. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Az 5-9. feladatok közül tetszése szerint választott négyet kell megoldania.  
+A kihagyott feladat sorszámát írja be a 3. oldalon található üres négyzetbe! 
+ 
+8. 
+Egy áruházláncban minden Kocka csokoládé vásárlásakor a csoki mellé ajándékba adnak 
+egy „zsákbamacska” csomagot, amelyben egy kis fémkocka van. A fémkocka mindegyik 
+lapja sárga vagy kék színűre van festve úgy, hogy mind a két színű lap előfordul. 
+ 
+a) Igazolja, hogy (színezés szerint) összesen 8-féle kocka van, ha a forgatással egy-
+másba vihető színezéseket nem tekintjük különbözőnek! 
+ 
+b) Dórinak 7 különböző színezésű kockája van, így már csak egy hiányzik a teljes kész-
+lethez, hogy abból nyakláncot készítsen magának. Mennyi annak a valószínűsége, 
+hogy ha 3 darab Kocka csokoládét vesz, akkor meglesz a teljes készlete? 
+ 
+(Feltételezhetjük, hogy mindegyik kockafajta ugyanakkora valószínűséggel fordul 
+elő a csomagokban.) 
+ 
+Az ábrán látható ABCDEFGH kocka élhosszúsága 10 egység. 
+ 
+c) Számítsa ki az ABG háromszög beírt körének sugarát! 
+ 
+ 
+ 
+a) 
+6 pont 
+ 
+b) 
+4 pont 
+ 
+c) 
+6 pont 
+ 
+Ö.: 
+16 pont 
+ 
+ 
+ 
+ 
+
+===== PAGE 19 =====
+Matematika 
+emelt szint 
+2113 írásbeli vizsga 
+19 / 24 
+2021. október 19. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 20 =====
+Matematika 
+emelt szint 
+2113 írásbeli vizsga 
+20 / 24 
+2021. október 19. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Az 5-9. feladatok közül tetszése szerint választott négyet kell megoldania.  
+A kihagyott feladat sorszámát írja be a 3. oldalon található üres négyzetbe! 
+ 
+9. 
+Két forgáshenger alakú viaszgyertyánk van. Az egyik gyertya alapkörének sugara r, ma-
+gassága h, a másik alapkörének sugara R, magassága szintén h. A két gyertyát összeol-
+vasztjuk, majd a viaszból egy ugyancsak h magasságú, forgáshenger alakú gyertyát ön-
+tünk (r, h, R > 0). 
+ 
+a) Igazolja, hogy az így kapott gyertya alapkörének sugara legalább 
+2rR . 
+(Az öntés során fellépő anyagveszteségtől eltekinthetünk.) 
+ 
+Egy forgáshenger alakú tortát egy 15 cm sugarú, félgömb 
+alakú védőbúra alatt helyezünk el. A torta a félgömb hatá-
+roló körének síkján áll, és a torta fedőlapjának határoló köre 
+a félgömbre illeszkedik (az ábra szerint). 
+ 
+b) Igazolja, hogy az m cm magasságú torta térfogata 
+(köbcentiméterben mérve)
+3
+225 m
+m
+π −π
+. (0 < m < 15) 
+ 
+c) Igazolja, hogy a védőbúra alatt (a fent leírt módon) elhelyezhető maximális térfogatú 
+torta térfogata kisebb, mint a félgömb térfogatának 60%-a! 
+ 
+a) 
+5 pont 
+ 
+b) 
+4 pont 
+ 
+c) 
+7 pont 
+ 
+Ö.: 
+16 pont 
+ 
+ 
+ 
+
+===== PAGE 21 =====
+Matematika 
+emelt szint 
+2113 írásbeli vizsga 
+21 / 24 
+2021. október 19. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 22 =====
+Matematika 
+emelt szint 
+2113 írásbeli vizsga 
+22 / 24 
+2021. október 19. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 23 =====
+Matematika 
+emelt szint 
+2113 írásbeli vizsga 
+23 / 24 
+2021. október 19. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 24 =====
+Matematika 
+emelt szint 
+2113 írásbeli vizsga 
+24 / 24 
+2021. október 19. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+a feladat 
+sorszáma 
+pontszám 
+maximális 
+elért 
+maximális 
+elért 
+I. rész 
+1. 
+14 
+ 
+51 
+ 
+2. 
+9 
+ 
+3. 
+14 
+ 
+4. 
+14 
+ 
+II. rész 
+ 
+16 
+ 
+64 
+ 
+ 
+16 
+ 
+ 
+16 
+ 
+ 
+16 
+ 
+ 
+← nem választott feladat 
+Az írásbeli vizsgarész pontszáma 
+115 
+ 
+ 
+dátum 
+ 
+javító tanár 
+ 
+ __________________________________________________________________________  
+ 
+ 
+ 
+pontszáma egész 
+számra kerekítve 
+elért 
+programba  
+beírt 
+I. rész 
+  
+  
+II. rész 
+  
+  
+ 
+dátum 
+ 
+dátum 
+ 
+ 
+ 
+ 
+ 
+ 
+javító tanár 
+ 
+jegyző 
+ 

@@ -1,0 +1,1987 @@
+
+===== PAGE 1 =====
+Matematika 
+emelt szint 
+ 
+Javítási-értékelési útmutató 2212 
+ 
+OKTATÁSI HIVATAL 
+MATEMATIKA 
+ 
+EMELT SZINTŰ 
+ÍRÁSBELI VIZSGA 
+minden vizsgázó számára 
+JAVÍTÁSI-ÉRTÉKELÉSI 
+ÚTMUTATÓ 
+ 
+É R E T T S É G I V I Z S G A • 2 0 2 2 . o k t ó b e r 1 8 . 
+
+===== PAGE 2 =====
+Matematika — emelt szint 
+Javítási-értékelési útmutató 
+2212 írásbeli vizsga 
+2 / 16 
+2022. október 18. 
+Fontos tudnivalók 
+ 
+ 
+Formai előírások: 
+ 
+1. Kérjük, hogy a dolgozatot a vizsgázó által használt színűtől eltérő színű tollal, olvas-
+hatóan javítsa ki. 
+2. A feladatok mellett található szürke téglalapok közül az elsőben a feladatra adható ma-
+ximális pontszám van, a javító által adott pontszám a mellette levő téglalapba 
+kerüljön. 
+3. Kifogástalan megoldás esetén kérjük, hogy a maximális pontszám feltüntetése mellett 
+kipipálással jelezze, hogy az adott gondolati egységet látta, és jónak minősítette. 
+4. Hiányos/hibás megoldás esetén kérjük, hogy a hiba jelzése mellett az egyes részpont-
+számokat is írja rá a dolgozatra. Ha a dolgozat javítását jobban követhetővé teszi, akkor 
+a vizsgázó által elvesztett részpontszámok jelzése is elfogadható. Ne maradjon olyan 
+részlet a megoldásban, amelyről a javítás után nem nyilvánvaló, hogy helyes, hibás vagy 
+fölösleges. 
+5. A javítás során alkalmazza az alábbi jelöléseket. 
+• helyes lépés: kipipálás 
+• elvi hiba: kétszeres aláhúzás 
+• számolási hiba vagy más, nem elvi hiba: egyszeres aláhúzás 
+• rossz kiinduló adattal végzett helyes lépés: szaggatott vagy áthúzott kipipálás 
+• hiányos indoklás, hiányos felsorolás vagy más hiány: hiányjel 
+• nem érthető rész: kérdőjel és/vagy hullámvonal 
+6. Az ábrán kívül ceruzával írt részeket ne értékelje. 
+ 
+Tartalmi kérések: 
+ 
+1. Egyes feladatoknál több megoldás pontozását is megadtuk. Amennyiben azoktól eltérő 
+megoldás születik, keresse meg ezen megoldásoknak az útmutató egyes részleteivel 
+egyenértékű részeit, és ennek alapján pontozzon. 
+2. A pontozási útmutató pontjai tovább bonthatók, hacsak az útmutató másképp nem 
+rendelkezik. Az adható pontszámok azonban csak egész pontok lehetnek. 
+3. Ha a megoldásban számolási hiba, pontatlanság van, akkor csak arra a részre nem jár 
+pont, ahol a tanuló a hibát elkövette. Ha a hibás részeredménnyel helyes gondolatmenet 
+alapján tovább dolgozik, és a megoldandó probléma lényegében nem változik meg, ak-
+kor a következő részpontszámokat meg kell adni. 
+4. Elvi hibát követően egy gondolati egységen belül (ezeket az útmutatóban kettős vonal 
+jelzi) a formálisan helyes matematikai lépésekre sem jár pont. Ha azonban a tanuló  
+az elvi hibával kapott rossz eredménnyel – mint kiinduló adattal – helyesen számol to-
+vább a következő gondolati egységekben vagy részkérdésekben, akkor ezekre a részekre 
+kapja meg a maximális pontot, ha a megoldandó probléma lényegében nem változott 
+meg. 
+5. Ha a megoldási útmutatóban zárójelben szerepel egy megjegyzés vagy mértékegység, 
+akkor ennek hiánya esetén is teljes értékű a megoldás. 
+
+===== PAGE 3 =====
+Matematika — emelt szint 
+Javítási-értékelési útmutató 
+2212 írásbeli vizsga 
+3 / 16 
+2022. október 18. 
+ 
+6. Egy feladatra adott többféle megoldási próbálkozás közül a vizsgázó által megjelölt 
+változat értékelhető. A javítás során egyértelműen jelezze, hogy melyik változatot ér-
+tékelte, és melyiket nem. 
+7. A megoldásokért jutalompont (az adott feladatra vagy feladatrészre előírt maximális 
+pontszámot meghaladó pont) nem adható. 
+8. Egy feladatra vagy részfeladatra adott összpontszám nem lehet negatív. 
+9. Az olyan részszámításokért, részlépésekért nem jár pontlevonás, melyek hibásak, de 
+amelyeket a feladat megoldásához a vizsgázó ténylegesen nem használ fel. 
+10. A gondolatmenet kifejtése során a zsebszámológép használata – további matemati-
+kai indoklás nélkül – a következő műveletek elvégzésére fogadható el: összeadás, 
+kivonás, szorzás, osztás, hatványozás, gyökvonás, n!, 
+
+
+
+
+
+
+k
+n
+ kiszámítása, a függvénytáb-
+lázatban fellelhető táblázatok helyettesítése (sin, cos, tg, log és ezek inverzei), a π és az 
+e szám közelítő értékének megadása, nullára rendezett másodfokú egyenlet gyökeinek 
+meghatározása. További matematikai indoklás nélkül használhatók a számológépek az 
+átlag és a szórás kiszámítására abban az esetben, ha a feladat szövege kifejezetten nem 
+követeli meg az ezzel kapcsolatos részletszámítások bemutatását is. Egyéb esetekben 
+a géppel elvégzett számítások indoklás nélküli lépéseknek számítanak, így azokért 
+nem jár pont. 
+11. Az ábrák bizonyító erejű felhasználása (például adatok leolvasása méréssel) nem elfo-
+gadható. 
+12. Valószínűségek megadásánál (ha a feladat szövege másképp nem rendelkezik) a száza-
+lékban megadott helyes válasz is elfogadható. 
+13. Ha egy feladat szövege nem ír elő kerekítési kötelezettséget, akkor az útmutatóban meg-
+adottól eltérő, észszerű és helyes kerekítésekkel kapott rész- és végeredmény is elfo-
+gadható. 
+14. A vizsgafeladatsor II. részében kitűzött 5 feladat közül csak 4 feladat megoldása 
+értékelhető. A vizsgázó az erre a célra szolgáló négyzetben – feltehetőleg – megjelölte 
+annak a feladatnak a sorszámát, amelynek értékelése nem fog beszámítani az összpont-
+számába. Ennek megfelelően a megjelölt feladatra esetlegesen adott megoldást nem is 
+kell javítani. Ha a vizsgázó nem jelölte meg, hogy melyik feladat értékelését nem kéri, 
+és a választás ténye a dolgozatból sem derül ki egyértelműen, akkor a nem értékelendő 
+feladat automatikusan a kitűzött sorrend szerinti utolsó feladat lesz. 
+ 
+ 
+
+===== PAGE 4 =====
+Matematika — emelt szint 
+Javítási-értékelési útmutató 
+2212 írásbeli vizsga 
+4 / 16 
+2022. október 18. 
+ 
+I. 
+ 
+1. a) 
+A kör sugara 
+2
+2
+3
+4
+5
+CP =
++
+=
+
+ egység, 
+1 pont
+ 
+egyenlete 
+2
+2
+(
+6)
+(
+2)
+25
+x
+y
++
++
++
+=
+. 
+1 pont
+ 
+Összesen:
+2 pont
+ 
+ 
+1. b) 
+Az érintő merőleges az érintési pontba húzott sugárra, 
+1 pont
+Ez a pont akkor is jár, ha 
+ez a gondolat csak a meg-
+oldásból derül ki. 
+ezért az érintő egy normálvektora 
+(3;4)
+CP
+
+, 
+1 pont
+ 
+egyenlete 3x + 4y = –1. 
+1 pont
+ 
+Összesen:
+3 pont
+ 
+ 
+1. c) 
+A CP egyenes egy irányvektora 
+(3;4)
+CP
+
+, 
+1 pont
+ 
+egyenlete 4x – 3y = –18. 
+1 pont
+ 
+(Az y = 0, majd x = 0 helyettesítésekkel kapjuk, 
+hogy) az egyenes az x tengelyt a (– 4,5; 0),  
+az y tengelyt pedig a (0; 6) pontban metszi. 
+1 pont
+ 
+A Pitagorasz-tétellel adódik, hogy a derékszögű há-
+romszög átfogója 
+2
+2
+4,5
+6
+7,5
++
+=
+ egység hosszú. 
+1 pont
+ 
+A derékszögű háromszög körülírt körének sugara az 
+átfogó fele,  
+1 pont A háromszög területe 13,5,
+tehát 3,75 egység hosszú. 
+1 pont
+körülírt körének sugara az 
+4
+abc
+R
+T
+=
+ képlettel: 
+4,5 6 7,5
+3,75
+4 13,5
+⋅⋅
+=
+⋅
+ egység.
+Összesen:
+6 pont
+ 
+ 
+ 
+
+===== PAGE 5 =====
+Matematika — emelt szint 
+Javítási-értékelési útmutató 
+2212 írásbeli vizsga 
+5 / 16 
+2022. október 18. 
+ 
+2. a) első megoldás 
+cos x = 0 nem megoldás (ekkor nem lehet sin x = 0), 
+1 pont
+ 
+ezért az egyenlet ekvivalens a 
+2
+2
+sin
+3
+cos
+x
+x =
+,  
+azaz a 
+2
+tg
+3
+x = egyenlettel. 
+1 pont
+ 
+tg
+3
+=
+x
+ vagy tg
+3
+= −
+x
+. 
+2 pont
+ 
+tg
+3
+x =
+ esetén 
+3
+x
+k
+π
+=
++ π , k ∈ Z,  
+tg
+3
+x = −
+ esetén 
+3
+x
+k
+π
+= −
++ π , k ∈ Z. 
+2 pont
+ 
+Összesen:
+6 pont
+ 
+ 
+2. a) második megoldás 
+A 
+2
+2
+sin
+1 cos
+= −
+x
+x azonosság felhasználásával,  
+1 pont
+ 
+az egyenlet ekvivalens az 
+2
+1
+cos
+4 =
+x egyenlettel. 
+1 pont
+ 
+1
+cos
+2
+x =
+ vagy 
+1
+cos
+2
+x = −
+. 
+2 pont
+ 
+1
+cos
+2
+x =
+ esetén 
+2
+3
+x
+k
+π
+= ±
++
+π, k ∈ Z,  
+1
+cos
+2
+x = −
+ esetén 
+2
+2
+3
+x
+k
+π
+= ±
++
+π , k ∈ Z. 
+2 pont
+3
+x
+k
+π
+=
++ π vagy 
+3
+x
+k
+π
+= −
++ π , k ∈ Z 
+Összesen:
+6 pont
+ 
+Megjegyzések: 
+1. Ha a vizsgázó a megoldásokat fokban helyesen adja meg, akkor legfeljebb 5 pontot kaphat. 
+2. Ha a vizsgázó válaszát periódus nélkül adja meg, akkor legfeljebb 4 pontot kaphat. 
+3. Ha a vizsgázó periódussal adja meg az egyenlet megoldásait, de a k ∈ Z feltételt egyszer 
+sem említi, akkor legfeljebb 5 pontot kaphat. 
+ 
+2. b) 
+Az egyenlet értelmezési tartománya: x > 2. 
+1 pont
+Ez a pont akkor is jár, ha 
+a vizsgázó behelyettesí-
+téssel ellenőriz. 
+(A logaritmus definíciója és azonosságai alapján)
+3
+3
+(
+8)(
+2)
+log
+log 3
+4
+x
+x
+x
++
+−
+=
++
+. 
+2 pont
+ 
+(A logaritmusfüggvény kölcsönös egyértelműsége 
+miatt) (
+8)(
+2)
+3
+4
+x
+x
+x
++
+−
+=
++
+. 
+1 pont
+ 
+Nullára rendezve 
+2
+3
+28
+0
+x
+x
++
+−
+= . 
+1 pont
+ 
+Ennek a gyökei a 4 és a –7,  
+1 pont
+ 
+melyek közül csak a 4 megoldás (mert –7 ≤ 2). 
+1 pont
+ 
+Ellenőrzés behelyettesítéssel, vagy az értelmezési tar-
+tományon ekvivalens átalakításokra hivatkozással. 
+1 pont
+ 
+Összesen:
+8 pont
+ 
+
+===== PAGE 6 =====
+Matematika — emelt szint 
+Javítási-értékelési útmutató 
+2212 írásbeli vizsga 
+6 / 16 
+2022. október 18. 
+ 
+3. a) 
+24 db töltő adatait tartalmazza a kördiagram, tehát az 
+egy töltőnek megfelelő középponti szög 15°. 
+1 pont
+ 
+A 24 töltő élettartama táblázatban: 
+élettartam (hónap)
+49 50 51
+52
+53
+54
+darabszám 
+2 
+4 
+7 
+4 
+5 
+2 
+ 
+1 pont
+ 
+A 24 töltő élettartamának átlaga: 
+2 49
+4 50
+7 51
+4 52
+5 53
+2 54
+24
+⋅
++ ⋅
++ ⋅
++ ⋅
++ ⋅
++ ⋅
+= 
+= 51,5 (hónap). 
+1 pont
+ 
+Az élettartamok szórása: 
+2
+2
+2 (49
+51,5)
+...
+2 (54
+51,5)
+24
+⋅
+−
++
++
+⋅
+−
+= 
+2
+2
+2
+4 2,5
+9 1,5
+11 0,5
+24
+⋅
++ ⋅
++
+⋅
+=
+= 
+1 pont
+Ez a pont akkor is jár, ha 
+a vizsgázó számológéppel 
+helyesen számol. 
+2
+=
+ (≈ 1,41) (hónap). 
+1 pont
+ 
+Összesen:
+5 pont
+ 
+ 
+3. b) 
+Annak a valószínűsége, hogy egy véletlenszerűen ki-
+választott töltő élettartama 50 hónapnál kevesebb 
+(1 – 0,9 =) 0,1. 
+1 pont
+Ez a pont akkor is jár, ha 
+ez a gondolat csak a meg-
+oldásból derül ki. 
+(Jelölje P(n) annak valószínűségét, hogy a 20 töltő 
+között n db élettartama lesz 50 hónapnál kevesebb.) 
+P(0) = 
+20
+0,9
+(≈ 0,122) 
+1 pont
+ 
+P(1) = 
+19
+20
+0,1 0,9
+1
+
+⋅
+⋅
+
+
+
+
+(≈ 0,270) 
+P(2) = 
+2
+18
+20
+0,1
+0,9
+2
+
+⋅
+⋅
+
+
+
+
+(≈ 0,285) 
+2 pont
+ 
+A kérdezett valószínűség tehát 
+P(0) + P(1) + P(2) ≈ 0,677. 
+1 pont
+ 
+Összesen:
+5 pont
+ 
+ 
+3. c) 
+Ha p jelöli annak a valószínűségét, hogy egy töltő 
+élettartama legalább 55 hónap, akkor 
+5
+(1
+)
+p
+−
+= 0,75. 
+1 pont
+ 
+Innen 1 – p (= 5 0,75 ) ≈ 0,944, 
+1 pont
+ 
+a kérdezett valószínűség tehát p ≈ 0,056. 
+1 pont
+ 
+Összesen:
+3 pont
+ 
+ 
+ 
+ 
+
+===== PAGE 7 =====
+Matematika — emelt szint 
+Javítási-értékelési útmutató 
+2212 írásbeli vizsga 
+7 / 16 
+2022. október 18. 
+ 
+4. a)  
+(0)
+sin 0
+0
+f
+=
+=
+, 
+π
+π
+sin
+1
+2
+2
+f 
+=
+=
+
+
+
+
+ 
+2
+0
+(0)
+0
+π
+g
+
+
+=
+=
+
+
+
+
+, 
+2
+π
+2 π
+1
+2
+π 2
+g 
+
+
+
+=
+⋅
+=
+
+
+
+
+
+
+
+
+ 
+(Tehát az állítás igaz.) 
+3 pont
+Egy hiba esetén 2 pont, 
+két hiba esetén 1 pont jár. 
+Összesen:
+3 pont
+ 
+ 
+4. b)  
+(Mivel az adott intervallumban f (x) ≥ g (x), ezért)  
+a síkidom területe:  
+2
+2
+0
+2
+sin
+x
+x
+dx
+π
+
+
+
+
+−
+
+
+
+
+
+
+π
+
+
+
+
+
+2
+2
+2
+0
+4
+sin x
+x
+dx
+π
+
+
+=
+−
+⋅
+=
+
+
+π
+
+
+
+  
+1 pont
+3
+2
+2
+0
+4
+cos
+3
+x
+x
+π
+
+
+= −
+−
+⋅
+=
+
+
+π
+
+
+ 
+2 pont
+ 
+0
+6
+π
+
+
+= −−
+
+
+
+
+ – (–1 – 0) = 
+1 pont
+ 
+=
+1
+6
+π
+−
++ (≈ 0,476). 
+1 pont
+ 
+Összesen:
+5 pont
+ 
+ 
+4. c)  
+2
+2
+=
++ π
+na
+n
+ 
+1 pont
+1
+2
+(
+1)
++
+−
+−
+=
++
+n
+n
+a
+a
+n n
+ 
+Ez mindig negatív, tehát 
+a sorozat szigorúan mo-
+noton csökkenő. 
+A 2
+n
+
+
+
+ sorozat szigorúan monoton csökkenő, 
+2π pedig állandó, ezért az 
+na sorozat is szigorúan 
+monoton csökkenő. 
+1 pont
+A sorozat felülről korlátos, mert a csökkenő sorozat 
+első tagja egy felső korlát; alulról is korlátos, mert a 
+sorozat mindegyik tagja pozitív (ezért például a 0 egy 
+alsó korlátja a sorozatnak). 
+1 pont*
+A sorozat legkisebb felső 
+korlátja 2 + 2π, 
+legnagyobb alsó korlátja 
+pedig 2π. 
+A 2
+n
+
+
+
+ sorozat határértéke 0, 
+1 pont
+ 
+ezért a megadott sorozat határértéke (0 + 2π =) 2π. 
+1 pont
+ 
+Összesen:
+5 pont
+ 
+Megjegyzés: A *-gal jelölt pont akkor is jár, ha a vizsgázó először belátja, hogy a megadott 
+sorozat konvergens, majd hivatkozik arra, hogy ebből következik a sorozat korlátossága. 
+ 
+ 
+
+===== PAGE 8 =====
+Matematika — emelt szint 
+Javítási-értékelési útmutató 
+2212 írásbeli vizsga 
+8 / 16 
+2022. október 18. 
+ 
+II. 
+ 
+5. a) első megoldás 
+(Az A, B, D tartományok páronként szomszédosak, 
+ezért) az A 4-féleképpen, a B 3-féleképpen, a D pe-
+dig 2-féleképpen színezhető. 
+1 pont
+ 
+Így az A, B, D tartományok lehetséges színezéseinek 
+száma 4 ∙ 3 ∙ 2 (= 24). 
+1 pont
+ 
+Feltehetjük, hogy pl. A piros, B kék, D zöld. 
+Ekkor C nem lehet sem piros, sem kék (tehát sárga 
+vagy zöld lehet). 
+1 pont
+Az E nem lehet sem kék, 
+sem zöld (tehát piros 
+vagy sárga lehet). 
+Ha C sárga, akkor E csak piros lehet, és F színe 
+2-féle lehet (kék vagy sárga). Ekkor tehát E és F 
+összesen 2-féleképpen színezhető. 
+1 pont
+Ha E sárga, akkor C 
+zöld, és F 2-féle színű le-
+het (piros vagy kék). 
+Ha C zöld, akkor E színe 2-féle lehet (piros vagy 
+sárga), és mindkét esetben F is 2-féleképpen színez-
+hető (ha E piros, akkor F kék vagy sárga, ha E sárga, 
+akkor F piros vagy kék). Az E és az F megfelelő szí-
+nezéseinek száma ekkor 2 ∙ 2. 
+1 pont
+Ha E piros, akkor C színe 
+2-féle lehet (zöld vagy 
+sárga), és F is 2-féle 
+színű lehet (kék vagy 
+sárga). 
+Összesen tehát 4 ∙ 3 ∙ 2 ∙ (2 + 2 ∙ 2) = 
+1 pont
+ 
+= 144 megfelelő színezés van. 
+1 pont
+ 
+Összesen:
+7 pont
+ 
+ 
+5. a) második megoldás 
+(Az A, B, D tartományok páronként szomszédosak, 
+ezért) az A 4-féleképpen, a B 3-féleképpen, a D pe-
+dig 2-féleképpen színezhető. 
+1 pont
+ 
+Így az A, B, D tartományok lehetséges színezéseinek 
+a száma 4 ∙ 3 ∙ 2 (= 24). 
+1 pont
+ 
+Feltehetjük, hogy A piros, B kék, D zöld.  
+Ekkor az E csak 2-féleképpen színezhető (piros vagy 
+sárga). Az E színének megválasztása után az F is 
+csak 2-féleképpen színezhető (mert szomszédos 
+D-vel és E-vel).  
+1 pont
+ 
+Ha a C lehetne piros is, akkor (az A, B, D, E, F színé-
+nek megválasztása után) C-t is 2-féleképpen lehetne 
+színezni (mert szomszédos B-vel és E-vel), vagyis 
+összesen 2 ∙ 2 ∙ 2 (= 8)-féle folytatása lenne az  
+A piros, B kék, D zöld színezésnek. 
+1 pont
+ 
+Ha A piros, B kék, D zöld, akkor rossz színezések 
+azok, amelyekben a C színe piros. Ekkor az E csak 
+sárga lehet, F színe pedig 2-féleképpen választható 
+(piros vagy kék), így összesen 2 rossz színezés van. 
+1 pont
+ 
+ 
+ 
+ 
+
+===== PAGE 9 =====
+Matematika — emelt szint 
+Javítási-értékelési útmutató 
+2212 írásbeli vizsga 
+9 / 16 
+2022. október 18. 
+ 
+Ha az összes eset számából (4 ∙ 3 ∙ 2 ∙ 2 ∙ 2 ∙ 2) levonjuk 
+a rossz esetek számát (4 ∙ 3 ∙ 2 ∙ 2), akkor a megfelelő 
+színezések számát kapjuk meg.  
+1 pont
+ 
+A megfelelő színezések száma 4 ∙ 3 ∙ 2 ∙ (8 – 2) = 144. 
+1 pont
+192 – 48 = 144 
+Összesen:
+7 pont
+ 
+Megjegyzés: Ha a tartományokat egy gráf csúcsainak tekintjük, és a „szomszédosságot” a 
+gráfban a két megfelelő csúcsot összekötő éllel jelenítjük meg, akkor a feladat átfogalmazható 
+úgy, hogy gráf csúcsait kell helyesen színezni (helyes színezés esetén az éllel összekötött csú-
+csok színe különböző). A szövegnek megfelelő gráf: 
+ 
+ 
+5. b) 
+(B, E, F számokat kifejezzük C segítségével.) 
+(1) és (2) szerint 
+6
+2
+C
+B
++
+=
+. 
+1 pont
+(1) és (2) szerint 
+ha B = 6 + m,  
+akkor C = 6 + 2m, 
+(5) szerint E = C + 2, 
+(3) és (1) szerint pedig 
+8(
+2)
+F
+DE
+C
+=
+=
++
+. 
+1 pont
+továbbá (5) miatt  
+E = 8 + 2m, 
+és (4) miatt F = 7 + m.  
+Végül (4) szerint F = B + 1, 
+azaz 
+6
+8(
+2)
+1
+2
+C
+C
++
++
+=
++ . 
+1 pont
+(1) és (3) miatt 
+F =
+8(8
+2 )
+m
++
+, 
+így 8(8
+2 )
+7
+m
+m
++
+=
++
+ 
+A jobb oldalon közös nevezőre hozva, majd négy-
+zetre emelve: 
+2
+64
+16
+8(
+2)
+4
+C
+C
+C
++
++
++
+=
+. 
+1 pont
+2
+8(8
+2 )
+(7
+)
+m
+m
++
+=
++
+  
+2
+64 16
+49 14
+m
+m m
++
+=
++
++
+ 
+4-gyel való szorzás után nullára rendezve: 
+2
+0
+16
+C
+C
+=
+−
+. 
+1 pont
+2
+2
+15
+0
+m
+m
+−
+−
+=
+  
+Az egyenlet gyökei C = 0 és C = 16. 
+1 pont
+m = –3 vagy m = 5 
+Az első esetben az ismeretlen számok: 
+B = 3, C = 0, E = 2, F = 4. 
+1 pont
+ 
+A második esetben az ismeretlen számok: 
+B = 11, C = 16, E = 18, F =12. 
+1 pont
+ 
+Ellenőrzés a szövegbe helyettesítéssel. 
+1 pont
+ 
+Összesen:
+9 pont
+ 
+ 
+ 
+ 
+
+===== PAGE 10 =====
+Matematika — emelt szint 
+Javítási-értékelési útmutató 
+2212 írásbeli vizsga 
+10 / 16 
+2022. október 18. 
+ 
+6. a)  
+ 
+Az ABC háromszög területe 
+126 65 sin122,5
+2
+⋅
+⋅
+° ≈  
+≈ 3454 (m2). 
+1 pont
+ 
+Az AC átló hossza az ABC háromszögből koszinusz-
+tétellel:  
+2
+2
+126
+65
+2 126 65 cos122,5
+AC =
++
+−
+⋅
+⋅
+⋅
+° ≈ 170 (m). 
+1 pont
+ 
+Az ADC derékszögű háromszögből Pitagorasz-tétel-
+lel: 
+2
+2
+170
+80
+150
+AD =
+−
+=
+ (m). 
+1 pont
+ 
+Az ADC háromszög területe 
+150 80
+6000
+2
+2
+AD DC
+⋅
+=
+=
+⋅
+ (m2). 
+1 pont
+ 
+A legelő területe (3454 + 6000 =) 9454 m2 = 0,9454 ha.
+1 pont
+ 
+0,9454 : 0,9 ≈ 1,05, tehát a legelő valódi területe 
+kb. 5%-kal nagyobb a meghirdetettnél. 
+1 pont
+ 
+Összesen:
+6 pont
+ 
+ 
+6. b)  
+A megdöntött vályúban maradt víztömeg alakja 
+olyan szabályos háromszög alapú gúla, amelynek 
+alapéle 38 cm, magassága 72 cm hosszú. 
+2 pont
+Ez a 2 pont akkor is jár, 
+ha ez a gondolat csak a 
+megoldásból derül ki. 
+A szabályos háromszög területe  
+2
+38
+3
+4
+t
+⋅
+=
+ (≈ 625,3) (cm2). 
+1 pont
+ 
+A vályúban maradó víz térfogata 
+72
+3
+t ⋅
+, 
+azaz kb. 15 006 cm3, 
+1 pont
+ 
+ami a kért kerekítéssel valóban 15 liter. 
+1 pont
+ 
+Összesen:
+5 pont
+ 
+Megjegyzés: A vályú térfogata kb. 45 000 cm3 (2 pont), a gúla térfogata ennek a harmada 
+(1 pont), vagyis 15 000 cm3 (1 pont), ami valóban 15 liter (1 pont). 
+ 
+ 
+
+===== PAGE 11 =====
+Matematika — emelt szint 
+Javítási-értékelési útmutató 
+2212 írásbeli vizsga 
+11 / 16 
+2022. október 18. 
+ 
+6. c) első megoldás 
+A 15 liter egy olyan szabályos háromszög alapú ha-
+sáb térfogata, melynek magassága 72 cm,  
+1 pont
+ 
+így az alaplapjának területe 15000
+72
+ ≈ 208,3 (cm2). 
+1 pont
+ 
+Az alaplap szabályos háromszög, oldala legyen x cm. 
+2
+3
+4
+x ⋅
+≈ 208,3 
+1 pont
+ 
+Ebből x ≈ 21,9 (cm),  
+1 pont
+ 
+ezért a kérdezett magasság 
+3
+2
+x⋅
+ ≈ 19 cm. 
+1 pont
+ 
+Összesen:
+5 pont
+ 
+ 
+6. c) második megoldás 
+Azonos alapú, azonos magasságú gúla és hasáb térfo-
+gatának aránya 1 : 3, ezért a vályúban maradt víz tér-
+fogata a vályú térfogatának a harmada, 
+1 pont
+ 
+így a vízzel kitöltött (azonos magasságú) hasáb alap-
+területe is harmada az eredetinek. 
+1 pont
+ 
+A két hasáb alaplapja hasonló, 
+1 pont
+ 
+a hasonlóság aránya 1
+3
+. 
+1 pont
+ 
+A vályúban maradt víz szintjének magassága tehát 
+3
+1
+38
+19
+2
+3
+
+
+⋅
+⋅
+=
+
+
+
+
+
+
+cm. 
+1 pont
+ 
+Összesen:
+5 pont
+ 
+ 
+7. a) 
+( 2)
+( 2)
+3
+9
+f
+−−
+−
+=
+= ∈N 
+1 pont
+1
+2
+1
+3
+(0,5)
+3
+(
+\
+)
+3
+3
+f
+−
+=
+=
+=
+∈R Q 
+1 pont
+5
+5
+1
+1
+(5)
+3
+(
+\
+)
+3
+243
+f
+−
+=
+=
+=
+∈Q Z 
+1 pont
+Összesen:
+3 pont
+ 
+Megjegyzések: 
+1. Ha a vizsgázó a megoldását nem indokolja (a kiszámított függvényértékeket nem tünteti 
+fel), akkor legfeljebb 2 pontot kaphat.  
+2. Ha a vizsgázó megoldásában az x ↦ 3x függvénnyel dolgozik, akkor legfeljebb 2 pontot 
+kaphat. 
+ 
+ 
+
+===== PAGE 12 =====
+Matematika — emelt szint 
+Javítási-értékelési útmutató 
+2212 írásbeli vizsga 
+12 / 16 
+2022. október 18. 
+ 
+7. b) 
+(A számokat a hozzájuk tartozó pontok betűjelével je-
+löljük.) 
+Az A, B és C számok racionálisak 
+2
+7
+12
+1
+1
+1
+,
+,
+3
+3
+3
+
+
+
+
+
+
+.  
+Két racionális szám összege is racionális, ezért az 
+ABC részgráf három éle be van húzva. 
+1 pont
+ 
+A D és E számok irracionálisak. (Két irracionális 
+szám összege lehet racionális és irracionális is.) 
+1
+1
+2
+1
+2
+1
+2
+1
+2
+1
+2
+1
++
+=
+=
+⋅
+=
++
+−
+−
++
+E
+ 
+1
+2
+2
+1
+2
++
+= −
++
++ =
+D
+E
+,  
+tehát a DE él is be van húzva. 
+2 pont
+1
+1
+2
+2
+1
++
+= −
++
+=
+−
+D
+E
+ 
+(1
+2)( 2
+1) 1
+2
+1
+−
+−
++
+=
+=
+−
+2 2
+2
+2( 2
+1)
+2
+2
+1
+2
+1
+−
+−
+=
+=
+=
+−
+−
+ 
+Egy racionális és egy irracionális szám összege irra-
+cionális, ezért több él nincs. 
+1 pont
+ 
+A gráfnak tehát összesen 4 éle van. 
+1 pont
+ 
+Összesen:
+5 pont
+ 
+Megjegyzés: Indoklás nélkül megadott helyes gráf és válasz esetén 2 pontot kapjon a vizsgázó. 
+ 
+7. c) 
+A téglalapok számát az 
+6
+1
+1
+1
+10
+3
+3
+n
+n
+−
++
+−
+>
+ egyenlőtlen-
+ség megoldásával kapjuk meg. 
+1 pont
+ 
+Az egyenlőtlenséget (a pozitív) 
+1
+3n+ -nel szorozva: 
+6
+1
+3 1
+10
+3n
+−
++
+−>
+⋅
+, amiből 
+6
+1
+2 10
+3n+
+⋅
+>
+. 
+1 pont
+ 
+Az x ↦3x (x ∈ R) függvény szigorúan monoton nö-
+vekedő, 
+1 pont
+ 
+így 
+6
+3
+log (2 10 )
+⋅
+ ≈ 13,2 > n + 1, 
+1 pont
+ 
+tehát n = 12 a legnagyobb pozitív egész megoldás. 
+1 pont
+ 
+A 12 téglalap mindegyikének egyik oldala 1. 
+Másik oldaluk hossza, és így a területük is egy olyan 
+mértani sorozat első 12 tagja, amelyben 
+1
+1
+3
+a
+q
+=
+=
+. 
+1 pont
+ 
+12
+12
+1
+1
+1
+3
+1
+3
+1
+3
+S
+
+
+−
+
+
+
+
+=
+⋅
+−
+ ≈ 
+1 pont
+ 
+≈ 0,5 a téglalapok területének összege. 
+1 pont
+ 
+Összesen:
+8 pont
+ 
+ 
+ 
+ 
+
+===== PAGE 13 =====
+Matematika — emelt szint 
+Javítási-értékelési útmutató 
+2212 írásbeli vizsga 
+13 / 16 
+2022. október 18. 
+ 
+8. a)  
+A harmadik él hossza 
+72
+4 2
+
+
+=
+
+
+⋅
+
+
+ 9 (dm), 
+1 pont
+ 
+a téglatest felszíne (2 ∙ (4 ∙ 2 + 4 ∙ 9 + 2 ∙ 9) =) 124 dm2. 
+1 pont
+ 
+Összesen:
+2 pont
+ 
+ 
+8. b)  
+A téglatest élei (dm-ben mérve) a, 2a és b (a, b > 0). 
+1 pont
+Ez a pont akkor is jár, ha 
+ez a gondolat csak a meg-
+oldásból derül ki. 
+A szöveg alapján a térfogat: 
+2
+72
+2a b
+=
+, 
+ahonnan 
+2
+36
+b
+a
+=
+. 
+1 pont
+ 
+A téglatest felszíne (dm2-ben mérve): 
+2
+2
+216
+4
+6
+4
+a
+ab
+a
+a
++
+=
++
+. 
+1 pont
+ 
+Az 
+2
+216
+:
+;
+( )
+4
+A
+A a
+a
+a
++ →
+=
++
+R
+R
+ függvény  
+deriválható, 
+2
+216
+( )
+8
+A a
+a
+a
+′
+=
+−
+. 
+2 pont*
+ 
+Minimuma ott lehet, ahol
+( )
+0
+A a
+′
+= . Ekkor a = 3. 
+1 pont*
+ 
+Mivel a második derivált az értelmezési tartomány 
+minden elemére pozitív, ez valóban minimumhely. 
+1 pont*
+3
+432
+( )
+8
+0
+A a
+a
+′′
+=
++
+>
+ 
+A minimális felszínű téglatest élei 3 dm, 6 dm, illetve 
+(36 : 9 =) 4 dm hosszúak. 
+1 pont
+ 
+Összesen:
+8 pont
+ 
+ 
+Megjegyzés: A *-gal jelölt 4 pontot az alábbi gondolatmenetért is megkaphatja a vizsgázó. 
+2
+2
+216
+108
+108
+( )
+4
+4
+A a
+a
+a
+a
+a
+a
+=
++
+=
++
++
+ 
+1 pont
+ 
+A számtani és mértani közép közötti egyenlőtlenséget 
+alkalmazva: 
+2
+2
+3
+108
+108
+108 108
+4
+3
+4
+a
+a
+a
+a
+a
+a
++
++
+≥⋅
+⋅
+⋅
+=
+3
+3
+46656
+3 36
+108
+=
+⋅
+=
+⋅
+=
+. 
+1 pont
+ 
+Egyenlőség (vagyis minimális felszín) akkor és csak 
+akkor lehetséges, ha 
+2
+108
+4a
+a
+=
+,  
+1 pont
+ 
+amiből a = 3 (dm). 
+1 pont
+ 
+ 
+ 
+ 
+
+===== PAGE 14 =====
+Matematika — emelt szint 
+Javítási-értékelési útmutató 
+2212 írásbeli vizsga 
+14 / 16 
+2022. október 18. 
+ 
+8. c) első megoldás 
+Két élszomszédos csúcs nem lehet a három kiválasz-
+tott pont között, mert ezekhez akárhogy választunk 
+harmadik csúcsot, az így meghatározott sík (lapsík 
+vagy átlós sík) átmegy egy negyedik csúcson is. 
+2 pont
+ 
+A téglatestnek vagy az alap-, vagy a fedőlapjáról két 
+csúcsot is ki kell választanunk, ezek tehát csak átlós 
+csúcsok lehetnek. Ezt az alap- és a fedőlap esetében 
+is 2-féleképpen tehetjük meg. 
+2 pont
+ 
+Ezekhez a másik lapról úgy kell harmadik csúcsot 
+választanunk, hogy egyikkel se legyen élszomszédos, 
+ezt minden esetben 2-féleképpen tehetjük meg. 
+1 pont
+ 
+A megfelelő kiválasztások száma tehát 2 ⋅ 2 ⋅ 2 = 8. 
+1 pont
+ 
+Összesen:
+6 pont
+ 
+ 
+8. c) második megoldás 
+(A komplementer leszámlálás módszerét használjuk.) 
+A 8 csúcs közül 8
+56
+3
+=
+
+
+-féleképpen választhatunk 
+ki 3 csúcsot. 
+1 pont
+ 
+Ha egy oldallap 3 csúcsát választjuk, az nem megfe-
+lelő választás, mert a negyedik csúcs is rajta van az 
+oldallap síkján. 
+1 pont
+ 
+Egy oldallapon 4-féleképpen választhatunk 3 csúcsot, 
+ezért ez a 6 ⋅ 4 = 24 választás nem felel meg. 
+2 pont
+ 
+Ugyanezzel a megfontolással látható be, hogy nem 
+megfelelő az sem, ha a téglatest 6 átlós síkján lévő 
+4-4 csúcs közül választunk 3-at. Tehát itt is 24 nem 
+megfelelő választás van.  
+1 pont
+ 
+A maradék 56 – 24 – 24 = 8 választás (a téglatest 
+8 csúcsából induló 3-3 él végpontja) megfelelő.  
+1 pont
+ 
+Összesen:
+6 pont
+ 
+Megjegyzés: Ha a vizsgázó indoklás nélkül felsorolja a megfelelő kiválasztá-
+sokat (ACF, ACH, BDE, BDG, EGB, EGD, FHA, FHC – az ACFH és a 
+BDEG tetraéder 4-4 lapsíkja), és ez alapján helyesen válaszol, akkor 4 pon-
+tot kapjon. 
+ 
+
+===== PAGE 15 =====
+Matematika — emelt szint 
+Javítási-értékelési útmutató 
+2212 írásbeli vizsga 
+15 / 16 
+2022. október 18. 
+ 
+9. a) 
+(Ha a kék sorsjegy ára k Ft, a zöld sorsjegyé z Ft,  
+akkor) 5k + 3z = 6700 és 3k + 2z = 4200. 
+1 pont
+ 
+Az első egyenlet kétszereséből a második egyenlet 
+háromszorosát kivonva megkapjuk, hogy k = 800, 
+egy kék sorsjegy ára tehát 800 Ft. 
+2 pont
+ 
+Amiből z = 900, egy zöld sorsjegy ára tehát 900 Ft. 
+1 pont
+ 
+Ellenőrzés:  
+5 kék és 3 zöld sorsjegy 4000 + 2700 = 6700 Ft-ba,  
+3 kék és 2 zöld pedig 2400 + 1800 = 4200 Ft-ba kerül. 
+1 pont
+ 
+Összesen:
+5 pont
+ 
+Megjegyzés: Ha a vizsgázó a válaszait mértékegység nélkül adja meg, akkor ezért összesen 
+1 pontot veszítsen. 
+ 
+9. b) 
+Ha n db sorsjegy készült, akkor 0,4n db sorsjegy kék, 
+és ezek 35%-a nyer tárgynyereményt.  
+Annak valószínűsége, hogy a kihúzott sorsjegy kék, 
+és tárgynyereményt nyer: P(AB) = 0,4
+0,35
+n
+n
+⋅
+= 0,14. 
+1 pont
+P(AB) = 0,4 ∙ 0,35 =  
+= 0,14 
+Az n db sorsjegy között 0,6n db zöld, és ezek 40%-a 
+nyer tárgynyereményt.  
+Annak valószínűsége, hogy a kihúzott sorsjegy zöld, 
+és tárgynyereményt nyer: 0,6
+0,4
+n
+n
+⋅
+= 0,24. 
+1 pont
+(A zöld sorsjegy húzása a 
+B esemény.) 
+(
+)
+P AB
+ = 0,6 ∙ 0,4 = 0,24 
+A tárgynyereményt nyerő sorsjegy vagy kék, vagy 
+zöld (és ez két egymást kizáró esemény), ezért  
+P(A) = 0,14 + 0,24 = 0,38 valóban. 
+1 pont
+P(A) = P(AB) + 
+(
+)
+P AB = 
+= 0,14 + 0,24 = 0,38 
+P(B | A) =
+(
+)
+0,14
+( )
+0,38
+P AB
+P A
+=
+= 
+1 pont 
+= 7
+19
+ ≈ 0,368 
+1 pont
+ 
+(A feladat szövegéből P(B) = 0,4.) 
+P(A) ∙ P(B) = 0,38 ∙ 0,4 = 0,152 
+1 pont
+P(B | A) ≠ P(B), 
+vagy P(A | B) ≠ P(A) 
+Mivel P(A) ∙ P(B) ≠ P(AB), 
+1 pont
+ezért A és B nem független események. 
+1 pont
+ 
+Összesen:
+8 pont
+ 
+ 
+ 
+ 
+
+===== PAGE 16 =====
+Matematika — emelt szint 
+Javítási-értékelési útmutató 
+2212 írásbeli vizsga 
+16 / 16 
+2022. október 18. 
+ 
+Megjegyzések:  
+1. Ha a vizsgázó a sorsjegyek számát önkényesen választva helyesen oldja meg a feladatot, de 
+nem utal arra, hogy ez nem megy az általánosság rovására, akkor ezért 1 pontot veszítsen. 
+2. Az egy darab kihúzott sorsjegyhez tartozó valószínűségek láthatók a fagráfon.  
+(Ennek alapján pl. P(A) = 0,14 + 0,24 = 0,38.) 
+ 
+ 
+9. c) 
+Az egy kék sorsjegyre jutó nyeremény várható értéke: 
+(0,4 ∙ 0 +) 0,35 ∙ 500 + 0,2 ∙ 1000 + 0,05 ∙ 5000 =  
+2 pont
+ 
+= 625 Ft. 
+1 pont
+ 
+Összesen:
+3 pont
+ 
+ 

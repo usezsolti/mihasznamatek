@@ -1,0 +1,1724 @@
+
+===== PAGE 1 =====
+Matematika 
+emelt szint 
+ 
+Javítási-értékelési útmutató 2112 
+ 
+EMBERI ERŐFORRÁSOK MINISZTÉRIUMA 
+MATEMATIKA 
+ 
+EMELT SZINTŰ 
+ÍRÁSBELI VIZSGA 
+JAVÍTÁSI-ÉRTÉKELÉSI 
+ÚTMUTATÓ 
+ 
+É R E T T S É G I V I Z S G A • 2 0 2 1 . m á j u s 4 . 
+
+===== PAGE 2 =====
+Matematika — emelt szint 
+Javítási-értékelési útmutató 
+2112 írásbeli vizsga 
+2 / 18 
+2021. május 4. 
+Fontos tudnivalók 
+ 
+ 
+Formai előírások: 
+ 
+1. Kérjük, hogy a dolgozatot a vizsgázó által használt színűtől eltérő színű tollal, olvas-
+hatóan javítsa ki. 
+2. A feladatok mellett található szürke téglalapok közül az elsőben a feladatra adható ma-
+ximális pontszám van, a javító által adott pontszám a mellette levő téglalapba 
+kerüljön. 
+3. Kifogástalan megoldás esetén kérjük, hogy a maximális pontszám feltüntetése mellett 
+kipipálással jelezze, hogy az adott gondolati egységet látta, és jónak minősítette. 
+4. Hiányos/hibás megoldás esetén kérjük, hogy a hiba jelzése mellett az egyes részpont-
+számokat is írja rá a dolgozatra. Ha a dolgozat javítását jobban követhetővé teszi, akkor 
+a vizsgázó által elvesztett részpontszámok jelzése is elfogadható. Ne maradjon olyan 
+részlet a megoldásban, amelyről a javítás után nem nyilvánvaló, hogy helyes, hibás vagy 
+fölösleges. 
+5. A javítás során alkalmazza az alábbi jelöléseket. 
+• helyes lépés: kipipálás 
+• elvi hiba: kétszeres aláhúzás 
+• számolási hiba vagy más, nem elvi hiba: egyszeres aláhúzás 
+• rossz kiinduló adattal végzett helyes lépés: szaggatott vagy áthúzott kipipálás 
+• hiányos indoklás, hiányos felsorolás vagy más hiány: hiányjel 
+• nem érthető rész: kérdőjel és/vagy hullámvonal 
+6. Az ábrán kívül ceruzával írt részeket ne értékelje. 
+ 
+Tartalmi kérések: 
+ 
+1. Egyes feladatoknál több megoldás pontozását is megadtuk. Amennyiben azoktól eltérő 
+megoldás születik, keresse meg ezen megoldásoknak az útmutató egyes részleteivel 
+egyenértékű részeit, és ennek alapján pontozzon. 
+2. A pontozási útmutató pontjai tovább bonthatók, hacsak az útmutató másképp nem 
+rendelkezik. Az adható pontszámok azonban csak egész pontok lehetnek. 
+3. Ha a megoldásban számolási hiba, pontatlanság van, akkor csak arra a részre nem jár 
+pont, ahol a tanuló a hibát elkövette. Ha a hibás részeredménnyel helyes gondolatmenet 
+alapján tovább dolgozik, és a megoldandó probléma lényegében nem változik meg, ak-
+kor a következő részpontszámokat meg kell adni. 
+4. Elvi hibát követően egy gondolati egységen belül (ezeket az útmutatóban kettős vonal 
+jelzi) a formálisan helyes matematikai lépésekre sem jár pont. Ha azonban a tanuló  
+az elvi hibával kapott rossz eredménnyel – mint kiinduló adattal – helyesen számol to-
+vább a következő gondolati egységekben vagy részkérdésekben, akkor ezekre a részekre 
+kapja meg a maximális pontot, ha a megoldandó probléma lényegében nem változott 
+meg. 
+5. Ha a megoldási útmutatóban zárójelben szerepel egy megjegyzés vagy mértékegység, 
+akkor ennek hiánya esetén is teljes értékű a megoldás. 
+
+===== PAGE 3 =====
+Matematika — emelt szint 
+Javítási-értékelési útmutató 
+2112 írásbeli vizsga 
+3 / 18 
+2021. május 4. 
+ 
+6. Egy feladatra adott többféle megoldási próbálkozás közül a vizsgázó által megjelölt 
+változat értékelhető. A javítás során egyértelműen jelezze, hogy melyik változatot ér-
+tékelte, és melyiket nem. 
+7. A megoldásokért jutalompont (az adott feladatra vagy feladatrészre előírt maximális 
+pontszámot meghaladó pont) nem adható. 
+8. Egy feladatra vagy részfeladatra adott összpontszám nem lehet negatív. 
+9. Az olyan részszámításokért, részlépésekért nem jár pontlevonás, melyek hibásak, de 
+amelyeket a feladat megoldásához a vizsgázó ténylegesen nem használ fel. 
+10. A gondolatmenet kifejtése során a zsebszámológép használata – további matemati-
+kai indoklás nélkül – a következő műveletek elvégzésére fogadható el: összeadás, 
+kivonás, szorzás, osztás, hatványozás, gyökvonás, n!, 
+
+
+
+
+
+
+k
+n kiszámítása, a függvénytáb-
+lázatban fellelhető táblázatok helyettesítése (sin, cos, tg, log és ezek inverzei), a π és az 
+e szám közelítő értékének megadása, nullára rendezett másodfokú egyenlet gyökeinek 
+meghatározása. További matematikai indoklás nélkül használhatók a számológépek az 
+átlag és a szórás kiszámítására abban az esetben, ha a feladat szövege kifejezetten nem 
+követeli meg az ezzel kapcsolatos részletszámítások bemutatását is. Egyéb esetekben 
+a géppel elvégzett számítások indoklás nélküli lépéseknek számítanak, így azokért 
+nem jár pont. 
+11. Az ábrák bizonyító erejű felhasználása (például adatok leolvasása méréssel) nem elfo-
+gadható. 
+12. Valószínűségek megadásánál (ha a feladat szövege másképp nem rendelkezik) a száza-
+lékban megadott helyes válasz is elfogadható. 
+13. Ha egy feladat szövege nem ír elő kerekítési kötelezettséget, akkor az útmutatóban meg-
+adottól eltérő, észszerű és helyes kerekítésekkel kapott rész- és végeredmény is elfo-
+gadható. 
+14. A vizsgafeladatsor II. részében kitűzött 5 feladat közül csak 4 feladat megoldása 
+értékelhető. A vizsgázó az erre a célra szolgáló négyzetben – feltehetőleg – megjelölte 
+annak a feladatnak a sorszámát, amelynek értékelése nem fog beszámítani az összpont-
+számába. Ennek megfelelően a megjelölt feladatra esetlegesen adott megoldást nem is 
+kell javítani. Ha a vizsgázó nem jelölte meg, hogy melyik feladat értékelését nem kéri, 
+és a választás ténye a dolgozatból sem derül ki egyértelműen, akkor a nem értékelendő 
+feladat automatikusan a kitűzött sorrend szerinti utolsó feladat lesz. 
+ 
+ 
+
+===== PAGE 4 =====
+Matematika — emelt szint 
+Javítási-értékelési útmutató 
+2112 írásbeli vizsga 
+4 / 18 
+2021. május 4. 
+ 
+I. 
+ 
+1. a)  
+A négyzetgyök értelmezési tartománya és értékkész-
+lete miatt –1 ≤ x ≤ 3. 
+1 pont 
+Ez a pont akkor is jár, ha 
+a vizsgázó behelyettesí-
+téssel ellenőriz. 
+Négyzetre emelve: –2x + 6 = x2 + 2x + 1. 
+1 pont  
+x2 + 4x – 5 = 0 
+1 pont  
+Az egyenlet gyökei –5 és 1. 
+1 pont  
+Ellenőrzés: behelyettesítéssel vagy (a [–1; 3] halma-
+zon) ekvivalens átalakításokra hivatkozással kapjuk, 
+hogy az 1 megoldása, a –5 pedig nem megoldása az 
+eredeti egyenletnek. 
+1 pont  
+Összesen: 
+5 pont  
+ 
+1. b) első megoldás 
+Az egyenlet értelmezési tartománya: x > 0. 
+1 pont 
+Ez a pont akkor is jár, ha 
+a vizsgázó behelyettesí-
+téssel ellenőriz. 
+A logaritmus azonosságait alkalmazva: 
+4
+4
+4
+4
+4log
+9log
+4log
+9log 8
+x
+x
+x
++
+=
++
+. 
+2 pont  
+4
+4
+9log
+9log 8
+x =
+, azaz 
+4
+4
+log
+log 8
+x =
+, 
+amiből a logaritmusfüggvény kölcsönös egyértelmű-
+sége miatt x = 8. 
+2 pont  
+Ellenőrzés: behelyettesítéssel vagy (az x > 0 halma-
+zon) ekvivalenciára hivatkozással. 
+1 pont  
+Összesen: 
+6 pont  
+ 
+1. b) második megoldás 
+Az egyenlet értelmezési tartománya: x > 0. 
+1 pont 
+Ez a pont akkor is jár, ha 
+a vizsgázó behelyettesí-
+téssel ellenőriz. 
+A logaritmus és a hatványozás azonosságait alkal-
+mazva: 
+4
+9
+4
+9
+4
+4
+4
+4
+log
+log
+log
+log 8
+x
+x
+x
++
+=
++
+. 
+2 pont  
+9
+9
+4
+4
+log
+log 8
+x =
+ 
+A logaritmusfüggvény kölcsönös egyértelműsége mi-
+att 
+9
+98
+x =
+, 
+amiből (az 
+9
+x
+x
+
+ függvény kölcsönös egyértelmű-
+sége miatt) x = 8. 
+2 pont  
+Ellenőrzés: behelyettesítéssel vagy (az x > 0 halma-
+zon) ekvivalenciára hivatkozással. 
+1 pont  
+Összesen: 
+6 pont  
+ 
+ 
+ 
+
+===== PAGE 5 =====
+Matematika — emelt szint 
+Javítási-értékelési útmutató 
+2112 írásbeli vizsga 
+5 / 18 
+2021. május 4. 
+ 
+2. a)  
+ 
+ 
+Az adatokat helyesen  
+feltüntető ábra. 
+1 pont 
+Ez a pont akkor is jár, ha 
+a vizsgázó ábra nélkül 
+helyesen számol. 
+A BCD háromszög területe  
+sin100,3
+2
+BC CD
+⋅
+⋅
+° = 60 70 sin100,3
+2
+⋅
+⋅
+° ≈ 2066 (m2). 
+1 pont  
+A BCD háromszögben koszinusztétellel: 
+2
+2
+2
+60
+70
+2 60 70 cos100,3
+BD =
++
+−⋅
+⋅
+⋅
+°. 
+1 pont  
+Ebből BD ≈ 100 (m). 
+1 pont  
+ 
+Az ABD háromszögben szi-
+nusztétellel (az ábra szerint): 
+sin
+50
+sin100,3
+100
+ε
+=
+°
+. 
+1 pont*  
+sin ε ≈ 0,4919,  
+(mivel ε hegyesszög, ezért) ε ≈ 29,5°. 
+1 pont*  
+ABD = (180° – 100,3° – 29,5° =) 50,2°, 
+1 pont*  
+ezért az ABD háromszög területe  
+sin 50, 2
+2
+AB BD
+⋅
+⋅
+° = 50 100 sin 50,2
+2
+⋅
+⋅
+° ≈ 1921 (m2). 
+1 pont*  
+A négyszög területe 2066 + 1921 = 3987 m2. 
+1 pont  
+Összesen: 
+9 pont  
+ 
+Megjegyzés: A *-gal jelölt 4 pontot az alábbi gondolatmenetért is megkaphatja a vizsgázó. 
+Legyen AD = x (méter). 
+Az ABD háromszögben koszinusztétellel: 
+2
+2
+2
+50
+2 50
+cos100,3
+100
+x
+x
++
+−⋅
+⋅⋅
+° =
+. 
+1 pont  
+Rendezve: 
+2
+17,88
+7500
+0
+x
+x
++
+−
+=
+. 
+1 pont  
+Az egyenlet pozitív gyöke (egy tizedesjegyre kere-
+kítve) 78,1 (a negatív gyök –96,0). 
+1 pont  
+Ezért az ABD háromszög területe  
+sin100,3
+2
+AB AD
+⋅
+⋅
+° = 50 78,1 sin100,3
+2
+⋅
+⋅
+° ≈ 1921 (m2). 
+1 pont  
+
+===== PAGE 6 =====
+Matematika — emelt szint 
+Javítási-értékelési útmutató 
+2112 írásbeli vizsga 
+6 / 18 
+2021. május 4. 
+ 
+2. b) első megoldás 
+A felhasznált 3 színt 4
+3
+
+
+
+ = 4-féleképpen választhat-
+juk ki. 
+1 pont  
+Mivel négy háromszög van, és csak 3 szín, 
+ezért két háromszögnek azonos színűnek kell lennie. 
+Ezek csak szemköztiek lehetnek. 
+1 pont  
+A két azonos színű szemközti háromszöget 2-féle-
+képpen választhatjuk ki. 
+1 pont  
+Az azonos színű háromszögek színét 3-féleképpen 
+választhatjuk meg,  
+1 pont  
+a maradék két háromszöget pedig 2-féleképpen szí-
+nezhetjük (a maradék két színnel). 
+1 pont  
+A lehetséges színezések száma ezért 4 ∙ 2 ∙ 3 ∙ 2 = 48. 
+1 pont  
+Összesen: 
+6 pont  
+ 
+2. b) második megoldás 
+Mivel négy háromszög van, és csak 3 szín, 
+ezért az egyik színt kétszer is fel kell használnunk.  
+1 pont  
+Ezt a színt 4-féleképpen választhatjuk ki. 
+1 pont  
+Ezzel a színnel két szemközti háromszöget kell kiszí-
+neznünk, ezeket 2-féleképpen választhatjuk ki. 
+1 pont  
+A maradék két háromszög a maradék 3 szín közül 
+kettővel 3 ∙ 2 = 6-féleképpen színezhető ki. 
+2 pont  
+A lehetséges színezések száma ezért 4 ∙ 2 ∙ 6 = 48. 
+1 pont  
+Összesen: 
+6 pont  
+ 
+2. b) harmadik megoldás 
+Az AB oldalra illeszkedő háromszög színe 4, 
+a BC oldalra illeszkedő háromszög színe ezek után 
+3-féle lehet. 
+1 pont  
+Ez a két háromszög tehát 4 ∙ 3 = 12-féleképpen szí-
+nezhető ki. 
+1 pont  
+Tegyük fel, hogy az AB oldalra illeszkedő háromszö-
+get pirosra, a BC-re illeszkedőt pedig kékre színez-
+tük. Vagy a piros vagy a kék színt még egyszer hasz-
+nálnunk kell. 
+1 pont*  
+Vagy a CD oldalra illeszkedő háromszög piros, vagy 
+a DA oldalra illeszkedő háromszög kék. A negyedik 
+háromszög mindkét esetben sárga vagy zöld lehet. 
+Az első két háromszög bármely színezéséhez tehát 
+4-féleképpen színezhetjük az utolsó két háromszöget, 
+2 pont*  
+így a lehetséges színezések száma 12 ∙ 4 = 48. 
+1 pont  
+Összesen: 
+6 pont  
+
+===== PAGE 7 =====
+Matematika — emelt szint 
+Javítási-értékelési útmutató 
+2112 írásbeli vizsga 
+7 / 18 
+2021. május 4. 
+ 
+Megjegyzés: A *-gal jelölt pontokat az alábbi gondolatmenetért is megkaphatja a vizsgázó. 
+Tegyük fel, hogy az AB oldalra illeszkedő háromszö-
+get pirosra, a BC-re illeszkedőt pedig kékre színez-
+tük. Ha a CD oldalra illeszkedő háromszög is piros, 
+akkor 2-féleképpen fejezhető be a színezés (sárga 
+vagy zöld színnel). 
+1 pont  
+Ha a CD oldalra illeszkedő háromszög nem piros, ak-
+kor 2-féle lehet (sárga vagy zöld). Mindkét esetben a 
+DA-ra illeszkedő háromszög csak kék lehet.  
+2 pont  
+ 
+3. a) első megoldás 
+Tegyük fel, hogy  x db 6600 Ft-os, és y db 4800 Ft-os  
+részvényünk van.  
+6600
+4800
+131400
+2
+6600
+4800
+140 400
+3
+3
+x
+y
+y
+x
+y
++
+=
+
+
+
+
++
++
+⋅
+=
+
+
+
+
+
+
+ 
+2 pont  
+A második egyenletből az elsőt kivonva: 
+2200y – 1600y = 9000, 
+1 pont  
+ahonnan y = 15,  
+1 pont  
+majd visszahelyettesítve x = 9.  
+(Tehát 9 db 6600 Ft-os, és 15 db 4800 Ft-os részvé-
+nyünk van.) 
+1 pont  
+Ellenőrzés: 
+6600 ∙ 9 + 4800 ∙ 15 = 131 400. 
+A 15 db 4800 Ft-os részvény harmadát, 5 db-ot cse-
+rélnénk 6600 Ft-osra. Így lenne 10 db 4800 Ft-os és 
+14 db 6600 Ft-os. Ezek összértéke  
+4800 ∙ 10 + 6600 ∙ 14 = 140 400 valóban. 
+1 pont  
+Összesen: 
+6 pont  
+ 
+3. a) második megoldás 
+A cserével a részvénycsomag értéke 
+(140 400 – 131 400 =) 9000 Ft-tal nőne. 
+1 pont  
+A kétfajta részvény névértéke közötti különbség 
+1800 Ft, tehát (9000 : 1800 =) 5 db 4800 Ft-os rész-
+vényt cserélnénk 6600 Ft-osra. 
+2 pont  
+Ez az összes 4800 Ft-os részvény harmada, 
+tehát (5 · 3 =) 15 db 4800 Ft-os részvényünk,  
+1 pont  
+és (131 400 – 15 ⋅ 4800) : 6600 = 9 db 6600 Ft-os 
+részvényünk van. 
+2 pont  
+Összesen: 
+6 pont  
+
+===== PAGE 8 =====
+Matematika — emelt szint 
+Javítási-értékelési útmutató 
+2112 írásbeli vizsga 
+8 / 18 
+2021. május 4. 
+ 
+3. b)  
+(Jelölje n a keresett hónap sorszámát.)
+450 000 1,013
+500 000 1,01
+n
+n
+⋅
+>
+⋅
+  
+2 pont  
+1,013
+50
+10
+1,01
+45
+9
+n
+
+>
+=
+
+
+
+
+ 
+1 pont  
+A tízes alapú logaritmus függvény szigorúan mono-
+ton növekedő, 
+1 pont 
+Az 1-nél nagyobb alapú 
+logaritmusfüggvény  
+szigorúan monoton növe-
+kedő, ezért 
+ezért 
+1,013
+10
+lg
+lg
+1,01
+9
+n
+>
+, 
+(közelítő értékekkel) n lg 1,003 > lg 1,111. 
+1 pont 
+1,013
+1,01
+10
+log
+9
+n
+
+
+>
+
+
+
+
+. 
+(Az egyenlőtlenséget pozitív számmal osztjuk:) 
+n > lg1,111
+lg1,003 ≈ 35,1. 
+1 pont 
+1,013
+1,01
+10
+log
+9
+
+
+
+
+
+
+≈ 35,5 
+Tehát a 36. hónap végén lesz először több pénz  
+a második befektetésben. 
+1 pont  
+Összesen: 
+7 pont  
+Megjegyzés: Ha a vizsgázó egyenlőtlenség helyett egyenlettel dolgozik, akkor n ≈ 35,1 megál-
+lapításáért legfeljebb 5 pontot kaphat. További 1-1 pont a helyes válaszért, és az egyenlőtlen-
+ség irányának megfelelő indoklásáért jár. 
+ 
+ 
+
+===== PAGE 9 =====
+Matematika — emelt szint 
+Javítási-értékelési útmutató 
+2112 írásbeli vizsga 
+9 / 18 
+2021. május 4. 
+ 
+4. a) 
+(Azt kell belátni, hogy a pontok koordinátái igazzá 
+teszik a görbe egyenletét.) 
+Az origó esetében: 
+2
+0,25 0 (0
+5)
+0
+⋅⋅
+−
+=
+ igaz, 
+1 pont  
+az (5; 0) pont esetében: 
+2
+0,25 5 (5 5)
+0
+⋅⋅
+−
+=
+ igaz. 
+(Tehát mindkét pont valóban rajta van a görbén.) 
+1 pont  
+Összesen: 
+2 pont  
+ 
+4. b) 
+A kérdezett valószínűség a trapéz és a korlátos sík-
+idom területének hányadosa. 
+1 pont 
+Ez a pont akkor is jár, ha 
+ez a gondolat csak a meg-
+oldásból derül ki. 
+(A görbe az 
+2
+:[0; 5]
+;
+( )
+0,25 (
+5)
+f
+f x
+x x
+→
+=
+−
+R
+ 
+függvény grafikonja.) 
+A síkidom területe: 
+5
+2
+0
+0,25 (
+5)
+x x
+dx
+−
+
+= 
+1 pont  
+=
+5
+3
+2
+0
+0,25(
+10
+25 )
+x
+x
+x dx
+−
++
+
+ = 
+1 pont  
+5
+4
+3
+2
+0
+0,25
+10
+25
+4
+3
+2
+x
+x
+x
+
+
+=
+−
++
+=
+
+
+
+
+ 
+2 pont  
+625
+48
+=
+ ≈ 13,02. 
+1 pont  
+D pont első koordinátája 1, második koordinátáját 
+(a trapéz egyik alapjának hosszát) behelyettesítéssel 
+kapjuk: 
+2
+0,25 1 (1 5)
+4
+⋅⋅
+−
+=
+. (Tehát D(1; 4).) 
+1 pont  
+Hasonlóan C pont első koordinátája 3, második koor-
+dinátája (a trapéz másik alapjának hossza): 
+2
+0,25 3 (3 5)
+3
+⋅⋅
+−
+= . (Tehát C(3; 3).) 
+1 pont  
+Mivel a trapéz magassága (az AB szakasz hossza) 2, 
+így a trapéz területe 4
+3 2
+7
+2
++
+⋅
+=
+.  
+1 pont  
+A kérdezett valószínűség 
+7
+13,02 ≈ 0,538. 
+1 pont 
+A valószínűség pontos 
+értéke 7
+0,5376
+625
+48
+=
+. 
+Összesen: 10 pont  
+ 
+ 
+
+===== PAGE 10 =====
+Matematika — emelt szint 
+Javítási-értékelési útmutató 
+2112 írásbeli vizsga 
+10 / 18 
+2021. május 4. 
+ 
+II. 
+ 
+5. a) 
+Pontosan akkor van két valós gyök, ha az 
+2
+2
+4
+0
+x
+x
+mx
+−
+−
++
+=
+  egyenlet diszkriminánsa pozitív. 
+1 pont 
+Ez a pont akkor is jár, ha 
+ez a gondolat csak a meg-
+oldásból derül ki. 
+(Az egyenlet 
+2
+(2
+)
+4
+0
+x
+m x
+−
++
++
+=
+, ezért)  
+D = (2 + m)
+2 – 16 
+1 pont  
+D = 
+2
+4
+12
+0
+m
+m
++
+−
+>
+ 
+1 pont  
+Az 
+2
+4
+12
+0
+m
+m
++
+−
+=
+ egyenlet megoldásai –6 és 2. 
+1 pont  
+Az 
+2
+4
+12
+m
+m
+m
++
+−
+
+ másodfokú függvény képe 
+„felfelé nyitott” parabola,  
+1 pont Ez a pont jár egy megfe-
+lelő ábráért is. 
+tehát m < –6 vagy m > 2 esetén igaz a megadott kije-
+lentés. 
+1 pont m ∈ ]–∞; –6[ ∪ ]2; +∞[ 
+Összesen: 
+6 pont  
+Megjegyzés: Az ábra a megoldásban kapott m értékeknek megfelelő egyeneseket szemlélteti. 
+ 
+ 
+ 
+5. b) 
+Mivel –1 ≤ cos x ≤ 1,  
+1 pont  
+ezért 0 ≤
+2
+(1 cos )x
++
+≤ 4, 
+1 pont  
+2 ≤
+2
+(1 cos )
+2
+x
++
++
+≤ 6.  
+1 pont  
+(A pozitív számok halmazán az 
+1
+x
+x
+
+ függvény 
+szigorúan monoton csökkenő, ezért) 
+2
+1
+1
+1
+2
+(1 cos )
+2
+6
+x
+≥
+≥
++
++
+. 
+1 pont  
+Ebből következik, hogy  
+2
+3
+3
+3
+1
+2
+(1 cos )
+2
+6
+2
+x
+≥
+≥
+=
++
++
+, tehát a megadott kijelen-
+tés valóban igaz (hiszen f folytonos függvény). 
+1 pont  
+Összesen: 
+5 pont  
+ 
+ 
+ 
+
+===== PAGE 11 =====
+Matematika — emelt szint 
+Javítási-értékelési útmutató 
+2112 írásbeli vizsga 
+11 / 18 
+2021. május 4. 
+ 
+5. c) első megoldás 
+Az (A ∧ B) ∨ C kijelentés pontosan akkor igaz,  
+ha A ∧ B, illetve C közül legalább az egyik igaz. 
+1 pont 
+Ez a pont akkor is jár, ha 
+ez a gondolat csak a meg-
+oldásból derül ki. 
+A ∧ B igaz és C igaz (vagyis mindhárom kijelentés 
+igaz) valószínűsége: 0,63 = 0,216.  
+1 pont  
+A ∧ B igaz és C hamis valószínűsége: 
+0,62
+ ⋅ 0,4 = 0,144. 
+1 pont  
+A ∧ B hamis és C igaz valószínűsége: 
+(1 – 0,62) ⋅ 0,6 = 0,384. 
+1 pont  
+Tehát a keresett valószínűség:  
+0,216 + 0,144 + 0,384 = 0,744. 
+1 pont  
+Összesen: 
+5 pont  
+ 
+5. c) második megoldás 
+Az (A ∧ B) ∨ C kijelentés pontosan akkor igaz,  
+ha A ∧ B, illetve C közül legalább az egyik igaz. 
+1 pont 
+Ez a pont akkor is jár, ha 
+ez a gondolat csak a meg-
+oldásból derül ki. 
+A ∧ B igaz valószínűsége 0,62 = 0,36. 
+1 pont  
+C igaz valószínűsége 0,6. 
+1 pont  
+Mindkétszer figyelembe vettük azt az eseményt,  
+hogy A ∧ B igaz és C is igaz;  
+ennek 0,36 ⋅ 0,6 = 0,216 a valószínűsége. 
+1 pont  
+A szitaformula szerint a kérdezett valószínűség 
+0,36 + 0,6 – 0,216 = 0,744. 
+1 pont  
+Összesen: 
+5 pont  
+ 
+5. c) harmadik megoldás 
+Az (A ∧ B) ∨ C kijelentés pontosan akkor igaz,  
+ha C igaz, vagy ha C hamis és A ∧ B igaz. 
+2 pont 
+Ez a 2 pont akkor is jár, 
+ha ez a gondolat csak a 
+megoldásból derül ki. 
+C igaz valószínűsége 0,6. 
+1 pont  
+A ∧ B igaz és C hamis valószínűsége: 
+0,62
+ ⋅ 0,4 = 0,144. 
+1 pont  
+Tehát a kérdezett valószínűség:  
+0,6 + 0,144 =  0,744. 
+1 pont  
+Összesen: 
+5 pont  
+ 
+5. c) negyedik megoldás 
+(A komplementer esemény valószínűségét határoz-
+zuk meg.) Az (A ∧ B) ∨ C kijelentés pontosan akkor 
+hamis, ha A ∧ B hamis és C is hamis. 
+1 pont 
+Ez a pont akkor is jár, ha 
+ez a gondolat csak a meg-
+oldásból derül ki. 
+Az A ∧ B hamis, ha legalább az egyik kijelentés ha-
+mis; ennek 2 ⋅ 0,6 ⋅ 0,4 + 0,42 = 0,64 a valószínűsége. 
+2 pont 
+2
+1 0,6
+−
+ 
+
+===== PAGE 12 =====
+Matematika — emelt szint 
+Javítási-értékelési útmutató 
+2112 írásbeli vizsga 
+12 / 18 
+2021. május 4. 
+ 
+Annak a valószínűsége, hogy A ∧ B hamis és C is ha-
+mis 0,64 ⋅ 0,4 = 0,256. 
+1 pont  
+Annak a valószínűsége tehát, hogy (A ∧ B) ∨ C kije-
+lentés igaz: 1 – 0,256 = 0,744. 
+1 pont  
+Összesen: 
+5 pont  
+ 
+5. c) ötödik megoldás 
+(Az összes lehetséges eset felsorolása és az igaz ese-
+tek valószínűségének megadása.) 
+A 
+B 
+C 
+A ∧ B (A ∧ B) ∨ C valószínű-
+sége 
+i 
+i 
+i 
+i 
+i 
+0,63  
+i 
+i 
+h 
+i 
+i 
+0,62
+ ⋅ 0,4  
+i 
+h 
+i 
+h 
+i 
+0,62
+ ⋅ 0,4  
+i 
+h 
+h 
+h 
+h 
+ 
+h 
+i 
+i 
+h 
+i 
+0,62
+ ⋅ 0,4  
+h 
+i 
+h 
+h 
+h 
+ 
+h 
+h 
+i 
+h 
+i 
+0,6 ⋅ 0,42 
+h 
+h 
+h 
+h 
+h 
+ 
+    
+4 pont 
+A 8 lehetséges eset és 
+azok logikai értékének 
+helyes megadása 2 pont, 
+az öt „igaz” logikai ér-
+tékű lehetőség valószínű-
+ségek helyes kiszámítása 
+2 pont. 
+A kérdezett valószínűség:  
+0,63 + 3 ⋅ 0,62
+ ⋅ 0,4 + 0,6 ⋅ 0,42 = 0,744. 
+1 pont  
+Összesen: 
+5 pont  
+Megjegyzés: A feladat szövege (bár feltételezte) nem jelentette ki kifejezetten, hogy az A, B és 
+C események függetlenek. Ha a vizsgázó megoldásában nem feltételezte, hogy a három esemény 
+(kijelentés) független, ezért (megfelelő indoklással) azt válaszolta, hogy a kérdezett esemény 
+valószínűsége 0,6 és 1 között lehet, akkor teljes pontszámot kapjon. 
+ 
+6. a) 
+(Az ismeretségi gráfban a pontokat a nevek betűivel 
+jelöljük, az ismeretségek a gráf élei.) 
+A {D, E, F} részgráfban 3 él lehet. 
+1 pont 
+Az ismeretségi gráfban az 
+élek száma négyféle le-
+het: 0, 1, 2, 3. 
+A 3 él bármelyike vagy szerepel a gráfban (ha a két 
+személy ismeri egymást), vagy nem, 
+1 pont 
+Ezek rendre 1, 3
+3
+1
+=
+
+
+, 
+3
+3
+2
+=
+
+
+, illetve 1 lehető-
+séget jelentenek. 
+ezért 23 = 8-féle ismeretségi gráf (háló) lehetséges. 
+1 pont Összesen 1 + 3 + 3 + 1 = 8 
+lehetőség van. 
+Összesen: 
+3 pont  
+Megjegyzés: Teljes pontszámot kapjon a vizsgázó, ha a nyolc lehetséges ismeretségi gráfot 
+felrajzolja, és ez alapján helyesen válaszol. 
+ 
+ 
+
+===== PAGE 13 =====
+Matematika — emelt szint 
+Javítási-értékelési útmutató 
+2112 írásbeli vizsga 
+13 / 18 
+2021. május 4. 
+ 
+6. b) 
+Az ismeretségi gráfban A ötödfokú pont, ezért min-
+den más ponttal össze van kötve, továbbá a D, E, F 
+pontok mindegyike össze van kötve a másik kettővel. 
+1 pont 
+Ez a pont akkor is jár, ha 
+ez a gondolat csak a meg-
+oldásból derül ki. 
+ 
+Ha a fentieknek megfelelő éleket be-
+rajzoljuk, akkor a B-ből még további 
+3, C-ből még további 2 élt kell meg-
+húznunk.  
+1 pont  
+Két esetet vizsgálunk aszerint, hogy a BC él benne 
+van-e a gráfban, vagy sem. 
+1 pont 
+Ez a pont akkor is jár, ha 
+ez a gondolat csak a meg-
+oldásból derül ki. 
+ 
+I. eset: Ha a BC él nincs benne a 
+gráfban, akkor a negyedfokú B pont 
+össze van kötve a D, E, F pontok 
+mindegyikével. Ez csak egyfélekép-
+pen lehetséges. 
+1 pont  
+A harmadfokú C-ből kiinduló mara-
+dék 2 élt ekkor 3-féleképpen húzhat-
+juk be (C-t összekötjük a D, E, F 
+pontok közül valamelyik kettővel).  
+Az I. esetben tehát 3 lehetőség van 
+összesen. 
+1 pont  
+II. eset: Ha a BC él benne van a 
+gráfban, akkor a B-ből kiinduló ma-
+radék 2 élt 3-féleképpen húzhatjuk 
+be (B-t összekötjük a D, E, F pontok 
+közül valamelyik kettővel).  
+1 pont 
+ 
+Például: 
+ 
+Szintén 3-féleképpen húzható be a 
+C-ből induló harmadik él (C-t ösz-
+szekötjük a D, E, F pontok valame-
+lyikével).   
+1 pont  
+ 
+Ekkor 3 ⋅ 3 (= 9) esetet kapunk. 
+1 pont 
+ 
+ 
+Például:  
+Az ismeretségi háló tehát (3 + 3 ⋅ 3 =) 12-féle lehet.  
+1 pont  
+Összesen: 
+9 pont  
+Megjegyzés: Ha a vizsgázó az összes lehetséges ismeretségi gráfot felrajzolja, és ez alapján 
+helyesen válaszol, akkor ezért 6 pont jár. A további 3 pontot annak indoklásáért kaphatja 
+meg, hogy miért nincs több lehetőség. 
+ 
+ 
+
+===== PAGE 14 =====
+Matematika — emelt szint 
+Javítási-értékelési útmutató 
+2112 írásbeli vizsga 
+14 / 18 
+2021. május 4. 
+ 
+6. c) első megoldás 
+Azon csoportok száma, amelyben A benne van,  
+de B nincs: 4
+2
+
+
+
+ = 6.  
+(A maradék 4 személyből 2 kerül A mellé.)  
+1 pont  
+Hasonlóan 4
+2
+
+
+
+ = 6 azon csoportok száma, amelyben 
+B benne van, de A nincs (szimmetria). 
+1 pont  
+Azon csoportok száma, amelyben sem A, sem B 
+nincs benne: 4
+3
+
+
+
+ = 4. 
+1 pont  
+A megfelelő csoportok száma 6 + 6 + 4 = 16,  
+ennyi kihallgatást kell szervezni.  
+1 pont  
+Összesen: 
+4 pont  
+ 
+6. c) második megoldás 
+A komplementer összeszámolás módszerét alkalmaz-
+zuk. 
+1 pont 
+Ez a pont akkor is jár, ha 
+ez a gondolat csak a meg-
+oldásból derül ki. 
+A 3 fős csoportok száma 6
+3
+
+
+
+= 20 (összes eset). 
+1 pont  
+4
+1
+
+
+
+ = 4 olyan csoport van, melynek A és B is a tagja 
+(kedvezőtlen esetek). 
+(A maradék 4 személyből 1 kerül A és B mellé.)  
+1 pont  
+A megfelelő csoportok száma 20 – 4 = 16,  
+ennyi kihallgatást kell szervezni. 
+1 pont  
+Összesen: 
+4 pont  
+ 
+7. a)  
+A nyolc szám átlaga (48 : 8 =) 6. 
+1 pont  
+(A nagyság szerint rendezett adatok:  
+3, 4, 6, 6, 7, 7, 7, 8, ezért) a medián 6,5. 
+1 pont  
+A szórás: 
+2
+2
+2
+2
+( 3)
+( 2)
+3 1
+2
+8
+−
++ −
++ ⋅
++
+= 
+1 pont 
+Ez a pont akkor is jár, ha 
+a vizsgázó a szórást szá-
+mológéppel helyesen ha-
+tározza meg. 
+20
+8
+
+
+=
+
+
+
+
+
+
+≈ 1,58. 
+1 pont  
+Összesen: 
+4 pont  
+
+===== PAGE 15 =====
+Matematika — emelt szint 
+Javítási-értékelési útmutató 
+2112 írásbeli vizsga 
+15 / 18 
+2021. május 4. 
+ 
+7. b)  
+A parabola az f : 
+2
+x
+ax
+bx
+c
++
++
+
+ másodfokú függ-
+vénynek a grafikonja (a ≠ 0, b, c ∈ R). 
+1 pont 
+Ez a pont akkor is jár, ha 
+ez a gondolat csak a meg-
+oldásból derül ki. 
+A szöveg alapján f (0) = 2, tehát c = 2. 
+1 pont  
+(0)
+f ′
+= m = tg45° = 1. 
+1 pont  
+Mivel 
+( )
+f
+x
+′
+= 2ax + b,  
+1 pont  
+ezért 
+(0)
+f ′
+= b = 1. 
+1 pont  
+f (4,6) = 
+2
+4,6
+4,6
+3
+a
+b
+c
+⋅
++ ⋅
++
+=
+, 
+1 pont  
+21,16a = –3,6, 
+ebből a ≈ – 0,17. 
+1 pont 
+90
+529
+a = −
+ 
+A keresett parabola egyenlete 
+2
+0,17
+2
+y
+x
+x
+= −
++
++
+. 
+1 pont  
+Összesen: 
+8 pont  
+ 
+A kosárlabda röppályájának íve a parabolán: 
+ 
+ 
+7. c)  
+Az inverzfüggvény értelmezési tartománya [–2; 5], 
+1 pont  
+értékkészlete [–2; 3], 
+1 pont  
+zérushelye 1, 
+1 pont  
+szigorúan monoton növekedő. 
+1 pont  
+Összesen: 
+4 pont  
+ 
+Közös koordináta-rendszerben ábrázolva f-et és az inverzfüggvényét: 
+ 
+
+===== PAGE 16 =====
+Matematika — emelt szint 
+Javítási-értékelési útmutató 
+2112 írásbeli vizsga 
+16 / 18 
+2021. május 4. 
+ 
+8. a) 
+A sorsjegy árát 200 (= 20 ⋅10) Ft-tal csökkentették, 
+tehát n = 20. 
+1 pont  
+Ekkor az eladott sorsjegyek száma 
+2
+10n = 4000-rel 
+több, azaz 5000 + 4000 = 9000 db,   
+1 pont  
+a havi bevétel pedig 9000 ⋅ 300 = 2 700 000 Ft. 
+1 pont  
+Összesen: 
+3 pont  
+ 
+8. b) 
+Tegyük fel, hogy n-szer csökkentették 10 Ft-tal az 
+árat, ekkor az új ár 500 – 10n (Ft) (ahol n < 50),  
+1 pont  
+és a havi eladott darabszám 5000 + 
+2
+10n . 
+1 pont  
+Az eladásból származó bevétel Ft-ban:  
+(500 – 10n)(5000 + 
+2
+10n ) = 
+= 
+3
+2
+100
+5000
+50000
+2500000
+n
+n
+n
+−
++
+−
++
+. 
+1 pont  
+Tekintsük a pozitív valós számok halmazán értelme-
+zett 
+3
+2
+( )
+100
+5000
+50000
+2500000
+f x
+x
+x
+x
+= −
++
+−
++
+ 
+függvényt. 
+1 pont  
+Ennek deriváltfüggvénye 
+2
+( )
+300
+10000
+50000
+f
+x
+x
+x
+′
+= −
++
+−
+ (x ∈ R), 
+1 pont  
+melynek zérushelyei 
+1x ≈ 6,13 és 
+2x ≈ 27,21. 
+1 pont  
+A deriváltfüggvény pontosan a két gyök között pozi-
+tív, és 
+2x -ben pozitívból negatívba vált, ezért 
+2x az 
+f maximumhelye (
+1x -ben negatívból pozitívba vált a 
+deriváltfüggvény). 
+1 pont 
+1
+( )
+0
+f
+x
+′′
+>
+ és 
+2
+(
+)
+0
+f
+x
+′′
+<
+, 
+ezért f-nek 
+2x a maxi-
+mumhelye. 
+(n értéke csak egész lehet:)  
+f (27) = 2 826 700 > f (28) = 2 824 800, 
+ezért (a modell szerint) 27-szer 10 Ft-tal (230 Ft-ra) 
+kell csökkenteni a sorsjegy árát ahhoz, hogy az érté-
+kesítésből származó havi bevétel maximális legyen. 
+2 pont  
+Összesen: 
+9 pont  
+Megjegyzés: Az alábbi grafikon a havi bevételt (1000 Ft-ban megadva) szemlélteti az árcsök-
+kentés függvényében. 
+ 
+ 
+
+===== PAGE 17 =====
+Matematika — emelt szint 
+Javítási-értékelési útmutató 
+2112 írásbeli vizsga 
+17 / 18 
+2021. május 4. 
+ 
+8. c) 
+(Az 50 000 Ft nyeremény valószínűsége p, ekkor)  
+p + 24p = 0,05, 
+1 pont 
+ 
+nyere-
+mény 
+(Ft) 
+0 
+2500 
+50 000 
+valószí-
+nűsége 
+0,95 0,048 
+0,002 
+ahonnan p = 0,002 és 24p = 0,048. 
+1 pont 
+A nyeremény várható értéke  
+(0,95 ⋅ 0 +) 0,048 ⋅ 2500 + 0,002 ⋅ 50 000 = 220 Ft. 
+2 pont  
+Összesen: 
+4 pont  
+Megjegyzés: A táblázat helyes kitöltése indoklás nélkül is elfogadható. 
+ 
+9. a)  
+A farönköket szemléltető egybevágó, 24 cm átmérőjű 
+körökből (alulról kezdve a számozást) a páratlan sor-
+számú sorokban 10, a párosakban pedig 9 kör fér el a 
+240 cm-en. 
+1 pont  
+ 
+ 
+(A körközéppontok egy 24 cm rácsponttávolságú 
+szabályos háromszögrács egy részletét határozzák 
+meg.) Az ábra ABC szabályos háromszögének ma-
+gassága 12 3 (≈ 20,78) (cm).  
+(A körök középpontja ennyivel lesz magasabban 
+minden következő sorban az előző sorban elhelyez-
+kedő körközéppontokhoz képest.) 
+2 pont  
+Ha k db sort raktak a teherautóra, akkor a rakomány 
+(
+1) 12 3
+2 12
+k −
+⋅
++ ⋅
+ cm magasságig tölti meg a rakte-
+ret. 
+1 pont*  
+A rakomány nem nyúlhat túl a raktéren, ezért 
+(
+1) 12 3
+2 12
+k −
+⋅
++ ⋅
+ ≤ 200. 
+1 pont*  
+176
+1
+12 3
+k ≤
++ ≈ 9,47 
+1 pont*  
+Legfeljebb 9 sorban rakhattak fákat a raktérbe. 
+1 pont*  
+5 sorban 5 ⋅ 10 = 50 db, 4 sorban 4 ⋅ 9 = 36 db farönk, 
+összesen tehát legfeljebb 50 + 36 = 86 farönk lehet a  
+raktérben. (Ezt kellett igazolni.) 
+1 pont  
+Összesen: 
+8 pont  
+
+===== PAGE 18 =====
+Matematika — emelt szint 
+Javítási-értékelési útmutató 
+2112 írásbeli vizsga 
+18 / 18 
+2021. május 4. 
+ 
+Megjegyzés: A *-gal jelölt 4 pontot az alábbi gondolatmenetért is megkaphatja a vizsgázó. 
+9 sor magassága 8 12 3
+2 12
+⋅
++ ⋅
+≈ 190,3 cm, 
+tehát 9 sor még befér a raktérbe. 
+2 pont  
+10 sor magassága 9 12 3
+2 12
+⋅
++ ⋅
+≈ 211,1 cm, 
+tehát 10 sor már nem fér be a raktérbe. 
+2 pont  
+ 
+9. b)  
+A raktér térfogata: Vrt = 2,4 ⋅ 2 ⋅ 7 = 33,6 m3. 
+1 pont  
+A 86 darab fa térfogata:  
+Vfa = 0,12
+2
+ ⋅ π ⋅ 7 ⋅ 86 ≈ 27,2 m3. 
+1 pont  
+fa
+rt
+V
+V
+≈27,2
+33,6 ≈ 0,81 (azaz 81%) 
+1 pont  
+Tehát a raktér térfogatának 19%-a lesz üres. 
+1 pont  
+Összesen: 
+4 pont  
+ 
+9. c)  
+(0,96 a valószínűsége, hogy egy fában nincs szú.)  
+P(0 darab szúrágta fa) = 0,96
+50 ≈ 0,130 
+1 pont  
+P(1 darab szúrágta fa) = 
+49
+50
+0,96
+0,04
+1
+
+⋅
+⋅
+
+
+
+
+≈ 0,271 
+2 pont  
+A keresett valószínűség ezek összege:  
+0,130 + 0,271 = 0,401. 
+1 pont  
+Összesen: 
+4 pont  
+ 

@@ -1,0 +1,961 @@
+
+===== PAGE 1 =====
+ 
+Javítási-értékelési útmutató 
+Matematika 
+ 
+Nat2020 
+K2511 
+OKTATÁSI HIVATAL 
+MATEMATIKA 
+ 
+KÖZÉPSZINTŰ 
+ÍRÁSBELI VIZSGA 
+JAVÍTÁSI-ÉRTÉKELÉSI 
+ÚTMUTATÓ 
+ 
+É R E T T S É G I V I Z S G A • 2 0 2 5 . m á j u s 6 . 
+
+===== PAGE 2 =====
+ 
+Javítási-értékelési útmutató 
+Matematika 
+2 / 12 
+középszintű írásbeli vizsga 
+K2511 
+ 
+2025. május 6. 
+Fontos tudnivalók 
+ 
+Formai előírások: 
+ 
+1. Kérjük, hogy a dolgozatot a vizsgázó által használt színűtől eltérő színű tollal, olvas-
+hatóan javítsa ki. 
+2. A feladatok mellett található szürke téglalapok közül az elsőben a feladatra adható ma-
+ximális pontszám van, a javító által adott pontszám a mellette levő téglalapba 
+kerüljön. 
+3. Kifogástalan megoldás esetén kérjük, hogy a maximális pontszám feltüntetése mellett 
+kipipálással jelezze, hogy az adott gondolati egységet látta, és jónak minősítette. 
+4. Hiányos/hibás megoldás esetén kérjük, hogy a hiba jelzése mellett az egyes részpont-
+számokat is írja rá a dolgozatra. Ha a dolgozat javítását jobban követhetővé teszi, akkor 
+a vizsgázó által elvesztett részpontszámok jelzése is elfogadható. Ne maradjon olyan 
+részlet a megoldásban, amelyről a javítás után nem nyilvánvaló, hogy helyes, hibás vagy 
+fölösleges. 
+5. A javítás során alkalmazza az alábbi jelöléseket. 
+ helyes lépés: kipipálás 
+ elvi hiba: kétszeres aláhúzás 
+ számolási hiba vagy más, nem elvi hiba: egyszeres aláhúzás 
+ rossz kiinduló adattal végzett helyes lépés: szaggatott vagy áthúzott kipipálás 
+ hiányos indoklás, hiányos felsorolás vagy más hiány: hiányjel 
+ nem érthető rész: kérdőjel és/vagy hullámvonal 
+6. Az ábrán kívül ceruzával írt részeket ne értékelje. 
+ 
+Tartalmi kérések: 
+ 
+1. Egyes feladatoknál több megoldás pontozását is megadtuk. Amennyiben azoktól eltérő 
+megoldás születik, keresse meg ezen megoldásoknak az útmutató egyes részleteivel 
+egyenértékű részeit, és ennek alapján pontozzon. 
+2. A pontozási útmutató pontjai tovább bonthatók, hacsak az útmutató másképp nem 
+rendelkezik. Az adható pontszámok azonban csak egész pontok lehetnek. 
+3. Ha a megoldásban számolási hiba, pontatlanság van, akkor csak arra a részre nem jár 
+pont, ahol a tanuló a hibát elkövette. Ha a hibás részeredménnyel helyes gondolatmenet 
+alapján tovább dolgozik, és a megoldandó probléma lényegében nem változik meg, ak-
+kor a következő részpontszámokat meg kell adni. 
+4. Elvi hibát követően egy gondolati egységen belül (ezeket az útmutatóban kettős vonal 
+jelzi) a formálisan helyes matematikai lépésekre sem jár pont. Ha azonban a tanuló  
+az elvi hibával kapott rossz eredménnyel – mint kiinduló adattal – helyesen számol to-
+vább a következő gondolati egységekben vagy részkérdésekben, akkor ezekre a részekre 
+kapja meg a maximális pontot, ha a megoldandó probléma lényegében nem változott 
+meg. 
+5. Ha az útmutatóban egy megjegyzés zárójelben szerepel, akkor ennek hiánya esetén is 
+teljes értékű a megoldás. 
+
+===== PAGE 3 =====
+ 
+Javítási-értékelési útmutató 
+Matematika 
+3 / 12 
+középszintű írásbeli vizsga 
+K2511 
+ 
+2025. május 6. 
+ 
+6. Mértékegység hiánya esetén csak akkor jár pontlevonás, ha a hiányzó mértékegység 
+válaszban vagy mértékegység-átváltásban szerepel (zárójel nélkül). 
+7. Egy feladatra adott többféle megoldási próbálkozás közül a vizsgázó által megjelölt 
+változat értékelhető. A javítás során egyértelműen jelezze, hogy melyik változatot ér-
+tékelte, és melyiket nem. 
+8. A megoldásokért jutalompont (az adott feladatra vagy feladatrészre előírt maximális 
+pontszámot meghaladó pont) nem adható. 
+9. Egy feladatra vagy részfeladatra adott összpontszám nem lehet negatív. 
+10. Az olyan részszámításokért, részlépésekért nem jár pontlevonás, melyek hibásak, de 
+amelyeket a feladat megoldásához a vizsgázó ténylegesen nem használ fel. 
+11. A gondolatmenet kifejtése során a zsebszámológép használata – további matemati-
+kai indoklás nélkül – a következő műveletek elvégzésére fogadható el: összeadás, 
+kivonás, szorzás, osztás, hatványozás, gyökvonás, n!, 
+
+
+
+
+
+
+k
+n kiszámítása, a függvénytáb-
+lázatban fellelhető táblázatok helyettesítése (sin, cos, tg, log és ezek inverzei), a π és az 
+e szám közelítő értékének megadása, nullára rendezett másodfokú egyenlet gyökeinek 
+meghatározása. További matematikai indoklás nélkül használhatók a számológépek bi-
+zonyos statisztikai mutatók kiszámítására (átlag, szórás) abban az esetben, ha a feladat 
+szövege kifejezetten nem követeli meg az ezzel kapcsolatos részletszámítások bemuta-
+tását is. Egyéb esetekben a géppel elvégzett számítások indoklás nélküli lépéseknek 
+számítanak, azokért nem jár pont. 
+12. Az ábrák bizonyító erejű felhasználása (például adatok leolvasása méréssel) nem elfo-
+gadható. 
+13. Valószínűségek megadásánál (ha a feladat szövege másképp nem rendelkezik) a száza-
+lékban megadott helyes válasz is elfogadható. 
+14. Ha egy feladat szövege nem ír elő kerekítési kötelezettséget, akkor az útmutatóban meg-
+adottól eltérő, észszerű és helyes kerekítésekkel kapott rész- és végeredmény is elfo-
+gadható. 
+15. A vizsgafeladatsor II. B részében kitűzött 3 feladat közül csak 2 feladat megoldása 
+értékelhető. A vizsgázó az erre a célra szolgáló négyzetben – feltehetőleg – megjelölte 
+annak a feladatnak a sorszámát, amelynek értékelése nem fog beszámítani az összpont-
+számába. Ennek megfelelően a megjelölt feladatra esetlegesen adott megoldást nem is 
+kell javítani. Ha a vizsgázó nem jelölte meg, hogy melyik feladat értékelését nem kéri, 
+és a választás ténye a dolgozatból sem derül ki egyértelműen, akkor a nem értékelendő 
+feladat automatikusan a kitűzött sorrend szerinti utolsó feladat lesz. 
+ 
+ 
+ 
+
+===== PAGE 4 =====
+ 
+Javítási-értékelési útmutató 
+Matematika 
+4 / 12 
+középszintű írásbeli vizsga 
+K2511 
+ 
+2025. május 6. 
+ 
+I. 
+ 
+1.   
+A  B  {1; 3; 5} 
+1 pont  
+A \ B  {2; 4} 
+1 pont  
+Összesen: 
+2 pont  
+ 
+2.  
+60 
+2 pont  
+Összesen: 
+2 pont  
+ 
+3.  
+x  3 
+2 pont  
+Összesen: 
+2 pont  
+ 
+4.   
+580 ezer forint 
+2 pont  
+Összesen: 
+2 pont  
+ 
+5.  
+(Az 5 cm hosszú oldallal szemközti szöget jelölje .  
+A szinusztétel alapján:) sin α
+5
+sin 60
+6
+
+
+. 
+1 pont  
+sin α ≈ 0,7217 
+1 pont  
+α ≈ 46,2 (Az α nem lehet tompaszög.) 
+1 pont  
+ 
+3 pont  
+ 
+6.  
+Egy megfelelő gráf, például: 
+ 
+2 pont Nem egyszerű gráf is el-
+fogadható. 
+Összesen: 
+2 pont  
+ 
+7.  
+3
+1 4 3
+π
+18π
+2
+3
+
+
+
+
+
+
+
+
+
+
+≈ 56,5 cm3 
+2 pont  
+Összesen: 
+2 pont  
+
+===== PAGE 5 =====
+ 
+Javítási-értékelési útmutató 
+Matematika 
+5 / 12 
+középszintű írásbeli vizsga 
+K2511 
+ 
+2025. május 6. 
+ 
+8.  
+(A minimum 50, az alsó kvartilis 55, a medián 75,  
+a felső kvartilis 110, a maximum 145 millió Ft.) 
+ 
+4 pont 
+A minimum és maximum 
+meghatározása összesen 1, 
+a medián 1, az alsó és a 
+felső kvartilis meghatáro-
+zása összesen 1 pontot ér. 
+A kapott adatokból készí-
+tett diagramért 1 pont jár. 
+Összesen: 
+4 pont  
+ 
+9.  
+CA
+
+ a – c  
+1 pont  
+BE
+
+ 2(a + c) 
+2 pont 2a + 2c 
+Összesen: 
+3 pont  
+ 
+10.  
+y  2x +1 
+2 pont  
+Összesen: 
+2 pont  
+ 
+11.  
+q  36
+24
+
+
+
+
+
+
+
+1,5 
+1 pont  
+a1  
+24
+1,5
+
+
+
+
+
+
+
+16 
+1 pont  
+6
+6
+1,5
+1
+16 1,5
+1
+S
+
+
+
+
+
+332,5 
+1 pont 16 + 24 + 36 + 54 + 81 +  
++ 121,5  332,5 
+Összesen: 
+3 pont  
+ 
+12. első megoldás 
+Összesen 36-féle dobás lehetséges (összes eset száma). 
+1 pont  
+A kedvező dobások száma 6 (1-6, 3-6, 5-6, 6-5, 6-3, 
+6-1). 
+1 pont  
+A keresett valószínűség így 6
+1
+36
+6
+
+
+
+
+
+
+
+. 
+1 pont  
+Összesen: 
+3 pont  
+ 
+ 
+ 
+
+===== PAGE 6 =====
+ 
+Javítási-értékelési útmutató 
+Matematika 
+6 / 12 
+középszintű írásbeli vizsga 
+K2511 
+ 
+2025. május 6. 
+ 
+12. második megoldás 
+Lehet a piros kockán 6-os és a kék kockán páratlan 
+szám, vagy fordítva. 
+1 pont 
+Ez a pont akkor is jár, ha 
+ez a gondolat csak a meg-
+oldásból derül ki. 
+Annak a valószínűsége, hogy a piros kockával 6-ost 
+dobunk 1
+6 , annak a valószínűsége, hogy kékkel párat-
+lan számot dobunk 1
+2 . 
+1 pont  
+A keresett valószínűség ezért 
+1 1
+1
+2 6 2
+6
+
+
+
+.  
+1 pont  
+Összesen: 
+3 pont  
+ 
+II. A 
+ 
+13. a)  
+Az egyenlet bal oldalán álló törteket közös nevezőre 
+hozva: 5
+40
+4
+20
+2.
+100
+100
+x
+x
+
+
+
+
+ 
+1 pont 
+Ez a pont akkor is jár, ha 
+a vizsgázó az egyenlet 
+mindkét oldalát megszo-
+rozza 100-zal. 
+5x + 40 + 4x  20  200 
+1 pont  
+9x + 20  200  
+1 pont  
+x  20 
+1 pont  
+Ellenőrzés behelyettesítéssel vagy ekvivalens átalakí-
+tásokra hivatkozással. 
+1 pont  
+Összesen: 
+5 pont  
+ 
+13. b)  
+A téglalap rövidebb oldalának hossza (cm-ben mérve) 
+legyen a, ekkor a másik oldal hossza a + 48.  
+A feladat szövege alapján: a (a + 48)  2025. 
+1 pont b(b – 48)  2025 
+a
+2 + 48a  2025  0  
+1 pont b
+2 – 48b  2025  0 
+a1  27 
+1 pont b1  75 
+a2  75, ami nem megoldása a feladatnak. 
+1 pont b2  27, nem megoldás 
+A téglalap oldalainak hossza 27 cm és 75 cm. 
+1 pont  
+A téglalap kerülete (2  27 + 2  75 ) 204 cm.  
+ 
+1 pont  
+Összesen: 
+6 pont  
+ 
+ 
+ 
+
+===== PAGE 7 =====
+ 
+Javítási-értékelési útmutató 
+Matematika 
+7 / 12 
+középszintű írásbeli vizsga 
+K2511 
+ 
+2025. május 6. 
+ 
+14. a)  
+Az ABD derékszögű háromszögben 
+12
+cos
+20
+ABD
+
+
+, 
+1 pont  
+ahonnan ABD ≈ 53,1º, 
+1 pont  
+így   (53,1º + 63º ) 116,1º.  
+1 pont  
+Összesen: 
+3 pont  
+ 
+14. b)  
+Az ABD derékszögű háromszögben Pitagorasz-tétellel: 
+2
+2
+20
+12
+AD 
+
+  16 cm. 
+2 pont 
+20 sin53,1
+AD 
+
+ 
+A DBC háromszögben koszinusztétellel: 
+2
+2
+2
+20
+15
+2 20 15 cos63
+CD 
+
+
+
+
+(≈ 352,6), 
+1 pont  
+amiből CD ≈ 18,8 cm. 
+1 pont  
+Az ABD derékszögű háromszög területe (a két befogó 
+szorzatának fele) 12 16
+2
+
+ 96 cm2. 
+1 pont 12 20 sin53,1
+2
+
+
+
+ ≈ 96 cm2  
+(A DBC háromszög területe a trigonometrikus terület-
+képlettel) 20 15 sin 63
+2
+
+
+
+ ≈  
+1 pont 
+(Héron-képlettel:) 
+26,9 6,9 11,9 8,1
+t 
+
+
+
+ ≈ 
+≈ 134 cm2. 
+1 pont  
+A négyszög területe így (96 + 134 ) 230 cm2. 
+1 pont  
+Összesen: 
+8 pont  
+Megjegyzés: Ha a vizsgázó a válaszait mértékegység nélkül adja meg, akkor ezért a feladat-
+ban összesen 1 pontot veszítsen. 
+ 
+14. c)  
+Az állítás hamis. 
+1 pont  
+Egy megfelelő ellenpélda (pl. egy olyan téglalap, 
+amelyik nem négyzet). 
+1 pont  
+Összesen: 
+2 pont  
+ 
+15. a)  
+ 
+ 
+f 
+g 
+h 
+van zérushelye 
+IGAZ 
+IGAZ HAMIS 
+van maximuma 
+HAMIS IGAZ HAMIS 
+szig. mon. növekvő 
+IGAZ HAMIS IGAZ 
+ 
+5 pont 
+8 jó válasz 4, 
+7 jó válasz 3, 
+6 jó válasz 2, 
+5 jó válasz 1 pontot ér. 
+5-nél kevesebb jó válasz 
+esetén nem jár pont. 
+Összesen: 
+5 pont  
+ 
+ 
+ 
+
+===== PAGE 8 =====
+ 
+Javítási-értékelési útmutató 
+Matematika 
+8 / 12 
+középszintű írásbeli vizsga 
+K2511 
+ 
+2025. május 6. 
+ 
+15. b)  
+Megoldandó a 2x + 1  1,25 egyenlet. 
+1 pont  
+2x  0,25 
+1 pont  
+(Az exponenciális függvény kölcsönös egyértelmű-
+sége miatt) x  –2. 
+1 pont  
+Összesen: 
+3 pont  
+ 
+15. c)  
+A vizsgázó másodfokú függvény grafikonját 
+(normálparabola) ábrázolja  
+1 pont 
+ 
+a [–1; 4] intervallumon, 
+1 pont 
+melynek minimumhelye 1,   
+1 pont 
+minimumértéke 2.  
+1 pont 
+Összesen: 
+4 pont  
+ 
+II. B 
+ 
+16. a)  
+A hívások átlagos ideje 2012-ben:  
+(18 001 : 8045 ≈) 2,24 perc. 
+1 pont  
+A hívások száma 2017-ben:  
+(22 377 : 2,83 ≈) 7907 millió db. 
+1 pont 
+7894 és 7921 közé eső 
+bármilyen érték elfogad-
+ható. 
+A hívások időtartama 2022-ben: 
+(8577  3,31 ≈) 28 390 millió perc. 
+1 pont 
+28 347 és 28 432 közé eső 
+bármilyen érték elfogad-
+ható. 
+Összesen: 
+3 pont  
+ 
+16. b)  
+A szintenként kapható pontok egy számtani sorozat 
+egymást követő tagjai: a4  630, a7  990. 
+1 pont 
+Ez a pont akkor is jár, ha 
+ez a gondolat csak a meg-
+oldásból derül ki. 
+a7  a4  990 – 630  3d, 
+1 pont  
+innen d  120. 
+1 pont  
+a1  a4  3d  270 
+1 pont  
+12
+2 270 11 120 12
+2
+S
+
+
+
+
+
+ 
+1 pont 270 + 390 + … + 1590  
+ 11 160 az összpontszáma annak a játékosnak, aki 
+mind a 12 szintet teljesítette. 
+1 pont  
+Összesen: 
+6 pont  
+
+===== PAGE 9 =====
+ 
+Javítási-értékelési útmutató 
+Matematika 
+9 / 12 
+középszintű írásbeli vizsga 
+K2511 
+ 
+2025. május 6. 
+ 
+16. c)  
+(5 – 4 ) 1 főnek csak az Alfánál és a Bétánál,  
+(6 – 4 ) 2 főnek csak a Bétánál és a Gammánál,  
+(7 – 4 ) 3 főnek csak az Alfánál és a Gammánál volt 
+már előfizetése. 
+2 pont 
+ 
+(32 – 1 ) 31 főnek volt már legalább az egyik 
+szolgáltatónál előfizetése. 
+1 pont 
+Összesen 31  (1 + 2 + 3 + 4)  21 főnek volt előfize-
+tése pontosan egy szolgáltatónál. 
+1 pont  
+Ha x főnek csak a Bétánál volt már előfizetése, akkor 
+csak az Alfánál 2x, csak a Gammánál 4x főnek volt 
+már előfizetése. 
+1 pont  
+x + 2x + 4x  21, 
+1 pont  
+ahonnan x  3. 
+1 pont  
+A Bétánál (3 + 1 + 4 + 2 ) 10 főnek volt már 
+előfizetése. 
+1 pont  
+Összesen: 
+8 pont  
+ 
+ 
+ 
+ 
+
+===== PAGE 10 =====
+ 
+Javítási-értékelési útmutató 
+Matematika 
+10 / 12 
+középszintű írásbeli vizsga 
+K2511 
+ 
+2025. május 6. 
+ 
+17. a)  
+A felhasznált érmék lehetnek:  
+– 3 db 100 Ft-os (és 0 db 50 Ft-os), 
+– 2 db 100 Ft-os és 2 db 50 Ft-os, 
+– 1 db 100 Ft-os és 4 db 50 Ft-os, 
+– (0 db 100 Ft-os és) 6 db 50 Ft-os. 
+1 pont 
+Ez a pont akkor is jár, ha 
+ez a gondolat csak a meg-
+oldásból derül ki. 
+3 db 100 Ft-ossal, illetve 6 db 50 Ft-ossal is csak 
+1-1-féleképpen lehet fizetni. 
+1 pont  
+2 db 100 Ft-ossal és 2 db 50 Ft-ossal  
+4
+2
+
+
+
+ 6-féleképpen lehet fizetni.   
+2 pont  
+1 db 100 Ft-ossal és 4 db 50 Ft-ossal 5-féleképpen 
+lehet fizetni. 
+1 pont  
+Összesen (1 + 6 + 5 + 1 ) 13-féleképpen dobhatunk 
+be az automatába 300 Ft-ot.   
+1 pont  
+Összesen: 
+6 pont  
+Megjegyzés: Ha a vizsgázó rendezetten felsorolja az összes lehetőséget, és ez alapján 
+helyesen válaszol, akkor a teljes pontszám jár. 
+ 
+17. b) első megoldás 
+Az összes (egyenlő valószínűségű) eset száma:  
+6
+3
+
+
+
+ 20. 
+1 pont 
+Egyesével választva, a 
+sorrendet is figyelembe 
+véve az összes eset száma 
+6 5 4
+120
+
+
+
+. 
+A kedvező esetek száma: 
+2
+4
+1
+2
+
+
+
+
+ 12. 
+2 pont 
+A kedvező esetek száma 
+3
+2
+2 4 3
+72
+
+
+
+
+. 
+A keresett valószínűség: 12
+0,6.
+20 
+ 
+1 pont  
+Összesen: 
+4 pont  
+ 
+17. b) második megoldás 
+Annak a valószínűsége, hogy elsőre tejcsokoládés, 
+másodikra és harmadikra is étcsokoládés desszertet 
+választ Balázs: 2 4 3
+1
+6 5 4
+5
+
+
+
+. 
+2 pont  
+Hasonlóan 1
+5 a valószínűsége annak, hogy második-
+ra, és szintén 1
+5 , hogy harmadikra választ tejcsokolá-
+dés desszertet Balázs (és a másik két választott desz-
+szert étcsokoládés).  
+1 pont 
+4 2 3
+1
+6 5 4
+5
+
+
+
+  
+4 3 2
+1
+6 5 4
+5
+
+
+
+ 
+A keresett valószínűség: 
+1
+3
+3 5
+5
+
+
+. 
+1 pont  
+Összesen: 
+4 pont  
+
+===== PAGE 11 =====
+ 
+Javítási-értékelési útmutató 
+Matematika 
+11 / 12 
+középszintű írásbeli vizsga 
+K2511 
+ 
+2025. május 6. 
+ 
+17. c)  
+A túróhenger sugara 9 mm, a félhenger sugara 10 mm. 
+1 pont 
+Ez a pont akkor is jár, ha 
+ez a gondolat csak a meg-
+oldásból derül ki. 
+A túróhenger térfogata: 9
+2 100 ≈ 25 447 mm3. 
+1 pont  
+A téglatest térfogata: 20  10  102  20 400 mm3. 
+1 pont  
+A félhenger térfogata: 0,5 10
+2 102 ≈ 16 022 mm3. 
+1 pont  
+A desszert térfogata: 20 400 + 16 022  36 422 mm3. 
+1 pont  
+A csokoládé térfogata a desszert és a túróhenger 
+térfogatának különbsége: 
+36 422 – 25 447 ≈ 10 975 mm3, 
+1 pont  
+azaz kb. 11 cm3 csokoládé kerül egy desszertbe. 
+1 pont  
+Összesen: 
+7 pont  
+ 
+18. a)  
+8848 méter  8,848 km 
+1 pont  
+0,054 8,848
+(8,848)
+101325 10
+p
+
+
+
+
+ ≈ 
+1 pont  
+≈ 33 723 Pa 
+1 pont  
+Összesen: 
+3 pont  
+ 
+18. b)  
+Megoldandó a 
+0,054
+60 000
+101325 10
+h
+
+
+
+
+ egyenlet. 
+1 pont  
+Innen 
+0,054
+60 000
+10
+101325
+h
+
+
+ (≈ 0,592). 
+1 pont  
+Ebből – 0,054h  lg 0,592 (≈ – 0,2277),  
+1 pont  
+így h ≈ 4,22 km, 
+1 pont  
+azaz kerekítve 4200 méter magasságban lesz a 
+légnyomás 60 000 Pa. 
+1 pont 
+Ezt a pont nem jár, ha a 
+vizsgázó nem kerekít, 
+vagy rosszul kerekít. 
+Összesen: 
+5 pont  
+ 
+ 
+ 
+
+===== PAGE 12 =====
+ 
+Javítási-értékelési útmutató 
+Matematika 
+12 / 12 
+középszintű írásbeli vizsga 
+K2511 
+ 
+2025. május 6. 
+ 
+18. c)  
+Összesen 268 hegymászó szerepel a táblázatban. 
+1 pont  
+Ebből az egyes kontinensekhez tartozó középponti 
+szögek rendre:  
+125 360
+268 
+ ≈ 168º, 70
+360
+268 
+ ≈ 94º,  
+50
+360
+268 
+ ≈ 67º, 23
+360
+268 
+ ≈ 31º. 
+2 pont 1 vagy 2 hiba esetén 
+1 pont jár. 
+Megfelelő kördiagram, jelmagyarázattal. 
+ 
+2 pont  
+Összesen: 
+5 pont  
+ 
+18. d) első megoldás 
+Az Ágnesből és Lászlóból álló hegymászópár és a 
+másik három hegymászó 4!-féle sorrendben követheti 
+egymást.  
+2 pont  
+Ágnes és László minden ilyen esetben 2-féle 
+sorrendben haladhatnak egymás után. 
+1 pont  
+Így a lehetőségek száma 2  4!  48. 
+1 pont  
+Összesen: 
+4 pont  
+ 
+18. d) második megoldás 
+Ágnes és László 4-féle helyen (1-2, 2-3, 3-4, 4-5), 
+1 pont  
+2-féle sorrendben haladhat egymás után. 
+1 pont  
+A többiek 3!-féle sorrendben szerepelhetnek a sorban,  
+1 pont  
+így a lehetőségek száma 4  2  3!  48. 
+1 pont  
+Összesen: 
+4 pont  
+ 

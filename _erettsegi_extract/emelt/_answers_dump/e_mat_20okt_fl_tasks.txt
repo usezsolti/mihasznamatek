@@ -1,0 +1,95 @@
+29: 2020. október 20. 8:00 
+44: 2020. október 20. 
+70: 2020. október 20. 
+90: 1. A feladatok megoldására 240 perc fordítható, az idő leteltével a munkát be kell fejeznie. 
+92: 2. A feladatok megoldási sorrendje tetszőleges. 
+94: 3. A II. részben kitűzött öt feladat közül csak négyet kell megoldania. A nem választott fel-
+101: 4. A feladatok megoldásához szöveges adatok tárolására és megjelenítésére nem alkalmas 
+105: 5. A megoldások gondolatmenetét minden esetben írja le, mert a feladatra adható pont-
+108: 6. Ügyeljen arra, hogy a lényegesebb részszámítások is nyomon követhetők legyenek! 
+110: 7. A gondolatmenet kifejtése során a zsebszámológép használata – további matematikai 
+128: 8. A feladatok megoldásánál használt tételek közül az iskolában tanult, névvel ellátott tételeket 
+135: 9. A feladatok végeredményét (a feltett kérdésre adandó választ) szöveges megfogalmazásban 
+138: 10. A dolgozatot tollal írja, de az ábrákat ceruzával is rajzolhatja. Az ábrákon kívül a ceruzával 
+142: 11. Minden feladatnak csak egy megoldása értékelhető. Több megoldási próbálkozás esetén 
+145: 12. Kérjük, hogy a szürkített téglalapokba semmit ne írjon! 
+154: 2020. október 20. 
+175: 1. 
+208: a) Adja meg az f zérushelyét! 
+210: b) Számítsa ki az f(20) – g(20) különbség értékét! 
+212: c) Adja meg a 
+231: a) 
+234: b) 
+237: c) 
+258: 2020. október 20. 
+284: 2020. október 20. 
+303: 2. 
+307: a) Hány nő és hány férfi vesz részt a továbbképzésen, ha 1,5-szer annyi nő van a cso-
+313: b) Hányféleképpen ízesíthetik az ételeiket a résztvevők úgy, hogy a hatból három- vagy 
+316: a) 
+319: b) 
+334: 2020. október 20. 
+360: 2020. október 20. 
+379: 3. 
+384: a) Hány érménk lehet, ha a dobozok száma 6? 
+390: b) Mennyi annak a valószínűsége, hogy legfeljebb 2 hibás érme lesz a kiválasztott ér-
+393: a) 
+396: b) 
+410: 2020. október 20. 
+436: 2020. október 20. 
+455: 4. 
+460: a) András egy alkalommal (az asztal lapjától mérve) 1 méter magasságból ejtette az 
+468: b) Mutassa meg, hogy András állítása hamis! 
+476: c) A doboz térfogatának hány százalékát tölti ki a három pingponglabda, ha a labdák 
+479: a) 
+482: b) 
+485: c) 
+500: 2020. október 20. 
+526: 2020. október 20. 
+550: 5. 
+564: a) Határozza meg az f és g függvények grafikonja által közrezárt korlátos síkidom te-
+570: b) Rajzolja fel az így kapott gráfot! 
+576: c) Hányféleképpen választható meg a c konstans értéke úgy, hogy a k, m, n és p függ-
+580: a) 
+583: b) 
+586: c) 
+601: 2020. október 20. 
+627: 2020. október 20. 
+649: 6. 
+675: a) A modell szerint hány fertőzött betegre lehet számítani ebben a városban a járvány 
+678: b) Hány nap múlva lesz a város lakosainak 10%-a fertőzött beteg a modell szerint? 
+680: c) Igazolja, hogy ha L és K adott pozitív számok, n ∈ N+, akkor a 
+700: a) 
+703: b) 
+706: c) 
+720: 2020. október 20. 
+747: 2020. október 20. 
+769: 7. 
+778: a) A zivatar után mindegyik hordóban ugyanolyan magasan állt a víz. Mekkora ez a 
+789: b) Hány darab cserepet kell vásárolnia Ádámnak a tető újracserepezéséhez, ha a tető-
+793: a) 
+796: b) 
+811: 2020. október 20. 
+837: 2020. október 20. 
+859: 8. 
+864: a) Hány eleme van az A \ (B ∩ C) halmaznak? 
+869: b) Két ilyen dobókockával egyszerre dobva mennyi a valószínűsége annak, hogy a do-
+877: c) Mennyit fizet Béla Andinak az 1-es dobása esetén, ha ez a játék igazságos, azaz 
+880: a) 
+883: b) 
+886: c) 
+901: 2020. október 20. 
+927: 2020. október 20. 
+949: 9. 
+953: a) Hány olyan négyszög van, melynek mind a négy csúcsa 
+967: b) Határozza meg az XYZ háromszög területét! 
+969: a) 
+972: b) 
+986: 2020. október 20. 
+1012: 2020. október 20. 
+1038: 2020. október 20. 
+1090: 2020. október 20. 
+1119: 1. 
+1124: 2. 
+1127: 3. 
+1130: 4. 

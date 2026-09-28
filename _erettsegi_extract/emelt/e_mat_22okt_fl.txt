@@ -1,0 +1,1223 @@
+
+===== PAGE 1 =====
+ 
+Matematika 
+ 
+emelt szint — írásbeli vizsga 2212 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+OKTATÁSI HIVATAL 
+MATEMATIKA 
+ 
+EMELT SZINTŰ 
+ÍRÁSBELI VIZSGA 
+minden vizsgázó számára 
+2022. október 18. 8:00 
+ 
+Időtartam: 240 perc 
+Pótlapok száma 
+Tisztázati 
+ 
+Piszkozati 
+ 
+É R E T T S É G I V I Z S G A • 2 0 2 2 . o k t ó b e r 1 8 . 
+
+===== PAGE 2 =====
+Matematika 
+emelt szint 
+2212 írásbeli vizsga 
+2 / 24 
+2022. október 18. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 3 =====
+Matematika 
+emelt szint 
+2212 írásbeli vizsga 
+3 / 24 
+2022. október 18. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Fontos tudnivalók 
+1. A feladatok megoldására 240 perc fordítható, az idő leteltével a munkát be kell fejeznie. 
+ 
+2. A feladatok megoldási sorrendje tetszőleges. 
+ 
+3. A II. részben kitűzött öt feladat közül csak négyet kell megoldania. A nem választott fel-
+adat sorszámát írja be a dolgozat befejezésekor az alábbi négyzetbe! Ha a javító tanár 
+számára nem derül ki egyértelműen, hogy melyik feladat értékelését nem kéri, akkor  
+a kitűzött sorrend szerinti legutolsó feladatra nem kap pontot. 
+ 
+ 
+ 
+4. A feladatok megoldásához szöveges adatok tárolására és megjelenítésére nem alkalmas 
+zsebszámológépet és bármilyen négyjegyű függvénytáblázatot használhat, más elektroni-
+kus vagy írásos segédeszköz használata tilos! 
+ 
+5. A megoldások gondolatmenetét minden esetben írja le, mert a feladatra adható pont-
+szám jelentős része erre jár! 
+ 
+6. Ügyeljen arra, hogy a lényegesebb részszámítások is nyomon követhetők legyenek! 
+ 
+7. A gondolatmenet kifejtése során a zsebszámológép használata – további matematikai 
+indoklás nélkül – a következő műveletek elvégzésére fogadható el: összeadás, kivonás, 
+szorzás, osztás, hatványozás, gyökvonás, n!, 
+
+
+
+
+
+
+k
+n kiszámítása, a függvénytáblázatban fel-
+lelhető táblázatok helyettesítése (sin, cos, tg, log és ezek inverzei), a π és az e szám közelítő 
+értékének megadása, nullára rendezett másodfokú egyenlet gyökeinek meghatározása.  
+További matematikai indoklás nélkül használhatók a számológépek az átlag és a szórás ki-
+számítására abban az esetben, ha a feladat szövege kifejezetten nem követeli meg az ezzel 
+kapcsolatos részletszámítások bemutatását is. Egyéb esetekben a géppel elvégzett számí-
+tások indoklás nélküli lépéseknek számítanak, így azokért nem jár pont. 
+ 
+8. A feladatok megoldásánál használt tételek közül az iskolában tanult, névvel ellátott tételeket 
+(pl. Pitagorasz-tétel, magasságtétel) nem kell pontosan megfogalmazva kimondania, elég 
+csak a tétel megnevezését említenie, de az alkalmazhatóságát röviden indokolnia kell. 
+Egyéb tétel(ek)re való hivatkozás csak akkor fogadható el teljes értékűnek, ha az állítást 
+minden feltételével együtt pontosan mondja ki (bizonyítás nélkül), és az adott problémában 
+az alkalmazhatóságát indokolja. 
+ 
+9. A feladatok végeredményét (a feltett kérdésre adandó választ) szöveges megfogalmazásban 
+is közölje! 
+ 
+10. A dolgozatot tollal írja, de az ábrákat ceruzával is rajzolhatja. Az ábrákon kívül a ceruzával 
+írt részeket a javító tanár nem értékelheti. Ha valamilyen megoldást vagy megoldásrészletet 
+áthúz, akkor az nem értékelhető. 
+ 
+11. Minden feladatnak csak egy megoldása értékelhető. Több megoldási próbálkozás esetén 
+egyértelműen jelölje, hogy melyiket tartja érvényesnek! 
+ 
+12. Kérjük, hogy a szürkített téglalapokba semmit ne írjon! 
+ 
+ 
+
+===== PAGE 4 =====
+Matematika 
+emelt szint 
+2212 írásbeli vizsga 
+4 / 24 
+2022. október 18. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+I. 
+ 
+1. 
+Adott a C(–6; –2) és a P(–3; 2) pont. 
+ 
+a) Írja fel a C középpontú, P ponton átmenő k kör egyenletét! 
+ 
+b) Írja fel a k kör P pontra illeszkedő érintőegyenesének egyenletét! 
+ 
+A C és P pontokon áthaladó egyenes és a két koordinátatengely egy derékszögű három-
+szöget határoz meg. 
+ 
+c) Határozza meg a háromszög köré írható kör sugarának hosszát! 
+ 
+a) 
+2 pont 
+ 
+b) 
+3 pont 
+ 
+c) 
+6 pont 
+ 
+Ö.: 
+11 pont 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 5 =====
+Matematika 
+emelt szint 
+2212 írásbeli vizsga 
+5 / 24 
+2022. október 18. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 6 =====
+Matematika 
+emelt szint 
+2212 írásbeli vizsga 
+6 / 24 
+2022. október 18. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+2. 
+Oldja meg az alábbi egyenleteket a valós számok halmazán! 
+ 
+a) 
+2
+2
+sin
+3cos
+x
+x
+=
+ 
+ 
+b) 
+3
+3
+3
+log (
+8)
+log (
+2)
+log (
+4)
+1
++
++
+−
+−
++
+=
+x
+x
+x
+ 
+ 
+a) 
+6 pont 
+ 
+b) 
+8 pont 
+ 
+Ö.: 
+14 pont 
+ 
+ 
+ 
+ 
+
+===== PAGE 7 =====
+Matematika 
+emelt szint 
+2212 írásbeli vizsga 
+7 / 24 
+2022. október 18. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 8 =====
+Matematika 
+emelt szint 
+2212 írásbeli vizsga 
+8 / 24 
+2022. október 18. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+3. 
+Egy napelemes akkumulátortöltőket gyártó cég termékei közül 24 darabnak az élettarta-
+mát vizsgálták. A vizsgálat végeredményét (a 24 darabra vonatkozóan) az alábbi kördi-
+agram szemlélteti. 
+ 
+a) Töltse ki az alábbi táblázatot, és határozza meg a 24 darab töltő élettartamának átla-
+gát és szórását! 
+ 
+ 
+ 
+ 
+A részletesebb vizsgálatok szerint a cég által gyártott töltők 90 százaléka legalább 50 hó-
+nap élettartamú (ezt tekinthetjük úgy, hogy egy véletlenszerűen kiválasztott töltő 0,9 va-
+lószínűséggel legalább 50 hónap élettartamú). 
+ 
+b) Mekkora a valószínűsége annak, hogy egy szakboltba kiszállított 20 darab töltő kö-
+zött legfeljebb kettő olyan található, amelynek az élettartama 50 hónapnál keve-
+sebb? 
+ 
+Ismert az is, hogy 0,75 annak a valószínűsége, hogy öt darab véletlenszerűen kiválasztott 
+töltő mindegyikének élettartama 55 hónapnál kevesebb. 
+ 
+c) Mekkora a valószínűsége annak, hogy egy darab véletlenszerűen kiválasztott töltő 
+élettartama legalább 55 hónap? 
+ 
+a) 
+5 pont 
+ 
+b) 
+5 pont 
+ 
+c) 
+3 pont 
+ 
+Ö.: 
+13 pont 
+ 
+ 
+ 
+élettartam (hónap) 
+ 
+ 
+ 
+ 
+ 
+ 
+darabszám 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 9 =====
+Matematika 
+emelt szint 
+2212 írásbeli vizsga 
+9 / 24 
+2022. október 18. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 10 =====
+Matematika 
+emelt szint 
+2212 írásbeli vizsga 
+10 / 24 
+2022. október 18. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+4. 
+Adott az 
+( )
+sin
+f x
+x
+=
+ és a 
+2
+2
+( )
+π
+x
+g x
+
+
+= 
+
+
+
+függvény (x ∈ R). 
+ 
+a) Igazolja, hogy mindkét függvény grafikonja áthalad az origón és a π ; 1
+2
+
+
+
+
+
+
+ ponton! 
+ 
+b) Határozza meg a két függvény grafikonja által közbezárt síkidom területét, 
+ha x ∈0; 2
+π
+
+
+
+
+
+
+! 
+ 
+Adott az 
+2
+2
+n
+n
+a
+n
++ π
+=
+ sorozat (n ∈ N+). 
+ 
+c) Igazolja, hogy ez a sorozat szigorúan monoton csökkenő és korlátos, és adja meg a 
+sorozat határértékét! 
+ 
+a) 
+3 pont 
+ 
+b) 
+5 pont 
+ 
+c) 
+5 pont 
+ 
+Ö.: 
+13 pont 
+ 
+ 
+ 
+ 
+
+===== PAGE 11 =====
+Matematika 
+emelt szint 
+2212 írásbeli vizsga 
+11 / 24 
+2022. október 18. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 12 =====
+Matematika 
+emelt szint 
+2212 írásbeli vizsga 
+12 / 24 
+2022. október 18. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+II. 
+ 
+Az 5-9. feladatok közül tetszése szerint választott négyet kell megoldania.  
+A kihagyott feladat sorszámát írja be a 3. oldalon található üres négyzetbe! 
+ 
+5. 
+Egy téglalapot hat tartományra osztottak fel az ábrán látható 
+módon. Az A, B, C, D, E, F tartományokat úgy kell kiszínezni, 
+hogy azonos színű tartományok ne érintkezzenek egymással. A 
+színezéshez a piros, kék, zöld és sárga színek használhatók. 
+(Mindegyik tartományt ki kell színezni a megadott színek egyikével, de nem kötelező 
+mind a négy színt felhasználni.) 
+ 
+a) Hányféleképpen színezhető ki a téglalap úgy, hogy az A és C tartományok színe 
+különböző legyen? 
+ 
+Az A, B, C, D, E és F nemnegatív számokról a következőket tudjuk: 
+(1)  A = 6 és D = 8; 
+(2)  B számtani közepe A-nak és C-nek; 
+(3)  F mértani közepe D-nek és E-nek; 
+(4)  F 1-gyel nagyobb B-nél; 
+(5)  E 2-vel nagyobb C-nél. 
+ 
+b) Határozza meg az ismeretlen számok értékét! 
+ 
+a) 
+7 pont 
+ 
+b) 
+9 pont 
+ 
+Ö.: 
+16 pont 
+ 
+ 
+ 
+
+===== PAGE 13 =====
+Matematika 
+emelt szint 
+2212 írásbeli vizsga 
+13 / 24 
+2022. október 18. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 14 =====
+Matematika 
+emelt szint 
+2212 írásbeli vizsga 
+14 / 24 
+2022. október 18. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Az 5-9. feladatok közül tetszése szerint választott négyet kell megoldania.  
+A kihagyott feladat sorszámát írja be a 3. oldalon található üres négyzetbe! 
+ 
+6. 
+Egy ingatlanhirdetésben sík területen fekvő legelőt kínálnak eladásra. A legelő alakja kon-
+vex négyszög, ennek csúcsait jelölje A, B, C és D. A négyszög három oldala AB = 126 m, 
+BC = 65 m, CD = 80 m, két szöge ABC∢ = 122,5° és ADC∢ = 90°. 
+A legelőt 0,9 hektár területűnek hirdeti az eladó. 
+ 
+a) Hány százalékkal nagyobb a legelő valódi területe a meghirdetettnél? 
+(1 ha = 10 000 m2) 
+ 
+Egy itatóvályú alakja háromszög alapú egyenes hasáb. 
+Vízszintes helyzetében a vályú felül nyitott, a hasábnak ez 
+a lapja párhuzamos a vízszintes talaj síkjával, a háromszög 
+alakú lapok pedig a talaj síkjára merőlegesek (ld. az ábrát). 
+A szabályos háromszög alakú lemezek oldalai 38 cm hosz-
+szúak, a két téglalap alakú oldallap pedig 38 cm × 72 cm-es. 
+A vízszintes helyzetű vályú kezdetben tele van vízzel. A vá-
+lyú egyik végét megemeljük, ezért a víz egy része kifolyik 
+belőle. A vályúban ekkor a vízfelszín a bal oldali szabályos 
+háromszög alsó csúcsától a jobb oldali szabályos három-
+szög felső éléig ér, ahogyan az ábra mutatja.  
+ 
+b) Igazolja, hogy ekkor a vályúban (egészre kerekítve) 15 liter víz van! 
+ 
+A vályút ezután visszafektetjük eredeti, vízszintes helyzetébe. 
+ 
+c) Hány cm magasan áll a víz a vályúban ekkor? 
+ 
+ 
+ 
+a) 
+6 pont 
+ 
+b) 
+5 pont 
+ 
+c) 
+5 pont 
+ 
+Ö.: 
+16 pont 
+ 
+ 
+ 
+
+===== PAGE 15 =====
+Matematika 
+emelt szint 
+2212 írásbeli vizsga 
+15 / 24 
+2022. október 18. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 16 =====
+Matematika 
+emelt szint 
+2212 írásbeli vizsga 
+16 / 24 
+2022. október 18. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Az 5-9. feladatok közül tetszése szerint választott négyet kell megoldania.  
+A kihagyott feladat sorszámát írja be a 3. oldalon található üres négyzetbe! 
+ 
+7. 
+a) Az f függvény hozzárendelési szabálya 
+( )
+3 x
+f x
+−
+=
+ (x ∈ R). Helyezze el az alábbi 
+halmazábra megfelelő részeibe az f (–2), f (0,5) és f (5) függvényértékeket! 
+ 
+ 
+Egy ötpontú egyszerű gráf A, B, C, D, E pontjaihoz rendre a 3–2, 3–7, 3–12, 1
+2
+−
+ és 
+1
+2
+1
+−
+ 
+számokat írtuk. A gráfban két pont akkor és csak akkor van éllel összekötve, ha a két 
+ponthoz írt számok összege racionális szám. 
+ 
+b) Hány éle van ennek az ötpontú gráfnak? 
+ 
+A koordinátatengelyek és a 
+( )
+3 x
+g x
+−
+=
+ (x ≥ 0) függvény 
+grafikonja által határolt tartományba olyan egymáshoz 
+csatlakozó téglalapokat írunk, amelyek egyik oldala az 
+x-tengelyen van és egységnyi hosszúságú, egyik csúcsa pe-
+dig a g függvény grafikonjára illeszkedik. 
+Az első beírt téglalap egyik csúcsa az origó, ezzel szem-
+közti csúcsa pedig az (1; g(1)) pont. A további téglalapok 
+egy-egy csúcsa rendre (2; g(2)), (3; g(3)), és így tovább, az 
+ábra szerint (az ábra nem méretarányos). 
+Legyen n az a legnagyobb pozitív egész szám, amelyre g(n) – g(n + 1) > 10– 6 teljesül. 
+ 
+c) Számítsa ki az első n téglalap területének összegét! 
+ 
+a) 
+3 pont 
+ 
+b) 
+5 pont 
+ 
+c) 
+8 pont 
+ 
+Ö.: 
+16 pont 
+ 
+ 
+ 
+ 
+
+===== PAGE 17 =====
+Matematika 
+emelt szint 
+2212 írásbeli vizsga 
+17 / 24 
+2022. október 18. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 18 =====
+Matematika 
+emelt szint 
+2212 írásbeli vizsga 
+18 / 24 
+2022. október 18. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Az 5-9. feladatok közül tetszése szerint választott négyet kell megoldania.  
+A kihagyott feladat sorszámát írja be a 3. oldalon található üres négyzetbe! 
+ 
+8. 
+Egy téglatest egyik éle 4 dm, egy másik éle 2 dm hosszú. A téglatest térfogata 72 dm3. 
+ 
+a) Határozza meg a téglatest felszínét! 
+ 
+Egy téglatest térfogata 72 dm3. A téglatest egyik éle kétszer olyan hosszú, mint egy másik 
+éle. 
+ 
+b) Határozza meg az ilyen tulajdonságú téglatestek közül a minimális felszínű téglatest 
+éleinek hosszát! 
+ 
+c) Hányféleképpen választhatunk ki egy téglatest csúcsai közül hármat úgy, hogy a 
+kiválasztott három csúcs által meghatározott sík ne tartalmazza a téglatest egyetlen 
+további csúcsát sem? 
+ 
+a) 
+2 pont 
+ 
+b) 
+8 pont 
+ 
+c) 
+6 pont 
+ 
+Ö.: 
+16 pont 
+ 
+ 
+ 
+ 
+
+===== PAGE 19 =====
+Matematika 
+emelt szint 
+2212 írásbeli vizsga 
+19 / 24 
+2022. október 18. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 20 =====
+Matematika 
+emelt szint 
+2212 írásbeli vizsga 
+20 / 24 
+2022. október 18. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Az 5-9. feladatok közül tetszése szerint választott négyet kell megoldania.  
+A kihagyott feladat sorszámát írja be a 3. oldalon található üres négyzetbe! 
+ 
+9. 
+Egy jótékonysági rendezvényen sorsjegyeket árulnak. 5 kék és 3 zöld sorsjegy 6700 Ft-ba, 
+3 kék és 2 zöld sorsjegy 4200 Ft-ba kerül. 
+ 
+a) Mennyibe kerül külön-külön egy kék, illetve egy zöld sorsjegy? 
+ 
+A sorsjegyek 40%-a kék, 60%-a zöld. A különböző színű sorsjegyekhez tartozó nyere-
+mények arányát mutatja a táblázat (például az összes kék sorsjegynek a 35%-a tárgynye-
+reményt nyer). 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Véletlenszerűen kiválasztunk egy sorsjegyet. Legyen az A esemény az, hogy ez a sorsjegy 
+tárgynyereményt nyer, a B esemény pedig az, hogy ez a sorsjegy kék. 
+ 
+b) Igazolja, hogy P(A) = 0,38. 
+Számítsa ki a P(B | A) feltételes valószínűséget! 
+ 
+Függetlenek-e az A és B események? 
+ 
+c) Határozza meg az egy kék sorsjegyre eső nyeremény várható értékét, ha a tárgynye-
+reményt 500 Ft-os értéken vesszük figyelembe! 
+ 
+a) 
+5 pont 
+ 
+b) 
+8 pont 
+ 
+c) 
+3 pont 
+ 
+Ö.: 
+16 pont 
+ 
+ 
+ 
+ 
+kék 
+zöld 
+tárgynyereményt nyer 
+35% 40% 
+1000 Ft-os könyvutalványt nyer 20% 30% 
+5000 Ft-os könyvutalványt nyer 
+5% 
+– 
+nem nyer 
+40% 30% 
+
+===== PAGE 21 =====
+Matematika 
+emelt szint 
+2212 írásbeli vizsga 
+21 / 24 
+2022. október 18. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 22 =====
+Matematika 
+emelt szint 
+2212 írásbeli vizsga 
+22 / 24 
+2022. október 18. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 23 =====
+Matematika 
+emelt szint 
+2212 írásbeli vizsga 
+23 / 24 
+2022. október 18. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 24 =====
+Matematika 
+emelt szint 
+2212 írásbeli vizsga 
+24 / 24 
+2022. október 18. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+a feladat 
+sorszáma 
+pontszám 
+maximális 
+elért 
+maximális 
+elért 
+I. rész 
+1. 
+11 
+ 
+51 
+ 
+2. 
+14 
+ 
+3. 
+13 
+ 
+4. 
+13 
+ 
+II. rész 
+ 
+16 
+ 
+64 
+ 
+ 
+16 
+ 
+ 
+16 
+ 
+ 
+16 
+ 
+ 
+← nem választott feladat 
+Az írásbeli vizsgarész pontszáma 
+115 
+ 
+ 
+dátum 
+ 
+javító tanár 
+ 
+ __________________________________________________________________________  
+ 
+ 
+ 
+pontszáma egész 
+számra kerekítve 
+elért 
+programba  
+beírt 
+I. rész 
+  
+  
+II. rész 
+  
+  
+ 
+dátum 
+ 
+dátum 
+ 
+ 
+ 
+ 
+ 
+ 
+javító tanár 
+ 
+jegyző 
+ 

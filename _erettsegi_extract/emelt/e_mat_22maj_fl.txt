@@ -1,0 +1,1133 @@
+
+===== PAGE 1 =====
+ 
+Matematika 
+ 
+emelt szint — írásbeli vizsga 2213 
+EMBERI ERŐFORRÁSOK MINISZTÉRIUMA 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+MATEMATIKA 
+ 
+EMELT SZINTŰ 
+ÍRÁSBELI VIZSGA 
+minden vizsgázó számára 
+2022. május 3. 9:00 
+ 
+Időtartam: 240 perc 
+Pótlapok száma 
+Tisztázati 
+ 
+Piszkozati 
+ 
+É R E T T S É G I V I Z S G A • 2 0 2 2 . m á j u s 3 . 
+
+===== PAGE 2 =====
+Matematika 
+emelt szint 
+2213 írásbeli vizsga 
+2 / 24 
+2022. május 3. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 3 =====
+Matematika 
+emelt szint 
+2213 írásbeli vizsga 
+3 / 24 
+2022. május 3. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Fontos tudnivalók 
+1. A feladatok megoldására 240 perc fordítható, az idő leteltével a munkát be kell fejeznie. 
+ 
+2. A feladatok megoldási sorrendje tetszőleges. 
+ 
+3. A II. részben kitűzött öt feladat közül csak négyet kell megoldania. A nem választott fel-
+adat sorszámát írja be a dolgozat befejezésekor az alábbi négyzetbe! Ha a javító tanár 
+számára nem derül ki egyértelműen, hogy melyik feladat értékelését nem kéri, akkor  
+a kitűzött sorrend szerinti legutolsó feladatra nem kap pontot. 
+ 
+ 
+ 
+4. A feladatok megoldásához szöveges adatok tárolására és megjelenítésére nem alkalmas 
+zsebszámológépet és bármilyen négyjegyű függvénytáblázatot használhat, más elektroni-
+kus vagy írásos segédeszköz használata tilos! 
+ 
+5. A megoldások gondolatmenetét minden esetben írja le, mert a feladatra adható pont-
+szám jelentős része erre jár! 
+ 
+6. Ügyeljen arra, hogy a lényegesebb részszámítások is nyomon követhetők legyenek! 
+ 
+7. A gondolatmenet kifejtése során a zsebszámológép használata – további matematikai 
+indoklás nélkül – a következő műveletek elvégzésére fogadható el: összeadás, kivonás, 
+szorzás, osztás, hatványozás, gyökvonás, n!, 
+
+
+
+
+
+
+k
+n
+ kiszámítása, a függvénytáblázatban fel-
+lelhető táblázatok helyettesítése (sin, cos, tg, log és ezek inverzei), a π és az e szám közelítő 
+értékének megadása, nullára rendezett másodfokú egyenlet gyökeinek meghatározása.  
+További matematikai indoklás nélkül használhatók a számológépek az átlag és a szórás ki-
+számítására abban az esetben, ha a feladat szövege kifejezetten nem követeli meg az ezzel 
+kapcsolatos részletszámítások bemutatását is. Egyéb esetekben a géppel elvégzett számí-
+tások indoklás nélküli lépéseknek számítanak, így azokért nem jár pont. 
+ 
+8. A feladatok megoldásánál használt tételek közül az iskolában tanult, névvel ellátott tételeket 
+(pl. Pitagorasz-tétel, magasságtétel) nem kell pontosan megfogalmazva kimondania, elég 
+csak a tétel megnevezését említenie, de az alkalmazhatóságát röviden indokolnia kell. 
+Egyéb tétel(ek)re való hivatkozás csak akkor fogadható el teljes értékűnek, ha az állítást 
+minden feltételével együtt pontosan mondja ki (bizonyítás nélkül), és az adott problémában 
+az alkalmazhatóságát indokolja. 
+ 
+9. A feladatok végeredményét (a feltett kérdésre adandó választ) szöveges megfogalmazásban 
+is közölje! 
+ 
+10. A dolgozatot tollal írja, de az ábrákat ceruzával is rajzolhatja. Az ábrákon kívül a ceruzával 
+írt részeket a javító tanár nem értékelheti. Ha valamilyen megoldást vagy megoldásrészletet 
+áthúz, akkor az nem értékelhető. 
+ 
+11. Minden feladatnak csak egy megoldása értékelhető. Több megoldási próbálkozás esetén 
+egyértelműen jelölje, hogy melyiket tartja érvényesnek! 
+ 
+12. Kérjük, hogy a szürkített téglalapokba semmit ne írjon! 
+ 
+ 
+
+===== PAGE 4 =====
+Matematika 
+emelt szint 
+2213 írásbeli vizsga 
+4 / 24 
+2022. május 3. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+I. 
+ 
+1. 
+Oldja meg a valós számok halmazán az alábbi egyenleteket! 
+ 
+a) 
+1
+9
+15 3
+6
+x
+x
++ +
+⋅
+=
+ 
+ 
+b) 1
+1
+sin 2
+0
+4
+3
+8
+π
+
+
+⋅
+−
+−
+=
+
+
+
+
+x
+ 
+ 
+a) 
+6 pont 
+ 
+b) 
+5 pont 
+ 
+Ö.: 
+11 pont 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 5 =====
+Matematika 
+emelt szint 
+2213 írásbeli vizsga 
+5 / 24 
+2022. május 3. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 6 =====
+Matematika 
+emelt szint 
+2213 írásbeli vizsga 
+6 / 24 
+2022. május 3. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+2. 
+a) Egy számtani sorozat első tagja 5, differenciája 3, az első n tag összege pedig 4900. 
+Határozza meg n értékét! 
+ 
+b) Egy mértani sorozat első és második tagjának összege 6, harmadik és negyedik tag-
+jának összege pedig 96. Adja meg a sorozat első tagját és hányadosát! 
+ 
+a) 
+5 pont 
+ 
+b) 
+8 pont 
+ 
+Ö.: 
+13 pont 
+ 
+ 
+ 
+ 
+
+===== PAGE 7 =====
+Matematika 
+emelt szint 
+2213 írásbeli vizsga 
+7 / 24 
+2022. május 3. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 8 =====
+Matematika 
+emelt szint 
+2213 írásbeli vizsga 
+8 / 24 
+2022. május 3. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+3. 
+Egy társasházban 50-en laknak. A lakók 38%-a nő, 32%-a szemüveges. 
+ 
+a) Legalább, illetve legfeljebb hányan lehetnek a lakók között a nem szemüveges fér-
+fiak? 
+ 
+A társasház kertje egy 15 méter hosszú, 10 méter széles téglalap alakú földterület, amely 
+az egyik átlója mentén ketté van osztva: az egyik fele füvesítve van, a másik felén 
+virágágyás található. A füvesített rész derékszögű csúcsában van egy öntöző, amely egy 
+10 méter sugarú negyedkör alakú területet locsol a kertben. 
+ 
+b) Mekkora az a füvesített terület, amelyet nem ér el az öntöző? 
+ 
+a) 
+5 pont 
+ 
+b) 
+8 pont 
+ 
+Ö.: 
+13 pont 
+ 
+ 
+ 
+
+===== PAGE 9 =====
+Matematika 
+emelt szint 
+2213 írásbeli vizsga 
+9 / 24 
+2022. május 3. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 10 =====
+Matematika 
+emelt szint 
+2213 írásbeli vizsga 
+10 / 24 
+2022. május 3. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+4. 
+Egy biliárdgolyó készletben található 9 golyó tömegére a következő mérési eredményeket 
+kapták (grammban): 163, 163, 163, 163, 163, 164, 165, 166, 166. 
+Egy ilyen készletet akkor hitelesítenek a minőségellenőrzésen, ha az alábbi feltételek 
+mindegyikének megfelel: 
+• minden golyó tömege legalább 160 gramm és legfeljebb 170 gramm; 
+• a golyók tömegének terjedelme legfeljebb 3 gramm; 
+• a golyók tömegének szórása legfeljebb 1 gramm.  
+ 
+a) Hitelesíthető-e ez a készlet? 
+ 
+Egy dobozban 3 piros és 7 kék golyó található. 
+ 
+b) Kihúzunk a dobozból egymás után két golyót úgy, hogy az elsőként kihúzott golyót 
+a húzás után nem tesszük vissza. Határozza meg annak a valószínűségét, hogy a 
+kihúzott két golyó között lesz piros! 
+ 
+c) Kihúzunk a 10 golyó közül egymás után három golyót úgy, hogy a kihúzott golyót 
+a következő húzás előtt mindig visszatesszük. Legyen az A esemény az, hogy a  
+kihúzott három golyó közül pontosan kettő piros, a B esemény pedig az, hogy a  
+kihúzott golyók között van piros. 
+ 
+Határozza meg a P(A | B) valószínűséget! 
+ 
+a) 
+5 pont 
+ 
+b) 
+4 pont 
+ 
+c) 
+5 pont 
+ 
+Ö.: 
+14 pont 
+ 
+ 
+ 
+ 
+
+===== PAGE 11 =====
+Matematika 
+emelt szint 
+2213 írásbeli vizsga 
+11 / 24 
+2022. május 3. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 12 =====
+Matematika 
+emelt szint 
+2213 írásbeli vizsga 
+12 / 24 
+2022. május 3. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+II. 
+ 
+Az 5-9. feladatok közül tetszése szerint választott négyet kell megoldania.  
+A kihagyott feladat sorszámát írja be a 3. oldalon található üres négyzetbe! 
+ 
+5. 
+Lali, Pali és Vali egy palacsintázóban ebédelnek. Lali 3 mogyorókrémes, 1 túrós és 2 fa-
+héjas palacsintáért 1500 Ft-ot, Pali 4 mogyorókrémes, 2 túrós és 1 fahéjas palacsintáért 
+1740 Ft-ot, Vali pedig 1 mogyorókrémes, 2 túrós és 2 fahéjas palacsintáért 1170 Ft-ot 
+fizetett. 
+ 
+a) Mennyibe kerül 1-1 darab a különböző fajta palacsintákból? 
+ 
+Lali vesz még egy lekváros palacsintát 210 Ft-ért. Lali zsebében 100, 50, 20, 10 és 5 Ft-os 
+érmék vannak, mindegyikből több is. Ezek közül 6 érmét választ ki. 
+ 
+b) Igazolja, hogy 6 érmével három különböző módon fizethető ki 210 Ft! (Két fizetést 
+különbözőnek tekintünk, ha legalább az egyik címletű érméből eltérő számút hasz-
+nálunk fel a két fizetés során.) 
+ 
+c) Hányféle sorrendben vehet elő Lali 6 olyan érmét a zsebéből, amelyek összege 
+210 Ft, ha egyesével húzza elő őket? (Az azonos címletű érméket nem különböztet-
+jük meg egymástól.) 
+ 
+a) 
+8 pont 
+ 
+b) 
+5 pont 
+ 
+c) 
+3 pont 
+ 
+Ö.: 
+16 pont 
+ 
+ 
+ 
+
+===== PAGE 13 =====
+Matematika 
+emelt szint 
+2213 írásbeli vizsga 
+13 / 24 
+2022. május 3. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 14 =====
+Matematika 
+emelt szint 
+2213 írásbeli vizsga 
+14 / 24 
+2022. május 3. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Az 5-9. feladatok közül tetszése szerint választott négyet kell megoldania.  
+A kihagyott feladat sorszámát írja be a 3. oldalon található üres négyzetbe! 
+ 
+6. 
+Egy egyenlőszárú háromszög csúcsai a derékszögű koordináta-rendszerben A(0; 0), 
+B(82; 0) és C(41; 71). Géza szerint ez a háromszög szabályos. 
+ 
+a) Határozza meg a háromszög szögeit fokban, három tizedesjegyre kerekítve! 
+ 
+b) Határozza meg a háromszög AC és AB oldalainak arányát négy tizedesjegyre kere-
+kítve! 
+ 
+Egy csonkakúp alapkörének sugara 14 cm, fedőkörének sugara 8 cm, alkotója 10 cm 
+hosszú. Géza szeretné gyorsan megbecsülni a csonkakúp térfogatát, ezért azt egy henger 
+térfogatával közelíti. A közelítő henger alapkörének sugara megegyezik a csonkakúp 
+alap- és fedőköre sugarának számtani közepével, magassága pedig egyenlő a csonkakúp 
+magasságával. 
+ 
+c) Határozza meg Géza közelítésének relatív hibáját! (Relatív hibának nevezzük a kö-
+zelítő értéknek a pontos értéktől mért százalékos eltérését.) 
+ 
+a) 
+5 pont 
+ 
+b) 
+3 pont 
+ 
+c) 
+8 pont 
+ 
+Ö.: 
+16 pont 
+ 
+ 
+ 
+
+===== PAGE 15 =====
+Matematika 
+emelt szint 
+2213 írásbeli vizsga 
+15 / 24 
+2022. május 3. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 16 =====
+Matematika 
+emelt szint 
+2213 írásbeli vizsga 
+16 / 24 
+2022. május 3. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Az 5-9. feladatok közül tetszése szerint választott négyet kell megoldania.  
+A kihagyott feladat sorszámát írja be a 3. oldalon található üres négyzetbe! 
+ 
+7. 
+Flóra kétfajta lisztből süt kenyeret. A kenyérhez a recept alapján 5 : 4 arányban kell búza-
+liszt és rozsliszt. Eredetileg 450 gramm búzalisztet és 400 gramm rozslisztet kevert össze, 
+de további, összesen 500 gramm liszt hozzáadásával sikerült elérnie a recept által előírt 
+arányt. 
+ 
+a) A hozzáadott 500 gramm lisztből hány gramm volt a búzaliszt? 
+ 
+Ha egy cég x tonna lisztet állít elő egy nap alatt (0 < x < 5), és ezt a mennyiséget el is 
+adja, akkor egy elemzés szerint a napi nyereség értékét az 
+2
+( )
+0,8
+(
+3)(1,5
+)
+n x
+x
+x
+x
+=
+−
+−
+ 
+képlet adja meg, a nyereséget tízezer tallérban számítva. (Negatív helyettesítési érték 
+veszteséget jelent.) 
+ 
+b) Mutassa meg, hogy csak 1,5 < x < 3 esetén nyereséges a napi termelés! 
+ 
+c) Hány tallér az elérhető legnagyobb napi nyereség, és ezt hány tonna liszt (előállítása 
+és eladása) esetén érik el? 
+ 
+a) 
+3 pont 
+ 
+b) 
+4 pont 
+ 
+c) 
+9 pont 
+ 
+Ö.: 
+16 pont 
+ 
+ 
+ 
+ 
+
+===== PAGE 17 =====
+Matematika 
+emelt szint 
+2213 írásbeli vizsga 
+17 / 24 
+2022. május 3. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 18 =====
+Matematika 
+emelt szint 
+2213 írásbeli vizsga 
+18 / 24 
+2022. május 3. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Az 5-9. feladatok közül tetszése szerint választott négyet kell megoldania.  
+A kihagyott feladat sorszámát írja be a 3. oldalon található üres négyzetbe! 
+ 
+8. 
+Egy baráti összejövetelen 7 fiú és 5 lány vett részt, találkozáskor mindenki üdvözölte a 
+többieket. A fiúk kézfogással köszöntek egymásnak, két lány, illetve egy fiú és egy lány 
+pedig öleléssel köszöntötte egymást. 
+ 
+a) Hány olyan találkozás volt, ahol öleléssel köszöntötték egymást? 
+ 
+Egy hatfős baráti társaság tagjai András, Bori, Csaba, Dóra, Ervin és Fanni bajnokságon 
+döntik el, hogy ki a legjobb pingpongos közülük. Mindenki mindenki ellen egy mérkőzést 
+játszik. Amikor 9 mérkőzést már lejátszottak, akkor kiderült, hogy mindegyikük páratlan 
+számú mérkőzésen van túl. András az eddigi egyetlen meccsét Bori ellen játszotta, Csaba 
+még nem játszott Ervin ellen. 
+ 
+b) Játszott-e már Dóra Fanni ellen? 
+ 
+András, Bori, Csaba és Dóra egy szabályos dobókockával dobnak egyet-egyet, és az nyer, 
+aki a legnagyobb olyan számot dobta, amit a többiek nem dobtak (például 6, 6, 4, 1 dobások 
+esetén a 4-est dobó játékos nyer). Ha nincs ilyen szám, akkor nem nyer senki. 
+Bori 5-öst dobott, a többiek ezután fognak dobni. 
+ 
+c) Mennyi a valószínűsége annak, hogy Bori nyer? 
+ 
+a) 
+3 pont 
+ 
+b) 
+7 pont 
+ 
+c) 
+6 pont 
+ 
+Ö.: 
+16 pont 
+ 
+ 
+ 
+ 
+
+===== PAGE 19 =====
+Matematika 
+emelt szint 
+2213 írásbeli vizsga 
+19 / 24 
+2022. május 3. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 20 =====
+Matematika 
+emelt szint 
+2213 írásbeli vizsga 
+20 / 24 
+2022. május 3. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Az 5-9. feladatok közül tetszése szerint választott négyet kell megoldania.  
+A kihagyott feladat sorszámát írja be a 3. oldalon található üres négyzetbe! 
+ 
+9. 
+Adott az 
+2
+2
+16
+x
+y
++
+=
+ egyenletű parabola és az 
+2
+2
+(
+3)
+9
+x
+y
++
+−
+=
+ egyenletű kör. 
+ 
+a) Határozza meg a parabola fókuszpontjának és a kör középpontjának a koordinátáit! 
+ 
+b) Igazolja, hogy a Q(2 2; 4) pont a parabolának és a körnek is pontja, és a kör Q-ban 
+húzott érintője érinti a parabolát is! 
+ 
+c) Határozza meg a parabola és az x tengely által közrezárt korlátos síkidom területét! 
+ 
+a) 
+4 pont 
+ 
+b) 
+7 pont 
+ 
+c) 
+5 pont 
+ 
+Ö.: 
+16 pont 
+ 
+ 
+ 
+
+===== PAGE 21 =====
+Matematika 
+emelt szint 
+2213 írásbeli vizsga 
+21 / 24 
+2022. május 3. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 22 =====
+Matematika 
+emelt szint 
+2213 írásbeli vizsga 
+22 / 24 
+2022. május 3. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 23 =====
+Matematika 
+emelt szint 
+2213 írásbeli vizsga 
+23 / 24 
+2022. május 3. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 24 =====
+Matematika 
+emelt szint 
+2213 írásbeli vizsga 
+24 / 24 
+2022. május 3. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+a feladat 
+sorszáma 
+pontszám 
+maximális 
+elért 
+maximális 
+elért 
+I. rész 
+1. 
+11 
+ 
+51 
+ 
+2. 
+13 
+ 
+3. 
+13 
+ 
+4. 
+14 
+ 
+II. rész 
+ 
+16 
+ 
+64 
+ 
+ 
+16 
+ 
+ 
+16 
+ 
+ 
+16 
+ 
+ 
+← nem választott feladat 
+Az írásbeli vizsgarész pontszáma 
+115 
+ 
+ 
+dátum 
+ 
+javító tanár 
+ 
+ 
+ __________________________________________________________________________  
+ 
+ 
+ 
+pontszáma egész 
+számra kerekítve 
+elért 
+programba  
+beírt 
+I. rész 
+  
+  
+II. rész 
+  
+  
+ 
+dátum 
+ 
+dátum 
+ 
+ 
+ 
+ 
+ 
+ 
+javító tanár 
+ 
+jegyző 
+ 

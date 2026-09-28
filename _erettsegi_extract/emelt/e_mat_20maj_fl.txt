@@ -1,0 +1,1221 @@
+
+===== PAGE 1 =====
+ 
+Matematika 
+ 
+emelt szint — írásbeli vizsga 2011 
+EMBERI ERŐFORRÁSOK MINISZTÉRIUMA 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+MATEMATIKA 
+ 
+EMELT SZINTŰ 
+ÍRÁSBELI VIZSGA 
+2020. május 5. 9:00 
+ 
+Időtartam: 240 perc 
+Pótlapok száma 
+Tisztázati 
+ 
+Piszkozati 
+ 
+É R E T T S É G I V I Z S G A • 2 0 2 0 . m á j u s 5 . 
+
+===== PAGE 2 =====
+Matematika 
+emelt szint 
+2011 írásbeli vizsga 
+2 / 24 
+2020. május 5. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 3 =====
+Matematika 
+emelt szint 
+2011 írásbeli vizsga 
+3 / 24 
+2020. május 5. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Fontos tudnivalók 
+1. A feladatok megoldására 240 perc fordítható, az idő leteltével a munkát be kell fejeznie. 
+ 
+2. A feladatok megoldási sorrendje tetszőleges. 
+ 
+3. A II. részben kitűzött öt feladat közül csak négyet kell megoldania. A nem választott fel-
+adat sorszámát írja be a dolgozat befejezésekor az alábbi négyzetbe! Ha a javító tanár 
+számára nem derül ki egyértelműen, hogy melyik feladat értékelését nem kéri, akkor  
+a kitűzött sorrend szerinti legutolsó feladatra nem kap pontot. 
+ 
+ 
+ 
+4. A feladatok megoldásához szöveges adatok tárolására és megjelenítésére nem alkalmas 
+zsebszámológépet és bármilyen négyjegyű függvénytáblázatot használhat, más elektroni-
+kus vagy írásos segédeszköz használata tilos! 
+ 
+5. A megoldások gondolatmenetét minden esetben írja le, mert a feladatra adható pont-
+szám jelentős része erre jár! 
+ 
+6. Ügyeljen arra, hogy a lényegesebb részszámítások is nyomon követhetők legyenek! 
+ 
+7. A gondolatmenet kifejtése során a zsebszámológép használata – további matematikai 
+indoklás nélkül – a következő műveletek elvégzésére fogadható el: összeadás, kivonás, 
+szorzás, osztás, hatványozás, gyökvonás, n!, 
+
+
+
+
+
+
+k
+n
+ kiszámítása, a függvénytáblázatban fel-
+lelhető táblázatok helyettesítése (sin, cos, tg, log és ezek inverzei), a π és az e szám közelítő 
+értékének megadása, nullára rendezett másodfokú egyenlet gyökeinek meghatározása.  
+További matematikai indoklás nélkül használhatók a számológépek az átlag és a szórás ki-
+számítására abban az esetben, ha a feladat szövege kifejezetten nem követeli meg az ezzel 
+kapcsolatos részletszámítások bemutatását is. Egyéb esetekben a géppel elvégzett számí-
+tások indoklás nélküli lépéseknek számítanak, így azokért nem jár pont. 
+ 
+8. A feladatok megoldásánál használt tételek közül az iskolában tanult, névvel ellátott tételeket 
+(pl. Pitagorasz-tétel, magasságtétel) nem kell pontosan megfogalmazva kimondania, elég 
+csak a tétel megnevezését említenie, de az alkalmazhatóságát röviden indokolnia kell. 
+Egyéb tétel(ek)re való hivatkozás csak akkor fogadható el teljes értékűnek, ha az állítást 
+minden feltételével együtt pontosan mondja ki (bizonyítás nélkül), és az adott problémában 
+az alkalmazhatóságát indokolja. 
+ 
+9. A feladatok végeredményét (a feltett kérdésre adandó választ) szöveges megfogalmazásban 
+is közölje! 
+ 
+10. A dolgozatot tollal írja, de az ábrákat ceruzával is rajzolhatja. Az ábrákon kívül a ceruzával 
+írt részeket a javító tanár nem értékelheti. Ha valamilyen megoldást vagy megoldásrészletet 
+áthúz, akkor az nem értékelhető. 
+ 
+11. Minden feladatnak csak egy megoldása értékelhető. Több megoldási próbálkozás esetén 
+egyértelműen jelölje, hogy melyiket tartja érvényesnek! 
+ 
+12. Kérjük, hogy a szürkített téglalapokba semmit ne írjon! 
+ 
+ 
+
+===== PAGE 4 =====
+Matematika 
+emelt szint 
+2011 írásbeli vizsga 
+4 / 24 
+2020. május 5. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+I. 
+ 
+1. 
+Az {an} számtani sorozat első és harmadik tagjának összege 26, a második és negyedik 
+tagjának összege pedig 130.  
+ 
+a) Adja meg a sorozat ötödik tagját! 
+ 
+A {bn} mértani sorozat első és harmadik tagjának összege 26, a második és negyedik 
+tagjának összege pedig 130. 
+ 
+b) Adja meg a sorozat ötödik tagját! 
+ 
+a) 
+5 pont 
+ 
+b) 
+6 pont 
+ 
+Ö.: 
+11 pont 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 5 =====
+Matematika 
+emelt szint 
+2011 írásbeli vizsga 
+5 / 24 
+2020. május 5. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 6 =====
+Matematika 
+emelt szint 
+2011 írásbeli vizsga 
+6 / 24 
+2020. május 5. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+2. 
+Marci szeret az autók rendszámában különböző matematikai összefüggéseket felfedezni. 
+(A rendszámok Magyarországon három betűből és az azokat követő három számjegyből 
+állnak.) 
+Az egyik általa kedvelt típusnak a „prímes” nevet adta: az ilyen 
+rendszámoknál a PRM betűket követő három számjegy szor-
+zata prímszám.  
+ 
+a) Hány különböző „prímes” rendszám készíthető? 
+ 
+Egy másik típusnak a „hatos” nevet adta: az ilyen rendszámok-
+ban a HAT betűket követő három számjegy összege 6. 
+ 
+b) Hány különböző „hatos” rendszám készíthető? 
+ 
+Egy harmadik típus a „logaritmusos”. Ezek általános alakja: 
+LOG-abc, ahol az a, b és c számjegyekre (ebben a sorrendben) 
+teljesül, hogy 
+. 
+ 
+c) Hány különböző „logaritmusos” rendszám készíthető?  
+ 
+a) 
+3 pont 
+ 
+b) 
+5 pont 
+ 
+c) 
+6 pont 
+ 
+Ö.: 
+14 pont 
+ 
+ 
+ 
+ 
+loga b
+c
+=
+
+===== PAGE 7 =====
+Matematika 
+emelt szint 
+2011 írásbeli vizsga 
+7 / 24 
+2020. május 5. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 8 =====
+Matematika 
+emelt szint 
+2011 írásbeli vizsga 
+8 / 24 
+2020. május 5. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+3. 
+A mellékelt ábrán egy kereszt alakú lemez látható, amely 5 db 
+10 cm oldalú négyzetből áll. A lemezből egy 10 cm alapélű, sza-
+bályos négyoldalú gúla hálóját szeretnénk kivágni úgy, hogy a kö-
+zépső négyzet legyen a gúla alaplapja. 
+ 
+a) Igazolja, hogy a lehetséges hálók kivágása során keletkező 
+hulladék legalább 200 cm2, de kevesebb 300 cm2-nél! 
+ 
+Tekintsük az ábrán látható nyolcpontú gráfot. 
+ 
+b) A gráfban véletlenszerűen kiválasztunk két csúcsot. 
+Mennyi a valószínűsége annak, hogy a két csúcsot él köti 
+össze a gráfban? 
+ 
+c) A gráf 9 élét kékre, 3 élét pedig zöldre színezzük. 
+Igazolja, hogy bármelyik ilyen színezésnél lesz a gráfban 
+egyszínű (gráfelméleti) kör!  
+ 
+a) 
+6 pont 
+ 
+b) 
+4 pont 
+ 
+c) 
+3 pont 
+ 
+Ö.: 
+13 pont 
+ 
+ 
+ 
+
+===== PAGE 9 =====
+Matematika 
+emelt szint 
+2011 írásbeli vizsga 
+9 / 24 
+2020. május 5. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 10 =====
+Matematika 
+emelt szint 
+2011 írásbeli vizsga 
+10 / 24 
+2020. május 5. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+4. 
+Adott az 
+2
+(4
+1)
+2
+0
+x
+p
+x
+p
+−
++
++
+=
+ másodfokú egyenlet, ahol p valós paraméter. 
+ 
+a) Igazolja, hogy bármely valós p érték esetén az egyenletnek két különböző valós 
+gyöke van! 
+ 
+b) Ha az egyenlet egyik gyöke 3, akkor mennyi a másik gyöke? 
+ 
+c) Határozza meg a p paraméter értékét úgy, hogy az egyenlet gyökeinek négyzetösz-
+szege 7 legyen!  
+ 
+a) 
+3 pont 
+ 
+b) 
+4 pont 
+ 
+c) 
+6 pont 
+ 
+Ö.: 
+13 pont 
+ 
+ 
+ 
+ 
+
+===== PAGE 11 =====
+Matematika 
+emelt szint 
+2011 írásbeli vizsga 
+11 / 24 
+2020. május 5. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 12 =====
+Matematika 
+emelt szint 
+2011 írásbeli vizsga 
+12 / 24 
+2020. május 5. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+II. 
+ 
+Az 5-9. feladatok közül tetszése szerint választott négyet kell megoldania.  
+A kihagyott feladat sorszámát írja be a 3. oldalon található üres négyzetbe! 
+ 
+5. 
+Az északi félteke 50. szélességi körén egy adott napon a nappal hosszát (a napkelte és a 
+napnyugta között eltelt időt) jó közelítéssel a következő f függvénnyel lehet modellezni: 
+8
+( )
+5,2cos
+11,2
+58
+n
+f n
++
+
+
+= −
++
+
+
+
+
+, 
+ahol n az adott nap sorszámát jelöli egy adott éven belül, f (n) pedig a nappal hossza órá-
+ban számolva (1 ≤ n ≤ 365, n ∈ N). 
+Az alábbi ábra a 
+[
+]
+8
+: 1;365
+;
+( )
+5,2cos
+11,2
+58
+x
+g
+g x
++
+
+
+→
+= −
++
+
+
+
+
+R
+ függvényt szemlélteti. 
+(A g függvény az f-nek egy folytonos kiterjesztése.) 
+ 
+a) Ha x = 1, akkor 
+8
+58
+x +
+ helyettesítési értéke 9
+58. 
+Adja meg a 9
+58 radián értékét fokban mérve! 
+ 
+b) Számítsa ki a modell alapján, hogy az év 50. napján milyen hosszú a nappal! 
+Válaszát óra:perc formátumban, egész percre kerekítve adja meg! 
+ 
+c) Igazolja, hogy (a modell szerint) egy évben 164 olyan nappal van, amelyik 12 óránál 
+hosszabb! 
+ 
+Adott egy másik, az  y = –5,2cos(x) + 11,2  egyenletű görbe, valamint az x = 0, az y = 0 
+és az x = 2π egyenletű egyenesek. 
+ 
+d) Számítsa ki a görbe és a három egyenes által határolt korlátos síkidom területét! 
+ 
+a) 
+2 pont 
+ 
+b) 
+3 pont 
+ 
+c) 
+7 pont 
+ 
+d) 
+4 pont 
+ 
+Ö.: 
+16 pont 
+ 
+
+===== PAGE 13 =====
+Matematika 
+emelt szint 
+2011 írásbeli vizsga 
+13 / 24 
+2020. május 5. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 14 =====
+Matematika 
+emelt szint 
+2011 írásbeli vizsga 
+14 / 24 
+2020. május 5. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Az 5-9. feladatok közül tetszése szerint választott négyet kell megoldania.  
+A kihagyott feladat sorszámát írja be a 3. oldalon található üres négyzetbe! 
+ 
+6. 
+a) Hány olyan 90-nél nem nagyobb pozitív egész szám van, amely a 2, a 3 és az 5 közül 
+pontosan az egyikkel osztható? 
+ 
+Az ötöslottó-játékban az első 90 pozitív egész számból kell öt különbözőt megjelölni. 
+A sorsoláson öt (különböző) nyerőszámot húznak ki. (Sem a megjelölés, sem a kihúzás 
+sorrendje nem számít.) 
+Kati a 7, 9, 14, 64, 68 számokat jelölte meg. A sorsoláson az első három kihúzott nyerő-
+szám a 7, a 9 és a 14 volt. Kati úgy gondolja, hogy most nagy esélye van legalább négy 
+találatot elérni. 
+ 
+b) Határozza meg annak a valószínűségét, hogy a hátralevő két nyerőszám közül Kati 
+legalább az egyiket eltalálja! 
+ 
+Az egyik játékhéten összesen 3 222 831 lottószelvényt küldtek játékba a játékosok.  
+Az alábbi táblázat mutatja a nyertes szelvények számát és nyereményét (2-nél kevesebb 
+találattal nem lehet nyerni). 
+ 
+Találatok  
+száma 
+Nyertes 
+szelvények 
+száma 
+Nyeremény 
+(Ft/nyertes szelvény) 
+5 
+0 
+0 
+4 
+17 
+3 113 255 
+3 
+1617 
+34 915 
+2 
+62 757 
+1970 
+ 
+c) Számítsa ki, hogy mennyi volt a játékosok egy lottószelvényre jutó átlagos veszte-
+sége ezen a héten, ha a játékba küldött szelvények egységára 250 Ft! 
+ 
+a) 
+6 pont 
+ 
+b) 
+6 pont 
+ 
+c) 
+4 pont 
+ 
+Ö.: 
+16 pont 
+ 
+ 
+ 
+
+===== PAGE 15 =====
+Matematika 
+emelt szint 
+2011 írásbeli vizsga 
+15 / 24 
+2020. május 5. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 16 =====
+Matematika 
+emelt szint 
+2011 írásbeli vizsga 
+16 / 24 
+2020. május 5. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Az 5-9. feladatok közül tetszése szerint választott négyet kell megoldania.  
+A kihagyott feladat sorszámát írja be a 3. oldalon található üres négyzetbe! 
+ 
+7. 
+Az ABCD húrnégyszögben AB = 20, BC = 18, ABC= 70°, CAD= 50°. 
+ 
+a) Milyen hosszú a CD oldal, és mekkora a húrnégyszög területe? 
+ 
+A derékszögű koordináta-rendszerben adottak a P(–2; 0), Q(6; 0) és R(0; 5) pontok, 
+a H pedig a PQ szakasz tetszőleges pontja. 
+ 
+b) Számítsa ki a 
+ és az 
+PH
+RH
+
+
+vektorok skaláris szorzatát, ha H(–1,8; 0). 
+ 
+c) Adja meg a H pont koordinátáit úgy, hogy a 
+ és az 
+PH
+RH
+
+
+ vektorok skaláris  
+szorzata maximális, illetve úgy is, hogy minimális legyen! 
+ 
+a) 
+7 pont 
+ 
+b) 
+2 pont 
+ 
+c) 
+7 pont 
+ 
+Ö.: 
+16 pont 
+ 
+ 
+ 
+ 
+
+===== PAGE 17 =====
+Matematika 
+emelt szint 
+2011 írásbeli vizsga 
+17 / 24 
+2020. május 5. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 18 =====
+Matematika 
+emelt szint 
+2011 írásbeli vizsga 
+18 / 24 
+2020. május 5. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Az 5-9. feladatok közül tetszése szerint választott négyet kell megoldania.  
+A kihagyott feladat sorszámát írja be a 3. oldalon található üres négyzetbe! 
+ 
+8. 
+Egy étteremben (hatósági engedély birtokában) az érvényes általános forgalmi adótól 
+(áfa) kismértékben eltérő adókulcsok alkalmazásának hatását vizsgálták az ételek és ita-
+lok fogyasztására nézve. Az ételek esetében 4%, az italok esetében 30% áfát adtak hozzá 
+a nettó árhoz, és az így kapott bruttó árat kellett a vendégnek kifizetnie. 
+A kísérlet első napján az új számítógépes program hibája miatt a számlán éppen fordítva 
+adták a nettó árakhoz az áfát: az ételek nettó árához 30%-ot, az italok nettó árához pedig 
+4%-ot számoltak hozzá, és ez a számlán is így, hibásan jelent meg. 
+Egy család ebben a vendéglőben ebédelt, és a hibás program miatt 8710 Ft-os számlát 
+kapott. A hibát észrevették, így végül a helyes összeget, 7670 Ft-ot kellett kifizetniük. 
+ 
+a) Hány forint volt az elfogyasztott ételek, és hány forint volt az elfogyasztott italok 
+helyes bruttó ára? 
+ 
+Egy másik étteremben 12 és 14 óra között 3900 Ft befizetéséért annyit eszik és iszik a 
+vendég, amennyit szeretne. 
+A befizetendő összeget egy előzetes felmérés alapján állapították meg. A felmérés során 
+minden vendég esetén összeadták az elfogyasztott étel és ital árát az adott fogyasztáshoz 
+tartozó összes egyéb költséggel. Az összesített költségek alapján osztályokba sorolták a 
+vendégeket aszerint, hogy az étteremnek hány forintjába kerültek. 
+Az alábbi táblázat mutatja a felmérés eredményét. A táblázat első sorában az osztálykö-
+zepek láthatók. 
+ 
+ 
+ 
+ 
+ 
+b) A felmérés eredményét felhasználva számítsa ki, hogy ennek az étteremnek 1000 
+vendég esetén mekkora a várható haszna! 
+ 
+c) A fenti táblázat értékeivel számolva mennyi a valószínűsége, hogy két (ebédre be-
+térő) vendég együttes fogyasztása veszteséget jelent az étteremnek? 
+(A táblázatba foglalt információkat tekinthetjük úgy, hogy egy véletlenszerűen be-
+térő vendég esetén pl. 0,25 annak a valószínűsége, hogy a vendég 2800 Ft-ba kerül 
+az étteremnek.) 
+ 
+a) 
+7 pont 
+ 
+b) 
+3 pont 
+ 
+c) 
+6 pont 
+ 
+Ö.: 
+16 pont 
+ 
+ 
+ 
+ 
+fejenként ennyi Ft-ba  
+került az étteremnek 
+1000 1900 2800 3600 4400 5200 
+a vendégek ennyi %-a 
+10 
+20 
+25 
+30 
+10 
+5 
+
+===== PAGE 19 =====
+Matematika 
+emelt szint 
+2011 írásbeli vizsga 
+19 / 24 
+2020. május 5. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 20 =====
+Matematika 
+emelt szint 
+2011 írásbeli vizsga 
+20 / 24 
+2020. május 5. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Az 5-9. feladatok közül tetszése szerint választott négyet kell megoldania.  
+A kihagyott feladat sorszámát írja be a 3. oldalon található üres négyzetbe! 
+ 
+9. 
+Egy városban a közösségi közlekedést kizárólag vonaljeggyel lehet igénybe venni, min-
+den utazáshoz egy vonaljegyet kell váltani. A vonaljegy ára jelenleg 300 tallér. Az utazá-
+sok száma naponta átlagosan 100 ezer. Ismert az is, hogy ennek kb. 10%-ában nem vál-
+tanak jegyet (bliccelnek). 
+A városi közlekedési társaság vezetői hatástanulmányt készíttettek a vonaljegy árának 
+esetleges megváltoztatásáról. A vonaljegy árát 5 talléronként lehet emelni vagy csökken-
+teni. A hatástanulmány szerint a vonaljegy árának 5 talléros emelése várhatóan 1000-rel 
+csökkenti a napi utazások számát, és 1 százalékponttal növeli a jegy nélküli utazások 
+(bliccelések) arányát. (Tehát például 310 talléros jegyár esetén naponta 98 000 utazás 
+lenne, és ennek 12%-a lenne bliccelés.) Ugyanez fordítva is igaz: a vonaljegy árának min-
+den 5 talléros csökkentése 1000-rel növelné a napi utazások számát, és 1 százalékponttal 
+csökkentené a bliccelések arányát. A tanulmány az alkalmazott modellben csak a 245 
+tallérnál drágább, de 455 tallérnál olcsóbb lehetséges jegyárakat vizsgálta. 
+ 
+a) Mekkora lenne a közlekedési társaság vonaljegyekből származó napi bevétele a ha-
+tástanulmány becslései alapján, ha 350 tallérra emelnék a vonaljegyek árát? 
+ 
+b) Hány talléros vonaljegy esetén lenne maximális a napi bevétel? 
+ 
+a) 
+4 pont 
+ 
+b) 
+12 pont 
+ 
+Ö.: 
+16 pont 
+ 
+ 
+ 
+
+===== PAGE 21 =====
+Matematika 
+emelt szint 
+2011 írásbeli vizsga 
+21 / 24 
+2020. május 5. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 22 =====
+Matematika 
+emelt szint 
+2011 írásbeli vizsga 
+22 / 24 
+2020. május 5. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 23 =====
+Matematika 
+emelt szint 
+2011 írásbeli vizsga 
+23 / 24 
+2020. május 5. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 24 =====
+Matematika 
+emelt szint 
+2011 írásbeli vizsga 
+24 / 24 
+2020. május 5. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+a feladat 
+sorszáma 
+pontszám 
+maximális 
+elért 
+maximális 
+elért 
+I. rész 
+1. 
+11 
+ 
+51 
+ 
+2. 
+14 
+ 
+3. 
+13 
+ 
+4. 
+13 
+ 
+II. rész 
+ 
+16 
+ 
+64 
+ 
+ 
+16 
+ 
+ 
+16 
+ 
+ 
+16 
+ 
+ 
+← nem választott feladat 
+Az írásbeli vizsgarész pontszáma 
+115 
+ 
+ 
+dátum 
+ 
+javító tanár 
+ 
+ __________________________________________________________________________  
+ 
+ 
+ 
+pontszáma egész 
+számra kerekítve 
+elért 
+programba  
+beírt 
+I. rész 
+  
+  
+II. rész 
+  
+  
+ 
+dátum 
+ 
+dátum 
+ 
+ 
+ 
+ 
+ 
+ 
+javító tanár 
+ 
+jegyző 
+ 

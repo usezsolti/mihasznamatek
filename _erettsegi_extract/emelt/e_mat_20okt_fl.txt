@@ -1,0 +1,1186 @@
+
+===== PAGE 1 =====
+ 
+Matematika 
+ 
+emelt szint — írásbeli vizsga 2013 
+EMBERI ERŐFORRÁSOK MINISZTÉRIUMA 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+MATEMATIKA 
+ 
+EMELT SZINTŰ 
+ÍRÁSBELI VIZSGA 
+2020. október 20. 8:00 
+ 
+Időtartam: 240 perc 
+Pótlapok száma 
+Tisztázati 
+ 
+Piszkozati 
+ 
+É R E T T S É G I V I Z S G A • 2 0 2 0 . o k t ó b e r 2 0 . 
+
+===== PAGE 2 =====
+Matematika 
+emelt szint 
+2013 írásbeli vizsga 
+2 / 24 
+2020. október 20. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 3 =====
+Matematika 
+emelt szint 
+2013 írásbeli vizsga 
+3 / 24 
+2020. október 20. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Fontos tudnivalók 
+1. A feladatok megoldására 240 perc fordítható, az idő leteltével a munkát be kell fejeznie. 
+ 
+2. A feladatok megoldási sorrendje tetszőleges. 
+ 
+3. A II. részben kitűzött öt feladat közül csak négyet kell megoldania. A nem választott fel-
+adat sorszámát írja be a dolgozat befejezésekor az alábbi négyzetbe! Ha a javító tanár 
+számára nem derül ki egyértelműen, hogy melyik feladat értékelését nem kéri, akkor  
+a kitűzött sorrend szerinti legutolsó feladatra nem kap pontot. 
+ 
+ 
+ 
+4. A feladatok megoldásához szöveges adatok tárolására és megjelenítésére nem alkalmas 
+zsebszámológépet és bármilyen négyjegyű függvénytáblázatot használhat, más elektroni-
+kus vagy írásos segédeszköz használata tilos! 
+ 
+5. A megoldások gondolatmenetét minden esetben írja le, mert a feladatra adható pont-
+szám jelentős része erre jár! 
+ 
+6. Ügyeljen arra, hogy a lényegesebb részszámítások is nyomon követhetők legyenek! 
+ 
+7. A gondolatmenet kifejtése során a zsebszámológép használata – további matematikai 
+indoklás nélkül – a következő műveletek elvégzésére fogadható el: összeadás, kivonás, 
+szorzás, osztás, hatványozás, gyökvonás, n!, 
+
+
+
+
+
+
+k
+n kiszámítása, a függvénytáblázatban fel-
+lelhető táblázatok helyettesítése (sin, cos, tg, log és ezek inverzei), a π és az e szám közelítő 
+értékének megadása, nullára rendezett másodfokú egyenlet gyökeinek meghatározása.  
+További matematikai indoklás nélkül használhatók a számológépek az átlag és a szórás ki-
+számítására abban az esetben, ha a feladat szövege kifejezetten nem követeli meg az ezzel 
+kapcsolatos részletszámítások bemutatását is. Egyéb esetekben a géppel elvégzett számí-
+tások indoklás nélküli lépéseknek számítanak, így azokért nem jár pont. 
+ 
+8. A feladatok megoldásánál használt tételek közül az iskolában tanult, névvel ellátott tételeket 
+(pl. Pitagorasz-tétel, magasságtétel) nem kell pontosan megfogalmazva kimondania, elég 
+csak a tétel megnevezését említenie, de az alkalmazhatóságát röviden indokolnia kell. 
+Egyéb tétel(ek)re való hivatkozás csak akkor fogadható el teljes értékűnek, ha az állítást 
+minden feltételével együtt pontosan mondja ki (bizonyítás nélkül), és az adott problémában 
+az alkalmazhatóságát indokolja. 
+ 
+9. A feladatok végeredményét (a feltett kérdésre adandó választ) szöveges megfogalmazásban 
+is közölje! 
+ 
+10. A dolgozatot tollal írja, de az ábrákat ceruzával is rajzolhatja. Az ábrákon kívül a ceruzával 
+írt részeket a javító tanár nem értékelheti. Ha valamilyen megoldást vagy megoldásrészletet 
+áthúz, akkor az nem értékelhető. 
+ 
+11. Minden feladatnak csak egy megoldása értékelhető. Több megoldási próbálkozás esetén 
+egyértelműen jelölje, hogy melyiket tartja érvényesnek! 
+ 
+12. Kérjük, hogy a szürkített téglalapokba semmit ne írjon! 
+ 
+ 
+
+===== PAGE 4 =====
+Matematika 
+emelt szint 
+2013 írásbeli vizsga 
+4 / 24 
+2020. október 20. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+I. 
+ 
+1. 
+Adott két függvény: 
+]
+[
+2
+: 0;130
+;
+( )
+900
+0,25(
+60)
+f
+f x
+x
+→
+=
+−
+−
+R
+, illetve 
+]
+[
+: 0;130
+; ( )
+6,4
+g
+g x
+x
+→
+=
+R
+. 
+ 
+a) Adja meg az f zérushelyét! 
+ 
+b) Számítsa ki az f(20) – g(20) különbség értékét! 
+ 
+c) Adja meg a 
+]
+[
+: 0;130
+;
+( )
+( )
+( )
+h
+h x
+f x
+g x
+→
+=
+−
+R
+ függvény szélsőértékét (típusát, 
+helyét és értékét)! 
+ 
+a) 
+4 pont 
+ 
+b) 
+3 pont 
+ 
+c) 
+6 pont 
+ 
+Ö.: 
+13 pont 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 5 =====
+Matematika 
+emelt szint 
+2013 írásbeli vizsga 
+5 / 24 
+2020. október 20. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 6 =====
+Matematika 
+emelt szint 
+2013 írásbeli vizsga 
+6 / 24 
+2020. október 20. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+2. 
+Egy továbbképzésen részt vevő csoport tagjai életkorának átlaga 28 év. Az öt legidősebb 
+résztvevő életkorának átlaga 40 év, a többieké 25,6 év. 
+ 
+a) Hány nő és hány férfi vesz részt a továbbképzésen, ha 1,5-szer annyi nő van a cso-
+portban, mint férfi? 
+ 
+A csoport tagjai az egyik napon „keleties” ebédet kaptak. Az ételek ízesítéséhez hatféle 
+fűszer állt rendelkezésükre: keserű, savanyú, édes, sós, csípős és fanyar. 
+ 
+b) Hányféleképpen ízesíthetik az ételeiket a résztvevők úgy, hogy a hatból három- vagy 
+négyféle fűszert használhatnak, de az édes és a keserű nem szerepelhet egyszerre? 
+ 
+a) 
+7 pont 
+ 
+b) 
+6 pont 
+ 
+Ö.: 
+13 pont 
+ 
+ 
+ 
+ 
+
+===== PAGE 7 =====
+Matematika 
+emelt szint 
+2013 írásbeli vizsga 
+7 / 24 
+2020. október 20. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 8 =====
+Matematika 
+emelt szint 
+2013 írásbeli vizsga 
+8 / 24 
+2020. október 20. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+3. 
+Van néhány dobozunk és valahány érménk. Ha minden dobozba egy érmét teszünk, 
+akkor m darab érme kimarad. Ha minden dobozba pontosan m db érmét akarunk tenni, 
+akkor m dobozba nem jut érme (m ≠ 1). 
+ 
+a) Hány érménk lehet, ha a dobozok száma 6? 
+ 
+Egy dobozban több ezer érme van, amelyek 3%-a hibás. Az érmék közül véletlenszerűen 
+kiválasztunk 80-at. (Az érmék nagy száma és az alacsony hibaszázalék miatt a kiválasztás 
+visszatevéses mintavétellel is modellezhető.) 
+ 
+b) Mennyi annak a valószínűsége, hogy legfeljebb 2 hibás érme lesz a kiválasztott ér-
+mék között? 
+ 
+a) 
+6 pont 
+ 
+b) 
+5 pont 
+ 
+Ö.: 
+11 pont 
+ 
+ 
+ 
+
+===== PAGE 9 =====
+Matematika 
+emelt szint 
+2013 írásbeli vizsga 
+9 / 24 
+2020. október 20. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 10 =====
+Matematika 
+emelt szint 
+2013 írásbeli vizsga 
+10 / 24 
+2020. október 20. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+4. 
+Ha András az asztalra ejti a pingponglabdáját, akkor a labda az ejtési magasság kb. 84%-
+ára pattan vissza. Ezután tovább pattog úgy, hogy minden asztalra érkezés után az előző 
+felpattanás magasságának 84%-áig emelkedik fel. 
+ 
+a) András egy alkalommal (az asztal lapjától mérve) 1 méter magasságból ejtette az 
+asztalra a pingponglabdát. Mekkora utat tesz meg összesen a pingponglabda az első 
+asztalra érkezésétől a tizenötödikig? (Feltételezzük, hogy a labda csak függőleges 
+irányban mozog, a vízszintes irányú elmozdulása elhanyagolható.) 
+ 
+András azt állítja, hogy az összes pingponglabdájának száma 6-tal osztva 2 maradékot, 
+15-tel osztva pedig 1 maradékot ad. 
+ 
+b) Mutassa meg, hogy András állítása hamis! 
+ 
+Dóri olyan pingponglabda-készletet vásárolt, amelynek dobozába 
+három egyforma labda – az ábrán látható elrendezésben – szorosan 
+belefér. A doboz hengeres test, melynek alaplapját három egybe-
+vágó körív és három egyenlő hosszúságú szakasz határolja. (Az 
+ábrán a dobozt felülnézetből látjuk.) 
+ 
+c) A doboz térfogatának hány százalékát tölti ki a három pingponglabda, ha a labdák 
+átmérője 40 mm? (A doboz falvastagsága elhanyagolható.) 
+ 
+a) 
+4 pont 
+ 
+b) 
+3 pont 
+ 
+c) 
+7 pont 
+ 
+Ö.: 
+14 pont 
+ 
+ 
+ 
+ 
+
+===== PAGE 11 =====
+Matematika 
+emelt szint 
+2013 írásbeli vizsga 
+11 / 24 
+2020. október 20. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 12 =====
+Matematika 
+emelt szint 
+2013 írásbeli vizsga 
+12 / 24 
+2020. október 20. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+II. 
+ 
+Az 5-9. feladatok közül tetszése szerint választott négyet kell megoldania.  
+A kihagyott feladat sorszámát írja be a 3. oldalon található üres négyzetbe! 
+ 
+5. 
+Adott négy, a valós számok halmazán értelmezett függvény: 
+f(x) = (x + 4)(2 – x) 
+g(x) = x + 4 
+h(x) =
+2
+4
+x −
+ 
+i(x) = 
+4
+x −
+ 
+ 
+a) Határozza meg az f és g függvények grafikonja által közrezárt korlátos síkidom te-
+rületét! 
+ 
+Egy négypontú gráf csúcsait megfeleltetjük e négy függvénynek. Két csúcsot pontosan 
+akkor kötünk össze éllel, ha a két megfelelő függvénynek van közös zérushelye. 
+ 
+b) Rajzolja fel az így kapott gráfot! 
+ 
+A valós számok halmazán értelmezett k függvény zérushelyei –5 és 3, az m függvény 
+zérushelyei 3 és –3, az n függvény zérushelyei pedig 5 és –5. 
+A p elsőfokú függvény hozzárendelési szabálya p(x) = x + c, ahol c egy valós szám. 
+ 
+c) Hányféleképpen választható meg a c konstans értéke úgy, hogy a k, m, n és p függ-
+vényekre a b) feladatban megadott szabály szerint elkészített négypontú gráf fagráf 
+legyen? 
+ 
+a) 
+7 pont 
+ 
+b) 
+4 pont 
+ 
+c) 
+5 pont 
+ 
+Ö.: 
+16 pont 
+ 
+ 
+ 
+ 
+
+===== PAGE 13 =====
+Matematika 
+emelt szint 
+2013 írásbeli vizsga 
+13 / 24 
+2020. október 20. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 14 =====
+Matematika 
+emelt szint 
+2013 írásbeli vizsga 
+14 / 24 
+2020. október 20. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Az 5-9. feladatok közül tetszése szerint választott négyet kell megoldania.  
+A kihagyott feladat sorszámát írja be a 3. oldalon található üres négyzetbe! 
+ 
+6. 
+Egyes kutatók szerint a városokban az influenzával fertőzött betegek száma a 
+0
+( )
+1
+1
+0,75t
+L
+B t
+L
+B
+=
+
+
++
+−
+⋅
+
+
+
+
+ formula szerint alakul. A képletben t az influenzajárvány kez-
+detétől eltelt idő napokban kifejezve (0 ≤ t < 30), L a város lakosainak száma, B0 pedig a 
+járvány kezdetekor a fertőzött betegek száma a városban (0 < B0 < L). 
+Egy nagyvárosban L = 1,5 millió, B0 = 1000. 
+ 
+a) A modell szerint hány fertőzött betegre lehet számítani ebben a városban a járvány 
+kezdete után 5 nappal? 
+ 
+b) Hány nap múlva lesz a város lakosainak 10%-a fertőzött beteg a modell szerint? 
+ 
+c) Igazolja, hogy ha L és K adott pozitív számok, n ∈ N+, akkor a 
+1
+0,75
+n
+n
+L
+b
+K
+= +
+⋅
+ 
+képlettel megadott sorozat korlátos, szigorúan monoton növekedő, és lim
+n
+n
+b
+L
+→∞
+=
+. 
+ 
+a) 
+3 pont 
+ 
+b) 
+6 pont 
+ 
+c) 
+7 pont 
+ 
+Ö.: 
+16 pont 
+ 
+ 
+ 
+
+===== PAGE 15 =====
+Matematika 
+emelt szint 
+2013 írásbeli vizsga 
+15 / 24 
+2020. október 20. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 16 =====
+Matematika 
+emelt szint 
+2013 írásbeli vizsga 
+16 / 24 
+2020. október 20. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Az 5-9. feladatok közül tetszése szerint választott négyet kell megoldania.  
+A kihagyott feladat sorszámát írja be a 3. oldalon található üres négyzetbe! 
+ 
+7. 
+Ádám balatoni telkén áll egy kis hétvégi ház. A ház felülnézete egy 7 m × 4 m-es téglalap. 
+Ha esik az eső, akkor a tetőre lehulló csapadékot a tető négy oldalán körbefutó ereszcsa-
+tornák gyűjtik össze és vezetik be négy nagy, kezdetben üres (fedett) hordóba. A hordók 
+forgáshenger alakúak, belső átmérőjük 40 cm, magasságuk 90 cm. 
+Egy nyári zivatar alkalmával 15 mm csapadék hullott a településen (ez azt jelenti, hogy 
+minden vízszintes felületen 15 mm magasan állna az esővíz, ha nem szivárogna el). A zi-
+vatar közben a tetőre lehullott csapadék 95%-a összegyűlt a hordókban. 
+ 
+a) A zivatar után mindegyik hordóban ugyanolyan magasan állt a víz. Mekkora ez a 
+magasság? 
+ 
+A ház cserépteteje elöregedett, cserélni kell. A tető felülete négy síkidomból áll. A háztető 
+7 méteres oldalaihoz két egybevágó húrtrapéz 
+csatlakozik, amelyek síkja a vízszintessel egy-
+aránt 30 fokos szöget zár be. A trapézok egy-
+máshoz csatlakozó, rövidebb oldala 3 méter 
+hosszú. A háztető 4 méteres oldalaihoz két egy-
+bevágó, egyenlő szárú háromszög csatlakozik. 
+ 
+b) Hány darab cserepet kell vásárolnia Ádámnak a tető újracserepezéséhez, ha a tető-
+felület egy négyzetméterére 30 darabra van szükség, és a megvásárolt mennyiség 
+8%-a hulladék lesz? 
+ 
+a) 
+5 pont 
+ 
+b) 
+11 pont 
+ 
+Ö.: 
+16 pont 
+ 
+ 
+ 
+ 
+
+===== PAGE 17 =====
+Matematika 
+emelt szint 
+2013 írásbeli vizsga 
+17 / 24 
+2020. október 20. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 18 =====
+Matematika 
+emelt szint 
+2013 írásbeli vizsga 
+18 / 24 
+2020. október 20. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Az 5-9. feladatok közül tetszése szerint választott négyet kell megoldania.  
+A kihagyott feladat sorszámát írja be a 3. oldalon található üres négyzetbe! 
+ 
+8. 
+Legyen az alaphalmaz a háromjegyű pozitív egész számok halmaza. Az A halmaz elemei 
+azok a háromjegyű számok, amelyekben van 1-es, a B halmaz elemei azok, amelyekben 
+van 2-es, a C halmaz elemei pedig azok, amelyekben van 3-as számjegy. 
+ 
+a) Hány eleme van az A \ (B ∩ C) halmaznak? 
+ 
+Egy szerepjátékhoz használt dobókocka három lapján 3-as, két lapján 2-es, egy lapján 
+1-es szám van. A feldobott kocka mindegyik lapjára egyforma valószínűséggel esik. 
+ 
+b) Két ilyen dobókockával egyszerre dobva mennyi a valószínűsége annak, hogy a do-
+bott számok összege 4 lesz? 
+ 
+Andi és Béla a következő játékot játsszák ezzel a dobókockával. Valamelyikük dob egyet 
+a kockával. Ha a dobás eredménye 3, akkor Andi fizet Bélának n forintot (n > 80); ha a 
+dobás eredménye 1, akkor Béla fizet (n – 80) forintot Andinak; ha pedig a dobás eredmé-
+nye 2, akkor is Béla fizet Andinak 2(n – 80) forintot. 
+ 
+c) Mennyit fizet Béla Andinak az 1-es dobása esetén, ha ez a játék igazságos, azaz 
+mindkét játékos nyereményének várható értéke 0? 
+ 
+a) 
+5 pont 
+ 
+b) 
+5 pont 
+ 
+c) 
+6 pont 
+ 
+Ö.: 
+16 pont 
+ 
+ 
+ 
+ 
+
+===== PAGE 19 =====
+Matematika 
+emelt szint 
+2013 írásbeli vizsga 
+19 / 24 
+2020. október 20. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 20 =====
+Matematika 
+emelt szint 
+2013 írásbeli vizsga 
+20 / 24 
+2020. október 20. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Az 5-9. feladatok közül tetszése szerint választott négyet kell megoldania.  
+A kihagyott feladat sorszámát írja be a 3. oldalon található üres négyzetbe! 
+ 
+9. 
+Az ABC szabályos háromszög mindhárom oldalát 3-3 osztó-
+ponttal négy egyenlő részre osztottuk. 
+ 
+a) Hány olyan négyszög van, melynek mind a négy csúcsa 
+a háromszög oldalain kijelölt 9 pont közül való úgy, 
+hogy a négyszögnek a háromszög mindegyik oldalán 
+van legalább egy csúcsa? 
+(Két négyszöget különbözőnek tekintünk, ha legalább 
+egy csúcsukban különböznek.) 
+ 
+Jelölje a 4 egység oldalú ABC szabályos háromszög BC ol-
+dalának B-hez közelebbi negyedelőpontját P, a CA oldal 
+C-hez közelebbi negyedelőpontját Q, az AB oldal A-hoz kö-
+zelebbi negyedelőpontját pedig R. Jelölje továbbá AP és BQ 
+szakaszok metszéspontját X, BQ és CR szakaszok metszés-
+pontját Y, végül CR és AP szakaszok metszéspontját Z. 
+ 
+b) Határozza meg az XYZ háromszög területét! 
+ 
+a) 
+5 pont 
+ 
+b) 
+11 pont 
+ 
+Ö.: 
+16 pont 
+ 
+ 
+ 
+
+===== PAGE 21 =====
+Matematika 
+emelt szint 
+2013 írásbeli vizsga 
+21 / 24 
+2020. október 20. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 22 =====
+Matematika 
+emelt szint 
+2013 írásbeli vizsga 
+22 / 24 
+2020. október 20. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 23 =====
+Matematika 
+emelt szint 
+2013 írásbeli vizsga 
+23 / 24 
+2020. október 20. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 24 =====
+Matematika 
+emelt szint 
+2013 írásbeli vizsga 
+24 / 24 
+2020. október 20. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+a feladat sor-
+száma 
+pontszám 
+maximális 
+elért 
+maximális 
+elért 
+I. rész 
+1. 
+13 
+ 
+51 
+ 
+2. 
+13 
+ 
+3. 
+11 
+ 
+4. 
+14 
+ 
+II. rész 
+ 
+16 
+ 
+64 
+ 
+ 
+16 
+ 
+ 
+16 
+ 
+ 
+16 
+ 
+ 
+← nem választott feladat 
+Az írásbeli vizsgarész pontszáma 
+115 
+ 
+ 
+dátum 
+ 
+javító tanár 
+ 
+ __________________________________________________________________________  
+ 
+ 
+ 
+pontszáma egész 
+számra kerekítve 
+elért 
+programba  
+beírt 
+I. rész 
+  
+  
+II. rész 
+  
+  
+ 
+dátum 
+ 
+dátum 
+ 
+ 
+ 
+ 
+ 
+ 
+javító tanár 
+ 
+jegyző 
+ 

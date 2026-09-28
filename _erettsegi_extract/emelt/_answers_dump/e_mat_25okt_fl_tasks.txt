@@ -1,0 +1,104 @@
+30: 2025. október 14. 8:00 
+47: 2025. október 14. 
+75: 2025. október 14. 
+95: 1. A feladatok megoldására 240 perc fordítható, az idő leteltével a munkát be kell fejeznie. 
+97: 2. A feladatok megoldási sorrendje tetszőleges. 
+99: 3. A II. részben kitűzött öt feladat közül csak négyet kell megoldania. A nem választott fel-
+106: 4. A feladatok megoldásához szöveges adatok tárolására és megjelenítésére nem alkalmas 
+110: 5. A megoldások gondolatmenetét minden esetben írja le, mert a feladatra adható pont-
+113: 6. Ügyeljen arra, hogy a lényegesebb részszámítások is nyomon követhetők legyenek! 
+115: 7. A gondolatmenet kifejtése során a zsebszámológép használata – további matematikai 
+133: 8. A feladatok megoldásánál használt tételek közül az iskolában tanult, névvel ellátott tételeket 
+140: 9. A feladatok végeredményét (a feltett kérdésre adandó választ) szöveges megfogalmazásban 
+143: 10. A dolgozatot tollal írja, de az ábrákat ceruzával is rajzolhatja. Az ábrákon kívül a ceruzával 
+147: 11. Minden feladatnak csak egy megoldása értékelhető. Több megoldási próbálkozás esetén 
+150: 12. Kérjük, hogy a szürkített téglalapokba semmit ne írjon! 
+161: 2025. október 14. 
+182: 1. 
+183: a) Oldja meg az alábbi egyenletet a valós számok halmazán! 
+201: b) A {bn} mértani sorozat második tagja 48, ötödik tagja 162. 
+204: a) 
+207: b) 
+225: 2025. október 14. 
+254: 2025. október 14. 
+273: 2. 
+279: a) Hányan vettek jegyet a helyszínen, és hányan elővételben? 
+285: b) Számítsa ki annak a valószínűségét, hogy a 2 hajó közül pontosan az egyik nyerő! 
+289: c) A döntő végén hányféle sorrendben végezhet a három versenyző, ha kettes vagy 
+292: a) 
+295: b) 
+298: c) 
+315: 2025. október 14. 
+343: 2025. október 14. 
+362: 3. 
+365: a) Hányféle úton juthatunk el az A pontból az F pont-
+387: b) Bizonyítsa be, hogy az állítás igaz! 
+389: c) Fogalmazza meg az állítás megfordítását, és adja meg a megfordított állítás logikai 
+392: a) 
+395: b) 
+398: c) 
+414: 2025. október 14. 
+442: 2025. október 14. 
+461: 4. 
+464: a) Adja meg a pontok által meghatározott szakasz f felezőmerőlegesének egyenletét, 
+470: b) Határozza meg a kör egyenletét! 
+472: a) 
+475: b) 
+492: 2025. október 14. 
+520: 2025. október 14. 
+544: 5. 
+547: a) Határozza meg a hat dobás értékének az átlagát és a szórását! 
+552: b) Az összes így megkapható négyjegyű szám hány százalékában van legalább két egy-
+557: c) Határozza meg azt a legkisebb n egész számot, amelyre igaz, hogy n dobás között 
+562: d) Határozza meg a szükséges dobások számának várható értékét! 
+564: a) 
+567: b) 
+570: c) 
+573: d) 
+589: 2025. október 14. 
+617: 2025. október 14. 
+639: 6. 
+647: a) Igazolja, hogy egy-egy deltoid szögei rendre 60°, 90°, 120° és 90°. 
+649: b) Számítsa ki egy kalap kerületét, ha területe 1728 területegység! Válaszát közelítő 
+656: c) Hányféleképpen lehet így kiszínezni az egy kalapot alkotó nyolc deltoidot? 
+658: a) 
+661: b) 
+664: c) 
+685: 2025. október 14. 
+713: 2025. október 14. 
+735: 7. 
+741: a) Hány dukát az erre az útra eső üzemeltetési költség, ha a hajó az utat 12 km/h állandó 
+744: b) Mekkora állandó sebességgel tegye meg ezt a 10 km-es utat a hajó, hogy az útra eső 
+751: c) A két utat tekintve átlagosan mennyibe került egy jegy? 
+753: a) 
+756: b) 
+759: c) 
+776: 2025. október 14. 
+804: 2025. október 14. 
+826: 8. 
+830: a) Határozza meg a parabola egyenletét! 
+846: b) A g grafikonjához érintőt húzunk az x = 4 abszcisszájú pontjában. Határozza meg 
+849: c) Számítsa ki az y  –2x + 2 egyenletű egyenes és az 
+863: a) 
+866: b) 
+869: c) 
+886: 2025. október 14. 
+914: 2025. október 14. 
+936: 9. 
+944: a) Határozza meg a TAJ szám ellenőrző számjegyét, ha az első nyolc számjegy 
+945: 24165379. 
+947: b) Egy TAJ szám első számjegyét letakartuk, így az _14564797 számsor látható. 
+950: c) Határozza meg az ellenőrző számjegy lehetséges értékeit abban a TAJ számban, 
+957: d) Mennyi annak a valószínűsége, hogy egynél több hibás lesz közöttük? 
+959: a) 
+962: b) 
+965: c) 
+968: d) 
+984: 2025. október 14. 
+1012: 2025. október 14. 
+1040: 2025. október 14. 
+1094: 2025. október 14. 
+1124: 1. 
+1129: 2. 
+1132: 3. 
+1135: 4. 

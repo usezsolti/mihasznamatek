@@ -1,0 +1,1204 @@
+
+===== PAGE 1 =====
+ 
+Matematika 
+ 
+emelt szint — írásbeli vizsga 2313 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+OKTATÁSI HIVATAL 
+MATEMATIKA 
+ 
+EMELT SZINTŰ 
+ÍRÁSBELI VIZSGA 
+minden vizsgázó számára 
+2023. május 9. 9:00 
+ 
+Időtartam: 240 perc 
+Pótlapok száma 
+Tisztázati 
+ 
+Piszkozati 
+ 
+É R E T T S É G I V I Z S G A • 2 0 2 3 . m á j u s 9 . 
+
+===== PAGE 2 =====
+Matematika 
+emelt szint 
+2313 írásbeli vizsga 
+2 / 24 
+2023. május 9. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 3 =====
+Matematika 
+emelt szint 
+2313 írásbeli vizsga 
+3 / 24 
+2023. május 9. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Fontos tudnivalók 
+1. A feladatok megoldására 240 perc fordítható, az idő leteltével a munkát be kell fejeznie. 
+ 
+2. A feladatok megoldási sorrendje tetszőleges. 
+ 
+3. A II. részben kitűzött öt feladat közül csak négyet kell megoldania. A nem választott fel-
+adat sorszámát írja be a dolgozat befejezésekor az alábbi négyzetbe! Ha a javító tanár 
+számára nem derül ki egyértelműen, hogy melyik feladat értékelését nem kéri, akkor  
+a kitűzött sorrend szerinti legutolsó feladatra nem kap pontot. 
+ 
+ 
+ 
+4. A feladatok megoldásához szöveges adatok tárolására és megjelenítésére nem alkalmas 
+zsebszámológépet és bármilyen négyjegyű függvénytáblázatot használhat, más elektroni-
+kus vagy írásos segédeszköz használata tilos! 
+ 
+5. A megoldások gondolatmenetét minden esetben írja le, mert a feladatra adható pont-
+szám jelentős része erre jár! 
+ 
+6. Ügyeljen arra, hogy a lényegesebb részszámítások is nyomon követhetők legyenek! 
+ 
+7. A gondolatmenet kifejtése során a zsebszámológép használata – további matematikai 
+indoklás nélkül – a következő műveletek elvégzésére fogadható el: összeadás, kivonás, 
+szorzás, osztás, hatványozás, gyökvonás, n!, 
+
+
+
+
+
+
+k
+n kiszámítása, a függvénytáblázatban fel-
+lelhető táblázatok helyettesítése (sin, cos, tg, log és ezek inverzei), a π és az e szám közelítő 
+értékének megadása, nullára rendezett másodfokú egyenlet gyökeinek meghatározása.  
+További matematikai indoklás nélkül használhatók a számológépek az átlag és a szórás ki-
+számítására abban az esetben, ha a feladat szövege kifejezetten nem követeli meg az ezzel 
+kapcsolatos részletszámítások bemutatását is. Egyéb esetekben a géppel elvégzett számí-
+tások indoklás nélküli lépéseknek számítanak, így azokért nem jár pont. 
+ 
+8. A feladatok megoldásánál használt tételek közül az iskolában tanult, névvel ellátott tételeket 
+(pl. Pitagorasz-tétel, magasságtétel) nem kell pontosan megfogalmazva kimondania, elég 
+csak a tétel megnevezését említenie, de az alkalmazhatóságát röviden indokolnia kell. 
+Egyéb tétel(ek)re való hivatkozás csak akkor fogadható el teljes értékűnek, ha az állítást 
+minden feltételével együtt pontosan mondja ki (bizonyítás nélkül), és az adott problémában 
+az alkalmazhatóságát indokolja. 
+ 
+9. A feladatok végeredményét (a feltett kérdésre adandó választ) szöveges megfogalmazásban 
+is közölje! 
+ 
+10. A dolgozatot tollal írja, de az ábrákat ceruzával is rajzolhatja. Az ábrákon kívül a ceruzával 
+írt részeket a javító tanár nem értékelheti. Ha valamilyen megoldást vagy megoldásrészletet 
+áthúz, akkor az nem értékelhető. 
+ 
+11. Minden feladatnak csak egy megoldása értékelhető. Több megoldási próbálkozás esetén 
+egyértelműen jelölje, hogy melyiket tartja érvényesnek! 
+ 
+12. Kérjük, hogy a szürkített téglalapokba semmit ne írjon! 
+ 
+ 
+
+===== PAGE 4 =====
+Matematika 
+emelt szint 
+2313 írásbeli vizsga 
+4 / 24 
+2023. május 9. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+I. 
+ 
+1. 
+Oldja meg a valós számok halmazán az alábbi egyenleteket! 
+ 
+a) 
+3
+3
+log
+log (
+2)
+1
+x
+x
++
++
+= 
+ 
+b) 
+2
+2
+4sin
+16cos
+1
+x
+x
+−
+= − 
+ 
+a) 
+7 pont 
+ 
+b) 
+7 pont 
+ 
+Ö.: 
+14 pont 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 5 =====
+Matematika 
+emelt szint 
+2313 írásbeli vizsga 
+5 / 24 
+2023. május 9. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 6 =====
+Matematika 
+emelt szint 
+2313 írásbeli vizsga 
+6 / 24 
+2023. május 9. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+2. 
+Európában az autók üzemanyag-fogyasztását liter
+100km
+ mértékegységben szokás megadni. 
+(Például a 8 liter
+100km azt jelenti, hogy az autó 100 kilométerenként átlagosan 8 liter üzem-
+anyagot fogyaszt.) 
+Az Egyesült Államokban viszont mérföld
+gallon mértékegységben adják meg a fogyasztást. 
+(Például a 20 mérföld
+gallon azt jelenti, hogy 1 gallon üzemanyaggal átlagosan 20 mérföldet 
+tudunk megtenni.) 
+Az Egyesült Államokban a 2020-ban gyártott autók átlagfogyasztása 25,4 mérföld
+gallon volt. 
+ 
+a) Fejezze ki ezt a fogyasztást 
+liter
+100km -ben! Válaszát 1 tizedesjegyre kerekítve adja 
+meg! (1 gallon ≈ 3,79 liter, és 1 mérföld ≈ 1,61 km.) 
+ 
+A 2022. július 1-jétől Magyarországon kiadott gépjárműrend-
+számok formátuma a következő: 
+• Összetétele: 4 betű a latin ábécéből, majd 3 számjegy. (A latin ábécé 26 betűből áll, 
+melyek közül 5 magánhangzó és 21 mássalhangzó.) 
+• Az első két betűből vagy mindkettő magánhangzó, vagy mindkettő mássalhangzó, de 
+az első betűpár nem lehet CS, GY, LY, NY, SZ, TY, ZS. 
+• A harmadik és negyedik betű tetszőleges lehet.  
+• A három számjegy mindegyike tetszőleges lehet, de 000-ra nem végződhet rendszám. 
+ 
+b) Hány különböző, a fenti szabályok mindegyikének megfelelő rendszám készíthető? 
+ 
+c) Jelölje meg annak az állításnak a betűjelét, amely tagadása a következő állításnak: 
+„Bármely két magyar rendszám különböző.” 
+A) Minden magyar rendszám egyforma. 
+B) Van pontosan két egyforma magyar rendszám. 
+C) Van legalább két egyforma magyar rendszám. 
+D) Nincs két egyforma magyar rendszám. 
+ 
+a) 
+4 pont 
+ 
+b) 
+6 pont 
+ 
+c) 
+2 pont 
+ 
+Ö.: 
+12 pont 
+ 
+ 
+ 
+ 
+
+===== PAGE 7 =====
+Matematika 
+emelt szint 
+2313 írásbeli vizsga 
+7 / 24 
+2023. május 9. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 8 =====
+Matematika 
+emelt szint 
+2313 írásbeli vizsga 
+8 / 24 
+2023. május 9. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+3. 
+Az ábrán látható trapéz alakú kert alapjainak hosz-
+sza: AB = 36 m, CD = 8 m. A 11 méter hosszú 
+AC átló merőleges a trapéz alapjaira. 
+ 
+a) Mekkora a kert kerülete és területe?  
+ 
+A kert tulajdonosa egy 10 cm átmérőjű, henger alakú kutat fúratott a kertben. 
+ 
+b) Hány méter mély lett a kút, ha a térfogata 0,1 köbméter? 
+ 
+Az e egyenes párhuzamos a fenti ABCD trapéz alapjaival, és az AD szárat az E pontban, 
+a BC szárat pedig az F pontban metszi. Az AC átló felezi az EF szakaszt. 
+ 
+c) Az A ponttól mekkora távolságra metszi az e egyenes az AC átlót? 
+ 
+a) 
+4 pont 
+ 
+b) 
+3 pont 
+ 
+c) 
+6 pont 
+ 
+Ö.: 
+13 pont 
+ 
+ 
+ 
+
+===== PAGE 9 =====
+Matematika 
+emelt szint 
+2313 írásbeli vizsga 
+9 / 24 
+2023. május 9. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 10 =====
+Matematika 
+emelt szint 
+2313 írásbeli vizsga 
+10 / 24 
+2023. május 9. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+4. 
+Egy számtani sorozat 20. tagja 108. A sorozat első 20 tagjának összege 1115. 
+ 
+a) Számítsa ki a sorozat első tagját és differenciáját! 
+ 
+Egy mértani sorozat első tagja 3, és hányadosa is 3. A sorozat első n tagjának szorzata 
+435
+3
+. 
+ 
+b) Számítsa ki n értékét! 
+ 
+a) 
+5 pont 
+ 
+b) 
+7 pont 
+ 
+Ö.: 
+12 pont 
+ 
+ 
+ 
+ 
+
+===== PAGE 11 =====
+Matematika 
+emelt szint 
+2313 írásbeli vizsga 
+11 / 24 
+2023. május 9. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 12 =====
+Matematika 
+emelt szint 
+2313 írásbeli vizsga 
+12 / 24 
+2023. május 9. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+II. 
+ 
+Az 5-9. feladatok közül tetszése szerint választott négyet kell megoldania.  
+A kihagyott feladat sorszámát írja be a 3. oldalon található üres négyzetbe! 
+ 
+5. 
+Pali és a testvére, Lilla együtt szeretnének filmet nézni. Három film közül választanak: 
+az egyik a Kocka, a másik A kör, a harmadik pedig a Képlet című film. Pali ezek közül az 
+egyik filmnek 1 pontot, egy másiknak 2 pontot, a harmadiknak pedig 3 pontot ad, majd 
+(Palitól függetlenül) ugyanezt teszi Lilla is. A két pontszámot mindegyik film esetében 
+összeadják, majd a legkisebb pontösszegű filmet nézik meg. Ha több ilyen film is van, 
+akkor filmnézés helyett társasjátékoznak. 
+ 
+a) Melyik filmet néznék meg a testvérek, ha az alábbi táblázat szerint adnák a pontjai-
+kat? 
+ 
+Pali 
+Lilla 
+1 pont A kör 
+Képlet 
+2 pont Kocka 
+A kör 
+3 pont Képlet 
+Kocka 
+ 
+b) Hányféleképpen oszthatják ki a pontokat a testvérek úgy, hogy mindhárom film 
+pontösszege ugyanannyi legyen? 
+ 
+c) Ha Pali és Lilla is véletlenszerűen osztja ki a pontszámokat a filmek között, akkor 
+mennyi a valószínűsége annak, hogy filmnézés lesz a pontozás eredménye? 
+ 
+Egy filmes portálon a Parabola című filmet 83-an értékelték 1-10-ig egy-egy egész szám-
+mal. A film erősen megosztotta a nézőket: 46-an 1-essel értékelték azt, ugyanakkor a 
+kapott értékelések átlaga pontosan 5 lett. 
+ 
+d) Számítsa ki a 83 értékelés szórását! 
+ 
+a) 
+2 pont 
+ 
+b) 
+3 pont 
+ 
+c) 
+6 pont 
+ 
+d) 
+5 pont 
+ 
+Ö.: 
+16 pont 
+ 
+ 
+ 
+
+===== PAGE 13 =====
+Matematika 
+emelt szint 
+2313 írásbeli vizsga 
+13 / 24 
+2023. május 9. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 14 =====
+Matematika 
+emelt szint 
+2313 írásbeli vizsga 
+14 / 24 
+2023. május 9. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Az 5-9. feladatok közül tetszése szerint választott négyet kell megoldania.  
+A kihagyott feladat sorszámát írja be a 3. oldalon található üres négyzetbe! 
+ 
+6. 
+Egy felül nyitott doboz vízszintes asztallapon áll. A do-
+bozt három téglalap és két derékszögű trapéz határolja. 
+A doboznak a vízszintes síkra illeszkedő lapja 
+8 cm × 6 cm méretű, két egymással szemközti függőle-
+ges síkú lapja pedig 6 cm × 5 cm, illetve 6 cm × 2 cm 
+méretű téglalap. 
+ 
+a) Számítsa ki a doboz testátlóinak hosszát! 
+ 
+A test kiterített hálóját az ábra sötétített tartománya szemlél-
+teti. Ezt a hálót egy 15 cm × 16 cm-es téglalapból vágjuk ki 
+(ennek oldalai párhuzamosak a test 8 cm × 6 cm-es alaplapjá-
+nak oldalaival). 
+ 
+b) Hány százalék hulladék keletkezik? 
+ 
+ 
+Egy téglalap alakú kartonlap oldalhosszait úgy szeretnénk megválasz-
+tani, hogy alul és felül 4-4 cm-es, jobb és bal oldalon 2-2 cm-es margót 
+hagyva a lap közepén megmaradó téglalap alakú terület 50 cm2 nagy-
+ságú legyen. 
+ 
+c) Mekkorának válasszuk a kartonlap oldalainak hosszát, hogy a te-
+rülete a lehető legkisebb legyen? 
+ 
+ 
+a) 
+3 pont 
+ 
+b) 
+5 pont 
+ 
+c) 
+8 pont 
+ 
+Ö.: 
+16 pont 
+ 
+ 
+ 
+
+===== PAGE 15 =====
+Matematika 
+emelt szint 
+2313 írásbeli vizsga 
+15 / 24 
+2023. május 9. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 16 =====
+Matematika 
+emelt szint 
+2313 írásbeli vizsga 
+16 / 24 
+2023. május 9. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Az 5-9. feladatok közül tetszése szerint választott négyet kell megoldania.  
+A kihagyott feladat sorszámát írja be a 3. oldalon található üres négyzetbe! 
+ 
+7. 
+Egy gyár a beszállítójától 600 darab terméket rendelt. A gyár csak akkor veszi át a 600 
+darabot, ha egy visszatevés nélküli mintavétellel adódó 15 elemű mintában egyetlen hi-
+bás termék sincs. 
+ 
+a) Ha a 600 termék között 6 hibás van, akkor mennyi annak a valószínűsége, hogy a 
+mintavétel után a gyár átveszi a termékeket? 
+ 
+Egy cég reklámja szerint a termékeik legfeljebb 0,5%-a lehet hibás. A minőséget vissza-
+tevéssel előállított 15 elemű minta alapján ellenőrizték, amelyben 2-szer fordult elő hibás 
+termék. 
+ 
+b) Tegyük fel, hogy a cég termékeinek pontosan 0,5%-a hibás! 
+Igazolja, hogy ekkor 1%-nál kisebb annak a valószínűsége, hogy a cég termékei 
+közül visszatevéssel előállított 15 elemű mintában legalább 2-szer fordul elő hibás 
+termék! 
+ 
+Egy szivattyúkat gyártó cég a selejtes termékeket visszavásárolja a forgalmazóktól, és a 
+selejtraktárban tárolja. A selejtes termékek hibájuk alapján háromféle hibakódot kaphat-
+nak. A törött termékek „T”, a hiányos termékek „H” és az egyéb hibával rendelkező ter-
+mékek „E” kódot kapnak. Egy termék többféle hibakódot is kaphat a hibái alapján. 
+A selejtraktárban az év végi nyilvántartás szerint a csak T kóddal, a csak H kóddal és a 
+csak E kóddal rendelkező termékek darabszáma megegyezik. Olyan selejtes termék nincs, 
+amelynek háromféle kódja is van. T kódja 35 terméknek, H kódja 40, E kódja pedig 
+45 terméknek van. Kétszer annyi terméknek van T és E kódja is, mint ahánynak T és H 
+kódja is. 
+ 
+c) Hány selejtes termék van a selejtraktárban? 
+ 
+a) 
+3 pont 
+ 
+b) 
+6 pont 
+ 
+c) 
+7 pont 
+ 
+Ö.: 
+16 pont 
+ 
+ 
+ 
+ 
+
+===== PAGE 17 =====
+Matematika 
+emelt szint 
+2313 írásbeli vizsga 
+17 / 24 
+2023. május 9. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 18 =====
+Matematika 
+emelt szint 
+2313 írásbeli vizsga 
+18 / 24 
+2023. május 9. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Az 5-9. feladatok közül tetszése szerint választott négyet kell megoldania.  
+A kihagyott feladat sorszámát írja be a 3. oldalon található üres négyzetbe! 
+ 
+8. 
+a) Legyen f : [1; ∞[ → [1; ∞[, 
+2
+1
+x
+x −
+
+, 
+és g: [1; ∞[ → [1; ∞[, 
+.
+x
+x
+
+ 
+Oldja meg az f (g(x)) = g(f (x)) egyenletet! 
+ 
+b) Igazolja, hogy tetszőleges a < b paraméterek esetén (2
+1)
+(
+)(
+1).
+b
+a
+x
+dx
+b
+a b
+a
+−
+=
+−
++
+−
+
+ 
+ 
+c) Határozza meg az a és b egész paraméterek lehetséges értékeit, ha tudjuk, hogy 
+(2
+1)
+8
+−
+=
+
+b
+a
+x
+dx
+ (a < b). 
+ 
+a) 
+7 pont 
+ 
+b) 
+4 pont 
+ 
+c) 
+5 pont 
+ 
+Ö.: 
+16 pont 
+ 
+ 
+ 
+ 
+
+===== PAGE 19 =====
+Matematika 
+emelt szint 
+2313 írásbeli vizsga 
+19 / 24 
+2023. május 9. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 20 =====
+Matematika 
+emelt szint 
+2313 írásbeli vizsga 
+20 / 24 
+2023. május 9. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Az 5-9. feladatok közül tetszése szerint választott négyet kell megoldania.  
+A kihagyott feladat sorszámát írja be a 3. oldalon található üres négyzetbe! 
+ 
+9. 
+Az ábrán egy medence méretarányos (kicsinyített) felülnézeti 
+tervrajza látható. A medencét az y = x és az y = –2x + 2 egyen-
+letű egyenes, valamint az 
+3
+y
+x
+x
+=
+−
+ (0 ≤ x ≤ 1) egyenletű 
+görbe fogja közre. 
+ 
+a) Számítsa ki, hogy mekkora a tervezett medence alapte-
+rülete, ha a tervrajzon látható (0; 0) és (1; 0) pontok tá-
+volsága a valóságban 12 méter lesz! 
+ 
+Adott az 
+3
+:
+;
+( )
+f
+f x
+x
+kx
++ →
+= −
++
+R
+R
+ függvény (k valós paraméter). Az f függvény gra-
+fikonjához egy-egy érintőt húzunk az x = 1, illetve az x = 2 abszcisszájú pontjában. 
+ 
+b) Igazolja, hogy a két érintő metszéspontjának első koordinátája (a k paraméter érté-
+kétől függetlenül) 14
+9 . 
+ 
+a) 
+ 8 pont 
+ 
+b) 
+ 8 pont 
+ 
+Ö.: 
+16 pont 
+ 
+ 
+ 
+
+===== PAGE 21 =====
+Matematika 
+emelt szint 
+2313 írásbeli vizsga 
+21 / 24 
+2023. május 9. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 22 =====
+Matematika 
+emelt szint 
+2313 írásbeli vizsga 
+22 / 24 
+2023. május 9. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 23 =====
+Matematika 
+emelt szint 
+2313 írásbeli vizsga 
+23 / 24 
+2023. május 9. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 24 =====
+Matematika 
+emelt szint 
+2313 írásbeli vizsga 
+24 / 24 
+2023. május 9. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+a feladat 
+sorszáma 
+pontszám 
+maximális 
+elért 
+maximális 
+elért 
+I. rész 
+1. 
+14 
+ 
+51 
+ 
+2. 
+12 
+ 
+3. 
+13 
+ 
+4. 
+12 
+ 
+II. rész 
+ 
+16 
+ 
+64 
+ 
+ 
+16 
+ 
+ 
+16 
+ 
+ 
+16 
+ 
+ 
+← nem választott feladat 
+Az írásbeli vizsgarész pontszáma 
+115 
+ 
+ 
+dátum 
+ 
+javító tanár 
+ 
+ __________________________________________________________________________  
+ 
+ 
+ 
+pontszáma egész 
+számra kerekítve 
+elért 
+programba  
+beírt 
+I. rész 
+  
+  
+II. rész 
+  
+  
+ 
+dátum 
+ 
+dátum 
+ 
+ 
+ 
+ 
+ 
+ 
+javító tanár 
+ 
+jegyző 
+ 

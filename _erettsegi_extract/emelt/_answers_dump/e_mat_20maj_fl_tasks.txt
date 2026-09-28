@@ -1,0 +1,102 @@
+29: 2020. május 5. 9:00 
+44: 2020. május 5. 
+70: 2020. május 5. 
+90: 1. A feladatok megoldására 240 perc fordítható, az idő leteltével a munkát be kell fejeznie. 
+92: 2. A feladatok megoldási sorrendje tetszőleges. 
+94: 3. A II. részben kitűzött öt feladat közül csak négyet kell megoldania. A nem választott fel-
+101: 4. A feladatok megoldásához szöveges adatok tárolására és megjelenítésére nem alkalmas 
+105: 5. A megoldások gondolatmenetét minden esetben írja le, mert a feladatra adható pont-
+108: 6. Ügyeljen arra, hogy a lényegesebb részszámítások is nyomon követhetők legyenek! 
+110: 7. A gondolatmenet kifejtése során a zsebszámológép használata – további matematikai 
+129: 8. A feladatok megoldásánál használt tételek közül az iskolában tanult, névvel ellátott tételeket 
+136: 9. A feladatok végeredményét (a feltett kérdésre adandó választ) szöveges megfogalmazásban 
+139: 10. A dolgozatot tollal írja, de az ábrákat ceruzával is rajzolhatja. Az ábrákon kívül a ceruzával 
+143: 11. Minden feladatnak csak egy megoldása értékelhető. Több megoldási próbálkozás esetén 
+146: 12. Kérjük, hogy a szürkített téglalapokba semmit ne írjon! 
+155: 2020. május 5. 
+176: 1. 
+180: a) Adja meg a sorozat ötödik tagját! 
+185: b) Adja meg a sorozat ötödik tagját! 
+187: a) 
+190: b) 
+211: 2020. május 5. 
+237: 2020. május 5. 
+256: 2. 
+264: a) Hány különböző „prímes” rendszám készíthető? 
+269: b) Hány különböző „hatos” rendszám készíthető? 
+276: c) Hány különböző „logaritmusos” rendszám készíthető?  
+278: a) 
+281: b) 
+284: c) 
+302: 2020. május 5. 
+328: 2020. május 5. 
+347: 3. 
+353: a) Igazolja, hogy a lehetséges hálók kivágása során keletkező 
+358: b) A gráfban véletlenszerűen kiválasztunk két csúcsot. 
+362: c) A gráf 9 élét kékre, 3 élét pedig zöldre színezzük. 
+366: a) 
+369: b) 
+372: c) 
+386: 2020. május 5. 
+412: 2020. május 5. 
+431: 4. 
+448: a) Igazolja, hogy bármely valós p érték esetén az egyenletnek két különböző valós 
+451: b) Ha az egyenlet egyik gyöke 3, akkor mennyi a másik gyöke? 
+453: c) Határozza meg a p paraméter értékét úgy, hogy az egyenlet gyökeinek négyzetösz-
+456: a) 
+459: b) 
+462: c) 
+477: 2020. május 5. 
+503: 2020. május 5. 
+527: 5. 
+576: a) Ha x = 1, akkor 
+581: 58. 
+585: b) Számítsa ki a modell alapján, hogy az év 50. napján milyen hosszú a nappal! 
+588: c) Igazolja, hogy (a modell szerint) egy évben 164 olyan nappal van, amelyik 12 óránál 
+594: d) Számítsa ki a görbe és a három egyenes által határolt korlátos síkidom területét! 
+596: a) 
+599: b) 
+602: c) 
+605: d) 
+617: 2020. május 5. 
+643: 2020. május 5. 
+665: 6. 
+666: a) Hány olyan 90-nél nem nagyobb pozitív egész szám van, amely a 2, a 3 és az 5 közül 
+676: b) Határozza meg annak a valószínűségét, hogy a hátralevő két nyerőszám közül Kati 
+703: c) Számítsa ki, hogy mennyi volt a játékosok egy lottószelvényre jutó átlagos veszte-
+706: a) 
+709: b) 
+712: c) 
+726: 2020. május 5. 
+753: 2020. május 5. 
+775: 7. 
+778: a) Milyen hosszú a CD oldal, és mekkora a húrnégyszög területe? 
+783: b) Számítsa ki a 
+791: c) Adja meg a H pont koordinátáit úgy, hogy a 
+800: a) 
+803: b) 
+806: c) 
+821: 2020. május 5. 
+847: 2020. május 5. 
+869: 8. 
+880: a) Hány forint volt az elfogyasztott ételek, és hány forint volt az elfogyasztott italok 
+896: b) A felmérés eredményét felhasználva számítsa ki, hogy ennek az étteremnek 1000 
+899: c) A fenti táblázat értékeivel számolva mennyi a valószínűsége, hogy két (ebédre be-
+905: a) 
+908: b) 
+911: c) 
+936: 2020. május 5. 
+962: 2020. május 5. 
+984: 9. 
+999: a) Mekkora lenne a közlekedési társaság vonaljegyekből származó napi bevétele a ha-
+1002: b) Hány talléros vonaljegy esetén lenne maximális a napi bevétel? 
+1004: a) 
+1007: b) 
+1021: 2020. május 5. 
+1047: 2020. május 5. 
+1073: 2020. május 5. 
+1125: 2020. május 5. 
+1154: 1. 
+1159: 2. 
+1162: 3. 
+1165: 4. 

@@ -1,0 +1,999 @@
+
+===== PAGE 1 =====
+ 
+Matematika 
+ 
+középszint — írásbeli vizsga 2212 
+ 
+ 
+I. összetevő 
+EMBERI ERŐFORRÁSOK MINISZTÉRIUMA 
+Név:  ...........................................................  osztály:...... 
+MATEMATIKA 
+ 
+KÖZÉPSZINTŰ 
+ÍRÁSBELI VIZSGA 
+minden vizsgázó számára 
+2022. május 3. 9:00 
+I. 
+Időtartam: 45 perc 
+Pótlapok száma 
+Tisztázati 
+ 
+Piszkozati 
+ 
+ 
+É R E T T S É G I V I Z S G A • 2 0 2 2 . m á j u s 3 . 
+
+===== PAGE 2 =====
+Matematika 
+középszint 
+2212 írásbeli vizsga, I. összetevő 
+2 / 8 
+2022. május 3. 
+Név:  ...........................................................  osztály:...... 
+Fontos tudnivalók 
+ 
+1. A feladatok megoldására 45 percet fordíthat, az idő leteltével a munkát be kell fejeznie. 
+ 
+ 
+2. A megoldások sorrendje tetszőleges. 
+ 
+ 
+3. A feladatok megoldásához szöveges adatok tárolására és megjelenítésére nem alkalmas 
+zsebszámológépet és bármilyen négyjegyű függvénytáblázatot használhat, más elektroni-
+kus vagy írásos segédeszköz használata tilos! 
+ 
+ 
+4. A feladatok végeredményét az erre a célra szolgáló keretbe írja, a megoldást csak akkor 
+kell részleteznie, ha erre a feladat szövege utasítást ad! 
+ 
+ 
+5. A dolgozatot tollal írja, az ábrákat ceruzával is rajzolhatja. Az ábrákon kívül a ceruzával írt 
+részeket a javító tanár nem értékelheti. Ha valamilyen megoldást vagy megoldásrészletet 
+áthúz, akkor az nem értékelhető. 
+ 
+ 
+6. Minden feladatnak csak egy megoldása értékelhető. Több megoldási próbálkozás esetén 
+egyértelműen jelölje, hogy melyiket tartja érvényesnek! 
+ 
+ 
+7. Kérjük, hogy a szürkített téglalapokba semmit ne írjon! 
+ 
+ 
+ 
+
+===== PAGE 3 =====
+Matematika 
+középszint 
+2212 írásbeli vizsga, I. összetevő 
+3 / 8 
+2022. május 3. 
+Név:  ...........................................................  osztály:...... 
+ 
+1. 
+Az A és B halmazokról tudjuk, hogy A = {2; 3; 5}, A ∩ B = {2; 3}, A ∪ B = {1; 2; 3; 4; 5}.  
+Elemei felsorolásával adja meg a B halmazt! 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+B = 
+2 pont 
+ 
+ 
+2. 
+Hány éle van egy tízpontú teljes gráfnak? 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+2 pont 
+ 
+ 
+3. 
+Melyik az a szám, amely 10-zel kisebb az ellentettjénél? 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+2 pont 
+ 
+
+===== PAGE 4 =====
+Matematika 
+középszint 
+2212 írásbeli vizsga, I. összetevő 
+4 / 8 
+2022. május 3. 
+Név:  ...........................................................  osztály:...... 
+ 
+4. 
+Válassza ki az alábbiak közül a valós számok halmazán értelmezett x  (x – 2)
+2  
+függvény grafikonját!  
+ 
+ 
+A) 
+ 
+B) 
+ 
+C) 
+ 
+D) 
+ 
+ 
+  
+2 pont 
+ 
+ 
+5. 
+Egy derékszögű háromszög egyik befogója 5 cm hosszú, a háromszög ezzel szemközti 
+szöge 32°-os. Számítsa ki a másik befogó hosszát! Megoldását részletezze!  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+2 pont 
+ 
+ 
+1 pont 
+ 
+
+===== PAGE 5 =====
+Matematika 
+középszint 
+2212 írásbeli vizsga, I. összetevő 
+5 / 8 
+2022. május 3. 
+Név:  ...........................................................  osztály:...... 
+ 
+6. 
+Egy feleletválasztós teszt 5 kérdésből áll, minden kérdésnél négy válaszlehetőség van. 
+Hányféleképpen lehet az 5 kérdésből álló tesztet kitölteni, ha minden kérdésnél egy 
+választ kell megjelölni? 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+2 pont 
+ 
+ 
+7. 
+Egy mértani sorozat második tagja 1,5, hányadosa 3. Számítsa ki a sorozat hatodik tagját 
+és az első tíz tagjának az összegét! Megoldását részletezze! 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+2 pont 
+ 
+A hatodik tag: 
+1 pont 
+ 
+Az első tíz tag összege: 
+1 pont 
+ 
+ 
+8. 
+Számítsa ki az A(5; –3) és B(1; 0) pontok távolságát!  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+2 pont 
+ 
+
+===== PAGE 6 =====
+Matematika 
+középszint 
+2212 írásbeli vizsga, I. összetevő 
+6 / 8 
+2022. május 3. 
+Név:  ...........................................................  osztály:...... 
+ 
+9. 
+Az ábrán látható kocka A csúcsából kiinduló élvektorai p, q és r. 
+Fejezze ki p, q és r segítségével a BH
+
+ vektort! 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+BH =
+
+ 
+2 pont 
+ 
+ 
+10. Adott a [–8; 4] zárt intervallumon értelmezett 
+1
+3
+2
+x
+x +
+
+ függvény. 
+Adja meg a függvény zérushelyét és értékkészletét!  
+ 
+ 
+ 
+ 
+ 
+ 
+A zérushely: 
+2 pont 
+ 
+Az értékkészlet: 
+2 pont 
+ 
+
+===== PAGE 7 =====
+Matematika 
+középszint 
+2212 írásbeli vizsga, I. összetevő 
+7 / 8 
+2022. május 3. 
+Név:  ...........................................................  osztály:...... 
+ 
+11. 2021. október közepén közvéleménykutató szavazást indított a Budapesti Közlekedési 
+Központ (BKK), melyben arra voltak kíváncsiak, hogy az utasok 30, 60 vagy 90 perces 
+időalapú mobiljegyet szeretnének-e leginkább. A szavazásból kiderült, hogy a válaszadók 
+fele 60 perces jegyet szeretne, 30 százalékuk választotta a 90 perceset, 20 százalékuk 
+pedig a 30 perceset.  
+Készítsen kördiagramot a szavazás eredményéről! 
+ 
+ 
+ 
+ 
+ 
+ 
+3 pont 
+ 
+ 
+12. Feldobunk három szabályos pénzérmét. Határozza meg annak a valószínűségét, hogy a 
+három pénzérmével azonosat dobunk (mindhárommal fejet, vagy mindhárommal írást)! 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+2 pont 
+ 
+ 
+
+===== PAGE 8 =====
+Matematika 
+középszint 
+2212 írásbeli vizsga, I. összetevő 
+8 / 8 
+2022. május 3. 
+Név:  ...........................................................  osztály:...... 
+ 
+ 
+pontszám 
+maximális 
+elért 
+I. rész 
+1. feladat 
+2 
+ 
+2. feladat 
+2 
+ 
+3. feladat 
+2 
+ 
+4. feladat 
+2 
+ 
+5. feladat 
+3 
+ 
+6. feladat 
+2 
+ 
+7. feladat 
+4 
+ 
+8. feladat 
+2 
+ 
+9. feladat 
+2 
+ 
+10. feladat 
+4 
+ 
+11. feladat 
+3 
+ 
+12. feladat 
+2 
+ 
+ 
+ÖSSZESEN 
+30 
+ 
+ 
+dátum 
+ 
+javító tanár 
+ 
+ __________________________________________________________________________  
+ 
+ 
+ 
+pontszáma egész 
+számra kerekítve 
+elért 
+programba  
+beírt 
+I. rész 
+  
+  
+ 
+dátum 
+ 
+dátum 
+ 
+ 
+ 
+ 
+ 
+ 
+javító tanár 
+ 
+jegyző 
+ 
+Megjegyzések: 
+1. Ha a vizsgázó a II. írásbeli összetevő megoldását elkezdte, akkor ez a táblázat és az aláírási rész 
+üresen marad! 
+2. Ha a vizsga az I. összetevő teljesítése közben megszakad, illetve nem folytatódik a II. összetevővel, 
+akkor ez a táblázat és az aláírási rész kitöltendő! 
+
+===== PAGE 9 =====
+ 
+Matematika 
+ 
+középszint — írásbeli vizsga 2212 
+ 
+ 
+II. összetevő 
+EMBERI ERŐFORRÁSOK MINISZTÉRIUMA 
+Név:  ...........................................................  osztály:...... 
+MATEMATIKA 
+ 
+KÖZÉPSZINTŰ 
+ÍRÁSBELI VIZSGA 
+minden vizsgázó számára 
+2022. május 3. 9:00 
+II. 
+Időtartam: 135 perc 
+Pótlapok száma 
+Tisztázati 
+ 
+Piszkozati 
+ 
+ 
+É R E T T S É G I V I Z S G A • 2 0 2 2 . m á j u s 3 . 
+
+===== PAGE 10 =====
+Matematika 
+középszint 
+2212 írásbeli vizsga, II. összetevő 
+2 / 16 
+2022. május 3. 
+Név:  ...........................................................  osztály: ..... 
+ 
+ 
+
+===== PAGE 11 =====
+Matematika 
+középszint 
+2212 írásbeli vizsga, II. összetevő 
+3 / 16 
+2022. május 3. 
+Név:  ...........................................................  osztály: ..... 
+ 
+Fontos tudnivalók 
+ 
+1. A feladatok megoldására 135 percet fordíthat, az idő leteltével a munkát be kell fejeznie. 
+ 
+2. A feladatok megoldási sorrendje tetszőleges. 
+ 
+3. A B részben kitűzött három feladat közül csak kettőt kell megoldania. A nem választott 
+feladat sorszámát írja be a dolgozat befejezésekor az alábbi négyzetbe! Ha a javító 
+tanár számára nem derül ki egyértelműen, hogy melyik feladat értékelését nem kéri, akkor 
+a kitűzött sorrend szerinti legutolsó feladatra nem kap pontot. 
+ 
+ 
+ 
+4. A feladatok megoldásához szöveges adatok tárolására és megjelenítésére nem alkalmas 
+zsebszámológépet és bármilyen négyjegyű függvénytáblázatot használhat, más elektroni-
+kus vagy írásos segédeszköz használata tilos! 
+ 
+5. A megoldások gondolatmenetét minden esetben írja le, mert a feladatra adható pont-
+szám jelentős része erre jár! 
+ 
+6. Ügyeljen arra, hogy a lényegesebb részszámítások is nyomon követhetők legyenek! 
+ 
+7. A gondolatmenet kifejtése során a zsebszámológép használata – további matematikai 
+indoklás nélkül – a következő műveletek elvégzésére fogadható el: összeadás, kivonás, 
+szorzás, osztás, hatványozás, gyökvonás, n!, 
+
+
+
+
+
+
+k
+n kiszámítása, a függvénytáblázatban fel-
+lelhető táblázatok helyettesítése (sin, cos, tg, log és ezek inverzei), a π és az e szám közelítő 
+értékének megadása, nullára rendezett másodfokú egyenlet gyökeinek meghatározása. To-
+vábbi matematikai indoklás nélkül használhatók a számológépek bizonyos statisztikai mu-
+tatók kiszámítására (átlag, szórás) abban az esetben, ha a feladat szövege kifejezetten nem 
+követeli meg az ezzel kapcsolatos részletszámítások bemutatását is. Egyéb esetekben a 
+géppel elvégzett számítások indoklás nélküli lépéseknek számítanak, azokért nem jár 
+pont. 
+ 
+8. A feladatok megoldásánál használt tételek közül az iskolában tanult, névvel ellátott tételeket 
+(pl. Pitagorasz-tétel, magasságtétel) nem kell pontosan megfogalmazva kimondania, elég 
+csak a tétel megnevezését említenie, de alkalmazhatóságát röviden indokolnia kell. 
+ 
+9. A feladatok végeredményét (a feltett kérdésre adandó választ) szöveges megfogalmazásban 
+is közölje! 
+ 
+10. A dolgozatot tollal írja, az ábrákat ceruzával is rajzolhatja. Az ábrákon kívül a ceruzával írt 
+részeket a javító tanár nem értékelheti. Ha valamilyen megoldást vagy megoldásrészletet 
+áthúz, akkor az nem értékelhető. 
+ 
+11. Minden feladatnak csak egy megoldása értékelhető. Több megoldási próbálkozás esetén 
+egyértelműen jelölje, hogy melyiket tartja érvényesnek! 
+ 
+12. Kérjük, hogy a szürkített téglalapokba semmit ne írjon! 
+ 
+ 
+
+===== PAGE 12 =====
+Matematika 
+középszint 
+2212 írásbeli vizsga, II. összetevő 
+4 / 16 
+2022. május 3. 
+Név:  ...........................................................  osztály: ..... 
+ 
+A 
+ 
+13. 
+a) Oldja meg az alábbi egyenletet a valós számok halmazán! 
+ 
+(x – 5)
+2 + 7 = 2x 
+ 
+b) Oldja meg az alábbi egyenletrendszert a valós számpárok halmazán! 
+ 
+1
+0,7
+0,2
+x
+y
+x
+y
+x
++
+= 
+
++
+= 
+ 
+ 
+ 
+a) 
+5 pont 
+ 
+b) 
+6 pont 
+ 
+Ö.: 
+11 pont 
+ 
+
+===== PAGE 13 =====
+Matematika 
+középszint 
+2212 írásbeli vizsga, II. összetevő 
+5 / 16 
+2022. május 3. 
+Név:  ...........................................................  osztály: ..... 
+ 
+ 
+
+===== PAGE 14 =====
+Matematika 
+középszint 
+2212 írásbeli vizsga, II. összetevő 
+6 / 16 
+2022. május 3. 
+Név:  ...........................................................  osztály: ..... 
+ 
+14.  Az ábrán látható diagram egy végzős évfolyam négy osztályában mutatja a fiúk és a lá-
+nyok számát.  
+ 
+  
+a) A legkisebb létszámú osztályban a lányok száma hány százaléka a fiúk számának? 
+ 
+b) Töltse ki az alábbi táblázatot, majd határozza meg a 4 adat terjedelmét, átlagát és 
+szórását! 
+ 
+osztály 
+12.A 12.B 12.C 12.D 
+lányok létszáma  
+ 
+ 
+ 
+ 
+ 
+A 12.B osztályban a lányok év végi matematikajegyeinek átlaga 4,5, az egész osztály 
+matematikajegyeinek átlaga pedig 4,1 volt. 
+ 
+c) Mennyi volt a 12.B osztályban a fiúk átlaga matematikából év végén?  
+ 
+ 
+ 
+  
+ 
+ 
+a) 
+3 pont 
+ 
+b) 
+5 pont 
+ 
+c) 
+4 pont 
+ 
+Ö.: 
+12 pont 
+ 
+0
+5
+10
+15
+20
+25
+12.A
+12.B
+12.C
+12.D
+Fiúk
+Lányok
+
+===== PAGE 15 =====
+Matematika 
+középszint 
+2212 írásbeli vizsga, II. összetevő 
+7 / 16 
+2022. május 3. 
+Név:  ...........................................................  osztály: ..... 
+ 
+ 
+
+===== PAGE 16 =====
+Matematika 
+középszint 
+2212 írásbeli vizsga, II. összetevő 
+8 / 16 
+2022. május 3. 
+Név:  ...........................................................  osztály: ..... 
+ 
+15.  Bálint szőlőt termeszt a Balaton-felvidéken. A szőlő egy részéből 100%-os szőlőlevet 
+készít. 1 liter szőlőlé 1,3 kg szőlő felhasználásával készül. Az elkészült szőlőlevet 5 literes 
+műanyag tasakokba töltik. 
+ 
+a) Hány teli tasak szőlőlé készül 4,7 tonna szőlőből? 
+ 
+Az 5 literes tasakot téglatest alakú papírdobozba teszik. A doboz éleinek hossza 12 cm, 
+20 cm és 25 cm. 
+ 
+b) Hány literes a doboz?  
+ 
+Bálint telke téglalap alakú. A telek szomszédos oldalainak aránya 3 : 4, területe 1,47 hektár 
+(1 hektár = 10 000 m
+2). 
+ 
+c) Mekkora ennek a teleknek a kerülete? 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+a) 
+4 pont 
+ 
+b) 
+3 pont 
+ 
+c) 
+6 pont 
+ 
+Ö.: 
+13 pont 
+ 
+
+===== PAGE 17 =====
+Matematika 
+középszint 
+2212 írásbeli vizsga, II. összetevő 
+9 / 16 
+2022. május 3. 
+Név:  ...........................................................  osztály: ..... 
+ 
+ 
+
+===== PAGE 18 =====
+Matematika 
+középszint 
+2212 írásbeli vizsga, II. összetevő 
+10 / 16 
+2022. május 3. 
+Név:  ...........................................................  osztály: ..... 
+ 
+B 
+ 
+A 16-18. feladatok közül tetszése szerint választott kettőt kell megoldania.  
+A kihagyott feladat sorszámát írja be a 3. oldalon lévő üres négyzetbe! 
+ 
+16. Az új autók értéke a megvásárlás pillanatától kezdve csökken. A csökkenés mértékét kü-
+lönböző modellekkel lehet becsülni. 
+A lineáris becslési módszer szerint az autó minden hónapban ugyanannyi forintot veszít 
+az értékéből. 
+ 
+a) Egy újonnan 6 millió forintba kerülő autó értéke a lineáris becslési módszer szerint  
+5 év alatt csökken a felére. Hány forinttal csökken az autó értéke egy hónap alatt?  
+ 
+Az exponenciális modell szerint az új autó értéke havonta 1%-kal csökken. 
+ 
+b) Hány forintra csökken a 6 millió forintba kerülő új autó értéke két év alatt az expo-
+nenciális modell szerint, és ez hány százalékos csökkenést jelent az új kori értékéhez 
+képest? 
+ 
+c) Hány hónap alatt csökken a felére az autó értéke az exponenciális modell szerint? 
+ 
+Egy autókereskedő a következő évre üzleti tervet készít. A terv szerint januárban 65 darab 
+autót ad el, februártól kezdve pedig havonta egyre több autó eladásával számol: minden 
+hónapban ugyanannyival növelné az értékesített autók számát az azt megelőző hónaphoz 
+képest. Az éves terv szerint összesen 1110 darab autó eladása a cél.  
+ 
+d) Hány darabbal kell növelnie hónapról hónapra az eladást a terv szerint? 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+a) 
+3 pont 
+ 
+b) 
+4 pont 
+ 
+c) 
+5 pont 
+ 
+d) 
+5 pont 
+ 
+Ö.: 
+17 pont 
+ 
+
+===== PAGE 19 =====
+Matematika 
+középszint 
+2212 írásbeli vizsga, II. összetevő 
+11 / 16 
+2022. május 3. 
+Név:  ...........................................................  osztály: ..... 
+ 
+ 
+
+===== PAGE 20 =====
+Matematika 
+középszint 
+2212 írásbeli vizsga, II. összetevő 
+12 / 16 
+2022. május 3. 
+Név:  ...........................................................  osztály: ..... 
+ 
+A 16-18. feladatok közül tetszése szerint választott kettőt kell megoldania.  
+A kihagyott feladat sorszámát írja be a 3. oldalon lévő üres négyzetbe! 
+ 
+17. A képen egy kerámia tárolóedény és a parafából készült teteje lát-
+ható. Az edény belseje egy csonkakúp alakú és egy ugyanolyan ma-
+gasságú forgáshenger alakú részből áll. Az edény belső méretei: 
+alapkörének átmérője 14 cm, a hengeres rész átmérője 11 cm,  
+az edény teljes magassága 21 cm.   
+ 
+a) Számítsa ki az edény térfogatát! 
+ 
+A kerámiaedény belső felületét vékony zománcréteggel vonták be.  
+ 
+b) Számítsa ki, hogy egy edényen hány cm2-es a zománcozott felület! 
+ 
+Egy szállodában 20 db egyforma fedett edényben kétféle müzlikeveréket tartanak.  
+5 edényben natúr, 15 edényben csokis müzli van. Egy alkalmazott a reggeli sietségben 
+véletlenszerűen választ ki az edények közül 4-et, és ezeket egy tálcára teszi. 
+ 
+c) Mekkora a valószínűsége annak, hogy a 4 edény közül egyben natúr, háromban pe-
+dig csokis müzli lesz? 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+a) 
+6 pont 
+ 
+b) 
+6 pont 
+ 
+c) 
+5 pont 
+ 
+Ö.: 
+17 pont 
+ 
+
+===== PAGE 21 =====
+Matematika 
+középszint 
+2212 írásbeli vizsga, II. összetevő 
+13 / 16 
+2022. május 3. 
+Név:  ...........................................................  osztály: ..... 
+ 
+ 
+ 
+
+===== PAGE 22 =====
+Matematika 
+középszint 
+2212 írásbeli vizsga, II. összetevő 
+14 / 16 
+2022. május 3. 
+Név:  ...........................................................  osztály: ..... 
+ 
+A 16-18. feladatok közül tetszése szerint választott kettőt kell megoldania.  
+A kihagyott feladat sorszámát írja be a 3. oldalon lévő üres négyzetbe! 
+ 
+18.  a) Határozza meg az alábbi állítások logikai értékét (igaz vagy hamis)! 
+(A és B halmazokat jelöl. Válaszait itt nem kell indokolnia.) 
+ 
+I. állítás: Ha B üres halmaz, akkor A ∩ B üres halmaz. 
+II. állítás: Ha A = B, akkor A \ B üres halmaz. 
+III. állítás: Ha A ∪ B = A, akkor A = B. 
+ 
+b) Az I. állítás megfordítása: Ha A ∩ B üres halmaz, akkor B üres halmaz. 
+Határozza meg ennek az állításnak a logikai értékét! Válaszát indokolja! 
+ 
+c) Írja be mind a kilenc egyjegyű pozitív egész számot az ábra megfelelő részébe! 
+ 
+ 
+ 
+A 0, 1, 2, 4 és 9 számjegyeket felhasználva elkészítjük az összes olyan ötjegyű számot, 
+melyek különböző számjegyekből állnak. 
+ 
+d) Hány 4-gyel osztható szám van az elkészített számok között? 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+a) 
+2 pont 
+ 
+b) 
+3 pont 
+ 
+c) 
+5 pont 
+ 
+d) 
+7 pont 
+ 
+Ö.: 
+17 pont 
+ 
+
+===== PAGE 23 =====
+Matematika 
+középszint 
+2212 írásbeli vizsga, II. összetevő 
+15 / 16 
+2022. május 3. 
+Név:  ...........................................................  osztály: ..... 
+ 
+ 
+
+===== PAGE 24 =====
+Matematika 
+középszint 
+2212 írásbeli vizsga, II. összetevő 
+16 / 16 
+2022. május 3. 
+Név:  ...........................................................  osztály:...... 
+ 
+ 
+a feladat 
+sorszáma 
+pontszám 
+maximális 
+elért 
+összesen 
+II. A rész 
+13. 
+11 
+ 
+ 
+14. 
+12 
+ 
+15. 
+13 
+ 
+II. B rész 
+ 
+17 
+ 
+ 
+ 
+17 
+ 
+ 
+← nem választott feladat 
+ ÖSSZESEN 
+70 
+ 
+ 
+ 
+ 
+pontszám 
+maximális 
+elért 
+I. rész 
+30 
+ 
+II. rész 
+70 
+ 
+Az írásbeli vizsgarész pontszáma 
+100 
+ 
+ 
+dátum 
+ 
+javító tanár 
+ 
+ __________________________________________________________________________  
+ 
+ 
+ 
+pontszáma egész 
+számra kerekítve 
+elért 
+programba  
+beírt 
+I. rész 
+  
+  
+II. rész 
+  
+  
+ 
+dátum 
+ 
+dátum 
+ 
+ 
+ 
+ 
+ 
+ 
+javító tanár 
+ 
+jegyző 
+ 

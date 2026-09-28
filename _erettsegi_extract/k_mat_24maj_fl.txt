@@ -1,0 +1,1078 @@
+
+===== PAGE 1 =====
+ 
+Matematika I. 
+ 
+Nat2020 
+K2414 
+Név:  ...........................................................  osztály:...... 
+OKTATÁSI HIVATAL 
+MATEMATIKA 
+ 
+KÖZÉPSZINTŰ 
+ÍRÁSBELI VIZSGA 
+2024. május 7. 9:00 
+I. 
+Időtartam: 45 perc 
+Pótlapok száma 
+Tisztázati 
+ 
+Piszkozati 
+ 
+ 
+É R E T T S É G I V I Z S G A • 2 0 2 4 . m á j u s 7 . 
+
+===== PAGE 2 =====
+ 
+Matematika I. 
+2 / 8 
+középszintű írásbeli vizsga 
+K2414 
+ 
+2024. május 7. 
+Név:  ...........................................................  osztály:...... 
+Fontos tudnivalók 
+ 
+1. A feladatok megoldására 45 percet fordíthat, az idő leteltével a munkát be kell fejeznie. 
+ 
+ 
+2. A megoldások sorrendje tetszőleges. 
+ 
+ 
+3. A feladatok megoldásához szöveges adatok tárolására és megjelenítésére nem alkalmas 
+zsebszámológépet és bármilyen négyjegyű függvénytáblázatot használhat, más elektroni-
+kus vagy írásos segédeszköz használata tilos! 
+ 
+ 
+4. A feladatok végeredményét az erre a célra szolgáló keretbe írja, a megoldást csak akkor 
+kell részleteznie, ha erre a feladat szövege utasítást ad! 
+ 
+ 
+5. A dolgozatot tollal írja, az ábrákat ceruzával is rajzolhatja. Az ábrákon kívül a ceruzával írt 
+részeket a javító tanár nem értékelheti. Ha valamilyen megoldást vagy megoldásrészletet 
+áthúz, akkor az nem értékelhető. 
+ 
+ 
+6. Minden feladatnak csak egy megoldása értékelhető. Több megoldási próbálkozás esetén 
+egyértelműen jelölje, hogy melyiket tartja érvényesnek! 
+ 
+ 
+7. Kérjük, hogy a szürkített téglalapokba semmit ne írjon! 
+ 
+ 
+ 
+
+===== PAGE 3 =====
+ 
+Matematika I. 
+3 / 8 
+középszintű írásbeli vizsga 
+K2414 
+ 
+2024. május 7. 
+Név:  ...........................................................  osztály:...... 
+ 
+1. 
+Az A és B halmazokról tudjuk, hogy A  B  {1; 2; 3; 4; 5; 6}, A  B  {1; 2} és A \ B  {3; 4}. 
+Adja meg az A és B halmazokat elemeik felsorolásával! 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+A  
+1 pont 
+ 
+B  
+1 pont 
+ 
+ 
+2. 
+Egy derékszögű háromszög egyik befogója 24 cm, átfogója 25 cm hosszú.  
+Hány cm hosszú a másik befogó?  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+A másik befogó hossza            cm. 
+2 pont 
+ 
+ 
+3. 
+Hány darab négyjegyű, különböző számjegyekből álló (pozitív) páratlan szám alkotható 
+az 1, 2, 3, 4 számjegyekből? 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+2 pont 
+ 
+
+===== PAGE 4 =====
+ 
+Matematika I. 
+4 / 8 
+középszintű írásbeli vizsga 
+K2414 
+ 
+2024. május 7. 
+Név:  ...........................................................  osztály:...... 
+ 
+4. 
+Egy kozmetikai cég alkalmazottja az alábbi diagramot készítette a 2022-ben és 2023-
+ban általa értékesített termékek mennyiségéről: 
+ 
+ 
+ 
+A diagram alapján állapítsa meg, igaz-e az az állítás, hogy az alkalmazott 2023-ban 
+háromszor annyi terméket értékesített, mint 2022-ben! Válaszát indokolja! 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+1 pont 
+ 
+  
+1 pont 
+ 
+ 
+5. 
+Adja meg a értékét, ha tudjuk, hogy 
+1
+2
+4
+a
+
+. 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+a  
+2 pont 
+ 
+ 
+900
+950
+1000
+1050
+1100
+1150
+1200
+1250
+Darab
+2022
+2023
+
+===== PAGE 5 =====
+ 
+Matematika I. 
+5 / 8 
+középszintű írásbeli vizsga 
+K2414 
+ 
+2024. május 7. 
+Név:  ...........................................................  osztály:...... 
+ 
+6. 
+Egy számtani sorozat nyolcadik tagja 6-tal nagyobb, mint a negyedik tagja. A sorozat 
+hatodik tagja 6. Számítsa ki a sorozat első 6 tagjának az összegét! Megoldását részletezze!  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+3 pont 
+ 
+S6   
+1 pont 
+ 
+ 
+7. 
+ Hány csúcsa, hány lapja és hány éle van egy hatszög alapú gúlának?   
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+A csúcsok száma: 
+1 pont 
+ 
+A lapok száma: 
+1 pont 
+ 
+Az élek száma: 
+1 pont 
+ 
+ 
+
+===== PAGE 6 =====
+ 
+Matematika I. 
+6 / 8 
+középszintű írásbeli vizsga 
+K2414 
+ 
+2024. május 7. 
+Név:  ...........................................................  osztály:...... 
+ 
+8. 
+Egy szám 2-es alapú logaritmusa 6.  
+Mennyi a szám kétszeresének a 2-es alapú logaritmusa?  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+2 pont 
+ 
+ 
+9. 
+Egy városban a polgármester-választáson a győztes jelöltre a szavazáson résztvevők 
+55%-a szavazott, így 10 593 szavazatot kapott. Hányan vettek részt ebben a városban a 
+szavazáson? 
+ 
+ 
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+2 pont 
+ 
+ 
+10. Adott az alábbi (a valós számok halmazán értelmezett) öt függvény. Adja meg közülük 
+azoknak a betűjelét, amelyeknek van zérushelye! 
+   
+f: 
+2
+x
+x
+
+ 
+ 
+g: 
+2
+x
+x 
+  
+ 
+h: 
+2
+3
+x
+x 
+
+ 
+ 
+i: x
+x
+
+  
+ 
+j: 
+5
+x 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Azok a függvények, amelyeknek 
+van zérushelye: 
+3 pont 
+ 
+ 
+
+===== PAGE 7 =====
+ 
+Matematika I. 
+7 / 8 
+középszintű írásbeli vizsga 
+K2414 
+ 
+2024. május 7. 
+Név:  ...........................................................  osztály:...... 
+ 
+11. Balázs magyar irodalomból a következő jegyeket szerezte az első félévben: 1, 5, 5, 5. 
+Számítsa ki Balázs jegyeinek átlagát és szórását! 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+A jegyek átlaga: 
+1 pont 
+ 
+A jegyek szórása: 
+2 pont 
+ 
+ 
+12. Egy piros, egy fekete és egy fehér szabályos dobókockával egyszerre dobunk.  
+Határozza meg annak a valószínűségét, hogy a dobás eredménye három különböző szám 
+lesz! Megoldását részletezze!  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+2 pont 
+ 
+ 
+1 pont 
+ 
+ 
+
+===== PAGE 8 =====
+ 
+Matematika I. 
+8 / 8 
+középszintű írásbeli vizsga 
+K2414 
+ 
+2024. május 7. 
+Név:  ...........................................................  osztály:...... 
+ 
+ 
+pontszám 
+maximális 
+elért 
+I. rész 
+1. feladat 
+2 
+ 
+2. feladat 
+2 
+ 
+3. feladat 
+2 
+ 
+4. feladat 
+2 
+ 
+5. feladat 
+2 
+ 
+6. feladat 
+4 
+ 
+7. feladat 
+3 
+ 
+8. feladat 
+2 
+ 
+9. feladat 
+2 
+ 
+10. feladat 
+3 
+ 
+11. feladat 
+3 
+ 
+12. feladat 
+3 
+ 
+ 
+ÖSSZESEN 
+30 
+ 
+ 
+dátum 
+ 
+javító tanár 
+ 
+ __________________________________________________________________________  
+ 
+ 
+ 
+pontszáma egész 
+számra kerekítve 
+elért 
+programba  
+beírt 
+I. rész 
+  
+  
+ 
+dátum 
+ 
+dátum 
+ 
+ 
+ 
+ 
+ 
+ 
+javító tanár 
+ 
+jegyző 
+ 
+Megjegyzések: 
+1. Ha a vizsgázó a II. írásbeli összetevő megoldását elkezdte, akkor ez a táblázat és az aláírási rész 
+üresen marad! 
+2. Ha a vizsga az I. összetevő teljesítése közben megszakad, illetve nem folytatódik a II. összetevővel, 
+akkor ez a táblázat és az aláírási rész kitöltendő! 
+
+===== PAGE 9 =====
+ 
+Matematika II. 
+ 
+Nat2020 
+K2414 
+Név: ...........................................................  osztály:......
+OKTATÁSI HIVATAL 
+MATEMATIKA 
+ 
+KÖZÉPSZINTŰ 
+ÍRÁSBELI VIZSGA 
+2024. május 7. 9:00 
+II. 
+Időtartam: 135 perc 
+Pótlapok száma 
+Tisztázati 
+ 
+Piszkozati 
+ 
+ 
+É R E T T S É G I V I Z S G A • 2 0 2 4 . m á j u s 7 . 
+
+===== PAGE 10 =====
+ 
+Matematika II. 
+2 / 16 
+középszintű írásbeli vizsga 
+K2414 
+ 
+2024. május 7. 
+Név: ...........................................................  osztály:......
+ 
+ 
+
+===== PAGE 11 =====
+ 
+Matematika II. 
+3 / 16 
+középszintű írásbeli vizsga 
+K2414 
+ 
+2024. május 7. 
+Név: ...........................................................  osztály:......
+ 
+Fontos tudnivalók 
+ 
+1. A feladatok megoldására 135 percet fordíthat, az idő leteltével a munkát be kell fejeznie. 
+ 
+2. A feladatok megoldási sorrendje tetszőleges. 
+ 
+3. A B részben kitűzött három feladat közül csak kettőt kell megoldania. A nem választott 
+feladat sorszámát írja be a dolgozat befejezésekor az alábbi négyzetbe! Ha a javító 
+tanár számára nem derül ki egyértelműen, hogy melyik feladat értékelését nem kéri, akkor 
+a kitűzött sorrend szerinti legutolsó feladatra nem kap pontot. 
+ 
+ 
+ 
+4. A feladatok megoldásához szöveges adatok tárolására és megjelenítésére nem alkalmas 
+zsebszámológépet és bármilyen négyjegyű függvénytáblázatot használhat, más elektroni-
+kus vagy írásos segédeszköz használata tilos! 
+ 
+5. A megoldások gondolatmenetét minden esetben írja le, mert a feladatra adható pont-
+szám jelentős része erre jár! 
+ 
+6. Ügyeljen arra, hogy a lényegesebb részszámítások is nyomon követhetők legyenek! 
+ 
+7. A gondolatmenet kifejtése során a zsebszámológép használata – további matematikai 
+indoklás nélkül – a következő műveletek elvégzésére fogadható el: összeadás, kivonás, 
+szorzás, osztás, hatványozás, gyökvonás, n!, 
+
+
+
+
+
+
+k
+n kiszámítása, a függvénytáblázatban fel-
+lelhető táblázatok helyettesítése (sin, cos, tg, log és ezek inverzei), a π és az e szám közelítő 
+értékének megadása, nullára rendezett másodfokú egyenlet gyökeinek meghatározása. To-
+vábbi matematikai indoklás nélkül használhatók a számológépek bizonyos statisztikai mu-
+tatók kiszámítására (átlag, szórás) abban az esetben, ha a feladat szövege kifejezetten nem 
+követeli meg az ezzel kapcsolatos részletszámítások bemutatását is. Egyéb esetekben a 
+géppel elvégzett számítások indoklás nélküli lépéseknek számítanak, azokért nem jár 
+pont. 
+ 
+8. A feladatok megoldásánál használt tételek közül az iskolában tanult, névvel ellátott tételeket 
+(pl. Pitagorasz-tétel, magasságtétel) nem kell pontosan megfogalmazva kimondania, elég 
+csak a tétel megnevezését említenie, de alkalmazhatóságát röviden indokolnia kell. 
+ 
+9. A feladatok végeredményét (a feltett kérdésre adandó választ) szöveges megfogalmazásban 
+is közölje! 
+ 
+10. A dolgozatot tollal írja, az ábrákat ceruzával is rajzolhatja. Az ábrákon kívül a ceruzával írt 
+részeket a javító tanár nem értékelheti. Ha valamilyen megoldást vagy megoldásrészletet 
+áthúz, akkor az nem értékelhető. 
+ 
+11. Minden feladatnak csak egy megoldása értékelhető. Több megoldási próbálkozás esetén 
+egyértelműen jelölje, hogy melyiket tartja érvényesnek! 
+ 
+12. Kérjük, hogy a szürkített téglalapokba semmit ne írjon! 
+ 
+ 
+
+===== PAGE 12 =====
+ 
+Matematika II. 
+4 / 16 
+középszintű írásbeli vizsga 
+K2414 
+ 
+2024. május 7. 
+Név: ...........................................................  osztály:......
+ 
+A 
+ 
+13.  
+a)  Oldja meg a valós számok halmazán az alábbi egyenletet! 
+ 
+18 ∙ (7x + 96) + 19 ∙ (5x – 56)  1990 
+ 
+b) Írja fel az 1896 és az 1956 prímtényezős felbontását, és adja meg az 1896 és az 1956 
+összes közös (pozitív) osztóját! 
+a) 
+4 pont 
+ 
+b) 
+5 pont 
+ 
+Ö.:
+9 pont 
+ 
+
+===== PAGE 13 =====
+ 
+Matematika II. 
+5 / 16 
+középszintű írásbeli vizsga 
+K2414 
+ 
+2024. május 7. 
+Név: ...........................................................  osztály:......
+ 
+ 
+
+===== PAGE 14 =====
+ 
+Matematika II. 
+6 / 16 
+középszintű írásbeli vizsga 
+K2414 
+ 
+2024. május 7. 
+Név: ...........................................................  osztály:......
+ 
+14.  Egy szabályos tízszög egy oldalának hossza 10 cm. 
+ 
+a) Igazolja, hogy a tízszög egy belső szöge 144°-os!  
+ 
+b) Számítsa ki a tízszög területét! 
+ 
+Egy szabályos sokszög átlóinak a száma 2015.  
+ 
+c) Hány oldalú a sokszög? 
+ 
+ 
+ 
+  
+ 
+ 
+a) 
+3 pont 
+ 
+b) 
+5 pont 
+ 
+c) 
+5 pont 
+ 
+Ö.:
+13 pont 
+ 
+
+===== PAGE 15 =====
+ 
+Matematika II. 
+7 / 16 
+középszintű írásbeli vizsga 
+K2414 
+ 
+2024. május 7. 
+Név: ...........................................................  osztály:......
+ 
+ 
+
+===== PAGE 16 =====
+ 
+Matematika II. 
+8 / 16 
+középszintű írásbeli vizsga 
+K2414 
+ 
+2024. május 7. 
+Név: ...........................................................  osztály:......
+ 
+15.  Egy étteremben az üdítőitalok árát deciliterenként adják meg. Tudjuk, hogy 3 dl almalé 
+és 5 dl baracklé összesen 1010 Ft-ba, 5 dl almalé és 3 dl baracklé pedig 990 Ft-ba kerül. 
+ 
+a) Mennyibe kerül egy dl almalé, és mennyibe egy dl baracklé? 
+ 
+Egyik este Anna, Bella és Cili együtt mentek vacsorázni. A vacsorához Anna almalevet, 
+Bella baracklevet, Cili citromos teát rendelt. A pincér sajnos elfelejtette, hogy ki melyik 
+üdítőt rendelte, és véletlenszerűen osztja ki nekik a három italt. 
+ 
+b) Határozza meg annak a valószínűségét, hogy egyikük sem azt az italt kapja, amit 
+rendelt! 
+ 
+Az étterem vezetője év végén összesítette, hogy az év során az egyes asztaloknál mennyit 
+fizettek egy-egy alkalommal a vendégek az üdítőitalokért. Az összesítés után a kapott 
+adatokat az alábbi sodrófadiagramon ábrázolta. 
+ 
+ 
+ 
+c) Az alábbi kijelentések a fenti diagramon ábrázolt adatokra vonatkoznak. Állapítsa 
+meg minden kijelentésről, hogy igaz, hamis, vagy az adatok alapján ezt nem lehet 
+eldönteni! Tegyen X-et a megfelelő cellába! Válaszait itt nem kell indokolnia. 
+ 
+ 
+Igaz 
+Hamis 
+Nem lehet 
+eldönteni 
+Az adatok terjedelme 7000 Ft. 
+ 
+ 
+ 
+A kifizetett összegek átlaga 3500 Ft. 
+ 
+ 
+ 
+A kifizetett összegek kb. 25%-a legalább 
+4000 Ft volt. 
+ 
+ 
+ 
+Volt olyan asztal, ahol 2500 Ft-ot fizettek. 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+a) 
+6 pont 
+ 
+b) 
+4 pont 
+ 
+c) 
+4 pont 
+ 
+Ö.:
+14 pont 
+ 
+
+===== PAGE 17 =====
+ 
+Matematika II. 
+9 / 16 
+középszintű írásbeli vizsga 
+K2414 
+ 
+2024. május 7. 
+Név: ...........................................................  osztály:......
+ 
+ 
+
+===== PAGE 18 =====
+ 
+Matematika II. 
+10 / 16 
+középszintű írásbeli vizsga 
+K2414 
+ 
+2024. május 7. 
+Név: ...........................................................  osztály:......
+ 
+B 
+ 
+A 16–18. feladatok közül tetszése szerint választott kettőt kell megoldania.  
+A kihagyott feladat sorszámát írja be a 3. oldalon lévő üres négyzetbe! 
+ 
+16. Péter matematikatanára az érettségire való felkészülés közben az egyik hétvégére – szor-
+galmi feladatként – négy függvény ábrázolását tűzte ki a diákoknak. Péter azt tervezi, 
+hogy ezek közül legalább kettőt meg fog csinálni. 
+ 
+a) Hányféleképpen választhat ki Péter a négy függvény közül legalább kettőt?  
+(Két kiválasztást különbözőnek tekintünk, ha van legalább egy olyan függvény, 
+amelyik az egyik kiválasztásban szerepel, a másikban pedig nem.) 
+ 
+Egy (a derékszögű koordináta-rendszerben ábrázolt) lineáris függvény grafikonja átmegy 
+a (12; 7) és a (13; 9) pontokon. 
+ 
+b) Adja meg a lineáris függvény hozzárendelési szabályát x  mx + b alakban! 
+ 
+c) Írja fel a (12; 7) középpontú, 15 egység sugarú kör egyenletét, és számítsa ki a kör 
+és az y tengely metszéspontjainak koordinátáit! 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+a) 
+5 pont 
+ 
+b) 
+4 pont 
+ 
+c) 
+8 pont 
+ 
+Ö.:
+17 pont 
+ 
+
+===== PAGE 19 =====
+ 
+Matematika II. 
+11 / 16 
+középszintű írásbeli vizsga 
+K2414 
+ 
+2024. május 7. 
+Név: ...........................................................  osztály:......
+ 
+
+===== PAGE 20 =====
+ 
+Matematika II. 
+12 / 16 
+középszintű írásbeli vizsga 
+K2414 
+ 
+2024. május 7. 
+Név: ...........................................................  osztály:......
+ 
+A 16–18. feladatok közül tetszése szerint választott kettőt kell megoldania.  
+A kihagyott feladat sorszámát írja be a 3. oldalon lévő üres négyzetbe! 
+ 
+17. A szolnoki cukrászdák különleges süteménye a szolnoki ha-
+bos isler. A habos isler alsó és felső része egy-egy 0,5 centi-
+méter vastagságú, 6 cm átmérőjű henger alakú tésztalap. 
+A két tésztalap között pedig 90 ml henger alakú hab talál-
+ható.  
+ 
+a) Hány cm3 a két tésztalap együttes térfogata?  
+ 
+b) Hány cm a két tésztalap közötti, habbal kitöltött hengeres rész átmérője, ha a süte-
+mény teljes magassága 5 cm? 
+ 
+Az islereket a készítés utolsó fázisában leöntik csokival. Néha előfordul, hogy a csoki 
+megdermedéskor megreped, az ilyen islert a cukrászdában nem szolgálják fel. Annak a 
+valószínűsége, hogy egy isleren a csokimáz megreped 0,03. Az egyik cukrászdában szer-
+dán 30 islert készítenek. 
+ 
+c) Számítsa ki annak a valószínűségét, hogy ezen a napon egyetlen isleren sem reped 
+meg a csokimáz, és így mindet fel lehet szolgálni! 
+ 
+A cukrászdában szerdánként akciós áron kínálják az islert, a zserbót és a krémest. Az 
+egyik szerda délelőtt az asztaloknál ülő vendégek összesen 20 rendelést adtak le. Volt 
+1 olyan rendelés, amelyben mindhárom sütemény szerepelt, és 2 olyan, amelyikben egyik 
+sem. A rendelések között 5 olyan volt, amelyben zserbó és krémes is szerepelt, 3 olyan, 
+amelyben zserbó és isler is, és 6 olyan, amelyben isler és krémes is. 9 olyan rendelés volt, 
+amelyben szerepelt zserbó. Tudjuk, hogy ugyanannyi rendelésben szerepelt krémes, mint 
+amennyiben isler. 
+ 
+d) Hány olyan rendelés volt szerda délelőtt, amelyben a három sütemény közül csak a 
+krémes szerepelt? 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+a) 
+3 pont 
+ 
+b) 
+5 pont 
+ 
+c) 
+3 pont 
+ 
+d) 
+6 pont 
+ 
+Ö.:
+17 pont 
+ 
+
+===== PAGE 21 =====
+ 
+Matematika II. 
+13 / 16 
+középszintű írásbeli vizsga 
+K2414 
+ 
+2024. május 7. 
+Név: ...........................................................  osztály:......
+ 
+ 
+ 
+
+===== PAGE 22 =====
+ 
+Matematika II. 
+14 / 16 
+középszintű írásbeli vizsga 
+K2414 
+ 
+2024. május 7. 
+Név: ...........................................................  osztály:......
+ 
+A 16–18. feladatok közül tetszése szerint választott kettőt kell megoldania.  
+A kihagyott feladat sorszámát írja be a 3. oldalon lévő üres négyzetbe! 
+ 
+18. Egy elektromos autó egyik alkatrészéhez tartozó áramköri elem szemléltethető egy olyan 
+hatpontú gráffal, melynek hat éle van, és amelyben öt pont fokszáma ismert: 1, 2, 2, 3, 3. 
+  
+a) Adja meg a hatodik csúcs fokszámát, és rajzoljon fel egy olyan gráfot, amely a fel-
+tételeknek megfelel! 
+ 
+Az elektromos autók által egy feltöltéssel megtehető távolságot az autó hatótávolságának 
+nevezzük. Ádám egy újságcikkben azt olvasta, hogy míg 2011-ben átlagosan csak 95 km 
+volt egy elektromos autó hatótávolsága, addig ez az érték 2023-ra 425 km-re nőtt.1 
+Ádám arra kíváncsi, hogy ha a 2011 és 2023 között tapasztalható tendencia folytatódik, 
+akkor melyik évben éri el az elektromos autók átlagos hatótávolsága az 1000 km-t. Ehhez 
+két modellt alkot. 
+ 
+Az egyik esetben úgy számol, hogy évről évre ugyanannyival nő az átlagos hatótávolság 
+az előző évihez képest. 
+ 
+b) Ezzel a modellel számolva melyik évben éri el az átlagos hatótávolság az 1000 km-t? 
+ 
+A másik esetben úgy számol, hogy évről évre ugyanannyiszorosára nő az átlagos ható-
+távolság az előző évihez képest.  
+  
+ 
+c) Ezzel a modellel számolva melyik évben éri el az átlagos hatótávolság az 1000 km-t? 
+ 
+ 
+ 
+                                                 
+1 https://hvg.hu/cegauto/20231228_nehany_ev_alatt_negyszeresere_nott_a_villanyautok_atlagos_hatotavja  
+a) 
+4 pont 
+ 
+b) 
+6 pont 
+ 
+c) 
+7 pont 
+ 
+Ö.:
+17 pont 
+ 
+
+===== PAGE 23 =====
+ 
+Matematika II. 
+15 / 16 
+középszintű írásbeli vizsga 
+K2414 
+ 
+2024. május 7. 
+Név: ...........................................................  osztály:......
+ 
+
+===== PAGE 24 =====
+ 
+Matematika II. 
+16 / 16 
+középszintű írásbeli vizsga 
+K2414 
+ 
+2024. május 7. 
+Név: ...........................................................  osztály:......
+ 
+ 
+a feladat 
+sorszáma 
+pontszám 
+maximális
+elért 
+összesen 
+II. A rész 
+13. 
+9 
+ 
+ 
+14. 
+13 
+ 
+15. 
+14 
+ 
+II. B rész 
+ 
+17 
+ 
+ 
+ 
+17 
+ 
+ 
+ nem választott feladat 
+ ÖSSZESEN
+70 
+ 
+ 
+ 
+ 
+pontszám 
+maximális
+elért 
+I. rész 
+30 
+ 
+II. rész 
+70 
+ 
+Az írásbeli vizsgarész pontszáma 
+100 
+ 
+ 
+dátum 
+ 
+javító tanár 
+ 
+ __________________________________________________________________________  
+ 
+ 
+ 
+pontszáma egész 
+számra kerekítve 
+elért 
+programba  
+beírt 
+I. rész 
+  
+  
+II. rész 
+  
+  
+ 
+dátum 
+ 
+dátum 
+ 
+ 
+ 
+ 
+ 
+ 
+javító tanár 
+ 
+jegyző 
+ 

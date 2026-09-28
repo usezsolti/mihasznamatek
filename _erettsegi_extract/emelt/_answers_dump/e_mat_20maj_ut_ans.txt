@@ -1,0 +1,515 @@
+--- line 144 ---
+1 pont  
+Innen (pl. a két egyenlet kivonása után) d = 52, 
+1 pont  
+és visszahelyettesítés után a1 = –39. 
+1 pont  
+A sorozat ötödik tagja a5 = a1 + 4d = 169. 
+(A sorozat első öt tagja: –39, 13, 65, 117, 169.) 
+1 pont  
+Összesen: 
+5 pont  
+
+--- line 192 ---
+=
+=
+. 
+1 pont  
+d = (a3 – a2 = 65 – 13 =) 52. 
+1 pont  
+A sorozat ötödik tagja a5 = a3 + 2d = 169. 
+1 pont  
+Összesen: 
+5 pont  
+
+--- line 216 ---
+oszthatjuk egymással, amiből q = 5 adódik, 
+1 pont  
+visszahelyettesítéssel pedig b1 = 1. 
+1 pont  
+A sorozat ötödik tagja b5 = b1q4 = 5
+4 = 625. 
+(A sorozat első öt tagja: 1, 5, 25, 125, 625.) 
+1 pont  
+Összesen: 
+6 pont  
+
+--- line 257 ---
+Ezt a második egyenlettel összehasonlítva kapjuk, 
+hogy 26q = 130, vagyis q = 5, 
+1 pont  
+visszahelyettesítéssel pedig b = 5. 
+1 pont  
+A sorozat ötödik tagja bq3 = 5
+4 = 625. 
+1 pont  
+Összesen: 
+6 pont  
+
+--- line 270 ---
+1-es, a harmadik pedig prímszám. 
+1 pont  
+Egyjegyű prímszám négy darab van: 2, 3, 5, 7. 
+1 pont  
+Bármely kiválasztott prímszám három helyen  
+fordulhat elő, így összesen 4 ⋅ 3 = 12 különböző 
+„prímes” rendszám készíthető. 
+1 pont  
+Összesen: 
+3 pont  
+
+--- line 287 ---
+3 + 3 + 0,  3 + 2 + 1,  2 + 2 + 2. 
+2 pont 
+Egy vagy két hiba esetén  
+1 pont, több hiba esetén  
+0 pont jár. 
+Az ezekből előállítható számhármasok száma rendre 
+3, 6, 6, 3, 3, 6, 1. 
+2 pont  
+Összesen 3 + 6 + 6 + 3 + 3 + 6 + 1 = 28-féle „hatos” 
+rendszám készíthető. 
+
+--- line 290 ---
+1 pont, több hiba esetén  
+0 pont jár. 
+Az ezekből előállítható számhármasok száma rendre 
+3, 6, 6, 3, 3, 6, 1. 
+2 pont  
+Összesen 3 + 6 + 6 + 3 + 3 + 6 + 1 = 28-féle „hatos” 
+rendszám készíthető. 
+1 pont  
+Összesen: 
+5 pont  
+
+--- line 335 ---
+akkor c ∈ {0; 1}, 
+ez (6 ⋅ 2 =) 12 lehetőség. 
+Ha c = 3, akkor a = 2 és b = 8. 
+Ez 1 lehetőség. 
+1 pont 
+(c ≥ 4 nem lehet, hiszen b = a4 ≥ 24 = 16 lenne, így)  
+összesen 8 + 8 + 2 + 1 = 19 „logaritmusos” rendszám 
+készíthető. 
+1 pont Összesen 4 + 3 + 12 = 19 
+lehetőség. 
+
+--- line 337 ---
+Ha c = 3, akkor a = 2 és b = 8. 
+Ez 1 lehetőség. 
+1 pont 
+(c ≥ 4 nem lehet, hiszen b = a4 ≥ 24 = 16 lenne, így)  
+összesen 8 + 8 + 2 + 1 = 19 „logaritmusos” rendszám 
+készíthető. 
+1 pont Összesen 4 + 3 + 12 = 19 
+lehetőség. 
+Összesen: 
+6 pont  
+
+--- line 381 ---
+⋅
+⋅> 10 5 4
+2
+⋅⋅
+= 100 cm2, így 
+1 pont 
+a hulladék kevesebb, mint 4 ⋅ 10 ⋅ 10 – 100 = 300 cm2. 
+1 pont  
+Összesen: 
+6 pont  
+
+--- line 419 ---
+7
+2
+=
+
+
+
+ (≈ 0,429). 
+1 pont  
+Összesen: 
+4 pont  
+
+--- line 451 ---
+2 7
+7
+⋅
++
+⋅
+=
+. 
+1 pont  
+Összesen: 
+4 pont  
+
+--- line 462 ---
+3. c) első megoldás 
+Az ADH, DCG, CBF, BAE háromszögek mindegyik 
+éle pontosan egy háromszöghöz tartozik. 
+1 pont  
+Mivel (4 háromszög és) 3 zöld él van, lesz a három-
+szögek között olyan, amelynek minden éle kék (és ez 
+egy gráfelméleti kör). 
+2 pont  
+Összesen: 
+3 pont  
+
+--- line 472 ---
+ 
+3. c) második megoldás 
+Ha egy n pontú gráfban nincsen kör, akkor legfeljebb 
+n – 1éle lehet. 
+1 pont  
+A kék élek által alkotott részgráfnak legfeljebb 8 csú-
+csa és 9 éle van, tehát biztosan van benne kör. 
+2 pont  
+Összesen: 
+3 pont  
+
+--- line 511 ---
+−
+⋅
+=
++ . 
+1 pont  
+Ez (p2 ≥ 0 miatt) a p minden valós értékére pozitív, 
+tehát az állítás igaz. 
+1 pont  
+Összesen: 
+3 pont  
+
+--- line 543 ---
+A gyökök és együtthatók 
+közötti összefüggés sze-
+rint a másik valós gyök 
+ekkor 3,4 – 3 = 0,4 vagy 
+1,2
+0,4
+3 =
+. 
+Összesen: 
+4 pont  
+
+--- line 613 ---
+(4 0,6
+2
+)0,4
+x =
+⋅
+−
+=
+. 
+Összesen: 
+4 pont  
+
+--- line 718 ---
++
+−
+=
+ 
+1 pont  
+Ennek az egyenletnek a valós gyökei 0,5 és –0,75,  
+így ezek a p paraméter keresett értékei. 
+1 pont  
+Összesen: 
+6 pont  
+
+--- line 855 ---
+ 
+5. a) 
+9 180
+58
+°
+⋅π
+ ≈ 8,89° 
+2 pont  
+Összesen: 
+2 pont  
+
+--- line 869 ---
+f (50) ≈ 8,39 óra 
+1 pont  
+Az 50. napon (körülbelül) 8:23 óra (8 óra 23 perc) 
+hosszú a nappal. 
+1 pont 
+Ez a pont nem jár, ha a 
+vizsgázó nem kerekít, 
+vagy rosszul kerekít. 
+Összesen: 
+3 pont  
+
+--- line 933 ---
+Innen x ≈ 92,06 vagy x ≈ 256,36. 
+1 pont  
+A g függvény ábrája alapján az f (n) > 12 megoldásai 
+azok az n-ek, amelyekre 93 ≤ n ≤ 256.  
+1 pont  
+A 12 óránál hosszabb nappalok száma tehát  
+(256 – 93 + 1 =) 164 valóban. 
+1 pont  
+Összesen: 
+7 pont  
+
+--- line 1014 ---
+eleme az intervallumoknak).  
+1 pont  
+Ezért f (n) > 12 megoldásai azok az n-ek, amelyekre 
+93 ≤ n ≤ 256.  
+1 pont  
+A 12 óránál hosszabb nappalok száma tehát  
+(256 – 93 + 1 =) 164 valóban. 
+1 pont  
+Összesen: 
+7 pont  
+
+--- line 1091 ---
+2
+0
+11,2dx
+π
+
+= 11,2 ∙ 2π,  
+= (0 + 11,2 ∙ 2π) – (0 + 0) ≈ 70,37 
+1 pont ezért a terület ≈ 70,37. 
+Összesen: 
+4 pont  
+
+--- line 1134 ---
+1 pont 
+A 2, a 3 és az 5 közül pontosan az egyikkel osztható 
+90-nél nem nagyobb pozitív egészek száma tehát 
+45 + 30 + 18 – 2 · (15 + 9 + 6) + 3 · 3 = 42. 
+2 pont 
+A keresett szám a Venn-
+diagram alapján: 
+24 + 12 + 6 = 42 
+Összesen: 
+6 pont  
+
+--- line 1157 ---
+osztható pedig 3 db van, így a csak 3-mal oszthatók 
+száma 30 – 15 – 6 + 3 = 12.  
+A 90-nél nem nagyobb pozitív egészek között 5-tel 
+osztható 18 db, közülük 2-vel is osztható 9 db, 3-mal 
+is osztható 6 db, 2-vel és 3-mal is osztható pedig 3 db 
+van, így a csak 5-tel oszthatók száma  
+18 – 9 – 6 + 3 = 6. 
+3 pont  
+Összesen tehát (24 + 12 + 6 =) 42 ilyen szám van. 
+1 pont  
+
+--- line 1159 ---
+A 90-nél nem nagyobb pozitív egészek között 5-tel 
+osztható 18 db, közülük 2-vel is osztható 9 db, 3-mal 
+is osztható 6 db, 2-vel és 3-mal is osztható pedig 3 db 
+van, így a csak 5-tel oszthatók száma  
+18 – 9 – 6 + 3 = 6. 
+3 pont  
+Összesen tehát (24 + 12 + 6 =) 42 ilyen szám van. 
+1 pont  
+Összesen: 
+6 pont  
+
+--- line 1188 ---
+1 pont  
+A 2, a 3 és az 5 közül pontosan az egyikkel osztható 
+számok 1-től 30-ig:  
+2, 3, 4, 5, 8, 9, 14, 16, 21, 22, 25, 26, 27 és 28. 
+2 pont  
+Ez 14 db, tehát a 90-nél nem nagyobb megfelelő szá-
+mok száma (14 ⋅ 3 =) 42. 
+1 pont  
+Összesen: 
+6 pont  
+
+--- line 1224 ---
+
+(= 3570) lehetőség van. 
+1 pont  
+A kedvező esetek száma tehát (3741 – 3570 =) 171. 
+1 pont  
+A keresett valószínűség 171
+3741≈ 0,046. 
+1 pont  
+Összesen: 
+6 pont  
+
+--- line 1272 ---
+ 
+A kedvező esetek száma (2 ∙ 170 + 2 =) 342. 
+1 pont (170 + 1 =) 171 
+A keresett valószínűség 342
+7482 ≈ 0,046. 
+1 pont 
+171
+3741≈ 0,046 
+Összesen: 
+6 pont  
+
+--- line 1337 ---
+⋅
++
+=
+⋅
+  
+= 342
+7482 ≈ 0,046. 
+1 pont  
+Összesen: 
+6 pont  
+
+--- line 1352 ---
+2 pont  
+Az egy szelvényre eső átlagos kifizetett nyeremény: 
+233014180
+3 222831 ≈ 72,3 Ft. 
+1 pont  
+A szelvény árát is figyelembe véve az egy szelvényre 
+jutó átlagos veszteség 250 – 72,3 = 177,7 Ft. 
+1 pont  
+Összesen: 
+4 pont  
+
+--- line 1421 ---
+letképletéből a terület  
+(s ≈ 31,9 miatt):
+11,9 13,9 14,1 23,9
+⋅
+⋅
+⋅
+ ≈  
+≈ 236,1. 
+Összesen: 
+7 pont  
+
+--- line 1436 ---
+
+= (–1,8; –5) 
+1 pont  
+PH RH
+⋅
+
+= 0,2 ∙ (–1,8) + 0 ∙ (–5) = – 0,36 
+1 pont  
+Összesen: 
+2 pont  
+
+--- line 1477 ---
+( f a [−2; –1] intervallumon szigorúan monoton fogyó, 
+a [−1; 6] intervallumon szigorúan monoton növekvő, 
+f (–2) = 0 és f (6) = 48 > 0 ezért)  
+a maximumát 6-nál veszi fel. 
+1 pont**  
+A minimális skaláris szorzat a H1(–1; 0) ponthoz tar-
+tozik, a maximális pedig a H2 = Q(6; 0) ponthoz. 
+1 pont  
+Összesen: 
+7 pont  
+
+--- line 1619 ---
+A helyesen kiállított számla szerinti bruttó ételfo-
+gyasztás 5720 Ft, a bruttó italfogyasztás pedig  
+y = 7670 – x = 1950 Ft volt. 
+1 pont x = 7670 – y = 5720 
+Ellenőrzés: A tévesen kiállított számlán bruttó 
+5720 : 1,04 · 1,3 + 1950 : 1,3 · 1,04 = 
+= (7150 + 1560 =) 8710 Ft szerepelt valóban. 
+1 pont  
+Összesen: 
+7 pont 
+
+--- line 1697 ---
+=
+Ft, a bruttó étel-
+fogyasztás pedig x = 7670 – y = 5720 Ft volt. 
+1 pont*  
+Ellenőrzés: A tévesen kiállított számlán bruttó 
+5720 : 1,04 · 1,3 + 1950 : 1,3 · 1,04 = 
+= (7150 + 1560 =) 8710 Ft szerepelt valóban. 
+1 pont  
+Összesen: 
+7 pont  
+
+--- line 1822 ---
+y = (8710 – 7150 =) 1560 
+A helyesen kiállított számla szerinti bruttó ételfo-
+gyasztás 7150 : 1,3 · 1,04 = 5720 Ft, a bruttó italfo-
+gyasztás pedig 1560 : 1,04 · 1,3 = 1950 Ft volt. 
+1 pont  
+Ellenőrzés: A helyesen kiállított számlán bruttó 
+5720 + 1950 = 7670 Ft szerepelt valóban. 
+1 pont  
+Összesen: 
+7 pont  
+
+--- line 1897 ---
+a bruttó italfogyasztás 1500 · 1,3 = 1950 Ft volt. 
+1 pont  
+Ellenőrzés: A helyesen kiállított számlán bruttó 
+5500 · 1,04 + 1500 · 1,3 = (5720 + 1950 =) 7670 Ft, 
+a tévesen kiállított számlán pedig bruttó 
+5500 · 1,3 + 1500 · 1,04 = (7150 + 1560 =) 8710 Ft 
+szerepelt valóban. 
+1 pont  
+Összesen: 
+7 pont  
+
+--- line 1944 ---
+8. b) első megoldás 
+Az 1000 vendég összesen  
+100 ⋅ 1000 + 200 ⋅ 1900 + 250 ⋅ 2800 + 300 ⋅ 3600 + 
++ 100 ⋅ 4400 + 50 ⋅ 5200 = 2 960 000 Ft-ba kerül. 
+1 pont  
+1000 vendég 3 900 000 Ft-ot fizet be, 
+így az étterem várható haszna 940 000 Ft.  
+2 pont  
+Összesen: 
+3 pont  
+
+--- line 1958 ---
+1 pont 
+Ez a pont akkor is jár, ha 
+ez a gondolat csak a meg-
+oldásból derül ki. 
+A várható haszon 1000 vendég fogyasztása után: 
+100 ⋅ 2900 + 200 ⋅ 2000 + 250 ⋅ 1100 + 300 ⋅ 300 +  
++ 100 ⋅ (−500) + 50 ⋅ (−1300) = 940 000 Ft. 
+2 pont  
+Összesen: 
+3 pont  
+
+--- line 1986 ---
+tetbe véve) rendre 
+0,05 ⋅ 0,05 (= 0,0025); 2 ⋅ 0,05 ⋅ 0,1 (= 0,01); 
+2 ⋅ 0,05 ⋅ 0,3 (= 0,03); 2 ⋅ 0,05 ⋅ 0,25 (= 0,025); 
+0,1 ⋅ 0,1 (= 0,01); 2 ⋅ 0,1 ⋅ 0,3 (= 0,06). 
+2 pont  
+A keresett valószínűség az előző hat valószínűség  
+összege, azaz 0,1375. 
+1 pont  
+Összesen: 
+6 pont  
+
+--- line 2000 ---
+1 pont  
+a bliccelések száma ennek a 20%-a, vagyis 18 000,  
+az érvényes jeggyel történő utazások száma pedig így 
+(90 000 – 18 000 =) 72 000. 
+2 pont  
+A napi bevétel ekkor  
+72 000 ∙ 350 = 25 200 000 tallér lenne. 
+1 pont  
+Összesen: 
+4 pont  
+
+--- line 2178 ---
+A feladatban x egész szám lehet csak, ezért még meg 
+kell vizsgálni f (–8) és f (–9) értékét. 
+f (–8) = 27 518 400 > f (–9) = 27 517 050,  
+1 pont  
+tehát a vonaljegy árát (300 + 5 ∙ (–8) =) 260 tallérban 
+kell megállapítani. (Ekkor az utasok száma 108 000, 
+a fizető utasok száma pedig 105 840 fő lenne.) 
+1 pont  
+Összesen: 12 pont  
+Megjegyzés: Ha a vizsgázó a 250 talléros jegyárat tekinti kiindulási alapnak, és ehhez viszo-

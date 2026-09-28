@@ -1,0 +1,105 @@
+30: 2026. május 5. 9:00 
+47: 2026. május 5. 
+75: 2026. május 5. 
+95: 1. A feladatok megoldására 240 perc fordítható, az idő leteltével a munkát be kell fejeznie. 
+97: 2. A feladatok megoldási sorrendje tetszőleges. 
+99: 3. A II. részben kitűzött öt feladat közül csak négyet kell megoldania. A nem választott fel-
+106: 4. A feladatok megoldásához szöveges adatok tárolására és megjelenítésére nem alkalmas 
+110: 5. A megoldások gondolatmenetét minden esetben írja le, mert a feladatra adható pont-
+113: 6. Ügyeljen arra, hogy a lényegesebb részszámítások is nyomon követhetők legyenek! 
+115: 7. A gondolatmenet kifejtése során a zsebszámológép használata – további matematikai 
+130: 8. A feladatok megoldásánál használt tételek közül az iskolában tanult, névvel ellátott tételeket 
+137: 9. A feladatok végeredményét (a feltett kérdésre adandó választ) szöveges megfogalmazásban 
+140: 10. A dolgozatot tollal írja, de az ábrákat ceruzával is rajzolhatja. Az ábrákon kívül a ceruzával 
+144: 11. Minden feladatnak csak egy megoldása értékelhető. Több megoldási próbálkozás esetén 
+147: 12. Kérjük, hogy a szürkített téglalapokba semmit ne írjon! 
+158: 2026. május 5. 
+179: 1. 
+180: a) Oldja meg az alábbi egyenlőtlenségrendszert a valós számok halmazán! 
+209: b) A piacon 1 kg alma és 1 kg mandarin ára összesen 14 peták. Döme 1 kg-mal több 
+213: a) 
+216: b) 
+234: 2026. május 5. 
+263: 2026. május 5. 
+282: 2. 
+300: a) Egy 1957-es nukleáris kísérlet során a becslések szerint 32 gramm stroncium-90 
+303: b) Hány százalékkal csökken évente a bomlás következtében a stroncium-90 tömege? 
+305: c) Melyik évben kerülhetett 50 gramm stroncium-90 a környezetbe, ha 2026-ban 
+308: a) 
+311: b) 
+314: c) 
+331: 2026. május 5. 
+359: 2026. május 5. 
+378: 3. 
+382: a) Hány olyan eleme van a H halmaznak, amely nem osztható sem 2-vel, sem 3-mal, 
+385: b) Hány olyan háromelemű részhalmaza van a H halmaznak, amelyben a három elem 
+388: c) Hány olyan 299 elemű részhalmaza van a H halmaznak, amelyben az elemek ösz-
+391: a) 
+394: b) 
+397: c) 
+413: 2026. május 5. 
+441: 2026. május 5. 
+460: 4. 
+466: a) Igazolja, hogy az AB átfogó hossza 65 cm! 
+468: b) Határozza meg az ADBC konkáv négyszög területét! 
+492: c) Igazolja (a húrnégyszögek területképletének felhasználásával), hogy a bicentrikus 
+501: d) Határozza meg a négyszög területét! 
+503: a) 
+506: b) 
+509: c) 
+512: d) 
+529: 2026. május 5. 
+557: 2026. május 5. 
+581: 5. 
+584: a) Igazolja, hogy ekkor a sorozat bármely három egymást követő tagjának a szórása 
+590: b) Határozza meg n lehetséges értékeit! 
+594: c) Határozza meg a két szám négyzetes közepét! 
+596: a) 
+599: b) 
+602: c) 
+618: 2026. május 5. 
+646: 2026. május 5. 
+668: 6. 
+673: a) Döntse el, hogy az állítás igaz vagy hamis! Válaszát indokolja! 
+675: b) Fogalmazza meg az állítás megfordítását a G elemeire vonatkozóan, és döntse el a 
+682: c) Lehetséges-e, hogy Balázs és Attila január végéig még csak az egymás elleni mér-
+688: d) Igaz-e, hogy 1
+692: a) 
+695: b) 
+698: c) 
+701: d) 
+718: 2026. május 5. 
+746: 2026. május 5. 
+768: 7. 
+769: a) Adja meg az alábbi függvények közül azoknak a betűjelét, amelyek konkávok a 
+824: b) Határozza meg annak az y tengellyel párhuzamos egyenesnek az egyenletét, amelyik 
+843: c) Határozza meg a b, c és d paraméterek értékét! 
+845: a) 
+848: b) 
+851: c) 
+867: 2026. május 5. 
+895: 2026. május 5. 
+917: 8. 
+923: a) Mekkora a 2000 Ft-os nyereményt tartalmazó, 36°-os 
+937: b) Határozza meg a nyeremény várható értékét egy forgatás esetén! 
+939: c) Mennyi a valószínűsége annak, hogy három forgatással pontosan 6000 Ft-ot nyer a 
+945: d) Hogyan kell módosítani az 1000 és a 2000 Ft-os nyereményösszegekhez tartozó va-
+949: a) 
+952: b) 
+955: c) 
+958: d) 
+975: 2026. május 5. 
+1003: 2026. május 5. 
+1025: 9. 
+1036: a) Határozza meg az akvárium térfogatát! Válaszát literben, egészre kerekítve adja 
+1041: b) Mekkorának válasszuk a téglatest alaplapjának az éleit, hogy a felszíne (az alaplap 
+1044: a) 
+1047: b) 
+1063: 2026. május 5. 
+1091: 2026. május 5. 
+1119: 2026. május 5. 
+1173: 2026. május 5. 
+1203: 1. 
+1208: 2. 
+1211: 3. 
+1214: 4. 

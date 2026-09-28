@@ -1,0 +1,2817 @@
+
+===== PAGE 1 =====
+ 
+Javítási-értékelési útmutató 
+Matematika 
+ 
+Nat2020 
+E2411 
+OKTATÁSI HIVATAL 
+MATEMATIKA 
+ 
+EMELT SZINTŰ 
+ÍRÁSBELI VIZSGA 
+JAVÍTÁSI-ÉRTÉKELÉSI 
+ÚTMUTATÓ 
+ 
+É R E T T S É G I V I Z S G A • 2 0 2 4 . m á j u s 7 . 
+
+===== PAGE 2 =====
+ 
+Javítási-értékelési útmutató 
+Matematika 
+2 / 21 
+emelt szintű írásbeli vizsga 
+E2411 
+ 
+2024. május 7. 
+Fontos tudnivalók 
+ 
+ 
+Formai előírások: 
+ 
+1. Kérjük, hogy a dolgozatot a vizsgázó által használt színűtől eltérő színű tollal, olvas-
+hatóan javítsa ki. 
+2. A feladatok mellett található szürke téglalapok közül az elsőben a feladatra adható ma-
+ximális pontszám van, a javító által adott pontszám a mellette levő téglalapba 
+kerüljön. 
+3. Kifogástalan megoldás esetén kérjük, hogy a maximális pontszám feltüntetése mellett 
+kipipálással jelezze, hogy az adott gondolati egységet látta, és jónak minősítette. 
+4. Hiányos/hibás megoldás esetén kérjük, hogy a hiba jelzése mellett az egyes részpont-
+számokat is írja rá a dolgozatra. Ha a dolgozat javítását jobban követhetővé teszi, akkor 
+a vizsgázó által elvesztett részpontszámok jelzése is elfogadható. Ne maradjon olyan 
+részlet a megoldásban, amelyről a javítás után nem nyilvánvaló, hogy helyes, hibás vagy 
+fölösleges. 
+5. A javítás során alkalmazza az alábbi jelöléseket. 
+ helyes lépés: kipipálás 
+ elvi hiba: kétszeres aláhúzás 
+ számolási hiba vagy más, nem elvi hiba: egyszeres aláhúzás 
+ rossz kiinduló adattal végzett helyes lépés: szaggatott vagy áthúzott kipipálás 
+ hiányos indoklás, hiányos felsorolás vagy más hiány: hiányjel 
+ nem érthető rész: kérdőjel és/vagy hullámvonal 
+6. Az ábrán kívül ceruzával írt részeket ne értékelje. 
+ 
+Tartalmi kérések: 
+ 
+1. Egyes feladatoknál több megoldás pontozását is megadtuk. Amennyiben azoktól eltérő 
+megoldás születik, keresse meg ezen megoldásoknak az útmutató egyes részleteivel 
+egyenértékű részeit, és ennek alapján pontozzon. 
+2. A pontozási útmutató pontjai tovább bonthatók, hacsak az útmutató másképp nem 
+rendelkezik. Az adható pontszámok azonban csak egész pontok lehetnek. 
+3. Ha a megoldásban számolási hiba, pontatlanság van, akkor csak arra a részre nem jár 
+pont, ahol a tanuló a hibát elkövette. Ha a hibás részeredménnyel helyes gondolatmenet 
+alapján tovább dolgozik, és a megoldandó probléma lényegében nem változik meg, ak-
+kor a következő részpontszámokat meg kell adni. 
+4. Elvi hibát követően egy gondolati egységen belül (ezeket az útmutatóban kettős vonal 
+jelzi) a formálisan helyes matematikai lépésekre sem jár pont. Ha azonban a tanuló  
+az elvi hibával kapott rossz eredménnyel – mint kiinduló adattal – helyesen számol to-
+vább a következő gondolati egységekben vagy részkérdésekben, akkor ezekre a részekre 
+kapja meg a maximális pontot, ha a megoldandó probléma lényegében nem változott 
+meg. 
+5. Ha az útmutatóban egy megjegyzés zárójelben szerepel, akkor ennek hiánya esetén is 
+teljes értékű a megoldás. 
+
+===== PAGE 3 =====
+ 
+Javítási-értékelési útmutató 
+Matematika 
+3 / 21 
+emelt szintű írásbeli vizsga 
+E2411 
+ 
+2024. május 7. 
+ 
+6. Mértékegység hiánya esetén csak akkor jár pontlevonás, ha a hiányzó mértékegység 
+válaszban vagy mértékegység-átváltásban szerepel (zárójel nélkül). 
+7. Egy feladatra adott többféle megoldási próbálkozás közül a vizsgázó által megjelölt 
+változat értékelhető. A javítás során egyértelműen jelezze, hogy melyik változatot ér-
+tékelte, és melyiket nem. 
+8. A megoldásokért jutalompont (az adott feladatra vagy feladatrészre előírt maximális 
+pontszámot meghaladó pont) nem adható. 
+9. Egy feladatra vagy részfeladatra adott összpontszám nem lehet negatív. 
+10. Az olyan részszámításokért, részlépésekért nem jár pontlevonás, melyek hibásak, de 
+amelyeket a feladat megoldásához a vizsgázó ténylegesen nem használ fel. 
+11. A gondolatmenet kifejtése során a zsebszámológép használata – további matemati-
+kai indoklás nélkül – a következő műveletek elvégzésére fogadható el: összeadás, 
+kivonás, szorzás, osztás, hatványozás, gyökvonás, n!, 
+
+
+
+
+
+
+k
+n kiszámítása, a függvénytáb-
+lázatban fellelhető táblázatok helyettesítése (sin, cos, tg, log és ezek inverzei), a π és az 
+e szám közelítő értékének megadása, nullára rendezett másodfokú egyenlet gyökeinek 
+meghatározása. További matematikai indoklás nélkül használhatók a számológépek az 
+átlag és a szórás kiszámítására abban az esetben, ha a feladat szövege kifejezetten nem 
+követeli meg az ezzel kapcsolatos részletszámítások bemutatását is. Egyéb esetekben 
+a géppel elvégzett számítások indoklás nélküli lépéseknek számítanak, így azokért 
+nem jár pont. 
+12. Az ábrák bizonyító erejű felhasználása (például adatok leolvasása méréssel) nem elfo-
+gadható. 
+13. Valószínűségek megadásánál (ha a feladat szövege másképp nem rendelkezik) a száza-
+lékban megadott helyes válasz is elfogadható. 
+14. Ha egy feladat szövege nem ír elő kerekítési kötelezettséget, akkor az útmutatóban meg-
+adottól eltérő, észszerű és helyes kerekítésekkel kapott rész- és végeredmény is elfo-
+gadható. 
+15. A vizsgafeladatsor II. részében kitűzött 5 feladat közül csak 4 feladat megoldása 
+értékelhető. A vizsgázó az erre a célra szolgáló négyzetben – feltehetőleg – megjelölte 
+annak a feladatnak a sorszámát, amelynek értékelése nem fog beszámítani az összpont-
+számába. Ennek megfelelően a megjelölt feladatra esetlegesen adott megoldást nem is 
+kell javítani. Ha a vizsgázó nem jelölte meg, hogy melyik feladat értékelését nem kéri, 
+és a választás ténye a dolgozatból sem derül ki egyértelműen, akkor a nem értékelendő 
+feladat automatikusan a kitűzött sorrend szerinti utolsó feladat lesz. 
+ 
+ 
+
+===== PAGE 4 =====
+ 
+Javítási-értékelési útmutató 
+Matematika 
+4 / 21 
+emelt szintű írásbeli vizsga 
+E2411 
+ 
+2024. május 7. 
+ 
+I. 
+ 
+1. a) 
+(A logaritmusfüggvény értelmezési tartománya miatt 
+x  – 4 és) x  2. 
+1 pont
+Ez a pont akkor is jár, ha 
+a vizsgázó behelyettesí-
+téssel ellenőriz. 
+2
+3
+log 8
+
+ 
+1 pont
+ 
+(A logaritmusok összegére vonatkozó azonosságot 
+felhasználva) 
+2
+2
+log (8
+16)
+log (2
+8)
+x
+x
+
+
+
+. 
+1 pont
+ 
+(A logaritmusfüggvény kölcsönösen egyértelmű, 
+ezért) 8x – 16  2x + 8. 
+1 pont
+ 
+x  4 
+1 pont
+ 
+Ellenőrzés behelyettesítéssel vagy (az értelmezési 
+tartományon) ekvivalens átalakításokra hivatkozás-
+sal. 
+1 pont
+ 
+Összesen:
+6 pont
+ 
+ 
+1. b) első megoldás 
+A megoldandó egyenlet: 
+3
+2
+2
+7
+x
+x
+
+. 
+1 pont
+ 
+2
+2
+7
+8
+x
+x
+
+ 
+1 pont
+ 
+2
+8
+x  
+1 pont
+ 
+(Az exponenciális függvény kölcsönösen egyértelmű, 
+ezért) a metszéspont első koordinátája x  3, 
+1 pont
+ 
+második koordinátája y  (f (3)  g (3) ) 1. 
+(Tehát a metszéspont az M(3; 1) pont.) 
+1 pont
+ 
+Összesen:
+5 pont
+ 
+ 
+1. b) második megoldás 
+Az f függvény ábrázolása. 
+2 pont
+ 
+A g függvény ábrázolása ugyanabban a koordináta-
+rendszerben. 
+1 pont
+A függvények grafikonjai az M(3; 1) pontban met-
+szik egymást. (Más közös pont nincs.) 
+1 pont
+ 
+A leolvasott értékek ellenőrzése behelyettesítéssel. 
+1 pont
+ 
+Összesen:
+5 pont
+ 
+ 
+ 
+ 
+
+===== PAGE 5 =====
+ 
+Javítási-értékelési útmutató 
+Matematika 
+5 / 21 
+emelt szintű írásbeli vizsga 
+E2411 
+ 
+2024. május 7. 
+ 
+1. c) 
+A h függvény értelmezési tartománya {2; 3; 5; 7}. 
+1 pont
+ 
+(A h függvény kölcsönösen egyértelmű, ezért létezik 
+inverzfüggvénye.) A h függvény értékkészlete meg-
+egyezik az inverzfüggvényének értelmezési tartomá-
+nyával. 
+1 pont
+Ez a pont akkor is jár, ha 
+ez a gondolat csak a meg-
+oldásból derül ki. 
+A h függvény inverzének értelmezési tartománya: 
+{0,5; 1; 4; 16}. 
+1 pont
+ 
+Összesen:
+3 pont
+ 
+ 
+2. a) 
+Egy olyan megfelelő szám van, amely nem tartalmaz 
+0 számjegyet (1111111). 
+1 pont
+ 
+Ha a szám egy 0 számjegyet tartalmaz, akkor az a 
+legnagyobb helyiértéken kívül bárhol lehet, tehát 
+6 ilyen szám van. 
+1 pont
+ 
+Ha a szám két 0 számjegyet tartalmaz, akkor ezek a 
+legnagyobb helyiértéken kívül bárhol lehetnek, így 
+helyüket 6
+2
+
+
+
+  15-féleképpen választhatjuk ki. 
+1 pont
+ 
+Összesen tehát (1 + 6 + 15 ) 22 megfelelő szám van.
+1 pont
+ 
+Összesen:
+4 pont
+ 
+Megjegyzés: Teljes pontszámot kapjon a vizsgázó, ha rendezetten felsorolja a megfelelő szá-
+mokat, és ez alapján helyesen válaszol. 
+ 
+2. b) első megoldás  
+(A H-nak 9 eleme van.) 
+7
+35
+3
+
+
+
+ olyan négyelemű részhalmaza van H-nak, 
+amelynek az 1 eleme, de a 2 nem. 
+1 pont
+8
+56
+3
+
+
+
+ olyan négy-
+elemű részhalmaza van 
+H-nak, amelynek eleme 
+az 1. 
+Ugyanennyi olyan négyelemű részhalmaza van 
+H-nak, amelynek a 2 eleme, de az 1 nem. 
+1 pont
+Ugyanennyi olyan négy-
+elemű részhalmaz van, 
+amelynek eleme a 2. 
+7
+21
+2
+
+
+
+ olyan négyelemű részhalmaza van H-nak, 
+amelynek az 1 és a 2 is eleme. 
+1 pont
+ 
+Összesen tehát (35 + 35 + 21 ) 91 megfelelő rész-
+halmaz van. 
+1 pont
+(Logikai szitát alkal-
+mazva kapjuk, hogy) a 
+megfelelő részhalmazok 
+száma 
+(56 + 56 – 21 ) 91. 
+Összesen:
+4 pont
+ 
+ 
+ 
+ 
+
+===== PAGE 6 =====
+ 
+Javítási-értékelési útmutató 
+Matematika 
+6 / 21 
+emelt szintű írásbeli vizsga 
+E2411 
+ 
+2024. május 7. 
+ 
+2. b) második megoldás 
+(A H-nak 9 eleme van.) 
+8
+56
+3
+
+
+
+ olyan négyelemű részhalmaza van H-nak, 
+amelynek eleme az 1. 
+1 pont
+ 
+Ezeken kívül megfelelőek azok a négyelemű részhal-
+mazok is, amelyeknek az 1 nem eleme, de a 2 igen. 
+Ezeknek a száma 7
+35
+3
+
+
+
+. 
+2 pont
+ 
+Összesen tehát (56 + 35 ) 91 megfelelő részhalmaz 
+van. 
+1 pont
+ 
+Összesen:
+4 pont
+ 
+ 
+2. b) harmadik megoldás 
+Komplementer módszerrel határozzuk meg a megfe-
+lelő részhalmazok számát. 
+1 pont
+Ez a pont akkor is jár, ha 
+ez a gondolat csak a meg-
+oldásból derül ki. 
+(A H-nak 9 eleme van.) 
+Összesen 9
+126
+4
+
+
+
+ négyelemű részhalmaza van 
+H-nak. 
+1 pont
+ 
+7
+35
+4
+
+
+
+ olyan négyelemű részhalmaza van H-nak, 
+amelynek sem az 1, sem a 2 nem eleme. 
+1 pont
+ 
+Összesen tehát (126 – 35 ) 91 megfelelő részhalmaz 
+van. 
+1 pont
+ 
+Összesen:
+4 pont
+ 
+ 
+2. c) 
+Az állítás megfordítása:  
+„Ha A  B  , akkor A
+B
+
+.” 
+1 pont
+ 
+A megfordítás hamis. 
+1 pont
+ 
+Például A  {1} és B  {2} esetén a két halmaz met-
+szete üres, de A
+B
+
+. 
+1 pont
+ 
+Összesen:
+3 pont
+ 
+ 
+ 
+ 
+
+===== PAGE 7 =====
+ 
+Javítási-értékelési útmutató 
+Matematika 
+7 / 21 
+emelt szintű írásbeli vizsga 
+E2411 
+ 
+2024. május 7. 
+ 
+3. a) első megoldás 
+Az összes lehetséges (egyenlő valószínűségű) kime-
+netel száma 65 (7776). 
+1 pont
+ 
+A Sor számkombináció 2-féle lehet (1-2-3-4-5 vagy 
+2-3-4-5-6). 
+1 pont
+Ez a pont akkor is jár, ha 
+ez a gondolat csak a meg-
+oldásból derül ki. 
+Mindkettő 5! ( 120)-féleképpen lehetséges. 
+1 pont
+ 
+Így a kedvező kimenetelek száma 2 5!
+
+ ( 240). 
+1 pont
+ 
+A kérdezett valószínűség tehát 
+240
+5
+7776
+162
+
+
+
+
+
+
+
+ ≈ 0,031. 
+1 pont
+ 
+Összesen:
+5 pont
+ 
+ 
+3. a) második megoldás 
+A Sor számkombináció 2-féle lehet (1-2-3-4-5 vagy 
+2-3-4-5-6). 
+1 pont
+Ez a pont akkor is jár, ha 
+ez a gondolat csak a meg-
+oldásból derül ki. 
+Feltehetjük, hogy az öt kockával egyesével dobunk. 
+Ekkor annak a valószínűsége, hogy a játékos 1-2-3-4-5 
+számkombinációt dob valamilyen sorrendben 
+5 4 3 2 1
+120
+6 6 6 6 6
+7776
+
+
+
+
+
+. 
+(Elsőre 5-félét, másodikra 4-félét dobhatunk, stb.) 
+2 pont
+ 
+Ugyanennyi annak a valószínűsége, hogy a játékos 
+2-3-4-5-6 számkombinációt dob valamilyen sorrend-
+ben. 
+1 pont
+ 
+A kérdezett valószínűség tehát 
+240
+5
+7776
+162
+
+
+
+
+
+
+
+ ≈ 0,031. 
+1 pont
+ 
+Összesen:
+5 pont
+ 
+ 
+ 
+ 
+
+===== PAGE 8 =====
+ 
+Javítási-értékelési útmutató 
+Matematika 
+8 / 21 
+emelt szintű írásbeli vizsga 
+E2411 
+ 
+2024. május 7. 
+ 
+3. b) első megoldás 
+A két kockával összesen 36-félét dobhatunk. 
+1 pont
+ 
+(Ha az újra felvett két kockával két egyforma számot 
+dob a játékos, akkor két 3-as esetén Royal, különben 
+Full House számkombinációt kap. Tehát) 6-féle ked-
+vező dobás lehetséges. 
+1 pont
+P(Full House)  5
+36 
+P(Royal)  1
+36 
+A kérdezett valószínűség tehát 6
+1
+36
+6
+
+. 
+1 pont
+5
+1
+1
+36
+36
+6
+
+
+ 
+Összesen:
+3 pont
+ 
+ 
+3. b) második megoldás 
+Feltehetjük, hogy a két kockával egyesével dob a já-
+tékos. Bármit is dob az első kockával, a második koc-
+kával ugyanazt kell dobnia (3-as esetén Royal, más 
+esetben Full House lesz az eredmény). 
+2 pont
+ 
+A kérdezett valószínűség tehát 1
+6 . 
+1 pont
+ 
+Összesen:
+3 pont
+ 
+ 
+3. c) 
+A komplementer esemény (egyik dobás sem 6-os) 
+valószínűsége 
+2
+(1
+)
+p
+
+. 
+1 pont
+Pontosan az egyik 6-os 
+vagy mindkettő 6-os: 
+2
+2
+(1
+)
+0,64
+1 p
+p
+p
+
+
+
+
+
+
+. 
+Így 
+2
+(1
+)
+(1 0,64 ) 0,36
+p
+
+
+
+
+. 
+1 pont
+1 – p  0,6 (mert p  1) 
+1 pont
+2
+2
+0,64
+0
+p
+p
+
+
+
+ 
+p  0,4 
+1 pont
+Ennek az 1-nél nem na-
+gyobb gyöke p  0,4 
+(a másik 1,6). 
+Összesen:
+4 pont
+ 
+ 
+ 
+
+===== PAGE 9 =====
+ 
+Javítási-értékelési útmutató 
+Matematika 
+9 / 21 
+emelt szintű írásbeli vizsga 
+E2411 
+ 
+2024. május 7. 
+ 
+4. a) első megoldás 
+Az ABC háromszög területe a négyzet területének fele.
+1 pont
+ 
+Az AFC háromszög területe fele az ABC háromszög 
+területének (C-hez tartozó magasságuk közös, alap-
+jaik aránya 1 : 2). 
+1 pont
+ 
+Az AFQ háromszög területe háromnegyede az AFC 
+háromszög területének (F-ből induló magasságuk kö-
+zös, alapjaik aránya 9 : 12  3 : 4). 
+1 pont
+ 
+Az AFQ háromszög területe így 1 1 3
+3
+2 2 4
+16
+
+
+
+ része 
+az ABCD négyzet területének. 
+1 pont
+ 
+Összesen:
+4 pont
+ 
+ 
+4. a) második megoldás 
+Az ABC háromszög területe a négyzet területének fele.
+1 pont
+ 
+1
+2
+AF
+AB 
+, 
+9
+3
+12
+4
+AQ
+AC 
+
+ 
+1 pont
+ 
+1
+3
+sin 45
+sin 45
+2
+4
+2
+2
+3
+sin 45
+3
+3
+3
+8
+2
+8
+8
+2
+16
+AFQ
+ABCD
+ABC
+ABCD
+AB
+AC
+AF AQ
+T
+T
+AB AC
+T
+T
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+2 pont
+ 
+Összesen:
+4 pont
+ 
+ 
+4. a) harmadik megoldás  
+A négyzet oldalát jelölje x. Ekkor 
+2
+x
+AF 
+. 
+1 pont
+Az általánosság megszo-
+rítása nélkül feltehetjük, 
+hogy a négyzet oldala 
+egységnyi, és így
+1
+2
+AF 
+. 
+Az AFQ háromszög AF oldalhoz tartozó magassága a 
+Q-ból az AB-re bocsátott merőleges szakasz. 
+Mivel Q az AC szakasz C-hez közelebbi negyedelő-
+pontja, ezért ennek a magasságnak a hossza (a párhu-
+zamos szelőszakaszok tétele miatt) 3
+4 x . 
+1 pont
+3
+4
+m 
+ 
+2
+3
+3
+2 4
+2
+16
+AFQ
+x
+x
+T
+x
+
+
+
+
+ 
+1 pont
+3
+16
+AFQ
+T
+
+ 
+Mivel az ABCD négyzet területe 
+2x , ezért az AFQ 
+háromszög területe annak 3
+16 része. 
+1 pont 
+Összesen:
+4 pont
+ 
+Megjegyzés: Ha a vizsgázó a négyzet oldalhosszának egy konkrét értékével dolgozik, de nem 
+említi, hogy ez nem megy az általánosság rovására, akkor legfeljebb 3 pontot kaphat. 
+
+===== PAGE 10 =====
+ 
+Javítási-értékelési útmutató 
+Matematika 
+10 / 21 
+emelt szintű írásbeli vizsga 
+E2411 
+ 
+2024. május 7. 
+ 
+4. b) első megoldás 
+AF  12, AC  24 2 , AP  8 2 , AQ  18 2 
+A PAF szög nagysága 45°. 
+2 pont
+ 
+A PAF háromszögben koszinusztétellel: 
+2
+2
+2
+(8 2)
+12
+2 8 2 12 cos45
+80.
+FP 
+
+
+
+
+
+ 
+1 pont
+ 
+Tehát 
+80
+4 5
+FP 
+
+ valóban. 
+1 pont
+ 
+Az AFQ háromszögben koszinusztétellel: 
+2
+2
+2
+(18 2)
+12
+2 18 2 12 cos45
+360.
+QF 
+
+
+
+
+
+ 
+1 pont
+ 
+Tehát 
+360
+6 10
+QF 
+
+ valóban. 
+1 pont
+ 
+Összesen:
+6 pont
+ 
+Megjegyzés: Ha a vizsgázó megoldásában közelítő értékeket is felhasznál, akkor legfeljebb 
+4 pontot kaphat. 
+ 
+4. b) második megoldás 
+Merőlegest bocsátunk P-ből és Q-ból AB-re, a talp-
+pontokat jelölje rendre T és U. 
+APT, AQU és ACB egyenlőszárú derékszögű három-
+szögek hasonlóságából adódik, hogy AT  TP  8, 
+valamint AU  UQ  18. 
+2 pont
+PTF derékszögű háromszögben TF  (12 – 8 ) 4. 
+Pitagorasz-tétellel: 
+2
+2
+8
+4
+80
+4 5
+FP 
+
+
+
+ valóban. 
+2 pont
+ 
+QFU derékszögű háromszögben FU  (18 – 12 ) 6. 
+Pitagorasz-tétellel: 
+2
+2
+18
+6
+360
+6 10
+QF 
+
+
+
+ valóban. 
+2 pont
+ 
+Összesen:
+6 pont
+ 
+ 
+4. c) első megoldás 
+A két háromszög Q-nál levő szöge közös. 
+1 pont
+ 
+A szöget közrefogó oldalaik aránya: 
+18 2
+3
+6 10
+5
+AQ
+QF 
+
+, illetve 
+6 10
+3 5
+3
+5
+10 2
+5
+QF
+PQ 
+
+
+.
+2 pont
+ 
+Mivel a két háromszögben egy szög és a szöget köz-
+refogó két oldal aránya megegyezik, ezért a két há-
+romszög valóban hasonló. 
+1 pont
+ 
+Összesen:
+4 pont
+ 
+ 
+ 
+ 
+
+===== PAGE 11 =====
+ 
+Javítási-értékelési útmutató 
+Matematika 
+11 / 21 
+emelt szintű írásbeli vizsga 
+E2411 
+ 
+2024. május 7. 
+ 
+4. c) második megoldás 
+Az AFQ háromszög oldalainak aránya: 
+:
+:
+12 : 6 10 :18 2
+2 : 10 : 3 2
+AF FQ QA 
+
+. 
+1 pont
+ 
+Az FPQ háromszög oldalainak aránya: 
+:
+:
+4 5 :10 2 : 6 10
+2 : 10 :3 2
+FP PQ QF 
+
+. 
+2 pont
+ 
+Mivel a két háromszögben a megfelelő oldalak ará-
+nya megegyezik, ezért a két háromszög valóban ha-
+sonló. 
+1 pont
+ 
+Összesen:
+4 pont
+ 
+ 
+4. c) harmadik megoldás 
+Koszinusztétellel meghatározzuk a PFQ szöget. 
+2
+2
+2
+360
+80
+200
+1
+cos
+2
+2 6 10 4 5
+2
+QF
+FP
+PQ
+PFQ
+QF FP
+
+
+
+
+
+
+
+
+
+
+
+
+2 pont
+ 
+A PFQ szög ezért 45°-os. 
+1 pont
+ 
+Mivel a két háromszögben két szög megegyezik 
+(Q-nál levő szögük közös, és van egy 45°-os szögük), 
+ezért a két háromszög valóban hasonló. 
+1 pont
+ 
+Összesen:
+4 pont
+ 
+ 
+II. 
+ 
+5. a) első megoldás 
+4
+4
+1
+n
+n
+a
+n
+n
+
+
+
+ 
+1 pont
+4
+lim
+4
+lim
+n
+n
+n
+n
+n
+n
+n
+n
+n
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+4
+4
+lim 1
+lim1
+lim
+1 0
+1
+n
+n
+n
+n
+n
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+2 pont
+1 0
+1
+1
+
+
+ 
+Összesen:
+3 pont
+ 
+ 
+5. a) második megoldás 
+Megmutatjuk, hogy 
+4
+lim
+1
+n
+n
+n
+
+
+. 
+1 pont
+ 
+Minden pozitív -ra 
+4
+1
+ε
+n
+n
+
+
+
+ teljesül, ha 
+4
+ε
+n 
+, 
+ami a határérték definíciója szerint azt jelenti, hogy 
+az {an} határértéke 1. 
+2 pont
+ 
+Összesen:
+3 pont
+ 
+ 
+ 
+ 
+
+===== PAGE 12 =====
+ 
+Javítási-értékelési útmutató 
+Matematika 
+12 / 21 
+emelt szintű írásbeli vizsga 
+E2411 
+ 
+2024. május 7. 
+ 
+5. b) első megoldás 
+4
+4
+1
+n
+n
+a
+n
+n
+
+
+
+
+
+
+
+
+
+ 
+(Az {n} szigorúan monoton nő, ezért) az 1
+n
+
+
+
+ szigo-
+rúan monoton csökken, 
+1 pont
+ 
+tehát a 4
+n
+
+
+
+ is szigorúan monoton csökken. 
+1 pont
+ 
+Vagyis az {an} valóban szigorúan monoton csökken. 
+1 pont
+ 
+Összesen:
+3 pont
+ 
+ 
+5. b) második megoldás 
+1
+4
+4
+4
+4
+1
+1
+1
+1
+n
+n
+a
+a
+n
+n
+n
+n
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+1 pont
+1
+5
+1
+4
+n
+n
+n
+a
+n
+n
+a
+n
+
+
+
+
+
+
+ 
+4
+4(
+1)
+4
+(
+1)
+(
+1)
+n
+n
+n n
+n n
+
+
+
+
+
+
+
+ 
+1 pont
+2
+2
+5
+5
+4
+n
+n
+n
+n
+
+
+
+
+ 
+(n > 0 miatt n(n + 1) > 0, tehát) 
+4
+0
+(
+1)
+n n
+
+
+
+, 
+vagyis a sorozat valóban szigorúan monoton csökken.
+1 pont
+(Mivel n > 0, ezért) a tört 
+értéke kisebb 1-nél, tehát 
+a sorozat valóban szigo-
+rúan monoton csökken.
+Összesen:
+3 pont
+ 
+ 
+5. c)  
+A törtet egyszerűsítve: 
+(n + 4)(n + 3)(n + 2)(n + 1)  24(n + 1)(n + 3). 
+1 pont
+ 
+(Mivel n > 0, ezért) oszthatjuk az egyenletet 
+(n + 1)(n + 3)-mal: 
+(n + 4)(n + 2)  24. 
+1 pont
+ 
+2
+6
+16
+0
+n
+n
+
+
+
+ 
+1 pont
+ 
+Ennek a pozitív megoldása n  2. 
+(Az egyenlet másik gyöke n  –8.) 
+1 pont
+ 
+Ellenőrzés behelyettesítéssel vagy ekvivalens átalakí-
+tásokra hivatkozással. 
+1 pont
+ 
+Összesen:
+5 pont
+ 
+ 
+5. d)  
+2
+24(
+1)(
+3)
+24
+96
+72
+x
+x
+x
+x
+
+
+
+
+
+ 
+1 pont
+ 
+Az f függvény (amelynek grafikonja egy felfelé nyíló 
+parabola) zérushelyei 1 és 3. 
+1
+2
+3
+(24
+96
+72)
+x
+x
+dx
+
+
+
+
+
+
+ 
+1 pont
+ 
+
+===== PAGE 13 =====
+ 
+Javítási-értékelési útmutató 
+Matematika 
+13 / 21 
+emelt szintű írásbeli vizsga 
+E2411 
+ 
+2024. május 7. 
+ 
+
+1
+3
+2
+3
+8
+48
+72
+x
+x
+x
+
+
+
+
+
+
+
+
+
+ 
+1 pont
+ 
+ (–8 + 48 – 72) – (–216 + 432 – 216)  –32 – 0  
+1 pont
+ 
+ –32, és mivel a síkidom az x-tengely „alatt” van, 
+ezért a területe 32 területegység. 
+1 pont
+ 
+Összesen:
+5 pont
+ 
+ 
+6. a) 
+Az egyes napokon végzett felülések száma egy olyan 
+{an} számtani sorozat egymást követő tagjai, melynek 
+differenciája 5, és az első 14 tagjának összege 1001. 
+1 pont
+Ez a pont akkor is jár, ha 
+ez a gondolat csak a meg-
+oldásból derül ki. 
+1
+1
+(2
+(
+1) )
+(2
+13 5) 14
+1001
+2
+2
+a
+n
+d
+n
+a
+
+
+
+
+
+
+
+
+ 
+1 pont
+ 
+1
+2
+13 5
+143
+a 
+
+ 
+1 pont
+ 
+1
+39
+a 
+ 
+1 pont
+ 
+14
+39 13 5
+104
+a
+
+
+
+ 
+(Tehát az első napon 39, az utolsón pedig 104 felülést 
+végzett Domi, ami megfelel a feladat feltételeinek.) 
+1 pont
+ 
+Összesen:
+5 pont
+ 
+ 
+6. b) első megoldás 
+Jelölje Dalma átlagsebességét (km/h-ban) az első 
+körben v. Ekkor a második körben az átlagsebessége 
+v – 3,5. 
+1 pont
+ 
+Dalma az első kört 5,25
+v
+ óra, a második kört 5,25
+3,5
+v 
+ 
+óra alatt tette meg. 
+1 pont
+ 
+Ha 12 km/h Dalma kétkörös átlagsebessége, 
+akkor a két kört 10,5
+0,875
+12 
+óra ( 52,5 perc) alatt 
+tette meg. 
+1 pont*
+ 
+így megoldandó az 5,25
+5,25
+0,875
+3,5
+v
+v
+
+
+
+ egyenlet. 
+1 pont*
+1
+1
+1
+3,5
+6
+v
+v
+
+
+
+ 
+Megszorozva a törtek nevezőivel: 
+5,25(v – 3,5) + 5,25v  0,875v(v – 3,5). 
+1 pont* 6(v – 3,5) + 6v  v(v – 3,5)
+A kijelölt műveleteket elvégezve és rendezve 
+2
+0,875
+13,5625
+18,375
+0
+v
+v
+
+
+
+ adódik. 
+1 pont*
+2
+15,5
+21
+0
+v
+v
+
+
+
+ 
+Ennek az egyenletnek a gyökei 14 és 1,5. 
+1 pont
+ 
+A v  1,5 nem megoldás, mert ekkor a második kör 
+átlagsebességére negatív érték adódna. 
+1 pont
+ 
+Dalma átlagsebessége az első körben tehát 14 km/h, 
+a másodikban 10,5 km/h volt (amely megfelel a fel-
+adat feltételeinek). 
+1 pont
+ 
+Összesen:
+9 pont
+ 
+
+===== PAGE 14 =====
+ 
+Javítási-értékelési útmutató 
+Matematika 
+14 / 21 
+emelt szintű írásbeli vizsga 
+E2411 
+ 
+2024. május 7. 
+ 
+Megjegyzés: A *-gal jelölt 4 pontot az alábbi gondolatmenetért is megkaphatja a vizsgázó. 
+Dalma a két kört 5,25
+5,25
+3,5
+v
+v
+
+
+ óra alatt tette meg, 
+átlagsebessége pedig 12 km/h volt, 
+1 pont
+Ez a 3 pont akkor is jár, 
+ha a vizsgázó tanult isme-
+retként hivatkozik arra, 
+hogy ebben az esetben az 
+átlagsebesség a két kör 
+átlagsebességének a har-
+monikus közepe, és így a 
+2
+12
+1
+1
+3,5
+v
+v
+
+
+
+ egyen-
+letből indulva helyesen 
+számol. 
+így megoldandó a 
+10,5
+12
+5,25
+5,25
+3,5
+v
+v
+
+
+
+ egyenlet. 
+1 pont
+Az egyenlet bal oldalát átalakítva: 
+10,5
+10,5 (
+3,5)
+5,25(
+3,5)
+5,25
+10,5
+18,375
+(
+3,5)
+v v
+v
+v
+v
+v v
+
+
+
+
+
+
+. 
+1 pont
+Az egyenlet mindkét oldalát megszorozva az átalakí-
+tott bal oldal nevezőjével: 
+2
+10,5
+36,75
+126
+220,5
+v
+v
+v
+
+
+
+, amelyből rendezés 
+és egyszerűsítés után 
+2
+15,5
+21
+0
+v
+v
+
+
+
+ adódik. 
+1 pont
+ 
+ 
+6. b) második megoldás 
+Ha 12 km/h Dalma kétkörös átlagsebessége, akkor a 
+két kört 10,5
+0,875
+12 
+ óra ( 52,5 perc) alatt tette meg.
+1 pont
+ 
+Az első kör megtételéhez szükséges időt (órában) jelöl-
+je t, ekkor a második kört 0,875 – t óra alatt tette meg. 
+1 pont
+ 
+Így Dalma átlagsebessége a két körben rendre 
+5,25
+t
+, illetve 
+5,25
+0,875 t
+ volt. 
+1 pont
+ 
+A két kör átlagsebessége közti összefüggés szerint 
+5,25
+5,25
+3,5
+0,875
+t
+t
+
+
+ teljesül. 
+1 pont
+ 
+Beszorozva a törtek nevezőivel: 
+5,25(0,875 – t) – 3,5t(0,875 – t) = 5,25t. 
+1 pont
+ 
+A kijelölt műveleteket elvégezve és rendezve 
+2
+3,5
+13,5625
+4,59375
+0
+t
+t
+
+
+
+ adódik. 
+1 pont
+2
+112
+434
+147
+0
+t
+t
+
+
+
+ 
+Ennek az egyenletnek a gyökei 3,5 és 3
+8
+
+
+
+
+
+
+
+ 0,375. 
+1 pont
+ 
+A t  3,5 nem megoldás, mert ekkor a második kör 
+átlagsebességére negatív érték adódna. 
+1 pont
+ 
+Dalma átlagsebessége az első körben 5,25
+0,375 14 km/h, 
+a másodikban 5,25
+0,5 10,5 km/h volt (amely megfelel 
+a feladat feltételeinek). 
+1 pont
+Dalma az első kört 
+0,375 óra  22,5 perc, 
+a második kört pedig 
+0,5 óra  30 perc alatt 
+tette meg. 
+Összesen:
+9 pont
+ 
+
+===== PAGE 15 =====
+ 
+Javítási-értékelési útmutató 
+Matematika 
+15 / 21 
+emelt szintű írásbeli vizsga 
+E2411 
+ 
+2024. május 7. 
+ 
+6. c) 
+Két különböző pozitív valós szám mértani közepe 
+mindig nagyobb, mint a harmonikus közepe, de ki-
+sebb, mint a számtani közepe. 
+2 pont
+1 pont jár, ha csak az 
+egyik reláció helyes. 
+Összesen:
+2 pont
+ 
+ 
+7. a) 
+Egy homokszem térfogata 
+3
+4 0,1
+3
+
+ ≈ 0,00419 mm3.
+1 pont
+ 
+A homok a pohár űrtartalmának 60%-át tölti ki. 
+0,6 ꞏ 2 dl  1,2 dl  0,12 dm3  120 000 mm3 
+2 pont
+ 
+A „tele” 2 dl-es pohárban kb. 120000
+0,00419
+ ≈ 28 639 618,
+1 pont
+ 
+azaz kerekítve 29 millió homokszem található. 
+1 pont
+Ez a pont nem jár, ha a 
+vizsgázó nem kerekít, 
+vagy rosszul kerekít. 
+Összesen:
+5 pont
+ 
+ 
+7. b) 
+A homokkupac alapkörének sugara 1,55 m, 
+1 pont
+ 
+magassága 
+2
+2
+1,8
+1,55
+
+ ≈ 0,915 m, 
+1 pont
+ 
+térfogata 
+2
+1,55
+0,915
+3
+
+ ≈ 2,3 m3. 
+1 pont
+ 
+Összesen:
+3 pont
+ 
+ 
+ 
+
+===== PAGE 16 =====
+ 
+Javítási-értékelési útmutató 
+Matematika 
+16 / 21 
+emelt szintű írásbeli vizsga 
+E2411 
+ 
+2024. május 7. 
+ 
+7. c) első megoldás 
+Jelölje a kúp alapkörének sugarát r, magasságát m, 
+ekkor 
+2
+2
+2
+1,8
+r
+m
+
+
+, ahonnan 
+2
+2
+3,24
+r
+m
+
+
+. 
+1 pont
+ 
+A forgáskúp térfogata: 
+2
+2
+3
+(3,24
+)
+(3,24
+)
+3
+3
+3
+r
+m
+m
+m
+m
+m
+
+
+
+
+
+
+
+
+. 
+1 pont
+ 
+A V: ]0; 1,8[  R; 
+3
+( )
+(3,24
+)
+3
+V m
+m
+m
+
+
+
+
+ függ-
+vénynek ott lehet maximuma, ahol a deriváltja nulla. 
+1 pont
+Ez a pont akkor is jár, ha 
+ez a gondolat csak a meg-
+oldásból derül ki. 
+2
+( )
+(3,24
+3
+)
+0
+3
+V m
+m
+
+
+
+
+
+
+ 
+1 pont
+ 
+Innen (m  0 miatt) 
+1,08
+m 
+ ≈ 1,04 m. 
+1 pont
+ 
+Az 
+1,08
+m 
+ helyen a deriváltfüggvény pozitívból 
+negatívba megy át, ezért itt V-nek (abszolút) maxi-
+muma van. 
+1 pont
+( )
+2
+V m
+m
+
+
+ 
+(1,04)
+0
+V
+
+ 
+Ekkor 
+(
+3,24
+1,08
+2,16)
+r 
+
+
+ ≈ 1,47 m, 
+1 pont
+ 
+a maximális térfogat pedig kb. 2,35 m3. 
+1 pont
+ 
+Összesen:
+8 pont
+ 
+ 
+7. c) második megoldás 
+Jelölje az alkotók és az alaplap hajlásszögét (radián-
+ban) . Ekkor a forgáskúp alapkörének sugara 
+1,8cos , magassága 1,8sin , 
+1 pont
+ 
+térfogata pedig 
+3
+2
+1,8
+cos
+sin
+3
+
+
+. 
+1 pont
+ 
+A V: 
+π
+0; 2
+
+
+
+
+
+
+  R; 
+3
+2
+1,8
+cos
+sin
+( )
+3
+V
+
+
+
+
+ függ-
+vénynek ott lehet maximuma, ahol a deriváltja nulla. 
+1 pont
+Ez a pont akkor is jár, ha 
+ez a gondolat csak a meg-
+oldásból derül ki. 
+3
+3
+2
+1,8
+(cos
+2sin
+cos )
+( )
+0
+3
+V
+
+
+
+
+
+
+ 
+1 pont
+ 
+Innen 
+1
+tg
+2
+
+, azaz  ≈ 0,6155 (≈ 35,26°), 
+amelyből m ( 1,8sin ) ≈ 1,04 m. 
+1 pont
+ 
+3
+2
+2
+1,8
+sin
+( 7cos
+2sin
+)
+( )
+3
+V
+
+
+
+
+
+ 
+(0,6155)
+0
+V
+
+, így ez valóban (abszolút) maxi-
+mumhely. 
+1 pont
+ 
+Ekkor r ( 1,8cos ) ≈ 1,47 m, 
+1 pont
+ 
+a maximális térfogat pedig kb. 2,35 m3. 
+1 pont
+ 
+Összesen:
+8 pont
+ 
+Megjegyzés: Ha a vizsgázó válaszait mértékegység nélkül adja meg, akkor a c) feladatban 
+ezért összesen 1 pontot veszítsen. 
+ 
+
+===== PAGE 17 =====
+ 
+Javítási-értékelési útmutató 
+Matematika 
+17 / 21 
+emelt szintű írásbeli vizsga 
+E2411 
+ 
+2024. május 7. 
+ 
+8. a) 
+A kör egyenletét átalakítva: 
+2
+2
+(
+2)
+(
+6)
+53.
+x
+y
+
+
+
+
+ 
+1 pont
+ 
+A kör sugara 53, 
+1 pont
+ 
+a kör középpontja (2; 6). 
+1 pont
+ 
+Összesen:
+3 pont
+ 
+ 
+8. b) első megoldás  
+Az alapok hossza (például a két pont távolságára vo-
+natkozó képlettel) 
+9 2
+AB 
+ és 
+5 2
+CD 
+. 
+A szárak hossza 
+106
+AD
+BC
+
+
+. 
+2 pont
+ 
+Merőlegest állítunk D-ből AB-re, a talppontot jelölje T. 
+(Az így létrejött ATD derékszögű háromszög TD be-
+fogójának hossza a húrtrapéz m magassága, míg e be-
+fogóval szemközti α szöge a húrtrapéz alapon fekvő 
+szöge.) 
+1 pont
+(A húrtrapéz tengelyes szimmetriája miatt:) 
+1 (
+)
+2 2
+2
+AT
+AB
+CD
+
+
+
+
+. 
+1 pont
+ 
+2
+2
+106
+8
+98
+7 2
+m
+AD
+AT
+
+
+
+
+
+
+ (≈ 9,90) 
+1 pont
+ 
+2 2
+cosα
+106
+AT
+AD
+
+
+
+
+
+
+
+
+ (≈ 0,2747), 
+1 pont
+7 2
+tgα
+3,5
+2 2
+DT
+AT
+
+
+
+ 
+amiből α ≈ 74,05°. 
+1 pont
+ 
+Így a húrtrapéz hegyesszögei 74,05°-osak, 
+tompaszögei pedig 180° – 74,05°  105,95°-osak. 
+1 pont
+ 
+Összesen:
+8 pont
+ 
+ 
+8. b) második megoldás 
+(Az átlók M(4; 4) metszéspontja a rajta átmenő 
+m magasságot két részre bontja.) 
+Ezek az AMB és a CMD egyenlőszárú derékszögű 
+háromszögek átfogóhoz tartozó magasságai. 
+1 pont
+Az AMB és a CMD egyenlőszárú derékszögű három-
+szögekben az átfogóhoz tartozó magasság a befogók 
+2
+2 -szerese, így hosszuk 9 2
+2
+ és 5 2
+2
+. 
+2 pont
+ 
+Tehát 
+7 2
+m 
+ (≈ 9,90). 
+1 pont
+ 
+
+===== PAGE 18 =====
+ 
+Javítási-értékelési útmutató 
+Matematika 
+18 / 21 
+emelt szintű írásbeli vizsga 
+E2411 
+ 
+2024. május 7. 
+ 
+A derékszögű BMC háromszögben az ábra jelölése 
+alapján 
+5
+tgβ'
+9
+CM
+BM
+
+
+
+
+
+
+
+
+, 
+1 pont
+ 
+amiből β’ ≈ 29,05°. 
+1 pont
+ 
+β  β’ + 45° ≈ 74,05°. 
+1 pont
+ 
+Így a húrtrapéz hegyesszögei 74,05°-osak, 
+tompaszögei pedig 180° – 74,05°  105,95°-osak. 
+1 pont
+ 
+Összesen:
+8 pont
+ 
+ 
+8. b) harmadik megoldás 
+(A húrtrapéz AC és BD átlói párhuzamosak a koordi-
+náta-rendszer tengelyeivel, így merőlegesek egy-
+másra.) Emiatt a húrtrapéz területe az átlók szorzatá-
+nak fele: 
+2
+14
+98
+2
+t 
+
+. 
+1 pont
+Az alapok hossza (például a két pont távolságára vo-
+natkozó képlettel) 
+9 2
+AB 
+ és 
+5 2
+CD 
+. 
+1 pont
+ 
+Így 
+(9 2
+5 2)
+98
+2
+m
+t
+
+
+
+
+, 
+1 pont
+ 
+amiből 
+7 2
+m 
+ (≈ 9,90). 
+1 pont
+ 
+A húrtrapéz szárának hossza 
+106
+BC 
+. 
+1 pont
+ 
+Az ABC háromszögben koszinusztétel a  szögre: 
+2
+2
+2
+(9 2)
+( 106)
+14
+2
+cosβ
+2 9 2
+106
+53
+
+
+
+
+
+
+ (≈ 0,2747), 
+1 pont
+ 
+amiből β ≈ 74,05°. 
+1 pont
+ 
+Így a húrtrapéz szögei: α  β ≈ 74,05°, 
+γ  δ  180° – β ≈ 105,95°. 
+1 pont
+ 
+Összesen:
+8 pont
+ 
+Megjegyzések: 1. A magasság kiszámításáért járó pontokat az alábbi gondolatmenet alkalma-
+zása esetén is megkaphatja a vizsgázó: 
+az AB egyenes egyenletének felírása: y  x + 9 (1 pont), 
+a C pontra illeszkedő, az alapokra merőleges egyenes egyenletének felírása: y  –x + 3 
+(1 pont), 
+a két egyenesek metszéspontjának (a magasság talppontjának) kiszámítása: T(–3; 6) (1 pont), 
+a magasság (a TC szakasz hosszának) kiszámítása: 
+7 2
+m 
+ (1 pont). 
+2. A cos β értéke a 
+(9; 9)
+BA
+
+ és a 
+(9;
+5)
+BC
+
+
+ skaláris szorzata segítségével is kiszámítható: 
+9 9
+9 ( 5)
+9 2
+106 cosβ
+BA BC
+
+
+
+
+
+
+
+, ahonnan 
+2
+cosβ
+53
+
+ (2 pont). 
+ 
+
+===== PAGE 19 =====
+ 
+Javítási-értékelési útmutató 
+Matematika 
+19 / 21 
+emelt szintű írásbeli vizsga 
+E2411 
+ 
+2024. május 7. 
+ 
+8. c) 
+(Az 53-at két négyzetszám összegére kell bontani.) 
+0 + 53  1 + 52  4 + 49  9 + 44  16 + 37  25 + 28, 
+tehát ez a két négyzetszám csak a 4 és a 49 lehet, 
+melyek (valamilyen sorrendben) a keresett pontok 
+két koordinátájának négyzetei. 
+2 pont
+49 + 4  36 + 17 
+Így a kör egyenletében szereplő x helyére 4 külön-
+böző értéket helyettesíthetünk (2, –2, 7, –7). 
+1 pont
+(2; 7), (2; –7), 
+(–2; 7), (–2; –7),  
+(7; 2), (7; –2), 
+(–7; 2), (–7; –2), 
+Ezek mindegyikéhez két-két y érték tartozik. 
+1 pont
+Tehát összesen 8 ilyen pont van. 
+1 pont
+ 
+Összesen:
+5 pont
+ 
+Megjegyzés: Ha a vizsgázó indoklás nélkül felsorolja mind a 8 megfelelő pontot, és ez alapján 
+helyesen válaszol, akkor ezért 3 pontot kapjon. További 2 pont jár annak indoklásáért, hogy 
+több ilyen pont nincs. 
+ 
+9. a) 
+A k pontú teljes gráf éleinek száma 
+(
+1) .
+2
+k k 
+ 
+A 2k pontú gráf éleinek száma 2 (2
+1) .
+2
+k
+k 
+ 
+1 pont*
+ 
+(
+1)
+2 (2
+1)
+697
+2
+2
+k k
+k
+k
+
+
+
+
+ 
+1 pont*
+ 
+2
+5
+3
+1394
+0
+k
+k
+
+
+
+ 
+1 pont
+ 
+k  16,4 nem megoldás. 
+1 pont
+ 
+k  17 megoldás (és ez megfelel a feladat feltételei-
+nek). 
+1 pont
+ 
+Összesen:
+5 pont
+ 
+ 
+Megjegyzés: A *-gal jelölt 2 pontot az alábbi gondolatmenetért is megkaphatja a vizsgázó. 
+A 3k pontú teljes gráf éleinek száma 3 (3
+1) .
+2
+k
+k 
+ 
+Ezen pontok között 2k  k pont nincs összekötve. 
+1 pont
+ 
+2
+3 (3
+1)
+2
+697
+2
+k
+k
+k
+
+
+
+ 
+1 pont
+ 
+ 
+ 
+ 
+
+===== PAGE 20 =====
+ 
+Javítási-értékelési útmutató 
+Matematika 
+20 / 21 
+emelt szintű írásbeli vizsga 
+E2411 
+ 
+2024. május 7. 
+ 
+9. b) első megoldás 
+A bajnokságban összesen 6
+15
+2
+
+
+
+ mérkőzést játsza-
+nak le. 
+1 pont
+ 
+Ezek közül 3-at 15
+3
+
+
+
+
+
+
+ 455-féleképpen lehet kivá-
+lasztani (összes eset). 
+1 pont
+ 
+A mindhárom mérkőzésen szereplő csapat 6-féle lehet. 
+Ennek a csapatnak az 5 mérkőzéséből 3-at 
+5
+3
+
+
+
+ 10-féleképpen lehet kiválasztani. 
+A kedvező esetek száma így 6  10  60. 
+2 pont
+ 
+Tehát a keresett valószínűség 60
+12
+455
+91
+
+ ≈ 0,132. 
+1 pont
+ 
+Összesen:
+5 pont
+ 
+ 
+9. b) második megoldás 
+Tekinthetjük a csapatokat egy hatpontú gráf pontjai-
+nak, a mérkőzéseket pedig a gráf éleinek. Annak a 
+valószínűségét keressük, hogy a hatpontú teljes gráf 
+élei közül hármat véletlenszerűen kiválasztva a kivá-
+lasztott három élnek van közös végpontja. 
+1 pont
+Ez a pont akkor is jár, ha 
+ez a gondolat csak a meg-
+oldásból derül ki. 
+A hatpontú teljes gráfnak 6
+15
+2
+
+
+
+ éle van (a bajnok-
+ság mérkőzéseinek száma). 
+1 pont
+ 
+Ezek közül két egymáshoz csatlakozó élt 
+8
+4
+1 14
+7
+
+
+ 
+valószínűséggel választhatunk ki, mivel az első él tet-
+szőleges lehet, a második él pedig az elsőhöz csatla-
+kozó 8 él valamelyike. 
+1 pont
+ 
+Ezután annak a valószínűsége, hogy a harmadik kivá-
+lasztott él is az első két él közös végpontjára illeszke-
+dik 3
+13 , mert a közös csúcsból kiinduló 5 élből 2-t 
+már korábban kiválasztottunk. 
+1 pont
+ 
+Tehát a keresett valószínűség 4
+3
+7 13
+
+ ≈ 0,132. 
+1 pont
+ 
+Összesen:
+5 pont
+ 
+ 
+ 
+ 
+
+===== PAGE 21 =====
+ 
+Javítási-értékelési útmutató 
+Matematika 
+21 / 21 
+emelt szintű írásbeli vizsga 
+E2411 
+ 
+2024. május 7. 
+ 
+9. c)  
+(Tekinthetjük a hat embert egy hatpontú gráf pontjai-
+nak, a kézfogásokat pedig a gráf éleinek.) 
+(Egy 6 pontú egyszerű gráfban nem lehet egyszerre 0 
+és 5 fokszámú pont, ezért) a gráfban az öt különböző 
+fokszám 0; 1; 2; 3; 4, vagy 1; 2; 3; 4; 5 lehet csak. 
+2 pont
+ 
+(Ha a gráf öt pontjának fokszáma 0; 1; 2; 3; 4, akkor 
+a 4 fokszámú pontot a 0 fokszámún kívül mindegyik 
+ponttal össze kell kötni. A 3 fokszámú pontot pedig a 
+0 és az 1 fokszámún kívül mindegyik ponttal össze 
+kell kötni.) 
+Ekkor a hatodik pont fokszáma csak 2 lehet, 
+1 pont
+tehát az élek (azaz a kézfogások) száma lehet
+0 1 2
+2
+3
+4
+6
+2
+
+
+
+
+
+
+
+
+
+
+. 
+1 pont
+ 
+(Ha a gráf öt pontjának fokszáma 1; 2; 3; 4; 5, akkor 
+az 5 fokszámú pontot mindegyik ponttal össze kell 
+kötni. A 4 fokszámú pontot az 1 fokszámún kívül 
+mindegyik ponttal össze kell kötni. A 3 fokszámú 
+pontot pedig az 1 és a 2 fokszámún kívül mindegyik 
+ponttal össze kell kötni.) 
+Ekkor a hatodik pont fokszáma csak 3 lehet, 
+1 pont
+tehát az élek (azaz a kézfogások) száma lehet
+1 2
+3 3
+4
+5
+9
+2
+
+
+
+
+
+
+
+
+
+
+. 
+1 pont
+ 
+Összesen:
+6 pont
+ 
+ 

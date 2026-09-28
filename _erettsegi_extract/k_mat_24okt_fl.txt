@@ -1,0 +1,1143 @@
+
+===== PAGE 1 =====
+ 
+Matematika I. 
+ 
+Nat2020 
+K2413 
+Név:  ...........................................................  osztály:...... 
+OKTATÁSI HIVATAL 
+MATEMATIKA 
+ 
+KÖZÉPSZINTŰ 
+ÍRÁSBELI VIZSGA 
+2024. október 15. 8:00 
+I. 
+Időtartam: 45 perc 
+Pótlapok száma 
+Tisztázati 
+ 
+Piszkozati 
+ 
+ 
+É R E T T S É G I V I Z S G A • 2 0 2 4 . o k t ó b e r 1 5 . 
+
+===== PAGE 2 =====
+ 
+Matematika I. 
+2 / 8 
+középszintű írásbeli vizsga 
+K2413 
+ 
+2024. október 15. 
+Név:  ...........................................................  osztály:...... 
+Fontos tudnivalók 
+ 
+1. A feladatok megoldására 45 percet fordíthat, az idő leteltével a munkát be kell fejeznie. 
+ 
+ 
+2. A megoldások sorrendje tetszőleges. 
+ 
+ 
+3. A feladatok megoldásához szöveges adatok tárolására és megjelenítésére nem alkalmas 
+zsebszámológépet és bármilyen négyjegyű függvénytáblázatot használhat, más elektroni-
+kus vagy írásos segédeszköz használata tilos! 
+ 
+ 
+4. A feladatok végeredményét az erre a célra szolgáló keretbe írja, a megoldást csak akkor 
+kell részleteznie, ha erre a feladat szövege utasítást ad! 
+ 
+ 
+5. A dolgozatot tollal írja, az ábrákat ceruzával is rajzolhatja. Az ábrákon kívül a ceruzával írt 
+részeket a javító tanár nem értékelheti. Ha valamilyen megoldást vagy megoldásrészletet 
+áthúz, akkor az nem értékelhető. 
+ 
+ 
+6. Minden feladatnak csak egy megoldása értékelhető. Több megoldási próbálkozás esetén 
+egyértelműen jelölje, hogy melyiket tartja érvényesnek! 
+ 
+ 
+7. Kérjük, hogy a szürkített téglalapokba semmit ne írjon! 
+ 
+ 
+ 
+
+===== PAGE 3 =====
+ 
+Matematika I. 
+3 / 8 
+középszintű írásbeli vizsga 
+K2413 
+ 
+2024. október 15. 
+Név:  ...........................................................  osztály:...... 
+ 
+1. 
+Adott az A  {1; 2; 3; 4} és a B  {1; 2; 4; 8} halmaz. Elemei felsorolásával adja meg az 
+A  B, az A  B és az A \ B halmazokat! 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+A  B  
+1 pont 
+ 
+A  B  
+1 pont 
+ 
+A \ B  
+1 pont 
+ 
+ 
+2. 
+Rajzoljon egy olyan ötpontú gráfot, amelyben a pontok fokszáma 1, 2, 2, 3, 4.  
+ 
+ 
+ 
+2 pont 
+ 
+ 
+3. 
+Egy pékségben fehér kenyeret és rozskenyeret is árusítanak. Egyik reggel az első 30 vevő 
+közül 22-en fehér kenyeret, 17-en pedig rozskenyeret vásároltak. Hányan vásároltak 
+mindkét fajta kenyérből, ha mind a 30 vevő vett a két fajta kenyér valamelyikéből? 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+2 pont 
+ 
+ 
+
+===== PAGE 4 =====
+ 
+Matematika I. 
+4 / 8 
+középszintű írásbeli vizsga 
+K2413 
+ 
+2024. október 15. 
+Név:  ...........................................................  osztály:...... 
+ 
+4. 
+Egy számtani sorozat első tagja 6, hetedik tagja pedig 36. Adja meg a sorozat negyedik 
+tagját!  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+a4  
+2 pont 
+ 
+ 
+5. 
+Válassza ki az alábbi ábrák közül a valós számok halmazán értelmezett 
+1
+( )
+3
+2
+f x
+x
+
+ 
+függvény grafikonját! 
+ 
+ 
+ 
+ 
+A 
+B 
+C 
+D 
+ 
+ 
+ 
+A megfelelő grafikon:  
+2 pont 
+ 
+ 
+6. 
+Hány átlója van egy konvex nyolcszögnek?  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+2 pont 
+ 
+
+===== PAGE 5 =====
+ 
+Matematika I. 
+5 / 8 
+középszintű írásbeli vizsga 
+K2413 
+ 
+2024. október 15. 
+Név:  ...........................................................  osztály:...... 
+ 
+7. 
+Egy derékszögű háromszögben az egyik befogó 5 cm, a 
+másik befogó 6 cm hosszú. Számítsa ki az 5 cm-es befogó-
+hoz tartozó súlyvonal hosszát! Megoldását részletezze!   
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+2 pont 
+ 
+ A súlyvonal hossza:               cm 
+1 pont 
+ 
+ 
+8. 
+Hány különböző 4-gyel osztható négyjegyű szám készíthető a 2, 3, 4, 5 számjegyekből, 
+ha egy-egy számhoz mindegyik számjegyet egyszer használjuk fel? Megoldását 
+részletezze!  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+2 pont 
+ 
+  
+1 pont 
+ 
+ 
+ 
+ 
+
+===== PAGE 6 =====
+ 
+Matematika I. 
+6 / 8 
+középszintű írásbeli vizsga 
+K2413 
+ 
+2024. október 15. 
+Név:  ...........................................................  osztály:...... 
+ 
+9. 
+Egy számítógépes játékban Bélának 4-szer annyi pontja van, mint Andrásnak. Hány 
+pontja van Bélának, ha kettejüknek együtt 6500 pontjuk van? 
+ 
+ 
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Bélának                pontja van. 
+2 pont 
+ 
+ 
+10. Annának két 5-öse, négy 4-ese és két 3-asa van biológiából. 
+Adja meg Anna biológiajegyeinek szórását!   
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+A jegyek szórása: 
+2 pont 
+ 
+ 
+ 
+ 
+
+===== PAGE 7 =====
+ 
+Matematika I. 
+7 / 8 
+középszintű írásbeli vizsga 
+K2413 
+ 
+2024. október 15. 
+Név:  ...........................................................  osztály:...... 
+ 
+11. Egy mértani sorozat nyolcadik tagja 10
+20, kilencedik tagja 10
+23. 
+Adja meg a sorozat hányadosát és az első tagját!  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+A hányados: 
+1 pont 
+ 
+Az első tag: 
+2 pont 
+ 
+ 
+12. Két szabályos dobókockával egyszer dobunk. Mennyi annak a valószínűsége, hogy a 
+dobott számok összege négyzetszám lesz? Megoldását részletezze!  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+3 pont 
+ 
+ 
+1 pont 
+ 
+ 
+ 
+
+===== PAGE 8 =====
+ 
+Matematika I. 
+8 / 8 
+középszintű írásbeli vizsga 
+K2413 
+ 
+2024. október 15. 
+Név:  ...........................................................  osztály:...... 
+ 
+ 
+pontszám 
+maximális 
+elért 
+I. rész 
+1. feladat 
+3 
+ 
+2. feladat 
+2 
+ 
+3. feladat 
+2 
+ 
+4. feladat 
+2 
+ 
+5. feladat 
+2 
+ 
+6. feladat 
+2 
+ 
+7. feladat 
+3 
+ 
+8. feladat 
+3 
+ 
+9. feladat 
+2 
+ 
+10. feladat 
+2 
+ 
+11. feladat 
+3 
+ 
+12. feladat 
+4 
+ 
+ 
+ÖSSZESEN 
+30 
+ 
+ 
+dátum 
+ 
+javító tanár 
+ 
+ __________________________________________________________________________  
+ 
+ 
+ 
+pontszáma egész 
+számra kerekítve 
+elért 
+programba  
+beírt 
+I. rész 
+  
+  
+ 
+dátum 
+ 
+dátum 
+ 
+ 
+ 
+ 
+ 
+ 
+javító tanár 
+ 
+jegyző 
+ 
+Megjegyzések: 
+1. Ha a vizsgázó a II. írásbeli összetevő megoldását elkezdte, akkor ez a táblázat és az aláírási rész 
+üresen marad! 
+2. Ha a vizsga az I. összetevő teljesítése közben megszakad, illetve nem folytatódik a II. összetevővel, 
+akkor ez a táblázat és az aláírási rész kitöltendő! 
+
+===== PAGE 9 =====
+ 
+Matematika II. 
+ 
+Nat2020 
+K2413 
+Név:  ...........................................................  osztály:...... 
+OKTATÁSI HIVATAL 
+MATEMATIKA 
+ 
+KÖZÉPSZINTŰ 
+ÍRÁSBELI VIZSGA 
+2024. október 15. 8:00 
+II. 
+Időtartam: 135 perc 
+Pótlapok száma 
+Tisztázati 
+ 
+Piszkozati 
+ 
+ 
+É R E T T S É G I V I Z S G A • 2 0 2 4 . o k t ó b e r 1 5 . 
+
+===== PAGE 10 =====
+ 
+Matematika II. 
+2 / 16 
+középszintű írásbeli vizsga 
+K2413 
+ 
+2024. október 15. 
+Név:  ...........................................................  osztály:...... 
+ 
+ 
+
+===== PAGE 11 =====
+ 
+Matematika II. 
+3 / 16 
+középszintű írásbeli vizsga 
+K2413 
+ 
+2024. október 15. 
+Név:  ...........................................................  osztály:...... 
+ 
+Fontos tudnivalók 
+ 
+1. A feladatok megoldására 135 percet fordíthat, az idő leteltével a munkát be kell fejeznie. 
+ 
+2. A feladatok megoldási sorrendje tetszőleges. 
+ 
+3. A B részben kitűzött három feladat közül csak kettőt kell megoldania. A nem választott 
+feladat sorszámát írja be a dolgozat befejezésekor az alábbi négyzetbe! Ha a javító 
+tanár számára nem derül ki egyértelműen, hogy melyik feladat értékelését nem kéri, akkor 
+a kitűzött sorrend szerinti legutolsó feladatra nem kap pontot. 
+ 
+ 
+ 
+4. A feladatok megoldásához szöveges adatok tárolására és megjelenítésére nem alkalmas 
+zsebszámológépet és bármilyen négyjegyű függvénytáblázatot használhat, más elektroni-
+kus vagy írásos segédeszköz használata tilos! 
+ 
+5. A megoldások gondolatmenetét minden esetben írja le, mert a feladatra adható pont-
+szám jelentős része erre jár! 
+ 
+6. Ügyeljen arra, hogy a lényegesebb részszámítások is nyomon követhetők legyenek! 
+ 
+7. A gondolatmenet kifejtése során a zsebszámológép használata – további matematikai 
+indoklás nélkül – a következő műveletek elvégzésére fogadható el: összeadás, kivonás, 
+szorzás, osztás, hatványozás, gyökvonás, n!, 
+
+
+
+
+
+
+k
+n kiszámítása, a függvénytáblázatban fel-
+lelhető táblázatok helyettesítése (sin, cos, tg, log és ezek inverzei), a π és az e szám közelítő 
+értékének megadása, nullára rendezett másodfokú egyenlet gyökeinek meghatározása. To-
+vábbi matematikai indoklás nélkül használhatók a számológépek bizonyos statisztikai mu-
+tatók kiszámítására (átlag, szórás) abban az esetben, ha a feladat szövege kifejezetten nem 
+követeli meg az ezzel kapcsolatos részletszámítások bemutatását is. Egyéb esetekben a 
+géppel elvégzett számítások indoklás nélküli lépéseknek számítanak, azokért nem jár 
+pont. 
+ 
+8. A feladatok megoldásánál használt tételek közül az iskolában tanult, névvel ellátott tételeket 
+(pl. Pitagorasz-tétel, magasságtétel) nem kell pontosan megfogalmazva kimondania, elég 
+csak a tétel megnevezését említenie, de alkalmazhatóságát röviden indokolnia kell. 
+ 
+9. A feladatok végeredményét (a feltett kérdésre adandó választ) szöveges megfogalmazásban 
+is közölje! 
+ 
+10. A dolgozatot tollal írja, az ábrákat ceruzával is rajzolhatja. Az ábrákon kívül a ceruzával írt 
+részeket a javító tanár nem értékelheti. Ha valamilyen megoldást vagy megoldásrészletet 
+áthúz, akkor az nem értékelhető. 
+ 
+11. Minden feladatnak csak egy megoldása értékelhető. Több megoldási próbálkozás esetén 
+egyértelműen jelölje, hogy melyiket tartja érvényesnek! 
+ 
+12. Kérjük, hogy a szürkített téglalapokba semmit ne írjon! 
+ 
+ 
+
+===== PAGE 12 =====
+ 
+Matematika II. 
+4 / 16 
+középszintű írásbeli vizsga 
+K2413 
+ 
+2024. október 15. 
+Név:  ...........................................................  osztály:...... 
+ 
+A 
+ 
+13.  
+a)  Oldja meg a valós számok halmazán az alábbi egyenletet! 
+ 
+3
+1
+4
+5
+2
+x
+x
+x
+
+
+
+
+ 
+ 
+A baktériumok szaporodása laboratóriumi körülmények között több fázisra osztható, az 
+első szakaszban a baktériumok száma nagyon gyorsan növekszik. Egy kutató a mérései 
+alapján arra a következtetésre jutott, hogy a vizsgált baktériumok számát az első néhány 
+órában a ( )
+6 1,015p
+b p 
+ képlettel jól lehet közelíteni. A képletben p jelöli a mérés kez-
+detétől eltelt időt percben, b(p) pedig p perc elteltével a baktériumok számát ezer darab-
+ban megadva. 
+ 
+b) Mennyi lesz a baktériumok száma a mérés kezdetétől számított 60 perc elteltével a 
+képlet alapján? 
+ 
+c) A mérés kezdetétől számítva hányadik órában éri el a baktériumok száma a 
+600 ezret a képlet alapján? 
+a) 
+5 pont 
+ 
+b) 
+2 pont 
+ 
+c) 
+4 pont 
+ 
+Ö.: 
+11 pont 
+ 
+
+===== PAGE 13 =====
+ 
+Matematika II. 
+5 / 16 
+középszintű írásbeli vizsga 
+K2413 
+ 
+2024. október 15. 
+Név:  ...........................................................  osztály:...... 
+ 
+ 
+
+===== PAGE 14 =====
+ 
+Matematika II. 
+6 / 16 
+középszintű írásbeli vizsga 
+K2413 
+ 
+2024. október 15. 
+Név:  ...........................................................  osztály:...... 
+ 
+14.  Adott az f: R → R, 
+2
+( )
+(
+3)
+4
+f x
+x
+
+
+
+ függvény. 
+ 
+a) Melyik számot rendeli az f függvény az x  2,5-hez?  
+ 
+b) Határozza meg az f függvény zérushelyeit! 
+ 
+Az f függvény grafikonjára illeszkedik a P(2; –3) és a Q(6; 5) pont.  
+ 
+c) Számítsa ki a P és a Q pont távolságát! 
+ 
+d) Határozza meg a P és Q pontokra illeszkedő egyenes egyenletét! 
+ 
+ 
+ 
+  
+ 
+ 
+a) 
+2 pont 
+ 
+b) 
+4 pont 
+ 
+c) 
+2 pont 
+ 
+d) 
+4 pont 
+ 
+Ö.: 
+12 pont 
+ 
+
+===== PAGE 15 =====
+ 
+Matematika II. 
+7 / 16 
+középszintű írásbeli vizsga 
+K2413 
+ 
+2024. október 15. 
+Név:  ...........................................................  osztály:...... 
+ 
+ 
+
+===== PAGE 16 =====
+ 
+Matematika II. 
+8 / 16 
+középszintű írásbeli vizsga 
+K2413 
+ 
+2024. október 15. 
+Név:  ...........................................................  osztály:...... 
+ 
+15.  Az ABCD paralelogramma AB oldala 6 cm, AD oldala 5 cm hosszú, a két oldal által bezárt 
+szög 70°-os. 
+ 
+ 
+a) Számítsa ki az ABCD paralelogramma területét! 
+ 
+b) Számítsa ki a BD átló hosszát, valamint az ábrán jelölt β és γ szögek nagyságát! 
+ 
+Tekintsük a következő állítást: 
+„Ha egy négyszög tengelyesen szimmetrikus, akkor az a négyszög középpontosan is szim-
+metrikus.” 
+ 
+c) Döntse el, hogy az állítás igaz vagy hamis! Válaszát indokolja! 
+ 
+d) Fogalmazza meg az állítás megfordítását, és döntse el a megfordított állításról, hogy 
+igaz vagy hamis! Válaszát indokolja! 
+ 
+ 
+ 
+ 
+ 
+ 
+a) 
+2 pont 
+ 
+b) 
+6 pont 
+ 
+c) 
+2 pont 
+ 
+d) 
+3 pont 
+ 
+Ö.: 
+13 pont 
+ 
+
+===== PAGE 17 =====
+ 
+Matematika II. 
+9 / 16 
+középszintű írásbeli vizsga 
+K2413 
+ 
+2024. október 15. 
+Név:  ...........................................................  osztály:...... 
+ 
+ 
+
+===== PAGE 18 =====
+ 
+Matematika II. 
+10 / 16 
+középszintű írásbeli vizsga 
+K2413 
+ 
+2024. október 15. 
+Név:  ...........................................................  osztály:...... 
+ 
+B 
+ 
+A 16–18. feladatok közül tetszése szerint választott kettőt kell megoldania.  
+A kihagyott feladat sorszámát írja be a 3. oldalon lévő üres négyzetbe! 
+ 
+16. Emese süteményeket süt, amihez 5 kg cukrot vásárol. Ha 4 kg kristálycukrot és 1 kg barna 
+cukrot vásárolna, akkor 2600 Ft-ot, ha 3 kg kristálycukrot és 2 kg barna cukrot vásárolna, 
+akkor 3275 Ft-ot fizetne. 
+ 
+a) Mennyibe kerül 1 kg kristálycukor, és mennyibe kerül 1 kg barna cukor? 
+ 
+Emese egy angol nyelvű szakácskönyvből nézett ki egy receptet, amelyben a tömegek 
+mérésére az uncia mértékegységet használják. A recept alapján 5 uncia cukrot kell ki-
+mérni. Tudjuk, hogy 1 kilogramm körülbelül 35,3 unciának felel meg.  
+ 
+b) Hány gramm cukrot kell Emesének kimérnie? 
+Válaszát tíz grammra kerekítve adja meg! 
+ 
+Emese 72 darab lekváros és 96 darab csokis linzerből egyforma összetételű csomagokat 
+állít össze az iskolai vásárra: mindegyik csomagba azonos számú lekváros linzert tesz, és 
+mindegyik csomagba azonos számú csokis linzert tesz úgy, hogy az összes süteményt 
+felhasználja. 
+ 
+c) Legfeljebb hány csomagot állíthat össze így Emese? 
+ 
+Egy süteményesdobozban 10 darab lekváros és 15 darab csokis linzer van. A dobozból 
+(visszatevés nélkül) véletlenszerűen kiveszünk 5 darab süteményt. 
+ 
+d) Számítsa ki annak a valószínűségét, hogy a kiválasztott sütemények között pontosan 
+2 darab lesz lekváros! 
+ 
+ 
+ 
+ 
+ 
+ 
+a) 
+6 pont 
+ 
+b) 
+3 pont 
+ 
+c) 
+4 pont 
+ 
+d) 
+4 pont 
+ 
+Ö.: 
+17 pont 
+ 
+
+===== PAGE 19 =====
+ 
+Matematika II. 
+11 / 16 
+középszintű írásbeli vizsga 
+K2413 
+ 
+2024. október 15. 
+Név:  ...........................................................  osztály:...... 
+ 
+ 
+
+===== PAGE 20 =====
+ 
+Matematika II. 
+12 / 16 
+középszintű írásbeli vizsga 
+K2413 
+ 
+2024. október 15. 
+Név:  ...........................................................  osztály:...... 
+ 
+A 16–18. feladatok közül tetszése szerint választott kettőt kell megoldania.  
+A kihagyott feladat sorszámát írja be a 3. oldalon lévő üres négyzetbe! 
+ 
+17. A futballmérkőzéseken használt labdák mérete a játékosok korosztályától függ.  
+A 8 éveseknek ajánlott 3-as méretű labda átmérője 18 cm, a 12 év felettieknek ajánlott  
+5-ös méretű labda átmerője 21,5 cm. (A labdákat gömb alakúnak tekintjük.)  
+ 
+ 
+   1-es       2-es        3-as 
+ 4-es        5-ös 
+ 
+a) Hány százalékkal nagyobb az 5-ös méretű labda térfogata a 3-as méretű labda térfo-
+gatánál?  
+ 
+A 2022-es katari futballvilágbajnokságon 32 csapat vett részt.  
+A 32 csapatot 8 csoportba osztották, minden csoportba 4 csapat 
+került. A csoportkörös mérkőzések során egy csoporton belül 
+minden csapat minden csapattal egy mérkőzést játszott. A győ-
+zelemért 3 pont, a döntetlenért mindkét csapatnak 1-1 pont, a 
+vereségért 0 pont járt. Az egyik csoportban a táblázatban lát-
+ható pontszámok alakultak ki a csoportkörös mérkőzések végén.  
+ 
+b) Hány mérkőzés végződött döntetlenre ebben a csoportban a csoportkör során? 
+ 
+Az alábbi táblázat a csoportkörös mérkőzések végére kialakult pontszámok gyakoriságát 
+mutatja a 32 csapat esetében. 
+ 
+Pontszám 
+0 
+1 
+2 
+3 
+4 
+5 
+6 
+7 
+8 
+9 
+Gyakoriság 
+2 
+3 
+0 
+4 
+10 
+2 
+8 
+3 
+0 
+0 
+ 
+c) Határozza meg a 32 csapat pontszámának átlagát! 
+ 
+d) Töltse ki az alábbi táblázatot a csoportkörökben kialakult pontszámokra vonatko-
+zóan, és rajzolja fel az adatokat ábrázoló sodrófa (box plot) diagramot! 
+ 
+minimum 
+alsó kvartilis 
+medián 
+felső kvartilis 
+maximum 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+pontszám 
+Helyezés Pontszám 
+1. 
+7 
+2. 
+5 
+3. 
+4 
+4. 
+0 
+
+===== PAGE 21 =====
+ 
+Matematika II. 
+13 / 16 
+középszintű írásbeli vizsga 
+K2413 
+ 
+2024. október 15. 
+Név:  ...........................................................  osztály:...... 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+a) 
+5 pont 
+ 
+b) 
+4 pont 
+ 
+c) 
+2 pont 
+ 
+d) 
+6 pont 
+ 
+Ö.: 
+17 pont 
+ 
+
+===== PAGE 22 =====
+ 
+Matematika II. 
+14 / 16 
+középszintű írásbeli vizsga 
+K2413 
+ 
+2024. október 15. 
+Név:  ...........................................................  osztály:...... 
+ 
+A 16–18. feladatok közül tetszése szerint választott kettőt kell megoldania.  
+A kihagyott feladat sorszámát írja be a 3. oldalon lévő üres négyzetbe! 
+ 
+18. A balatoni viharjelzést 1988 óta távvezérelt fényjelző berendezésekkel oldják meg. A vi-
+harjelzésnek három különböző fokozata van:  
+ Ha a várható legerősebb széllökések nem haladják meg a 45 km/h sebességet, akkor a 
+rendszer alapon van, fényjelzés nincs. 
+ Ha a szél sebessége 45–60 km/h között várható, akkor elsőfokú viharjelzés van, a vi-
+harjelző berendezés lámpái percenként 45-ször villannak fel, egyenlő időközönként. 
+ 60 km/h-nál erősebb várható széllökések esetén másodfokú viharjelzés van, a vihar-
+jelző berendezés lámpái percenként 90-szer villannak fel, egyenlő időközönként. 
+  
+a) Milyen viharjelzési fokozat van érvényben, ha 12 másodperc alatt 9 felvillanást  
+látunk? 
+ 
+Viharjelzés szempontjából a Balatont 2012 óta három meden-
+cére osztották: nyugati, középső és keleti medencére. Az egyes 
+medencékben ki lehet adni egymástól eltérő fokozatú viharjel-
+zéseket (egy medencén belül minden viharjelző berendezés 
+azonos jelzést ad), de szomszédos medencékben legfeljebb egy 
+fokozattal térhetnek el egymástól a kiadott viharjelzések. 
+ 
+b) Hányféleképpen adható ki viharjelzés a teljes Balatonra vonatkozóan a fenti szabá-
+lyoknak megfelelően? (Egy ilyen például, ha a nyugati medencében a rendszer 
+alapon van, a középső és keleti medencében pedig elsőfokú a viharjelzés. Két kiadott 
+viharjelzést különbözőnek tekintünk, ha legalább az egyik medencében eltér a vi-
+harjelzési fokozat a két esetben.) 
+ 
+A Badacsony hegy térfogatának becsléséhez a hegy 
+közelíthető egy olyan csonkakúppal, melynek alap-
+köre 11 km kerületű, fedőkörének sugara 0,6 km, 
+magassága pedig 330 méter. 
+  
+ 
+c) Igaz-e, hogy (a becslés alapján) a hegy térfogata nagyobb, mint 1,5 km3? 
+ 
+Egy új badacsonyi borászat vezetője üzleti tervet készít. Úgy számol, hogy a második 
+évtől kezdve minden évben 5%-kal több bort fog előállítani, mint az előző évben. Az első 
+10 évben szeretne összesen 1000 hektoliter bort előállítani. 
+ 
+d) Hány hektoliter bort fog előállítani a tizedik évben, ha a terv teljesül? 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+a) 
+2 pont 
+ 
+b) 
+5 pont 
+ 
+c) 
+5 pont 
+ 
+d) 
+5 pont 
+ 
+Ö.: 
+17 pont 
+ 
+
+===== PAGE 23 =====
+ 
+Matematika II. 
+15 / 16 
+középszintű írásbeli vizsga 
+K2413 
+ 
+2024. október 15. 
+Név:  ...........................................................  osztály:...... 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 24 =====
+ 
+Matematika II. 
+16 / 16 
+középszintű írásbeli vizsga 
+K2413 
+ 
+2024. október 15. 
+Név:  ...........................................................  osztály:...... 
+ 
+ 
+a feladat 
+sorszáma 
+pontszám 
+maximális 
+elért 
+összesen 
+II. A rész 
+13. 
+11 
+ 
+ 
+14. 
+12 
+ 
+15. 
+13 
+ 
+II. B rész 
+ 
+17 
+ 
+ 
+ 
+17 
+ 
+ 
+ nem választott feladat 
+ ÖSSZESEN 
+70 
+ 
+ 
+ 
+ 
+pontszám 
+maximális 
+elért 
+I. rész 
+30 
+ 
+II. rész 
+70 
+ 
+Az írásbeli vizsgarész pontszáma 
+100 
+ 
+ 
+dátum 
+ 
+javító tanár 
+ 
+ __________________________________________________________________________  
+ 
+ 
+ 
+pontszáma egész 
+számra kerekítve 
+elért 
+programba  
+beírt 
+I. rész 
+  
+  
+II. rész 
+  
+  
+ 
+dátum 
+ 
+dátum 
+ 
+ 
+ 
+ 
+ 
+ 
+javító tanár 
+ 
+jegyző 
+ 

@@ -1,0 +1,2607 @@
+
+===== PAGE 1 =====
+ 
+Javítási-értékelési útmutató 
+Matematika 
+ 
+Nat2020 
+E2512 
+OKTATÁSI HIVATAL 
+MATEMATIKA 
+ 
+EMELT SZINTŰ 
+ÍRÁSBELI VIZSGA 
+JAVÍTÁSI-ÉRTÉKELÉSI 
+ÚTMUTATÓ 
+ 
+É R E T T S É G I V I Z S G A • 2 0 2 5 . m á j u s 6 . 
+
+===== PAGE 2 =====
+ 
+Javítási-értékelési útmutató 
+Matematika 
+2 / 19 
+emelt szintű írásbeli vizsga 
+E2512 
+ 
+2025. május 6. 
+Fontos tudnivalók 
+ 
+ 
+Formai előírások: 
+ 
+1. Kérjük, hogy a dolgozatot a vizsgázó által használt színűtől eltérő színű tollal, olvas-
+hatóan javítsa ki. 
+2. A feladatok mellett található szürke téglalapok közül az elsőben a feladatra adható ma-
+ximális pontszám van, a javító által adott pontszám a mellette levő téglalapba 
+kerüljön. 
+3. Kifogástalan megoldás esetén kérjük, hogy a maximális pontszám feltüntetése mellett 
+kipipálással jelezze, hogy az adott gondolati egységet látta, és jónak minősítette. 
+4. Hiányos/hibás megoldás esetén kérjük, hogy a hiba jelzése mellett az egyes részpont-
+számokat is írja rá a dolgozatra. Ha a dolgozat javítását jobban követhetővé teszi, akkor 
+a vizsgázó által elvesztett részpontszámok jelzése is elfogadható. Ne maradjon olyan 
+részlet a megoldásban, amelyről a javítás után nem nyilvánvaló, hogy helyes, hibás vagy 
+fölösleges. 
+5. A javítás során alkalmazza az alábbi jelöléseket. 
+ helyes lépés: kipipálás 
+ elvi hiba: kétszeres aláhúzás 
+ számolási hiba vagy más, nem elvi hiba: egyszeres aláhúzás 
+ rossz kiinduló adattal végzett helyes lépés: szaggatott vagy áthúzott kipipálás 
+ hiányos indoklás, hiányos felsorolás vagy más hiány: hiányjel 
+ nem érthető rész: kérdőjel és/vagy hullámvonal 
+6. Az ábrán kívül ceruzával írt részeket ne értékelje. 
+ 
+Tartalmi kérések: 
+ 
+1. Egyes feladatoknál több megoldás pontozását is megadtuk. Amennyiben azoktól eltérő 
+megoldás születik, keresse meg ezen megoldásoknak az útmutató egyes részleteivel 
+egyenértékű részeit, és ennek alapján pontozzon. 
+2. A pontozási útmutató pontjai tovább bonthatók, hacsak az útmutató másképp nem 
+rendelkezik. Az adható pontszámok azonban csak egész pontok lehetnek. 
+3. Ha a megoldásban számolási hiba, pontatlanság van, akkor csak arra a részre nem jár 
+pont, ahol a tanuló a hibát elkövette. Ha a hibás részeredménnyel helyes gondolatmenet 
+alapján tovább dolgozik, és a megoldandó probléma lényegében nem változik meg, ak-
+kor a következő részpontszámokat meg kell adni. 
+4. Elvi hibát követően egy gondolati egységen belül (ezeket az útmutatóban kettős vonal 
+jelzi) a formálisan helyes matematikai lépésekre sem jár pont. Ha azonban a tanuló  
+az elvi hibával kapott rossz eredménnyel – mint kiinduló adattal – helyesen számol to-
+vább a következő gondolati egységekben vagy részkérdésekben, akkor ezekre a részekre 
+kapja meg a maximális pontot, ha a megoldandó probléma lényegében nem változott 
+meg. 
+5. Ha az útmutatóban egy megjegyzés zárójelben szerepel, akkor ennek hiánya esetén is 
+teljes értékű a megoldás. 
+
+===== PAGE 3 =====
+ 
+Javítási-értékelési útmutató 
+Matematika 
+3 / 19 
+emelt szintű írásbeli vizsga 
+E2512 
+ 
+2025. május 6. 
+ 
+6. Mértékegység hiánya esetén csak akkor jár pontlevonás, ha a hiányzó mértékegység 
+válaszban vagy mértékegység-átváltásban szerepel (zárójel nélkül). 
+7. Egy feladatra adott többféle megoldási próbálkozás közül a vizsgázó által megjelölt 
+változat értékelhető. A javítás során egyértelműen jelezze, hogy melyik változatot ér-
+tékelte, és melyiket nem. 
+8. A megoldásokért jutalompont (az adott feladatra vagy feladatrészre előírt maximális 
+pontszámot meghaladó pont) nem adható. 
+9. Egy feladatra vagy részfeladatra adott összpontszám nem lehet negatív. 
+10. Az olyan részszámításokért, részlépésekért nem jár pontlevonás, melyek hibásak, de 
+amelyeket a feladat megoldásához a vizsgázó ténylegesen nem használ fel. 
+11. A gondolatmenet kifejtése során a zsebszámológép használata – további matemati-
+kai indoklás nélkül – a következő műveletek elvégzésére fogadható el: összeadás, 
+kivonás, szorzás, osztás, hatványozás, gyökvonás, n!, 
+
+
+
+
+
+
+k
+n kiszámítása, a függvénytáb-
+lázatban fellelhető táblázatok helyettesítése (sin, cos, tg, log és ezek inverzei), a π és az 
+e szám közelítő értékének megadása, nullára rendezett másodfokú egyenlet gyökeinek 
+meghatározása. További matematikai indoklás nélkül használhatók a számológépek az 
+átlag és a szórás kiszámítására abban az esetben, ha a feladat szövege kifejezetten nem 
+követeli meg az ezzel kapcsolatos részletszámítások bemutatását is. Egyéb esetekben 
+a géppel elvégzett számítások indoklás nélküli lépéseknek számítanak, így azokért 
+nem jár pont. 
+12. Az ábrák bizonyító erejű felhasználása (például adatok leolvasása méréssel) nem elfo-
+gadható. 
+13. Valószínűségek megadásánál (ha a feladat szövege másképp nem rendelkezik) a száza-
+lékban megadott helyes válasz is elfogadható. 
+14. Ha egy feladat szövege nem ír elő kerekítési kötelezettséget, akkor az útmutatóban meg-
+adottól eltérő, észszerű és helyes kerekítésekkel kapott rész- és végeredmény is elfo-
+gadható. 
+15. A vizsgafeladatsor II. részében kitűzött 5 feladat közül csak 4 feladat megoldása 
+értékelhető. A vizsgázó az erre a célra szolgáló négyzetben – feltehetőleg – megjelölte 
+annak a feladatnak a sorszámát, amelynek értékelése nem fog beszámítani az összpont-
+számába. Ennek megfelelően a megjelölt feladatra esetlegesen adott megoldást nem is 
+kell javítani. Ha a vizsgázó nem jelölte meg, hogy melyik feladat értékelését nem kéri, 
+és a választás ténye a dolgozatból sem derül ki egyértelműen, akkor a nem értékelendő 
+feladat automatikusan a kitűzött sorrend szerinti utolsó feladat lesz. 
+ 
+ 
+
+===== PAGE 4 =====
+ 
+Javítási-értékelési útmutató 
+Matematika 
+4 / 19 
+emelt szintű írásbeli vizsga 
+E2512 
+ 
+2025. május 6. 
+ 
+I. 
+ 
+1. a) 
+Jelölje a cipők novemberi árát forintban x, y és z 
+(x  y  z). A feladat szövege alapján megoldandó az 
+alábbi egyenletrendszer: 
+45 000
+0,5
+0,8
+37 000
+1,3
+48 000.
+x
+y
+z
+x
+y
+z
+x
+y
+z
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+2 pont  
+A harmadik egyenletből az elsőt kivonva: 
+0,3x  3000, amiből x  10 000. 
+1 pont  
+Ezt visszahelyettesítve, és az első egyenletből a má-
+sodikat kivonva: 5000 + 0,2y  8000, 
+amiből y  15 000. 
+1 pont  
+Az első egyenletbe visszahelyettesítve: 
+10 000 + 15 000 + z  45 000, amiből z  20 000. 
+1 pont  
+Tehát a három cipő novemberi ára 10 000 Ft, 
+15 000 Ft és 20 000 Ft volt. 
+1 pont  
+Ellenőrzés a szövegbe való behelyettesítéssel. 
+1 pont  
+Összesen: 
+7 pont  
+ 
+1. b) első megoldás 
+A számtani sorozat differenciáját jelölje d, 
+ezzel a négy szám rendre 3, 3 + d, 3 + 2d, 25. 
+1 pont  
+Az utolsó három szám mértani sorozatot alkot, ezért 
+3
+2
+25
+.
+3
+3
+2
+d
+d
+d
+
+
+
+
+ 
+1 pont 
+2
+(3
+2 )
+25(3
+)
+d
+d
+
+
+
+ 
+2
+9
+12
+4
+75
+25
+d
+d
+d
+
+
+
+
+ 
+Nullára rendezve: 
+2
+4
+13
+66
+0.
+d
+d
+
+
+
+ 
+2 pont  
+Ennek gyökei d1  6 és d2  –2,75. 
+1 pont  
+A másik két szám ekkor vagy a (3 + 6 ) 9 és 
+a (3 + 12 ) 15, vagy pedig a (3 – 2,75 ) 0,25 és 
+a (3 – 5,5 ) –2,5. 
+1 pont  
+Ellenőrzés: A 3, 9, 15 valóban egy (6 differenciájú) 
+számtani, a 9, 15, 25 valóban egy ( 5
+3 hányadosú) 
+mértani sorozat három egymást követő tagja. 
+A 3, 0,25, –2,5 valóban egy (–2,75 differenciájú) 
+számtani, a 0,25, –2,5, 25 egy (–10 hányadosú) mér-
+tani sorozat három egymást követő tagja. 
+1 pont  
+Összesen: 
+7 pont  
+ 
+ 
+ 
+
+===== PAGE 5 =====
+ 
+Javítási-értékelési útmutató 
+Matematika 
+5 / 19 
+emelt szintű írásbeli vizsga 
+E2512 
+ 
+2025. május 6. 
+ 
+1. b) második megoldás 
+A mértani sorozat hányadosát jelölje q, 
+ezzel a négy szám rendre 3, 
+2
+25
+q , 25
+q , 25. 
+1 pont  
+Az első három szám számtani sorozatot alkot, ezért 
+2
+2
+25
+25
+25
+3
+.
+q
+q
+q
+
+
+
+ 
+1 pont 
+2
+25
+25
+2
+3
+q
+q
+
+
+ 
+2
+25
+3
+25
+25
+q
+q
+
+
+
+ 
+Nullára rendezve: 
+2
+3
+25
+50
+0.
+q
+q
+
+
+
+ 
+2 pont  
+Ennek gyökei 
+1
+5
+3
+q 
+ és q2  –10. 
+1 pont  
+A másik két szám ekkor vagy a 9 és a 15, vagy pedig 
+a 0,25 és a –2,5. 
+1 pont  
+Ellenőrzés: A 3, 9, 15 valóban egy (6 differenciájú) 
+számtani, a 9, 15, 25 valóban egy ( 5
+3 hányadosú) 
+mértani sorozat három egymást követő tagja. 
+A 3, 0,25, –2,5 valóban egy (–2,75 differenciájú) 
+számtani, a 0,25, –2,5, 25 egy (–10 hányadosú) mér-
+tani sorozat három egymást követő tagja. 
+1 pont  
+Összesen: 
+7 pont  
+ 
+1. b) harmadik megoldás 
+Ha a négy szám rendre 3, a, b, 25, akkor a feladat 
+szövege alapján b – a  a – 3, tehát b  2a – 3, 
+1 pont 
+3
+2
+b
+a
+
+
+ 
+továbbá 
+25,
+b
+a
+b
+
+ tehát 
+2
+25 .
+b
+a
+
+ 
+1 pont  
+Itt b helyére 2a – 3-at helyettesítve: 
+2
+(2
+3)
+25 .
+a
+a
+
+
+ 
+1 pont Itt az a helyére 
+3
+2
+b 
+-t 
+helyettesítve és rendezve: 
+2
+12,5
+37,5
+0.
+b
+b
+
+
+
+ 
+Nullára rendezve: 
+2
+4
+37
+9
+0.
+a
+a
+
+
+
+ 
+1 pont 
+Ennek gyökei a1  9 és a2  0,25. 
+1 pont  
+Innen b1  15 és b2  –2,5. 
+1 pont  
+Ellenőrzés: A 3, 9, 15 valóban egy (6 differenciájú) 
+számtani, a 9, 15, 25 valóban egy ( 5
+3 hányadosú) 
+mértani sorozat három egymást követő tagja. 
+A 3, 0,25, –2,5 valóban egy (–2,75 differenciájú) 
+számtani, a 0,25, –2,5, 25 egy (–10 hányadosú) mér-
+tani sorozat három egymást követő tagja. 
+1 pont  
+Összesen: 
+7 pont  
+ 
+ 
+ 
+
+===== PAGE 6 =====
+ 
+Javítási-értékelési útmutató 
+Matematika 
+6 / 19 
+emelt szintű írásbeli vizsga 
+E2512 
+ 
+2025. május 6. 
+ 
+2. a) 
+Behelyettesítve a megadott értékeket: 
+0,05 8
+(8)
+140,
+1 1,5 2
+E
+P
+
+
+
+
+
+
+ 
+1 pont  
+ahonnan 
+0,4
+140 (1 1,5 2
+)
+E
+
+
+
+
+
+ ≈ 299, tehát a sziget 
+eltartóképessége ebből a fajból kb. 300 egyed. 
+2 pont 
+Ha a vizsgázó válasza 
+nem egész szám, akkor 
+legfeljebb 1 pont jár. 
+Összesen: 
+3 pont  
+ 
+2. b) 
+0
+1500
+1500
+(0)
+200,
+1
+2
+1
+c
+P
+k
+k
+
+
+
+
+
+
+
+ 
+1 pont  
+ahonnan 1 + k  7,5, tehát k  6,5. 
+1 pont  
+5
+1500
+(5)
+350,
+1
+6,5 2
+c
+P
+
+
+
+
+
+ 
+1 pont  
+ahonnan 
+5
+1500
+30
+1 6,5 2
+350
+7
+c
+
+
+
+
+
+, 
+1 pont 
+5
+350
+2275 2
+1500
+c
+
+
+
+
+ 
+tehát 
+5
+30
+1
+7
+2
+6,5
+c
+
+
+
+ ≈ 0,5055. 
+1 pont 
+5
+1150
+46
+2
+2275
+91
+c
+
+
+
+ 
+2
+5
+log 0,5055
+c
+
+
+ ≈ – 0,9842, 
+1 pont  
+ahonnan c ≈ 0,197. 
+1 pont  
+Összesen: 
+7 pont  
+ 
+2. c) első megoldás 
+Mivel 
+( )
+1
+2 ct
+E
+P t
+k
+
+
+, így bizonyítandó, hogy nem-
+negatív t esetén 
+.
+1
+2 ct
+E
+E
+k
+
+
+
+
+ 
+1 pont  
+A tört nevezője pozitív, mert a 2-nek tetszőleges va-
+lós kitevős hatványa, valamint k is pozitív. 
+1 pont  
+A (pozitív) E-vel osztva, a tört (pozitív) nevezőjével 
+szorozva: 1
+1
+2
+.
+ct
+k
+
+
+
+ 
+1 pont  
+0
+2
+,
+ct
+k
+
+
+
+ami valóban teljesül. Ezzel a bizonyítandó 
+állítást beláttuk (átalakításaink ekvivalensek voltak). 
+1 pont  
+Összesen: 
+4 pont  
+ 
+ 
+ 
+
+===== PAGE 7 =====
+ 
+Javítási-értékelési útmutató 
+Matematika 
+7 / 19 
+emelt szintű írásbeli vizsga 
+E2512 
+ 
+2025. május 6. 
+ 
+2. c) második megoldás 
+Mivel 
+( )
+1
+2 ct
+E
+P t
+k
+
+
+
+, így bizonyítandó, hogy nem-
+negatív t esetén 
+.
+1
+2 ct
+E
+E
+k
+
+
+
+
+ 
+1 pont  
+A 
+2 ct
+k
+
+
+ kifejezés értéke pozitív, mert a 2-nek tetsző-
+leges valós kitevős hatványa, valamint k is pozitív. 
+1 pont  
+Így az 1
+2 ct
+k
+
+
+
+ kifejezés értéke nagyobb 1-nél. 
+1 pont  
+Az 1
+2 ct
+E
+k
+
+
+
+ tört nevezője tehát 1-nél nagyobb, 
+a tört értéke így valóban kisebb E-nél (hiszen E > 0). 
+1 pont  
+Összesen: 
+4 pont  
+ 
+3. a) 
+2
+1
+2
+a
+a
+
+
+ 
+3
+2
+1
+3
+5
+a
+a
+a
+
+
+
+ 
+4
+3
+1
+4
+9
+a
+a
+a
+
+
+
+ 
+2 pont  
+1
+2
+3
+4
+1
+4
+16
+360
+a
+a
+a
+a
+a
+
+
+
+
+
+
+ 
+1 pont  
+Innen 
+1
+86.
+a 
+ 
+1 pont  
+Így a négyszög belső szögei 86º, 88º, 91º és 95º 
+(amelyek megfelelnek a feltételeknek). 
+1 pont  
+Összesen: 
+5 pont  
+ 
+3. b) első megoldás 
+Az ABC háromszögben szinusztétellel: 
+18
+sin
+20
+sin70
+BCA
+
+
+, 
+1 pont  
+ahonnan BCA ≈ 57,75º (tompaszög nem lehet, 
+mert rövidebb oldallal szemben kisebb szög van). 
+1 pont  
+Így CAB (180º – 70º – 57,75º ) 52,25º, 
+és DAC (90º – 52,25º ) 37,75º. 
+1 pont  
+Az ABC háromszögben koszinusztétellel: 
+2
+2
+2
+20
+18
+2 20 18 cos52,25
+BC 
+
+
+
+
+ (≈ 283,2), 
+1 pont 
+Az ABC háromszögben 
+szinusztétellel: 
+sin52,25
+20
+sin70
+BC
+
+
+
+, 
+ahonnan BC ≈ 16,83 cm. 
+1 pont  
+Az ACD háromszögben koszinusztétellel: 
+2
+2
+2
+20
+15
+2 20 15 cos37,75
+CD 
+
+
+
+
+ (≈ 150,6), 
+1 pont  
+ahonnan CD ≈ 12,27 cm. 
+1 pont  
+Összesen: 
+7 pont  
+ 
+ 
+ 
+
+===== PAGE 8 =====
+ 
+Javítási-értékelési útmutató 
+Matematika 
+8 / 19 
+emelt szintű írásbeli vizsga 
+E2512 
+ 
+2025. május 6. 
+ 
+3. b) második megoldás 
+Az ABD háromszögben Pitagorasz-tétellel: 
+2
+2
+15
+18
+BD 
+
+≈ 23,43 cm. 
+1 pont  
+15
+tg
+18
+ABD
+, 
+1 pont  
+ahonnan ABD≈ 39,81º, 
+és így DBC (70º – 39,81º ) 30,19º. 
+1 pont  
+Az ABC háromszögben koszinusztétellel: 
+2
+2
+2
+20
+18
+2 18
+cos70 .
+BC
+BC
+
+
+
+
+
+ 
+Rendezve: 
+2
+12,31
+76
+0,
+BC
+BC
+
+
+
+
+ 
+1 pont  
+ennek pozitív gyöke BC ≈ 16,83 cm (a negatív gyök 
+≈ – 4,52). 
+1 pont  
+A DBC háromszögben koszinusztétellel: 
+2
+2
+2
+23,43
+16,83
+2 23,43 16,83 cos30,19 ,
+CD 
+
+
+
+
+ 
+1 pont  
+ahonnan CD ≈ 12,27 cm. 
+1 pont  
+Összesen: 
+7 pont  
+Megjegyzés: Ha a vizsgázó a válaszait mértékegység nélkül adja meg, akkor ezért a feladat-
+ban összesen 1 pontot veszítsen. 
+ 
+4. a) első megoldás 
+A keresett kör középpontja az AB szakasz felezőme-
+rőlegesének és az y tengelynek a metszéspontja. 
+1 pont 
+Ez a pont akkor is jár, ha 
+ez a gondolat csak a meg-
+oldásból derül ki. 
+Az AB szakasz felezőpontja: 
+5
+7 14
+6
+;
+(6;10).
+2
+2
+AB
+F
+
+
+
+
+
+
+
+
+ 
+1 pont  
+A felezőmerőleges egy normálvektora: 
+(7
+5;6 14)
+(2; 8),
+AB
+
+
+
+
+
+ 
+1 pont n(1; –4) 
+így az egyenlete: 2x – 8y  (2 ꞏ 6 – 8 ꞏ 10 ) –68.  
+1 pont x – 4y  –34 
+x  0 esetén y  8,5, 
+tehát a kör középpontjának koordinátái (0; 8,5). 
+1 pont  
+A kör sugara a középpont és például az A pont távol-
+sága: 
+2
+2
+5
+(14
+8,5)
+55,25
+
+
+
+ (≈ 7,43). 
+1 pont  
+A kör egyenlete 
+2
+2
+(
+8,5)
+55,25.
+x
+y
+
+
+
+ 
+1 pont  
+Összesen: 
+7 pont  
+ 
+ 
+ 
+
+===== PAGE 9 =====
+ 
+Javítási-értékelési útmutató 
+Matematika 
+9 / 19 
+emelt szintű írásbeli vizsga 
+E2512 
+ 
+2025. május 6. 
+ 
+4. a) második megoldás 
+A keresett kör y tengelyre illeszkedő középpontja le-
+gyen a C(0; v) pont. 
+1 pont  
+CA  CB, tehát 
+2
+2
+2
+2
+5
+(14
+)
+7
+(6
+) ,
+v
+v
+
+
+
+
+
+ 
+1 pont  
+amiből 
+2
+2
+25 196
+28
+49
+36 12
+.
+v
+v
+v
+v
+
+
+
+
+
+
+
+ 
+1 pont  
+Innen 16v  136, azaz v  8,5. 
+Tehát a kör középpontjának koordinátái (0; 8,5). 
+2 pont  
+A kör sugara a középpont és például a B pont távol-
+sága: 
+2
+2
+7
+(6
+8,5)
+55,25
+
+
+
+ (≈ 7,43). 
+1 pont  
+A kör egyenlete 
+2
+2
+(
+8,5)
+55,25.
+x
+y
+
+
+
+ 
+1 pont  
+Összesen: 
+7 pont  
+ 
+ 
+4. b) első megoldás 
+Mivel B(7; 6) a parabola tengelypontja, 
+ezért a parabola egyenlete: 
+2
+1 (
+7)
+6.
+2
+y
+x
+p
+
+
+
+ 
+1 pont  
+Behelyettesítve az A pont koordinátáit: 
+2
+1
+14
+(5
+7)
+6.
+2p
+
+
+
+ 
+1 pont  
+4
+8
+,
+2p
+
+ 
+1 pont  
+amiből 
+1.
+4
+p 
+ 
+1 pont  
+Összesen: 
+4 pont  
+ 
+ 
+ 
+
+===== PAGE 10 =====
+ 
+Javítási-értékelési útmutató 
+Matematika 
+10 / 19 
+emelt szintű írásbeli vizsga 
+E2512 
+ 
+2025. május 6. 
+ 
+4. b) második megoldás 
+Ha a „felfelé nyíló” parabola tengelypontja B(7; 6) 
+és paramétere p, akkor fókuszpontja 7; 6
+2
+p
+
+
+
+
+
+
+
+, 
+vezéregyenesének egyenlete pedig 
+6
+2
+p
+y 
+
+. 
+1 pont  
+Az A pont illeszkedik a parabolára, így egyenlő tá-
+volságra van a fókuszponttól és a (parabola alatt 
+levő) vezéregyenestől: 
+2
+2
+(5
+7)
+14
+6
+14
+6
+2
+2
+p
+p
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.  
+1 pont  
+Négyzetre emelve (mindkét oldal pozitív): 
+2
+2
+68
+8
+64
+8
+4
+4
+p
+p
+p
+p
+
+
+
+
+
+, 
+1 pont  
+amiből 
+1.
+4
+p 
+ 
+1 pont  
+Összesen: 
+4 pont  
+ 
+4. b) harmadik megoldás 
+Toljuk el (a (7; 6) vektorral) a koordináta-rendszert 
+úgy, hogy az origó a B pont legyen. Ebben a koordi-
+náta-rendszerben az A pont koordinátái (–2; 8). 
+1 pont  
+Az origó tengelypontú parabola egyenlete 
+2
+1
+.
+2
+y
+x
+p
+
+ 
+1 pont  
+Ebbe az A pont (új) koordinátáit behelyettesítve: 
+2
+1
+8
+( 2) ,
+2p
+
+
+ 
+1 pont  
+amiből 
+1.
+4
+p 
+ 
+1 pont  
+Összesen: 
+4 pont  
+  
+ 
+
+===== PAGE 11 =====
+ 
+Javítási-értékelési útmutató 
+Matematika 
+11 / 19 
+emelt szintű írásbeli vizsga 
+E2512 
+ 
+2025. május 6. 
+ 
+II. 
+ 
+5. a) első megoldás 
+Ha az iskola fiú tanulóinak számát n-nel jelöljük, 
+akkor a lányok száma 510 – n. 
+1 pont  
+Megoldandó a következő egyenletrendszer: 
+13
+100
+3
+(510
+)
+20.
+100
+p
+n
+p
+n
+
+
+
+
+
+
+
+
+
+
+ 
+1 pont  
+Rendezve az egyenleteket: 
+1300
+510
+1530
+3
+2000.
+np
+p
+np
+n
+
+
+
+
+
+
+
+
+ 
+1 pont  
+A két egyenletet összeadva: 
+510p + 1530 – 3n  3300, 
+1 pont*  
+amiből 
+510
+1770
+170
+590.
+3
+p
+n
+p
+
+
+
+
+ 
+1 pont* 
+59
+170
+17
+n
+p 
+
+ 
+Ezt az első egyenletbe visszaírva: 
+(170
+590)
+1300
+p
+p
+
+
+
+, majd 10-zel osztva és nul-
+lára rendezve: 
+2
+17
+59
+130
+0.
+p
+p
+
+
+
+ 
+1 pont* 
+59
+1300
+170
+17
+n
+n 
+
+
+
+
+
+
+
+
+ 
+2
+0
+590
+221000
+n
+n
+
+
+
+ 
+A másodfokú egyenlet pozitív megoldása p  5 
+(a másik megoldás 
+26
+17
+
+), ahonnan n  260. 
+1 pont n1  260 (n2  –850) 
+p  
+Tehát a fiúk száma 260, a lányok száma pedig 250. 
+1 pont  
+Ellenőrzés: 260  0,05  13 és 250  0,08  20 valóban. 
+1 pont  
+Összesen: 
+9 pont  
+ 
+Megjegyzés: A *-gal jelölt 3 pontot az alábbi gondolatmenetért is megkaphatja a vizsgázó. 
+Az első egyenletből 
+1300.
+n
+p
+
+ 
+1 pont  
+Ezt a második egyenletbe visszaírva: 
+1300
+510
+1300 1530
+3
+2000.
+p
+p
+
+
+
+
+ 
+1 pont  
+Beszorozva p-vel és nullára rendezve: 
+2
+510
+1770
+3900
+0.
+p
+p
+
+
+
+ 
+1 pont  
+ 
+ 
+ 
+
+===== PAGE 12 =====
+ 
+Javítási-értékelési útmutató 
+Matematika 
+12 / 19 
+emelt szintű írásbeli vizsga 
+E2512 
+ 
+2025. május 6. 
+ 
+5. a) második megoldás 
+Ha az iskola fiú tanulóinak számát n-nel jelöljük, 
+akkor a lányok száma 510 – n. 
+1 pont  
+A 13 az n-nek 13 100
+n 
+ százaléka, 
+a 20 az (510 – n)-nek a 
+20
+100
+510
+n 
+
+ százaléka. 
+2 pont  
+Így megoldandó a következő egyenlet: 
+13
+20
+100
+3
+100.
+510
+n
+n
+
+
+
+
+
+ 
+1 pont  
+A nevezőkkel mindkét oldalt megszorozva: 
+1300  (510 – n) + 3n  (510 – n)  2000n. 
+1 pont  
+Nullára rendezve: 
+2
+0
+590
+221000.
+n
+n
+
+
+
+ 
+1 pont  
+A másodfokú egyenlet pozitív megoldása n  260. 
+1 pont  
+Tehát a fiúk száma 260, a lányok száma pedig 250. 
+1 pont  
+Ellenőrzés: a 13 a 260-nak 5 százaléka, 
+a 20 a 250-nek 8 százaléka, és 5 + 3  8 valóban. 
+1 pont  
+Összesen: 
+9 pont  
+ 
+5. b) első megoldás 
+A 13 fiú és a 20 lány közül 1 fiút és 2 lányt 
+13
+20
+1
+2
+
+
+
+
+
+
+
+
+
+ ( 2470)-féleképpen lehet kiválasztani 
+(kedvező esetek száma). 
+2 pont  
+A 33 kitűnő tanuló közül 3-at 33
+3
+
+
+
+
+
+
+( 5456)-félekép-
+pen lehet kiválasztani (összes eset száma). 
+1 pont  
+Tehát a keresett valószínűség 
+13
+20
+1
+2
+33
+3
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ ≈ 0,453. 
+1 pont  
+Összesen: 
+4 pont  
+ 
+5. b) második megoldás 
+Ha figyelembe vesszük a tanulók kiválasztásának 
+sorrendjét, akkor annak a valószínűsége, hogy elő-
+ször fiút, majd ezután másodjára és harmadjára is 
+lányt választunk: 13 20 19
+33 32 31
+
+
+ (≈ 0,151). 
+2 pont  
+Mivel ugyanennyi annak a valószínűsége is, hogy a 
+fiút másodjára vagy harmadjára választjuk, ezért a 
+kérdezett valószínűség 
+13 20 19
+3 33 32 31
+
+
+
+
+
+ ≈ 0,453. 
+2 pont  
+Összesen: 
+4 pont  
+
+===== PAGE 13 =====
+ 
+Javítási-értékelési útmutató 
+Matematika 
+13 / 19 
+emelt szintű írásbeli vizsga 
+E2512 
+ 
+2025. május 6. 
+ 
+5. c)  
+Mivel vannak kitűnő tanulók, ezért a maximum 5, 
+a terjedelem miatt a minimum 5 – 2,4  2,6. 
+1 pont  
+ 
+2 pont  
+Összesen: 
+3 pont  
+ 
+6. a)  
+ 
+1-1 pont  
+Összesen: 
+4 pont  
+ 
+6. b)  
+ 
+1 pont  
+Egy megfelelő függvény megadása, 
+pl. (R  R) 
+1
+2
+x
+x 
+
+
+
+
+
+ vagy (R  R) 
+2.
+x
+x
+
+ 
+2 pont 
+1 pont jár, ha a megadott 
+függvény a háromból 
+csak két szempont szerint 
+megfelelő. 
+Összesen: 
+3 pont  
+ 
+6. c) első megoldás 
+A függvénygrafikon egy parabola, melynek tengely-
+pontja (2; –1), így a függvény hozzárendelési szabálya 
+2
+(
+2)
+1.
+x
+x
+
+
+
+ 
+2 pont  
+2
+2
+(
+2)
+1
+4
+3,
+x
+x
+x
+
+
+
+
+ 
+1 pont  
+amiből b  – 4 és c  3. 
+1 pont  
+Összesen: 
+4 pont  
+ 
+ 
+ 
+
+===== PAGE 14 =====
+ 
+Javítási-értékelési útmutató 
+Matematika 
+14 / 19 
+emelt szintű írásbeli vizsga 
+E2512 
+ 
+2025. május 6. 
+ 
+6. c) második megoldás 
+A függvény átalakítva: 
+2
+2
+.
+2
+4
+b
+b
+x
+x
+c
+
+
+
+
+
+
+
+
+
+ 
+1 pont  
+Ennek minimumhelye 
+2,
+2
+b
+x 
+
+ amiből b  – 4. 
+1 pont  
+A függvény minimumértéke 
+2
+( 4)
+1,
+4
+c
+
+
+
+ 
+1 pont  
+amiből c  3. 
+1 pont  
+Összesen: 
+4 pont  
+ 
+6. c) harmadik megoldás 
+A függvény deriváltfüggvénye 
+2
+.
+x
+x
+b
+
+
+ 
+1 pont  
+A függvény a minimumát x  2-ben veszi fel, így a 
+deriváltja itt nulla: 2  2 + b  0, azaz b  – 4. 
+1 pont  
+Itt a függvényérték 
+2
+2
+4 2
+1,
+c
+
+
+ 
+1 pont  
+amiből c  3. 
+1 pont  
+Összesen: 
+4 pont  
+ 
+6. d)  
+
+0
+0
+sin
+cos
+p
+p
+x dx
+x
+
+
+
+ 
+1 pont  
+1
+cos
+( cos0)
+,
+2
+p
+
+
+
+  
+1 pont  
+amiből 
+1
+cos
+1
+,
+2
+p
+
+
+ tehát 
+1
+cos
+.
+2
+p 
+ 
+1 pont  
+A [0; 2π] intervallumon 
+1
+,
+3
+p
+
+
+ 
+1 pont  
+és 
+2
+5 .
+3
+p
+
+
+ 
+1 pont  
+Összesen: 
+5 pont  
+ 
+ 
+ 
+
+===== PAGE 15 =====
+ 
+Javítási-értékelési útmutató 
+Matematika 
+15 / 19 
+emelt szintű írásbeli vizsga 
+E2512 
+ 
+2025. május 6. 
+ 
+7. a) első megoldás 
+Az alaplap területe 36 dm2, anyagköltsége 144 tallér. 
+1 pont  
+A négy oldallapra így legfeljebb (300 – 144 ) 156 
+tallér marad, oldallaponként tehát (156 : 4 ) 39 tallér. 
+1 pont  
+Egy oldallap területe ekkor (39 : 3 ) 13 dm2. 
+1 pont  
+A doboz magassága így legfeljebb 13
+6 dm lehet. 
+1 pont  
+Összesen: 
+4 pont  
+ 
+7. a) második megoldás 
+A doboz magasságát (dm-ben) jelölje m. 
+A doboz anyagköltségére felírható a következő 
+egyenlőtlenség: 
+2
+6
+4
+4 6
+3
+300.
+m
+
+
+ 
+2 pont 
+Ha a vizsgázó egyenlőt-
+lenség helyett egyenlettel 
+számol, a megfelelő pon-
+tok járnak. 
+144 + 72m ≤ 300, amiből 
+13.
+6
+m 
+ 
+A doboz magassága így legfeljebb 13
+6 dm lehet. 
+2 pont  
+Összesen: 
+4 pont  
+ 
+7. b) első megoldás 
+Jelölje a doboz alapélét a, magasságát b. 
+A doboz elkészítésének költsége ekkor 
+2
+2
+4
+4
+3
+4
+12
+300
+a
+ab
+a
+ab
+
+
+
+
+ tallér. 
+1 pont  
+(Keressük 
+2
+a b maximumát.) 
+Kifejezzük b-t: 
+2
+300
+4
+25
+12
+3
+a
+a
+b
+a
+a
+
+
+
+
+,  
+1 pont  
+és ezzel felírjuk a doboz térfogatát: 
+3
+2
+2
+25
+25
+3
+3
+a
+a
+V
+a b
+a
+a
+a
+
+
+
+
+
+
+
+
+
+
+
+. 
+1 pont  
+A pozitív valós számok halmazán értelmezett 
+3
+( )
+25
+3
+a
+f a
+a
+
+
+ függvénynek ott lehet szélsőértéke, 
+ahol a deriváltja 0. 
+1 pont 
+Ez a pont akkor is jár, ha 
+ez a gondolat csak a meg-
+oldásból derül ki. 
+2
+( )
+25
+f
+a
+a
+
+
+
+ 
+1 pont  
+2
+25
+0
+a
+
+
+-ból (a  0 miatt) a  5, majd 
+10
+3
+b 
+. 
+1 pont  
+( )
+2
+0
+f
+a
+a
+
+
+
+ miatt ez valóban maximumhelye 
+f-nek. 
+1 pont 
+Az első deriváltfüggvény 
+előjele a  5-ben pozitív-
+ról negatívra változik. 
+A 300 tallérból elkészíthető maximális térfogatú do-
+boz alapéle tehát 5 dm, magassága 10
+3 dm. 
+1 pont 
+A maximális térfogat 
+250
+3
+ dm3. 
+Összesen: 
+8 pont  
+
+===== PAGE 16 =====
+ 
+Javítási-értékelési útmutató 
+Matematika 
+16 / 19 
+emelt szintű írásbeli vizsga 
+E2512 
+ 
+2025. május 6. 
+ 
+7. b) második megoldás 
+Jelölje a doboz alapélét a, magasságát b. 
+A doboz elkészítésének költsége ekkor 
+2
+2
+4
+4
+3
+4
+12
+300
+a
+ab
+a
+ab
+
+
+
+
+  tallér. 
+1 pont  
+(Keressük 
+2
+a b maximumát.) 
+A számtani és mértani közepek közötti összefüggést 
+használva: 
+2
+2
+3
+3
+2
+2
+300
+4
+12
+12
+3
+a
+ab
+ab
+a
+ab
+
+
+
+
+
+
+
+2
+3
+3
+3
+12
+2
+2
+a
+ab
+ab
+
+
+
+
+. 
+2 pont  
+Azaz 
+4
+2
+3 9
+25
+,
+4 a b
+
+ 
+1 pont  
+amiből rendezés után 
+2
+250
+3
+a b
+V
+
+
+ adódik, 
+vagyis a térfogat maximum 250
+3 dm3 lehet. 
+1 pont  
+Ezt a maximumot fel is veszi a térfogat, ha a köze-
+pekben szereplő tagok egyenlők, vagyis ha 
+2
+3
+,
+2
+a
+ab
+
+ azaz 2
+.
+3 a
+b
+
+ 
+1 pont  
+3
+2
+2
+250
+2
+2
+,
+3
+3
+3
+a
+V
+a b
+a
+a
+
+
+
+
+
+ 
+1 pont 
+2
+2
+2
+2
+300
+4
+12
+12
+3
+a
+a
+a
+
+
+
+
+ 
+amiből (a doboz alapéle) a  5 dm, (a doboz magas-
+sága) 
+10
+3
+b 
+ dm. 
+1 pont  
+Összesen: 
+8 pont  
+Megjegyzés: Ha a vizsgázó a válaszait mértékegység nélkül adja meg, akkor ezért a feladat-
+ban összesen 1 pontot veszítsen. 
+ 
+7. c) 
+Tegyük fel először, hogy az alaplap kék. 
+Lehet minden oldallap piros, vagy minden oldallap 
+kék, ez 1-1 lehetőség. 
+1 pont  
+Lehet egy vagy három piros oldallap, ez is 1-1 lehe-
+tőség. 
+1 pont  
+És lehet két piros oldallap, ez 2 lehetőség (vagy egy-
+más mellett, vagy egymással szemben vannak). 
+1 pont  
+Mivel ugyanígy (2 + 2 + 2 ) 6 lehetőség van akkor 
+is, ha az alaplap piros, ezért összesen 12 megfelelő 
+színezés van. 
+1 pont  
+Összesen: 
+4 pont  
+Megjegyzés: Ha a vizsgázó rendezetten felsorolja az összes lehetőséget, és ez alapján helyes 
+választ ad, akkor a teljes pontszám jár. 
+
+===== PAGE 17 =====
+ 
+Javítási-értékelési útmutató 
+Matematika 
+17 / 19 
+emelt szintű írásbeli vizsga 
+E2512 
+ 
+2025. május 6. 
+ 
+8. a) első megoldás 
+Nem lehetséges. 
+1 pont  
+G egy ötpontú fagráf, így 4 éle van. 
+1 pont  
+Az ötpontú teljes gráfnak 5
+10
+2
+
+
+
+ éle van. 
+1 pont  
+G komplementerének így (10 – 4 ) 6 éle van, 
+ezért nem lehet fagráf (mert annak csak 4 éle van). 
+1 pont  
+Összesen: 
+4 pont  
+ 
+8. a) második megoldás 
+Nem lehetséges. 
+1 pont  
+Izomorfia erejéig három különböző ötpontú fagráf 
+létezik, mindhárom komplementere tartalmaz kört, 
+így nem fagráf. 
+    
+ 
+    
+ 
+    
+ 
+3 pont  
+Összesen: 
+4 pont  
+ 
+8. b) 
+ 
+ 
+(a zöld éleket folytonos, 
+a piros éleket pontozott 
+vonallal jelöltük) 
+ 
+1 pont  
+A hat pont közül hármat 6
+3
+
+
+
+ 20-féleképpen vá-
+laszthatunk ki (összes eset száma). 
+1 pont  
+A kedvező esetek száma 6 (zöld: 1-2-4, 1-2-6, 1-3-6; 
+piros: 2-3-5, 3-4-5, 4-5-6). 
+2 pont  
+A kérdezett valószínűség így 6
+0,3.
+20 
+ 
+1 pont  
+Összesen: 
+5 pont  
+ 
+ 
+
+===== PAGE 18 =====
+ 
+Javítási-értékelési útmutató 
+Matematika 
+18 / 19 
+emelt szintű írásbeli vizsga 
+E2512 
+ 
+2025. május 6. 
+ 
+8. c) 
+Jelölje P(n) annak a valószínűségét, hogy n húzásra 
+van szükség. (P(1)  P(2)  P(6)  0)  
+Három húzásra van szükség, ha a 2. és 3. húzás színe 
+megegyezik az 1. húzás színével: 
+2 1
+1
+(3)
+5 4
+10
+P
+
+
+
+. 
+1 pont 
+(ZZZ)
+(PPP)
+1
+1
+2
+6
+10
+3
+P
+P
+
+
+
+
+
+
+
+
+ 
+4 húzásra van szükség és zöld a 4. húzás a PZZZ, 
+ZPZZ vagy ZZPZ sorrendek esetén. Ugyanígy három 
+megfelelő sorrend van akkor, ha piros a 4. húzás.  
+1 pont  
+Minden ilyen húzási sorrend valószínűsége 
+3 3 2 1
+1 ,
+6 5 4 3
+20
+
+
+
+ tehát 
+1
+3
+(4)
+6
+.
+20
+10
+P
+
+
+
+ 
+1 pont  
+5 húzásra akkor van szükség, ha az első 4 húzás kö-
+zött (a sorrendre való tekintet nélkül) 2-2 zöld és pi-
+ros van. 
+1 pont 
+3
+(5)
+1
+(3)
+(4)
+5
+P
+P
+P
+
+
+
+ 
+Ennek a valószínűsége 
+3
+3
+2
+2
+3
+(5)
+6
+5
+4
+P
+
+
+
+
+
+
+
+
+
+.  
+1 pont 
+A szükséges húzások számának várható értéke: 
+5
+3
+1
+3
+3
+( )
+3
+4
+5
+4,5.
+10
+10
+5
+i
+P i
+i
+
+
+
+
+
+
+ 
+2 pont  
+Összesen: 
+7 pont  
+ 
+9. a) 
+(2) és (4) kizárják egymást, mert a 20-szal osztható 
+számok 0-ra végződnek, így számjegyeik szorzata 0. 
+1 pont  
+Tehát a másik két tulajdonságnak teljesülnie kell: 
+a keresett szám biztosan húszjegyű, és számjegyeinek 
+összege 20. 
+1 pont  
+Az ilyen számok közül a legnagyobb a 
+
+17 db
+99200...0 , 
+1 pont  
+mely teljesíti a 20-szal való oszthatósági feltételt is 
+(számjegyeinek szorzata viszont nem 20, így valóban 
+pontosan három feltétel teljesül). 
+1 pont  
+Összesen: 
+4 pont  
+ 
+9. b) első megoldás 
+(Először A elemszámát számítjuk ki.) 
+Az első számjegy 8-féle lehet (nem lehet 0 és 7), 
+a többi helyiérték mindegyikére 9-féle számjegyet ír-
+hatunk (egyik sem lehet 7), 
+1 pont  
+így A  8 ꞏ 9
+19 ≈ 1,08 ꞏ 10
+19. 
+1 pont  
+ 
+
+===== PAGE 19 =====
+ 
+Javítási-értékelési útmutató 
+Matematika 
+19 / 19 
+emelt szintű írásbeli vizsga 
+E2512 
+ 
+2025. május 6. 
+ 
+Összesen H 9 ꞏ 10
+19 darab húszjegyű szám van. 
+1 pont  
+Ezt felhasználva: 
+A
+H
+A
+
+
+  9 ꞏ 10
+19 – 1,08 ꞏ 10
+19  7,92 ꞏ 10
+19, 
+1 pont  
+tehát A
+A
+
+. 
+1 pont  
+Összesen: 
+5 pont  
+ 
+9. b) második megoldás 
+(Először A elemszámát számítjuk ki.) 
+Az első számjegy 8-féle lehet (nem lehet 0 és 7), 
+a többi helyiérték mindegyikére 9-féle számjegyet ír-
+hatunk (egyik sem lehet 7), 
+1 pont  
+így A  8 ꞏ 9
+19. 
+1 pont  
+Megadjuk azon húszjegyű számok számát, amelyek-
+ben pontosan egy darab 7-es számjegy szerepel, de az 
+nem a legnagyobb helyiértéken található (ezek a szá-
+mok A valódi részhalmazát alkotják). 
+Ha már ez nagyobb, mint A , akkor nyilván A
+A
+
+. 
+1 pont  
+Az első helyiértéken 0 és 7 nem lehet, a 7-es szám-
+jegy 19 helyen lehet, a többi helyiérték mindegyikére 
+pedig 9-féle számjegyet írhatunk. Ez 19 ꞏ 8 ꞏ 9
+18 lehe-
+tőség, ami több, mint A  9 ꞏ 8 ꞏ 9
+18. 
+1 pont  
+tehát A
+A
+
+. 
+1 pont  
+Összesen: 
+5 pont  
+ 
+9. c) 
+Komplementer módszerrel dolgozunk: 
+P(van benne 7-es)  1 – P(nincs benne 7-es)  
+1 pont  
+1
+8
+9
+1
+.
+9
+10
+n
+
+
+
+
+
+
+
+ 
+1 pont  
+Így megoldandó az alábbi egyenlőtlenség: 
+1
+8
+9
+1
+0,99.
+9
+10
+n
+
+
+
+
+
+
+
+
+
+ 
+1 pont  
+Rendezve: 
+1
+9
+0,9
+800
+n
+
+. 
+1 pont  
+Mivel az 
+0,9
+log
+x
+x
+
+ függvény szigorúan monoton 
+csökkenő, 
+1 pont  
+0,9
+9
+log
+1
+800
+n 
+
+ ≈ 43,59, 
+1 pont  
+tehát n ≥ 44 (n N). 
+1 pont  
+Összesen: 
+7 pont  
+ 

@@ -1,0 +1,97 @@
+30: 2022. május 3. 9:00 
+45: 2022. május 3. 
+71: 2022. május 3. 
+91: 1. A feladatok megoldására 240 perc fordítható, az idő leteltével a munkát be kell fejeznie. 
+93: 2. A feladatok megoldási sorrendje tetszőleges. 
+95: 3. A II. részben kitűzött öt feladat közül csak négyet kell megoldania. A nem választott fel-
+102: 4. A feladatok megoldásához szöveges adatok tárolására és megjelenítésére nem alkalmas 
+106: 5. A megoldások gondolatmenetét minden esetben írja le, mert a feladatra adható pont-
+109: 6. Ügyeljen arra, hogy a lényegesebb részszámítások is nyomon követhetők legyenek! 
+111: 7. A gondolatmenet kifejtése során a zsebszámológép használata – további matematikai 
+130: 8. A feladatok megoldásánál használt tételek közül az iskolában tanult, névvel ellátott tételeket 
+137: 9. A feladatok végeredményét (a feltett kérdésre adandó választ) szöveges megfogalmazásban 
+140: 10. A dolgozatot tollal írja, de az ábrákat ceruzával is rajzolhatja. Az ábrákon kívül a ceruzával 
+144: 11. Minden feladatnak csak egy megoldása értékelhető. Több megoldási próbálkozás esetén 
+147: 12. Kérjük, hogy a szürkített téglalapokba semmit ne írjon! 
+156: 2022. május 3. 
+177: 1. 
+180: a) 
+192: b) 1
+213: a) 
+216: b) 
+232: 2022. május 3. 
+259: 2022. május 3. 
+278: 2. 
+279: a) Egy számtani sorozat első tagja 5, differenciája 3, az első n tag összege pedig 4900. 
+282: b) Egy mértani sorozat első és második tagjának összege 6, harmadik és negyedik tag-
+285: a) 
+288: b) 
+303: 2022. május 3. 
+329: 2022. május 3. 
+348: 3. 
+351: a) Legalább, illetve legfeljebb hányan lehetnek a lakók között a nem szemüveges fér-
+359: b) Mekkora az a füvesített terület, amelyet nem ér el az öntöző? 
+361: a) 
+364: b) 
+378: 2022. május 3. 
+404: 2022. május 3. 
+423: 4. 
+432: a) Hitelesíthető-e ez a készlet? 
+436: b) Kihúzunk a dobozból egymás után két golyót úgy, hogy az elsőként kihúzott golyót 
+440: c) Kihúzunk a 10 golyó közül egymás után három golyót úgy, hogy a kihúzott golyót 
+447: a) 
+450: b) 
+453: c) 
+468: 2022. május 3. 
+494: 2022. május 3. 
+518: 5. 
+524: a) Mennyibe kerül 1-1 darab a különböző fajta palacsintákból? 
+529: b) Igazolja, hogy 6 érmével három különböző módon fizethető ki 210 Ft! (Két fizetést 
+533: c) Hányféle sorrendben vehet elő Lali 6 olyan érmét a zsebéből, amelyek összege 
+537: a) 
+540: b) 
+543: c) 
+557: 2022. május 3. 
+583: 2022. május 3. 
+605: 6. 
+609: a) Határozza meg a háromszög szögeit fokban, három tizedesjegyre kerekítve! 
+611: b) Határozza meg a háromszög AC és AB oldalainak arányát négy tizedesjegyre kere-
+620: c) Határozza meg Géza közelítésének relatív hibáját! (Relatív hibának nevezzük a kö-
+623: a) 
+626: b) 
+629: c) 
+643: 2022. május 3. 
+670: 2022. május 3. 
+692: 7. 
+698: a) A hozzáadott 500 gramm lisztből hány gramm volt a búzaliszt? 
+719: b) Mutassa meg, hogy csak 1,5 < x < 3 esetén nyereséges a napi termelés! 
+721: c) Hány tallér az elérhető legnagyobb napi nyereség, és ezt hány tonna liszt (előállítása 
+724: a) 
+727: b) 
+730: c) 
+745: 2022. május 3. 
+771: 2022. május 3. 
+793: 8. 
+798: a) Hány olyan találkozás volt, ahol öleléssel köszöntötték egymást? 
+806: b) Játszott-e már Dóra Fanni ellen? 
+813: c) Mennyi a valószínűsége annak, hogy Bori nyer? 
+815: a) 
+818: b) 
+821: c) 
+836: 2022. május 3. 
+862: 2022. május 3. 
+884: 9. 
+906: a) Határozza meg a parabola fókuszpontjának és a kör középpontjának a koordinátáit! 
+908: b) Igazolja, hogy a Q(2 2; 4) pont a parabolának és a körnek is pontja, és a kör Q-ban 
+911: c) Határozza meg a parabola és az x tengely által közrezárt korlátos síkidom területét! 
+913: a) 
+916: b) 
+919: c) 
+933: 2022. május 3. 
+959: 2022. május 3. 
+985: 2022. május 3. 
+1037: 2022. május 3. 
+1065: 1. 
+1070: 2. 
+1073: 3. 
+1076: 4. 

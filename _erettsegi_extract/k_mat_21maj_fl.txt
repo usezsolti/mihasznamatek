@@ -1,0 +1,1076 @@
+
+===== PAGE 1 =====
+ 
+Matematika 
+ 
+középszint — írásbeli vizsga 2112 
+ 
+ 
+I. összetevő 
+EMBERI ERŐFORRÁSOK MINISZTÉRIUMA 
+Név:  ...........................................................  osztály:...... 
+MATEMATIKA 
+ 
+KÖZÉPSZINTŰ 
+ÍRÁSBELI VIZSGA 
+2021. május 4. 9:00 
+I. 
+Időtartam: 45 perc 
+Pótlapok száma 
+Tisztázati 
+ 
+Piszkozati 
+ 
+ 
+É R E T T S É G I V I Z S G A • 2 0 2 1 . m á j u s 4 . 
+
+===== PAGE 2 =====
+Matematika 
+középszint 
+2112 írásbeli vizsga, I. összetevő 
+2 / 8 
+2021. május 4. 
+Név:  ...........................................................  osztály:...... 
+Fontos tudnivalók 
+ 
+1. A feladatok megoldására 45 percet fordíthat, az idő leteltével a munkát be kell fejeznie. 
+ 
+ 
+2. A megoldások sorrendje tetszőleges. 
+ 
+ 
+3. A feladatok megoldásához szöveges adatok tárolására és megjelenítésére nem alkalmas 
+zsebszámológépet és bármilyen négyjegyű függvénytáblázatot használhat, más elektroni-
+kus vagy írásos segédeszköz használata tilos! 
+ 
+ 
+4. A feladatok végeredményét az erre a célra szolgáló keretbe írja, a megoldást csak akkor 
+kell részleteznie, ha erre a feladat szövege utasítást ad! 
+ 
+ 
+5. A dolgozatot tollal írja, az ábrákat ceruzával is rajzolhatja. Az ábrákon kívül a ceruzával írt 
+részeket a javító tanár nem értékelheti. Ha valamilyen megoldást vagy megoldásrészletet 
+áthúz, akkor az nem értékelhető. 
+ 
+ 
+6. Minden feladatnak csak egy megoldása értékelhető. Több megoldási próbálkozás esetén 
+egyértelműen jelölje, hogy melyiket tartja érvényesnek! 
+ 
+ 
+7. Kérjük, hogy a szürkített téglalapokba semmit ne írjon! 
+ 
+ 
+ 
+
+===== PAGE 3 =====
+Matematika 
+középszint 
+2112 írásbeli vizsga, I. összetevő 
+3 / 8 
+2021. május 4. 
+Név:  ...........................................................  osztály:...... 
+ 
+1. 
+Egy számtani sorozat második tagja 8, negyedik tagja 18.  
+Határozza meg a sorozat első tagját! 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+A sorozat első tagja: 
+2 pont 
+ 
+ 
+2. 
+Hányadik hatványra kell emelni a 2-t, hogy 512-t kapjunk? 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+2 pont 
+ 
+ 
+3. 
+Legyen A a pozitív, kétjegyű páros számok halmaza, és B pedig a 40-nél kisebb, 3-mal 
+osztható pozitív számok halmaza. 
+Elemei felsorolásával adja meg az A ∩ B halmazt! 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+A ∩ B = 
+2 pont 
+ 
+
+===== PAGE 4 =====
+Matematika 
+középszint 
+2112 írásbeli vizsga, I. összetevő 
+4 / 8 
+2021. május 4. 
+Név:  ...........................................................  osztály:...... 
+ 
+4. 
+Egy négyszög belső szögeinek aránya 1 : 2 : 3 : 4.  
+Hány fokos a négyszög legnagyobb szöge? Válaszát indokolja! 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+3 pont 
+ 
+ 
+A legnagyobb szög: 
+1 pont 
+ 
+ 
+5. 
+Válassza ki az alábbiak közül az összes állítást, amely tagadása a következőnek!  
+ 
+„Volt olyan nap a múlt héten, amikor esett az eső.” 
+ 
+A: A múlt héten minden nap esett az eső. 
+B: A múlt héten egyik nap sem esett az eső. 
+C: Nem volt olyan nap a múlt héten, amikor esett az eső. 
+D: Volt olyan nap a múlt héten, amikor nem esett az eső. 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+2 pont 
+ 
+ 
+
+===== PAGE 5 =====
+Matematika 
+középszint 
+2112 írásbeli vizsga, I. összetevő 
+5 / 8 
+2021. május 4. 
+Név:  ...........................................................  osztály:...... 
+ 
+6. 
+Egy diákmunka-közvetítéssel foglalkozó cég 25 állást hirdetett meg. Az állások órabérét 
+és ezek gyakoriságát az alábbi táblázat tartalmazza. Adja meg a hirdetésekben szereplő 
+órabérek terjedelmét, móduszát, mediánját és átlagát! 
+ 
+Órabér (Ft) 
+1000 
+1200 
+1500 
+1600 
+Állások száma (db) 
+9 
+4 
+5 
+7 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Terjedelem:                Ft 
+1 pont 
+ 
+Módusz:                Ft 
+1 pont 
+ 
+Medián:                Ft 
+1 pont 
+ 
+Átlag:                Ft 
+1 pont 
+ 
+ 
+7. 
+Ha egy egészségpénztári számlára befizetünk egy összeget, akkor abból először levon-
+nak 6% működési költséget, és a fennmaradó összeget írják jóvá a számlán. 
+Hány forintot írnak jóvá a számlán 150 000 Ft befizetése esetén? 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+                    
+2 pont 
+ 
+
+===== PAGE 6 =====
+Matematika 
+középszint 
+2112 írásbeli vizsga, I. összetevő 
+6 / 8 
+2021. május 4. 
+Név:  ...........................................................  osztály:...... 
+ 
+8. 
+A derékszögű koordinátarendszerben ábrázoltuk a valós számok halmazán értelmezett 
+2
+8
+:
+5
+5
+f
+x
+x +
+
+ függvényt. Adjon meg egy olyan pontot a koordinátáival, amely illesz-
+kedik a függvény grafikonjára! 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+2 pont 
+ 
+ 
+9. 
+Egy szabályos sokszög egyik csúcsából behúztunk két átlót, így a sokszöget egy három-
+szögre, egy négyszögre és egy ötszögre bontottuk. 
+Hány oldalú a szabályos sokszög? 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+2 pont 
+ 
+ 
+10. Oldja meg az alábbi egyenletet a valós számok halmazán! 
+ 
+4
+1
+x −
+= 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+2 pont 
+ 
+ 
+
+===== PAGE 7 =====
+Matematika 
+középszint 
+2112 írásbeli vizsga, I. összetevő 
+7 / 8 
+2021. május 4. 
+Név:  ...........................................................  osztály:...... 
+ 
+11. Adja meg a valós számok halmazán értelmezett f (x) = 2 ∙ sin(x + π) függvény 
+helyettesítési értékét, ha 
+π
+2
+x =
+. 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+π
+2
+f 
+=
+
+
+
+
+ 
+2 pont 
+ 
+ 
+12. A háromjegyű pozitív egész számok közül véletlenszerűen kiválasztunk egyet. 
+Mennyi annak a valószínűsége, hogy a kiválasztott szám számjegyei különbözők?  
+Megoldását részletezze! 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+3 pont 
+ 
+ 
+ 
+1 pont 
+ 
+ 
+
+===== PAGE 8 =====
+Matematika 
+középszint 
+2112 írásbeli vizsga, I. összetevő 
+8 / 8 
+2021. május 4. 
+Név:  ...........................................................  osztály:...... 
+ 
+ 
+ 
+ 
+pontszám 
+maximális 
+elért 
+I. rész 
+1. feladat 
+2 
+ 
+2. feladat 
+2 
+ 
+3. feladat 
+2 
+ 
+4. feladat 
+4 
+ 
+5. feladat 
+2 
+ 
+6. feladat 
+4 
+ 
+7. feladat 
+2 
+ 
+8. feladat 
+2 
+ 
+9. feladat 
+2 
+ 
+10. feladat 
+2 
+ 
+11. feladat 
+2 
+ 
+12. feladat 
+4 
+ 
+ 
+ÖSSZESEN 
+30 
+ 
+ 
+dátum 
+ 
+javító tanár 
+ 
+ __________________________________________________________________________  
+ 
+ 
+ 
+pontszáma egész 
+számra kerekítve 
+elért 
+programba  
+beírt 
+I. rész 
+  
+  
+ 
+dátum 
+ 
+dátum 
+ 
+ 
+ 
+ 
+ 
+ 
+javító tanár 
+ 
+jegyző 
+ 
+Megjegyzések: 
+1. Ha a vizsgázó a II. írásbeli összetevő megoldását elkezdte, akkor ez a táblázat és az aláírási rész 
+üresen marad! 
+2. Ha a vizsga az I. összetevő teljesítése közben megszakad, illetve nem folytatódik a II. összetevővel, 
+akkor ez a táblázat és az aláírási rész kitöltendő! 
+
+===== PAGE 9 =====
+ 
+Matematika 
+ 
+középszint — írásbeli vizsga 2112 
+ 
+ 
+II. összetevő 
+EMBERI ERŐFORRÁSOK MINISZTÉRIUMA 
+Név:  ...........................................................  osztály:...... 
+MATEMATIKA 
+ 
+KÖZÉPSZINTŰ 
+ÍRÁSBELI VIZSGA 
+2021. május 4. 9:00 
+II. 
+Időtartam: 135 perc 
+Pótlapok száma 
+Tisztázati 
+ 
+Piszkozati 
+ 
+ 
+É R E T T S É G I V I Z S G A • 2 0 2 1 . m á j u s 4 . 
+
+===== PAGE 10 =====
+Matematika 
+középszint 
+2112 írásbeli vizsga, II. összetevő 
+2 / 16 
+2021. május 4. 
+Név:  ...........................................................  osztály:...... 
+ 
+ 
+
+===== PAGE 11 =====
+Matematika 
+középszint 
+2112 írásbeli vizsga, II. összetevő 
+3 / 16 
+2021. május 4. 
+Név:  ...........................................................  osztály:...... 
+ 
+Fontos tudnivalók 
+ 
+1. A feladatok megoldására 135 percet fordíthat, az idő leteltével a munkát be kell fejeznie. 
+ 
+2. A feladatok megoldási sorrendje tetszőleges. 
+ 
+3. A B részben kitűzött három feladat közül csak kettőt kell megoldania. A nem választott 
+feladat sorszámát írja be a dolgozat befejezésekor az alábbi négyzetbe! Ha a javító 
+tanár számára nem derül ki egyértelműen, hogy melyik feladat értékelését nem kéri, akkor 
+a kitűzött sorrend szerinti legutolsó feladatra nem kap pontot. 
+ 
+ 
+ 
+4. A feladatok megoldásához szöveges adatok tárolására és megjelenítésére nem alkalmas 
+zsebszámológépet és bármilyen négyjegyű függvénytáblázatot használhat, más elektroni-
+kus vagy írásos segédeszköz használata tilos! 
+ 
+5. A megoldások gondolatmenetét minden esetben írja le, mert a feladatra adható pont-
+szám jelentős része erre jár! 
+ 
+6. Ügyeljen arra, hogy a lényegesebb részszámítások is nyomon követhetők legyenek! 
+ 
+7. A gondolatmenet kifejtése során a zsebszámológép használata – további matematikai 
+indoklás nélkül – a következő műveletek elvégzésére fogadható el: összeadás, kivonás, 
+szorzás, osztás, hatványozás, gyökvonás, n!, 
+
+
+
+
+
+
+k
+n kiszámítása, a függvénytáblázatban fel-
+lelhető táblázatok helyettesítése (sin, cos, tg, log és ezek inverzei), a π és az e szám közelítő 
+értékének megadása, nullára rendezett másodfokú egyenlet gyökeinek meghatározása. To-
+vábbi matematikai indoklás nélkül használhatók a számológépek bizonyos statisztikai mu-
+tatók kiszámítására (átlag, szórás) abban az esetben, ha a feladat szövege kifejezetten nem 
+követeli meg az ezzel kapcsolatos részletszámítások bemutatását is. Egyéb esetekben a 
+géppel elvégzett számítások indoklás nélküli lépéseknek számítanak, azokért nem jár 
+pont. 
+ 
+8. A feladatok megoldásánál használt tételek közül az iskolában tanult, névvel ellátott tételeket 
+(pl. Pitagorasz-tétel, magasságtétel) nem kell pontosan megfogalmazva kimondania, elég 
+csak a tétel megnevezését említenie, de alkalmazhatóságát röviden indokolnia kell. 
+ 
+9. A feladatok végeredményét (a feltett kérdésre adandó választ) szöveges megfogalmazásban 
+is közölje! 
+ 
+10. A dolgozatot tollal írja, az ábrákat ceruzával is rajzolhatja. Az ábrákon kívül a ceruzával írt 
+részeket a javító tanár nem értékelheti. Ha valamilyen megoldást vagy megoldásrészletet 
+áthúz, akkor az nem értékelhető. 
+ 
+11. Minden feladatnak csak egy megoldása értékelhető. Több megoldási próbálkozás esetén 
+egyértelműen jelölje, hogy melyiket tartja érvényesnek! 
+ 
+12. Kérjük, hogy a szürkített téglalapokba semmit ne írjon! 
+ 
+ 
+
+===== PAGE 12 =====
+Matematika 
+középszint 
+2112 írásbeli vizsga, II. összetevő 
+4 / 16 
+2021. május 4. 
+Név:  ...........................................................  osztály:...... 
+ 
+A 
+ 
+13.  
+a) 
+Oldja meg az alábbi egyenletet a valós számok halmazán! 
+ 
+2
+(
+4)
+(
+1) (
+2)
+9
+x
+x
+x
++
++
++
+⋅
++
+=
+ 
+ 
+b) 
+Oldja meg az alábbi egyenletrendszert a valós számpárok halmazán! 
+ 
+ 
+2
+7
+3
+7
+36
+x
+y
+x
+y
++
+=
+
+
+−
+=
+
+ 
+ 
+ 
+ 
+a) 
+6 pont 
+ 
+b) 
+6 pont 
+ 
+Ö.: 
+12 pont 
+ 
+
+===== PAGE 13 =====
+Matematika 
+középszint 
+2112 írásbeli vizsga, II. összetevő 
+5 / 16 
+2021. május 4. 
+Név:  ...........................................................  osztály:...... 
+ 
+ 
+ 
+
+===== PAGE 14 =====
+Matematika 
+középszint 
+2112 írásbeli vizsga, II. összetevő 
+6 / 16 
+2021. május 4. 
+Név:  ...........................................................  osztály:...... 
+ 
+14.  Az ABCD derékszögű trapéz 6 cm-es BC szára 110°-os szöget zár be a 12 cm-es 
+CD alappal. 
+  
+ 
+a) Számítsa ki a trapéz másik két oldalának a hosszát!  
+ 
+b) Számítsa ki a BCD háromszög BD oldalának hosszát és ismeretlen szögeinek 
+nagyságát! 
+ 
+  
+ 
+ 
+a) 
+6 pont 
+ 
+b) 
+6 pont 
+ 
+Ö.: 
+12 pont 
+ 
+
+===== PAGE 15 =====
+Matematika 
+középszint 
+2112 írásbeli vizsga, II. összetevő 
+7 / 16 
+2021. május 4. 
+Név:  ...........................................................  osztály:...... 
+ 
+ 
+
+===== PAGE 16 =====
+Matematika 
+középszint 
+2112 írásbeli vizsga, II. összetevő 
+8 / 16 
+2021. május 4. 
+Név:  ...........................................................  osztály:...... 
+ 
+15.  Amerikai kutatók 104 labrador genetikai elemzése alapján felállítottak egy egyenletet, 
+amellyel (a kutya 3 hónapos korától) megmondható, milyen korú az adott kutya em-
+berévekben.1 A kutya valódi életkorát években mérve jelölje K, ekkor az emberévekben 
+kifejezett életkort (E) az alábbi képlettel kapjuk: E = 37 ⋅ lg K + 31 (ahol K > 0,25). 
+ 
+a) Egy kutya emberévekbe átszámított életkora E = 70 év.  
+Hány év, hány hónap ennek a kutyának a valódi életkora? 
+Válaszát egész hónapra kerekítve adja meg! 
+ 
+Egy másik átszámítás szerint – a kutya 3 éves korától kezdve – az emberévekben kifeje-
+zett életkor az e = 5,5 ⋅ K + 12 képlettel kapható meg (ahol K > 3). 
+ 
+b) Számítsa ki egy K = 8 éves labrador esetén az emberévekben kifejezett életkort 
+mindkét képlettel!  
+Az amerikai kutatók képletéből kiszámított érték hány százalékkal nagyobb, mint a 
+másik képletből kiszámított érték? 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+                                                 
+1 https://www.cell.com/action/showPdf?pii=S2405-4712%2820%2930203-9 
+a) 
+6 pont 
+ 
+b) 
+6 pont 
+ 
+Ö.: 
+12 pont 
+ 
+
+===== PAGE 17 =====
+Matematika 
+középszint 
+2112 írásbeli vizsga, II. összetevő 
+9 / 16 
+2021. május 4. 
+Név:  ...........................................................  osztály:...... 
+ 
+ 
+
+===== PAGE 18 =====
+Matematika 
+középszint 
+2112 írásbeli vizsga, II. összetevő 
+10 / 16 
+2021. május 4. 
+Név:  ...........................................................  osztály:...... 
+ 
+B 
+ 
+A 16-18. feladatok közül tetszése szerint választott kettőt kell megoldania.  
+A kihagyott feladat sorszámát írja be a 3. oldalon lévő üres négyzetbe! 
+ 
+16. Egy nyolccsapatos jégkorongbajnokságban minden csa-
+pat minden másikkal egyszer mérkőzik meg.  
+Az ábrán látható gráf az eddig lejátszott mérkőzéseket 
+szemlélteti. A pontok a csapatokat jelképezik, és két pont 
+között pontosan akkor van él, ha a két csapat már játszott 
+egymással.  
+A bajnokságból 5 fordulót már megrendeztek, ám néhány 
+mérkőzés elmaradt. (Egy fordulóban – ha nincs elmaradó 
+mérkőzés – mindegyik csapat egy mérkőzést játszik.) 
+ 
+a) Adja meg három olyan csapat betűjelét, melyek közül bármely kettő már lejátszotta 
+az egymás közötti mérkőzését! 
+ 
+b) Hány mérkőzés maradt el az első 5 fordulóban? 
+ 
+Az egyik játékos 0,3 valószínűséggel szerez gólt egy büntetőlövésből. 
+ 
+c) Mekkora a valószínűsége, hogy 10 büntetőlövésből pontosan 4 gólt szerez? 
+ 
+A szabványos jégkorong egy olyan vulkanizált gu-
+mihenger, amelynek magassága 2,54 cm (1 inch), 
+alapkörének átmérője 7,62 cm (3 inch). Az egyik 
+csapat a pálya bejáratához egy olyan nagyméretű  
+korongot terveztet, amely (matematikai értelemben) 
+hasonló a szabványos jégkoronghoz. A tervben sze-
+replő nagyméretű korong térfogata 1 m3.  
+ 
+d) Számítsa ki a nagyméretű korong magasságá-
+nak és alapköre átmérőjének a hosszát! 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+a) 
+2 pont 
+ 
+b) 
+4 pont 
+ 
+c) 
+4 pont 
+ 
+d) 
+7 pont 
+ 
+Ö.: 
+17 pont 
+ 
+
+===== PAGE 19 =====
+Matematika 
+középszint 
+2112 írásbeli vizsga, II. összetevő 
+11 / 16 
+2021. május 4. 
+Név:  ...........................................................  osztály:...... 
+ 
+ 
+
+===== PAGE 20 =====
+Matematika 
+középszint 
+2112 írásbeli vizsga, II. összetevő 
+12 / 16 
+2021. május 4. 
+Név:  ...........................................................  osztály:...... 
+ 
+A 16-18. feladatok közül tetszése szerint választott kettőt kell megoldania.  
+A kihagyott feladat sorszámát írja be a 3. oldalon lévő üres négyzetbe! 
+ 
+17. 
+a) Az x
+mx
+b
++
+
+ lineáris függvény 1-hez 200-at, 21-hez pedig 5200-at rendel. 
+ 
+ 
+Adja meg m és b értékét! 
+ 
+Anna szeretne részt venni a Balaton-átúszáson, amelyhez két különböző 21 napos edzés-
+tervet készít. Azt már elhatározta, hogy az első napon 200 métert, az utolsó, 21. napon 
+pedig az átúszás teljes távját, 5200 métert úszik. Az egyik edzéstervben a napi úszás-
+mennyiségek egy számtani sorozat egymást követő tagjai, a másik változatban pedig (jó 
+közelítéssel) egy mértani sorozaté. 
+ 
+b) A teljes felkészülés alatt összesen hány métert úszna Anna az egyik, illetve a másik 
+változatban? 
+ 
+A 2020-as Balaton-átúszáson az indulók 36%-a volt nő, átlagéletkoruk 35 év. Az indulók 
+64%-a volt férfi, átlagéletkoruk 38 év. 
+ 
+c) Mennyi volt ebben az évben az összes induló átlagéletkora? 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+a) 
+5 pont 
+ 
+b) 
+8 pont 
+ 
+c) 
+4 pont 
+ 
+Ö.: 
+17 pont 
+ 
+
+===== PAGE 21 =====
+Matematika 
+középszint 
+2112 írásbeli vizsga, II. összetevő 
+13 / 16 
+2021. május 4. 
+Név:  ...........................................................  osztály:...... 
+ 
+ 
+ 
+
+===== PAGE 22 =====
+Matematika 
+középszint 
+2112 írásbeli vizsga, II. összetevő 
+14 / 16 
+2021. május 4. 
+Név:  ...........................................................  osztály:...... 
+ 
+A 16-18. feladatok közül tetszése szerint választott kettőt kell megoldania.  
+A kihagyott feladat sorszámát írja be a 3. oldalon lévő üres négyzetbe! 
+ 
+18. Az ábrán szereplő A, B, C, D és E pontok egy olyan egyenesre illeszkednek, amely pár-
+huzamos az F és G pontokra illeszkedő egyenessel. 
+ 
+ 
+ 
+a) Hány olyan különböző egyenes létezik, amely az ábrán lévő pontok közül legalább 
+kettőre illeszkedik? 
+ 
+b) Hány olyan háromszög van, amelynek a csúcsait az ábrán szereplő 7 pont közül 
+választjuk ki? (Két háromszöget különbözőnek tekintünk, ha legalább az egyik csú-
+csukban eltérnek egymástól.) 
+ 
+Egy háromszög csúcsai: K(– 1; 5), L(1; 1), M(5; 3). 
+ 
+c) Igazolja, hogy a háromszög L-nél lévő szöge derékszög! 
+ 
+d) Írja fel a háromszög körülírt körének az egyenletét! 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+a) 
+3 pont 
+ 
+b) 
+5 pont 
+ 
+c) 
+4 pont 
+ 
+d) 
+5 pont 
+ 
+Ö.: 
+17 pont 
+ 
+
+===== PAGE 23 =====
+Matematika 
+középszint 
+2112 írásbeli vizsga, II. összetevő 
+15 / 16 
+2021. május 4. 
+Név:  ...........................................................  osztály:...... 
+ 
+ 
+ 
+ 
+
+===== PAGE 24 =====
+Matematika 
+középszint 
+2112 írásbeli vizsga, II. összetevő 
+16 / 16 
+2021. május 4. 
+Név:  ...........................................................  osztály:...... 
+ 
+ 
+ 
+a feladat 
+sorszáma 
+pontszám 
+maximális 
+elért 
+összesen 
+II. A rész 
+13. 
+12 
+ 
+ 
+14. 
+12 
+ 
+15. 
+12 
+ 
+II. B rész 
+ 
+17 
+ 
+ 
+ 
+17 
+ 
+ 
+← nem választott feladat 
+ ÖSSZESEN 
+70 
+ 
+ 
+ 
+ 
+ 
+pontszám 
+maximális 
+elért 
+I. rész 
+30 
+ 
+II. rész 
+70 
+ 
+Az írásbeli vizsgarész pontszáma 
+100 
+ 
+ 
+dátum 
+ 
+javító tanár 
+ 
+ __________________________________________________________________________  
+ 
+ 
+ 
+pontszáma egész 
+számra kerekítve 
+elért 
+programba  
+beírt 
+I. rész 
+  
+  
+II. rész 
+  
+  
+ 
+dátum 
+ 
+dátum 
+ 
+ 
+ 
+ 
+ 
+ 
+javító tanár 
+ 
+jegyző 
+ 

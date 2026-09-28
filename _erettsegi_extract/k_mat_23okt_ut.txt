@@ -1,0 +1,1234 @@
+
+===== PAGE 1 =====
+Matematika 
+középszint 
+ 
+Javítási-értékelési útmutató 2313 
+ 
+OKTATÁSI HIVATAL 
+MATEMATIKA 
+ 
+KÖZÉPSZINTŰ 
+ÍRÁSBELI VIZSGA 
+minden vizsgázó számára 
+JAVÍTÁSI-ÉRTÉKELÉSI 
+ÚTMUTATÓ 
+ 
+É R E T T S É G I V I Z S G A • 2 0 2 3 . o k t ó b e r 1 7 . 
+
+===== PAGE 2 =====
+Matematika — középszint 
+Javítási-értékelési útmutató 
+2313 írásbeli vizsga 
+2 / 14 
+2023. október 17. 
+Fontos tudnivalók 
+ 
+Formai előírások: 
+ 
+1. Kérjük, hogy a dolgozatot a vizsgázó által használt színűtől eltérő színű tollal, olvas-
+hatóan javítsa ki. 
+2. A feladatok mellett található szürke téglalapok közül az elsőben a feladatra adható ma-
+ximális pontszám van, a javító által adott pontszám a mellette levő téglalapba 
+kerüljön. 
+3. Kifogástalan megoldás esetén kérjük, hogy a maximális pontszám feltüntetése mellett 
+kipipálással jelezze, hogy az adott gondolati egységet látta, és jónak minősítette. 
+4. Hiányos/hibás megoldás esetén kérjük, hogy a hiba jelzése mellett az egyes részpont-
+számokat is írja rá a dolgozatra. Ha a dolgozat javítását jobban követhetővé teszi, akkor 
+a vizsgázó által elvesztett részpontszámok jelzése is elfogadható. Ne maradjon olyan 
+részlet a megoldásban, amelyről a javítás után nem nyilvánvaló, hogy helyes, hibás vagy 
+fölösleges. 
+5. A javítás során alkalmazza az alábbi jelöléseket. 
+ helyes lépés: kipipálás 
+ elvi hiba: kétszeres aláhúzás 
+ számolási hiba vagy más, nem elvi hiba: egyszeres aláhúzás 
+ rossz kiinduló adattal végzett helyes lépés: szaggatott vagy áthúzott kipipálás 
+ hiányos indoklás, hiányos felsorolás vagy más hiány: hiányjel 
+ nem érthető rész: kérdőjel és/vagy hullámvonal 
+6. Az ábrán kívül ceruzával írt részeket ne értékelje. 
+ 
+Tartalmi kérések: 
+ 
+1. Egyes feladatoknál több megoldás pontozását is megadtuk. Amennyiben azoktól eltérő 
+megoldás születik, keresse meg ezen megoldásoknak az útmutató egyes részleteivel 
+egyenértékű részeit, és ennek alapján pontozzon. 
+2. A pontozási útmutató pontjai tovább bonthatók, hacsak az útmutató másképp nem 
+rendelkezik. Az adható pontszámok azonban csak egész pontok lehetnek. 
+3. Ha a megoldásban számolási hiba, pontatlanság van, akkor csak arra a részre nem jár 
+pont, ahol a tanuló a hibát elkövette. Ha a hibás részeredménnyel helyes gondolatmenet 
+alapján tovább dolgozik, és a megoldandó probléma lényegében nem változik meg, ak-
+kor a következő részpontszámokat meg kell adni. 
+4. Elvi hibát követően egy gondolati egységen belül (ezeket az útmutatóban kettős vonal 
+jelzi) a formálisan helyes matematikai lépésekre sem jár pont. Ha azonban a tanuló  
+az elvi hibával kapott rossz eredménnyel – mint kiinduló adattal – helyesen számol to-
+vább a következő gondolati egységekben vagy részkérdésekben, akkor ezekre a részekre 
+kapja meg a maximális pontot, ha a megoldandó probléma lényegében nem változott 
+meg. 
+5. Ha az útmutatóban egy megjegyzés zárójelben szerepel, akkor ennek hiánya esetén is 
+teljes értékű a megoldás. 
+
+===== PAGE 3 =====
+Matematika — középszint 
+Javítási-értékelési útmutató 
+2313 írásbeli vizsga 
+3 / 14 
+2023. október 17. 
+ 
+6. Mértékegység hiánya esetén csak akkor jár pontlevonás, ha a hiányzó mértékegység 
+válaszban vagy mértékegység-átváltásban szerepel (zárójel nélkül). 
+7. Egy feladatra adott többféle megoldási próbálkozás közül a vizsgázó által megjelölt 
+változat értékelhető. A javítás során egyértelműen jelezze, hogy melyik változatot ér-
+tékelte, és melyiket nem. 
+8. A megoldásokért jutalompont (az adott feladatra vagy feladatrészre előírt maximális 
+pontszámot meghaladó pont) nem adható. 
+9. Egy feladatra vagy részfeladatra adott összpontszám nem lehet negatív. 
+10. Az olyan részszámításokért, részlépésekért nem jár pontlevonás, melyek hibásak, de 
+amelyeket a feladat megoldásához a vizsgázó ténylegesen nem használ fel. 
+11. A gondolatmenet kifejtése során a zsebszámológép használata – további matemati-
+kai indoklás nélkül – a következő műveletek elvégzésére fogadható el: összeadás, 
+kivonás, szorzás, osztás, hatványozás, gyökvonás, n!, 
+
+
+
+
+
+
+k
+n
+ kiszámítása, a függvénytáb-
+lázatban fellelhető táblázatok helyettesítése (sin, cos, tg, log és ezek inverzei), a π és az 
+e szám közelítő értékének megadása, nullára rendezett másodfokú egyenlet gyökeinek 
+meghatározása. További matematikai indoklás nélkül használhatók a számológépek az 
+átlag és a szórás kiszámítására abban az esetben, ha a feladat szövege kifejezetten nem 
+követeli meg az ezzel kapcsolatos részletszámítások bemutatását is. Egyéb esetekben 
+a géppel elvégzett számítások indoklás nélküli lépéseknek számítanak, így azokért 
+nem jár pont. 
+12. Az ábrák bizonyító erejű felhasználása (például adatok leolvasása méréssel) nem elfo-
+gadható. 
+13. Valószínűségek megadásánál (ha a feladat szövege másképp nem rendelkezik) a száza-
+lékban megadott helyes válasz is elfogadható. 
+14. Ha egy feladat szövege nem ír elő kerekítési kötelezettséget, akkor az útmutatóban meg-
+adottól eltérő, észszerű és helyes kerekítésekkel kapott rész- és végeredmény is elfo-
+gadható. 
+15. A vizsgafeladatsor II. B részében kitűzött 3 feladat közül csak 2 feladat megoldása 
+értékelhető. A vizsgázó az erre a célra szolgáló négyzetben – feltehetőleg – megjelölte 
+annak a feladatnak a sorszámát, amelynek értékelése nem fog beszámítani az összpont-
+számába. Ennek megfelelően a megjelölt feladatra esetlegesen adott megoldást nem is 
+kell javítani. Ha a vizsgázó nem jelölte meg, hogy melyik feladat értékelését nem kéri, 
+és a választás ténye a dolgozatból sem derül ki egyértelműen, akkor a nem értékelendő 
+feladat automatikusan a kitűzött sorrend szerinti utolsó feladat lesz. 
+ 
+ 
+ 
+
+===== PAGE 4 =====
+Matematika — középszint 
+Javítási-értékelési útmutató 
+2313 írásbeli vizsga 
+4 / 14 
+2023. október 17. 
+ 
+I. 
+ 
+1. 
+3
+1848
+2
+3 7 11
+
+
+ 
+2 pont  
+Összesen: 
+2 pont  
+ 
+2. 
+5 8
+4
+
+
+
+
+
+
+
+
+10 
+2 pont  
+Összesen: 
+2 pont  
+ 
+3. 
+Az átfogó hossza (Pitagorasz-tétellel) 
+2
+2
+10
+24
+
+ 
+1 pont  
+26 (cm). 
+1 pont  
+(A keresett szöget jelölje .) 
+10
+tg
+24
+
+ (≈ 0,417) 
+1 pont  
+ ≈ 22,62 
+1 pont  
+Összesen: 
+4 pont  
+ 
+4. 
+C 
+2 pont Nem bontható. 
+Összesen: 
+2 pont  
+ 
+5. 
+(6 ꞏ 6300 – 5 ꞏ 7500 ) 300 Ft-tal 
+2 pont  
+Összesen: 
+2 pont  
+ 
+6. 
+Az átlag: 9
+5
+6
+9
+6
+6
+8
+49
+7
+7
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 7 C 
+1 pont  
+A terjedelem: 4 C 
+1 pont  
+A medián: 6 C 
+1 pont  
+Összesen: 
+3 pont  
+ 
+7. 
+5 
+2 pont  
+Összesen: 
+2 pont  
+Megjegyzés: 1 pont jár annak megállapításáért, hogy összesen 15 golyó van a dobozban. 
+
+===== PAGE 5 =====
+Matematika — középszint 
+Javítási-értékelési útmutató 
+2313 írásbeli vizsga 
+5 / 14 
+2023. október 17. 
+ 
+8. 
+2
+(
+1)(
+1)
+1
+a
+a
+a
+
+
+
+ 
+1 pont  
+2
+2
+(
+4)
+8
+16
+a
+a
+a
+
+
+
+
+ 
+1 pont  
+Összevonás után: 
+2
+2
+8
+15.
+a
+a
+
+
+ 
+1 pont  
+Összesen: 
+3 pont  
+ 
+9. 
+Az üzemanyag tömege 60 000  0,85  51 000 kg  
+1 pont  
+ 51 t. 
+1 pont  
+A tele tartálykocsi tömege (51 + 23,8 ) 74,8 tonna. 
+1 pont  
+Összesen: 
+3 pont  
+ 
+10. 
+A kör középpontja (2; 4), 
+1 pont  
+sugara 5. 
+1 pont  
+Összesen: 
+2 pont  
+ 
+11. 
+A függvény zérushelye (x  9. 
+2 pont  
+Összesen: 
+2 pont  
+ 
+12. első megoldás 
+Kedvező esetek: FII, IFI és IIF (3 eset).  
+1 pont  
+Az összes eset száma: (23 ) 8. 
+1 pont  
+A keresett valószínűség így 3
+8
+ ( 0,375). 
+1 pont  
+Összesen: 
+3 pont  
+ 
+12. második megoldás 
+(Binomiális eloszlással számolva.)  
+A keresett valószínűség 
+2
+3
+1
+1
+1
+2
+2
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+2 pont  
+3 ( 0,375).
+8
+
+
+ 
+1 pont  
+Összesen: 
+3 pont  
+Megjegyzés: Ha a vizsgázó a binomiális együtthatót elhagyja, és így válasza 1
+8 , akkor 1 pon-
+tot kapjon. 
+ 
+ 
+
+===== PAGE 6 =====
+Matematika — középszint 
+Javítási-értékelési útmutató 
+2313 írásbeli vizsga 
+6 / 14 
+2023. október 17. 
+ 
+II. A 
+ 
+13. a) 
+2
+(
+(3,5)
+(3,5
+3)
+2
+)
+f
+
+
+
+2,25 
+2 pont  
+Összesen: 
+2 pont  
+ 
+13. b) első megoldás 
+2
+(
+3)
+2
+6
+x 
+
+
+ 
+1 pont  
+Nullára rendezve: 
+2
+6
+5
+0.
+x
+x
+
+
+
+ 
+1 pont  
+x  1 vagy x  5. 
+2 pont  
+Összesen: 
+4 pont  
+ 
+13. b) második megoldás 
+2
+(
+3)
+2
+6
+x 
+
+
+, azaz 
+2
+(
+3)
+4.
+x 
+
+ 
+1 pont  
+Tehát x – 3  2 vagy x – 3  –2. 
+2 pont  
+Innen x  5 vagy x  1. 
+1 pont 
+Ez a pont csak akkor jár, 
+ha mindkét választ meg-
+adja a vizsgázó. 
+Összesen: 
+4 pont  
+Megjegyzés: Ha a vizsgázó grafikusan oldja meg a feladatot, akkor 2 pont jár az f grafikonjának 
+helyes felrajzolásáért, 1 pont jár a két megfelelő érték leolvasásáért, és további 1 pont jár a 
+leolvasott értékek ellenőrzéséért. 
+ 
+13. c) 
+B 
+2 pont Nem bontható. 
+Összesen: 
+2 pont  
+ 
+13. d) első megoldás 
+Nullára rendezve: 
+2
+6
+8
+0
+x
+x
+
+
+
+. 
+1 pont  
+Az 
+2
+6
+8
+0
+x
+x
+
+
+
+ egyenlet gyökei 2 és 4, 
+1 pont  
+a két gyök között lesz a bal oldal értéke negatív 
+(tehát a valós számok halmazán az egyenlőtlenség 
+megoldása 2  x  4). 
+1 pont 
+Ez a pont akkor is jár, ha 
+ez a gondolat csak a meg-
+oldásból derül ki. 
+Az egész megoldások tehát: 2, 3 és 4. 
+1 pont  
+Összesen: 
+4 pont  
+ 
+ 
+ 
+
+===== PAGE 7 =====
+Matematika — középszint 
+Javítási-értékelési útmutató 
+2313 írásbeli vizsga 
+7 / 14 
+2023. október 17. 
+ 
+13. d) második megoldás 
+Teljes négyzetté alakítva és rendezve: 
+2
+(
+3)
+1
+x 
+. 
+1 pont  
+3
+1
+x 
+ 
+1 pont  
+Tehát x – 3 lehetséges egész értékei –1, 0 és 1, 
+1 pont –1  x – 3  1 
+így x lehetséges egész értékei 2, 3 és 4. 
+1 pont  
+Összesen: 
+4 pont  
+Megjegyzések: 
+1. Ha a vizsgázó a valós számok halmazán oldja meg az egyenlőtlenséget, akkor legfeljebb 
+3 pontot kaphat. 
+2. Ha a vizsgázó (pl. próbálgatás után) helyesen felsorolja a megoldásokat, akkor ezért 2 pontot 
+kapjon. További 2 pont jár annak indoklásáért, hogy más megoldás nincs. 
+ 
+14. a) 
+A CAB háromszögben koszinusztétellel: 
+2
+2
+2
+11
+8
+2 11 8 cos32
+BC 
+
+
+
+ (≈ 35,74). 
+2 pont  
+Innen BC ≈ 6 cm. 
+1 pont  
+Összesen: 
+3 pont  
+ 
+14. b) első megoldás 
+A terület a CAB háromszög területének kétszerese. 
+1 pont 
+Ez a pont akkor is jár, ha 
+ez a gondolat csak a meg-
+oldásból derül ki. 
+11 8 sin32
+2
+2
+T
+
+
+
+
+≈ 
+1 pont 
+Hérón-képlettel: 
+T ≈ 2 12,5 1,5 4,5 6,5
+
+
+
+ ≈ 
+≈ 46,6 cm2 
+1 pont ≈ 46,8 cm2 
+Összesen: 
+3 pont  
+ 
+14. b) második megoldás 
+(Meghatározzuk a paralelogramma AB oldalához tar-
+tozó m magasságát.) 
+sin 32
+11
+m
+
+ 
+1 pont 
+ 
+Innen m ≈ 5,83 cm. 
+1 pont  
+T  ∙ m ≈ 46,6 cm2 
+1 pont  
+Összesen: 
+3 pont  
+ 
+ 
+ 
+
+===== PAGE 8 =====
+Matematika — középszint 
+Javítási-értékelési útmutató 
+2313 írásbeli vizsga 
+8 / 14 
+2023. október 17. 
+ 
+14. c) 
+Az AFT derékszögű háromszög-
+ben: 
+cos32
+5,5
+AT
+
+, 
+1 pont 
+FT szakasz hossza fele a 
+paralelogramma magas-
+ságának: FT  2,915 cm. 
+ahonnan AT ≈ 4,66 cm. 
+1 pont 
+Pitagorasz-tétellel: 
+2
+2
+5,5
+2,915
+AT 
+
+≈ 
+≈ 4,66 cm. 
+A másik szakasz: TB  8 – AT  3,34 cm. 
+1 pont  
+Összesen: 
+3 pont  
+ 
+14. d) első megoldás 
+Az egyik színt kétszer kell használnunk. 
+Ezt a színt 3-féleképpen választhatjuk ki.  
+1 pont  
+Ezzel a színnel két szemközti tartományt kell kiszí-
+neznünk. Ezt a két tartományt 2-féleképpen választ-
+hatjuk ki. 
+1 pont  
+A maradék két tartományt a maradék két színnel  
+2-féleképpen színezhetjük ki. 
+1 pont  
+Így 3 ꞏ 2 ꞏ 2  12 megfelelő színezési lehetőség van. 
+1 pont  
+Összesen: 
+4 pont  
+ 
+14. d) második megoldás 
+Tegyük fel, hogy a felső tartományt pirosra színez-
+zük. Ha a bal és a jobb oldali tartomány különböző 
+színű (az egyik sárga, a másik kék), akkor az alsó tar-
+tomány csak piros lehet. Ez 2 lehetőség. 
+1 pont  
+Ha (a felső tartomány piros, és) a bal és a jobb oldali 
+tartomány azonos színű (mindkettő sárga vagy mind-
+kettő kék), akkor az alsó tartományt csak az addig fel 
+nem használt színnel színezhetjük. Ez is 2 lehetőség. 
+1 pont  
+Ugyanígy (2 + 2 ) 4 lehetőség van akkor, ha a felső 
+tartomány sárga vagy kék. 
+1 pont  
+Így 3 ꞏ 4  12 megfelelő színezési lehetőség van. 
+1 pont  
+Összesen: 
+4 pont  
+Megjegyzés: Ha a vizsgázó a színezési lehetőségeket rendezetten és helyesen felsorolja, és ez 
+alapján helyesen válaszol, akkor a teljes pontszám jár. 
+ 
+ 
+
+===== PAGE 9 =====
+Matematika — középszint 
+Javítási-értékelési útmutató 
+2313 írásbeli vizsga 
+9 / 14 
+2023. október 17. 
+ 
+15. a) 
+ 
+7 pont 
+Az N megfelelő elhelyezé-
+séért 1 pont, a T, R és P 
+megfelelő elhelyezéséért 
+2-2 pont jár. 
+Ha a T, R vagy P elhelye-
+zésekor egy szempont sze-
+rint hibázik a vizsgázó, 
+akkor annak a négyszög-
+nek az elhelyezéséért 
+1 pontot kapjon. 
+Összesen: 
+7 pont  
+ 
+15. b) 
+Az I. állítás hamis. 
+1 pont  
+Helyes indoklás (pl. jó ellenpélda). 
+1 pont Pl. A  {1; 2}, B  {1; 3}. 
+A II. állítás igaz. 
+1 pont  
+Az elemek: 16, 25, 36, 49, 64 és 81. 
+1 pont  
+Összesen: 
+4 pont  
+ 
+ 
+ 
+R 
+N 
+T 
+P 
+
+===== PAGE 10 =====
+Matematika — középszint 
+Javítási-értékelési útmutató 
+2313 írásbeli vizsga 
+10 / 14 
+2023. október 17. 
+ 
+II. B 
+ 
+16. a) első megoldás 
+Ha Janka n darab ötöst szerzett, akkor a feladat szö-
+vege alapján: 3
+3
+4
+5
+4,5.
+3
+n
+n
+
+
+
+
+
+ 
+2 pont 
+Ha összesen m jegye volt:
+3
+3
+4
+5(
+3)
+4,5.
+m
+m
+
+
+
+
+
+ 
+10 + 5n  13,5 + 4,5n 
+0,5n  3,5 
+1 pont 5m – 5  4,5m 
+Innen n  7, tehát 7 ötöst kapott Janka. 
+1 pont m  10, tehát Janka 
+(10 – 3 ) 7 ötöst kapott. 
+Összesen: 
+4 pont  
+ 
+16. a) második megoldás 
+Ha Janka még 7 ötöst kapott, 
+1 pont  
+akkor éppen 4,5 lett az átlaga, hiszen 
+3
+3
+4
+7 5
+4,5.
+10
+
+
+
+ 
+2 pont  
+Annak helyes indoklása, hogy más megoldás nem le-
+hetséges (pl. ennél kevesebb ötös esetén 4,5-nél rosz-
+szabb, ennél több ötös esetén pedig 4,5-nél jobb lesz 
+az átlaga). Tehát Janka csak 7 ötöst kaphatott. 
+1 pont  
+Összesen: 
+4 pont  
+ 
+16. b) első megoldás  
+Janka az első évben 12 ꞏ 1000  12 000 Ft, 
+a második évben 12 ꞏ 2000  24 000 Ft, és így tovább, 
+az utolsó évben 12 ꞏ 12 000  144 000 Ft zsebpénzt 
+kap. 
+1 pont   
+Az évente kapott összegek egy olyan számtani sorozat 
+egymást követő tagjai, melynek első tagja és differen-
+ciája is 12 000, és az első 12 tagot kell összegezni. 
+1 pont 
+Ez a pont akkor is jár, ha 
+ez a gondolat csak a meg-
+oldásból derül ki. 
+Ez az összeg 
+12
+2 12 000
+(12
+1) 12 000 12
+2
+S
+
+
+
+
+
+
+ 
+1 pont 
+12
+12 000
+144 000 12
+2
+S
+
+
+
+ 
+ 936 000 Ft. 
+1 pont  
+Összesen: 
+4 pont  
+ 
+16. b) második megoldás  
+A 12 év alatt kapott összeg: 
+12 ꞏ 1000 + 12 ꞏ 2000 + … + 12 ꞏ 12 000  
+1 pont  
+ 12 ꞏ (1000 + 2000 + … + 12 000)  
+1 pont Ezek a pontok akkor is 
+járnak, ha a vizsgázó szá-
+mológéppel helyesen szá-
+mol. 
+ 12 ꞏ 1000 ꞏ (1 + 2 + … + 12)  12 ꞏ 1000 ꞏ 78  
+1 pont 
+ 936 000 Ft. 
+1 pont  
+Összesen: 
+4 pont  
+
+===== PAGE 11 =====
+Matematika — középszint 
+Javítási-értékelési útmutató 
+2313 írásbeli vizsga 
+11 / 14 
+2023. október 17. 
+ 
+16. c) 
+(A mértani sorozat n-edik tagját jelölje an.) 
+Az első kilenc tag összege: 
+9
+1
+3
+1
+59 046.
+3 1
+a
+
+
+
+
+ 
+1 pont  
+1 9841
+59 046
+a 
+
+ 
+1 pont  
+Innen a1  6. 
+1 pont  
+8
+8
+9
+1
+6 3
+39 366
+a
+a
+q
+
+
+
+
+
+ 
+1 pont  
+Összesen: 
+4 pont  
+ 
+16. d) 
+3
+50000 1
+59046
+100
+p
+
+
+
+
+
+
+
+
+
+ 
+2 pont 
+3
+50 000
+59 046
+x
+
+
+ 
+3
+1
+1,18092
+100
+p
+
+
+
+
+
+
+
+
+ 
+1 pont 
+3
+1,18092
+x 
+ 
+3
+1
+1,18092
+100
+p
+
+
+≈ 1,057 
+1 pont x ≈ 1,057 
+Így p értéke kb. 5,7. 
+1 pont  
+Összesen: 
+5 pont  
+ 
+ 
+ 
+
+===== PAGE 12 =====
+Matematika — középszint 
+Javítási-értékelési útmutató 
+2313 írásbeli vizsga 
+12 / 14 
+2023. október 17. 
+ 
+17. a) első megoldás 
+A kerékpárszállító kocsi helyét 7-féleképpen, 
+1 pont  
+az étkezőkocsi helyét ezután 6-féleképpen választhat-
+juk ki (a másodosztályú kocsik helye ezután adott), 
+1 pont  
+ezért 7 ꞏ 6  42-féle sorrendben állítható össze a hét 
+kocsi. 
+1 pont  
+Összesen: 
+3 pont  
+ 
+17. a) második megoldás 
+A másodosztályú kocsik helyét 7
+5
+
+
+
+  21-féleképpen 
+választhatjuk ki. 
+1 pont  
+A további két kocsit ezután 2-féle sorrendben helyez-
+hetjük el a maradék két helyre, 
+1 pont  
+ezért 21 ꞏ 2  42-féle sorrendben állítható össze a hét 
+kocsi. 
+1 pont  
+Összesen: 
+3 pont  
+ 
+17. a) harmadik megoldás 
+A 7 kocsit 7! ( 5040)-féleképpen állíthatják sorba. 
+1 pont A lehetséges sorrendek 
+száma egyenlő 7 olyan 
+elem ismétléses permutá-
+cióinak számával, melyek 
+közül 5 elem egyforma. 
+A másodosztályú kocsikat azonban nem különböztet-
+jük meg egymástól. Ezek lehetséges sorrendjeinek 
+száma 5! ( 120). 
+1 pont 
+Így 7!
+42
+5! 
+-féle sorrendben állítható össze a hét kocsi. 
+1 pont  
+Összesen: 
+3 pont  
+ 
+17. b) 
+A kedvezmény nélküli ár 3040 : 0,95  
+1 pont  
+ 3200 (Ft). 
+1 pont  
+Összesen: 
+2 pont  
+ 
+17. c) 
+Egy jegy ára az automatás kedvezménnyel 
+280  0,95  266 Ft. 
+1 pont  
+(Tegyük fel, hogy Ábel n-szer utazott.) 
+2140 < n  266 
+8,05 < n 
+1 pont 2140 : 266 ≈ 8,05 
+Ezért a havi tanulóbérlet ára 8 kedvezményes menet-
+jegy áránál több, de 9 menetjegy áránál már kevesebb. 
+1 pont 
+Ez a pont akkor is jár, ha 
+ez a gondolat csak a meg-
+oldásból derül ki. 
+Ábel 9-szer utazott januárban ezen a távolságon. 
+1 pont  
+Összesen: 
+4 pont  
+
+===== PAGE 13 =====
+Matematika — középszint 
+Javítási-értékelési útmutató 
+2313 írásbeli vizsga 
+13 / 14 
+2023. október 17. 
+ 
+17. d)  
+A teljes árú jegy árát (Ft-ban) jelölje x, a gyorsvonati 
+pótjegy árát pedig y. Ekkor a 20%-os mérséklésű jegy 
+ára 0,8x, az 50%-os mérséklésű jegy ára 0,5x, 
+a 90%-os mérséklésű jegy ára pedig 0,1x. 
+1 pont 
+Ez a pont akkor is jár, ha 
+ez a gondolat csak a meg-
+oldásból derül ki. 
+(A két család által vásárolt jegyekre egy-egy egyenlet 
+írható fel. Megoldandó a két egyenletből álló egyen-
+letrendszer.) 
+2x + 0,8x + 0,5x + 4y  7960, 
+azaz 3,3x + 4y  7960. 
+1 pont  
+5 ꞏ 0,1x + 5y  1975, 
+azaz 0,5x + 5y  1975. 
+1 pont  
+A második egyenletből y  395 – 0,1x, 
+1 pont* Az első egyenletből 
+y  1990 – 0,825x. 
+ezt az első egyenletbe helyettesítve 
+3,3x + 1580 – 0,4x  7960 adódik, 
+1 pont* A másodikba helyettesítve 
+9950 – 3,625x  1975. 
+ahonnan (a teljes árú menetjegy ára) x  2200 (Ft), 
+1 pont  
+majd (a gyorsvonati pótjegy ára) y  175 (Ft). 
+1 pont  
+Ellenőrzés: (A 20%-os mérséklésű menetjegy 1760 Ft, 
+az 50%-os 1100 Ft, a 90%-os 220 Ft.) A Kiss család 
+2 ꞏ 2200 + 1760 + 1100 + 4 ꞏ 175  7960 Ft-ért, a Nagy 
+család pedig 5 ꞏ 220 + 5 ꞏ 175  1975 Ft-ért vásárolt je-
+gyeket valóban. 
+1 pont  
+Összesen: 
+8 pont  
+ 
+Megjegyzés: A *-gal jelölt 2 pontot az alábbi gondolatért is megkaphatja a vizsgázó. 
+Az első egyenlet ötszöröséből kivonva a második 
+egyenlet négyszeresét: 
+14,5x  31 900. 
+2 pont  
+ 
+18. a) 
+A nagy henger alapkörének sugara 21 cm, 
+a kis henger alapkörének sugara 9 cm 
+(a test magassága m  7 cm). 
+1 pont  
+A nagy henger térfogata: 
+2
+21
+π 7
+
+ ≈ 9698 cm3. 
+1 pont  
+A kis henger térfogata: 
+2
+9
+π 7
+
+
+ ≈ 1781 cm3.  
+1 pont  
+A szivacsos rész térfogata a két henger térfogatának 
+különbsége, azaz 7917 cm3. 
+1 pont  
+Összesen: 
+4 pont  
+ 
+ 
+ 
+
+===== PAGE 14 =====
+Matematika — középszint 
+Javítási-értékelési útmutató 
+2313 írásbeli vizsga 
+14 / 14 
+2023. október 17. 
+ 
+18. b) 
+Egy párna felszíne két körgyűrűből, valamint a belső, 
+illetve a külső hengerpalástból áll. 
+1 pont* 
+Ez a pont akkor is jár, ha 
+ez a gondolat csak a meg-
+oldásból derül ki. 
+A körgyűrű területe a nagy és a kisebb kör területének 
+különbsége: 
+2
+2
+21
+π
+9
+π
+
+
+
+ ≈ 1131 cm2. 
+1 pont*  
+A belső hengerpalást területe: 2 9 π 7
+
+
+ ≈ 396 cm2. 
+1 pont*  
+A külső hengerpalást területe: 2 21 π 7
+
+
+
+ ≈ 924 cm2. 
+1 pont*  
+Egy párna felszíne: 2  1131 + 396 + 924  3582 cm2. 
+1 pont*  
+30 db párna felszíne: 30  3582  107 460 cm2  
+1 pont  
+ 10,746 m2. 
+1 pont  
+Tehát (a kért kerekítéssel) 11 m2 szövetre van szükség. 
+1 pont 
+Ez a pont nem jár, ha a 
+vizsgázó nem kerekít, 
+vagy rosszul kerekít. 
+Összesen: 
+8 pont  
+ 
+Megjegyzés: A *-gal jelölt 5 pontot az alábbi gondolatmenetért is megkaphatja a vizsgázó. 
+A párna felszínét megkapjuk, ha a nagy henger felszí-
+néből kivonjuk a kis henger felszínét, és a különbség-
+hez hozzáadjuk a belső hengerpalást területének két-
+szeresét. 
+1 pont 
+Ez a pont akkor is jár, ha 
+ez a gondolat csak a meg-
+oldásból derül ki. 
+A nagy henger felszíne: 
+2
+2 21
+π
+2 21 π 7
+
+
+
+
+ ≈ 3695 cm2. 
+1 pont  
+A kis henger felszíne: 
+2
+2 9
+π
+2 9 π 7
+
+
+
+
+ ≈ 905 cm2. 
+1 pont  
+A belső hengerpalást területe: 2 9 π 7
+
+
+ ≈ 396 cm2. 
+1 pont  
+Egy párna felszíne: 3695 – 905 + 2 ∙ 396  3582 cm2. 
+1 pont  
+ 
+18. c) 
+Annak a valószínűsége, hogy egy párna nem lesz se-
+lejtes: 0,97. 
+1 pont 
+Ez a pont akkor is jár, ha 
+ez a gondolat csak a meg-
+oldásból derül ki. 
+Annak a valószínűsége, hogy a 30 darab között nem 
+lesz selejtes párna: 0,9730 ≈ 0,401. 
+1 pont  
+Annak a valószínűsége, hogy a párnák közt pontosan 
+egy selejtes lesz: 
+29
+30
+0,03 0,97
+1
+
+
+
+
+
+
+
+≈ 0,372. 
+2 pont  
+Tehát a kérdezett valószínűség 0,401 + 0,372  0,773. 
+1 pont  
+Összesen: 
+5 pont  
+ 

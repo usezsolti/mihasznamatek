@@ -1,0 +1,395 @@
+--- line 147 ---
+1 pont  
+Az egyenlet gyökei –5 és 1. 
+1 pont  
+Ellenőrzés: behelyettesítéssel vagy (a [–1; 3] halma-
+zon) ekvivalens átalakításokra hivatkozással kapjuk, 
+hogy az 1 megoldása, a –5 pedig nem megoldása az 
+eredeti egyenletnek. 
+1 pont  
+Összesen: 
+5 pont  
+
+--- line 191 ---
+x =
+, 
+amiből a logaritmusfüggvény kölcsönös egyértelmű-
+sége miatt x = 8. 
+2 pont  
+Ellenőrzés: behelyettesítéssel vagy (az x > 0 halma-
+zon) ekvivalenciára hivatkozással. 
+1 pont  
+Összesen: 
+6 pont  
+
+--- line 247 ---
+x
+
+ függvény kölcsönös egyértelmű-
+sége miatt) x = 8. 
+2 pont  
+Ellenőrzés: behelyettesítéssel vagy (az x > 0 halma-
+zon) ekvivalenciára hivatkozással. 
+1 pont  
+Összesen: 
+6 pont  
+
+--- line 328 ---
+° = 50 100 sin 50,2
+2
+⋅
+⋅
+° ≈ 1921 (m2). 
+1 pont*  
+A négyszög területe 2066 + 1921 = 3987 m2. 
+1 pont  
+Összesen: 
+9 pont  
+
+--- line 408 ---
+Az azonos színű háromszögek színét 3-féleképpen 
+választhatjuk meg,  
+1 pont  
+a maradék két háromszöget pedig 2-féleképpen szí-
+nezhetjük (a maradék két színnel). 
+1 pont  
+A lehetséges színezések száma ezért 4 ∙ 2 ∙ 3 ∙ 2 = 48. 
+1 pont  
+Összesen: 
+6 pont  
+
+--- line 425 ---
+Ezzel a színnel két szemközti háromszöget kell kiszí-
+neznünk, ezeket 2-féleképpen választhatjuk ki. 
+1 pont  
+A maradék két háromszög a maradék 3 szín közül 
+kettővel 3 ∙ 2 = 6-féleképpen színezhető ki. 
+2 pont  
+A lehetséges színezések száma ezért 4 ∙ 2 ∙ 6 = 48. 
+1 pont  
+Összesen: 
+6 pont  
+
+--- line 449 ---
+Vagy a CD oldalra illeszkedő háromszög piros, vagy 
+a DA oldalra illeszkedő háromszög kék. A negyedik 
+háromszög mindkét esetben sárga vagy zöld lehet. 
+Az első két háromszög bármely színezéséhez tehát 
+4-féleképpen színezhetjük az utolsó két háromszöget, 
+2 pont*  
+így a lehetséges színezések száma 12 ∙ 4 = 48. 
+1 pont  
+Összesen: 
+6 pont  
+
+--- line 522 ---
+1 pont  
+Ellenőrzés: 
+6600 ∙ 9 + 4800 ∙ 15 = 131 400. 
+A 15 db 4800 Ft-os részvény harmadát, 5 db-ot cse-
+rélnénk 6600 Ft-osra. Így lenne 10 db 4800 Ft-os és 
+14 db 6600 Ft-os. Ezek összértéke  
+4800 ∙ 10 + 6600 ∙ 14 = 140 400 valóban. 
+1 pont  
+Összesen: 
+6 pont  
+
+--- line 539 ---
+vényt cserélnénk 6600 Ft-osra. 
+2 pont  
+Ez az összes 4800 Ft-os részvény harmada, 
+tehát (5 · 3 =) 15 db 4800 Ft-os részvényünk,  
+1 pont  
+és (131 400 – 15 ⋅ 4800) : 6600 = 9 db 6600 Ft-os 
+részvényünk van. 
+2 pont  
+Összesen: 
+6 pont  
+
+--- line 628 ---
+
+
+
+
+≈ 35,5 
+Tehát a 36. hónap végén lesz először több pénz  
+a második befektetésben. 
+1 pont  
+Összesen: 
+7 pont  
+
+--- line 666 ---
+0,25 5 (5 5)
+0
+⋅⋅
+−
+=
+ igaz. 
+(Tehát mindkét pont valóban rajta van a görbén.) 
+1 pont  
+Összesen: 
+2 pont  
+
+--- line 792 ---
+1 pont 
+A valószínűség pontos 
+értéke 7
+0,5376
+625
+48
+=
+. 
+Összesen: 10 pont  
+ 
+
+--- line 880 ---
+
+ másodfokú függvény képe 
+„felfelé nyitott” parabola,  
+1 pont Ez a pont jár egy megfe-
+lelő ábráért is. 
+tehát m < –6 vagy m > 2 esetén igaz a megadott kije-
+lentés. 
+1 pont m ∈ ]–∞; –6[ ∪ ]2; +∞[ 
+Összesen: 
+6 pont  
+
+--- line 946 ---
+≥
+≥
+=
++
++
+, tehát a megadott kijelen-
+tés valóban igaz (hiszen f folytonos függvény). 
+1 pont  
+Összesen: 
+5 pont  
+
+--- line 979 ---
+ ⋅ 0,4 = 0,144. 
+1 pont  
+A ∧ B hamis és C igaz valószínűsége: 
+(1 – 0,62) ⋅ 0,6 = 0,384. 
+1 pont  
+Tehát a keresett valószínűség:  
+0,216 + 0,144 + 0,384 = 0,744. 
+1 pont  
+Összesen: 
+5 pont  
+
+--- line 1000 ---
+1 pont  
+Mindkétszer figyelembe vettük azt az eseményt,  
+hogy A ∧ B igaz és C is igaz;  
+ennek 0,36 ⋅ 0,6 = 0,216 a valószínűsége. 
+1 pont  
+A szitaformula szerint a kérdezett valószínűség 
+0,36 + 0,6 – 0,216 = 0,744. 
+1 pont  
+Összesen: 
+5 pont  
+
+--- line 1019 ---
+1 pont  
+A ∧ B igaz és C hamis valószínűsége: 
+0,62
+ ⋅ 0,4 = 0,144. 
+1 pont  
+Tehát a kérdezett valószínűség:  
+0,6 + 0,144 =  0,744. 
+1 pont  
+Összesen: 
+5 pont  
+
+--- line 1051 ---
+2021. május 4. 
+ 
+Annak a valószínűsége, hogy A ∧ B hamis és C is ha-
+mis 0,64 ⋅ 0,4 = 0,256. 
+1 pont  
+Annak a valószínűsége tehát, hogy (A ∧ B) ∨ C kije-
+lentés igaz: 1 – 0,256 = 0,744. 
+1 pont  
+Összesen: 
+5 pont  
+
+--- line 1126 ---
+az öt „igaz” logikai ér-
+tékű lehetőség valószínű-
+ségek helyes kiszámítása 
+2 pont. 
+A kérdezett valószínűség:  
+0,63 + 3 ⋅ 0,62
+ ⋅ 0,4 + 0,6 ⋅ 0,42 = 0,744. 
+1 pont  
+Összesen: 
+5 pont  
+
+--- line 1160 ---
+3
+2
+=
+
+
+, illetve 1 lehető-
+séget jelentenek. 
+ezért 23 = 8-féle ismeretségi gráf (háló) lehetséges. 
+1 pont Összesen 1 + 3 + 3 + 1 = 8 
+lehetőség van. 
+
+--- line 1162 ---
+=
+
+
+, illetve 1 lehető-
+séget jelentenek. 
+ezért 23 = 8-féle ismeretségi gráf (háló) lehetséges. 
+1 pont Összesen 1 + 3 + 3 + 1 = 8 
+lehetőség van. 
+Összesen: 
+3 pont  
+
+--- line 1232 ---
+ 
+Ekkor 3 ⋅ 3 (= 9) esetet kapunk. 
+1 pont 
+ 
+ 
+Például:  
+Az ismeretségi háló tehát (3 + 3 ⋅ 3 =) 12-féle lehet.  
+1 pont  
+Összesen: 
+9 pont  
+
+--- line 1276 ---
+
+
+
+ = 4. 
+1 pont  
+A megfelelő csoportok száma 6 + 6 + 4 = 16,  
+ennyi kihallgatást kell szervezni.  
+1 pont  
+Összesen: 
+4 pont  
+
+--- line 1305 ---
+
+ = 4 olyan csoport van, melynek A és B is a tagja 
+(kedvezőtlen esetek). 
+(A maradék 4 személyből 1 kerül A és B mellé.)  
+1 pont  
+A megfelelő csoportok száma 20 – 4 = 16,  
+ennyi kihallgatást kell szervezni. 
+1 pont  
+Összesen: 
+4 pont  
+
+--- line 1347 ---
+
+
+
+
+
+
+≈ 1,58. 
+1 pont  
+Összesen: 
+4 pont  
+
+--- line 1424 ---
+y
+x
+x
+= −
++
++
+. 
+1 pont  
+Összesen: 
+8 pont  
+
+--- line 1439 ---
+Az inverzfüggvény értelmezési tartománya [–2; 5], 
+1 pont  
+értékkészlete [–2; 3], 
+1 pont  
+zérushelye 1, 
+1 pont  
+szigorúan monoton növekedő. 
+1 pont  
+Összesen: 
+4 pont  
+
+--- line 1463 ---
+1 pont  
+Ekkor az eladott sorsjegyek száma 
+2
+10n = 4000-rel 
+több, azaz 5000 + 4000 = 9000 db,   
+1 pont  
+a havi bevétel pedig 9000 ⋅ 300 = 2 700 000 Ft. 
+1 pont  
+Összesen: 
+3 pont  
+
+--- line 1568 ---
+2x a maxi-
+mumhelye. 
+(n értéke csak egész lehet:)  
+f (27) = 2 826 700 > f (28) = 2 824 800, 
+ezért (a modell szerint) 27-szer 10 Ft-tal (230 Ft-ra) 
+kell csökkenteni a sorsjegy árát ahhoz, hogy az érté-
+kesítésből származó havi bevétel maximális legyen. 
+2 pont  
+Összesen: 
+9 pont  
+
+--- line 1602 ---
+nűsége 
+0,95 0,048 
+0,002 
+ahonnan p = 0,002 és 24p = 0,048. 
+1 pont 
+A nyeremény várható értéke  
+(0,95 ⋅ 0 +) 0,048 ⋅ 2500 + 0,002 ⋅ 50 000 = 220 Ft. 
+2 pont  
+Összesen: 
+4 pont  
+
+--- line 1653 ---
++ ≈ 9,47 
+1 pont*  
+Legfeljebb 9 sorban rakhattak fákat a raktérbe. 
+1 pont*  
+5 sorban 5 ⋅ 10 = 50 db, 4 sorban 4 ⋅ 9 = 36 db farönk, 
+összesen tehát legfeljebb 50 + 36 = 86 farönk lehet a  
+raktérben. (Ezt kellett igazolni.) 
+1 pont  
+Összesen: 
+8 pont  
+
+--- line 1696 ---
+rt
+V
+V
+≈27,2
+33,6 ≈ 0,81 (azaz 81%) 
+1 pont  
+Tehát a raktér térfogatának 19%-a lesz üres. 
+1 pont  
+Összesen: 
+4 pont  
+
+--- line 1722 ---
+
+
+
+≈ 0,271 
+2 pont  
+A keresett valószínűség ezek összege:  
+0,130 + 0,271 = 0,401. 
+1 pont  
+Összesen: 
+4 pont  

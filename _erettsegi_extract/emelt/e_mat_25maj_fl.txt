@@ -1,0 +1,1202 @@
+
+===== PAGE 1 =====
+ 
+Matematika 
+ 
+Nat2020 
+E2512 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+OKTATÁSI HIVATAL 
+MATEMATIKA 
+ 
+EMELT SZINTŰ 
+ÍRÁSBELI VIZSGA 
+2025. május 6. 9:00 
+ 
+Időtartam: 240 perc 
+Pótlapok száma 
+Tisztázati 
+ 
+Piszkozati 
+ 
+É R E T T S É G I V I Z S G A • 2 0 2 5 . m á j u s 6 . 
+
+===== PAGE 2 =====
+ 
+Matematika 
+2 / 24 
+emelt szintű írásbeli vizsga 
+E2512 
+ 
+2025. május 6. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 3 =====
+ 
+Matematika 
+3 / 24 
+emelt szintű írásbeli vizsga 
+E2512 
+ 
+2025. május 6. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Fontos tudnivalók 
+1. A feladatok megoldására 240 perc fordítható, az idő leteltével a munkát be kell fejeznie. 
+ 
+2. A feladatok megoldási sorrendje tetszőleges. 
+ 
+3. A II. részben kitűzött öt feladat közül csak négyet kell megoldania. A nem választott fel-
+adat sorszámát írja be a dolgozat befejezésekor az alábbi négyzetbe! Ha a javító tanár 
+számára nem derül ki egyértelműen, hogy melyik feladat értékelését nem kéri, akkor  
+a kitűzött sorrend szerinti legutolsó feladatra nem kap pontot. 
+ 
+ 
+ 
+4. A feladatok megoldásához szöveges adatok tárolására és megjelenítésére nem alkalmas 
+zsebszámológépet és bármilyen négyjegyű függvénytáblázatot használhat, más elektroni-
+kus vagy írásos segédeszköz használata tilos! 
+ 
+5. A megoldások gondolatmenetét minden esetben írja le, mert a feladatra adható pont-
+szám jelentős része erre jár! 
+ 
+6. Ügyeljen arra, hogy a lényegesebb részszámítások is nyomon követhetők legyenek! 
+ 
+7. A gondolatmenet kifejtése során a zsebszámológép használata – további matematikai 
+indoklás nélkül – a következő műveletek elvégzésére fogadható el: összeadás, kivonás, 
+szorzás, osztás, hatványozás, gyökvonás, n!, 
+
+
+
+
+
+
+k
+n
+ kiszámítása, a függvénytáblázatban fel-
+lelhető táblázatok helyettesítése (sin, cos, tg, log és ezek inverzei), a π és az e szám közelítő 
+értékének megadása, nullára rendezett másodfokú egyenlet gyökeinek meghatározása.  
+További matematikai indoklás nélkül használhatók a számológépek az átlag és a szórás ki-
+számítására abban az esetben, ha a feladat szövege kifejezetten nem követeli meg az ezzel 
+kapcsolatos részletszámítások bemutatását is. Egyéb esetekben a géppel elvégzett számí-
+tások indoklás nélküli lépéseknek számítanak, így azokért nem jár pont. 
+ 
+8. A feladatok megoldásánál használt tételek közül az iskolában tanult, névvel ellátott tételeket 
+(pl. Pitagorasz-tétel, magasságtétel) nem kell pontosan megfogalmazva kimondania, elég 
+csak a tétel megnevezését említenie, de az alkalmazhatóságát röviden indokolnia kell. 
+Egyéb tétel(ek)re való hivatkozás csak akkor fogadható el teljes értékűnek, ha az állítást 
+minden feltételével együtt pontosan mondja ki (bizonyítás nélkül), és az adott problémában 
+az alkalmazhatóságát indokolja. 
+ 
+9. A feladatok végeredményét (a feltett kérdésre adandó választ) szöveges megfogalmazásban 
+is közölje! 
+ 
+10. A dolgozatot tollal írja, de az ábrákat ceruzával is rajzolhatja. Az ábrákon kívül a ceruzával 
+írt részeket a javító tanár nem értékelheti. Ha valamilyen megoldást vagy megoldásrészletet 
+áthúz, akkor az nem értékelhető. 
+ 
+11. Minden feladatnak csak egy megoldása értékelhető. Több megoldási próbálkozás esetén 
+egyértelműen jelölje, hogy melyiket tartja érvényesnek! 
+ 
+12. Kérjük, hogy a szürkített téglalapokba semmit ne írjon! 
+ 
+ 
+
+===== PAGE 4 =====
+ 
+Matematika 
+4 / 24 
+emelt szintű írásbeli vizsga 
+E2512 
+ 
+2025. május 6. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+I. 
+ 
+1. 
+Egy cipőboltban novemberben három pár cipő összesen 45 000 Ft-ba került. Egy kará-
+csonyi akció keretében, ha valaki három pár cipőt egyszerre vásárolt, akkor a legolcsóbbat 
+50%, a második legolcsóbbat pedig 20% kedvezménnyel vehette meg (a legdrágább ci-
+pőre nem járt kedvezmény). Ebben az akcióban ugyanezért a három pár cipőért így ösz-
+szesen már csak 37 000 Ft-ot kellett fizetni. 
+Karácsony elmúltával az akció véget ért, és a legolcsóbb cipő árát – a novemberi árához 
+képest – 30%-kal megemelték, így a három pár cipő ekkor összesen 48 000 Ft-ba került. 
+ 
+a) Határozza meg mindhárom pár cipő novemberi árát! 
+ 
+Négy szám közül az első három szám egy számtani, az utolsó három szám pedig egy 
+mértani sorozat egymást követő három tagja. Az első szám a 3, a negyedik szám a 25. 
+ 
+b) Határozza meg a másik két számot! 
+ 
+a) 
+7 pont 
+ 
+b) 
+7 pont 
+ 
+Ö.: 
+14 pont 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 5 =====
+ 
+Matematika 
+5 / 24 
+emelt szintű írásbeli vizsga 
+E2512 
+ 
+2025. május 6. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 6 =====
+ 
+Matematika 
+6 / 24 
+emelt szintű írásbeli vizsga 
+E2512 
+ 
+2025. május 6. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+2. 
+Egy kis szigeten élő állatfajok populációinak egyedszámát egy modell szerint (jó közelí-
+téssel) a következő képlet adja meg: 
+( )
+1
+2 ct
+E
+P t
+k
+
+
+. A képletben P(t) az adott faj po-
+pulációjának egyedszáma a vizsgálat kezdetétől számított t év elteltével, E, k és c pedig 
+az adott faj populációjára jellemző pozitív állandók: E a sziget eltartóképessége (a becsült 
+maximális egyedszám, amit a sziget el tud tartani), k a populáció kezdeti méretétől, c pe-
+dig a populáció növekedési sebességétől függő állandó. 
+ 
+a) Egy emlősfajra jellemző állandók értéke k  1,5 és c  0,05. Tudjuk, hogy a vizsgálat 
+kezdetétől számított 8 év elteltével 140 egyedből áll a faj populációja. 
+Határozza meg a szigetnek az erre az emlősfajra jellemző eltartóképességét! 
+ 
+b) Egy rágcsálófaj esetén a sziget eltartóképessége 1500 egyed. 
+Határozza meg az erre a populációra jellemző k és c állandók értékét, ha a vizsgálat 
+kezdetekor 200, öt évvel később pedig 350 egyedből állt a populáció! 
+ 
+c) Igazolja, hogy egy populáció P(t) egyedszáma a modell szerint soha nem haladhatja 
+meg a sziget (adott populációra jellemző) eltartóképességét! 
+ 
+a) 
+3 pont 
+ 
+b) 
+7 pont 
+ 
+c) 
+4 pont 
+ 
+Ö.: 
+14 pont 
+ 
+ 
+ 
+ 
+
+===== PAGE 7 =====
+ 
+Matematika 
+7 / 24 
+emelt szintű írásbeli vizsga 
+E2512 
+ 
+2025. május 6. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 8 =====
+ 
+Matematika 
+8 / 24 
+emelt szintű írásbeli vizsga 
+E2512 
+ 
+2025. május 6. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+3. 
+Az {an} sorozat tagjaira n ≥ 2 esetén az 
+1
+n
+n
+a
+a
+n
+
+
+
+ összefüggés teljesül. Egy négyszög 
+belső szögei (fokban mérve) a1, a2, a3 és a4. 
+ 
+a) Határozza meg a négyszög belső szögeinek nagyságát! 
+ 
+Az ABCD négyszög oldalai, átlói és szögei közül ismertek a következők: 
+AB  18 cm, AD  15 cm, AC  20 cm, DAB 90º, ABC 70º.  
+ 
+b) Határozza meg a négyszög BC és CD oldalának hosszát! 
+ 
+a) 
+5 pont 
+ 
+b) 
+7 pont 
+ 
+Ö.: 
+12 pont 
+ 
+ 
+ 
+
+===== PAGE 9 =====
+ 
+Matematika 
+9 / 24 
+emelt szintű írásbeli vizsga 
+E2512 
+ 
+2025. május 6. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 10 =====
+ 
+Matematika 
+10 / 24 
+emelt szintű írásbeli vizsga 
+E2512 
+ 
+2025. május 6. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+4. 
+Adott az A(5; 14) és a B(7; 6) pont a koordináta-rendszerben. 
+ 
+a) Írja fel annak a körnek az egyenletét, amely illeszkedik az A és a B pontokra, és a 
+középpontja az y tengelyen van! 
+ 
+b) Az 
+2
+1 (
+)
+2
+y
+x
+u
+v
+p
+
+
+ egyenletű parabola tengelypontja a B pont, és a parabola il-
+leszkedik az A pontra. Határozza meg a parabola p paraméterének értékét! 
+ 
+ 
+ 
+a) 
+7 pont 
+ 
+b) 
+4 pont 
+ 
+Ö.: 
+11 pont 
+ 
+ 
+ 
+ 
+
+===== PAGE 11 =====
+ 
+Matematika 
+11 / 24 
+emelt szintű írásbeli vizsga 
+E2512 
+ 
+2025. május 6. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 12 =====
+ 
+Matematika 
+12 / 24 
+emelt szintű írásbeli vizsga 
+E2512 
+ 
+2025. május 6. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+II. 
+ 
+Az 5–9. feladatok közül tetszése szerint választott négyet kell megoldania.  
+A kihagyott feladat sorszámát írja be a 3. oldalon található üres négyzetbe! 
+ 
+5. 
+Egy iskolának 510 tanulója van. Év végén a fiúk p százaléka, a lányok p + 3 százaléka 
+lett kitűnő, így 13 fiú és 20 lány kitűnő tanuló van. 
+ 
+a) Határozza meg a fiúk és a lányok számát ebben az iskolában! 
+ 
+A 33 kitűnő (5,0 átlagú) tanuló közül sorsolással kiválasztanak hármat, akik ingyenes 
+nyári táborozást nyernek. 
+ 
+b) Határozza meg annak a valószínűségét, hogy a kisorsolt tanulók között 1 fiú és 
+2 lány lesz! 
+ 
+Az 510 tanuló év végi tanulmányi átlagairól (a kitűnők számán kívül) még a következő 
+információkat tudjuk: az év végi átlagok terjedelme 2,4; módusza 3,8; mediánja 4,0; át-
+laga 4,2; szórása 0,9; alsó kvartilise 3,3; felső kvartilise 4,6. 
+ 
+c) Készítsen a tanulók év végi tanulmányi átlagairól sodrófadiagramot! 
+ 
+ 
+a) 
+9 pont 
+ 
+b) 
+4 pont 
+ 
+c) 
+3 pont 
+ 
+Ö.: 
+16 pont 
+ 
+ 
+ 
+
+===== PAGE 13 =====
+ 
+Matematika 
+13 / 24 
+emelt szintű írásbeli vizsga 
+E2512 
+ 
+2025. május 6. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 14 =====
+ 
+Matematika 
+14 / 24 
+emelt szintű írásbeli vizsga 
+E2512 
+ 
+2025. május 6. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Az 5–9. feladatok közül tetszése szerint választott négyet kell megoldania.  
+A kihagyott feladat sorszámát írja be a 3. oldalon található üres négyzetbe! 
+ 
+6. 
+Legyen a H alaphalmaz az egyváltozós valós függvények halmaza, M, K és A pedig a 
+H alábbi részhalmazai: 
+M  {az értelmezési tartományukon szigorúan monoton növekedő függvények}; 
+K  {az értelmezési tartományukon konvex függvények}; 
+A  {alulról korlátos függvények}. 
+ 
+a) Helyezze el az alábbi hozzárendelésekkel megadott 
+függvények betűjelét az ábra megfelelő részébe! 
+f: R  R, 
+sin
+x
+x
+
+ 
+g: R \ {0}  R, 
+1
+x
+x
+
+ 
+h: R  R, 
+2x
+x 
+ 
+i: R+
+  {0}  R, x
+x
+
+ 
+ 
+b) Jelölje az ábrán satírozással a (K  A) \ M halmazt, és hozzárendelési szabályával 
+adjon meg egy olyan j függvényt, amely ebbe a halmazba tartozik! 
+ 
+c) Határozza meg az R  R, 
+2
+x
+x
+bx
+c
+
+
+
+ függvény b és c paramétereinek értékét, 
+ha tudjuk, hogy a függvénynek x  2-ben minimumhelye van, és a minimum értéke 
+–1. 
+ 
+d) Határozza meg azokat a p  [0; 2] értékeket, amelyekre 
+0
+1
+sin
+2
+p
+xdx 
+
+. 
+ 
+a) 
+4 pont 
+ 
+b) 
+3 pont 
+ 
+c) 
+4 pont 
+ 
+d) 
+5 pont 
+ 
+Ö.: 
+16 pont 
+ 
+ 
+ 
+ 
+
+===== PAGE 15 =====
+ 
+Matematika 
+15 / 24 
+emelt szintű írásbeli vizsga 
+E2512 
+ 
+2025. május 6. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 16 =====
+ 
+Matematika 
+16 / 24 
+emelt szintű írásbeli vizsga 
+E2512 
+ 
+2025. május 6. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Az 5–9. feladatok közül tetszése szerint választott négyet kell megoldania.  
+A kihagyott feladat sorszámát írja be a 3. oldalon található üres négyzetbe! 
+ 
+7. 
+Felül nyitott, négyzet alapú egyenes hasáb alakú tárolódobozt készítünk. A doboz alap-
+lapjának anyagköltsége 4 tallér négyzetdeciméterenként, az oldallapok anyagköltsége 
+3 tallér négyzetdeciméterenként. Az egész doboz anyagköltségére összesen 300 tallér áll 
+rendelkezésre. 
+ 
+a) Legfeljebb mekkora lehet a doboz magassága, ha alapélei 6 dm hosszúak? 
+ 
+b) Határozza meg a 300 tallérból elkészíthető maximális térfogatú doboz éleinek hosz-
+szát! 
+ 
+Az elkészült doboz alaplapját és négy oldallapját kívül kékre vagy pirosra festjük, egy-
+egy lapot egyszínűre. 
+ 
+c) Hányféle különböző színezésű doboz készíthető? (Két színezést különbözőnek te-
+kintünk, ha forgatással nem vihetők át egymásba. Nem szükséges mindkét színt fel-
+használni.)  
+ 
+a) 
+4 pont 
+ 
+b) 
+8 pont 
+ 
+c) 
+4 pont 
+ 
+Ö.: 
+16 pont 
+ 
+ 
+ 
+
+===== PAGE 17 =====
+ 
+Matematika 
+17 / 24 
+emelt szintű írásbeli vizsga 
+E2512 
+ 
+2025. május 6. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 18 =====
+ 
+Matematika 
+18 / 24 
+emelt szintű írásbeli vizsga 
+E2512 
+ 
+2025. május 6. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Az 5–9. feladatok közül tetszése szerint választott négyet kell megoldania.  
+A kihagyott feladat sorszámát írja be a 3. oldalon található üres négyzetbe! 
+ 
+8. 
+Legyen G egy ötpontú fagráf. 
+ 
+a) Lehetséges-e, hogy ekkor G komplementere is fagráf? 
+ 
+Egy hatpontú teljes gráf pontjait megszámozzuk 1-től 6-ig. A gráf éleit ezután zöldre vagy 
+pirosra színezzük a következő szabály szerint: két pontot összekötő él zöld lesz, ha a két 
+ponthoz írt számok közül az egyik osztója a másiknak, egyébként pedig piros. A gráf 
+pontjai közül véletlenszerűen kiválasztunk hármat. 
+ 
+b) Határozza meg annak a valószínűségét, hogy a kiválasztott három pontot összekötő 
+három él azonos színű! 
+ 
+Egy dobozban 3 zöld és 3 piros golyó van. A dobozból csukott szemmel, visszatevés 
+nélkül addig húzunk egymás után golyókat, amíg vagy a zöld vagy a piros golyók közül 
+kihúzzuk mind a hármat. 
+ 
+c) Határozza meg a szükséges húzások számának várható értékét! 
+ 
+a) 
+4 pont 
+ 
+b) 
+5 pont 
+ 
+c) 
+7 pont 
+ 
+Ö.: 
+16 pont 
+ 
+ 
+ 
+ 
+
+===== PAGE 19 =====
+ 
+Matematika 
+19 / 24 
+emelt szintű írásbeli vizsga 
+E2512 
+ 
+2025. május 6. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 20 =====
+ 
+Matematika 
+20 / 24 
+emelt szintű írásbeli vizsga 
+E2512 
+ 
+2025. május 6. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Az 5–9. feladatok közül tetszése szerint választott négyet kell megoldania.  
+A kihagyott feladat sorszámát írja be a 3. oldalon található üres négyzetbe! 
+ 
+9. 
+a) Melyik az a legnagyobb természetes szám, amelyre az alábbi négy tulajdonságból 
+pontosan három teljesül? 
+(1) Húszjegyű. 
+(2) 20-szal osztható. 
+(3) Számjegyeinek összege 20. 
+(4) Számjegyeinek szorzata 20. 
+ 
+Legyen a H alaphalmaz a húszjegyű pozitív egész számok halmaza, az A halmaz pedig a 
+7-es számjegyet tartalmazó húszjegyű pozitív egész számok halmaza. 
+ 
+b) Melyik a nagyobb: A vagy A ? 
+ 
+Az n jegyű pozitív egészek közül egyet véletlenszerűen kiválasztva 0,99-nél nagyobb an-
+nak a valószínűsége, hogy a kiválasztott szám tartalmaz 7-es számjegyet. 
+ 
+c) Határozza meg n lehetséges értékeit! 
+ 
+a) 
+4 pont 
+ 
+b) 
+5 pont 
+ 
+c) 
+7 pont 
+ 
+Ö.: 
+16 pont 
+ 
+ 
+ 
+
+===== PAGE 21 =====
+ 
+Matematika 
+21 / 24 
+emelt szintű írásbeli vizsga 
+E2512 
+ 
+2025. május 6. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 22 =====
+ 
+Matematika 
+22 / 24 
+emelt szintű írásbeli vizsga 
+E2512 
+ 
+2025. május 6. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 23 =====
+ 
+Matematika 
+23 / 24 
+emelt szintű írásbeli vizsga 
+E2512 
+ 
+2025. május 6. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 24 =====
+ 
+Matematika 
+24 / 24 
+emelt szintű írásbeli vizsga 
+E2512 
+ 
+2025. május 6. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+a feladat 
+sorszáma 
+pontszám 
+maximális 
+elért 
+maximális 
+elért 
+I. rész 
+1. 
+14 
+ 
+51 
+ 
+2. 
+14 
+ 
+3. 
+12 
+ 
+4. 
+11 
+ 
+II. rész 
+ 
+16 
+ 
+64 
+ 
+ 
+16 
+ 
+ 
+16 
+ 
+ 
+16 
+ 
+ 
+ nem választott feladat 
+Az írásbeli vizsgarész pontszáma 
+115 
+ 
+ 
+dátum 
+ 
+javító tanár 
+ 
+ __________________________________________________________________________  
+ 
+ 
+ 
+pontszáma egész 
+számra kerekítve 
+elért 
+programba  
+beírt 
+I. rész 
+  
+  
+II. rész 
+  
+  
+ 
+dátum 
+ 
+dátum 
+ 
+ 
+ 
+ 
+ 
+ 
+javító tanár 
+ 
+jegyző 
+ 

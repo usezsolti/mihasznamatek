@@ -1,0 +1,1272 @@
+
+===== PAGE 1 =====
+ 
+Matematika 
+ 
+emelt szint — írásbeli vizsga 2311 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+OKTATÁSI HIVATAL 
+MATEMATIKA 
+ 
+EMELT SZINTŰ 
+ÍRÁSBELI VIZSGA 
+minden vizsgázó számára 
+2023. október 17. 8:00 
+ 
+Időtartam: 240 perc 
+Pótlapok száma 
+Tisztázati 
+ 
+Piszkozati 
+ 
+É R E T T S É G I V I Z S G A • 2 0 2 3 . o k t ó b e r 1 7 . 
+
+===== PAGE 2 =====
+Matematika 
+emelt szint 
+2311 írásbeli vizsga 
+2 / 24 
+2023. október 17. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 3 =====
+Matematika 
+emelt szint 
+2311 írásbeli vizsga 
+3 / 24 
+2023. október 17. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Fontos tudnivalók 
+1. A feladatok megoldására 240 perc fordítható, az idő leteltével a munkát be kell fejeznie. 
+ 
+2. A feladatok megoldási sorrendje tetszőleges. 
+ 
+3. A II. részben kitűzött öt feladat közül csak négyet kell megoldania. A nem választott fel-
+adat sorszámát írja be a dolgozat befejezésekor az alábbi négyzetbe! Ha a javító tanár 
+számára nem derül ki egyértelműen, hogy melyik feladat értékelését nem kéri, akkor  
+a kitűzött sorrend szerinti legutolsó feladatra nem kap pontot. 
+ 
+ 
+ 
+4. A feladatok megoldásához szöveges adatok tárolására és megjelenítésére nem alkalmas 
+zsebszámológépet és bármilyen négyjegyű függvénytáblázatot használhat, más elektroni-
+kus vagy írásos segédeszköz használata tilos! 
+ 
+5. A megoldások gondolatmenetét minden esetben írja le, mert a feladatra adható pont-
+szám jelentős része erre jár! 
+ 
+6. Ügyeljen arra, hogy a lényegesebb részszámítások is nyomon követhetők legyenek! 
+ 
+7. A gondolatmenet kifejtése során a zsebszámológép használata – további matematikai 
+indoklás nélkül – a következő műveletek elvégzésére fogadható el: összeadás, kivonás, 
+szorzás, osztás, hatványozás, gyökvonás, n!, 
+
+
+
+
+
+
+k
+n kiszámítása, a függvénytáblázatban fel-
+lelhető táblázatok helyettesítése (sin, cos, tg, log és ezek inverzei), a π és az e szám közelítő 
+értékének megadása, nullára rendezett másodfokú egyenlet gyökeinek meghatározása.  
+További matematikai indoklás nélkül használhatók a számológépek az átlag és a szórás ki-
+számítására abban az esetben, ha a feladat szövege kifejezetten nem követeli meg az ezzel 
+kapcsolatos részletszámítások bemutatását is. Egyéb esetekben a géppel elvégzett számí-
+tások indoklás nélküli lépéseknek számítanak, így azokért nem jár pont. 
+ 
+8. A feladatok megoldásánál használt tételek közül az iskolában tanult, névvel ellátott tételeket 
+(pl. Pitagorasz-tétel, magasságtétel) nem kell pontosan megfogalmazva kimondania, elég 
+csak a tétel megnevezését említenie, de az alkalmazhatóságát röviden indokolnia kell. 
+Egyéb tétel(ek)re való hivatkozás csak akkor fogadható el teljes értékűnek, ha az állítást 
+minden feltételével együtt pontosan mondja ki (bizonyítás nélkül), és az adott problémában 
+az alkalmazhatóságát indokolja. 
+ 
+9. A feladatok végeredményét (a feltett kérdésre adandó választ) szöveges megfogalmazásban 
+is közölje! 
+ 
+10. A dolgozatot tollal írja, de az ábrákat ceruzával is rajzolhatja. Az ábrákon kívül a ceruzával 
+írt részeket a javító tanár nem értékelheti. Ha valamilyen megoldást vagy megoldásrészletet 
+áthúz, akkor az nem értékelhető. 
+ 
+11. Minden feladatnak csak egy megoldása értékelhető. Több megoldási próbálkozás esetén 
+egyértelműen jelölje, hogy melyiket tartja érvényesnek! 
+ 
+12. Kérjük, hogy a szürkített téglalapokba semmit ne írjon! 
+ 
+ 
+
+===== PAGE 4 =====
+Matematika 
+emelt szint 
+2311 írásbeli vizsga 
+4 / 24 
+2023. október 17. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+I. 
+ 
+1. 
+a) Oldja meg az egyenletet, ha x és y pozitív egész számok! 
+ 
+1,5
+8
+x
+y
+
+ 
+ 
+b) Oldja meg az egyenletet a valós számok halmazán! 
+ 
+ 
+3
+3 9
+3
+3
+9
+x
+x
+x
+
+
+
+
+
+ 
+ 
+a) 
+4 pont 
+ 
+b) 
+7 pont 
+ 
+Ö.: 
+11 pont 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 5 =====
+Matematika 
+emelt szint 
+2311 írásbeli vizsga 
+5 / 24 
+2023. október 17. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 6 =====
+Matematika 
+emelt szint 
+2311 írásbeli vizsga 
+6 / 24 
+2023. október 17. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+2. 
+Egy családi ház egy téglatest alakú földszinti részből és a rá illesz-
+kedő, háromoldalú egyenes hasáb alakú tetőtérből áll. A ház néhány 
+méretét elölnézetben és oldalnézetben mutatja az alábbi ábra. (A fal-
+vastagságtól mindenütt eltekintünk.) 
+ 
+Az ábrán megadott méretek alapján számolva válaszoljon az alábbi kérdésekre! 
+ 
+a) A teljes tetőfelületet cseréppel fedik. Mekkora ez a felület? 
+Válaszát m2-ben, egészre kerekítve adja meg! 
+ 
+b) Hány köbméter a ház teljes térfogata (földszint és tetőtér összesen)? 
+ 
+A beépített tetőtér alapterületének csak az a része számít lakóterületnek, ahol a belmagasság 
+legalább 1,9 méter. 
+ 
+c) Hány négyzetméter a ház teljes lakóterülete (a földszinti és tetőtérbeli lakóterület 
+összesen)? 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+a) 
+4 pont 
+ 
+b) 
+4 pont 
+ 
+c) 
+4 pont 
+ 
+Ö.: 
+12 pont 
+ 
+ 
+ 
+ 
+
+===== PAGE 7 =====
+Matematika 
+emelt szint 
+2311 írásbeli vizsga 
+7 / 24 
+2023. október 17. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 8 =====
+Matematika 
+emelt szint 
+2311 írásbeli vizsga 
+8 / 24 
+2023. október 17. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+3. 
+Tomi edzője mindegyik focimeccs után az 1-10-es skálán értékeli (egy-egy egész szám-
+mal) a játékosok teljesítményét. Az idei első hét mérkőzésen Tomi a következő értékelé-
+seket kapta: 6, 8, 6, 2, 8, 8, 6. 
+ 
+a) Számítsa ki az első hét értékelés átlagát és szórását!  
+ 
+Tomi következő három mérkőzése után kiderült, hogy az addigi tíz értékelésnek az átlaga 
+6,3, a terjedelme 8, és egyetlen módusza van. 
+ 
+b) Határozza meg, hogy hányas értékeléseket kapott Tomi ezen a három mérkőzésen! 
+ 
+A 11. mérkőzésre kapott értékelés után Tomi átlaga a kapott értékelés tizedével csökkent 
+az előző tíz mérkőzésének 6,3-es átlagához képest. 
+ 
+c) Hányas értékelést kapott Tomi a 11. mérkőzésen? 
+ 
+a) 
+3 pont 
+ 
+b) 
+7 pont 
+ 
+c) 
+3 pont 
+ 
+Ö.: 
+13 pont 
+ 
+ 
+ 
+
+===== PAGE 9 =====
+Matematika 
+emelt szint 
+2311 írásbeli vizsga 
+9 / 24 
+2023. október 17. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 10 =====
+Matematika 
+emelt szint 
+2311 írásbeli vizsga 
+10 / 24 
+2023. október 17. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+4. 
+Adott a valós számok halmazán értelmezett másodfokú f függvény. Ismert, hogy egy adott 
+a  R helyen 
+( )
+f a > 0, 
+( )
+f a
+
+> 0 és 
+( )
+f
+a
+
+> 0 mindegyike teljesül. 
+ 
+a) Az alábbi ábrákon négy másodfokú függvény grafikonja látható. Ezek alapján töltse 
+ki a táblázat üres mezőit aszerint, hogy a megfelelő kijelentés igaz vagy hamis, majd 
+döntse el, hogy a négy grafikon közül melyik lehet az f függvényé! 
+(Válaszait itt nem kell indokolnia.) 
+ 
+függvény- 
+grafikon 
+az a helyen a 
+függvényérték 
+pozitív 
+az a helyen az 
+első derivált 
+értéke pozitív 
+az a helyen a 
+második derivált 
+értéke pozitív 
+I. 
+ 
+hamis 
+ 
+II. 
+ 
+ 
+ 
+III. 
+ 
+ 
+ 
+IV. 
+ 
+ 
+ 
+Az f függvény grafikonja a(z) …… grafikon lehet. 
+ 
+b) A másodfokú g függvény értékét az x  R helyen a 
+2
+( )
+g x
+px
+qx
+r
+
+
+
+ összefüggés 
+adja meg (p, q, r  R, p ≠ 0). Határozza meg p, q és r értékét úgy, hogy g(1)  1, 
+(1)
+g
+ 2 és 
+(1)
+g
+ 4 teljesüljön! 
+ 
+c) Számítsa ki 
+2
+2
+3
+1
+2
+1
+2 x
+x
+dx
+
+
+
+
+
+
+
+
+
+
+ értékét! 
+a) 
+6 pont 
+ 
+b) 
+6 pont 
+ 
+c) 
+3 pont 
+ 
+Ö.: 
+15 pont 
+ 
+ 
+ 
+ 
+
+===== PAGE 11 =====
+Matematika 
+emelt szint 
+2311 írásbeli vizsga 
+11 / 24 
+2023. október 17. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 12 =====
+Matematika 
+emelt szint 
+2311 írásbeli vizsga 
+12 / 24 
+2023. október 17. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+II. 
+ 
+Az 5-9. feladatok közül tetszése szerint választott négyet kell megoldania.  
+A kihagyott feladat sorszámát írja be a 3. oldalon található üres négyzetbe! 
+ 
+5. 
+Az ABCDE konvex ötszögben AB AE 20 cm és BC CD DE. A BCDE négyszög 
+egy húrtrapéz, amelynek a B-nél fekvő belső szöge 40°-os. Az A csúcs és az EB átló 
+távolsága 10 cm. 
+ 
+a) Mekkorák az ötszög (belső) szögei? 
+ 
+b) Mekkora az ötszög területe? 
+ 
+c) Hányféleképpen járható be az ábrán látható ABCDE ötpontú gráf, ha mindegyik élén 
+pontosan egyszer kell végighaladnunk? 
+(A bejárás kezdőpontja a gráf egyik csúcsa; egy csúcsba érkezve csak olyan élen 
+haladhatunk tovább, amely szintén az adott csúcsból indul.) 
+ 
+ 
+a) 
+4 pont 
+ 
+b) 
+8 pont 
+ 
+c) 
+4 pont 
+ 
+Ö.: 
+16 pont 
+ 
+ 
+ 
+
+===== PAGE 13 =====
+Matematika 
+emelt szint 
+2311 írásbeli vizsga 
+13 / 24 
+2023. október 17. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 14 =====
+Matematika 
+emelt szint 
+2311 írásbeli vizsga 
+14 / 24 
+2023. október 17. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Az 5-9. feladatok közül tetszése szerint választott négyet kell megoldania.  
+A kihagyott feladat sorszámát írja be a 3. oldalon található üres négyzetbe! 
+ 
+6. 
+Egy hatfős baráti társaság, Attila, Boróka, Csaba, Dóra, Emil és Fanni három csapatot alkot. 
+Mindhárom csapat 2 tagú, és mind a hatan pontosan egy csapatnak lesznek a tagjai.  
+ 
+a) Igazolja, hogy 15 különböző lehetőség van a három csapat kialakítására! 
+(Két lehetőség különböző, ha van olyan tag, akinek az egyik esetben más a csapat-
+társa, mint a másikban.)  
+ 
+b) Ha véletlenszerűen (például sorsolással) hozzák létre a három csapatot, akkor meny-
+nyi a valószínűsége annak, hogy mindhárom csapatba egy fiú és egy lány kerül? 
+ 
+Végül Attila Borókával, Csaba Dórával, Emil pedig Fannival került egy csapatba. A há-
+rom csapat tagjai egyéni asztalitenisz-mérkőzéseket játszanak. Mindhárom csapat mind-
+két tagja egyszer játszik a másik két csapat mindkét tagjával. (Az egy csapatba tartozók 
+nem játszanak egymás ellen.) Az egyes mérkőzéseket egymás után bonyolítják le. Az 
+egyik mérkőzés után Attila megfigyelte, hogy a többi öt játékos mind különböző számú 
+mérkőzést játszott eddig. 
+ 
+c) Hány mérkőzést játszott eddig Boróka? 
+ 
+a) 
+5 pont 
+ 
+b) 
+4 pont 
+ 
+c) 
+7 pont 
+ 
+Ö.: 
+16 pont 
+ 
+ 
+ 
+
+===== PAGE 15 =====
+Matematika 
+emelt szint 
+2311 írásbeli vizsga 
+15 / 24 
+2023. október 17. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 16 =====
+Matematika 
+emelt szint 
+2311 írásbeli vizsga 
+16 / 24 
+2023. október 17. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Az 5-9. feladatok közül tetszése szerint választott négyet kell megoldania.  
+A kihagyott feladat sorszámát írja be a 3. oldalon található üres négyzetbe! 
+ 
+ 
+7. 
+Egy bizonyos fenyőfa (méterben mért) várható magasságának becslésére az alábbi kép-
+letet használják: 
+30
+( )
+1 59 0,905t
+h t 
+
+, ahol t a megfigyelés kezdetétől eltelt idő években számítva. 
+ 
+a) Hány méter magas volt a fa a megfigyelés kezdetekor? 
+ 
+b) A megfigyelés kezdetétől számítva hány év múlva lesz a fa 10 méter magas? 
+ 
+c) Számítsa ki az {an} sorozat határértékét, ha 
+30
+1 59 0,905
+n
+n
+a 
+
+. 
+ 
+Különleges facsemeték neveléséhez egy téglalap alakú 
+részt akarnak elkeríteni. A téglalap két szomszédos ol-
+dala természetes határokkal védhető, ezért csak a másik 
+két oldalon kell kerítést építeni. A környezeti adott-
+ságok miatt a kerítés építési költsége a két oldalon 
+különböző: az egyik oldalon 5 ezer Ft/m, a másik 
+oldalon pedig 10 ezer Ft/m. A kerítés építésére összesen 
+400 ezer Ft áll rendelkezésre. 
+ 
+d) Hogyan kell megválasztani a két kerítésszakasz hosszát, hogy a rendelkezésre álló 
+összegből a legnagyobb területű ültetvényt lehessen elkeríteni? 
+ 
+a) 
+2 pont 
+ 
+b) 
+5 pont 
+ 
+c) 
+3 pont 
+ 
+d) 
+6 pont 
+ 
+Ö.: 
+16 pont 
+ 
+ 
+ 
+ 
+
+===== PAGE 17 =====
+Matematika 
+emelt szint 
+2311 írásbeli vizsga 
+17 / 24 
+2023. október 17. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 18 =====
+Matematika 
+emelt szint 
+2311 írásbeli vizsga 
+18 / 24 
+2023. október 17. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Az 5-9. feladatok közül tetszése szerint választott négyet kell megoldania.  
+A kihagyott feladat sorszámát írja be a 3. oldalon található üres négyzetbe! 
+ 
+8. 
+Egy számítógépes játékban egy kör alakú tartomány az ábra szerint három résztarto-
+mányra van felosztva (A, B, C). Bármely két tartomány között egy átjáró van (az ábrán 
+szaggatott vonallal jelölve). 
+A tartományok közötti átjárók mindegyike a többitől függetlenül p valószínűséggel van 
+nyitva (0 < p < 1). Egyik tartományból a másikba csak nyitott átjárón (vagy átjárókon) 
+keresztül lehet eljutni. 
+ 
+Legyen az E0 esemény az, hogy az A tartományból nem lehet másik tartományba eljutni.  
+ 
+a) Mutassa meg, hogy az E0 esemény valószínűsége 
+2
+1 2p
+p
+
+
+. 
+ 
+b) Hogyan kell megválasztani a p értékét úgy, hogy az E0 esemény valószínűsége leg-
+feljebb 0,01 legyen? 
+ 
+Legyen az E1 esemény az, hogy az A tartományból pontosan egy másik tartományba lehet 
+eljutni, az E2 esemény pedig az, hogy az A tartományból mindkét másik tartományba el 
+lehet jutni (nem feltétlenül közvetlenül).  
+ 
+c) Igazolja, hogy az E1 esemény valószínűsége 
+2
+3
+2
+4
+2
+p
+p
+p
+
+
+, az E2 esemény való-
+színűsége pedig 
+2
+3
+3
+2
+p
+p
+
+. 
+ 
+d) Határozza meg a p valószínűség értékét úgy, hogy az E1 esemény valószínűsége a 
+lehető legnagyobb legyen, majd számítsa ki ekkor az E1 esemény valószínűségét! 
+ 
+a) 
+3 pont 
+ 
+b) 
+3 pont 
+ 
+c) 
+5 pont 
+ 
+d) 
+5 pont 
+ 
+Ö.: 
+16 pont 
+ 
+ 
+ 
+
+===== PAGE 19 =====
+Matematika 
+emelt szint 
+2311 írásbeli vizsga 
+19 / 24 
+2023. október 17. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 20 =====
+Matematika 
+emelt szint 
+2311 írásbeli vizsga 
+20 / 24 
+2023. október 17. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Az 5-9. feladatok közül tetszése szerint választott négyet kell megoldania.  
+A kihagyott feladat sorszámát írja be a 3. oldalon található üres négyzetbe! 
+ 
+9. 
+A 2, 4, 6, 8, 10 számok felhasználásával az összes lehetséges módon képezzük azokat a 
+kéttényezős szorzatokat, amelyekben az első tényező kisebb, mint a második. Az így ka-
+pott szorzatokat összeadjuk.  
+ 
+a) Számítsa ki ezt az összeget! 
+ 
+Legyen k tetszőleges 1-nél nagyobb pozitív egész szám. Jelölje Sk azt az összeget, amelyet 
+a következő eljárással kapunk: az 1, 2, 3, … , k számok (az első k db pozitív egész szám) 
+felhasználásával az összes lehetséges módon képezzük azokat a kéttényezős szorzatokat, 
+amelyekben az első tényező kisebb, mint a második, majd a kapott szorzatokat összead-
+juk.  
+ 
+b) Igazolja, hogy 
+2
+1
+(
+1)
+2
+k
+k
+k k
+S
+S
+
+
+
+
+. 
+ 
+c) Igazolja (teljes indukcióval vagy más módszerrel), hogy tetszőleges 1-nél nagyobb 
+n egész szám esetén 
+(
+1) (
+1)(3
+2)
+24
+n
+n
+n n
+n
+S
+
+
+
+
+. 
+ 
+a) 
+ 4 pont 
+ 
+b) 
+ 4 pont 
+ 
+c) 
+ 8 pont 
+ 
+Ö.: 
+16 pont 
+ 
+ 
+ 
+
+===== PAGE 21 =====
+Matematika 
+emelt szint 
+2311 írásbeli vizsga 
+21 / 24 
+2023. október 17. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 22 =====
+Matematika 
+emelt szint 
+2311 írásbeli vizsga 
+22 / 24 
+2023. október 17. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 23 =====
+Matematika 
+emelt szint 
+2311 írásbeli vizsga 
+23 / 24 
+2023. október 17. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 24 =====
+Matematika 
+emelt szint 
+2311 írásbeli vizsga 
+24 / 24 
+2023. október 17. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+a feladat 
+sorszáma 
+pontszám 
+maximális 
+elért 
+maximális 
+elért 
+I. rész 
+1. 
+11 
+ 
+51 
+ 
+2. 
+12 
+ 
+3. 
+13 
+ 
+4. 
+15 
+ 
+II. rész 
+ 
+16 
+ 
+64 
+ 
+ 
+16 
+ 
+ 
+16 
+ 
+ 
+16 
+ 
+ 
+ nem választott feladat 
+Az írásbeli vizsgarész pontszáma 
+115 
+ 
+ 
+dátum 
+ 
+javító tanár 
+ 
+ __________________________________________________________________________  
+ 
+ 
+ 
+pontszáma egész 
+számra kerekítve 
+elért 
+programba  
+beírt 
+I. rész 
+  
+  
+II. rész 
+  
+  
+ 
+dátum 
+ 
+dátum 
+ 
+ 
+ 
+ 
+ 
+ 
+javító tanár 
+ 
+jegyző 
+ 

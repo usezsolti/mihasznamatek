@@ -1,0 +1,2088 @@
+
+===== PAGE 1 =====
+Matematika 
+emelt szint 
+ 
+Javítási-értékelési útmutató 2213 
+ 
+EMBERI ERŐFORRÁSOK MINISZTÉRIUMA 
+MATEMATIKA 
+ 
+EMELT SZINTŰ 
+ÍRÁSBELI VIZSGA 
+minden vizsgázó számára 
+JAVÍTÁSI-ÉRTÉKELÉSI 
+ÚTMUTATÓ 
+ 
+É R E T T S É G I V I Z S G A • 2 0 2 2 . m á j u s 3 . 
+
+===== PAGE 2 =====
+Matematika — emelt szint 
+Javítási-értékelési útmutató 
+2213 írásbeli vizsga 
+2 / 18 
+2022. május 3. 
+Fontos tudnivalók 
+ 
+ 
+Formai előírások: 
+ 
+1. Kérjük, hogy a dolgozatot a vizsgázó által használt színűtől eltérő színű tollal, olvas-
+hatóan javítsa ki. 
+2. A feladatok mellett található szürke téglalapok közül az elsőben a feladatra adható ma-
+ximális pontszám van, a javító által adott pontszám a mellette levő téglalapba 
+kerüljön. 
+3. Kifogástalan megoldás esetén kérjük, hogy a maximális pontszám feltüntetése mellett 
+kipipálással jelezze, hogy az adott gondolati egységet látta, és jónak minősítette. 
+4. Hiányos/hibás megoldás esetén kérjük, hogy a hiba jelzése mellett az egyes részpont-
+számokat is írja rá a dolgozatra. Ha a dolgozat javítását jobban követhetővé teszi, akkor 
+a vizsgázó által elvesztett részpontszámok jelzése is elfogadható. Ne maradjon olyan 
+részlet a megoldásban, amelyről a javítás után nem nyilvánvaló, hogy helyes, hibás vagy 
+fölösleges. 
+5. A javítás során alkalmazza az alábbi jelöléseket. 
+• helyes lépés: kipipálás 
+• elvi hiba: kétszeres aláhúzás 
+• számolási hiba vagy más, nem elvi hiba: egyszeres aláhúzás 
+• rossz kiinduló adattal végzett helyes lépés: szaggatott vagy áthúzott kipipálás 
+• hiányos indoklás, hiányos felsorolás vagy más hiány: hiányjel 
+• nem érthető rész: kérdőjel és/vagy hullámvonal 
+6. Az ábrán kívül ceruzával írt részeket ne értékelje. 
+ 
+Tartalmi kérések: 
+ 
+1. Egyes feladatoknál több megoldás pontozását is megadtuk. Amennyiben azoktól eltérő 
+megoldás születik, keresse meg ezen megoldásoknak az útmutató egyes részleteivel 
+egyenértékű részeit, és ennek alapján pontozzon. 
+2. A pontozási útmutató pontjai tovább bonthatók, hacsak az útmutató másképp nem 
+rendelkezik. Az adható pontszámok azonban csak egész pontok lehetnek. 
+3. Ha a megoldásban számolási hiba, pontatlanság van, akkor csak arra a részre nem jár 
+pont, ahol a tanuló a hibát elkövette. Ha a hibás részeredménnyel helyes gondolatmenet 
+alapján tovább dolgozik, és a megoldandó probléma lényegében nem változik meg, ak-
+kor a következő részpontszámokat meg kell adni. 
+4. Elvi hibát követően egy gondolati egységen belül (ezeket az útmutatóban kettős vonal 
+jelzi) a formálisan helyes matematikai lépésekre sem jár pont. Ha azonban a tanuló  
+az elvi hibával kapott rossz eredménnyel – mint kiinduló adattal – helyesen számol to-
+vább a következő gondolati egységekben vagy részkérdésekben, akkor ezekre a részekre 
+kapja meg a maximális pontot, ha a megoldandó probléma lényegében nem változott 
+meg. 
+5. Ha a megoldási útmutatóban zárójelben szerepel egy megjegyzés vagy mértékegység, 
+akkor ennek hiánya esetén is teljes értékű a megoldás. 
+
+===== PAGE 3 =====
+Matematika — emelt szint 
+Javítási-értékelési útmutató 
+2213 írásbeli vizsga 
+3 / 18 
+2022. május 3. 
+ 
+6. Egy feladatra adott többféle megoldási próbálkozás közül a vizsgázó által megjelölt 
+változat értékelhető. A javítás során egyértelműen jelezze, hogy melyik változatot ér-
+tékelte, és melyiket nem. 
+7. A megoldásokért jutalompont (az adott feladatra vagy feladatrészre előírt maximális 
+pontszámot meghaladó pont) nem adható. 
+8. Egy feladatra vagy részfeladatra adott összpontszám nem lehet negatív. 
+9. Az olyan részszámításokért, részlépésekért nem jár pontlevonás, melyek hibásak, de 
+amelyeket a feladat megoldásához a vizsgázó ténylegesen nem használ fel. 
+10. A gondolatmenet kifejtése során a zsebszámológép használata – további matemati-
+kai indoklás nélkül – a következő műveletek elvégzésére fogadható el: összeadás, 
+kivonás, szorzás, osztás, hatványozás, gyökvonás, n!, 
+
+
+
+
+
+
+k
+n
+ kiszámítása, a függvénytáb-
+lázatban fellelhető táblázatok helyettesítése (sin, cos, tg, log és ezek inverzei), a π és az 
+e szám közelítő értékének megadása, nullára rendezett másodfokú egyenlet gyökeinek 
+meghatározása. További matematikai indoklás nélkül használhatók a számológépek az 
+átlag és a szórás kiszámítására abban az esetben, ha a feladat szövege kifejezetten nem 
+követeli meg az ezzel kapcsolatos részletszámítások bemutatását is. Egyéb esetekben 
+a géppel elvégzett számítások indoklás nélküli lépéseknek számítanak, így azokért 
+nem jár pont. 
+11. Az ábrák bizonyító erejű felhasználása (például adatok leolvasása méréssel) nem elfo-
+gadható. 
+12. Valószínűségek megadásánál (ha a feladat szövege másképp nem rendelkezik) a száza-
+lékban megadott helyes válasz is elfogadható. 
+13. Ha egy feladat szövege nem ír elő kerekítési kötelezettséget, akkor az útmutatóban meg-
+adottól eltérő, észszerű és helyes kerekítésekkel kapott rész- és végeredmény is elfo-
+gadható. 
+14. A vizsgafeladatsor II. részében kitűzött 5 feladat közül csak 4 feladat megoldása 
+értékelhető. A vizsgázó az erre a célra szolgáló négyzetben – feltehetőleg – megjelölte 
+annak a feladatnak a sorszámát, amelynek értékelése nem fog beszámítani az összpont-
+számába. Ennek megfelelően a megjelölt feladatra esetlegesen adott megoldást nem is 
+kell javítani. Ha a vizsgázó nem jelölte meg, hogy melyik feladat értékelését nem kéri, 
+és a választás ténye a dolgozatból sem derül ki egyértelműen, akkor a nem értékelendő 
+feladat automatikusan a kitűzött sorrend szerinti utolsó feladat lesz. 
+ 
+ 
+
+===== PAGE 4 =====
+Matematika — emelt szint 
+Javítási-értékelési útmutató 
+2213 írásbeli vizsga 
+4 / 18 
+2022. május 3. 
+ 
+I. 
+ 
+1. a) 
+9 9
+15 3
+6
+0
+x
+x
+⋅
++
+⋅
+−
+=
+ 
+1 pont  
+Mivel 
+2
+9
+(3 )
+x
+x
+=
+, ezért az egyenlet 3x-ben másodfokú: 
+2
+9 (3 )
+15 3
+6
+0
+x
+x
+⋅
++
+⋅
+−
+=
+. 
+1 pont  
+3x = –2 vagy 3x = 1
+3 . 
+1 pont  
+Az első eset nem lehetséges (mert 3x > 0), 
+1 pont  
+a második esetből pedig x = –1 adódik. 
+1 pont  
+Ellenőrzés behelyettesítéssel vagy ekvivalens átalakí-
+tásokra való hivatkozással. 
+1 pont  
+Összesen: 
+6 pont  
+ 
+1. b) 
+1
+sin 2
+3
+2
+x
+π
+
+
+−
+=
+
+
+
+
+ 
+1 pont  
+2
+2
+3
+6
+x
+k
+π
+π
+−
+=
++
+⋅π vagy 
+5
+2
+2
+3
+6
+x
+k
+π
+π
+−
+=
++
+⋅π , k ∈ Z. 
+2 pont  
+4
+x
+k
+π
+=
++
+⋅π vagy 
+7
+12
+x
+k
+π
+=
++
+⋅π , k ∈ Z. 
+2 pont  
+Összesen: 
+5 pont  
+Megjegyzések: 
+1. Ha a vizsgázó a megoldásokat fokban helyesen adja meg, akkor legfeljebb 4 pontot kaphat. 
+2. Ha a vizsgázó a válaszát periódus nélkül vagy hibás periódussal adja meg, akkor legfeljebb 
+3 pontot kaphat. 
+3. Ha a vizsgázó a válaszát periódussal adja meg, de a k ∈ Z feltételt egyszer sem említi, akkor 
+legfeljebb 4 pontot kaphat.  
+ 
+2. a) 
+A számtani sorozat összegképletét használva:
+2 5
+3(
+1)
+4900
+2
+n
+n
+⋅+
+−
+⋅
+=
+. 
+1 pont  
+2
+3
+7
+9800
+0
+n
+n
++
+−
+=
+ 
+2 pont  
+n1 = 56 (ami valóban megoldása a feladatnak), 
+1 pont  
+n2 (= 58,3
+−
+) < 0, ami nem megoldás. 
+1 pont  
+Összesen: 
+5 pont  
+ 
+ 
+ 
+
+===== PAGE 5 =====
+Matematika — emelt szint 
+Javítási-értékelési útmutató 
+2213 írásbeli vizsga 
+5 / 18 
+2022. május 3. 
+ 
+2. b) első megoldás 
+Jelölje a mértani sorozat első tagját a, hányadosát q. 
+2
+3
+6
+96
++
+=
+
+
++
+=
+
+a
+aq
+aq
+aq
+ 
+2 pont  
+A második egyenlet átalakítva: 
+q2(a + aq) = 96. 
+Ezt az egyenletet elosztva az elsővel megkapjuk, 
+hogy q2 = 16, 
+2 pont  
+amiből q = 4 vagy q = – 4. 
+1 pont  
+(Az első egyenletből) q = 4 esetén 
+6
+5
+=
+a
+, 
+1 pont Az első négy tag: 
+1,2; 4,8; 19,2; 76,8, 
+q = – 4 esetén a = –2. 
+1 pont vagy –2; 8; –32; 128. 
+Ellenőrzés: 
+6
+24
+30
+6
+5
+5
+5
+
+
++
+=
+=
+
+
+
+
+ és 96
+384
+480
+96
+5
+5
+5
+
+
++
+=
+=
+
+
+
+
+, 
+illetve (–2) + 8 = 6 és (–32) + 128 = 96. 
+1 pont  
+Összesen: 
+8 pont  
+ 
+2. b) második megoldás 
+Jelölje a mértani sorozat első tagját a, hányadosát q. 
+2
+3
+6
+96
++
+=
+
+
++
+=
+
+a
+aq
+aq
+aq
+ 
+2 pont  
+Az első egyenletből q-t kifejezve: 
+6
+a
+q
+a
+−
+=
+ (a ≠ 0). 
+Ezt a második egyenletbe behelyettesítve: 
+2
+3
+2
+(6
+)
+(6
+)
+96
+a
+a
+a
+a
+−
+−
++
+=
+. 
+1 pont  
+2
+2
+3
+2
+(36 12
+)
+(216 108
+18
+)
+96
+a
+a
+a
+a
+a
+a
+a
+−
++
++
+−
++
+−
+=
+Rendezve és 18-cal osztva: 
+2
+5
+4
+12
+0
+a
+a
++
+−
+=
+, 
+1 pont 
+2
+2
+(6
+) (
+6
+)
+96
+a
+a
+a
+a
+−
++
+−
+=
+ 
+2
+2
+(6
+)
+(4 )
+a
+a
+−
+=
+ 
+6 – a = 4a vagy a – 6 = 4a 
+amiből 
+6
+5
+=
+a
+ vagy a = –2. 
+1 pont  
+6
+5
+=
+a
+ esetén q = 4, 
+1 pont  
+a = –2 esetén q = – 4. 
+1 pont  
+Ellenőrzés: 
+6
+24
+30
+6
+5
+5
+5
+
+
++
+=
+=
+
+
+
+
+ és 96
+384
+480
+96
+5
+5
+5
+
+
++
+=
+=
+
+
+
+
+, 
+illetve (–2) + 8 = 6 és (–32) + 128 = 96. 
+1 pont  
+Összesen: 
+8 pont  
+ 
+ 
+ 
+
+===== PAGE 6 =====
+Matematika — emelt szint 
+Javítási-értékelési útmutató 
+2213 írásbeli vizsga 
+6 / 18 
+2022. május 3. 
+ 
+3. a) 
+A lakók közül 19 nő, 31 férfi, illetve 16 szemüveges, 
+34 nem szemüveges.  
+1 pont  
+Legfeljebb 31 nem szemüveges férfi lehet, 
+1 pont  
+ha egyik férfi sem szemüveges. 
+1 pont 
+ 
+Legalább (31 – 16 =) 15 nem szemüveges férfi van, 
+1 pont*  
+ha minden szemüveges lakó férfi. 
+1 pont* 
+ 
+Összesen: 
+5 pont  
+ 
+Megjegyzés: A *-gal jelölt 2 pontot az alábbi gondolatmenetért is megkaphatja a vizsgázó. 
+A férfiak és a nem szemüvegesek számának összege 
+31 + 34 = 65, de csak 50 lakó van, így legalább 15-öt 
+mindkét részhalmazban megszámoltunk, 
+1 pont  
+tehát legalább 15 nem szemüveges férfi van. 
+1 pont  
+ 
+3. b) 
+A feladat megértését tükröző ábra. 
+ 
+(Használjuk az ábra betűzéseit: A füvesített terület az 
+ADC háromszög. Az öntözött terület a D középpontú 
+negyedkör. Keressük a sötétített síkidom területét.) 
+1 pont  
+(Az ADC derékszögű háromszögből) 
+15
+tg α
+10
+=
+, 
+1 pont  
+innen α ≈ 56,3º. 
+1 pont  
+Mivel DA = DM = 10 (m), ezért DAM háromszög 
+egyenlőszárú, így β = 180º – 2α ≈ 67,4º. 
+1 pont  
+ 
+ 
+ 
+
+===== PAGE 7 =====
+Matematika — emelt szint 
+Javítási-értékelési útmutató 
+2213 írásbeli vizsga 
+7 / 18 
+2022. május 3. 
+ 
+A füvesített terület: 
+1
+10 15
+2
+T
+⋅
+=
+ = 75 (m2). 
+1 pont*  
+A γ = 90º – β ≈ 22,6º középponti szögű, 10 méter su-
+garú körcikk területe: 
+2
+2
+22,6 10
+π
+360
+T =
+⋅
+⋅
+ ≈ 19,7 (m2). 
+1 pont*  
+A DAM háromszög területe: 
+3
+10 10 sin 67,4
+2
+T
+⋅
+⋅
+°
+=
+ ≈ 46,2 (m2). 
+1 pont*  
+A locsolásból kimaradó füvesített terület nagysága: 
+T1 – (T2 + T3) = 75 – 65,9 = 9,1 m2. 
+1 pont*  
+Összesen: 
+8 pont  
+ 
+Megjegyzés: A *-gal jelölt 4 pontot az alábbi gondolatmenetért is megkaphatja a vizsgázó. 
+DM = DA = 10 (m) és DC = 15 (m), 
+valamint γ = 90º – β ≈ 22,6º, 
+1 pont  
+így a CDM háromszög területe: 
+4
+15 10 sin 22,6
+2
+T
+⋅
+⋅
+°
+=
+≈ 28,8 (m2). 
+1 pont  
+A γ középponti szögű, 10 méter sugarú körcikk terü-
+lete: 
+2
+2
+22,6 10
+π
+360
+T =
+⋅
+⋅
+ ≈ 19,7 (m2). 
+1 pont  
+A locsolásból kimaradó füvesített terület nagysága: 
+T4 – T2 = 9,1 m2. 
+1 pont  
+ 
+Megjegyzés: A *-gal jelölt 4 pontot az alábbi gondolatmenetért is megkaphatja a vizsgázó. 
+Jelölje T1 a füvesített területet, T3 a DAM háromszög területét, T5 az AD = 10 méter sugarú 
+negyedkör területét, T6 a β középponti szögű, 10 méter sugarú körcikk területét, végül T7 az 
+AM húr által határolt kisebbik körszelet területét. 
+1
+10 15
+2
+T
+⋅
+=
+= 75 m2, 
+3
+10 10 sin 67,4
+2
+T
+⋅
+⋅
+°
+=
+ ≈ 46,2 m2, 
+2
+5
+10
+π
+4
+T
+⋅
+=
+≈ 78,5 m2, 
+2
+6
+67,4 10
+π
+360
+T =
+⋅
+⋅
+ ≈ 58,8 m2, T7 = T6 – T3 = 12,6 m2. 
+Ezekkel: Tkimaradó = Tfüvesített – Tmeglocsolt füvesített = T1 – (T5 – T7) = T1 – (T5 – (T6 – T3)) = 
+ = T1 – T5 + T6 – T3 = 9,1 m2. 
+ 
+ 
+
+===== PAGE 8 =====
+Matematika — emelt szint 
+Javítási-értékelési útmutató 
+2213 írásbeli vizsga 
+8 / 18 
+2022. május 3. 
+ 
+4. a) 
+Az első két kritériumnak megfelel a készlet. 
+1 pont 
+Ez a pont akkor is jár, ha 
+a vizsgázó a kiszámolt 
+szórásra hivatkozva he-
+lyesen válaszol. 
+A mért tömegek átlaga 
+5 163 164 165
+2 166
+1476
+9
+9
+⋅
++
++
++ ⋅
+
+
+=
+=
+
+
+
+
+164 (gramm). 
+1 pont Ezek a pontok akkor is 
+járnak, ha a vizsgázó szá-
+mológéppel helyesen szá-
+mol. 
+A mért tömegek szórása: 
+2
+2
+2
+5 (163 164)
+(165 164)
+2 (166 164)
+9
+⋅
+−
++
+−
++ ⋅
+−
+= 
+1 pont 
+14
+3
+=
+ ≈ 1,25 (gramm). 
+1 pont  
+A készlet nem hitelesíthető. 
+1 pont  
+Összesen: 
+5 pont  
+ 
+4. b) első megoldás 
+P(lesz piros) = 1 – P(mindkettő kék) 
+1 pont 
+Ez a pont akkor is jár, ha 
+ez a gondolat csak a meg-
+oldásból derül ki. 
+Két kék golyót (a sorrendre való tekintet nélkül)  
+7
+2
+
+
+
+(= 21)-féleképpen tudunk kiválasztani (kedvező 
+esetek száma). 
+1 pont A sorrendet is figyelembe 
+véve 7 · 6 (= 42). 
+Két golyót összesen 10
+2
+
+
+
+
+
+
+(= 45)-féleképpen tudunk 
+kiválasztani (összes eset száma). 
+1 pont 10 · 9 (= 90) 
+A keresett valószínűség tehát 
+21
+8
+1
+45
+15
+−
+=
+ ≈ 0,533. 
+1 pont  
+Összesen: 
+4 pont  
+ 
+ 
+ 
+
+===== PAGE 9 =====
+Matematika — emelt szint 
+Javítási-értékelési útmutató 
+2213 írásbeli vizsga 
+9 / 18 
+2022. május 3. 
+ 
+4. b) második megoldás 
+P(lesz piros) = P(1 piros) + P(2 piros) 
+1 pont 
+Ez a pont akkor is jár, ha 
+ez a gondolat csak a meg-
+oldásból derül ki. 
+P(1 piros) = 
+3
+7
+1
+1
+21
+10
+45
+2
+
+⋅
+
+
+=
+
+
+
+
+
+
+
+
+
+
+ 
+1 pont 
+3 7
+7 3
+10 9
+⋅+
+⋅
+⋅
+ 
+P(2 piros) = 
+3
+2
+3
+10
+45
+2
+
+
+
+
+=
+
+
+
+
+
+
+
+
+
+ 
+1 pont 
+3 2
+10 9
+⋅
+⋅
+ 
+A keresett valószínűség tehát 21
+3
+8
+45
+45
+15
++
+=
+ ≈ 0,533. 
+1 pont  
+Összesen: 
+4 pont  
+ 
+4. c) első megoldás 
+P(AB) = P(A) = 
+2
+3
+0,3
+0,7
+2
+⋅
+⋅
+
+
+(= 0,189) 
+2 pont  
+P(B) 
+3
+1
+( )
+1 0,7
+P B
+= −
+= −
+(= 0,657) 
+2 pont 
+P(B) = P(1 piros) + 
++ P(2 piros) + P(3 piros) = 
+= 0,441 + 0,189 + 0,027 
+P(A | B) = 
+(
+)
+0,189
+( )
+0,657
+P AB
+P B
+=
+ ≈ 0,288 
+1 pont  
+Összesen: 
+5 pont  
+ 
+4. c) második megoldás 
+103 – 73 = 657 olyan eset van, amelyben a kihúzott 
+golyók közt van piros (ez az összes eset száma a 
+keresett feltételes valószínűségre vonatkozóan). 
+2 pont  
+Ezek közül 3 ∙ 32
+ ∙ 7 = 189 esetben van 2 piros golyó 
+(kedvező esetek száma). 
+2 pont  
+Tehát a keresett valószínűség 189
+657
+ ≈ 0,288. 
+1 pont  
+Összesen: 
+5 pont  
+ 
+ 
+
+===== PAGE 10 =====
+Matematika — emelt szint 
+Javítási-értékelési útmutató 
+2213 írásbeli vizsga 
+10 / 18 
+2022. május 3. 
+ 
+II. 
+ 
+5. a) 
+A mogyorókrémes palacsinta árát m-mel, 
+a túrósét t-vel, és a fahéjasét f-fel jelölve: 
+(1) 3m + t + 2f = 1500, 
+(2) 4m + 2t + f = 1740, 
+(3) m + 2t + 2f = 1170. 
+2 pont  
+(2) és (3) különbsége: 3m – f = 570, 
+(1) és (3) különbsége: 2m – t = 330. 
+2 pont  
+Amiből f = 3m – 570 és t = 2m – 330. 
+1 pont  
+Ezeket visszahelyettesítve bármelyik eredeti egyen-
+letbe: m = 270, t = 210, f = 240. 
+(Egy mogyorókrémes palacsinta 270 Ft-ba, egy túrós 
+210 Ft-ba, egy fahéjas pedig 240 Ft-ba kerül.) 
+2 pont  
+Ellenőrzés a szöveg alapján: 
+3 ∙ 270 + 210 + 2 ∙ 240 = 1500, 
+4 ∙ 270 + 2 ∙ 210 + 240 = 1740, 
+270 + 2 ∙ 210 + 2 ∙ 240 = 1170 valóban. 
+1 pont  
+Összesen: 
+8 pont  
+ 
+5. b) 
+100 Ft-osból 0 vagy 1 darab lehetett a 6 érme között 
+(2 db 100 Ft-os esetén legfeljebb 4 érmét használt 
+volna). 
+1 pont  
+1 darab 100 Ft-os esetén, 50 Ft-os nélkül legfeljebb 
+200 Ft-ot tudna kifizetni; 
+legalább 2 db 50 Ft-ossal pedig legfeljebb 5 érmét 
+használt volna, így 1 db 50 Ft-os volt. 
+A maradék 60 Ft-ot 20-20-10-10 összeállításban 
+tudja 4 db érmével kifizetni. 
+1 pont  
+Ha nem volt 100 Ft-os, akkor lehetett 4 db 50 Ft-os, 
+és mellette 2 db 5 Ft-os; 
+1 pont  
+ha pedig 3 db 50 Ft-os volt, akkor a maradék 60 Ft-ot 
+20-20-20 összeállításban tudja 3 db érmével kifi-
+zetni. 
+1 pont  
+Háromnál kevesebb 50 Ft-os esetén legfeljebb 
+180 Ft-ot tudna kifizetni. Tehát valóban 3 különböző 
+lehetőség van. 
+1 pont  
+Összesen: 
+5 pont  
+ 
+ 
+ 
+
+===== PAGE 11 =====
+Matematika — emelt szint 
+Javítási-értékelési útmutató 
+2213 írásbeli vizsga 
+11 / 18 
+2022. május 3. 
+ 
+Megjegyzések: 
+1. Ha a vizsgázó megadja a 3 különböző lehetőséget (100-50-20-20-10-10, 50-50-50-50-5-5, 
+50-50-50-20-20-20), akkor ezért 3 pontot kapjon. Annak igazolásáért, hogy több lehetőség 
+nincs, további 2 pont jár. 
+2. Ha a vizsgázó egy (például az alábbihoz hasonló) táblázatban megvizsgálja az összes lehe-
+tőséget, akkor teljes pontszámot kapjon. 
+ 
+100 Ft-os 
+50 Ft-os 
+20 Ft-os 
+10 Ft-os 
+5 Ft-os 
+darab-
+szám 
+ összesen 
+2 
+legfeljebb 2 db 
+≤ 4 
+1 
+2 
+legfeljebb 2 db 
+≤ 5 
+1 
+1 
+3 
+0 
+0 
+5 
+1 
+1 
+2 
+2 
+0 
+6 
+1 
+1 
+2 
+2-nél kevesebb 10 Ft-os 
+esetén legalább 3 db 
+≥ 7 
+1 
+1 
+2-nél kevesebb 20 Ft-os esetén 
+legalább 5 db 
+≥ 7 
+1 
+0 
+legalább 6 db 
+≥ 7 
+0 
+4 
+0 
+1 
+0 
+5 
+0 
+4 
+0 
+0 
+2 
+6 
+0 
+3 
+3 
+0 
+0 
+6 
+0 
+3 
+3-nál kevesebb 20 Ft-os esetén 
+legalább 4 db 
+≥ 7 
+0 
+2 
+legalább 6 db 
+≥ 8 
+0 
+≤ 1 
+legalább 8 db 
+≥ 8 
+ 
+5. c) 
+A 100-50-20-20-10-10 esetben 
+6!
+( 180)
+1! 1! 2! 2! =
+⋅
+⋅
+⋅
+, 
+az 50-50-50-50-5-5 esetben 
+6! ( 15)
+4! 2! =
+⋅
+, 
+az 50-50-50-20-20-20 esetben 6! (
+20)
+3! 3! =
+⋅
+ külön-
+böző sorrendben vehette elő a zsebéből Lali a 6 ér-
+mét. 
+2 pont 
+Az első esetben 
+4
+6 5
+2
+
+⋅⋅
+
+, 
+a második esetben 6
+4
+
+
+
+, 
+a harmadik esetben 6
+3
+
+
+
+ 
+különböző sorrend lehet-
+séges. 
+Összesen 180 + 15 + 20 = 215 sorrend lehetséges. 
+1 pont  
+Összesen: 
+3 pont  
+Megjegyzés: Ha a vizsgázó a b) feladat megoldásából származó rossz adatokkal helyesen számol, 
+és a megoldandó probléma lényegében nem változott meg, akkor a megfelelő pontok járnak. 
+ 
+ 
+
+===== PAGE 12 =====
+Matematika — emelt szint 
+Javítási-értékelési útmutató 
+2213 írásbeli vizsga 
+12 / 18 
+2022. május 3. 
+ 
+6. a) első megoldás 
+ 
+Az AB oldal felezőpontja 
+F (41; 0), 
+így az AFC derékszögű 
+háromszögben 
+71
+tg
+41
+α =
+. 
+Ebből α ≈ 59,9951°.  
+2 pont*  
+Mivel AC = BC, ezért a B csúcsnál fekvő szög 
+β ≈ 59,9951°. 
+1 pont  
+γ = 180° – (α + β) ≈ 180° – 119,9902° = 60,0098°. 
+1 pont  
+Három tizedesjegyre kerekítve a háromszög szögei 
+59,995°, 59,995° és 60,010°. (Tehát Gézának nincs 
+igaza, a háromszög nem szabályos.) 
+1 pont 
+Ez a pont nem jár, ha a 
+vizsgázó nem kerekít, 
+vagy rosszul kerekít. 
+Összesen: 
+5 pont  
+Megjegyzés: A *-gal jelölt 2 pont akkor is jár, ha a vizsgázó az AB
+
+ és AC
+
+ vektorok skaláris 
+szorzatát kétféleképpen felírja, és ezek egyenlőségéből fejezi ki cos α-t: 
+82 41 0 71
+cos
+82
+6722
+⋅
++ ⋅
+α =
+⋅
+ (≈ 0,50007). Ebből α ≈ 59,9951°. 
+ 
+6. a) második megoldás 
+AB = 82, BC = CA = 6722 
+1 pont  
+Koszinusztétellel: 
+2
+2 6722
+82
+cos
+2 6722
+⋅
+−
+γ =
+⋅
+ (≈ 0,49985), 
+1 pont  
+amiből γ ≈ 60,0098°. 
+1 pont  
+180
+2
+°−γ
+α = β =
+≈ 59,9951° 
+1 pont  
+Három tizedesjegyre kerekítve a háromszög szögei 
+59,995°, 59,995° és 60,010°. (Tehát Gézának nincs 
+igaza, a háromszög nem szabályos.) 
+1 pont 
+Ez a pont nem jár, ha a 
+vizsgázó nem kerekít, 
+vagy rosszul kerekít. 
+Összesen: 
+5 pont  
+ 
+6. b) 
+AC = 6722 (≈ 81,9878) 
+1 pont  
+Így 
+6722
+82
+AC
+AB =
+ (≈ 0,999851). 
+1 pont  
+Négy tizedesjegyre kerekítve az arány 0,9999. 
+1 pont 
+Ez a pont nem jár, ha a 
+vizsgázó nem kerekít, 
+vagy rosszul kerekít. 
+Összesen: 
+3 pont  
+Megjegyzések: 1. Az AB
+AC arány (≈ 1,0001) is elfogadható. 
+2. Kerekítési hiba miatt a vizsgázó a feladatban összesen legfeljebb 1 pontot veszítsen. 
+
+===== PAGE 13 =====
+Matematika — emelt szint 
+Javítási-értékelési útmutató 
+2213 írásbeli vizsga 
+13 / 18 
+2022. május 3. 
+ 
+6. c) első megoldás 
+A csonkakúp magassága 
+2
+2
+10
+6
+8
+−
+= (cm), 
+2 pont 
+ 
+térfogata 
+2
+2
+8 (14
+14 8
+8 )
+992
+3
+cs
+V
+π
+=
++
+⋅+
+=
+π (≈ 3116) 
+(cm3). 
+2 pont  
+A közelítő henger alapkörének sugara 
+((14 + 8) : 2 =) 11 (cm), 
+1 pont 
+Ez a pont akkor is jár, ha 
+ez a gondolat csak a meg-
+oldásból derül ki. 
+térfogata 
+2
+8 11
+968
+h
+V = ⋅
+⋅π =
+π (≈ 3041) (cm3). 
+1 pont  
+Ez a pontos értéknek (3041 : 3116 ≈) 0,976-szerese, 
+azaz 97,6%-a. 
+1 pont 968π : 992π ≈ 0,976 
+A relatív hiba tehát – 2,4%. 
+1 pont A 2,4% is elfogadható. 
+Összesen: 
+8 pont  
+ 
+6. c) második megoldás 
+A csonkakúp térfogata 
+2
+2
+(14
+14 8
+8 )
+3
+cs
+m
+V
+π
+=
++
+⋅+
+. 
+2 pont  
+A közelítő henger alapkörének sugara 
+((14 + 8) : 2 =) 11 (cm), 
+1 pont 
+Ez a pont akkor is jár, ha 
+ez a gondolat csak a meg-
+oldásból derül ki. 
+térfogata 
+2
+8 11
+h
+V = ⋅
+⋅π . 
+1 pont  
+A két térfogat hányadosa: 
+2
+2
+2
+11
+(14
+14 8
+8 )
+3
+h
+cs
+V
+m
+m
+V
+⋅
+⋅π
+=
+π
++
+⋅+
+. 
+1 pont  
+Egyszerűsítve: 
+2
+2
+2
+11
+121
+14
+14 8
+8
+124
+3
+h
+cs
+V
+V
+
+
+=
+=
+
+
++
+⋅+
+
+
+ ≈ 
+1 pont  
+≈ 0,976, azaz a henger térfogata a csonkakúp térfoga-
+tának 97,6%-a. 
+1 pont  
+A relatív hiba tehát – 2,4%. 
+1 pont A 2,4% is elfogadható. 
+Összesen: 
+8 pont  
+ 
+ 
+ 
+
+===== PAGE 14 =====
+Matematika — emelt szint 
+Javítási-értékelési útmutató 
+2213 írásbeli vizsga 
+14 / 18 
+2022. május 3. 
+ 
+7. a) első megoldás 
+Összesen 450 + 400 + 500 = 1350 gramm lisztből 
+sütött kenyeret Flóra. 
+1 pont  
+Ehhez 
+5
+1350
+750
+9
+⋅
+=
+gramm búzaliszt kell. 
+1 pont  
+Tehát a hozzáadott lisztből (750 – 450 =) 300 gramm 
+volt a búzaliszt. 
+1 pont  
+Összesen: 
+3 pont  
+ 
+7. a) második megoldás 
+Jelölje x a hozzáadott búzaliszt tömegét (grammban). 
+Ekkor a rozsliszt tömege 500 – x (gramm). 
+A kétfajta liszt tömegének aránya: 
+450
+5
+400
+(500
+)
+4
+x
+x
++
+=
++
+−
+. 
+1 pont  
+1800 + 4x = 4500 – 5x 
+1 pont  
+x = 300 (Tehát a hozzáadott lisztből 300 gramm volt 
+a búzaliszt.) 
+1 pont  
+Összesen: 
+3 pont  
+ 
+7. a) harmadik megoldás 
+50 gramm búzaliszt hozzáadásával éppen elérhető az 
+előírt arány (500 : 400 = 5 : 4). 
+1 pont  
+A maradék 450 gramm hozzákevert lisztben is 5 : 4 
+arányban kell lennie a búzalisztnek és a rozslisztnek, 
+azaz 
+5
+450 9
+
+
+⋅
+=
+
+
+
+
+250 gramm a búzaliszt mennyisége. 
+1 pont  
+Tehát a hozzáadott lisztből (50 + 250 =) 300 gramm 
+volt a búzaliszt. 
+1 pont  
+Összesen: 
+3 pont  
+ 
+7. b)  
+Ha 0 < x < 5, akkor 
+2x pozitív, 
+1 pont  
+tehát pontosan akkor van nyereség, ha 
+(x – 3)(1,5 – x) > 0. 
+1 pont  
+Ez akkor teljesül, ha a két tényező azonos előjelű. 
+A két tényező egyszerre nem lehet pozitív. 
+Mindkettő negatív, ha 1,5 < x < 3. 
+(Ezzel az állítást beláttuk.) 
+2 pont 
+ 
+Összesen: 
+4 pont  
+ 
+ 
+ 
+
+===== PAGE 15 =====
+Matematika — emelt szint 
+Javítási-értékelési útmutató 
+2213 írásbeli vizsga 
+15 / 18 
+2022. május 3. 
+ 
+7. c)  
+A nyereségfüggvény: 
+4
+3
+2
+( )
+0,8
+3,6
+3,6
+n x
+x
+x
+x
+= −
++
+−
+. 
+1 pont  
+Ennek deriváltfüggvénye:  
+3
+2
+( )
+3,2
+10,8
+7,2
+n x
+x
+x
+x
+′
+= −
++
+−
+. 
+1 pont  
+Az n függvénynek szélsőértéke lehet, ha 
+( )
+0
+′
+=
+n x
+.
+3
+2
+3,2
+10,8
+7,2
+0
+x
+x
+x
+−
++
+−
+=
+ 
+1 pont  
+Kiemelve x-et, az 
+2
+( 3,2
+10,8
+7,2)
+0
+−
++
+−
+=
+x
+x
+x
+ 
+egyenlet gyökei: x1 = 0, x2 ≈ 0,91, x3 ≈ 2,46. 
+2 pont  
+Mivel csak 1,5 < x < 3 esetén nyereséges a termelés, 
+ezért az x ≈ 2,46 helyen kell megvizsgálni a függ-
+vényt. 
+1 pont  
+A második derivált: 
+2
+( )
+9,6
+21,6
+7,2
+n x
+x
+x
+′′
+= −
++
+−
+. 
+(2,46)
+0
+n′′
+<
+, tehát az n függvénynek itt (abszolút) 
+maximuma van. 
+1 pont  
+2
+(2,46)
+0,8 2,46
+( 0,54) ( 0,96)
+n
+=
+⋅
+⋅−
+⋅−
+ ≈ 2,51. 
+1 pont  
+A legnagyobb elérhető napi nyereség tehát körülbelül 
+25 100 tallér, ami kb. 2,46 tonna liszt előállításával 
+és eladásával érhető el. 
+1 pont  
+Összesen: 
+9 pont  
+ 
+8. a) első megoldás 
+Két lány között 5
+10
+2
+=
+
+
+, 
+1 pont  
+egy lány és egy fiú között 5 ∙ 7 = 35 ölelés volt. 
+1 pont  
+Összesen (10 + 35 =) 45 találkozásnál volt ölelés. 
+1 pont  
+Összesen: 
+3 pont  
+ 
+8. a) második megoldás 
+Összesen 12
+66
+2
+
+=
+
+
+
+
+ köszöntés volt, 
+1 pont  
+ebből 7
+21
+2
+=
+
+
+ volt kézfogás. 
+1 pont  
+Tehát (66 – 21 =) 45 találkozásnál volt ölelés. 
+1 pont  
+Összesen: 
+3 pont  
+ 
+ 
+ 
+
+===== PAGE 16 =====
+Matematika — emelt szint 
+Javítási-értékelési útmutató 
+2213 írásbeli vizsga 
+16 / 18 
+2022. május 3. 
+ 
+8. b) első megoldás 
+Ha a lejátszott 9 mérkőzést a hatpontú ABCDEF egy-
+szerű gráffal szemléltetjük, akkor a gráfban a csúcsok 
+fokszámának összege (2 ∙ 9 =) 18. 
+1 pont  
+A feladat szövege szerint B, C, D, E, F fokszáma 1, 3 
+vagy 5 lehet, és az öt fokszám összege 17 (mert A 
+fokszáma 1). 
+1 pont  
+Legalább egy 5 fokszámú csúcsnak lennie kell közöt-
+tük (ha nem lenne, akkor a fokszámok összege legfel-
+jebb 5 ∙ 3 = 15 lenne). 
+1 pont  
+Csak a B csúcsnak lehet 5 a fokszáma, mert csak 
+B játszott A-val. 
+1 pont  
+Ezekkel a feltételekkel a C, D, E, F csúcsok fok-
+száma csak 3 lehet (mert a négy csúcs fokszámának 
+összege 12). 
+1 pont Ekkor CDEF részgráfban 
+minden csúcs fokszáma 2, 
+Mivel C és E között nincs él, ezért a CB, CD, CF 
+élek és az EB, ED, EF élek is léteznek. 
+1 pont és a CE él nem létezik. 
+ 
+ 
+Így a D-ből induló 3 él DB, DC és 
+DE. A DF él tehát nem létezik: 
+Dóra nem játszott még Fanni ellen.  
+1 pont Ez csak úgy lehetséges, 
+hogy a DF él sem létezik. 
+Összesen: 
+7 pont  
+Megjegyzés: Ha a vizsgázó további indoklás nélkül helyesen felrajzolja a már lejátszott mérkő-
+zések gráfját, és ez alapján jól válaszol, akkor ezért 4 pontot kapjon. 
+ 
+8. b) második megoldás 
+Ha a lejátszott 9 mérkőzést a hatpontú ABCDEF egy-
+szerű gráffal szemléltetjük, akkor a BCDEF részgráf-
+ban 8 élt kell behúzni az összesen lehetséges 10-ből 
+(mert az A-ból csak B-be indul él). 
+3 pont  
+A két hiányzó él közül az egyik a CE. 
+1 pont  
+A másik hiányzó él nem indulhat sem C-ből, sem 
+E-ből, mert akkor annak a pontnak a fokszáma 2 
+lenne (tehát páros), sem B-ből, mert akkor ennek a 
+fokszáma 4 lenne (tehát páros). 
+2 pont  
+A másik nem behúzott él ezért csak a DF lehet, 
+azaz Dóra nem játszott még Fanni ellen. 
+1 pont  
+Összesen: 
+7 pont  
+ 
+ 
+ 
+
+===== PAGE 17 =====
+Matematika — emelt szint 
+Javítási-értékelési útmutató 
+2213 írásbeli vizsga 
+17 / 18 
+2022. május 3. 
+ 
+8. c) 
+András, Csaba és Dóra összes lehetséges dobásainak 
+száma 63 (= 216). 
+1 pont  
+Bori pontosan akkor nyer, ha  
+– a többiek mindhárman 5-nél kisebbet dobnak, 
+– vagy a többiek mindhárman 6-ost dobnak, 
+– vagy pontosan ketten dobnak 6-ost, egy valaki 
+pedig 5-nél kisebbet dob.  
+1 pont 
+Ez a pont akkor is jár, ha 
+ez a gondolat csak a meg-
+oldásból derül ki.  
+Mindhárman 5-nél kisebbet 43 (= 64)-féleképpen 
+dobhatnak.  
+1 pont  
+Mindhárman 6-ost csak 1-féleképpen dobhatnak. 
+1 pont  
+A három dobás között pontosan két 6-os és egy 5-nél 
+kisebb dobás 3
+1 1 4
+2
+⋅⋅⋅
+
+
+ (= 12)-féleképpen lehetséges. 
+1 pont  
+A kérdezett valószínűség: 
+64
+1 12
+77
+216
+216
++ +
+=
+ (≈ 0,356). 
+1 pont  
+Összesen: 
+6 pont  
+ 
+9. a) 
+A parabola egyenlete átrendezve: 
+2
+1
+8
+2
+y
+x
+= −
++
+. 
+1 pont  
+Ez tehát egy „lefelé nyíló” parabola, melynek para-
+métere p = 1, tengelypontja pedig a (0; 8) pont. 
+1 pont  
+A parabola fókuszpontja ezért a (0; 7,5) pont. 
+1 pont  
+A kör középpontja a C(0; 3) pont. 
+1 pont  
+Összesen: 
+4 pont  
+ 
+9. b) első megoldás 
+2
+(2 2)
+2 4
+16
++ ⋅
+=
+, 
+valamint 
+2
+2
+(2 2)
+(4
+3)
+9
++
+−
+=
+ is igaz (ezért Q való-
+ban pontja a parabolának és a körnek is). 
+2 pont  
+A kör 
+(2 2;4)
+Q
+ pontbeli érintőjének egy normál-
+vektora 
+(2 2;1)
+CQ
+=
+=
+n
+
+, 
+1 pont  
+egyenlete 2 2
+( 2 2 2 2
+1 4)
+12
+x
+y
++
+=
+⋅
++ ⋅
+=
+. 
+1 pont  
+Az érintő egyenletéből y-t kifejezve és beírva a para-
+bola egyenletébe: 
+2
+24
+4 2
+16
+x
+x
++
+−
+=
+. 
+1 pont  
+Rendezve 
+2
+4 2
+8
+0
+x
+x
+−
++
+=
+, azaz 
+2
+(
+2 2)
+0
+x −
+=
+. 
+1 pont  
+Ennek az egyenletnek egy megoldása van (
+2 2)
+x =
+, 
+ezért a kör érintőjének egy közös pontja van a para-
+bolával (és nem párhuzamos az y tengellyel), tehát 
+érinti a parabolát is. 
+1 pont  
+Összesen: 
+7 pont  
+
+===== PAGE 18 =====
+Matematika — emelt szint 
+Javítási-értékelési útmutató 
+2213 írásbeli vizsga 
+18 / 18 
+2022. május 3. 
+ 
+9. b) második megoldás 
+2
+(2 2)
+2 4
+16
++ ⋅
+=
+, 
+valamint 
+2
+2
+(2 2)
+(4
+3)
+9
++
+−
+=
+ is igaz (ezért Q való-
+ban pontja a parabolának és a körnek is). 
+2 pont  
+A kör 
+(2 2; 4)
+Q
+ pontbeli érintőjének egy normál-
+vektora 
+(2 2;1)
+CQ
+=
+=
+n
+
+, 
+1 pont  
+ezért az érintő meredeksége 
+2 2
+2 2
+1
+−
+= −
+. 
+1 pont Az érintő egyenlete 
+2 2
+12
+x
+y
++
+=
+. 
+Az 
+2
+1
+( )
+8
+2
+f x
+x
+= −
++
+ (x ∈ R) függvény deriváltfügg-
+vénye 
+( )
+f
+x
+x
+′
+= −, 
+1 pont  
+ezért a parabolához a Q-ban húzott érintő meredek-
+sége 
+(2 2)
+2 2
+f ′
+= −
+. 
+1 pont Az érintő egyenlete 
+2 2
+12
+y
+x
+= −
++
+. 
+A két görbének tehát valóban közös a Q-beli érintője. 
+1 pont  
+Összesen: 
+7 pont  
+Megjegyzés: Ha a vizsgázó megoldásához közelítő értéket is felhasznál, akkor legfeljebb 
+6 pontot kapjon. 
+ 
+ 
+9. c) 
+Az 
+2
+16
+x =
+ egyenlet megoldásaiból kapjuk, hogy a 
+parabola – 4-ben és 4-ben metszi az x tengelyt. 
+1 pont  
+A parabola és az x tengely által közrezárt korlátos 
+síkidom területe 
+4
+2
+4
+1
+8
+2 x
+dx
+−
+
+
+−
++
+=
+
+
+
+
+
+ 
+1 pont  
+4
+3
+4
+1
+8
+2
+3
+x
+x
+−
+
+
+= −
+⋅
++
+=
+
+
+
+
+ 
+1 pont  
+32
+32
+32
+32
+3
+3
+
+
+
+
+= −
++
+−
+−
+=
+
+
+
+
+
+
+
+
+ 
+1 pont  
+128
+3
+=
+. 
+1 pont  
+Összesen: 
+5 pont  
+ 

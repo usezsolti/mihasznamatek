@@ -1,0 +1,1132 @@
+
+===== PAGE 1 =====
+ 
+Matematika I. 
+ 
+Nat2020 
+K2511 
+Név:  ...........................................................  osztály:...... 
+OKTATÁSI HIVATAL 
+MATEMATIKA 
+ 
+KÖZÉPSZINTŰ 
+ÍRÁSBELI VIZSGA 
+2025. május 6. 9:00 
+I. 
+Időtartam: 45 perc 
+Pótlapok száma 
+Tisztázati 
+ 
+Piszkozati 
+ 
+ 
+É R E T T S É G I V I Z S G A • 2 0 2 5 . m á j u s 6 . 
+
+===== PAGE 2 =====
+ 
+Matematika I. 
+2 / 8 
+középszintű írásbeli vizsga 
+K2511 
+ 
+2025. május 6. 
+Név:  ...........................................................  osztály:...... 
+Fontos tudnivalók 
+ 
+1. A feladatok megoldására 45 percet fordíthat, az idő leteltével a munkát be kell fejeznie. 
+ 
+ 
+2. A megoldások sorrendje tetszőleges. 
+ 
+ 
+3. A feladatok megoldásához szöveges adatok tárolására és megjelenítésére nem alkalmas 
+zsebszámológépet és bármilyen négyjegyű függvénytáblázatot használhat, más elektroni-
+kus vagy írásos segédeszköz használata tilos! 
+ 
+ 
+4. A feladatok végeredményét az erre a célra szolgáló keretbe írja, a megoldást csak akkor 
+kell részleteznie, ha erre a feladat szövege utasítást ad! 
+ 
+ 
+5. A dolgozatot tollal írja, az ábrákat ceruzával is rajzolhatja. Az ábrákon kívül a ceruzával írt 
+részeket a javító tanár nem értékelheti. Ha valamilyen megoldást vagy megoldásrészletet 
+áthúz, akkor az nem értékelhető. 
+ 
+ 
+6. Minden feladatnak csak egy megoldása értékelhető. Több megoldási próbálkozás esetén 
+egyértelműen jelölje, hogy melyiket tartja érvényesnek! 
+ 
+ 
+7. Kérjük, hogy a szürkített téglalapokba semmit ne írjon! 
+ 
+ 
+ 
+
+===== PAGE 3 =====
+ 
+Matematika I. 
+3 / 8 
+középszintű írásbeli vizsga 
+K2511 
+ 
+2025. május 6. 
+Név:  ...........................................................  osztály:...... 
+ 
+1. 
+Adottak a következő halmazok: A  {1; 2; 3; 4; 5} és B  {1; 3; 5; 7; 9}.  
+Elemei felsorolásával adja meg az A  B és az A \ B halmazt! 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+A  B  
+1 pont 
+ 
+A \ B  
+1 pont 
+ 
+ 
+2. 
+Adja meg a 12 és a 20 legkisebb közös többszörösét!  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+2 pont 
+ 
+ 
+3. 
+Oldja meg az alábbi egyenletet a valós számok halmazán! 
+ 
+3
+2
+4
+2 (2 )
+2
+2
+x
+
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+x  
+2 pont 
+ 
+
+===== PAGE 4 =====
+ 
+Matematika I. 
+4 / 8 
+középszintű írásbeli vizsga 
+K2511 
+ 
+2025. május 6. 
+Név:  ...........................................................  osztály:...... 
+ 
+4. 
+Az alábbi táblázat egy kisbolt napi bevételeit mutatja az egyik héten hétfőtől péntekig 
+(ezer forintban). Hány ezer forint volt ezen az öt napon a bolt átlagos napi bevétele? 
+ 
+nap 
+hétfő 
+kedd 
+szerda 
+csütörtök péntek 
+bevétel (ezer forint)  
+568 
+465 
+497 
+488 
+882 
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Az átlag:              ezer forint.           
+2 pont 
+ 
+ 
+5. 
+Az ábrán látható hegyesszögű háromszög 6 cm hosszú oldalával szemközti szög 60-os. 
+Mekkora a háromszög 5 cm hosszú oldalával szemközti szög? Megoldását részletezze!   
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+2 pont 
+ 
+ 
+1 pont 
+ 
+
+===== PAGE 5 =====
+ 
+Matematika I. 
+5 / 8 
+középszintű írásbeli vizsga 
+K2511 
+ 
+2025. május 6. 
+Név:  ...........................................................  osztály:...... 
+ 
+6. 
+Rajzoljon egy olyan hatpontú gráfot, melyben a csúcsok fokszáma 5, 4, 3, 2, 2, 2.   
+ 
+ 
+ 
+ 
+ 
+  
+2 pont 
+ 
+ 
+7. 
+Hány köbcentiméter egy 3 cm sugarú félgömb térfogata?  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+A térfogat:                      cm3. 
+2 pont 
+ 
+ 
+8. 
+Egy új építésű házban a megvehető 14 lakás ára (millió forintban):  
+50, 50, 55, 55, 55, 70, 70, 80, 80, 90, 110, 115, 130, 145.  
+Ábrázolja sodrófadiagramon ezeket az adatokat!  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+4 pont 
+ 
+
+===== PAGE 6 =====
+ 
+Matematika I. 
+6 / 8 
+középszintű írásbeli vizsga 
+K2511 
+ 
+2025. május 6. 
+Név:  ...........................................................  osztály:...... 
+ 
+9. 
+Az ábrán látható ABCDEF szabályos hatszögben a  BA
+
+ és c  BC
+
+. Fejezze ki a és c 
+vektorok segítségével a CA
+
+ és BE
+
+ vektorokat! 
+ 
+ 
+ 
+ 
+  
+ 
+ 
+CA 
+
+ 
+1 pont 
+ 
+BE 
+
+ 
+2 pont 
+ 
+ 
+10. Írja fel annak a (0; 1) ponton átmenő egyenesnek az egyenletét, amely párhuzamos az  
+y  2x + 4 egyenletű egyenessel! 
+ 
+   
+ 
+ 
+ 
+ 
+  
+2 pont 
+ 
+
+===== PAGE 7 =====
+ 
+Matematika I. 
+7 / 8 
+középszintű írásbeli vizsga 
+K2511 
+ 
+2025. május 6. 
+Név:  ...........................................................  osztály:...... 
+ 
+11. Egy mértani sorozat második tagja 24, harmadik tagja 36.  
+Határozza meg a sorozat első hat tagjának összegét! Megoldását részletezze!  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+2 pont 
+ 
+ 
+1 pont 
+ 
+ 
+12. Egy piros és egy kék színű szabályos dobókockával egyszerre dobunk. Mennyi a való-
+színűsége annak, hogy az egyik kockával 6-ost, a másikkal pedig páratlan számot do-
+bunk? Megoldását részletezze! 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+2 pont 
+ 
+ 
+1 pont 
+ 
+ 
+ 
+ 
+
+===== PAGE 8 =====
+ 
+Matematika I. 
+8 / 8 
+középszintű írásbeli vizsga 
+K2511 
+ 
+2025. május 6. 
+Név:  ...........................................................  osztály:...... 
+ 
+ 
+pontszám 
+maximális 
+elért 
+I. rész 
+1. feladat 
+2 
+ 
+2. feladat 
+2 
+ 
+3. feladat 
+2 
+ 
+4. feladat 
+2 
+ 
+5. feladat 
+3 
+ 
+6. feladat 
+2 
+ 
+7. feladat 
+2 
+ 
+8. feladat 
+4 
+ 
+9. feladat 
+3 
+ 
+10. feladat 
+2 
+ 
+11. feladat 
+3 
+ 
+12. feladat 
+3 
+ 
+ 
+ÖSSZESEN 
+30 
+ 
+ 
+dátum 
+ 
+javító tanár 
+ 
+ __________________________________________________________________________  
+ 
+ 
+ 
+pontszáma egész 
+számra kerekítve 
+elért 
+programba  
+beírt 
+I. rész 
+  
+  
+ 
+dátum 
+ 
+dátum 
+ 
+ 
+ 
+ 
+ 
+ 
+javító tanár 
+ 
+jegyző 
+ 
+Megjegyzések: 
+1. Ha a vizsgázó a II. írásbeli összetevő megoldását elkezdte, akkor ez a táblázat és az aláírási rész 
+üresen marad! 
+2. Ha a vizsga az I. összetevő teljesítése közben megszakad, illetve nem folytatódik a II. összetevővel, 
+akkor ez a táblázat és az aláírási rész kitöltendő! 
+
+===== PAGE 9 =====
+ 
+Matematika II. 
+ 
+Nat2020 
+K2511 
+Név:  ...........................................................  osztály:...... 
+OKTATÁSI HIVATAL 
+MATEMATIKA 
+ 
+KÖZÉPSZINTŰ 
+ÍRÁSBELI VIZSGA 
+2025. május 6. 9:00 
+II. 
+Időtartam: 135 perc 
+Pótlapok száma 
+Tisztázati 
+ 
+Piszkozati 
+ 
+ 
+É R E T T S É G I V I Z S G A • 2 0 2 5 . m á j u s 6 . 
+
+===== PAGE 10 =====
+ 
+Matematika II. 
+2 / 16 
+középszintű írásbeli vizsga 
+K2511 
+ 
+2025. május 6. 
+Név:  ...........................................................  osztály:...... 
+ 
+ 
+
+===== PAGE 11 =====
+ 
+Matematika II. 
+3 / 16 
+középszintű írásbeli vizsga 
+K2511 
+ 
+2025. május 6. 
+Név:  ...........................................................  osztály:...... 
+ 
+Fontos tudnivalók 
+ 
+1. A feladatok megoldására 135 percet fordíthat, az idő leteltével a munkát be kell fejeznie. 
+ 
+2. A feladatok megoldási sorrendje tetszőleges. 
+ 
+3. A B részben kitűzött három feladat közül csak kettőt kell megoldania. A nem választott 
+feladat sorszámát írja be a dolgozat befejezésekor az alábbi négyzetbe! Ha a javító 
+tanár számára nem derül ki egyértelműen, hogy melyik feladat értékelését nem kéri, akkor 
+a kitűzött sorrend szerinti legutolsó feladatra nem kap pontot. 
+ 
+ 
+ 
+4. A feladatok megoldásához szöveges adatok tárolására és megjelenítésére nem alkalmas 
+zsebszámológépet és bármilyen négyjegyű függvénytáblázatot használhat, más elektroni-
+kus vagy írásos segédeszköz használata tilos! 
+ 
+5. A megoldások gondolatmenetét minden esetben írja le, mert a feladatra adható pont-
+szám jelentős része erre jár! 
+ 
+6. Ügyeljen arra, hogy a lényegesebb részszámítások is nyomon követhetők legyenek! 
+ 
+7. A gondolatmenet kifejtése során a zsebszámológép használata – további matematikai 
+indoklás nélkül – a következő műveletek elvégzésére fogadható el: összeadás, kivonás, 
+szorzás, osztás, hatványozás, gyökvonás, n!, 
+
+
+
+
+
+
+k
+n kiszámítása, a függvénytáblázatban fel-
+lelhető táblázatok helyettesítése (sin, cos, tg, log és ezek inverzei), a π és az e szám közelítő 
+értékének megadása, nullára rendezett másodfokú egyenlet gyökeinek meghatározása. To-
+vábbi matematikai indoklás nélkül használhatók a számológépek bizonyos statisztikai mu-
+tatók kiszámítására (átlag, szórás) abban az esetben, ha a feladat szövege kifejezetten nem 
+követeli meg az ezzel kapcsolatos részletszámítások bemutatását is. Egyéb esetekben a 
+géppel elvégzett számítások indoklás nélküli lépéseknek számítanak, azokért nem jár 
+pont. 
+ 
+8. A feladatok megoldásánál használt tételek közül az iskolában tanult, névvel ellátott tételeket 
+(pl. Pitagorasz-tétel, magasságtétel) nem kell pontosan megfogalmazva kimondania, elég 
+csak a tétel megnevezését említenie, de alkalmazhatóságát röviden indokolnia kell. 
+ 
+9. A feladatok végeredményét (a feltett kérdésre adandó választ) szöveges megfogalmazásban 
+is közölje! 
+ 
+10. A dolgozatot tollal írja, az ábrákat ceruzával is rajzolhatja. Az ábrákon kívül a ceruzával írt 
+részeket a javító tanár nem értékelheti. Ha valamilyen megoldást vagy megoldásrészletet 
+áthúz, akkor az nem értékelhető. 
+ 
+11. Minden feladatnak csak egy megoldása értékelhető. Több megoldási próbálkozás esetén 
+egyértelműen jelölje, hogy melyiket tartja érvényesnek! 
+ 
+12. Kérjük, hogy a szürkített téglalapokba semmit ne írjon! 
+ 
+ 
+
+===== PAGE 12 =====
+ 
+Matematika II. 
+4 / 16 
+középszintű írásbeli vizsga 
+K2511 
+ 
+2025. május 6. 
+Név:  ...........................................................  osztály:...... 
+ 
+A 
+ 
+13. 
+a)  Oldja meg az alábbi egyenletet a valós számok halmazán! 
+ 
+8
+5
+2
+20
+25
+x
+x
+
+
+
+
+ 
+ 
+b)  Egy téglalap egyik oldala 48 cm-rel hosszabb, mint a másik oldala. A téglalap terü-
+lete 2025 cm2. Számítsa ki a téglalap kerületét! 
+ 
+a) 
+5 pont 
+ 
+b) 
+6 pont 
+ 
+Ö.: 
+11 pont 
+ 
+
+===== PAGE 13 =====
+ 
+Matematika II. 
+5 / 16 
+középszintű írásbeli vizsga 
+K2511 
+ 
+2025. május 6. 
+Név:  ...........................................................  osztály:...... 
+ 
+ 
+
+===== PAGE 14 =====
+ 
+Matematika II. 
+6 / 16 
+középszintű írásbeli vizsga 
+K2511 
+ 
+2025. május 6. 
+Név:  ...........................................................  osztály:...... 
+ 
+14.  Az ABCD négyszögben AB  12 cm, BC  15 cm, BD  20 cm. Az A csúcsnál lévő belső 
+szög derékszög, továbbá DBC 63º (az ábrának megfelelően).  
+ 
+ 
+a) Számítsa ki a négyszög B csúcsnál lévő belső szögének () nagyságát! 
+ 
+b) Számítsa ki a négyszög AD és CD oldalának hosszát, valamint a négyszög területét! 
+ 
+c) Határozza meg az alábbi állítás logikai értékét (igaz vagy hamis)! Válaszát indo-
+kolja! 
+Ha egy négyszög átlói felezik egymást, akkor a négyszög rombusz. 
+ 
+ 
+ 
+  
+ 
+ 
+a) 
+3 pont 
+ 
+b) 
+8 pont 
+ 
+c) 
+2 pont 
+ 
+Ö.: 
+13 pont 
+ 
+
+===== PAGE 15 =====
+ 
+Matematika II. 
+7 / 16 
+középszintű írásbeli vizsga 
+K2511 
+ 
+2025. május 6. 
+Név:  ...........................................................  osztály:...... 
+ 
+ 
+
+===== PAGE 16 =====
+ 
+Matematika II. 
+8 / 16 
+középszintű írásbeli vizsga 
+K2511 
+ 
+2025. május 6. 
+Név:  ...........................................................  osztály:...... 
+ 
+15.  Adott három, a valós számok halmazán értelmezett függvény: 
+ 
+f: 
+2
+3
+x
+x 
+
+  
+g: 
+2
+x
+x
+
+
+ 
+ 
+h: 
+2
+1
+x
+x
+
+
+ 
+ 
+a) Határozza meg mindhárom függvény esetén a megadott állítások logikai értékét! 
+Írja az alábbi táblázat celláiba az IGAZ, illetve a HAMIS szavak közül a megfelelőt! 
+ 
+ 
+f 
+g 
+h 
+A függvénynek 
+van zérushelye. 
+ 
+ 
+ 
+A függvénynek 
+van maximuma. 
+ 
+ 
+ 
+Szigorúan monoton 
+növekvő függvény. 
+ 
+ 
+ 
+ 
+b) Adja meg a h függvény értelmezési tartományának azt az elemét, amelyhez a 
+függvény 1,25-ot rendel!  
+ 
+Adott a valós számok halmazán értelmezett 
+2
+:
+(
+1)
+2
+j
+x
+x 
+
+
+ függvény. 
+ 
+c) Ábrázolja a j függvényt a [1; 4] intervallumon! 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+a) 
+5 pont 
+ 
+b) 
+3 pont 
+ 
+c) 
+4 pont 
+ 
+Ö.: 
+12 pont 
+ 
+
+===== PAGE 17 =====
+ 
+Matematika II. 
+9 / 16 
+középszintű írásbeli vizsga 
+K2511 
+ 
+2025. május 6. 
+Név:  ...........................................................  osztály:...... 
+ 
+ 
+
+===== PAGE 18 =====
+ 
+Matematika II. 
+10 / 16 
+középszintű írásbeli vizsga 
+K2511 
+ 
+2025. május 6. 
+Név:  ...........................................................  osztály:...... 
+ 
+B 
+ 
+A 16–18. feladatok közül tetszése szerint választott kettőt kell megoldania.  
+A kihagyott feladat sorszámát írja be a 3. oldalon lévő üres négyzetbe! 
+ 
+16. Az alábbi, hiányosan kitöltött táblázatban a magyarországi mobiltelefon-hívások száma, 
+ezek összidőtartama és az ebből számított (két tizedesjegyre kerekített) átlagos hívásidő 
+látható az adott években.1  
+ 
+ 
+2002 
+2007 
+2012 
+2017 
+2022 
+hívások száma (millió db) 
+4399 
+7173 
+8045 
+ 
+8577 
+hívások időtartama (millió perc) 
+5 080 
+13 653 
+18 001 
+22 377 
+ 
+hívások átlagos ideje (perc) 
+1,15 
+1,90 
+ 
+2,83 
+3,31 
+ 
+a) Számítsa ki a táblázat három hiányzó adatát! 
+ 
+Egy telefonos játékban 12 szintet lehet teljesíteni. Az egyre nehezedő szintek teljesítéséért 
+egyre több pont jár a játékosnak. Az egymást követő szintek teljesítéséért kapható 
+pontszámok között mindig ugyanannyi a különbség. A negyedik szint teljesítéséért 
+630 pont, a hetedik szintért 990 pont jár. A játék végén a játékos összpontszámát a telje-
+sített szintekért járó pontszámok összege adja. 
+ 
+b) Mennyi az összpontszáma annak a játékosnak, aki teljesítette mind a 12 szintet?  
+ 
+Egy 32 fős munkahelyen mindenkitől megkérdezték, hogy az Alfa, a Béta és a Gamma 
+mobiltelefon-szolgáltatók közül kinek melyiknél volt már előfizetése. A válaszok alapján 
+5 főnek az Alfánál és a Bétánál is, 6 főnek a Bétánál és a Gammánál is, 7 főnek pedig az 
+Alfánál és a Gammánál is volt már előfizetése, közülük 4 főnek pedig mindhárom 
+szolgáltatónál volt már előfizetése. A válaszokból az is kiderült, hogy 1 főnek egyik 
+szolgáltatónál sem volt még előfizetése. Akiknek csak az Alfánál volt már előfizetésük, 
+azok kétszer annyian vannak, mint akiknek csak a Bétánál, és feleannyian, mint akiknek 
+csak a Gammánál. 
+ 
+c) Számítsa ki, hogy a megkérdezettek közül hány főnek volt már előfizetése a Bétánál! 
+ 
+ 
+ 
+                                                 
+1 https://www.ksh.hu/stadat_files/ikt/hu/ikt0005.html 
+a) 
+3 pont 
+ 
+b) 
+6 pont 
+ 
+c) 
+8 pont 
+ 
+Ö.: 
+17 pont 
+ 
+
+===== PAGE 19 =====
+ 
+Matematika II. 
+11 / 16 
+középszintű írásbeli vizsga 
+K2511 
+ 
+2025. május 6. 
+Név:  ...........................................................  osztály:...... 
+ 
+ 
+
+===== PAGE 20 =====
+ 
+Matematika II. 
+12 / 16 
+középszintű írásbeli vizsga 
+K2511 
+ 
+2025. május 6. 
+Név:  ...........................................................  osztály:...... 
+ 
+A 16–18. feladatok közül tetszése szerint választott kettőt kell megoldania.  
+A kihagyott feladat sorszámát írja be a 3. oldalon lévő üres négyzetbe! 
+ 
+17.  Több mint 60 éves Magyarország egyik kedvelt desszertje, a csokoládéval bevont 
+túrórúd. Az egyik automatába 300 Ft-ot kell bedobni, ha egy ilyen terméket vásárolunk. 
+A gép csak 100 Ft-os és 50 Ft-os érméket fogad el.  
+ 
+a) Hányféleképpen lehet ilyen érmékből 300 Ft-ot bedobni az automatába, ha a 
+bedobás sorrendje is számít? (Az azonos címletű érméket nem különböztetjük meg 
+egymástól.)  
+ 
+Anna 2 darab tejcsokoládé és 4 darab étcsokoládé bevonatú desszertet vásárolt. A hat 
+desszert közül Balázs véletlenszerűen kiválaszt hármat (visszatevés nélkül).  
+ 
+b) Mennyi a valószínűsége annak, hogy egy darab tejcsokoládé és két darab étcsoko-
+ládé bevonatú desszertet választ ki Balázs? 
+ 
+A desszert készítésekor egy 18 mm átmérőjű, 100 mm hosszúságú lehűtött túróhenger köré 
+csokoládébevonatot dermesztenek. A kész desszert alakja egy 20 mm  10 mm  102 mm 
+méretű téglatest és egy 20 mm átmérőjű, 102 mm hosszúságú félhenger egyesítésének 
+tekinthető. (A jobb oldali ábrán a desszert keresztmetszeti rajza látható.) 
+ 
+ 
+ 
+ 
+ 
+c) Hány cm3 csokoládé kerül egy desszertbe?  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+a) 
+6 pont 
+ 
+b) 
+4 pont 
+ 
+c) 
+7 pont 
+ 
+Ö.: 
+17 pont 
+ 
+
+===== PAGE 21 =====
+ 
+Matematika II. 
+13 / 16 
+középszintű írásbeli vizsga 
+K2511 
+ 
+2025. május 6. 
+Név:  ...........................................................  osztály:...... 
+ 
+ 
+ 
+
+===== PAGE 22 =====
+ 
+Matematika II. 
+14 / 16 
+középszintű írásbeli vizsga 
+K2511 
+ 
+2025. május 6. 
+Név:  ...........................................................  osztály:...... 
+ 
+A 16–18. feladatok közül tetszése szerint választott kettőt kell megoldania.  
+A kihagyott feladat sorszámát írja be a 3. oldalon lévő üres négyzetbe! 
+ 
+18. A tengerszint felett h kilométer magasságban mérhető p(h) légnyomás jól közelíthető a 
+következő képlettel: 
+0,054
+( )
+(0) 10
+.
+h
+p h
+p
+
+
+
+
+ A képletben p(0) jelöli a tengerszinten mér-
+hető légnyomást, ami 101 325 Pa. (A Pa – azaz pascal – a légnyomás mértékegysége.) 
+ 
+ 
+a) A Föld legmagasabb hegycsúcsa, a Mount Everest 8848 méter magas. Számítsa ki 
+a megadott képlettel, hogy mekkora a Mount Everest csúcsán mérhető légnyomás! 
+ 
+b) A képlet alapján hány méter magasságban lesz a légnyomás 60 000 Pa?  
+Válaszát 100 méterre kerekítve adja meg! 
+ 
+A Mount Everest meghódítását évtizedek óta kiemelt figyelemmel kíséri a közvélemény. 
+Az alábbi táblázat azoknak a hegymászóknak a számát mutatja (születési hely alapján), 
+akik 2024. szeptemberig legalább kétszer sikeresen feljutottak a csúcsra.2  
+ 
+Kontinens 
+Hegymászók 
+száma 
+Ázsia 
+125 
+Amerika 
+70 
+Európa 
+50 
+Többi kontinens 
+23 
+ 
+c) Ábrázolja kördiagramon a táblázatban szereplő hegymászók számának kontinensek 
+szerinti megoszlását! 
+ 
+Egy ötfős hegymászócsapat indul a csúcs felé. A csapat tagjai között van Ágnes és László. 
+ 
+d) Hányféle sorrendben haladhatnak öten egymás után, ha Ágnes és László (vala-
+milyen sorrendben) közvetlenül egymás után haladnak? 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+                                                 
+2 https://en.wikipedia.org/wiki/List_of_Mount_Everest_summiters_by_frequency  
+a) 
+3 pont 
+ 
+b) 
+5 pont 
+ 
+c) 
+5 pont 
+ 
+d) 
+4 pont 
+ 
+Ö.: 
+17 pont 
+ 
+
+===== PAGE 23 =====
+ 
+Matematika II. 
+15 / 16 
+középszintű írásbeli vizsga 
+K2511 
+ 
+2025. május 6. 
+Név:  ...........................................................  osztály:...... 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 24 =====
+ 
+Matematika II. 
+16 / 16 
+középszintű írásbeli vizsga 
+K2511 
+ 
+2025. május 6. 
+Név:  ...........................................................  osztály:...... 
+ 
+ 
+a feladat 
+sorszáma 
+pontszám 
+maximális 
+elért 
+összesen 
+II. A rész 
+13. 
+11 
+ 
+ 
+14. 
+13 
+ 
+15. 
+12 
+ 
+II. B rész 
+ 
+17 
+ 
+ 
+ 
+17 
+ 
+ 
+ nem választott feladat 
+ ÖSSZESEN 
+70 
+ 
+ 
+ 
+ 
+pontszám 
+maximális 
+elért 
+I. rész 
+30 
+ 
+II. rész 
+70 
+ 
+Az írásbeli vizsgarész pontszáma 
+100 
+ 
+ 
+dátum 
+ 
+javító tanár 
+ 
+ __________________________________________________________________________  
+ 
+ 
+ 
+pontszáma egész 
+számra kerekítve 
+elért 
+programba  
+beírt 
+I. rész 
+  
+  
+II. rész 
+  
+  
+ 
+dátum 
+ 
+dátum 
+ 
+ 
+ 
+ 
+ 
+ 
+javító tanár 
+ 
+jegyző 
+ 

@@ -1,0 +1,1060 @@
+
+===== PAGE 1 =====
+ 
+Matematika 
+ 
+középszint — írásbeli vizsga 2211 
+ 
+ 
+I. összetevő 
+Név:  ...........................................................  osztály:...... 
+OKTATÁSI HIVATAL 
+MATEMATIKA 
+ 
+KÖZÉPSZINTŰ 
+ÍRÁSBELI VIZSGA 
+minden vizsgázó számára 
+2022. október 18. 8:00 
+I. 
+Időtartam: 45 perc 
+Pótlapok száma 
+Tisztázati 
+ 
+Piszkozati 
+ 
+ 
+É R E T T S É G I V I Z S G A • 2 0 2 2 . o k t ó b e r 1 8 . 
+
+===== PAGE 2 =====
+Matematika 
+középszint 
+2211 írásbeli vizsga, I. összetevő 
+2 / 8 
+2022. október 18. 
+Név:  ...........................................................  osztály:...... 
+Fontos tudnivalók 
+ 
+1. A feladatok megoldására 45 percet fordíthat, az idő leteltével a munkát be kell fejeznie. 
+ 
+ 
+2. A megoldások sorrendje tetszőleges. 
+ 
+ 
+3. A feladatok megoldásához szöveges adatok tárolására és megjelenítésére nem alkalmas 
+zsebszámológépet és bármilyen négyjegyű függvénytáblázatot használhat, más elektroikus 
+vagy írásos segédeszköz használata tilos! 
+ 
+ 
+4. A feladatok végeredményét az erre a célra szolgáló keretbe írja, a megoldást csak akkor 
+kell részleteznie, ha erre a feladat szövege utasítást ad! 
+ 
+ 
+5. A dolgozatot tollal írja, az ábrákat ceruzával is rajzolhatja. Az ábrákon kívül a ceruzával írt 
+részeket a javító tanár nem értékelheti. Ha valamilyen megoldást vagy megoldásrészletet 
+áthúz, akkor az nem értékelhető. 
+ 
+ 
+6. Minden feladatnak csak egy megoldása értékelhető. Több megoldási próbálkozás esetén 
+egyértelműen jelölje, hogy melyiket tartja érvényesnek! 
+ 
+ 
+7. Kérjük, hogy a szürkített téglalapokba semmit ne írjon! 
+ 
+ 
+ 
+
+===== PAGE 3 =====
+Matematika 
+középszint 
+2211 írásbeli vizsga, I. összetevő 
+3 / 8 
+2022. október 18. 
+Név:  ...........................................................  osztály:...... 
+ 
+1. 
+Adott a pozitív egész számok halmazának két részhalmaza: 
+A = {12-nél kisebb prímszámok},   
+B = {3-mal nem osztható egyjegyű számok}. 
+Elemei felsorolásával adja meg az A, a B, az A ∩ B és a B \ A halmazokat! 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+A = 
+1 pont 
+ 
+B = 
+1 pont 
+ 
+A ∩ B = 
+1 pont 
+ 
+B \ A = 
+1 pont 
+ 
+ 
+2. 
+Hány olyan háromjegyű pozitív egész szám van, melynek mindhárom számjegye 
+nagyobb 5-nél? 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+2 pont 
+ 
+ 
+3. 
+Adja meg n értékét úgy, hogy az alábbi egyenlőség igaz legyen! 
+ 
+7
+6
+3
+2
+2
+2
+2
+n
+⋅
+=
+ 
+ 
+ 
+ 
+ 
+n = 
+2 pont 
+ 
+ 
+
+===== PAGE 4 =====
+Matematika 
+középszint 
+2211 írásbeli vizsga, I. összetevő 
+4 / 8 
+2022. október 18. 
+Név:  ...........................................................  osztály:...... 
+ 
+4. 
+Egy 35 g tömegű csokoládészelet csomagolásán az olvasható, hogy 100 g termék  
+520 kcal energiát tartalmaz. Hány kcal energiát tartalmaz ez a csokoládészelet? 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+2 pont 
+ 
+ 
+5. 
+Az alábbi ábrán a [−3; 2] zárt intervallumon értelmezett 
+2
+(
+1)
+5
+x
+x
+−
++
++
+
+ függvény 
+grafikonja látható. Adja meg a függvény értékkészletét és maximumának helyét! 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Értékkészlet: 
+2 pont 
+ 
+A maximum helye: 
+1 pont 
+ 
+ 
+
+===== PAGE 5 =====
+Matematika 
+középszint 
+2211 írásbeli vizsga, I. összetevő 
+5 / 8 
+2022. október 18. 
+Név:  ...........................................................  osztály:...... 
+ 
+6. 
+Adja meg egy konvex nyolcszög átlóinak számát!  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+2 pont 
+ 
+ 
+7. 
+Adja meg x értékét három tizedesjegyre kerekítve, ha 10x = 30.  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+2 pont 
+ 
+ 
+8. 
+A valós számok halmazán értelmezett 
+5
+3
+x
+x −
+
+ függvény grafikonja a P pontban met-
+szi az x tengelyt. Adja meg a P pont első koordinátáját!  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+2 pont 
+ 
+ 
+
+===== PAGE 6 =====
+Matematika 
+középszint 
+2211 írásbeli vizsga, I. összetevő 
+6 / 8 
+2022. október 18. 
+Név:  ...........................................................  osztály:...... 
+ 
+9. 
+Rajzoljon egy olyan hatpontú gráfot, melyben két pontnak egyenlő a fokszáma, a többi 
+négy fokszám viszont ettől és egymástól is különbözik!  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+2 pont 
+ 
+ 
+10. Számítsa ki az alábbi háromszögben a 30°-os szöggel szemközti oldal hosszát! 
+Megoldását részletezze! 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+2 pont 
+ 
+ 
+1 pont 
+ 
+
+===== PAGE 7 =====
+Matematika 
+középszint 
+2211 írásbeli vizsga, I. összetevő 
+7 / 8 
+2022. október 18. 
+Név:  ...........................................................  osztály:...... 
+ 
+11. Egy minőségellenőr megszámolta hat gyufásdobozban a gyufaszálak számát. 
+A kapott adatokat az alábbi táblázat tartalmazza. 
+Számítsa ki az adatok átlagát és szórását! 
+ 
+doboz 
+első 
+második harmadik negyedik 
+ötödik 
+hatodik 
+szálak száma (db) 
+43 
+40 
+42 
+39 
+40 
+36 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Az átlag: 
+1 pont 
+ 
+A szórás: 
+2 pont 
+ 
+ 
+12. Egy szabályos dobókockával kétszer dobunk. Mennyi a valószínűsége annak, hogy a két 
+dobott szám szorzata 6 lesz? Megoldását részletezze! 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+2 pont 
+ 
+A valószínűség: 
+1 pont 
+ 
+ 
+
+===== PAGE 8 =====
+Matematika 
+középszint 
+2211 írásbeli vizsga, I. összetevő 
+8 / 8 
+2022. október 18. 
+Név:  ...........................................................  osztály:...... 
+ 
+ 
+ 
+pontszám 
+maximális 
+elért 
+I. rész 
+1. feladat 
+4 
+ 
+2. feladat 
+2 
+ 
+3. feladat 
+2 
+ 
+4. feladat 
+2 
+ 
+5. feladat 
+3 
+ 
+6. feladat 
+2 
+ 
+7. feladat 
+2 
+ 
+8. feladat 
+2 
+ 
+9. feladat 
+2 
+ 
+10. feladat 
+3 
+ 
+11. feladat 
+3 
+ 
+12. feladat 
+3 
+ 
+ 
+ÖSSZESEN 
+30 
+ 
+ 
+dátum 
+ 
+javító tanár 
+ 
+ __________________________________________________________________________  
+ 
+ 
+ 
+pontszáma egész 
+számra kerekítve 
+elért 
+programba  
+beírt 
+I. rész 
+  
+  
+ 
+dátum 
+ 
+dátum 
+ 
+ 
+ 
+ 
+ 
+ 
+javító tanár 
+ 
+jegyző 
+ 
+Megjegyzések: 
+1. Ha a vizsgázó a II. írásbeli összetevő megoldását elkezdte, akkor ez a táblázat és az aláírási rész 
+üresen marad! 
+2. Ha a vizsga az I. összetevő teljesítése közben megszakad, illetve nem folytatódik a II. összetevővel, 
+akkor ez a táblázat és az aláírási rész kitöltendő! 
+
+===== PAGE 9 =====
+ 
+Matematika 
+ 
+középszint — írásbeli vizsga 2211 
+ 
+ 
+II. összetevő 
+Név:  ...........................................................  osztály:...... 
+OKTATÁSI HIVATAL 
+MATEMATIKA 
+ 
+KÖZÉPSZINTŰ 
+ÍRÁSBELI VIZSGA 
+minden vizsgázó számára 
+2022. október 18. 8:00 
+II. 
+Időtartam: 135 perc 
+Pótlapok száma 
+Tisztázati 
+ 
+Piszkozati 
+ 
+ 
+ 
+ 
+ 
+É R E T T S É G I V I Z S G A • 2 0 2 2 . o k t ó b e r 1 8 . 
+
+===== PAGE 10 =====
+Matematika 
+középszint 
+2211 írásbeli vizsga, II. összetevő 
+2 / 16 
+2022. október 18. 
+Név:  ...........................................................  osztály:...... 
+ 
+ 
+
+===== PAGE 11 =====
+Matematika 
+középszint 
+2211 írásbeli vizsga, II. összetevő 
+3 / 16 
+2022. október 18. 
+Név:  ...........................................................  osztály:...... 
+ 
+Fontos tudnivalók 
+ 
+1. A feladatok megoldására 135 percet fordíthat, az idő leteltével a munkát be kell fejeznie. 
+ 
+2. A feladatok megoldási sorrendje tetszőleges. 
+ 
+3. A B részben kitűzött három feladat közül csak kettőt kell megoldania. A nem választott 
+feladat sorszámát írja be a dolgozat befejezésekor az alábbi négyzetbe! Ha a javító 
+tanár számára nem derül ki egyértelműen, hogy melyik feladat értékelését nem kéri, akkor 
+a kitűzött sorrend szerinti legutolsó feladatra nem kap pontot. 
+ 
+ 
+ 
+4. A feladatok megoldásához szöveges adatok tárolására és megjelenítésére nem alkalmas 
+zsebszámológépet és bármilyen négyjegyű függvénytáblázatot használhat, más elektroni-
+kus vagy írásos segédeszköz használata tilos! 
+ 
+5. A megoldások gondolatmenetét minden esetben írja le, mert a feladatra adható pont-
+szám jelentős része erre jár! 
+ 
+6. Ügyeljen arra, hogy a lényegesebb részszámítások is nyomon követhetők legyenek! 
+ 
+7. A gondolatmenet kifejtése során a zsebszámológép használata – további matematikai 
+indoklás nélkül – a következő műveletek elvégzésére fogadható el: összeadás, kivonás, 
+szorzás, osztás, hatványozás, gyökvonás, n!, 
+
+
+
+
+
+
+k
+n kiszámítása, a függvénytáblázatban fel-
+lelhető táblázatok helyettesítése (sin, cos, tg, log és ezek inverzei), a π és az e szám közelítő 
+értékének megadása, nullára rendezett másodfokú egyenlet gyökeinek meghatározása. To-
+vábbi matematikai indoklás nélkül használhatók a számológépek bizonyos statisztikai mu-
+tatók kiszámítására (átlag, szórás) abban az esetben, ha a feladat szövege kifejezetten nem 
+követeli meg az ezzel kapcsolatos részletszámítások bemutatását is. Egyéb esetekben a 
+géppel elvégzett számítások indoklás nélküli lépéseknek számítanak, azokért nem jár 
+pont. 
+ 
+8. A feladatok megoldásánál használt tételek közül az iskolában tanult, névvel ellátott tételeket 
+(pl. Pitagorasz-tétel, magasságtétel) nem kell pontosan megfogalmazva kimondania, elég 
+csak a tétel megnevezését említenie, de alkalmazhatóságát röviden indokolnia kell. 
+ 
+9. A feladatok végeredményét (a feltett kérdésre adandó választ) szöveges megfogalmazásban 
+is közölje! 
+ 
+10. A dolgozatot tollal írja, az ábrákat ceruzával is rajzolhatja. Az ábrákon kívül a ceruzával írt 
+részeket a javító tanár nem értékelheti. Ha valamilyen megoldást vagy megoldásrészletet 
+áthúz, akkor az nem értékelhető. 
+ 
+11. Minden feladatnak csak egy megoldása értékelhető. Több megoldási próbálkozás esetén 
+egyértelműen jelölje, hogy melyiket tartja érvényesnek! 
+ 
+12. Kérjük, hogy a szürkített téglalapokba semmit ne írjon! 
+ 
+ 
+
+===== PAGE 12 =====
+Matematika 
+középszint 
+2211 írásbeli vizsga, II. összetevő 
+4 / 16 
+2022. október 18. 
+Név:  ...........................................................  osztály:...... 
+ 
+A 
+ 
+13. 
+a) Oldja meg az alábbi egyenletet a valós számok halmazán! 
+ 
+1
+8
+2
+3
+x
+x −
++
+=
+ 
+ 
+b) Két egymást követő egész szám négyzetének összege 10 513. 
+ 
+Melyik ez a két szám? 
+ 
+ 
+a) 
+4 pont 
+ 
+b) 
+8 pont 
+ 
+Ö.: 
+12 pont 
+ 
+
+===== PAGE 13 =====
+Matematika 
+középszint 
+2211 írásbeli vizsga, II. összetevő 
+5 / 16 
+2022. október 18. 
+Név:  ...........................................................  osztály:...... 
+ 
+ 
+ 
+
+===== PAGE 14 =====
+Matematika 
+középszint 
+2211 írásbeli vizsga, II. összetevő 
+6 / 16 
+2022. október 18. 
+Név:  ...........................................................  osztály:...... 
+ 
+14.  A képen látható lépcsőkorlát egy részletének oldalnézete paralelogramma alakú. A para-
+lelogramma függőleges oldalai 80 cm hosszúak, távolságuk 115 cm. A másik két oldal 
+hossza 125 cm. (Az ábra jelöléseit használjuk.) 
+ 
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+a) A ϕ szög a paralelogramma alsó oldalának a vízszintessel bezárt szöge. 
+Számítással igazolja, hogy (egész fokra kerekítve) ϕ = 23°! 
+ 
+b) Számítsa ki a paralelogramma e átlójának hosszát! 
+ 
+c) A lépcsőkorlátra szélfogót szerelnek nádszövetből. Mekkora területű nádszövettel le-
+het a paralelogramma alakú részt lefedni? Igaz-e, hogy a felszerelt nádszövet területe 
+kisebb 1 m2-nél?  
+ 
+ 
+  
+ 
+ 
+a) 
+3 pont 
+ 
+b) 
+4 pont 
+ 
+c) 
+3 pont 
+ 
+Ö.: 
+10 pont 
+ 
+
+===== PAGE 15 =====
+Matematika 
+középszint 
+2211 írásbeli vizsga, II. összetevő 
+7 / 16 
+2022. október 18. 
+Név:  ...........................................................  osztály:...... 
+ 
+ 
+
+===== PAGE 16 =====
+Matematika 
+középszint 
+2211 írásbeli vizsga, II. összetevő 
+8 / 16 
+2022. október 18. 
+Név:  ...........................................................  osztály:...... 
+ 
+15.  Most induló kisvállalkozásához András üzleti tervet készít. Tervei szerint az első félévben 
+minden hónapban 300 000 Ft lesz a havi árbevétele. Arra számít, hogy a 7. hónaptól 
+kezdve egészen a második év végéig minden hónapban az előző hónaphoz képest 5%-os 
+havi árbevétel-növekedést ér majd el. 
+ 
+a) A terv szerint mennyi lesz András havi árbevétele a 24. hónapban, és mennyi  
+összesen a két év alatt? Válaszait tízezer forintra kerekítve adja meg! 
+ 
+András és négy barátja: Balázs, Cili, Dóra és Endre egy ötszemélyes autóval utaznak a 
+Balatonhoz (elöl ketten, hátul hárman ülnek). Jogosítványa csak Andrásnak és Dórának 
+van, így csak ők vezethetik az autót. 
+ 
+b) Hányféle ülésrendben utazhat az autóval az öt fiatal, ha András mindenképpen Cili 
+mellett ül?  
+(Az a két ember, aki elöl ül, egymás mellett ül. Két ülésrend különböző, ha van olyan 
+ember, aki az egyik ülésrendben máshol ül, mint a másikban.) 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+a) 
+9 pont 
+ 
+b) 
+5 pont 
+ 
+Ö.: 
+14 pont 
+ 
+
+===== PAGE 17 =====
+Matematika 
+középszint 
+2211 írásbeli vizsga, II. összetevő 
+9 / 16 
+2022. október 18. 
+Név:  ...........................................................  osztály:...... 
+ 
+ 
+
+===== PAGE 18 =====
+Matematika 
+középszint 
+2211 írásbeli vizsga, II. összetevő 
+10 / 16 
+2022. október 18. 
+Név:  ...........................................................  osztály:...... 
+ 
+B 
+ 
+A 16-18. feladatok közül tetszése szerint választott kettőt kell megoldania.  
+A kihagyott feladat sorszámát írja be a 3. oldalon lévő üres négyzetbe! 
+ 
+16. Az alábbi táblázatban egy végzős osztály emelt szintű matematikacsoportjának idei pró-
+baérettségi eredményei láthatók. A dolgozattal legfeljebb 115 pontot lehetett szerezni; 
+60%-tól jeles (5), 47%-tól jó (4), 33%-tól közepes (3) és 25%-tól elégséges (2) osztály-
+zatot lehetett elérni. Az alábbi táblázatba már beírták a szerzett pontszámokat, de a jegye-
+ket még nem mindenkihez.  
+ 
+ 
+Anna 
+Béla 
+Cili 
+Dezső 
+Egon 
+Fruzsi 
+Géza 
+Huba 
+Imre 
+eredmény 
+(pont) 
+103 
+61 
+68 
+72 
+97 
+55 
+37 
+39 
+75 
+osztályzat 
+5 
+ 
+4 
+5 
+5 
+ 
+ 
+ 
+5 
+ 
+a) A fenti adatok alapján egészítse ki a tábláza-
+tot a hiányzó osztályzatokkal, és készítsen 
+kördiagramot a matematikacsoport osztály-
+zatainak eloszlásáról!  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+A 33 fős osztály az utolsó tanévben három osztályprogramot szervezett: színházba,  
+moziba, illetve kirándulni mentek. Mindenki részt vett legalább az egyik programon. 
+Színházban és moziban is volt 13 fő, színházban és kirándulni is volt 12 fő, moziban és 
+kirándulni is volt 10 fő. 4 olyan diák volt, aki csak egyetlen programon vett részt. 
+ 
+b) Hányan voltak ott mindhárom osztályprogramon?   
+ 
+A színház 15 soros nézőterén a második sortól kezdve minden sorban ugyanannyival több 
+szék van, mint az előző sorban. A hatodik sorban 26 szék, a tizedik sorban 34 szék van. 
+ 
+c) Hány szék van összesen a nézőtéren? 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+a) 
+5 pont 
+ 
+b) 
+7 pont 
+ 
+c) 
+5 pont 
+ 
+Ö.: 
+17 pont 
+ 
+
+===== PAGE 19 =====
+Matematika 
+középszint 
+2211 írásbeli vizsga, II. összetevő 
+11 / 16 
+2022. október 18. 
+Név:  ...........................................................  osztály:...... 
+ 
+ 
+ 
+
+===== PAGE 20 =====
+Matematika 
+középszint 
+2211 írásbeli vizsga, II. összetevő 
+12 / 16 
+2022. október 18. 
+Név:  ...........................................................  osztály:...... 
+ 
+A 16-18. feladatok közül tetszése szerint választott kettőt kell megoldania.  
+A kihagyott feladat sorszámát írja be a 3. oldalon lévő üres négyzetbe! 
+ 
+17. A ceruzagyártás folyamatának egyik eleme a ceruzabél készítése. A grafitból, agyagból 
+és koromból álló masszából egy gép először 20 cm átmérőjű, 25 cm magas hengereket 
+présel. A még képlékeny állapotú hengerekből – hulladék keletkezése nélkül – készül a  
+2 mm átmérőjű hengeres ceruzabélszál.  
+ 
+a) Összesen hány méter hosszú ceruzabélszál készül egy hengerből? 
+ 
+Egy ceruzagyárban jelenleg az ott dolgozó nők és férfiak aránya 3 : 2. Ha felvennének 
+még 5 nőt és 6 férfit, akkor ez az arány 4 : 3-ra módosulna.  
+ 
+b) Hány nő és hány férfi dolgozik jelenleg a gyárban? 
+ 
+Ha egy ceruza leesik az asztalról, akkor 0,2 a valószínűsége annak, hogy kitörik a hegye.  
+Ervin macskája lesodor egy ceruzakészletet az asztalról, így a ceruzák sorban leesnek a 
+földre. 
+ 
+c) Mennyi a valószínűsége annak, hogy a 12 leeső ceruzából legfeljebb egy ceruzának 
+törik ki a hegye?  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+a) 
+6 pont 
+ 
+b) 
+6 pont 
+ 
+c) 
+5 pont 
+ 
+Ö.: 
+17 pont 
+ 
+
+===== PAGE 21 =====
+Matematika 
+középszint 
+2211 írásbeli vizsga, II. összetevő 
+13 / 16 
+2022. október 18. 
+Név:  ...........................................................  osztály:...... 
+ 
+ 
+ 
+
+===== PAGE 22 =====
+Matematika 
+középszint 
+2211 írásbeli vizsga, II. összetevő 
+14 / 16 
+2022. október 18. 
+Név:  ...........................................................  osztály:...... 
+ 
+A 16-18. feladatok közül tetszése szerint választott kettőt kell megoldania.  
+A kihagyott feladat sorszámát írja be a 3. oldalon lévő üres négyzetbe! 
+ 
+18. Az asztalon összesen 36 darab színes papír sokszög van, egy részük háromszög alakú, a 
+többi négyszög alakú. Mindegyik vagy piros, vagy kék színű. 24 sokszög piros, 27 pedig 
+háromszög alakú. Kék négyszögből 5 darab van.  
+ 
+a) Hány piros háromszög van az asztalon? 
+ 
+A 36 sokszögből véletlenszerűen kiválasztunk kettőt (visszatevés nélkül).  
+ 
+b) Mennyi a valószínűsége annak, hogy mindkét választott sokszög háromszög? 
+ 
+Adott egy háromszög három csúcsa a koordinátasíkon: A(1; 2), B(5; 0) és C(6; 7).  
+ 
+c) Igazolja, hogy az ABC háromszög egyenlő szárú! 
+ 
+d) Határozza meg az ABC háromszög területét! 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+a) 
+4 pont 
+ 
+b) 
+4 pont 
+ 
+c) 
+3 pont 
+ 
+d) 
+6 pont 
+ 
+Ö.: 
+17 pont 
+ 
+
+===== PAGE 23 =====
+Matematika 
+középszint 
+2211 írásbeli vizsga, II. összetevő 
+15 / 16 
+2022. október 18. 
+Név:  ...........................................................  osztály:...... 
+ 
+ 
+ 
+ 
+
+===== PAGE 24 =====
+Matematika 
+középszint 
+2211 írásbeli vizsga, II. összetevő 
+16 / 16 
+2022. október 18. 
+Név:  ...........................................................  osztály:...... 
+ 
+ 
+ 
+a feladat 
+sorszáma 
+pontszám 
+maximális 
+elért 
+összesen 
+II. A rész 
+13. 
+12 
+ 
+ 
+14. 
+10 
+ 
+15. 
+14 
+ 
+II. B rész 
+ 
+17 
+ 
+ 
+ 
+17 
+ 
+ 
+← nem választott feladat 
+ ÖSSZESEN 
+70 
+ 
+ 
+ 
+ 
+pontszám 
+maximális 
+elért 
+I. rész 
+30 
+ 
+II. rész 
+70 
+ 
+Az írásbeli vizsgarész pontszáma 
+100 
+ 
+ 
+dátum 
+ 
+javító tanár 
+ 
+ __________________________________________________________________________  
+ 
+ 
+ 
+pontszáma egész 
+számra kerekítve 
+elért 
+programba  
+beírt 
+I. rész 
+  
+  
+II. rész 
+  
+  
+ 
+dátum 
+ 
+dátum 
+ 
+ 
+ 
+ 
+ 
+ 
+javító tanár 
+ 
+jegyző 
+ 

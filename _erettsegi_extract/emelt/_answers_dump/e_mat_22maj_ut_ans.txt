@@ -1,0 +1,455 @@
+--- line 177 ---
+1 pont  
+Az első eset nem lehetséges (mert 3x > 0), 
+1 pont  
+a második esetből pedig x = –1 adódik. 
+1 pont  
+Ellenőrzés behelyettesítéssel vagy ekvivalens átalakí-
+tásokra való hivatkozással. 
+1 pont  
+Összesen: 
+6 pont  
+
+--- line 239 ---
+12
+x
+k
+π
+=
++
+⋅π , k ∈ Z. 
+2 pont  
+Összesen: 
+5 pont  
+
+--- line 281 ---
+ 
+2 pont  
+n1 = 56 (ami valóban megoldása a feladatnak), 
+1 pont  
+n2 (= 58,3
+−
+) < 0, ami nem megoldás. 
+1 pont  
+Összesen: 
+5 pont  
+
+--- line 366 ---
+=
+
+
+
+
+, 
+illetve (–2) + 8 = 6 és (–32) + 128 = 96. 
+1 pont  
+Összesen: 
+8 pont  
+
+--- line 530 ---
+=
+
+
+
+
+, 
+illetve (–2) + 8 = 6 és (–32) + 128 = 96. 
+1 pont  
+Összesen: 
+8 pont  
+
+--- line 557 ---
+ha egyik férfi sem szemüveges. 
+1 pont 
+ 
+Legalább (31 – 16 =) 15 nem szemüveges férfi van, 
+1 pont*  
+ha minden szemüveges lakó férfi. 
+1 pont* 
+ 
+Összesen: 
+5 pont  
+
+--- line 633 ---
+⋅
+°
+=
+ ≈ 46,2 (m2). 
+1 pont*  
+A locsolásból kimaradó füvesített terület nagysága: 
+T1 – (T2 + T3) = 75 – 65,9 = 9,1 m2. 
+1 pont*  
+Összesen: 
+8 pont  
+
+--- line 770 ---
+1 pont 
+14
+3
+=
+ ≈ 1,25 (gramm). 
+1 pont  
+A készlet nem hitelesíthető. 
+1 pont  
+Összesen: 
+5 pont  
+
+--- line 810 ---
+8
+1
+45
+15
+−
+=
+ ≈ 0,533. 
+1 pont  
+Összesen: 
+4 pont  
+
+--- line 900 ---
+8
+45
+45
+15
++
+=
+ ≈ 0,533. 
+1 pont  
+Összesen: 
+4 pont  
+
+--- line 940 ---
+0,189
+( )
+0,657
+P AB
+P B
+=
+ ≈ 0,288 
+1 pont  
+Összesen: 
+5 pont  
+
+--- line 956 ---
+Ezek közül 3 ∙ 32
+ ∙ 7 = 189 esetben van 2 piros golyó 
+(kedvező esetek száma). 
+2 pont  
+Tehát a keresett valószínűség 189
+657
+ ≈ 0,288. 
+1 pont  
+Összesen: 
+5 pont  
+
+--- line 992 ---
+(Egy mogyorókrémes palacsinta 270 Ft-ba, egy túrós 
+210 Ft-ba, egy fahéjas pedig 240 Ft-ba kerül.) 
+2 pont  
+Ellenőrzés a szöveg alapján: 
+3 ∙ 270 + 210 + 2 ∙ 240 = 1500, 
+4 ∙ 270 + 2 ∙ 210 + 240 = 1740, 
+270 + 2 ∙ 210 + 2 ∙ 240 = 1170 valóban. 
+1 pont  
+Összesen: 
+8 pont  
+
+--- line 1018 ---
+ha pedig 3 db 50 Ft-os volt, akkor a maradék 60 Ft-ot 
+20-20-20 összeállításban tudja 3 db érmével kifi-
+zetni. 
+1 pont  
+Háromnál kevesebb 50 Ft-os esetén legfeljebb 
+180 Ft-ot tudna kifizetni. Tehát valóban 3 különböző 
+lehetőség van. 
+1 pont  
+Összesen: 
+5 pont  
+
+--- line 1156 ---
+a harmadik esetben 6
+3
+
+
+
+ 
+különböző sorrend lehet-
+séges. 
+Összesen 180 + 15 + 20 = 215 sorrend lehetséges. 
+1 pont  
+
+--- line 1158 ---
+
+
+
+ 
+különböző sorrend lehet-
+séges. 
+Összesen 180 + 15 + 20 = 215 sorrend lehetséges. 
+1 pont  
+Összesen: 
+3 pont  
+
+--- line 1197 ---
+1 pont  
+Három tizedesjegyre kerekítve a háromszög szögei 
+59,995°, 59,995° és 60,010°. (Tehát Gézának nincs 
+igaza, a háromszög nem szabályos.) 
+1 pont 
+Ez a pont nem jár, ha a 
+vizsgázó nem kerekít, 
+vagy rosszul kerekít. 
+Összesen: 
+5 pont  
+
+--- line 1245 ---
+1 pont  
+Három tizedesjegyre kerekítve a háromszög szögei 
+59,995°, 59,995° és 60,010°. (Tehát Gézának nincs 
+igaza, a háromszög nem szabályos.) 
+1 pont 
+Ez a pont nem jár, ha a 
+vizsgázó nem kerekít, 
+vagy rosszul kerekít. 
+Összesen: 
+5 pont  
+
+--- line 1263 ---
+AB =
+ (≈ 0,999851). 
+1 pont  
+Négy tizedesjegyre kerekítve az arány 0,9999. 
+1 pont 
+Ez a pont nem jár, ha a 
+vizsgázó nem kerekít, 
+vagy rosszul kerekít. 
+Összesen: 
+3 pont  
+
+--- line 1325 ---
+⋅π =
+π (≈ 3041) (cm3). 
+1 pont  
+Ez a pontos értéknek (3041 : 3116 ≈) 0,976-szerese, 
+azaz 97,6%-a. 
+1 pont 968π : 992π ≈ 0,976 
+A relatív hiba tehát – 2,4%. 
+1 pont A 2,4% is elfogadható. 
+Összesen: 
+8 pont  
+
+--- line 1413 ---
+
+ ≈ 
+1 pont  
+≈ 0,976, azaz a henger térfogata a csonkakúp térfoga-
+tának 97,6%-a. 
+1 pont  
+A relatív hiba tehát – 2,4%. 
+1 pont A 2,4% is elfogadható. 
+Összesen: 
+8 pont  
+
+--- line 1427 ---
+===== PAGE 14 =====
+Matematika — emelt szint 
+Javítási-értékelési útmutató 
+2213 írásbeli vizsga 
+14 / 18 
+2022. május 3. 
+ 
+7. a) első megoldás 
+Összesen 450 + 400 + 500 = 1350 gramm lisztből 
+sütött kenyeret Flóra. 
+
+--- line 1442 ---
+9
+⋅
+=
+gramm búzaliszt kell. 
+1 pont  
+Tehát a hozzáadott lisztből (750 – 450 =) 300 gramm 
+volt a búzaliszt. 
+1 pont  
+Összesen: 
+3 pont  
+
+--- line 1468 ---
+−
+. 
+1 pont  
+1800 + 4x = 4500 – 5x 
+1 pont  
+x = 300 (Tehát a hozzáadott lisztből 300 gramm volt 
+a búzaliszt.) 
+1 pont  
+Összesen: 
+3 pont  
+
+--- line 1493 ---
+
+
+
+250 gramm a búzaliszt mennyisége. 
+1 pont  
+Tehát a hozzáadott lisztből (50 + 250 =) 300 gramm 
+volt a búzaliszt. 
+1 pont  
+Összesen: 
+3 pont  
+
+--- line 1509 ---
+(x – 3)(1,5 – x) > 0. 
+1 pont  
+Ez akkor teljesül, ha a két tényező azonos előjelű. 
+A két tényező egyszerre nem lehet pozitív. 
+Mindkettő negatív, ha 1,5 < x < 3. 
+(Ezzel az állítást beláttuk.) 
+2 pont 
+ 
+Összesen: 
+4 pont  
+
+--- line 1635 ---
+⋅−
+⋅−
+ ≈ 2,51. 
+1 pont  
+A legnagyobb elérhető napi nyereség tehát körülbelül 
+25 100 tallér, ami kb. 2,46 tonna liszt előállításával 
+és eladásával érhető el. 
+1 pont  
+Összesen: 
+9 pont  
+
+--- line 1649 ---
+2
+=
+
+
+, 
+1 pont  
+egy lány és egy fiú között 5 ∙ 7 = 35 ölelés volt. 
+1 pont  
+Összesen (10 + 35 =) 45 találkozásnál volt ölelés. 
+1 pont  
+
+--- line 1651 ---
+
+
+, 
+1 pont  
+egy lány és egy fiú között 5 ∙ 7 = 35 ölelés volt. 
+1 pont  
+Összesen (10 + 35 =) 45 találkozásnál volt ölelés. 
+1 pont  
+Összesen: 
+3 pont  
+
+--- line 1655 ---
+egy lány és egy fiú között 5 ∙ 7 = 35 ölelés volt. 
+1 pont  
+Összesen (10 + 35 =) 45 találkozásnál volt ölelés. 
+1 pont  
+Összesen: 
+3 pont  
+ 
+8. a) második megoldás 
+Összesen 12
+66
+
+--- line 1676 ---
+2
+=
+
+
+ volt kézfogás. 
+1 pont  
+Tehát (66 – 21 =) 45 találkozásnál volt ölelés. 
+1 pont  
+Összesen: 
+3 pont  
+
+--- line 1720 ---
+1 pont és a CE él nem létezik. 
+ 
+ 
+Így a D-ből induló 3 él DB, DC és 
+DE. A DF él tehát nem létezik: 
+Dóra nem játszott még Fanni ellen.  
+1 pont Ez csak úgy lehetséges, 
+hogy a DF él sem létezik. 
+Összesen: 
+7 pont  
+
+--- line 1741 ---
+A másik hiányzó él nem indulhat sem C-ből, sem 
+E-ből, mert akkor annak a pontnak a fokszáma 2 
+lenne (tehát páros), sem B-ből, mert akkor ennek a 
+fokszáma 4 lenne (tehát páros). 
+2 pont  
+A másik nem behúzott él ezért csak a DF lehet, 
+azaz Dóra nem játszott még Fanni ellen. 
+1 pont  
+Összesen: 
+7 pont  
+
+--- line 1791 ---
+1 12
+77
+216
+216
++ +
+=
+ (≈ 0,356). 
+1 pont  
+Összesen: 
+6 pont  
+
+--- line 1813 ---
+1 pont  
+Ez tehát egy „lefelé nyíló” parabola, melynek para-
+métere p = 1, tengelypontja pedig a (0; 8) pont. 
+1 pont  
+A parabola fókuszpontja ezért a (0; 7,5) pont. 
+1 pont  
+A kör középpontja a C(0; 3) pont. 
+1 pont  
+Összesen: 
+4 pont  
+
+--- line 1903 ---
+Ennek az egyenletnek egy megoldása van (
+2 2)
+x =
+, 
+ezért a kör érintőjének egy közös pontja van a para-
+bolával (és nem párhuzamos az y tengellyel), tehát 
+érinti a parabolát is. 
+1 pont  
+Összesen: 
+7 pont  
+
+--- line 1998 ---
+12
+y
+x
+= −
++
+. 
+A két görbének tehát valóban közös a Q-beli érintője. 
+1 pont  
+Összesen: 
+7 pont  
+
+--- line 2086 ---
+
+ 
+1 pont  
+128
+3
+=
+. 
+1 pont  
+Összesen: 
+5 pont  

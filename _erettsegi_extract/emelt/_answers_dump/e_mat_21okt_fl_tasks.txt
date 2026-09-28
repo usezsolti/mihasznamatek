@@ -1,0 +1,97 @@
+29: 2021. október 19. 8:00 
+44: 2021. október 19. 
+70: 2021. október 19. 
+90: 1. A feladatok megoldására 240 perc fordítható, az idő leteltével a munkát be kell fejeznie. 
+92: 2. A feladatok megoldási sorrendje tetszőleges. 
+94: 3. A II. részben kitűzött öt feladat közül csak négyet kell megoldania. A nem választott fel-
+101: 4. A feladatok megoldásához szöveges adatok tárolására és megjelenítésére nem alkalmas 
+105: 5. A megoldások gondolatmenetét minden esetben írja le, mert a feladatra adható pont-
+108: 6. Ügyeljen arra, hogy a lényegesebb részszámítások is nyomon követhetők legyenek! 
+110: 7. A gondolatmenet kifejtése során a zsebszámológép használata – további matematikai 
+128: 8. A feladatok megoldásánál használt tételek közül az iskolában tanult, névvel ellátott tételeket 
+135: 9. A feladatok végeredményét (a feltett kérdésre adandó választ) szöveges megfogalmazásban 
+138: 10. A dolgozatot tollal írja, de az ábrákat ceruzával is rajzolhatja. Az ábrákon kívül a ceruzával 
+142: 11. Minden feladatnak csak egy megoldása értékelhető. Több megoldási próbálkozás esetén 
+145: 12. Kérjük, hogy a szürkített téglalapokba semmit ne írjon! 
+154: 2021. október 19. 
+175: 1. 
+176: a) Oldja meg az alábbi egyenletet a valós számok halmazán! 
+203: b) Adja meg az állítás logikai értékét (igaz vagy hamis)! Válaszát indokolja! 
+205: c) Fogalmazza meg az állítás megfordítását! Igaz-e az állítás megfordítása? Válaszát 
+208: a) 
+211: b) 
+214: c) 
+230: 2021. október 19. 
+256: 2021. október 19. 
+275: 2. 
+284: a) Számítsa ki a városi autózás után a hátralévő távolságot! 
+291: b) Mennyi volt az autó 100 km-re vonatkozó átlagfogyasztása a kirándulás során? 
+293: a) 
+296: b) 
+311: 2021. október 19. 
+337: 2021. október 19. 
+356: 3. 
+357: a) Hány olyan pozitív háromjegyű szám van a tízes számrendszerben, amely a 8 és a 9 
+360: b) A 8-as számrendszerben háromjegyű pozitív egész számok közül véletlenszerűen 
+364: a) 
+367: b) 
+381: 2021. október 19. 
+407: 2021. október 19. 
+426: 4. 
+440: a) Jut-e mindenkinek különböző belépőkártya? 
+447: b) Milyen hosszú a CD kerítés?  
+453: c) Mennyi a magyar résztvevők életkorának átlaga?  
+455: a) 
+458: b) 
+461: c) 
+476: 2021. október 19. 
+502: 2021. október 19. 
+526: 5. 
+575: a) Számítsa ki az (an) sorozat első öt tagjából álló számsokaság átlagát és szórását! 
+577: b) A fenti (an) sorozatból képezzük a (bn) sorozatot: 
+593: c) Határozza meg n értékét! 
+595: a) 
+598: b) 
+601: c) 
+615: 2021. október 19. 
+641: 2021. október 19. 
+663: 6. 
+667: a) Egy egyenlő szárú háromszög alapja 18 cm hosszú. Mekkora lehet a szára, ha az 
+673: b) Hány olyan 1000-nél kisebb pozitív egész szám van, amellyel az 1 2 3 4 5 6
+677: a) 
+680: b) 
+696: 2021. október 19. 
+723: 2021. október 19. 
+745: 7. 
+756: a) Határozza meg az R(4; 2) és az S(4; 5) pontok füg-
+791: b) Adja meg az m értékét úgy, hogy az y = mx egyenletű (origón átmenő) egyenes a 
+808: c) Mekkora a g és h által közbezárt korlátos alakzat területe? 
+810: a) 
+813: b) 
+816: c) 
+831: 2021. október 19. 
+857: 2021. október 19. 
+879: 8. 
+884: a) Igazolja, hogy (színezés szerint) összesen 8-féle kocka van, ha a forgatással egy-
+887: b) Dórinak 7 különböző színezésű kockája van, így már csak egy hiányzik a teljes kész-
+896: c) Számítsa ki az ABG háromszög beírt körének sugarát! 
+900: a) 
+903: b) 
+906: c) 
+921: 2021. október 19. 
+947: 2021. október 19. 
+969: 9. 
+975: a) Igazolja, hogy az így kapott gyertya alapkörének sugara legalább 
+984: b) Igazolja, hogy az m cm magasságú torta térfogata 
+992: c) Igazolja, hogy a védőbúra alatt (a fent leírt módon) elhelyezhető maximális térfogatú 
+995: a) 
+998: b) 
+1001: c) 
+1015: 2021. október 19. 
+1041: 2021. október 19. 
+1067: 2021. október 19. 
+1119: 2021. október 19. 
+1148: 1. 
+1153: 2. 
+1156: 3. 
+1159: 4. 

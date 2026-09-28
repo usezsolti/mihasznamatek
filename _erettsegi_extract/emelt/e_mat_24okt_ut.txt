@@ -1,0 +1,2594 @@
+
+===== PAGE 1 =====
+ 
+Javítási-értékelési útmutató 
+Matematika 
+ 
+Nat2020 
+E2413 
+OKTATÁSI HIVATAL 
+MATEMATIKA 
+ 
+EMELT SZINTŰ 
+ÍRÁSBELI VIZSGA 
+JAVÍTÁSI-ÉRTÉKELÉSI 
+ÚTMUTATÓ 
+ 
+É R E T T S É G I V I Z S G A • 2 0 2 4 . o k t ó b e r 1 5 . 
+
+===== PAGE 2 =====
+ 
+Javítási-értékelési útmutató 
+Matematika 
+2 / 18 
+emelt szintű írásbeli vizsga 
+E2413 
+ 
+2024. október 15. 
+Fontos tudnivalók 
+ 
+ 
+Formai előírások: 
+ 
+1. Kérjük, hogy a dolgozatot a vizsgázó által használt színűtől eltérő színű tollal, olvas-
+hatóan javítsa ki. 
+2. A feladatok mellett található szürke téglalapok közül az elsőben a feladatra adható ma-
+ximális pontszám van, a javító által adott pontszám a mellette levő téglalapba 
+kerüljön. 
+3. Kifogástalan megoldás esetén kérjük, hogy a maximális pontszám feltüntetése mellett 
+kipipálással jelezze, hogy az adott gondolati egységet látta, és jónak minősítette. 
+4. Hiányos/hibás megoldás esetén kérjük, hogy a hiba jelzése mellett az egyes részpont-
+számokat is írja rá a dolgozatra. Ha a dolgozat javítását jobban követhetővé teszi, akkor 
+a vizsgázó által elvesztett részpontszámok jelzése is elfogadható. Ne maradjon olyan 
+részlet a megoldásban, amelyről a javítás után nem nyilvánvaló, hogy helyes, hibás vagy 
+fölösleges. 
+5. A javítás során alkalmazza az alábbi jelöléseket. 
+ helyes lépés: kipipálás 
+ elvi hiba: kétszeres aláhúzás 
+ számolási hiba vagy más, nem elvi hiba: egyszeres aláhúzás 
+ rossz kiinduló adattal végzett helyes lépés: szaggatott vagy áthúzott kipipálás 
+ hiányos indoklás, hiányos felsorolás vagy más hiány: hiányjel 
+ nem érthető rész: kérdőjel és/vagy hullámvonal 
+6. Az ábrán kívül ceruzával írt részeket ne értékelje. 
+ 
+Tartalmi kérések: 
+ 
+1. Egyes feladatoknál több megoldás pontozását is megadtuk. Amennyiben azoktól eltérő 
+megoldás születik, keresse meg ezen megoldásoknak az útmutató egyes részleteivel 
+egyenértékű részeit, és ennek alapján pontozzon. 
+2. A pontozási útmutató pontjai tovább bonthatók, hacsak az útmutató másképp nem 
+rendelkezik. Az adható pontszámok azonban csak egész pontok lehetnek. 
+3. Ha a megoldásban számolási hiba, pontatlanság van, akkor csak arra a részre nem jár 
+pont, ahol a tanuló a hibát elkövette. Ha a hibás részeredménnyel helyes gondolatmenet 
+alapján tovább dolgozik, és a megoldandó probléma lényegében nem változik meg, ak-
+kor a következő részpontszámokat meg kell adni. 
+4. Elvi hibát követően egy gondolati egységen belül (ezeket az útmutatóban kettős vonal 
+jelzi) a formálisan helyes matematikai lépésekre sem jár pont. Ha azonban a tanuló  
+az elvi hibával kapott rossz eredménnyel – mint kiinduló adattal – helyesen számol to-
+vább a következő gondolati egységekben vagy részkérdésekben, akkor ezekre a részekre 
+kapja meg a maximális pontot, ha a megoldandó probléma lényegében nem változott 
+meg. 
+5. Ha az útmutatóban egy megjegyzés zárójelben szerepel, akkor ennek hiánya esetén is 
+teljes értékű a megoldás. 
+
+===== PAGE 3 =====
+ 
+Javítási-értékelési útmutató 
+Matematika 
+3 / 18 
+emelt szintű írásbeli vizsga 
+E2413 
+ 
+2024. október 15. 
+ 
+6. Mértékegység hiánya esetén csak akkor jár pontlevonás, ha a hiányzó mértékegység 
+válaszban vagy mértékegység-átváltásban szerepel (zárójel nélkül). 
+7. Egy feladatra adott többféle megoldási próbálkozás közül a vizsgázó által megjelölt 
+változat értékelhető. A javítás során egyértelműen jelezze, hogy melyik változatot ér-
+tékelte, és melyiket nem. 
+8. A megoldásokért jutalompont (az adott feladatra vagy feladatrészre előírt maximális 
+pontszámot meghaladó pont) nem adható. 
+9. Egy feladatra vagy részfeladatra adott összpontszám nem lehet negatív. 
+10. Az olyan részszámításokért, részlépésekért nem jár pontlevonás, melyek hibásak, de 
+amelyeket a feladat megoldásához a vizsgázó ténylegesen nem használ fel. 
+11. A gondolatmenet kifejtése során a zsebszámológép használata – további matemati-
+kai indoklás nélkül – a következő műveletek elvégzésére fogadható el: összeadás, 
+kivonás, szorzás, osztás, hatványozás, gyökvonás, n!, 
+
+
+
+
+
+
+k
+n kiszámítása, a függvénytáb-
+lázatban fellelhető táblázatok helyettesítése (sin, cos, tg, log és ezek inverzei), a π és az 
+e szám közelítő értékének megadása, nullára rendezett másodfokú egyenlet gyökeinek 
+meghatározása. További matematikai indoklás nélkül használhatók a számológépek az 
+átlag és a szórás kiszámítására abban az esetben, ha a feladat szövege kifejezetten nem 
+követeli meg az ezzel kapcsolatos részletszámítások bemutatását is. Egyéb esetekben 
+a géppel elvégzett számítások indoklás nélküli lépéseknek számítanak, így azokért 
+nem jár pont. 
+12. Az ábrák bizonyító erejű felhasználása (például adatok leolvasása méréssel) nem elfo-
+gadható. 
+13. Valószínűségek megadásánál (ha a feladat szövege másképp nem rendelkezik) a száza-
+lékban megadott helyes válasz is elfogadható. 
+14. Ha egy feladat szövege nem ír elő kerekítési kötelezettséget, akkor az útmutatóban meg-
+adottól eltérő, észszerű és helyes kerekítésekkel kapott rész- és végeredmény is elfo-
+gadható. 
+15. A vizsgafeladatsor II. részében kitűzött 5 feladat közül csak 4 feladat megoldása 
+értékelhető. A vizsgázó az erre a célra szolgáló négyzetben – feltehetőleg – megjelölte 
+annak a feladatnak a sorszámát, amelynek értékelése nem fog beszámítani az összpont-
+számába. Ennek megfelelően a megjelölt feladatra esetlegesen adott megoldást nem is 
+kell javítani. Ha a vizsgázó nem jelölte meg, hogy melyik feladat értékelését nem kéri, 
+és a választás ténye a dolgozatból sem derül ki egyértelműen, akkor a nem értékelendő 
+feladat automatikusan a kitűzött sorrend szerinti utolsó feladat lesz. 
+ 
+ 
+
+===== PAGE 4 =====
+ 
+Javítási-értékelési útmutató 
+Matematika 
+4 / 18 
+emelt szintű írásbeli vizsga 
+E2413 
+ 
+2024. október 15. 
+ 
+I. 
+ 
+1. a) 
+Az állítás igaz. 
+1 pont  
+Helyes indoklás, például: 
+6
+8
+>
+7.
+2
+2
+a
+b
+
+
+
+ 
+1 pont  
+Összesen: 
+2 pont  
+ 
+1. b) 
+A megfordítás: Ha a és b számtani közepe nagyobb 
+7-nél, akkor a  6 és b  8. 
+1 pont  
+A megfordítás hamis. 
+1 pont  
+Jó ellenpélda (pl. a  5, b  11). 
+1 pont  
+Összesen: 
+3 pont  
+ 
+1. c) 
+(7-nek és x-nek a harmonikus közepe 
+x
+1
+7
+1
+2
+
+, így) 
+megoldandó a 
+10
+1
+7
+1
+2
+
+x
+ egyenlet (x  0). 
+1 pont 
+Ez a pont akkor is jár, ha 
+a vizsgázó a harmonikus 
+közép 2
+
+ab
+a
+b alakját hasz-
+nálja. 
+10
+7
+14
+
+
+x
+x
+ 
+1 pont  
+14x  10x + 70 
+1 pont  
+Innen x  17,5. 
+1 pont  
+Összesen: 
+4 pont  
+ 
+1. d) 
+ 
+biztosan igaz 
+biztosan hamis 
+nem lehet eldönteni 
+A 
+X 
+ 
+ 
+B 
+ 
+X 
+ 
+C 
+ 
+ 
+X 
+ 
+1-1 pont  
+Összesen: 
+3 pont  
+ 
+2. a) 
+T (0)  75 °C, H  25 °C, t  15 perc, c  –0,209 
+1 pont 
+Ez a pont akkor is jár, ha 
+ezek a gondolatok csak a 
+megoldásból derülnek ki. 
+0,209 15
+(15)
+25
+(75
+25) 2
+T
+
+
+
+
+
+
+ 
+1 pont  
+3,135
+25
+50 2
+
+
+
+ ≈ 
+1 pont  
+≈ 30,7 °C hőmérsékletű lesz a kávé negyedóra múlva. 
+1 pont  
+Összesen: 
+4 pont  
+
+===== PAGE 5 =====
+ 
+Javítási-értékelési útmutató 
+Matematika 
+5 / 18 
+emelt szintű írásbeli vizsga 
+E2413 
+ 
+2024. október 15. 
+ 
+2. b)  
+25,5  25 + 
+0,209
+50 2
+t
+
+
+
+ 
+1 pont  
+0,01  
+0,209
+2
+t
+
+ 
+1 pont  
+2
+0,209
+log 0,01
+t
+
+
+ ≈ –6,644 
+1 pont 
+lg0,01
+0,209
+lg 2
+t
+
+
+ 
+t ≈ 31,8, tehát kb. 32 perc múlva hűl le a kávé 
+25,5 °C hőmérsékletűre. 
+1 pont  
+Összesen: 
+4 pont  
+ 
+2. c)  
+40 
+0,209 10
+(85
+) 2
+H
+H
+
+
+
+
+
+
+ 
+1 pont  
+40 
+(85
+) 0,235
+H
+H
+
+
+
+
+ 
+1 pont  
+40  0,765H + 19,975 
+1 pont  
+Ebből a szoba hőmérséklete H ≈ 26,2 °C. 
+1 pont  
+Összesen: 
+4 pont  
+Megjegyzés: Ha a vizsgázó több válaszát is mértékegység nélkül adja meg, akkor a 2. feladat-
+ban ezért összesen 1 pontot veszítsen. 
+ 
+3. a) 
+I. eset: 
+2
+2sin
+7sin
+1
+5
+x
+x
+
+, 
+azaz 
+2
+2sin
+7sin
+4
+0.
+x
+x
+
+
+
+    
+1 pont  
+Az egyenlet (sin x)-ben másodfokú, gyökei 0,5 és –4. 
+1 pont  
+II. eset: 
+2
+2sin
+7sin
+1
+5
+x
+x
+
+, 
+azaz 
+2
+2sin
+7sin
+6
+0.
+x
+x
+
+
+
+ 
+1 pont  
+Az egyenlet (sin x)-ben másodfokú, gyökei –1,5 és –2. 
+1 pont  
+A négy gyök közül (–1  sin x  1 miatt) csak a 
+sin x  0,5 lehetséges, 
+1 pont  
+ekkor 
+2
+6
+x
+k
+
+
+
+ vagy 
+5
+2
+6
+x
+k
+
+
+
+, k Z. 
+2 pont  
+Ellenőrzés behelyettesítéssel vagy ekvivalens átalakí-
+tásokra hivatkozással. 
+1 pont  
+Összesen: 
+8 pont  
+Megjegyzések: 
+1. Ha a vizsgázó a válaszát fokban (helyesen) adja meg, akkor ezért 1 pontot veszítsen. 
+2. Ha a vizsgázó a válaszát periódus nélkül adja meg, akkor ezért 1 pontot veszítsen. 
+ 
+ 
+
+===== PAGE 6 =====
+ 
+Javítási-értékelési útmutató 
+Matematika 
+6 / 18 
+emelt szintű írásbeli vizsga 
+E2413 
+ 
+2024. október 15. 
+ 
+3. b) 
+(A 
+5
+;
+6
+6
+
+
+
+
+
+
+
+
+ intervallumon az f függvény pozitív, így) 
+a terület: 
+5
+6
+6
+sin
+T
+x dx
+
+
+
+
+
+  
+1 pont 
+ 
+
+
+5
+6
+6
+cos x
+
+
+
+ 
+1 pont  
+3
+3
+2
+2
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+1 pont  
+ 
+3
+
+ (≈ 1,73).  
+1 pont  
+Összesen: 
+4 pont  
+ 
+4. a) 
+A háromszög 120-os szöge a legnagyobb szög, így 
+ez a leghosszabb (c) oldallal szemközti szög.  
+1 pont 
+Ez a pont akkor is jár, ha 
+ez a gondolat csak a meg-
+oldásból derül ki. 
+Felírva a koszinusztételt a c oldalra: 
+2
+2
+2
+(
+8)
+(
+4)
+2 (
+4) cos120 .
+a
+a
+a
+a a
+
+
+
+
+
+
+
+ 
+1 pont  
+Rendezve: 
+2
+0
+2
+4
+48.
+a
+a
+
+
+
+ 
+2 pont  
+Az egyenlet pozitív gyöke a  6 (a negatív gyök – 4, 
+ami nem lehetséges). 
+1 pont  
+A háromszög oldalai: 6 (cm), 10 (cm) és 14 (cm) 
+(és ekkor teljesül a háromszög-egyenlőtlenség). 
+1 pont    
+Összesen: 
+6 pont  
+ 
+4. b) első megoldás 
+A másik két oldal 16 cm és 20 cm hosszú. 
+1 pont  
+A 16 cm-es oldallal szemközti szöget -val jelölve, 
+a koszinusztétellel: 
+2
+2
+2
+24
+20
+16
+cos
+0,75.
+2 24 20
+
+
+
+
+
+
+ 
+1 pont 
+ 
+Innen  ≈ 41,4. 
+1 pont  
+A háromszög területe: 
+24 20 sin 41,4
+2
+T
+
+
+
+
+ ≈ 
+1 pont 
+A 24 cm-es oldalhoz tar-
+tozó magasság: m  
+ 20 ꞏ sin 41,4 ≈ 13,2 cm. 
+≈ 158,7 cm2. 
+1 pont 
+24 13,2
+2
+
+
+T
+ ≈ 158,4 cm2 
+Összesen: 
+5 pont  
+Megjegyzés: A háromszög másik két szöge 55,8°, illetve 82,8°, a másik két oldalhoz tartozó 
+magasság 15,87 cm, illetve 19,84 cm. 
+ 
+ 
+
+===== PAGE 7 =====
+ 
+Javítási-értékelési útmutató 
+Matematika 
+7 / 18 
+emelt szintű írásbeli vizsga 
+E2413 
+ 
+2024. október 15. 
+ 
+4. b) második megoldás 
+A másik két oldal 16 cm és 20 cm hosszú. 
+1 pont  
+A háromszög félkerülete: 
+24
+20 16
+2
+s
+
+
+
+
+
+
+
+
+
+
+ 30 cm. 
+1 pont  
+A Hérón-képlettel a terület: 
+(
+)(
+)(
+)
+30 14 10 6
+T
+s s
+a s
+b s
+c
+
+
+
+
+
+
+
+
+ 
+2 pont  
+60 7
+
+≈ 158,7 cm2. 
+1 pont  
+Összesen: 
+5 pont  
+ 
+4. b) harmadik megoldás 
+A másik két oldal 16 cm és 20 cm hosszú. 
+1 pont  
+A 24 cm-es oldalhoz tartozó magasságot jelölje m. 
+(Ez a háromszögön belül halad.) 
+Ez a magasság az alapot (az ábra szerint) egy x és 
+egy 24 – x cm-es részre osztja. Mindkét részhárom-
+szögben a Pitagorasz-tételből m
+ 2-et kifejezve, ezeket 
+egyenlővé téve: 
+2
+2
+2
+2
+2
+(
+) 20
+16
+(24
+) .
+
+
+
+
+
+m
+x
+x
+ 
+1 pont 
+ 
+2
+2
+400
+256
+576
+48
+x
+x
+x
+
+
+
+
+
+, 
+ahonnan x  15 cm. 
+1 pont  
+Innen 
+2
+2
+20
+175
+m
+x
+
+
+
+≈ 13,2 cm. 
+1 pont  
+24 13, 2
+2
+
+
+T
+ ≈ 158,4 cm2. 
+1 pont    
+Összesen: 
+5 pont  
+ 
+4. c) 
+Mivel c a leghosszabb oldal, ezért (a háromszög-
+egyenlőtlenség miatt) pontosan akkor létezik a há-
+romszög, ha a + b  c. 
+1 pont  
+a + (a + 4)  a + 8, 
+1 pont  
+ahonnan a  4. 
+1 pont  
+Így a háromszög kerülete valóban nagyobb, mint  
+(4 + 8 + 12 ) 24 cm.  
+1 pont    
+Összesen: 
+4 pont  
+ 
+ 
+ 
+
+===== PAGE 8 =====
+ 
+Javítási-értékelési útmutató 
+Matematika 
+8 / 18 
+emelt szintű írásbeli vizsga 
+E2413 
+ 
+2024. október 15. 
+ 
+II. 
+ 
+5. a) 
+Az átlag 1
+2
+2
+3
+3
+3
+7
+6
+3
+
+
+
+
+
+
+ (≈ 2,33). 
+1 pont Ezek a pontok akkor is 
+járnak, ha a vizsgázó az 
+átlagot, illetve a szórást 
+számológéppel helyesen 
+határozza meg. 
+A szórás 
+2
+2
+2
+4
+1
+2
+2
+3
+5
+3
+3
+3
+6
+3
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ ≈ 0,745. 
+2 pont 
+Összesen: 
+3 pont  
+ 
+5. b) 
+A dobások sorrendjét tekintve hat helyen szerepelhet 
+az 1-es dobás. 
+1 pont 
+Ismétléses permutációval 
+számolva 
+6!
+2! 3! 
+
+ 
+A maradék öt dobásból 5
+10
+2
+
+
+
+-féleképpen választ-
+hatjuk ki a két 2-es dobás helyét. (A maradék három 
+helyen 3-as áll.) 
+1 pont 
+Így összesen 6  10  60 megfelelő dobássorozat van. 
+1 pont  60. 
+Összesen: 
+3 pont  
+ 
+5. c) első megoldás 
+A két dobás 36-féle lehet (összes eset). 
+1 pont  
+Kedvező esetek azok, amikor az egyik szám páros, 
+de 4-gyel nem osztható (2 vagy 6), a másik pedig pá-
+ratlan (1, 3, vagy 5). 
+1 pont  
+Mivel minden megfelelő számpárt kétféle sorrendben 
+dobhatunk, a kedvező esetek száma 2  2  3  12. 
+2 pont  
+A keresett valószínűség így 12
+1
+36
+3
+
+ (≈ 0,333). 
+1 pont  
+Összesen: 
+5 pont  
+ 
+ 
+ 
+
+===== PAGE 9 =====
+ 
+Javítási-értékelési útmutató 
+Matematika 
+9 / 18 
+emelt szintű írásbeli vizsga 
+E2413 
+ 
+2024. október 15. 
+ 
+5. c) második megoldás 
+Komplementer módszerrel számolunk. Kedvezőtlen 
+esetek azok, amikor a szorzat vagy nem osztható 
+2-vel, vagy osztható 4-gyel. 
+1 pont 
+Ez a pont akkor is jár, ha 
+ez a gondolat csak a meg-
+oldásból derül ki. 
+I. eset: A szorzat nem osztható 2-vel, ha két páratlan 
+számot dobunk. Ennek a valószínűsége 1 1
+1 .
+2 2
+4
+
+
+ 
+1 pont  
+II/1. eset: 4-gyel osztható a szorzat egyrészt akkor, ha 
+az egyik kockával 4-et, a másikkal pedig egy páratlan 
+számot dobunk. Ennek a valószínűsége 
+1 1
+1
+2
+.
+6 2
+6
+
+
+
+ 
+1 pont*  
+II/2. eset: 4-gyel osztható továbbá a szorzat, ha két pá-
+ros számot dobunk. Ennek a valószínűsége 1 1
+1 .
+2 2
+4
+
+
+ 
+1 pont*  
+A keresett valószínűség 
+1
+1
+1
+1
+1
+4
+6
+4
+3
+
+
+
+
+ (≈ 0,333). 
+1 pont*  
+Összesen: 
+5 pont  
+ 
+Megjegyzések: 1. A *-gal jelölt 3 pontot az alábbi gondolatmenetért is megkaphatja a vizsgázó. 
+II/1. eset: 4-gyel osztható a szorzat egyrészt akkor, ha 
+az egyik kockával 4-et (a másikkal pedig bármit) do-
+bunk. Ennek a valószínűsége 6
+6
+1
+11 .
+36
+36
+
+
+
+  
+1 pont  
+II/2. eset: 4-gyel osztható továbbá a szorzat, ha két pá-
+ros számot dobunk, de egyik sem a 4. Ennek a való-
+színűsége 2 2
+4 .
+6 6
+36
+
+
+ 
+1 pont  
+A keresett valószínűség 
+9
+11
+4
+12
+1
+36
+36
+36
+36
+
+
+
+
+. 
+1 pont  
+ 
+2. Ha a vizsgázó (például az alábbi táblázattal) rendezetten felsorolja a lehetséges eseteket, és 
+ez alapján helyesen válaszol, akkor a teljes pontszám jár.  
+ 
+1 
+2 
+3 
+4 
+5 
+6 
+1 
+1 
+2 
+3 
+4 
+5 
+6 
+2 
+2 
+4 
+6 
+8 
+10 12 
+3 
+3 
+6 
+9 
+12 15 18 
+4 
+4 
+8 
+12 16 20 24 
+5 
+5 
+10 15 20 25 30 
+6 
+6 
+12 18 24 30 36 
+ 
+ 
+ 
+
+===== PAGE 10 =====
+ 
+Javítási-értékelési útmutató 
+Matematika 
+10 / 18 
+emelt szintű írásbeli vizsga 
+E2413 
+ 
+2024. október 15. 
+ 
+5. d)  
+Helyesen kitöltött halmazábra. 
+5 pont 
+Összesen: 
+5 pont  
+Megjegyzés: 8 helyesen kitöltött tartományért 5 pont, 7 helyesen kitöltött tartományért 4 pont, 
+5 vagy 6 helyesen kitöltött tartományért 3 pont, 3 vagy 4 helyesen kitöltött tartományért 
+2 pont, 1 vagy 2 helyesen kitöltött tartományért 1 pont jár. 
+Egy nemüres tartomány kitöltése akkor helyes, ha legalább egy jó számpár szerepel benne, 
+rossz számpár pedig nem szerepel benne. Egy üres tartomány kitöltése akkor helyes, ha be 
+van satírozva. 
+ 
+6. a)  
+Az OAB háromszög területe 
+2
+12
+sin 75
+2
+
+
+ ≈ 69,5 cm2. 
+1 pont  
+Az OCD körcikk területe 
+2
+75
+8
+360
+
+
+
+ ≈ 41,9 cm2. 
+1 pont  
+A szürkére színezett tartomány területe 
+(69,5 – 41,9 ) 27,6 cm2. 
+1 pont  
+Az OAB háromszögben koszinusztétellel: 
+2
+2
+12
+12
+2 12 12 cos75
+AB 
+
+
+
+
+ ≈ 
+1 pont  
+≈ 14,6 cm. 
+1 pont  
+A CD körív hossza 75
+2 8
+360
+
+
+ ≈ 10,5 cm. 
+1 pont 2
+2 41,9
+8
+OCD
+T
+r
+
+
+ ≈ 10,5 cm 
+CA  DB  12 – 8  4 cm 
+1 pont  
+A szürkére színezett tartomány kerülete 
+(14,6 + 4 + 10,5 + 4 ) 33,1 cm. 
+1 pont  
+Összesen: 
+8 pont  
+ 
+ 
+ 
+
+===== PAGE 11 =====
+ 
+Javítási-értékelési útmutató 
+Matematika 
+11 / 18 
+emelt szintű írásbeli vizsga 
+E2413 
+ 
+2024. október 15. 
+ 
+6. b) 
+Az OAB háromszög B-hez tartozó magassága 
+12  sin 75º ≈ 11,6 cm. 
+1 pont 
+ 
+A keletkező forgástest két forgáskúp egyesítése. 
+Mindkét forgáskúp alapkörének sugara 11,6 cm, 
+magasságaik összege pedig OA  12 cm. 
+2 pont 
+Az egyik magasság 
+12  cos 75º ≈ 3,1 cm, 
+a másik 8,9 cm. 
+A forgástest térfogata 
+2
+11,6
+12
+3
+
+ ≈ 1691 cm3. 
+1 pont 437 cm3 + 1254 cm3 
+Összesen: 
+4 pont  
+Megjegyzés: Ha a vizsgázó több válaszát is mértékegység nélkül adja meg, akkor a 6. feladat-
+ban ezért összesen 1 pontot veszítsen. 
+ 
+6. c) első megoldás 
+Az ábra jelöléseit használjuk. Két szomszédos tarto-
+mányt, például A-t és B-t 3  2  6-féleképpen színez-
+hetünk ki. 
+1 pont 
+ 
+Ha ezután a C tartomány színe az A színével egyezik 
+meg, akkor a D tartomány színezése 2-féle lehet. 
+1 pont  
+Ha pedig a C tartomány színe a harmadik szín, akkor 
+a D tartomány színezése egyértelmű (D és B színe 
+egyforma). 
+1 pont  
+Tehát 6  (2 + 1)  18 megfelelő színezés van. 
+1 pont  
+Összesen: 
+4 pont  
+ 
+ 
+ 
+
+===== PAGE 12 =====
+ 
+Javítási-értékelési útmutató 
+Matematika 
+12 / 18 
+emelt szintű írásbeli vizsga 
+E2413 
+ 
+2024. október 15. 
+ 
+6. c) második megoldás 
+Ha két színnel színezünk, akkor 3-féleképpen vá-
+laszthatjuk ki a két színt, és ezekkel 2-féleképpen szí-
+nezhetjük ki az ábrát. Ez (3  2 ) 6 lehetőség. 
+1 pont 
+ 
+Ha három színnel színezünk, akkor 3-féleképpen vá-
+laszthatjuk ki a kétszer felhasznált színt, 2-félekép-
+pen választhatjuk ki az ezzel színezett két (szem-
+közti) tartományt, és 2-féleképpen színezhetjük ki a 
+másik két tartományt. Ez (3  2  2 ) 12 lehetőség. 
+2 pont  
+Tehát (6  + 12 ) 18 megfelelő színezés van. 
+1 pont  
+Összesen: 
+4 pont  
+Megjegyzés: Ha a vizsgázó rendezetten felsorolja a lehetséges eseteket, és ez alapján helyesen 
+válaszol, akkor a teljes pontszám jár. 
+ 
+7. a) első megoldás 
+(A kiválasztás sorrendjét nem vesszük figyelembe. 
+A sorsolás után üresen maradt szekrényeket vizsgál-
+juk. Bármely három szekrény azonos valószínűséggel 
+marad üresen.) 
+36 szekrény közül hármat 36
+3
+
+
+
+
+
+
+ ( 7140)-féleképpen 
+lehet kiválasztani (összes eset száma). 
+1 pont 
+(A kisorsolt szekrényeket 
+vizsgáljuk.) 
+36
+33
+
+
+
+
+
+
+ ( 7140) 
+Három szekrényt egy adott sorból 12
+3
+
+
+
+
+
+
+ ( 220)-féle-
+képpen lehet kiválasztani. 
+Mivel három sor van, ebben az esetben a kedvező 
+esetek száma 
+12
+3
+3
+
+
+
+
+
+
+ ( 660). 
+1 pont 
+12
+12
+12
+3
+9
+12
+12
+
+
+
+
+
+
+
+
+
+
+
+
+( 660) 
+Az A esemény valószínűsége így 
+12
+3
+3
+36
+3
+
+
+
+
+
+
+
+
+
+
+
+
+ ≈ 0,092. 
+1 pont  
+Három különböző sorból egy-egy szekrényt 
+12  12  12 ( 1728)-féleképpen lehet kiválasztani. 
+1 pont  
+3
+12
+11
+
+
+
+
+
+
+( 1728) 
+A B esemény valószínűsége így 12 12 12
+36
+3
+
+
+
+
+
+
+
+
+ ≈ 0,242. 
+1 pont  
+Tehát a B esemény valószínűsége nagyobb. 
+1 pont  
+Összesen: 
+6 pont  
+ 
+ 
+ 
+
+===== PAGE 13 =====
+ 
+Javítási-értékelési útmutató 
+Matematika 
+13 / 18 
+emelt szintű írásbeli vizsga 
+E2413 
+ 
+2024. október 15. 
+ 
+7. a) második megoldás 
+(A kiválasztás sorrendjét is figyelembe vesszük. 
+Tekinthetjük úgy, hogy az üres szekrényeket sorsol-
+juk ki először.) 
+Az első kisorsolt szekrény (mindkét esetben) bárme-
+lyik lehet. 
+1 pont 
+Ez a pont akkor is jár, ha 
+ez a gondolat csak a meg-
+oldásból derül ki. 
+Az első esetben a másodikra 35 szekrény közül még 
+11, harmadikra 34 szekrény közül még 10 „jó” szek-
+rény van (és a három húzás egymástól független), így 
+az A esemény valószínűsége 11 10
+35 34
+
+ ≈ 0,092. 
+2 pont  
+A második esetben a másodikra 35 szekrény közül 
+még 24, harmadikra 34 szekrény közül még 12 „jó” 
+szekrény van, így a B esemény valószínűsége 
+24 12
+35 34
+
+ ≈ 0,242. 
+2 pont    
+Tehát a B esemény valószínűsége nagyobb. 
+1 pont  
+Összesen: 
+6 pont  
+ 
+7. a) harmadik megoldás 
+(A kiválasztás sorrendjét is figyelembe vesszük. 
+Tekinthetjük úgy, hogy az üres szekrényeket sorsol-
+juk ki először.) 
+36 szekrény közül hármat 36  35  34 ( 42 840)-féle-
+képpen lehet kiválasztani (összes eset száma). 
+1 pont  
+Az A esemény esetében elsőre bármelyik szekrényt 
+kiválaszthatjuk, második és harmadikra (az első szek-
+rény sorában levő) 11, illetve 10 szekrény marad, így 
+a kedvező esetek száma 36  11  10 ( 3960). 
+2 pont  
+A B esemény esetében elsőre bármelyik szekrényt ki-
+választhatjuk, második és harmadikra 24, illetve 12 
+szekrény marad, így a kedvező esetek száma 
+36  24  12 ( 10 368). 
+2 pont  
+Mivel (azonos számú összes eset mellett) a második 
+esetben nagyobb a kedvező esetek száma, így a 
+B esemény valószínűsége a nagyobb. 
+1 pont  
+Összesen: 
+6 pont  
+ 
+7. b) 
+A leghosszabb pálcát a téglatest alakú szekrény testát-
+lója mentén helyezhetjük el. 
+1 pont 
+Ez a pont akkor is jár, ha 
+ez a gondolat csak a meg-
+oldásból derül ki. 
+A testátlóra vonatkozó összefüggés szerint: 
+2
+2
+2
+20
+35
+30
+
+
+ ≈ 
+1 pont  
+≈ 50 cm a leghosszabb elhelyezhető pálca hossza. 
+1 pont  
+Összesen: 
+3 pont  
+
+===== PAGE 14 =====
+ 
+Javítási-értékelési útmutató 
+Matematika 
+14 / 18 
+emelt szintű írásbeli vizsga 
+E2413 
+ 
+2024. október 15. 
+ 
+7. c) első megoldás 
+A kulcsokat 4! ( 24)-féle sorrendben oszthatják ki 
+(összes eset száma). 
+1 pont  
+Kedvező esetek: 
+I. Lehetséges, hogy mind a négyen a saját kulcsukat 
+kapják vissza, ez 1 eset. 
+1 pont ABCD 
+Az nem lehetséges, hogy pontosan hárman kapják 
+vissza a saját kulcsukat (hiszen ekkor a negyedik 
+lány is a sajátját kapná vissza). 
+1 pont 
+Ez a pont akkor is jár, ha 
+ez a gondolat csak a meg-
+oldásból derül ki. 
+II. Ha pontosan ketten kapják vissza a saját kulcsu-
+kat, akkor a másik két lány felcserélve kapja vissza a 
+kulcsait. 
+1 pont 
+ABDC, ADCB, ACBD, 
+DBCA, CBAD, BACD 
+(ahol a lányok kulcsait a 
+kezdőbetűjükkel jelöltük, 
+és Alíz, Boglárka, 
+Csenge, Dorka sorrend-
+ben osztják ki a kulcso-
+kat). 
+4
+2
+
+
+
+  6-féleképpen tudjuk kiválasztani azt a két 
+lányt, aki a saját kulcsát kapja vissza (a másik két 
+kulcs kiosztása ezek után egyértelmű). 
+1 pont 
+A kedvező esetek száma tehát (1 + 6 ) 7. 
+1 pont  
+A keresett valószínűség így 7
+24
+ ≈ 0,292. 
+1 pont  
+Összesen: 
+7 pont  
+ 
+7. c) második megoldás 
+Annak a valószínűsége, hogy sorban mind a négyen a 
+saját kulcsukat kapják vissza: 1 1 1
+1
+1
+4 3 2
+24
+
+
+
+. 
+2 pont  
+Az nem lehetséges, hogy pontosan hárman kapják 
+vissza a saját kulcsukat (hiszen ekkor a negyedik 
+lány is a sajátját kapná vissza). 
+1 pont 
+Ez a pont akkor is jár, ha 
+ez a gondolat csak a meg-
+oldásból derül ki. 
+Annak a valószínűsége, hogy például Alíz és Bog-
+lárka a saját kulcsát kapja vissza, de Csenge és Dorka 
+nem: 1 1 1
+1
+1
+4 3 2
+24
+
+
+
+. 
+2 pont  
+4
+2
+
+
+
+ 6-féleképpen választható ki az a két lány, aki a 
+saját kulcsát kapja vissza, így annak a valószínűsége, 
+hogy pontosan ketten kapják vissza a saját kulcsukat: 
+1
+6
+6 24
+24
+
+
+. 
+1 pont  
+A keresett valószínűség így 
+1
+6
+7
+24
+24
+24
+
+
+
+
+
+
+
+
+ ≈ 0,292. 
+1 pont  
+Összesen: 
+7 pont  
+ 
+ 
+ 
+
+===== PAGE 15 =====
+ 
+Javítási-értékelési útmutató 
+Matematika 
+15 / 18 
+emelt szintű írásbeli vizsga 
+E2413 
+ 
+2024. október 15. 
+ 
+8. a) 
+1 tonna ( 1000 kg)  1 000 000 gramm 
+1 pont  
+(35 gramm zabmag 1000 darab magot tartalmaz.) 
+1 millió gramm zabmag 1000 000 1000
+35
+
+ ≈ 
+≈ 28,57 millió, 
+1 pont  
+azaz kb. 
+7
+2,857 10
+
+ darab magot tartalmaz. 
+1 pont  
+Összesen: 
+3 pont  
+ 
+8. b) 
+Ha 8 egyenlő részre osztjuk az 1000 kg zabot, akkor 
+egy rész tömege 125 kg. 
+1 pont  
+A gép ekkor 
+2
+125
+8
+90
+3845
+40
+
+
+
+
+
+
+
+
+
+ perc, 
+1 pont  
+azaz 3845
+60
+
+
+ ≈
+.
+.
+
+
+ 64 óra alatt végez a zabhegyezéssel. 
+1 pont  
+Összesen: 
+3 pont  
+ 
+8. c) 
+Ha n egyenlő részre osztjuk az 1000 kg zabot, 
+akkor egy rész tömege 1000
+n
+ kg. 
+1 pont  
+A gép ekkor 
+2
+2
+1
+1000
+25 000
+90
+90
+40
+n
+n
+n
+n
+
+
+
+
+
+
+
+
+
+
+
+ 
+perc alatt végez a munkával. 
+2 pont  
+Vizsgáljuk az f: R+  R, 
+25 000
+( )
+90
+f x
+x
+x
+
+
+ függ-
+vényt. Ennek ott lehet minimuma, ahol a deriváltja 
+nulla. 
+1 pont 
+Ez a pont akkor is jár, ha 
+ez a gondolat csak a meg-
+oldásból derül ki. 
+2
+25 000
+( )
+90
+0
+f
+x
+x
+
+
+
+
+ 
+1 pont  
+Innen 
+25 000
+50
+90
+3
+x 
+
+ ≈ 16,67 (mert x  0). 
+1 pont  
+Ha x  16,67, akkor
+( )
+0
+f
+x
+
+
+, ha pedig 0  x  16,67, 
+akkor
+( )
+0
+f
+x
+
+
+, ezért ez valóban (abszolút) mini-
+mumhelye f-nek. 
+1 pont 
+3
+50 000
+( )
+0
+f
+x
+x
+
+
+
+ 
+ 
+ 
+ 
+
+===== PAGE 16 =====
+ 
+Javítási-értékelési útmutató 
+Matematika 
+16 / 18 
+emelt szintű írásbeli vizsga 
+E2413 
+ 
+2024. október 15. 
+ 
+(Mivel n  Z+, a minimális időt n  16-nál vagy 
+n  17-nél kapjuk.) 
+f (16)  3002,5 és f (17) ≈ 3000,6, 
+1 pont  
+így az 1000 kg zab kihegyezésének ideje akkor mini-
+mális, ha 17 egyenlő részre osztjuk. 
+1 pont  
+Ekkor a zabhegyezési idő kb. 3000
+60
+
+
+
+
+
+
+
+ 50 óra. 
+1 pont  
+Összesen: 10 pont  
+ 
+9. a) 
+Megoldandó a 
+7
+1
+2
+10
+2
+n
+
+
+
+
+
+
+
+
+
+ egyenlőtlenség, 
+1 pont  
+azaz 
+7
+1
+1
+10
+2n
+
+
+    
+7
+1
+10
+2n
+
+. 
+1 pont  
+A 2-es alapú logaritmusfüggvény szigorúan monoton 
+növekvő, így 
+1 pont  
+7
+2
+log 10
+1
+n
+
+, 
+1 pont  
+azaz 
+7
+2
+log 10
+1
+n 
+ ≈ 24,3. 
+1 pont  
+A keresett n érték a 25. 
+1 pont  
+Összesen: 
+6 pont  
+Megjegyzés: Ha a vizsgázó a sorozat első 25 tagját észszerű és helyes kerekítésekkel kiszá-
+molja, és ez alapján helyesen válaszol, akkor a teljes pontszám jár. 
+ 
+9. b) 
+A sorozat első tagja 
+1
+1
+2
+1
+2
+a
+
+
+
+
+
+
+
+
+, 
+1 pont  
+hányadosa 
+1
+2
+q 
+. 
+1 pont  
+Az első 10 tag összege: 
+1
+1
+10
+1
+10
+
+
+
+
+q
+q
+a
+S
+   
+ 
+10
+1
+1023
+1
+2046
+2
+1024
+( 1)
+1
+3
+3072
+1
+2
+2
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+, 
+1 pont  
+ami a kért alakban 
+512
+341
+
+. 
+1 pont  
+Összesen: 
+4 pont  
+ 
+ 
+ 
+
+===== PAGE 17 =====
+ 
+Javítási-értékelési útmutató 
+Matematika 
+17 / 18 
+emelt szintű írásbeli vizsga 
+E2413 
+ 
+2024. október 15. 
+ 
+9. c) első megoldás 
+Az explicit alakot felhasználva 
+n
+n
+n
+b
+b
+b
+
+
+
+
+1
+2
+2
+  
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+2
+2
+1
+2
+2
+2
+1
+2
+2
+1
+2
+n
+n
+ – 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+2
+2
+1
+2
+n
+   
+2 pont  
+ 
+2
+2
+1
+2
+1
+2
+4
+4
+1
+2
+1
+4
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+n
+n
+ –  
+– 
+2
+2
+1
+2
+
+
+
+
+
+
+
+
+n
+    
+2 pont  
+ 
+2
+2
+4
+2
+2
+1
+2
+4
+1
+4
+2
+1
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+n
+  
+1 pont  
+ 
+1
+(1 1 2)
+0
+0
+2
+n
+
+
+
+
+
+
+
+
+
+
+
+ valóban teljesül minden 
+n-re. 
+1 pont  
+Összesen: 
+6 pont  
+ 
+9. c) második megoldás 
+A 
+2
+2 nb  „konstans része” 4, a 
+1
+nb  és a 
+nb konstans 
+része 2, így a konstansok összege a 
+2
+1
+2 n
+n
+n
+b
+b
+b
+
+
+
+
+ 
+kifejezésben 4 – 2 – 2  0. 
+2 pont 
+2
+
+
+n
+n
+a
+b
+, így 
+n
+n
+n
+b
+b
+b
+
+
+
+
+1
+2
+2
+  
+2
+1
+2(
+2)
+(
+2)
+n
+n
+a
+a
+
+
+
+
+
+
+ – 
+– 
+)
+2
+(
+
+n
+a
+  
+A „nem konstans rész” megegyezik az a) feladatbeli 
+{an} mértani sorozattal. 
+1 pont  
+n
+n
+n
+a
+a
+a
+
+
+
+
+1
+2
+2
+ 
+n
+n
+n
+a
+a
+a
+
+
+
+
+1
+2
+2
+  
+n
+n
+n
+a
+a
+a
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+2
+1
+2
+1
+2
+2
+  
+1 pont  
+ 
+
+
+
+
+
+
+
+
+
+1
+2
+1
+2
+1
+n
+a
+  0 
+1 pont  
+Tehát a nem konstans részek összege is 0, 
+így 
+2
+1
+2
+0
+n
+n
+n
+b
+b
+b
+
+
+
+
+
+ valóban teljesül minden n-re. 
+1 pont  
+Összesen: 
+6 pont  
+ 
+ 
+ 
+
+===== PAGE 18 =====
+ 
+Javítási-értékelési útmutató 
+Matematika 
+18 / 18 
+emelt szintű írásbeli vizsga 
+E2413 
+ 
+2024. október 15. 
+ 
+9. c) harmadik megoldás 
+Kifejezzük bn-nel bn + 1-et és bn + 2-t. 
+1
+1
+1
+(
+2)
+2
+3
+2
+2
+n
+n
+n
+b
+b
+b
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+2 pont  
+2
+1
+1
+3
+(
+2)
+2
+4
+4
+2
+n
+n
+n
+b
+b
+b
+
+
+
+
+
+
+ 
+2 pont  
+Így 
+n
+n
+n
+b
+b
+b
+
+
+
+
+1
+2
+2
+  1
+1
+3
+3
+2
+2
+n
+n
+n
+b
+b
+b
+
+
+
+
+   
+1 pont  
+ 
+1
+1
+1
+0
+2
+2
+nb
+
+
+
+
+
+
+
+
+
+
+ valóban teljesül minden n-re.   
+1 pont  
+Összesen: 
+6 pont  
+ 
+9. c) negyedik megoldás 
+A bizonyítandó egyenlőséget átrendezzük: 
+2
+1
+2
+n
+n
+n
+b
+b
+b
+
+
+
+
+. (Vagyis igazolandó, hogy a 3. tagtól 
+kezdve bármely tag az előző két tag számtani közepé-
+vel egyenlő.) 
+1 pont  
+1
+2
+1
+1
+2
+2
+2
+2
+1
+2
+2
+2
+2
+2
+2
+n
+n
+n
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+1 pont  
+A jobb oldalon elvégezve az osztást: 
+2
+1
+1
+1
+1
+2
+2
+1
+1
+2
+2
+2
+n
+n
+n
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+. 
+1 pont  
+1
+1
+1
+1
+1
+2 4
+2
+2
+2
+2
+n
+n
+n
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+1 pont  
+1
+2
+n
+
+
+
+
+
+
+
+-nel osztva: 1
+1
+1
+2
+2
+
+
+
+
+
+
+
+
+, ami azonosság. 
+1 pont  
+Mivel átalakításaink ekvivalensek voltak, az eredeti 
+állítást ezzel beláttuk. 
+1 pont  
+Összesen: 
+6 pont  
+ 

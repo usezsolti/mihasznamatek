@@ -1,0 +1,134 @@
+[
+  {
+    "file": "Valszam_gyak_10.txt",
+    "sha": "4d5b2b57e5c3",
+    "chars": 3383,
+    "preview": "\r | ===== PAGE 1 =====\r | BME VIK - Valószínűségszámítás\r | 2020. november 18, 5, 20.\r | 9. Gyakorlat\r | Normális eloszlás, Centrális határeloszlás-tétel\r | 1. Tegyük fel, hogy egy berendezés élettartama normális eloszlású 6,3 év várható értékkel és 2 év szórással.\r | a) Ha 8 év a garancia, mekkora eséllyel tapasztalunk meghibásodást a garanciális idő lejárta előtt?\r | b) Hány év garanciát adjunk, hogy 0,95 legye"
+  },
+  {
+    "file": "Valszam_gyak_10_mo.txt",
+    "sha": "97a0a80fdbd1",
+    "chars": 372,
+    "preview": "\r | ===== PAGE 1 =====\r | BME VIK - Valószínűségszámítás\r | 2020. november 18, 5, 20.\r | 9. Gyakorlat\r | Normális eloszlás, Centrális határeloszlás-tétel\r | Végeredmények\r | 1. a) 0,8023\r | b) 3,02\r | 2. 2,005\r | 3. µ = 12,47, σ2 = 8,657\r | 4. N(30; 4,938)\r | 5. fZ(t) =\r | \r | \r | \r | 1\r | √\r | 2πte−t\r | 2\r | 0 < t\r | 0\r | egyébként\r | 6. ≈0,0104\r | 7. ≈138\r | 8. 2\r | 12\r | P\r | i=1\r | Xi −7\r | 9. ≈0,1894\r | 10. ≈3\r | 11. 9,439\r | "
+  },
+  {
+    "file": "Valszam_gyak_11.txt",
+    "sha": "ea1d1cb6160e",
+    "chars": 2320,
+    "preview": "\r | ===== PAGE 1 =====\r | BME VIK - Valószínűségszámítás\r | 2020. november 25, 26, 27.\r | 10. Gyakorlat\r | Kovariancia folytonos esetben, Lineáris regresszió\r | 1. Legyenek X és Y független valószínűségi változók, ahol E(X) = 4, E(Y ) = 0, D2(X) = 1, D2(Y ) = 2.\r | Határozzuk meg az E(5X−6Y ), E(XY ), D2(5X−6Y +8) és cov(5X+2Y +2, X+6Y −3) mennyiségeket.\r | 2. Legyenek X, Y ∼U(0; 1) függetlenek, továbbá Z1 = XY é"
+  },
+  {
+    "file": "Valszam_gyak_11_mo.txt",
+    "sha": "89e06bc213ce",
+    "chars": 647,
+    "preview": "\r | ===== PAGE 1 =====\r | BME VIK - Valószínűségszámítás\r | 2020. november 25, 26, 27.\r | 10. Gyakorlat\r | Kovariancia folytonos esetben, Lineáris regresszió\r | Végeredmények\r | 1. 20,\r | 0,\r | 97,\r | 29\r | 2. a) 0,25,\r | 1\r | b) nem\r | c) 1,049\r | 3. −0,0225\r | 4. −1\r | 5. 0,\r | nem\r | 6. 0,01270\r | 7. a) 1,\r | 2,\r | 2\r | b) 1\r | 2\r | c)\r | \u001a\r | (x, y) ∈R2 | y = x\r | 2\r | \u001b\r | d) 3\r | 2\r | 8. a)\r | n\r | (x, y) ∈R2 | y = 9\r | 5x + 23\r | 25\r | o\r | b)\r | \b(x, y) ∈R2 | y = x "
+  },
+  {
+    "file": "Valszam_gyak_12.txt",
+    "sha": "2ad9b8439995",
+    "chars": 2962,
+    "preview": "\r | ===== PAGE 1 =====\r | BME VIK - Valószínűségszámítás\r | 2020. december 2, 3, 4.\r | 11. Gyakorlat\r | Feltételes várható érték, Teljes várható érték tétele\r | 1. Egyenletesen véletlenszerűen választok egy U számot az [1; 2] intervallumon. Az U ismeretében várok\r | U paraméterű exponenciális ideig, jelölje a várakozás idejét M.\r | a) Mennyi E(M | U)?\r | b) Határozzuk meg (U, M) együttes sűrűségfüggvényét.\r | 2. Legy"
+  },
+  {
+    "file": "Valszam_gyak_1_1.txt",
+    "sha": "47931d1520f9",
+    "chars": 3213,
+    "preview": "\r | ===== PAGE 1 =====\r | Valószínűségszámítás\r | 2020. szeptember 9, 10, 11.\r | 1. Gyakorlat\r | Eseményalgebra, Poincaré-formula\r | 1. Feldobunk két pénzérmét. Hány elemű az eseménytér? Mik az egyes események valószínűségei?\r | 2. Feldobunk két dobókockát. Legyenek A és B események, ahol A azon kimenetelek halmaza, amelyeknél\r | a dobott számok összege kétjegyű, B pedig amelyeknél a dobott számok összege páros. "
+  },
+  {
+    "file": "Valszam_gyak_1_mo_1.txt",
+    "sha": "3a450efcbd03",
+    "chars": 559,
+    "preview": "\r | ===== PAGE 1 =====\r | 2020. szeptember 9, 10, 11.\r | 1. Gyakorlat\r | Eseményalgebra, Poincaré-formula\r | Végeredmények\r | 1.\r | 2.\r | a) igen, Ω\r | b) igen, ∅\r | c) igen, pl.: A\\B\r | d) nem következik\r | 3.\r | a) pl.: B1 ∩A7 ∩Ka\r | b) pl.: B1 ∪B2 ∪B3\r | c) pl.: Ka ∪Ko\r | d) pl.: B3 ∩S6\r | i=2 Ai ∩S10\r | i=8 Ai\r | e) pl.: B8 ∩S6\r | i=2 Ai ∩S9\r | i=8 Ai\r | f) nem lehetséges\r | 4.\r | a) A ⊆B\r | b) B ⊆A\r | c) A ∩B = ∅\r | d) A = B\r | 5.\r | 1\r | 24, 25\r | 54\r | "
+  },
+  {
+    "file": "Valszam_gyak_2_2.txt",
+    "sha": "1d5c17796b39",
+    "chars": 3298,
+    "preview": "\r | ===== PAGE 1 =====\r | Valószínűségszámítás\r | 2020. szeptember 16, 17, 18.\r | 2. Gyakorlat\r | Feltételes valószínűség, Teljes valószínűség tétele, Bayes-formula\r | 1. Egy szabályos dobókockával dobunk, jelölje az eredményét x. Legyenek\r | A = {x prím}\r | B = {x páros}\r | C = {x Æ 4}\r | események. Független-e A és C? Ha tudjuk, hogy x páros, mekkora eséllyel lesz prím? Azaz P(A | B) =?\r | 2. Mennyi annak a valószínű"
+  },
+  {
+    "file": "Valszam_gyak_2_mo_2.txt",
+    "sha": "3896c7e5868f",
+    "chars": 409,
+    "preview": "\r | ===== PAGE 1 =====\r | BME VIK - Valószínűségszámítás\r | 2020. szeptember 16, 17, 18.\r | 2. Gyakorlat\r | Feltételes valószínűség, Teljes valószínűség tétele, Bayes-formula\r | Végeredmények\r | 1. igen, 1\r | 3\r | 2. 0,00001934\r | 3. 1\r | 3, 5\r | 6, 1, nem\r | 4. 1\r | 2\r | 5. igen\r | 6. 13\r | 48\r | 7. 0,0472\r | 8. 0,9114\r | 9. k = 0: 0,\r | k = 1: 5\r | 7,\r | k = 2: 2\r | 7\r | 10.\r | 3p\r | 2p + 1, 1\r | 2\r | 11.\r | (a)\r | 21\r | 128\r | (b)\r | 1\r | 63\r | 12.\r | (a) 0,9048\r | (b)"
+  },
+  {
+    "file": "Valszam_gyak_3.txt",
+    "sha": "76508e7b0b87",
+    "chars": 2995,
+    "preview": "\r | ===== PAGE 1 =====\r | BME VIK - Valószínűségszámítás\r | 2020. szeptember 30, 24, 25.\r | 3. Gyakorlat\r | Diszkrét valószínűségi változók, Várható érték, Geometriai valószínűség\r | 1. Dobjunk fel egy szabályos érmét háromszor. Legyen az Ωeseménytér a 3 hosszú fej-írás sorozatok\r | halmaza, és jelöljük az elemeit értelemszerűen: FFF, FIF, . . . jelsorozatokkal. Deﬁniáljuk az X : Ω→\r | R függvényt az FFF kimenete"
+  },
+  {
+    "file": "Valszam_gyak_3_mo.txt",
+    "sha": "7681bcb10c9e",
+    "chars": 355,
+    "preview": "\r | ===== PAGE 1 =====\r | BME VIK - Valószínűségszámítás\r | 2020. szeptember 30, 24, 25.\r | 3. Gyakorlat\r | Diszkrét valószínűségi változók, Várható érték, Geometriai valószínűség\r | Végeredmények\r | 1.\r | (a) 5\r | 8\r | (b) nem\r | 2. 0,6\r | 3. 11\r | 20\r | 4. 4 17\r | 36\r | 5. 154,1527\r | 6. 3\r | 7.\r | (a) 0,9816\r | (b) 1\r | (c*) 1\r | 8. 3 1\r | 6\r | 9. 0,0707\r | 10. 2\r | 3\r | 11. 1\r | 2\r | 12. 1\r | 2\r | 13. 0,4218\r | "
+  },
+  {
+    "file": "Valszam_gyak_4.txt",
+    "sha": "d305fc6b1df1",
+    "chars": 2828,
+    "preview": "\r | ===== PAGE 1 =====\r | BME VIK - Valószínűségszámítás\r | 2020. október 7, 1, 2.\r | 4. Gyakorlat\r | Folytonos valószínűségi változók várható értéke, Sűrűségfüggvény karakterizációja\r | 1. Az egységnégyzeten találomra kiválasztunk egy P pontot. Jelölje X a P-hez legközelebbi oldal és a P\r | pont távolságát.\r | a) Legyen Ω= {(x, y) | 0 ≤x, y ≤1} az eseményterünk. Írjuk fel X-et, mint Ω→R függvényt.\r | b) Mi X elosz"
+  },
+  {
+    "file": "Valszam_gyak_4_mo.txt",
+    "sha": "9317262401c0",
+    "chars": 1204,
+    "preview": "\r | ===== PAGE 1 =====\r | BME VIK - Valószínűségszámítás\r | 2020. október 7, 1, 2.\r | 4. Gyakorlat\r | Folytonos valószínűségi változók várható értéke, Sűrűségfüggvény karakterizációja\r | Végeredmények\r | 1. a) X(x, y) = min(x, y, 1 −x, 1 −y)\r | ((x, y) ∈Ω)\r | b) FX(x) =\r | \r | \r | \r | \r | \r | \r | \r | 0\r | x ≤0\r | 4x −4x2\r | 0 < x ≤1\r | 2\r | 1\r | 1\r | 2 < x\r | ,\r | fX(x) =\r | (\r | 4 −8x\r | 0 < x < 1\r | 2\r | 0\r | egyébként\r | 2.\r | (a) FX(x) =\r | \r | \r | \r | \r | \r"
+  },
+  {
+    "file": "Valszam_gyak_5_mo.txt",
+    "sha": "20866f28cca1",
+    "chars": 314,
+    "preview": "\r | ===== PAGE 1 =====\r | BME VIK - Valószínűségszámítás\r | 2020. október 14, 8, 9\r | 5. Gyakorlat\r | Exponenciális, Geometriai és Poisson-eloszlás\r | Végeredmények\r | 1. a) 2\r | b) 0,9817\r | c) 0,5\r | 2. 0,6065\r | 3. 0,8647\r | 4. 1,443\r | 5. 0,8025\r | 6. 3\r | 7. Geo\r | \u0000 π\r | 4\r | \u0001, 1,273\r | 8. 1\r | 3\r | 9. 0,4046\r | 10. 3,401, 307\r | 11. 0,6482\r | 12. 989\r | "
+  },
+  {
+    "file": "Valszam_gyak_6.txt",
+    "sha": "7220690c73f4",
+    "chars": 2510,
+    "preview": "\r | ===== PAGE 1 =====\r | BME VIK - Valószínűségszámítás\r | 2020. október 21, 15, 16.\r | 6. Gyakorlat\r | Diszkrét és folytonos valószínűségi változók transzformáltja\r | 1. Legyen X egy véletlenszerűen választott hónap sorszáma, árilistól decemberig. Annak az esélye, hogy\r | az i-edik hónapot választjuk ki\r | i\r | 72 (∀i = 4, . . . , 12). Legyen Y = (−1)X.\r | a) Határozzuk meg Y eloszlását.\r | b) Határozzuk meg E(Y )-t "
+  },
+  {
+    "file": "Valszam_gyak_6_mo.txt",
+    "sha": "c4d69f0212d3",
+    "chars": 1099,
+    "preview": "\r | ===== PAGE 1 =====\r | BME VIK - Valószínűségszámítás\r | 2020. október 21, 15, 16.\r | 6. Gyakorlat\r | Diszkrét és folytonos valószínűségi változók transzformáltja\r | Végeredmények\r | 1. a) P(Y = 1) = 5\r | 9, P(Y = −1) = 4\r | 9\r | b) 1\r | 9\r | c) 1\r | 9\r | 2. E(Y ) = 9\r | 8, E(Z) = 23\r | 8\r | 3. a) 0,1991\r | b) 9\r | 4. 1\r | 2p2\r | 5. FY (y) =\r | \r | \r | \r | \r | \r | \r | \r | \r | \r | \r | \r | \r | \r | \r | \r | \r | \r | 0\r | y ≤0\r | 1\r | 6\r | 0 < y ≤1\r | 3\r | 6\r | 1 < y ≤2\r | 5\r"
+  },
+  {
+    "file": "Valszam_gyak_7.txt",
+    "sha": "da3e356b2c22",
+    "chars": 2085,
+    "preview": "\r | ===== PAGE 1 =====\r | BME VIK - Valószínűségszámítás\r | 2020. október 28, 22, 30.\r | 7. Gyakorlat\r | Függetlenség, Korreláció\r | 1. Kétszer dobunk egy szabályos dobókockával. Jelölje X a hatosok, Y pedig a páros eredmények számát.\r | Független-e X és Y ?\r | 2. Az X és Y valószínűségi változók együttes eloszlását tartalmazza az alábbi táblázat.\r | Y\r | X\r | −1\r | 0\r | 1\r | −1\r | p\r | 3p\r | 6p\r | 1\r | 5p\r | 15p\r | 30p\r | a) p =?\r | b) P(X ≤"
+  },
+  {
+    "file": "Valszam_gyak_7_mo.txt",
+    "sha": "bf2e32c921eb",
+    "chars": 492,
+    "preview": "\r | ===== PAGE 1 =====\r | BME VIK - Valószínűségszámítás\r | 2020. október 28, 22, 30.\r | 7. Gyakorlat\r | Függetlenség, Korreláció\r | Végeredmények\r | 1. nem\r | 2. a) 1\r | 60\r | b) 1\r | 3\r | c) igen\r | d) 1\r | 3\r | 3. nem\r | Y\r | X\r | 1\r | 2\r | 3\r | 4\r | 5\r | 0\r | 1/3\r | 2/15\r | 1/30\r | 0\r | 0\r | 1\r | 0\r | 2/15\r | 2/15\r | 1/15\r | 0\r | 2\r | 0\r | 0\r | 1/30\r | 1/15\r | 1/15\r | 4. a) 2,25\r | b) 2\r | 9\r | c*) 0,5\r | 5. a) −1\r | 3\r | b) 2\r | 3\r | c) 2\r | 3\r | d) −1\r | 2\r | e) nem\r | 6. 0, ha létezik;\r | nem, ha ("
+  },
+  {
+    "file": "Valszam_gyak_8.txt",
+    "sha": "2a0c9a7cc6a9",
+    "chars": 2404,
+    "preview": "\r | ===== PAGE 1 =====\r | BME VIK - Valószínűségszámítás\r | 2020. nov. 4, okt. 29, nov. 6.\r | 8. Gyakorlat\r | Együttes sűrűségfüggvény, Konvolúció\r | 1. Legyenek X ∼U(0; 3) és Y ∼U(−1; 4) független valószínűségi változók. Ábrázoljuk az (X, Y ) együttes\r | eloszlásfüggvényének szinthalmazait. Határozzuk meg az alábbi mennyiségeket:\r | a) P(X < Y ) =?\r | b) P(X + Y = 1) =?\r | c) P(XY < 1) =?\r | 2. Legyenek X, Y ∼U(0; 1) "
+  },
+  {
+    "file": "Valszam_gyak_8_mo.txt",
+    "sha": "98d48416b322",
+    "chars": 1347,
+    "preview": "\r | ===== PAGE 1 =====\r | BME VIK - Valószínűségszámítás\r | 2020. nov. 4, okt. 29, nov. 6\r | 8. Gyakorlat\r | Együttes sűrűségfüggvény, Konvolúció\r | Végeredmények\r | 1. a) 1\r | 2\r | b) 0\r | c) 0, 4323\r | 2. 2\r | 3\r | 3. a) 1\r | 5\r | b) 11\r | 18\r | c) fX(x) =\r | (\r | 2x3 + 1\r | 2\r | 0 < x < 1\r | 0\r | egyébként\r | fY (y) =\r | (\r | 2y3 + 1\r | 2\r | 0 < y < 1\r | 0\r | egyébként\r | d) 13\r | 20\r | e) nem\r | 4.\r | 1\r | 1024\r | 5. a = 1\r | 5, b = 2\r | 5\r | 6. Q ∼Exp(2)\r | E(Q) = 1\r | 2\r | FR"
+  },
+  {
+    "file": "Valszam_gyak_9.txt",
+    "sha": "eac96533e9c0",
+    "chars": 3383,
+    "preview": "\r | ===== PAGE 1 =====\r | BME VIK - Valószínűségszámítás\r | 2020. november 11, 5, 13.\r | 9. Gyakorlat\r | Normális eloszlás, Centrális határeloszlás-tétel\r | 1. Tegyük fel, hogy egy berendezés élettartama normális eloszlású 6,3 év várható értékkel és 2 év szórással.\r | a) Ha 8 év a garancia, mekkora eséllyel tapasztalunk meghibásodást a garanciális idő lejárta előtt?\r | b) Hány év garanciát adjunk, hogy 0,95 legye"
+  },
+  {
+    "file": "Valszam_gyak_9_mo.txt",
+    "sha": "97a0a80fdbd1",
+    "chars": 372,
+    "preview": "\r | ===== PAGE 1 =====\r | BME VIK - Valószínűségszámítás\r | 2020. november 18, 5, 20.\r | 9. Gyakorlat\r | Normális eloszlás, Centrális határeloszlás-tétel\r | Végeredmények\r | 1. a) 0,8023\r | b) 3,02\r | 2. 2,005\r | 3. µ = 12,47, σ2 = 8,657\r | 4. N(30; 4,938)\r | 5. fZ(t) =\r | \r | \r | \r | 1\r | √\r | 2πte−t\r | 2\r | 0 < t\r | 0\r | egyébként\r | 6. ≈0,0104\r | 7. ≈138\r | 8. 2\r | 12\r | P\r | i=1\r | Xi −7\r | 9. ≈0,1894\r | 10. ≈3\r | 11. 9,439\r | "
+  }
+]

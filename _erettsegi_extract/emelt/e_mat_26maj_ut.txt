@@ -1,0 +1,2082 @@
+
+===== PAGE 1 =====
+ 
+Javítási-értékelési útmutató 
+Matematika 
+ 
+Nat2020 
+E2513 
+OKTATÁSI HIVATAL 
+MATEMATIKA 
+ 
+EMELT SZINTŰ 
+ÍRÁSBELI VIZSGA 
+JAVÍTÁSI-ÉRTÉKELÉSI 
+ÚTMUTATÓ 
+ 
+É R E T T S É G I V I Z S G A • 2 0 2 6 . m á j u s 5 . 
+
+===== PAGE 2 =====
+ 
+Javítási-értékelési útmutató 
+Matematika 
+2 / 19 
+emelt szintű írásbeli vizsga 
+E2513 
+ 
+2026. május 5. 
+Fontos tudnivalók 
+ 
+ 
+Formai előírások: 
+ 
+1. Kérjük, hogy a dolgozatot a vizsgázó által használt színűtől eltérő színű tollal, olvas-
+hatóan javítsa ki. 
+2. A feladatok mellett található szürke téglalapok közül az elsőben a feladatra adható ma-
+ximális pontszám van, a javító által adott pontszám a mellette levő téglalapba 
+kerüljön. 
+3. Kifogástalan megoldás esetén kérjük, hogy a maximális pontszám feltüntetése mellett 
+kipipálással jelezze, hogy az adott gondolati egységet látta, és jónak minősítette. 
+4. Hiányos/hibás megoldás esetén kérjük, hogy a hiba jelzése mellett az egyes részpont-
+számokat is írja rá a dolgozatra. Ha a dolgozat javítását jobban követhetővé teszi, akkor 
+a vizsgázó által elvesztett részpontszámok jelzése is elfogadható. Ne maradjon olyan 
+részlet a megoldásban, amelyről a javítás után nem nyilvánvaló, hogy helyes, hibás vagy 
+fölösleges. 
+5. A javítás során alkalmazza az alábbi jelöléseket. 
+ helyes lépés: kipipálás 
+ elvi hiba: kétszeres aláhúzás 
+ számolási hiba vagy más, nem elvi hiba: egyszeres aláhúzás 
+ rossz kiinduló adattal végzett helyes lépés: szaggatott vagy áthúzott kipipálás 
+ hiányos indoklás, hiányos felsorolás vagy más hiány: hiányjel 
+ nem érthető rész: kérdőjel és/vagy hullámvonal 
+6. Az ábrán kívül ceruzával írt részeket ne értékelje. 
+ 
+Tartalmi kérések: 
+ 
+1. Egyes feladatoknál több megoldás pontozását is megadtuk. Amennyiben azoktól eltérő 
+megoldás születik, keresse meg ezen megoldásoknak az útmutató egyes részleteivel 
+egyenértékű részeit, és ennek alapján pontozzon. 
+2. A pontozási útmutató pontjai tovább bonthatók, hacsak az útmutató másképp nem 
+rendelkezik. Az adható pontszámok azonban csak egész pontok lehetnek. 
+3. Ha a megoldásban számolási hiba, pontatlanság van, akkor csak arra a részre nem jár 
+pont, ahol a tanuló a hibát elkövette. Ha a hibás részeredménnyel helyes gondolatmenet 
+alapján tovább dolgozik, és a megoldandó probléma lényegében nem változik meg, ak-
+kor a következő részpontszámokat meg kell adni. 
+4. Elvi hibát követően egy gondolati egységen belül (ezeket az útmutatóban kettős vonal 
+jelzi) a formálisan helyes matematikai lépésekre sem jár pont. Ha azonban a tanuló  
+az elvi hibával kapott rossz eredménnyel – mint kiinduló adattal – helyesen számol to-
+vább a következő gondolati egységekben vagy részkérdésekben, akkor ezekre a részekre 
+kapja meg a maximális pontot, ha a megoldandó probléma lényegében nem változott 
+meg. 
+5. Ha az útmutatóban egy megjegyzés zárójelben szerepel, akkor ennek hiánya esetén is 
+teljes értékű a megoldás. 
+
+===== PAGE 3 =====
+ 
+Javítási-értékelési útmutató 
+Matematika 
+3 / 19 
+emelt szintű írásbeli vizsga 
+E2513 
+ 
+2026. május 5. 
+ 
+6. Mértékegység hiánya esetén csak akkor jár pontlevonás, ha a hiányzó mértékegység 
+válaszban vagy mértékegység-átváltásban szerepel (zárójel nélkül). 
+7. Egy feladatra adott többféle megoldási próbálkozás közül a vizsgázó által megjelölt 
+változat értékelhető. A javítás során egyértelműen jelezze, hogy melyik változatot ér-
+tékelte, és melyiket nem. 
+8. A megoldásokért jutalompont (az adott feladatra vagy feladatrészre előírt maximális 
+pontszámot meghaladó pont) nem adható. 
+9. Egy feladatra vagy részfeladatra adott összpontszám nem lehet negatív. 
+10. Az olyan részszámításokért, részlépésekért nem jár pontlevonás, melyek hibásak, de 
+amelyeket a feladat megoldásához a vizsgázó ténylegesen nem használ fel. 
+11. A gondolatmenet kifejtése során a zsebszámológép használata – további matemati-
+kai indoklás nélkül – a következő műveletek elvégzésére fogadható el: összeadás, 
+kivonás, szorzás, osztás, hatványozás, gyökvonás, n!, n
+k
+
+
+
+
+
+
+ kiszámítása, a függvénytáb-
+lázatban fellelhető táblázatok helyettesítése (sin, cos, tg, log és ezek inverzei), a π és az 
+e szám közelítő értékének megadása, nullára rendezett másodfokú egyenlet gyökeinek 
+meghatározása. További matematikai indoklás nélkül használhatók a számológépek az 
+átlag és a szórás kiszámítására abban az esetben, ha a feladat szövege kifejezetten nem 
+követeli meg az ezzel kapcsolatos részletszámítások bemutatását is. Egyéb esetekben 
+a géppel elvégzett számítások indoklás nélküli lépéseknek számítanak, így azokért 
+nem jár pont. 
+12. Az ábrák bizonyító erejű felhasználása (például adatok leolvasása méréssel) nem elfo-
+gadható. 
+13. Valószínűségek megadásánál (ha a feladat szövege másképp nem rendelkezik) a száza-
+lékban megadott helyes válasz is elfogadható. 
+14. Ha egy feladat szövege nem ír elő kerekítési kötelezettséget, akkor az útmutatóban meg-
+adottól eltérő, észszerű és helyes kerekítésekkel kapott rész- és végeredmény is elfo-
+gadható. 
+15. A vizsgafeladatsor II. részében kitűzött 5 feladat közül csak 4 feladat megoldása 
+értékelhető. A vizsgázó az erre a célra szolgáló négyzetben – feltehetőleg – megjelölte 
+annak a feladatnak a sorszámát, amelynek értékelése nem fog beszámítani az összpont-
+számába. Ennek megfelelően a megjelölt feladatra esetlegesen adott megoldást nem is 
+kell javítani. Ha a vizsgázó nem jelölte meg, hogy melyik feladat értékelését nem kéri, 
+és a választás ténye a dolgozatból sem derül ki egyértelműen, akkor a nem értékelendő 
+feladat automatikusan a kitűzött sorrend szerinti utolsó feladat lesz. 
+ 
+ 
+
+===== PAGE 4 =====
+ 
+Javítási-értékelési útmutató 
+Matematika 
+4 / 19 
+emelt szintű írásbeli vizsga 
+E2513 
+ 
+2026. május 5. 
+ 
+I. 
+ 
+1. a) 
+Az első egyenlőtlenségben elvégezve a négyzetre 
+emelést: 
+2
+2
+2
+15
+4
+4.
+x
+x
+x
+x
+
+
+
+
+
+ 
+1 pont  
+Innen x  9,5. 
+1 pont  
+A 
+2
+2
+9
+18
+0
+x
+x
+
+
+
+ másodfokú egyenlet megoldásai 
+–1,5 és 6. 
+1 pont  
+A főegyüttható pozitív, 
+1 pont Ez a pont jár egy megfe-
+lelő ábra esetén is. 
+így a második egyenlőtlenség megoldása x  –1,5 
+vagy x  6. 
+1 pont  
+A két egyenlőtlenség megoldását összevetve az 
+egyenlőtlenségrendszer megoldása: 
+x  –1,5 vagy 6  x  9,5. 
+1 pont x  ]–∞; –1,5]  [6; 9,5] 
+Összesen: 
+6 pont  
+ 
+1. b) első megoldás 
+Ha Döme x kg almát vásárolt, akkor x – 1 kg manda-
+rint vett (x  1). Egy kg alma 21
+x petákba, egy kg 
+mandarin 20
+1
+x  petákba kerül. 
+Megoldandó az alábbi egyenlet: 
+21
+20
+14.
+1
+x
+x
+
+
+
+ 
+2 pont  
+A közös (nem nulla) nevezővel szorozva: 
+21(x – 1) + 20x  14x(x – 1). 
+1 pont  
+Rendezve: 
+2
+14
+55
+21
+0.
+x
+x
+
+
+
+ 
+1 pont  
+x  3,5 kg almát vett Döme, 
+1 pont  
+kilogrammonként 21
+6
+3,5 
+ petákért. 
+1 pont  
+x  3
+7 nem megoldás (mert ekkor x  1). 
+1 pont  
+Ellenőrzés a szöveg alapján: Ha Döme 3,5 kg almát 
+vásárolt, akkor 2,5 kg mandarint vett, kilogrammon-
+ként (14 – 6 ) 8 petákért, és így a 2,5 kg mandarin-
+ért valóban 20 petákot fizetett. 
+1 pont  
+Összesen: 
+8 pont  
+
+===== PAGE 5 =====
+ 
+Javítási-értékelési útmutató 
+Matematika 
+5 / 19 
+emelt szintű írásbeli vizsga 
+E2513 
+ 
+2026. május 5. 
+ 
+1. b) második megoldás 
+Ha 1 kg alma ára y peták, akkor 1 kg mandarin ára 
+14 – y peták (0  y  14). Almából 21
+y kg-ot, manda-
+rinból 
+20
+14
+y
+
+ kg-ot vett Döme. 
+Megoldandó az alábbi egyenlet: 
+21
+20
+1.
+14
+y
+y
+
+
+
+ 
+2 pont  
+A közös (nem nulla) nevezővel szorozva: 
+21(14 – y)  20y + y(14 – y). 
+1 pont  
+Rendezve: 
+2
+55
+294
+0.
+y
+y
+
+
+
+ 
+1 pont  
+y  6 peták 1 kg alma ára, 
+1 pont  
+tehát 21
+3,5
+6 
+ kg almát vásárolt Döme. 
+1 pont  
+y  49 nem megoldás (mert ekkor y  14). 
+1 pont  
+Ellenőrzés a szöveg alapján: Ha 1 kg alma ára 6 pe-
+ták, akkor 1 kg mandarin ára (14 – 6 ) 8 peták, így 
+20
+8
+
+
+
+
+
+
+
+ 2,5 kg mandarint vett Döme, ami valóban 
+1 kg-mal kevesebb az alma mennyiségénél. 
+1 pont  
+Összesen: 
+8 pont  
+ 
+1. b) harmadik megoldás 
+Ha Döme x kg almát vásárolt, akkor x – 1 kg manda-
+rint vett (x  1). Egy kg alma ára legyen y peták, ek-
+kor 1 kg mandarin ára 14 – y peták. 
+Megoldandó az alábbi egyenletrendszer: 
+21
+(
+1)(14
+)
+20.
+xy
+x
+y
+
+
+
+
+
+
+
+ 
+2 pont  
+A második egyenletben a zárójel felbontása után xy 
+helyére 21-et behelyettesítve: 14x – 21 – 14 + y  20. 
+Innen y  55 – 14x. 
+1 pont  
+Ezt az első egyenletbe helyettesítve, majd rendezve: 
+2
+0
+14
+55
+21.
+x
+x
+
+
+
+ 
+1 pont  
+x  3,5 kg almát vett Döme, 
+1 pont  
+kilogrammonként 
+21
+6
+3,5
+y 
+
+ petákért. 
+1 pont  
+x  3
+7 nem megoldás (mert ekkor x  1). 
+1 pont  
+ 
+ 
+
+===== PAGE 6 =====
+ 
+Javítási-értékelési útmutató 
+Matematika 
+6 / 19 
+emelt szintű írásbeli vizsga 
+E2513 
+ 
+2026. május 5. 
+ 
+Ellenőrzés a szöveg alapján: Ha Döme 3,5 kg almáért 
+21 petákot fizetett, akkor 2,5 kg mandarint vett, kiló-
+ját 
+20
+2,5
+
+
+
+
+
+
+
+ 8 petákért, és így 1 kg alma és 1 kg man-
+darin árának összege valóban 14 peták. 
+1 pont  
+Összesen: 
+8 pont  
+ 
+2. a)  
+1957-től 2026-ig 69 év telt el. 
+1 pont  
+Az 1957-ben a környezetbe jutott stroncium-90-ből 
+69
+29
+(69)
+32 0,5
+f
+
+
+ ≈ 
+1 pont  
+≈ 6,15 (gramm) található meg még a környezetben 
+2026-ban. 
+1 pont  
+Összesen: 
+3 pont  
+ 
+2. b)  
+(Az exponenciális csökkenés miatt elegendő a válto-
+zást az első évben megvizsgálni.) 
+1
+1
+29
+29
+(1)
+0,5
+0,5
+(0)
+f
+m
+f
+m
+
+
+
+ ≈ 
+1 pont* 
+Egy év alatt 
+1
+29
+0,5
+-szere-
+sére változik a stroncium-
+90 tömege. 
+≈ 0,976 
+1 pont  
+Tehát (100 – 97,6 ) 2,4 %-kal csökken évente a 
+stroncium-90 tömege. 
+1 pont  
+Összesen: 
+3 pont  
+Megjegyzés: A *-gal jelölt pont akkor is jár, ha a vizsgázó (29 évet figyelembe véve) 29 0,5 
+értékét, vagy (69 évet figyelembe véve) 69 6,15
+32 értékét határozza meg. 
+ 
+2. c)  
+Jelölje t a stroncium-90 környezetbe kerülésétől a 
+2026-ig eltelt évek számát. Ekkor 
+29
+33,3
+50 0,5 .
+t
+
+
+ 
+1 pont  
+29
+0,666
+0,5
+t
+
+ 
+1 pont  
+0,5
+log
+0,666
+29
+t 
+ 
+1 pont  
+0,5
+29 log
+0,666
+t 
+
+ ≈ 17 
+1 pont 
+lg0,666
+29
+lg0,5
+t =
+⋅
+ 
+Tehát (2026 – 17 ) 2009-ben kerülhetett az 
+50 gramm stroncium-90 a környezetbe. 
+1 pont  
+Összesen: 
+5 pont  
+ 
+ 
+
+===== PAGE 7 =====
+ 
+Javítási-értékelési útmutató 
+Matematika 
+7 / 19 
+emelt szintű írásbeli vizsga 
+E2513 
+ 
+2026. május 5. 
+ 
+3. a) első megoldás 
+A 300-nál nem nagyobb pozitív egész számok közül 
+2-vel minden második szám, tehát 150 db, 
+3-mal minden harmadik szám, tehát 100 db, 
+5-tel minden ötödik szám, azaz 60 db osztható. 
+1 pont  
+2-vel és 3-mal minden hatodik szám, tehát 50 db, 
+2-vel és 5-tel minden tizedik szám, tehát 30 db, 
+3-mal és 5-tel minden tizenötödik szám, azaz 20 db 
+osztható. 
+1 pont  
+Végül 2-vel és 3-mal és 5-tel minden harmincadik 
+szám, azaz 10 db osztható. 
+1 pont  
+A logikaiszita-formula alapján 2-vel vagy 3-mal vagy 
+5-tel 150 + 100 + 60 – (50 + 30 + 20) + 10  220 db 
+szám osztható. 
+1 pont  
+Így (300 – 220 ) 80 db olyan szám van, amely sem 
+2-vel, sem 3-mal, sem 5-tel nem osztható. 
+1 pont  
+Összesen: 
+5 pont  
+ 
+3. a) második megoldás 
+Jelölje a (300-nál nem nagyobb) 2-vel osztható szá-
+mok halmazát A, a 3-mal oszthatókét B, az 5-tel oszt-
+hatókét pedig C. 
+2-vel, 3-mal és 5-tel minden harmincadik szám, azaz 
+10 db osztható, ezért | A  B  C |  10. 
+1 pont 
+ 
+A csak 2-vel és 3-mal (de 5-tel nem) osztható számok 
+száma: | (A  B) \ C |  (| A  B | – | A  B  C | ) 
+ 50 – 10  40 db. 
+Hasonlóan csak 2-vel és 5-tel (de 3-mal nem) oszt-
+ható: | (A  C) \ B |  30 – 10  20 db, 
+csak 3-mal és 5-tel (de 2-vel nem) osztható: 
+| (B  C) \ A |  20 – 10  10 db szám. 
+1 pont 
+ 
+A csak 2-vel (de 3-mal és 5-tel nem) osztható számok 
+száma: 
+| A \ (B  C) |  (| A | – | (A  B) \ C | – | (A  C) \ B | – 
+– | A  B  C | ) 150 – 40 – 20 – 10  80. 
+1 pont 
+ 
+ 
+ 
+
+===== PAGE 8 =====
+ 
+Javítási-értékelési útmutató 
+Matematika 
+8 / 19 
+emelt szintű írásbeli vizsga 
+E2513 
+ 
+2026. május 5. 
+ 
+Hasonlóan csak 3-mal osztható: 
+| B \ (A  C) |  100 – 40 – 10 – 10  40 db, 
+csak 5-tel osztható: 
+| C \ (A  B) |  60 – 20 – 10 – 10  20 db szám. 
+1 pont 
+ 
+Így (300 – 10 – 40 – 20 – 10 – 80 – 40 – 20 ) 80 db 
+olyan szám van, amely sem 2-vel, sem 3-mal, sem 
+5-tel nem osztható. 
+1 pont 
+ 
+Összesen: 
+5 pont  
+Megjegyzés: Ha a vizsgázó helyesen kitöltött Venn-diagram alapján jól válaszol, akkor a tel-
+jes pontszám jár. 
+ 
+3. a) harmadik megoldás 
+A 2-nek, a 3-nak és az 5-nek a legkisebb közös több-
+szöröse a 30, vizsgáljuk ezért először az első 30 pozi-
+tív egész számot. 
+1 pont 
+Ez a pont akkor is jár, ha 
+ez a gondolat csak a meg-
+oldásból derül ki. 
+A 30-nál nem nagyobb sem 2-vel, sem 3-mal, sem 
+5-tel nem osztható számok: 1, 7, 11, 13, 17, 19, 23 és 
+a 29 (8 db). 
+2 pont  
+Ugyanígy 31-től 60-ig 8 db, 61-től 90-ig 8 db, és így 
+tovább, végül 271-től 300-ig szintén 8 db sem 2-vel, 
+sem 3-mal, sem 5-tel nem osztható szám van. 
+1 pont  
+Tehát a 300-nál nem nagyobb pozitív egész számok 
+között 8 10  80 megfelelő szám van. 
+1 pont  
+Összesen: 
+5 pont  
+ 
+ 
+
+===== PAGE 9 =====
+ 
+Javítási-értékelési útmutató 
+Matematika 
+9 / 19 
+emelt szintű írásbeli vizsga 
+E2513 
+ 
+2026. május 5. 
+ 
+3. b) 
+Egy megfelelő háromelemű részhalmazban pontosan 
+egy olyan szám szerepelhet, amely 2-vel osztható, de 
+4-gyel nem, a másik két szám pedig csak páratlan le-
+het. 
+1 pont 
+Ez a pont akkor is jár, ha 
+ez a gondolat csak a meg-
+oldásból derül ki. 
+A 4-gyel nem osztható páros szám a 
+2, 6, 10, 14, …, 294, 298 számok közül bármelyik le-
+het, ami 300
+4
+
+
+
+
+
+
+
+ 75 lehetőség. 
+1 pont 
+A 2-től kezdve minden 
+második páros szám nem 
+osztható 4-gyel, így 
+150
+75
+2 =
+ db 4-gyel nem 
+osztható páros szám van. 
+A 150 páratlan szám közül a maradék kettőt 
+150
+11175
+2
+
+
+
+
+
+
+-féleképpen választhatjuk ki, 
+1 pont  
+így a H halmaznak összesen 75  11 175  838 125 
+megfelelő részhalmaza van. 
+1 pont  
+Összesen: 
+4 pont  
+ 
+3. c) első megoldás 
+H-nak 300
+300
+300
+299
+1
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ darab 299 elemű rész-
+halmaza van. 
+1 pont  
+H elemeinek összege páros (mert páros számú párat-
+lan eleme van), így akkor kapunk páros összeget, ha 
+a halmazból egy páros számot hagyunk el. 
+1 pont 
+1 300 300
+45150
+2
+H
+S
++
+=
+⋅
+=
+ 
+Így a H halmaznak 150 darab olyan 299 elemű rész-
+halmaza van, amelyben az elemek összege páros. 
+1 pont  
+Összesen: 
+3 pont  
+ 
+3. c) második megoldás 
+H-ból egy elemet elhagyva kapunk 299 elemű rész-
+halmazt, ezért 300 darab 299 elemű részhalmaz van. 
+1 pont  
+150 esetben páros, 150 esetben pedig páratlan elemet 
+hagyunk el, ezért a 300 darab részhalmaz felében lesz 
+páros az elemek összege. 
+1 pont  
+Így a H halmaznak 150 darab olyan 299 elemű rész-
+halmaza van, amelyben az elemek összege páros. 
+1 pont  
+Összesen: 
+3 pont  
+ 
+ 
+
+===== PAGE 10 =====
+ 
+Javítási-értékelési útmutató 
+Matematika 
+10 / 19 
+emelt szintű írásbeli vizsga 
+E2513 
+ 
+2026. május 5. 
+ 
+4. a) 
+A koszinusztételt felírva az ABD háromszög AB olda-
+lára: 
+2
+2
+2
+35
+40
+2 35 40 cos120
+AB 
+
+
+
+
+ 
+1 pont  
+ 4225, amiből AB  65 cm valóban. 
+1 pont  
+Összesen: 
+2 pont  
+ 
+4. b) 
+A Pitagorasz-tételt az ABC háromszög BC oldalára 
+felírva: 
+2
+2
+65
+39
+BC 
+
+ 
+1 pont  
+ 52 cm. 
+1 pont  
+39 52
+1014
+2
+ABC
+T
+
+
+
+ cm2 
+1 pont  
+35 40 sin120
+2
+ABD
+T
+
+
+
+
+ ≈ 606,2 cm2 
+1 pont  
+ADBC
+T
+1014 – 606,2  407,8 cm2 
+1 pont  
+Összesen: 
+5 pont  
+ 
+4. c) 
+Az érintőnégyszögek szemközti oldalainak összege 
+egyenlő, tehát (a szokásos jelöléssel) a + c  b + d. 
+1 pont  
+Ekkor például 
+2
+2
+.
+2
+2
+a b c d
+a
+c
+s
+a
+a
+a
+a c
+a
+c
++ + +
++
+−
+=
+−
+=
+−
+=
++ −
+=
+ 
+2 pont Mivel a + c  b + d  s, 
+ezért s – a  c. 
+Ugyanígy s – b  d, s – c  a és s – d  b. 
+1 pont  
+Tehát 
+(
+)(
+)(
+)(
+)
+T
+s a s b s c s d
+=
+−
+−
+−
+−
+= 
+cdab
+abcd
+=
+=
+ valóban. 
+1 pont  
+Összesen: 
+5 pont  
+ 
+4. d) 
+Mivel a négyszög érintőnégyszög, ezért a negyedik 
+oldalának hossza HE  21 + 42 – 56  7 cm. 
+1 pont  
+A négyszög területe 
+21 56 42 7
+588
+
+
+
+
+ cm2. 
+1 pont  
+Összesen: 
+2 pont  
+Megjegyzés: Ha a vizsgázó válaszait mértékegység nélkül adja meg, akkor ezért a feladatban 
+összesen 1 pontot veszítsen. 
+ 
+ 
+
+===== PAGE 11 =====
+ 
+Javítási-értékelési útmutató 
+Matematika 
+11 / 19 
+emelt szintű írásbeli vizsga 
+E2513 
+ 
+2026. május 5. 
+ 
+II. 
+ 
+5. a) 
+Ha a három tag közül a középső a, akkor a három tag 
+átlaga is (
+6)
+(
+6)
+3
+a
+a
+a
+
+
+
+
+
+
+
+
+
+
+
+a. 
+1 pont  
+A három tag szórása: 
+2
+2
+2
+( 6)
+0
+6
+3
+
+
+
+ 
+1 pont  
+72
+24
+2 6
+3
+
+
+
+ valóban. 
+1 pont  
+Összesen: 
+3 pont  
+Megjegyzés: Ha a vizsgázó egy konkrét (6 differenciájú) számtani sorozat három egymást 
+követő tagjára igazolja az állítást, akkor ezért 1 pontot kaphat. 
+ 
+5. b) 
+A feladat szövege alapján megoldandó egyenlet: 
+2 2
+(
+1) ( 0,2)
+2
+n
+n
+S
+n
+n
+
+
+
+
+
+
+. 
+1 pont  
+1. eset: 2 2
+(
+1) ( 0,2)
+2
+n
+n
+n
+
+
+
+
+
+. 
+2-vel szorozva és n-nel osztva (n  0): 
+4 + (n  1) ꞏ (0,2)  2, 
+1 pont 
+2
+2
+0,1
+0,1
+n
+n
+n
+n
+−
++
+=
+ 
+innen 0,2n  2,2, azaz n  11, 
+1 pont 0,1n(n  11)  0 
+(n  0) n  11 
+2. eset: 2 2
+(
+1) ( 0,2)
+2
+n
+n
+n
+
+
+
+
+. 
+2-vel szorozva és n-nel osztva (n  0): 
+4 + (n  1) ꞏ (0,2)  –2, 
+1 pont 
+2
+2
+0,1
+0,1
+n
+n
+n
+n
+−
++
+= − 
+innen 0,2n  6,2, azaz n  31. 
+1 pont 0,1n(n  31)  0 
+(n  0) n  31 
+Ellenőrzés: az 1. esetben S11  11, a 2. esetben pedig 
+S31  31, tehát mindkét érték valóban megfelel. 
+1 pont  
+Összesen: 
+6 pont 
+ 
+ 
+ 
+
+===== PAGE 12 =====
+ 
+Javítási-értékelési útmutató 
+Matematika 
+12 / 19 
+emelt szintű írásbeli vizsga 
+E2513 
+ 
+2026. május 5. 
+ 
+5. c) 
+Jelölje a két keresett számot a és b (a  0 és b  0). 
+Megoldandó az alábbi egyenletrendszer: 
+5
+2
+2
+4,8.
+1
+1
+a
+b
+a
+b
+
+
+
+
+
+
+
+
+
+ 
+2 pont 
+5
+2
+2
+4,8
+a
+b
+ab
+a
+b
+
+
+
+
+
+
+
+
+
+ 
+Az első egyenletből b  10 – a, 
+ezt a másodikba helyettesítve: 
+2
+4,8.
+1
+1
+10
+a
+a
+
+
+
+ 
+1 pont 
+Az első egyenletből 
+a + b  10, 
+ezt a másodikba helyette-
+sítve: ab  24. 
+2
+4,8
+10
+(10
+)
+a
+a
+a
+a
+
+
+
+
+, azaz 2 (10
+)
+4,8.
+10
+a
+a
+
+
+ 
+1 pont b  10 – a, 
+amiből a(10 – a)  24. 
+Rendezve: 
+2
+10
+24
+0.
+
+
+
+a
+a
+ 
+1 pont  
+Ennek megoldásai a  4 (ekkor b  6) vagy a  6 (ek-
+kor b  4), tehát a két szám a 4 és a 6 (ezek megfelel-
+nek mindkét feltételnek), 
+1 pont  
+négyzetes közepük pedig 
+2
+2
+4
+6
+26
+2
+
+
+ ≈ 5,1. 
+1 pont  
+Összesen: 
+7 pont  
+ 
+6. a) első megoldás 
+Az állítás igaz. 
+1 pont  
+Ha minden pont fokszáma legalább 2, akkor a gráf 
+fokszámösszege legalább 18, tehát legalább 9 éle 
+van. 
+1 pont  
+Ez több, mint a kilencpontú fagráf éleinek száma (8), 
+így biztosan van benne kör. 
+1 pont  
+Összesen: 
+3 pont  
+ 
+6. a) második megoldás 
+Az állítás igaz. 
+1 pont  
+Ha egy összefüggő gráfban nincs kör, akkor az 
+fagráf. Minden fagráfnak van 1-es fokszámú pontja. 
+1 pont  
+Ennek a gráfnak nincs (így ez nem fagráf), tehát van 
+benne kör. 
+1 pont  
+Összesen: 
+3 pont  
+ 
+ 
+
+===== PAGE 13 =====
+ 
+Javítási-értékelési útmutató 
+Matematika 
+13 / 19 
+emelt szintű írásbeli vizsga 
+E2513 
+ 
+2026. május 5. 
+ 
+6. a) harmadik megoldás 
+Az állítás igaz. 
+1 pont  
+Kezdjük el bejárni a gráf éleit a gráf egy tetszőleges 
+pontjából kiindulva. Mivel minden pont fokszáma 
+legalább 2, ezért minden új pontból tovább lehet 
+lépni egy korábban még be nem járt élen. 
+1 pont  
+Mivel a pontok száma véges, a bejárás során valami-
+kor (legkésőbb a kilencedik lépésben) mindenképpen 
+egy korábban már érintett pontba térünk vissza, tehát 
+a gráfban van kör. 
+1 pont  
+Összesen: 
+3 pont  
+ 
+6. b) 
+Az állítás megfordítása: Ha egy (kilencpontú, össze-
+függő, egyszerű) gráfban van kör, akkor minden 
+pontjának fokszáma legalább 2. 
+1 pont  
+Az állítás hamis. 
+1 pont  
+Jó ellenpélda. 
+1 pont  
+Összesen: 
+3 pont  
+ 
+6. c) első megoldás 
+Tegyük fel, hogy mindketten még csak az egymás el-
+leni mérkőzésüket játszották le, tehát a többi 7 játé-
+kos még nem játszott egyikükkel sem. 
+1 pont 
+Ez a pont akkor is jár, ha 
+ez a gondolat csak a meg-
+oldásból derül ki. 
+A többi 7 játékos egymás közt legfeljebb 7
+21
+2
+
+
+
+ 
+mérkőzést játszhatott, 
+1 pont  
+így (a Balázs–Attila mérkőzéssel együtt) összesen 
+legfeljebb 22 mérkőzésre kerülhetett volna sor. 
+1 pont  
+Mivel tudjuk, hogy már 23 mérkőzésre sor került, 
+ezért nem lehetséges, hogy Balázs és Attila még csak 
+az egymás elleni mérkőzésüket játszották le. 
+1 pont  
+Összesen: 
+4 pont  
+ 
+6. c) második megoldás 
+A bajnokságban 9
+36
+2
+
+
+
+ mérkőzésre kerül sor. 
+1 pont  
+Ha Balázs és Attila még csak az egymás elleni mér-
+kőzésüket játszották le, akkor mindkettőjüknek 7-7 
+mérkőzése még hátravan. 
+1 pont  
+(Mivel ezek között nincsenek azonosak, ezért) ez leg-
+alább 14 hátralévő mérkőzést jelent. 
+1 pont  
+De már csak (36 – 23 ) 13 mérkőzés van hátra, ezért 
+nem lehetséges, hogy Balázs és Attila még csak az 
+egymás elleni mérkőzésüket játszották le.  
+1 pont  
+Összesen: 
+4 pont  
+
+===== PAGE 14 =====
+ 
+Javítási-értékelési útmutató 
+Matematika 
+14 / 19 
+emelt szintű írásbeli vizsga 
+E2513 
+ 
+2026. május 5. 
+ 
+6. c) harmadik megoldás 
+Tekintsük azt a gráfot, amelynek pontjai a játékosok, 
+élei pedig a már lejátszott mérkőzések. 
+1 pont 
+Ez a pont akkor is jár, ha 
+ez a gondolat csak a meg-
+oldásból derül ki. 
+A feltétel szerint a gráfnak 23 éle van, pontjainak 
+fokszámösszege tehát 46. 
+1 pont  
+Ha Balázs és Attila még csak az egymás elleni mér-
+kőzésüket játszották le, akkor a B(alázs) és az A(ttila) 
+pontok fokszáma 1, a többi 7 pont fokszáma pedig 
+legfeljebb 6 lehet. 
+1 pont  
+Egy ilyen gráf fokszámösszege tehát legfeljebb 
+(2 ꞏ 1 + 7 ꞏ 6 ) 44 lehet, ezért nem lehetséges, hogy 
+Balázs és Attila még csak az egymás elleni mérkőzé-
+süket játszották le. 
+1 pont  
+Összesen: 
+4 pont  
+ 
+6. d) első megoldás 
+A bajnokságban összesen 9
+36
+2
+
+
+
+ mérkőzésre kerül 
+sor. 
+1 pont  
+36 mérkőzés közül 23-at 36
+23
+
+
+
+
+
+
+( 2 310 789 600)-fé-
+leképpen választhatunk ki (összes eset száma). 
+1 pont  
+A 36 mérkőzés között 3
+3
+2
+
+
+
+ olyan van, amelyen 
+két balkezes játszik egymással, tehát a kedvező ese-
+tek azok, amikor a másik 33 mérkőzés közül választ-
+juk ki a 23 mérkőzést. 
+1 pont  
+A kedvező esetek száma 33
+23
+
+
+
+
+
+
+( 92 561 040). 
+1 pont  
+Annak a valószínűsége, hogy a kiválasztott mérkőzé-
+sek között nincs olyan, amelyen két balkezes játszik 
+egymással, 
+33
+23
+36
+23
+
+
+
+
+
+
+
+
+
+
+
+
+ ≈ 0,04006. 
+1 pont  
+Tehát nem igaz, hogy ez a valószínűség kisebb, mint 
+.
+1
+0,03.
+30 
+ 
+1 pont  
+Összesen: 
+6 pont  
+ 
+ 
+
+===== PAGE 15 =====
+ 
+Javítási-értékelési útmutató 
+Matematika 
+15 / 19 
+emelt szintű írásbeli vizsga 
+E2513 
+ 
+2026. május 5. 
+ 
+6. d) második megoldás 
+A bajnokságban összesen 9
+36
+2
+
+
+
+ mérkőzésre kerül 
+sor. 
+1 pont  
+A 36 mérkőzés között 3 olyan van, amelyen két bal-
+kezes játszik egymással, tehát annak a valószínűségét 
+keressük, hogy a másik 33 mérkőzés közül választjuk 
+ki mind a 23 mérkőzést. 
+1 pont  
+Válasszuk ki a mérkőzéseket egyesével. Annak a va-
+lószínűsége, hogy az első kiválasztott mérkőzés meg-
+felelő, 33
+36 . 
+1 pont  
+Annak a valószínűsége, hogy ezután a második kivá-
+lasztott mérkőzés is megfelelő, 32
+35 . És így tovább, 
+annak a valószínűsége, hogy az utolsó (23.) kiválasz-
+tott mérkőzés is megfelelő, 11.
+14 
+1 pont  
+Annak a valószínűsége, hogy a kiválasztott mérkőzé-
+sek között nincs olyan, amelyen két balkezes játszik 
+egymással, ezek szorzata, tehát 
+33 32 31 30 29
+11
+13 12 11
+143
+...
+36 35 34 33 32
+14
+36 35 34
+3570
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+1 pont  
+119
+1 ,
+3570
+30
+
+
+ ezért nem igaz, hogy ez a valószínű-
+ség kisebb 1
+30 -nál. 
+1 pont  
+Összesen: 
+6 pont  
+ 
+7. a)  
+A, D, E 
+1-1 pont 
+Minden tévesen megadott 
+betűjelért 1 pont levonás 
+jár. 
+Összesen: 
+3 pont  
+ 
+7. b)  
+(A parabola az [1; 7] intervallumon az x tengely „fe-
+lett” van, így) a síkidom területe 
+7
+7
+3
+2
+1
+1
+3
+x
+x dx
+
+
+
+
+
+
+
+
+
+ 
+1 pont  
+343
+1
+114
+3
+3
+
+
+
+ területegység. 
+1 pont  
+ 
+ 
+
+===== PAGE 16 =====
+ 
+Javítási-értékelési útmutató 
+Matematika 
+16 / 19 
+emelt szintű írásbeli vizsga 
+E2513 
+ 
+2026. május 5. 
+ 
+Ha a keresett egyenes egyenlete x  p, akkor 
+3
+2
+1
+1
+3
+p
+p
+x
+x dx
+
+
+
+
+
+
+
+
+
+ 
+1 pont 
+7
+7
+3
+2
+3
+p
+p
+x
+x dx
+
+
+
+
+
+
+
+
+
+ 
+3 1
+114
+57.
+3
+2
+p 
+
+
+
+ 
+1 pont 
+3
+3
+7
+57
+3
+p
+
+
+
+ 
+Innen 
+3
+3
+3 57
+1
+172
+p 
+
+
+
+ ≈ 5,56. 
+(Az egyenes egyenlete tehát 
+3 172.
+x 
+) 
+1 pont 
+3
+3
+343
+3 57
+172
+p 
+
+
+
+ 
+Összesen: 
+5 pont  
+ 
+7. c)  
+Mivel a függvénynek 1-ben és 7-ben szélsőértéke 
+van, ezért 
+(1)
+(7)
+0.
+g
+g
+
+
+
+
+ 
+1 pont 
+Ez a pont akkor is jár, ha 
+ez a gondolat csak a meg-
+oldásból derül ki. 
+A g deriváltfüggvénye: 
+2
+( )
+3
+2
+.
+g x
+x
+bx
+c
+
+
+
+
+ 
+1 pont  
+Felírható a következő egyenletrendszer: 
+(1)
+3
+2
+0
+(7)
+147 14
+0.
+g
+b
+c
+g
+b
+c
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+1 pont  
+A második egyenletből az elsőt kivonva kapjuk, hogy 
+144 + 12b  0, amiből b  –12. 
+1 pont 
+Az első egyenletből 
+c  –2b – 3, 
+amit a második egyen-
+letbe helyettesítve: 
+147 + 14b – 2b – 3  0. 
+Ebből b  –12. 
+Ezt az első egyenletbe behelyettesítve, majd az 
+egyenletet rendezve c  21. 
+1 pont  
+( )
+6
+2
+6
+24
+g x
+x
+b
+x
+′′
+=
++
+=
+−
+ 
+1 pont* 
+A 
+2
+( )
+3
+24
+21
+
+
+
+
+g x
+x
+x
+deriváltfüggvény grafi-
+konja felfelé nyíló para-
+bola, ezért az első deri-
+vált 1-nél pozitívból ne-
+gatívba, 7-nél pedig ne-
+gatívból pozitívba vált. 
+Tehát az 1 lokális maxi-
+mumhely, a 7 pedig loká-
+lis minimumhely. 
+(1)
+6 24
+18
+g′′
+=
+−
+= −
+ 
+(7)
+42 24 18
+g′′
+=
+−
+=
+ 
+Tehát az 1 lokális maximumhely, a 7 pedig lokális 
+minimumhely. 
+1 pont* 
+Mivel a függvény lokális maximumhelye az 1, 
+így g(1)  1 – 12  1 + 21 + d  6, amiből d  – 4. 
+(Tehát 
+3
+2
+( )
+12
+21
+4.
+g x
+x
+x
+x
+=
+−
++
+−
+) 
+1 pont  
+Összesen: 
+8 pont  
+Megjegyzés: A *-gal jelölt 2 pont akkor is jár, ha a vizsgázó arra hivatkozik, hogy ha egy har-
+madfokú függvény főegyütthatója pozitív, akkor két lokális szélsőértékhely esetén a kisebbik 
+értékhez (tehát a feladatban az x  1-hez) tartozik a lokális maximum. 
+ 
+ 
+
+===== PAGE 17 =====
+ 
+Javítási-értékelési útmutató 
+Matematika 
+17 / 19 
+emelt szintű írásbeli vizsga 
+E2513 
+ 
+2026. május 5. 
+ 
+8. a) 
+A körgyűrűcikk hosszabb sugara (100 : 2 ) 50 cm, 
+a rövidebb pedig (50 – 20 ) 30 cm. 
+1 pont  
+Így a területe 
+2
+2
+36
+(50
+30
+) 360
+
+
+°
+−
+⋅
+=
+°
+ 
+1 pont  
+ 160π ≈ 503 cm2. 
+1 pont  
+Összesen: 
+3 pont  
+ 
+8. b) 
+Egy forgatás esetén a nyeremény várható értéke: 
+1000  0,4 + 2000  0,1 + 3000  0,3 + 4000  0,2  
+ 2300 (Ft). 
+2 pont  
+Összesen: 
+2 pont  
+ 
+8. c) 
+(Három forgatással 6000 Ft-ot – a forgatások sor-
+rendjétől eltekintve – háromféleképpen érhetünk el.) 
+A  2000 + 2000 + 2000, 
+ennek valószínűsége: P(A)  0,1
+3  0,001. 
+1 pont  
+B  3000 + 2000 + 1000, és ezeket a nyereményeket 
+3!-féle sorrendben forgathatjuk ki. 
+P(B)  3! ꞏ 0,3 ꞏ 0,1 ꞏ 0,4  0,072 
+2 pont  
+C  4000 + 1000 + 1000, és ezeket a nyereményeket 
+3-féle sorrendben forgathatjuk ki. 
+P(C)  3 ꞏ 0,2 ꞏ 0,4 ꞏ 0,4  0,096 
+2 pont  
+A kérdezett valószínűség ezek összege, azaz 
+0,001 + 0,072 + 0,096  0,169. 
+1 pont  
+Összesen: 
+6 pont  
+ 
+8. d) 
+Az 1000 Ft-os nyeremény módosított valószínűségét 
+jelölje p, ekkor a 2000 Ft-os nyeremény módosított 
+valószínűsége 0,5 – p. 
+1 pont 
+Ez a pont akkor is jár, ha 
+ez a gondolat csak a meg-
+oldásból derül ki. 
+A várható értékre vonatkozó feltétel alapján: 
+1000  p + 2000  (0,5 – p) + 3000  0,3 + 4000  0,2  
+ 2500. 
+1 pont  
+2700 – 1000p  2500 
+1 pont  
+Így az 1000 Ft-os nyeremény valószínűsége p  0,2, 
+1 pont  
+a 2000 Ft-os nyeremény valószínűsége pedig 
+(0,5 – 0,2  0,3 legyen. 
+1 pont  
+Összesen: 
+5 pont  
+ 
+ 
+
+===== PAGE 18 =====
+ 
+Javítási-értékelési útmutató 
+Matematika 
+18 / 19 
+emelt szintű írásbeli vizsga 
+E2513 
+ 
+2026. május 5. 
+ 
+9. a) 
+Jelölje F az AB szakasz felezőpontját. 
+A körszelet körívének sugara Pitagorasz-tétellel: 
+2
+2
+30
+40
+50
+FC 
+
+
+ cm. 
+1 pont 
+ 
+A CD ívhez tartozó α középponti szögre 
+40
+tg
+,
+2
+30
+
+ 
+1 pont  
+amiből α ≈ 106,3°. 
+1 pont  
+A körcikk területe: 
+2
+106,3
+50
+360
+
+
+
+ ≈ 2319 cm2. 
+1 pont  
+Az FCD háromszög területe: 80 30
+1200
+2
+⋅
+=
+ cm2. 
+1 pont* 
+50 50 sin106,3
+2
+
+
+ 
+A körszelet területe így 2319 – 1200  1119 cm2, 
+tehát az alaplap területe 80  30 + 1119  3519 cm2. 
+1 pont*  
+Az akvárium térfogata 3519  35  123 165 cm3 ≈ 
+1 pont  
+≈ 123 liter. 
+1 pont 
+Ez a pont nem jár, ha a 
+vizsgázó nem kerekít, 
+vagy rosszul kerekít. 
+Összesen: 
+8 pont  
+ 
+Megjegyzés: A *-gal jelölt 2 pontot az alábbi gondolatmenetért is megkaphatja a vizsgázó. 
+A BCF háromszög és az AFD háromszög területének 
+összege: 
+40 30
+2
+1200
+2
+⋅
+⋅
+=
+cm2. 
+1 pont  
+Az alaplap területe így 2319 + 1200  3519 cm2. 
+1 pont  
+ 
+ 
+
+===== PAGE 19 =====
+ 
+Javítási-értékelési útmutató 
+Matematika 
+19 / 19 
+emelt szintű írásbeli vizsga 
+E2513 
+ 
+2026. május 5. 
+ 
+9. b)  
+A téglatest alaplapjának éleit jelöljük a-val és b-vel. 
+Ekkor a térfogatra felírható: a  b  35  126 000 cm3,  
+1 pont  
+amiből ab  3600 cm2, így 
+3600.
+b
+a
+
+ 
+1 pont  
+A téglatest felszíne: 
+252000
+3600
+2 35
+2 35
+3600
+70
+.
+a
+b
+a
+a
+
+
+
+
+
+ 
+1 pont  
+Vizsgáljuk a pozitív valós számokon értelmezett 
+252000
+( )
+3600
+70
+f a
+a
+a
+
+
+
+ függvényt. 
+Ennek ott lehet minimuma, ahol a deriváltja nulla. 
+1 pont*  
+2
+252000
+( )
+70
+0,
+f a
+a
+
+
+
+
+ 
+1 pont*  
+amiből (a > 0 miatt) a  60 cm. 
+1 pont*  
+Ha 0  a  60, akkor 
+( )
+0,
+f a
+
+
+ 
+ha pedig a  60, akkor 
+( )
+0,
+f a
+
+
+ 
+ezért ez valóban (abszolút) minimumhelye f-nek. 
+1 pont* 
+3
+504000
+( )
+0
+f
+a
+a
+
+
+
+ 
+minden a > 0 esetén. 
+Tehát a felszín akkor minimális, ha a  60 cm, 
+és ekkor 
+3600
+60
+60
+b 
+
+ cm szintén. 
+1 pont  
+Összesen: 
+8 pont  
+ 
+A *-gal jelölt pontokat a vizsgázó a következő gondolatmenetért is megkaphatja: 
+A téglatest felszíne akkor minimális, ha 
+252000
+70a
+a
+
+ értéke minimális. 
+1 pont  
+A (pozitív számokra felírt) számtani és mértani közép 
+közötti egyenlőtlenség miatt  
+3600
+3600
+70
+70 2
+140 60
+8400.
+a
+a
+a
+a
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+2 pont  
+Egyenlőség (és a felszínnek minimuma) pontosan ak-
+kor van, ha 
+3600.
+a
+a
+
+ 
+1 pont  
+ 

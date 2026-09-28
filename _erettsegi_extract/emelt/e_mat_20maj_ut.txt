@@ -1,0 +1,2225 @@
+
+===== PAGE 1 =====
+Matematika 
+emelt szint 
+ 
+Javítási-értékelési útmutató 2011 
+ 
+EMBERI ERŐFORRÁSOK MINISZTÉRIUMA 
+MATEMATIKA 
+ 
+EMELT SZINTŰ 
+ÍRÁSBELI VIZSGA 
+JAVÍTÁSI-ÉRTÉKELÉSI 
+ÚTMUTATÓ 
+ 
+É R E T T S É G I V I Z S G A • 2 0 2 0 . m á j u s 5 . 
+
+===== PAGE 2 =====
+Matematika — emelt szint 
+Javítási-értékelési útmutató 
+2011 írásbeli vizsga 
+2 / 21 
+2020. május 5. 
+Fontos tudnivalók 
+ 
+ 
+Formai előírások: 
+ 
+1. Kérjük, hogy a dolgozatot a vizsgázó által használt színűtől eltérő színű tollal, olvas-
+hatóan javítsa ki. 
+2. A feladatok mellett található szürke téglalapok közül az elsőben a feladatra adható ma-
+ximális pontszám van, a javító által adott pontszám a mellette levő téglalapba 
+kerüljön. 
+3. Kifogástalan megoldás esetén kérjük, hogy a maximális pontszám feltüntetése mellett 
+kipipálással jelezze, hogy az adott gondolati egységet látta, és jónak minősítette. 
+4. Hiányos/hibás megoldás esetén kérjük, hogy a hiba jelzése mellett az egyes részpont-
+számokat is írja rá a dolgozatra. Ha a dolgozat javítását jobban követhetővé teszi, akkor 
+a vizsgázó által elvesztett részpontszámok jelzése is elfogadható. Ne maradjon olyan 
+részlet a megoldásban, amelyről a javítás után nem nyilvánvaló, hogy helyes, hibás vagy 
+fölösleges. 
+5. A javítás során alkalmazza az alábbi jelöléseket. 
+• helyes lépés: kipipálás 
+• elvi hiba: kétszeres aláhúzás 
+• számolási hiba vagy más, nem elvi hiba: egyszeres aláhúzás 
+• rossz kiinduló adattal végzett helyes lépés: szaggatott vagy áthúzott kipipálás 
+• hiányos indoklás, hiányos felsorolás vagy más hiány: hiányjel 
+• nem érthető rész: kérdőjel és/vagy hullámvonal 
+6. Az ábrán kívül ceruzával írt részeket ne értékelje. 
+ 
+Tartalmi kérések: 
+ 
+1. Egyes feladatoknál több megoldás pontozását is megadtuk. Amennyiben azoktól eltérő 
+megoldás születik, keresse meg ezen megoldásoknak az útmutató egyes részleteivel 
+egyenértékű részeit, és ennek alapján pontozzon. 
+2. A pontozási útmutató pontjai tovább bonthatók, hacsak az útmutató másképp nem 
+rendelkezik. Az adható pontszámok azonban csak egész pontok lehetnek. 
+3. Ha a megoldásban számolási hiba, pontatlanság van, akkor csak arra a részre nem jár 
+pont, ahol a tanuló a hibát elkövette. Ha a hibás részeredménnyel helyes gondolatmenet 
+alapján tovább dolgozik, és a megoldandó probléma lényegében nem változik meg, ak-
+kor a következő részpontszámokat meg kell adni. 
+4. Elvi hibát követően egy gondolati egységen belül (ezeket az útmutatóban kettős vonal 
+jelzi) a formálisan helyes matematikai lépésekre sem jár pont. Ha azonban a tanuló  
+az elvi hibával kapott rossz eredménnyel – mint kiinduló adattal – helyesen számol to-
+vább a következő gondolati egységekben vagy részkérdésekben, akkor ezekre a részekre 
+kapja meg a maximális pontot, ha a megoldandó probléma lényegében nem változott 
+meg. 
+5. Ha a megoldási útmutatóban zárójelben szerepel egy megjegyzés vagy mértékegység, 
+akkor ennek hiánya esetén is teljes értékű a megoldás. 
+
+===== PAGE 3 =====
+Matematika — emelt szint 
+Javítási-értékelési útmutató 
+2011 írásbeli vizsga 
+3 / 21 
+2020. május 5. 
+ 
+6. Egy feladatra adott többféle megoldási próbálkozás közül a vizsgázó által megjelölt 
+változat értékelhető. A javítás során egyértelműen jelezze, hogy melyik változatot ér-
+tékelte, és melyiket nem. 
+7. A megoldásokért jutalompont (az adott feladatra vagy feladatrészre előírt maximális 
+pontszámot meghaladó pont) nem adható. 
+8. Egy feladatra vagy részfeladatra adott összpontszám nem lehet negatív. 
+9. Az olyan részszámításokért, részlépésekért nem jár pontlevonás, melyek hibásak, de 
+amelyeket a feladat megoldásához a vizsgázó ténylegesen nem használ fel. 
+10. A gondolatmenet kifejtése során a zsebszámológép használata – további matemati-
+kai indoklás nélkül – a következő műveletek elvégzésére fogadható el: összeadás, 
+kivonás, szorzás, osztás, hatványozás, gyökvonás, n!, 
+
+
+
+
+
+
+k
+n kiszámítása, a függvénytáb-
+lázatban fellelhető táblázatok helyettesítése (sin, cos, tg, log és ezek inverzei), a π és az 
+e szám közelítő értékének megadása, nullára rendezett másodfokú egyenlet gyökeinek 
+meghatározása. További matematikai indoklás nélkül használhatók a számológépek az 
+átlag és a szórás kiszámítására abban az esetben, ha a feladat szövege kifejezetten nem 
+követeli meg az ezzel kapcsolatos részletszámítások bemutatását is. Egyéb esetekben 
+a géppel elvégzett számítások indoklás nélküli lépéseknek számítanak, így azokért 
+nem jár pont. 
+11. Az ábrák bizonyító erejű felhasználása (például adatok leolvasása méréssel) nem elfo-
+gadható. 
+12. Valószínűségek megadásánál (ha a feladat szövege másképp nem rendelkezik) a száza-
+lékban megadott helyes válasz is elfogadható. 
+13. Ha egy feladat szövege nem ír elő kerekítési kötelezettséget, akkor az útmutatóban meg-
+adottól eltérő, észszerű és helyes kerekítésekkel kapott rész- és végeredmény is elfo-
+gadható. 
+14. A vizsgafeladatsor II. részében kitűzött 5 feladat közül csak 4 feladat megoldása 
+értékelhető. A vizsgázó az erre a célra szolgáló négyzetben – feltehetőleg – megjelölte 
+annak a feladatnak a sorszámát, amelynek értékelése nem fog beszámítani az összpont-
+számába. Ennek megfelelően a megjelölt feladatra esetlegesen adott megoldást nem is 
+kell javítani. Ha a vizsgázó nem jelölte meg, hogy melyik feladat értékelését nem kéri, 
+és a választás ténye a dolgozatból sem derül ki egyértelműen, akkor a nem értékelendő 
+feladat automatikusan a kitűzött sorrend szerinti utolsó feladat lesz. 
+ 
+ 
+
+===== PAGE 4 =====
+Matematika — emelt szint 
+Javítási-értékelési útmutató 
+2011 írásbeli vizsga 
+4 / 21 
+2020. május 5. 
+ 
+I. 
+ 
+1. a) első megoldás 
+A sorozat első négy tagja: a1, a1 + d, a1 + 2d, a1 + 3d. 
+1 pont 
+Ez a pont akkor is jár, ha 
+ez a gondolat csak a meg-
+oldásból derül ki. 
+A feltételek szerint 2a1 + 2d = 26 és 2a1 + 4d = 130. 
+1 pont  
+Innen (pl. a két egyenlet kivonása után) d = 52, 
+1 pont  
+és visszahelyettesítés után a1 = –39. 
+1 pont  
+A sorozat ötödik tagja a5 = a1 + 4d = 169. 
+(A sorozat első öt tagja: –39, 13, 65, 117, 169.) 
+1 pont  
+Összesen: 
+5 pont  
+ 
+1. a) második megoldás 
+A számtani sorozat ismert tulajdonsága miatt (három 
+szomszédos tag közül a középső a két szélsőnek a 
+számtani közepe): 
+1 pont 
+Ez a pont akkor is jár, ha 
+ez a gondolat csak a meg-
+oldásból derül ki. 
+1
+3
+2
+26
+13
+2
+2
+a
+a
+a
++
+=
+=
+=
+,  
+1 pont  
+és 
+2
+4
+3
+130
+65
+2
+2
+a
+a
+a
++
+=
+=
+=
+. 
+1 pont  
+d = (a3 – a2 = 65 – 13 =) 52. 
+1 pont  
+A sorozat ötödik tagja a5 = a3 + 2d = 169. 
+1 pont  
+Összesen: 
+5 pont  
+ 
+1. b) első megoldás 
+A sorozat első négy tagja: 
+b1, b1q, b1q2, b1q3 (b1≠ 0, q ≠ 0). 
+1 pont 
+Ez a pont akkor is jár, ha 
+ez a gondolat csak a meg-
+oldásból derül ki. 
+A feltétel szerint b1 + b1q2 = 26 és b1q + b1q3 = 130. 
+1 pont  
+Szorzattá alakítva: 
+b1(1 + q2) = 26 és b1q (1 + q2) = 130. 
+1 pont  
+(Egyik tényező sem nulla, ezért) a két egyenletet el-
+oszthatjuk egymással, amiből q = 5 adódik, 
+1 pont  
+visszahelyettesítéssel pedig b1 = 1. 
+1 pont  
+A sorozat ötödik tagja b5 = b1q4 = 5
+4 = 625. 
+(A sorozat első öt tagja: 1, 5, 25, 125, 625.) 
+1 pont  
+Összesen: 
+6 pont  
+ 
+ 
+ 
+
+===== PAGE 5 =====
+Matematika — emelt szint 
+Javítási-értékelési útmutató 
+2011 írásbeli vizsga 
+5 / 21 
+2020. május 5. 
+ 
+1. b) második megoldás 
+Ha a sorozat második tagja b, hányadosa pedig q  
+(b ≠ 0, q ≠ 0), akkor a sorozat első négy tagja rendre:  
+b
+q , b, bq, bq2. 
+1 pont 
+Ez a pont akkor is jár, ha 
+ez a gondolat csak a meg-
+oldásból derül ki. 
+A feltétel szerint 
+26
+b
+bq
+q +
+=
+ és b + bq2 = 130. 
+1 pont  
+Az első egyenletből (q-val szorzás után): 
+b + bq2 = 26q. 
+1 pont  
+Ezt a második egyenlettel összehasonlítva kapjuk, 
+hogy 26q = 130, vagyis q = 5, 
+1 pont  
+visszahelyettesítéssel pedig b = 5. 
+1 pont  
+A sorozat ötödik tagja bq3 = 5
+4 = 625. 
+1 pont  
+Összesen: 
+6 pont  
+ 
+2. a) 
+Három számjegy szorzata prím, ha két számjegy 
+1-es, a harmadik pedig prímszám. 
+1 pont  
+Egyjegyű prímszám négy darab van: 2, 3, 5, 7. 
+1 pont  
+Bármely kiválasztott prímszám három helyen  
+fordulhat elő, így összesen 4 ⋅ 3 = 12 különböző 
+„prímes” rendszám készíthető. 
+1 pont  
+Összesen: 
+3 pont  
+Megjegyzés: Ha a vizsgázó rendezetten felsorolja az összes lehetőséget, és ez alapján helyes 
+választ ad, akkor teljes pontszámot kapjon. 
+ 
+2. b) 
+A 6 előállítási lehetőségei három számjegy összege-
+ként (a sorrendtől eltekintve): 
+6 + 0 + 0,  5 + 1 + 0,  4 + 2 + 0,  4 + 1 + 1,  
+3 + 3 + 0,  3 + 2 + 1,  2 + 2 + 2. 
+2 pont 
+Egy vagy két hiba esetén  
+1 pont, több hiba esetén  
+0 pont jár. 
+Az ezekből előállítható számhármasok száma rendre 
+3, 6, 6, 3, 3, 6, 1. 
+2 pont  
+Összesen 3 + 6 + 6 + 3 + 3 + 6 + 1 = 28-féle „hatos” 
+rendszám készíthető. 
+1 pont  
+Összesen: 
+5 pont  
+Megjegyzés: Ha a vizsgázó rendezetten felsorolja az összes lehetőséget, és ez alapján helyes 
+választ ad, akkor teljes pontszámot kapjon. 
+ 
+ 
+
+===== PAGE 6 =====
+Matematika — emelt szint 
+Javítási-értékelési útmutató 
+2011 írásbeli vizsga 
+6 / 21 
+2020. május 5. 
+ 
+2. c) 
+Definíció szerint logab = c  ⇔  ac = b, 
+ahol a > 0, a ≠ 1 és b > 0 (így 2 ≤ a ≤ 9 és 1 ≤ b ≤ 9). 
+1 pont 
+Ez a pont akkor is jár, ha 
+ezek a gondolatok csak a 
+megoldásból derülnek ki. 
+(Esetszétválasztás c lehetséges értékei alapján.) 
+Ha c = 0, akkor b = 1 és a = 2, 3, 4, 5, 6, 7, 8 vagy 9. 
+Ez 8 lehetőség. 
+1 pont 
+Ha a = 2, akkor  
+c ∈ {0; 1; 2; 3},  
+ez 4 lehetőség. 
+Ha c = 1, akkor a = b = 2, 3, 4, 5, 6, 7, 8 vagy 9.  
+Ez 8 lehetőség. 
+1 pont 
+Ha a = 3, akkor  
+c ∈ {0; 1; 2},  
+ez 3 lehetőség. 
+Ha c = 2, akkor a = 2 és b = 4, vagy a = 3 és b = 9.  
+Ez 2 lehetőség. 
+1 pont Ha a ∈ {4; 5; 6; 7; 8; 9}, 
+akkor c ∈ {0; 1}, 
+ez (6 ⋅ 2 =) 12 lehetőség. 
+Ha c = 3, akkor a = 2 és b = 8. 
+Ez 1 lehetőség. 
+1 pont 
+(c ≥ 4 nem lehet, hiszen b = a4 ≥ 24 = 16 lenne, így)  
+összesen 8 + 8 + 2 + 1 = 19 „logaritmusos” rendszám 
+készíthető. 
+1 pont Összesen 4 + 3 + 12 = 19 
+lehetőség. 
+Összesen: 
+6 pont  
+Megjegyzések: 
+1. Ha a vizsgázó rendezetten felsorolja az összes lehetőséget, és ez alapján helyes választ ad, 
+akkor teljes pontszámot kapjon. 
+2. Ha a vizsgázó megengedi az a = 1 lehetőséget, akkor ezért 1 pontot veszítsen. 
+3. Ha a vizsgázó megengedi az a = 0 lehetőséget, akkor ezért 1 pontot veszítsen. 
+ 
+3. a) 
+A keletkező hulladék akkor minimális, ha az oldalla-
+pok területe, és így (alapélhez tartozó) h magassága 
+maximális, azaz 10 cm. 
+1 pont  
+Ekkor a négy oldallap területe 10
+4
+2
+h
+⋅
+⋅ = 200 cm2,  
+1 pont  
+a hulladék tehát legalább 4 ⋅ 10 ⋅ 10 – 200 = 200 cm2. 
+1 pont  
+Minél kisebb az oldallapok magassága, annál több a 
+hulladék. A lapmagasságok merőleges vetülete az 
+alaplapon 5 cm, így h > 5 cm. (Derékszögű három-
+szögben az átfogó nagyobb, mint a befogó.) 
+ 
+1 pont A palást nagyobb terü-
+letű, mint az alaplap, 
+azaz több, mint 100 cm2, 
+így 
+Az oldallapok területösszege:  
+10
+4
+2
+h
+⋅
+⋅> 10 5 4
+2
+⋅⋅
+= 100 cm2, így 
+1 pont 
+a hulladék kevesebb, mint 4 ⋅ 10 ⋅ 10 – 100 = 300 cm2. 
+1 pont  
+Összesen: 
+6 pont  
+ 
+ 
+
+===== PAGE 7 =====
+Matematika — emelt szint 
+Javítási-értékelési útmutató 
+2011 írásbeli vizsga 
+7 / 21 
+2020. május 5. 
+ 
+3. b) első megoldás 
+Két csúcsot 
+
+
+
+
+
+
+2
+8 (= 28)-féleképpen választhatunk ki 
+(összes eset száma). 
+1 pont  
+(A gráfnak 12 éle van, így) a két csúcs 12 esetben 
+lesz egy él két végpontja (kedvező esetek száma). 
+2 pont  
+A keresett valószínűség 12
+3
+8
+7
+2
+=
+
+
+
+ (≈ 0,429). 
+1 pont  
+Összesen: 
+4 pont  
+ 
+3. b) második megoldás 
+Ha az első kiválasztott csúcs „külső” pont (E, F, G 
+vagy H), akkor a megfelelő második csúcs kiválasz-
+tásának 2
+7 a valószínűsége (a maradék 7 csúcsból 
+2 szomszédos).  
+1 pont  
+Ha az első kiválasztott csúcs „belső” pont (A, B, C 
+vagy D), akkor a megfelelő második csúcs kiválasz-
+tásának 7
+4 a valószínűsége (a maradék 7 csúcsból 
+4 szomszédos). 
+1 pont  
+A külső és a belső csúcs kiválasztásának a valószínű-
+sége egyaránt 2
+1 , 
+1 pont  
+így a keresett valószínűség 1 2
+1 4
+3
+2 7
+2 7
+7
+⋅
++
+⋅
+=
+. 
+1 pont  
+Összesen: 
+4 pont  
+ 
+3. c) első megoldás 
+Az ADH, DCG, CBF, BAE háromszögek mindegyik 
+éle pontosan egy háromszöghöz tartozik. 
+1 pont  
+Mivel (4 háromszög és) 3 zöld él van, lesz a három-
+szögek között olyan, amelynek minden éle kék (és ez 
+egy gráfelméleti kör). 
+2 pont  
+Összesen: 
+3 pont  
+ 
+3. c) második megoldás 
+Ha egy n pontú gráfban nincsen kör, akkor legfeljebb 
+n – 1éle lehet. 
+1 pont  
+A kék élek által alkotott részgráfnak legfeljebb 8 csú-
+csa és 9 éle van, tehát biztosan van benne kör. 
+2 pont  
+Összesen: 
+3 pont  
+ 
+ 
+
+===== PAGE 8 =====
+Matematika — emelt szint 
+Javítási-értékelési útmutató 
+2011 írásbeli vizsga 
+8 / 21 
+2020. május 5. 
+ 
+4. a) 
+A másodfokú egyenletnek pontosan akkor van két 
+különböző valós gyöke, ha a diszkriminánsa pozitív. 
+1 pont 
+Ez a pont akkor is jár, ha 
+ez a gondolat csak a meg-
+oldásból derül ki. 
+A diszkrimináns:
+2
+2
+(4
+1)
+4 2
+16
+1
+p
+p
+p
++
+−
+⋅
+=
++ . 
+1 pont  
+Ez (p2 ≥ 0 miatt) a p minden valós értékére pozitív, 
+tehát az állítás igaz. 
+1 pont  
+Összesen: 
+3 pont  
+ 
+4. b) első megoldás 
+Ha a 3 gyöke az egyenletnek, akkor  
+9 – 3(4p + 1) + 2p = 0,  
+1 pont  
+ahonnan p = 0,6. 
+1 pont  
+Az egyenlet ezzel az értékkel:
+2
+3,4
+1,2
+0
+x
+x
+−
++
+=
+. 
+1 pont  
+A megoldóképletből adódik, hogy a másik valós 
+gyök ekkor 0,4. 
+1 pont 
+A gyökök és együtthatók 
+közötti összefüggés sze-
+rint a másik valós gyök 
+ekkor 3,4 – 3 = 0,4 vagy 
+1,2
+0,4
+3 =
+. 
+Összesen: 
+4 pont  
+ 
+4. b) második megoldás 
+(Az egyenletnek mindig két valós gyöke van, ezért) a 
+gyökök és együtthatók közötti összefüggések szerint 
+2
+3
+4
+1
+x
+p
++
+=
++ és 
+2
+3
+2
+x
+p
+=
+. 
+1 pont  
+Ez utóbbi alapján
+2
+3
+2
+p
+x
+=
+,  
+1 pont Az első egyenletből:
+2
+4
+2
+x
+p
+=
+−
+. 
+amelyet az első összefüggésbe helyettesítve:
+2
+2
+3
+6
+1
+x
+x
++
+=
++ , 
+1 pont 
+Ezt a másodikba helyette-
+sítve: 12p – 6 = 2p,  
+ebből p = 0,6, 
+ahonnan a másik gyök 
+2
+0,4
+x =
+. 
+1 pont így 
+2
+(4 0,6
+2
+)0,4
+x =
+⋅
+−
+=
+. 
+Összesen: 
+4 pont  
+ 
+ 
+ 
+
+===== PAGE 9 =====
+Matematika — emelt szint 
+Javítási-értékelési útmutató 
+2011 írásbeli vizsga 
+9 / 21 
+2020. május 5. 
+ 
+4. c) 
+(A megadott egyenletnek mindig 2 valós gyöke van.) 
+2
+2
+2
+1
+2
+1
+2
+1
+2
+(
+)
+2
+x
+x
+x
+x
+x x
++
+=
++
+−
+  
+1 pont*  
+A gyökök és együtthatók közötti összefüggések sze-
+rint 
+1
+2
+4
+1
+x
+x
+p
++
+=
++ és
+1
+2
+2
+x x
+p
+=
+, 
+ezért 
+2
+2
+2
+1
+2
+(4
+1)
+2 2
+x
+x
+p
+p
++
+=
++
+−
+⋅
+. 
+2 pont*  
+2
+(4
+1)
+2 2
+7
+p
+p
++
+−
+⋅
+=
+ 
+1 pont  
+2
+16
+4
+6
+0
+p
+p
++
+−
+=
+ 
+1 pont  
+Ennek az egyenletnek a valós gyökei 0,5 és –0,75,  
+így ezek a p paraméter keresett értékei. 
+1 pont  
+Összesen: 
+6 pont  
+ 
+Megjegyzések: 
+1. p = 0,5 esetén az egyenlet 
+2
+3
+1
+0
+x
+x
+−
++
+=
+, melynek a gyökei 3
+5
+2
+±
+, 
+p = –0,75 esetén az egyenlet 
+2
+2
+1,5
+0
+x
+x
++
+−
+=
+, melynek a gyökei 2
+10
+2
+−±
+. 
+ 
+2. A *-gal jelölt pontokat az alábbi gondolatmenetért is megkaphatja a vizsgázó. 
+2
+1
+4
+1
+(4
+1)
+8
+2
+p
+p
+p
+x
++ +
++
+−
+=
+  
+2
+2
+4
+1
+(4
+1)
+8
+2
+p
+p
+p
+x
++ −
++
+−
+=
+  
+1 pont  
+2
+2
+2
+2
+1
+2
+2 (4
+1)
+2 ((4
+1)
+8 )
+4
+p
+p
+p
+x
+x
+⋅
++
++ ⋅
++
+−
++
+=
+= 
+2
+2
+4(4
+1)
+16
+(4
+1)
+4
+4
+p
+p
+p
+p
++
+−
+=
+=
++
+−
+ 
+2 pont  
+ 
+ 
+ 
+
+===== PAGE 10 =====
+Matematika — emelt szint 
+Javítási-értékelési útmutató 
+2011 írásbeli vizsga 
+10 / 21 
+2020. május 5. 
+ 
+II. 
+ 
+5. a) 
+9 180
+58
+°
+⋅π
+ ≈ 8,89° 
+2 pont  
+Összesen: 
+2 pont  
+ 
+5. b) 
+f (50) = –5,2cos(1) + 11,2  
+1 pont  
+f (50) ≈ 8,39 óra 
+1 pont  
+Az 50. napon (körülbelül) 8:23 óra (8 óra 23 perc) 
+hosszú a nappal. 
+1 pont 
+Ez a pont nem jár, ha a 
+vizsgázó nem kerekít, 
+vagy rosszul kerekít. 
+Összesen: 
+3 pont  
+ 
+5. c) első megoldás 
+(Az f (n) > 12 megoldásai számának megállapításá-
+hoz) először a g függvény értelmezési tartományán 
+oldjuk meg a 
+8
+5,2cos
+11,2
+12
+58
+x +
+
+
+−
++
+=
+
+
+
+
+ egyenletet 
+(1 ≤ x ≤ 365, x ∈ R). 
+(Ekkor 0,16 ≈ 9
+8
+373
+58
+58
+58
+x +
+≤
+≤
+ ≈ 6,43.) 
+1 pont  
+8
+cos
+58
+x +
+
+
+
+
+
+
+ ≈ –0,1538 
+1 pont  
+8
+58
+x +
+ ≈ 1,7253 vagy 
+8
+58
+x +
+≈ 2π – 1,7253 ≈ 4,5579 
+2 pont  
+Innen x ≈ 92,06 vagy x ≈ 256,36. 
+1 pont  
+A g függvény ábrája alapján az f (n) > 12 megoldásai 
+azok az n-ek, amelyekre 93 ≤ n ≤ 256.  
+1 pont  
+A 12 óránál hosszabb nappalok száma tehát  
+(256 – 93 + 1 =) 164 valóban. 
+1 pont  
+Összesen: 
+7 pont  
+ 
+ 
+ 
+
+===== PAGE 11 =====
+Matematika — emelt szint 
+Javítási-értékelési útmutató 
+2011 írásbeli vizsga 
+11 / 21 
+2020. május 5. 
+ 
+5. c) második megoldás 
+(Az f (n) > 12 megoldásai számának megállapításá-
+hoz) először a g függvény értelmezési tartományán 
+oldjuk meg a 
+8
+5,2cos
+11,2
+12
+58
+x +
+
+
+−
++
+>
+
+
+
+
+ egyenlőtlen-
+séget (1 ≤ x ≤ 365, x ∈ R). 
+1 pont  
+Ez (az adott halmazon) ekvivalens a 
+8
+2
+cos
+58
+13
+x +
+
+< −
+
+
+
+
+ egyenlőtlenséggel. 
+1 pont  
+Közelítő értékeket alkalmazva:
+8
+]1,7253
+2
+;4,5579
+2
+[
+58
+x
+k
+k
++ ∈
++
+π
++
+π (k ∈ Z). 
+Így a ]92,1 + 116kπ; 256,3 + 116kπ[ intervallumok 
+elemei megoldásai az egyenlőtlenségnek. 
+2 pont 
+ 
+k = 0 esetén a ]92,1; 256,3[ intervallum a g értelme-
+zési tartományának részhalmaza (ha pedig k ≠ 0, ak-
+kor nincs a g értelmezési tartományához tartozó 
+eleme az intervallumoknak).  
+1 pont  
+Ezért f (n) > 12 megoldásai azok az n-ek, amelyekre 
+93 ≤ n ≤ 256.  
+1 pont  
+A 12 óránál hosszabb nappalok száma tehát  
+(256 – 93 + 1 =) 164 valóban. 
+1 pont  
+Összesen: 
+7 pont  
+Megjegyzés: Teljes pontszámot kapjon a vizsgázó, ha (számításokkal és a g függvény monoto-
+nitására/grafikonjára hivatkozva) igazolja, hogy az év első 12 óránál hosszabb nappali idő-
+szaka a 93., az utolsó pedig a 256. napon van, majd ennek alapján helyesen következtet. 
+ 
+5. d) 
+A terület: 
+2
+0
+( 5,2cos( )
+11,2)
+x
+dx
+π
+−
++
+
+. 
+1 pont 
+2
+0
+5,2 cos( )
+x dx
+π
+−
++
+
+ 
+2
+0
+11,2dx
+π
++
+ 
+[
+]
+2
+2
+0
+0
+( 5,2cos( )
+11,2)
+5,2sin( )
+11,2
+x
+dx
+x
+x
+π
+π
+−
++
+= −
++
+=
+
+ 
+2 pont 
+Mivel 
+2
+0
+cos( )
+0
+x dx
+π
+=
+
+, 
+2
+0
+11,2dx
+π
+
+= 11,2 ∙ 2π,  
+= (0 + 11,2 ∙ 2π) – (0 + 0) ≈ 70,37 
+1 pont ezért a terület ≈ 70,37. 
+Összesen: 
+4 pont  
+ 
+ 
+
+===== PAGE 12 =====
+Matematika — emelt szint 
+Javítási-értékelési útmutató 
+2011 írásbeli vizsga 
+12 / 21 
+2020. május 5. 
+ 
+6. a) első megoldás 
+A 90-nél nem nagyobb pozitív egészek között 2-vel 
+osztható 45 db, 3-mal osztható 30 db, 5-tel osztható 
+18 db van. 
+1 pont 
+Venn-diagramon szemlél-
+tetjük az egyes halmazo-
+kat és azok elemszámát. 
+ 
+ 
+Ha összeadjuk a 2-vel, a 3-mal, és az 5-tel osztható 
+számok számát, akkor ezek közt kétszer számoltuk a 
+6-tal, a 10-zel és a 15-tel oszthatókat, az összegből 
+tehát le kell vonni ezek számának a kétszeresét. 
+1 pont 
+A 30-cal oszthatókat viszont így háromszor számol-
+tuk, majd hatszor levontuk, tehát ezek számát még 
+háromszor hozzá kell adnunk. 
+1 pont 
+2-vel és 3-mal (tehát 6-tal) osztható számból 15 db, 
+2-vel és 5-tel (tehát 10-zel) oszthatóból 9 db, 3-mal 
+és 5-tel (tehát 15-tel) oszthatóból 6 db, végül 2-vel, 
+3-mal és 5-tel is (tehát 30-cal) oszthatóból 3 db van. 
+1 pont 
+A 2, a 3 és az 5 közül pontosan az egyikkel osztható 
+90-nél nem nagyobb pozitív egészek száma tehát 
+45 + 30 + 18 – 2 · (15 + 9 + 6) + 3 · 3 = 42. 
+2 pont 
+A keresett szám a Venn-
+diagram alapján: 
+24 + 12 + 6 = 42 
+Összesen: 
+6 pont  
+ 
+6. a) második megoldás 
+A 90-nél nem nagyobb pozitív egészek között 45 db 
+2-vel osztható van. Ezek között 3-mal is (tehát 6-tal) 
+osztható 15 db, 5-tel is (tehát 10-zel) osztható 9 db. 
+45 – 15 – 9 = 21, de így a 3-mal és 5-tel is (tehát 30-
+cal) osztható 3 db számot kétszer vontuk le. 
+Ezért a csak 2-vel oszthatók száma  
+45 – 15 – 9 + 3 = 24. 
+2 pont  
+Hasonlóan: a 90-nél nem nagyobb pozitív egészek 
+között 3-mal osztható 30 db, közülük 2-vel is oszt-
+ható 15 db, 5-tel is osztható 6 db, 2-vel és 5-tel is 
+osztható pedig 3 db van, így a csak 3-mal oszthatók 
+száma 30 – 15 – 6 + 3 = 12.  
+A 90-nél nem nagyobb pozitív egészek között 5-tel 
+osztható 18 db, közülük 2-vel is osztható 9 db, 3-mal 
+is osztható 6 db, 2-vel és 3-mal is osztható pedig 3 db 
+van, így a csak 5-tel oszthatók száma  
+18 – 9 – 6 + 3 = 6. 
+3 pont  
+Összesen tehát (24 + 12 + 6 =) 42 ilyen szám van. 
+1 pont  
+Összesen: 
+6 pont  
+ 
+ 
+ 
+
+===== PAGE 13 =====
+Matematika — emelt szint 
+Javítási-értékelési útmutató 
+2011 írásbeli vizsga 
+13 / 21 
+2020. május 5. 
+ 
+6. a) harmadik megoldás 
+Mivel a 2, a 3 és az 5 legkisebb közös többszöröse a 
+30, ezért elég megnézni, hogy 30-ig hány szám ren-
+delkezik a keresett tulajdonsággal. 
+2 pont  
+A megfelelő oszthatóságok ezután periodikusan is-
+métlődnek, tehát 90-ig háromszor annyi ilyen szám 
+lesz, mint 30-ig. 
+1 pont  
+A 2, a 3 és az 5 közül pontosan az egyikkel osztható 
+számok 1-től 30-ig:  
+2, 3, 4, 5, 8, 9, 14, 16, 21, 22, 25, 26, 27 és 28. 
+2 pont  
+Ez 14 db, tehát a 90-nél nem nagyobb megfelelő szá-
+mok száma (14 ⋅ 3 =) 42. 
+1 pont  
+Összesen: 
+6 pont  
+Megjegyzés: Ha a vizsgázó rendezetten felsorolja az összes lehetőséget, és ez alapján helye-
+sen válaszol, akkor teljes pontszámot kapjon.  
+ 
+6. b) első megoldás 
+(A hátralevő két nyerőszámot 87 szám közül sorsol-
+ják ki, erre a sorrendet nem figyelembe véve) össze-
+sen 87
+2
+
+
+
+
+
+
+(= 3741) lehetőség van (összes eset száma). 
+1 pont  
+Nézzük a komplementer eseményt: ekkor az utolsó 
+két kihúzott szám között nincs sem a 64, sem a 68. 
+2 pont  
+Erre összesen 85
+2
+
+
+
+
+
+
+(= 3570) lehetőség van. 
+1 pont  
+A kedvező esetek száma tehát (3741 – 3570 =) 171. 
+1 pont  
+A keresett valószínűség 171
+3741≈ 0,046. 
+1 pont  
+Összesen: 
+6 pont  
+ 
+6. b) második megoldás 
+(A hátralevő két nyerőszámot 87 szám közül sorsol-
+ják ki, erre a húzás sorrendjét is figyelembe véve) 
+összesen 87 · 86 (= 7482) lehetőség van (összes eset 
+száma). 
+1 pont 
+A sorrendet nem figye-
+lembe véve: 
+87
+2
+
+
+
+
+
+
+ (= 3741) lehetőség. 
+Ha a negyedik kihúzott szám a 64 vagy a 68, de az 
+ötödik szám valami más, akkor erre 2 · 85 (= 170) le-
+hetőség van; hasonlóképpen 85 · 2 (= 170) lehetőség 
+van arra, hogy a negyedik kihúzott szám nem jó,  
+de az ötödik kihúzott szám a 64 vagy a 68. 
+2 pont 2 ∙ 85 = 170 eset 
+Végül kétféleképpen fordulhat elő az, hogy a negye-
+dik és az ötödik kihúzott szám (valamilyen sorrend-
+ben) a 64 és a 68. 
+1 pont 1 eset 
+ 
+ 
+ 
+
+===== PAGE 14 =====
+Matematika — emelt szint 
+Javítási-értékelési útmutató 
+2011 írásbeli vizsga 
+14 / 21 
+2020. május 5. 
+ 
+A kedvező esetek száma (2 ∙ 170 + 2 =) 342. 
+1 pont (170 + 1 =) 171 
+A keresett valószínűség 342
+7482 ≈ 0,046. 
+1 pont 
+171
+3741≈ 0,046 
+Összesen: 
+6 pont  
+ 
+6. b) harmadik megoldás 
+(A hátralevő két nyerőszámot 87 szám közül sorsol-
+ják ki.) Annak a valószínűsége, hogy a negyediknek 
+húzott szám a 64 vagy a 68, de az ötödik ezek egyike 
+sem: 2 85
+87 86
+⋅
+ (≈ 0,0227). 
+Ugyanennyi, 85
+2
+87 86
+⋅
+ (≈ 0,0227) a valószínűsége, 
+hogy a negyedik kihúzott szám nem a 64 és nem 
+a 68, de az ötödik ezek közül kerül ki. 
+2 pont 
+2
+87 annak a valószínű-
+sége, hogy a negyedik ki-
+húzott szám a 64 vagy a 
+68. 
+Annak a valószínűsége, hogy a 64-et és a 68-at is ki-
+húzzák: 2
+1
+87 86
+⋅
+ (≈ 0,0003). 
+2 pont 
+Annak a valószínűsége, 
+hogy a negyedik szám 
+nem a 64 és a 68 közül 
+kerül ki, de az ötödik 
+szám igen: 85
+2
+87 86
+⋅
+. 
+A keresett valószínűség: 
+2 85
+2
+2 87 86
+87 86
+⋅
+⋅
++
+=
+⋅
+⋅
+  
+1 pont 
+2
+85 2
+87
+87 86
+⋅
++
+=
+⋅
+  
+= 342
+7482 ≈ 0,046. 
+1 pont  
+Összesen: 
+6 pont  
+ 
+6. c) 
+Az összes kifizetett nyeremény: 
+17 · 3 113 255 + 1617 · 34 915 + 62 757 · 1970 = 
+= 233 014 180 Ft. 
+2 pont  
+Az egy szelvényre eső átlagos kifizetett nyeremény: 
+233014180
+3 222831 ≈ 72,3 Ft. 
+1 pont  
+A szelvény árát is figyelembe véve az egy szelvényre 
+jutó átlagos veszteség 250 – 72,3 = 177,7 Ft. 
+1 pont  
+Összesen: 
+4 pont  
+ 
+ 
+ 
+
+===== PAGE 15 =====
+Matematika — emelt szint 
+Javítási-értékelési útmutató 
+2011 írásbeli vizsga 
+15 / 21 
+2020. május 5. 
+ 
+7. a)  
+ABC háromszögben koszinusztétellel: 
+2
+2
+2
+20
+18
+2 20 18 cos70
+AC =
++
+−
+⋅
+⋅
+⋅
+° , 
+1 pont  
+AC ≈ 21,86. 
+1 pont  
+A húrnégyszögben δ = 180° – 70° = 110°. 
+1 pont  
+ACD háromszögben szinusztétellel: 
+sin50
+sin110
+CD
+AC
+°
+=
+° , 
+1 pont  
+CD ≈ 17,82. 
+1 pont  
+DCA∠ = 20°, ezért a négyszög területe: 
+20 18 sin70
+21,86 17,82 sin20
+2
+2
+⋅
+⋅
+°
+⋅
+⋅
+°
++
+≈  
+(≈ 169,1 + 66,6 =) 235,7. 
+2 pont 
+Szinusztétellel AD ≈ 7,96, 
+így a húrnégyszög terü-
+letképletéből a terület  
+(s ≈ 31,9 miatt):
+11,9 13,9 14,1 23,9
+⋅
+⋅
+⋅
+ ≈  
+≈ 236,1. 
+Összesen: 
+7 pont  
+ 
+7. b)  
+PH
+
+= (0,2; 0), RH
+
+= (–1,8; –5) 
+1 pont  
+PH RH
+⋅
+
+= 0,2 ∙ (–1,8) + 0 ∙ (–5) = – 0,36 
+1 pont  
+Összesen: 
+2 pont  
+ 
+ 
+ 
+
+===== PAGE 16 =====
+Matematika — emelt szint 
+Javítási-értékelési útmutató 
+2011 írásbeli vizsga 
+16 / 21 
+2020. május 5. 
+ 
+7. c) 
+ 
+Legyen H az (x; 0) pont (ahol –2 ≤ x ≤ 6). 
+1 pont*  
+Ekkor PH
+
+ = (x; 0) – (–2; 0) = (x + 2; 0) 
+és RH
+
+ = (x; 0) – (0; 5) = (x; –5). 
+1 pont*  
+PH RH
+⋅
+
+= (x + 2) x + 0 ∙ (–5) = x (x + 2) 
+1 pont*  
+x (x + 2) = (x + 1)2 – 1, 
+ezért az f: xx (x + 2), –2 ≤ x ≤ 6  
+függvénynek minimuma van –1-nél, 
+2 pont**  
+( f a [−2; –1] intervallumon szigorúan monoton fogyó, 
+a [−1; 6] intervallumon szigorúan monoton növekvő, 
+f (–2) = 0 és f (6) = 48 > 0 ezért)  
+a maximumát 6-nál veszi fel. 
+1 pont**  
+A minimális skaláris szorzat a H1(–1; 0) ponthoz tar-
+tozik, a maximális pedig a H2 = Q(6; 0) ponthoz. 
+1 pont  
+Összesen: 
+7 pont  
+ 
+Megjegyzések:  
+1. A *-gal jelzett pontokat az alábbi gondolatmenetért is megkaphatja a vizsgázó. 
+ 
+A PH
+ és RH
+ vektorok szöge az ábrán jelölt α, 
+így a definíció szerint 
+cos
+PH RH
+PH
+RH
+⋅
+=
+⋅
+⋅
+α
+
+
+
+. 
+1 pont  
+Mivel 
+cos
+RH
+x
+⋅
+α =
+
+, és PH
+= x + 2, 
+ezért
+(
+2)
+PH RH
+x x
+⋅
+=
++
+
+.  
+2 pont  
+ 
+2. A **-gal jelzett pontok akkor is járnak, ha a vizsgázó helyesen vázolja a [–2; 6] zárt inter-
+vallumra leszűkített 
+2
+(
+2)
+2
+x
+x x
+x
+x
++
+=
++
+
+ másodfokú függvényt, majd az ábra alapján helye-
+sen válaszol. 
+ 
+
+===== PAGE 17 =====
+Matematika — emelt szint 
+Javítási-értékelési útmutató 
+2011 írásbeli vizsga 
+17 / 21 
+2020. május 5. 
+8. a) első megoldás 
+Ha a javított számla alapján az ételekért végül bruttó 
+x Ft-ot, az italokért y Ft-ot fizettek, akkor a hibás 
+számla szerint az ételekért x : 1,04 · 1,30 = 1,25x, az 
+italokért pedig y : 1,30 · 1,04 = 0,8y Ft-ot kellett volna 
+fizetniük.  
+2 pont  
+1,25
+0,8
+8710
+7670
+x
+y
+x
+y
++
+=
+
+
++
+=
+
+ 
+1 pont  
+A második egyenletet 0,8-del szorozva: 
+1,25
+0,8
+8710
+0,8
+0,8
+6136.
+x
+y
+x
+y
++
+=
+
+
++
+=
+
+ 
+A két egyenlet különbségéből 0,45x = 2574,  
+azaz x = 5720. 
+2 pont 
+Az első egyenletet 0,8-del 
+szorozva: 
+0,64
+6968
+7670.
+x
+y
+x
+y
++
+=
+
+
++
+=
+
+ 
+0,36y = 702 
+y = 1950 
+A helyesen kiállított számla szerinti bruttó ételfo-
+gyasztás 5720 Ft, a bruttó italfogyasztás pedig  
+y = 7670 – x = 1950 Ft volt. 
+1 pont x = 7670 – y = 5720 
+Ellenőrzés: A tévesen kiállított számlán bruttó 
+5720 : 1,04 · 1,3 + 1950 : 1,3 · 1,04 = 
+= (7150 + 1560 =) 8710 Ft szerepelt valóban. 
+1 pont  
+Összesen: 
+7 pont 
+ 
+ 
+8. a) második megoldás 
+Ha a javított számla alapján az ételekért végül bruttó 
+x Ft-ot, az italokért y Ft-ot fizettek, akkor a hibás 
+számla szerint az ételekért x : 1,04 · 1,3, az italokért 
+pedig y : 1,3 · 1,04 Ft-ot kellett volna fizetniük.  
+1 pont  
+1,3
+1,04
+8710
+1,04
+1,3
+7670
+x
+y
+x
+y
+
+⋅
++
+⋅
+=
+
+
++
+=
+
+ 
+1 pont  
+A második egyenletből x = 7670 – y, ezt az elsőbe 
+visszaírva: (7670
+) 1,3
+1,04
+8710
+1,04
+1,3
+y
+y
+−
+⋅
+⋅
++
+=
+. 
+(7670
+) 1,25
+0,8
+8710
+y
+y
+−
+⋅
++
+⋅
+=
+ 
+9587,5 – 0,45y = 8710 
+3 pont*  
+A helyesen kiállított számla szerinti bruttó italfo-
+gyasztás 
+9587,5
+8710
+1950
+0,45
+y
+−
+=
+=
+Ft, a bruttó étel-
+fogyasztás pedig x = 7670 – y = 5720 Ft volt. 
+1 pont*  
+Ellenőrzés: A tévesen kiállított számlán bruttó 
+5720 : 1,04 · 1,3 + 1950 : 1,3 · 1,04 = 
+= (7150 + 1560 =) 8710 Ft szerepelt valóban. 
+1 pont  
+Összesen: 
+7 pont  
+ 
+ 
+
+===== PAGE 18 =====
+Matematika — emelt szint 
+Javítási-értékelési útmutató 
+2011 írásbeli vizsga 
+18 / 21 
+2020. május 5. 
+ 
+Megjegyzés: A *-gal jelölt pontokat az alábbi gondolatmenetért is megkaphatja a vizsgázó. 
+A második egyenletből y = 7670 – x, ezt az elsőbe 
+visszaírva: 
+1,3
+(7670
+) 1,04
+8710
+1,04
+1,3
+x
+x
+⋅
+−
+⋅
++
+=
+. 
+Mindkét oldalt 1,04-dal és 1,3-del is szorozva: 
+2
+2
+1,3
+(7670
+) 1,04
+11775,92
+x
+x
+⋅
++
+−
+⋅
+=
+. 
+0,6084x + 8295,872 = 11 775,92 
+3 pont  
+A helyesen kiállított számla szerinti bruttó ételfo-
+gyasztás 
+11775,92
+8295,872
+5720
+0,6084
+x
+−
+=
+=
+Ft, a bruttó 
+italfogyasztás pedig y = 7670 – x = 1950 Ft volt. 
+1 pont  
+ 
+8. a) harmadik megoldás 
+Ha a hibás számla alapján az ételekért bruttó x Ft-ot, 
+az italokért y Ft-ot fizettek volna, akkor az újraszá-
+molás után az ételekért x : 1,3 · 1,04 = 0,8x, az italo-
+kért pedig y : 1,04 · 1,3 = 1,25y Ft-ot kellett fizetniük.  
+2 pont  
+8710
+0,8
+1,25
+7670
+x
+y
+x
+y
++
+=
+
+
++
+=
+
+ 
+1 pont  
+Az első egyenletet 0,8-del szorozva: 
+0,8
+0,8
+6968
+0,8
+1,25
+7670.
+x
+y
+x
+y
++
+=
+
+
++
+=
+
+ 
+A két egyenlet különbségéből 0,45y = 702, 
+azaz y = 1560, majd x = 8710 – y = 7150. 
+2 pont 
+y = 8710 – x 
+0,8x + 1,25(8710 – x) = 
+= 7670 
+10 887,5 – 0,45x = 7670 
+10 887,5
+7670
+0,45
+x
+−
+=
+= 
+= 7150 
+y = (8710 – 7150 =) 1560 
+A helyesen kiállított számla szerinti bruttó ételfo-
+gyasztás 7150 : 1,3 · 1,04 = 5720 Ft, a bruttó italfo-
+gyasztás pedig 1560 : 1,04 · 1,3 = 1950 Ft volt. 
+1 pont  
+Ellenőrzés: A helyesen kiállított számlán bruttó 
+5720 + 1950 = 7670 Ft szerepelt valóban. 
+1 pont  
+Összesen: 
+7 pont  
+ 
+ 
+ 
+
+===== PAGE 19 =====
+Matematika — emelt szint 
+Javítási-értékelési útmutató 
+2011 írásbeli vizsga 
+19 / 21 
+2020. május 5. 
+ 
+8. a) negyedik megoldás 
+Legyen az elfogyasztott ételek nettó ára x Ft, az ita-
+loké pedig y Ft. 
+Ekkor 1,3
+1,04
+8710
+1,04
+1,3
+7670.
+x
+y
+x
+y
++
+=
+
+
++
+=
+
+ 
+2 pont  
+Az első egyenletből kivonva a másodikat: 
+0,26(x – y) = 1040, 
+azaz x – y = 4000, tehát x = 4000 + y. 
+Ezt visszaírva az első egyenletbe: 
+1,3(4000 + y) + 1,04y = 8710. 
+5200 + 2,34y = 8710 
+8710
+5200
+1500
+2,34
+y
+−
+=
+=
+ és x = 4000 + y = 5500 
+3 pont* 
+A két egyenletet össze-
+adva: 
+2,34(x + y) = 16 380, 
+x + y = 7000, x = 7000 – y. 
+9100 – 0,26y = 8710 
+9100
+8710
+1500
+0,26
+y
+−
+=
+=
+ 
+x = (7000 – 1500 =) 5500 
+A bruttó ételfogyasztás 5500 · 1,04 = 5720 Ft,  
+a bruttó italfogyasztás 1500 · 1,3 = 1950 Ft volt. 
+1 pont  
+Ellenőrzés: A helyesen kiállított számlán bruttó 
+5500 · 1,04 + 1500 · 1,3 = (5720 + 1950 =) 7670 Ft, 
+a tévesen kiállított számlán pedig bruttó 
+5500 · 1,3 + 1500 · 1,04 = (7150 + 1560 =) 8710 Ft 
+szerepelt valóban. 
+1 pont  
+Összesen: 
+7 pont  
+ 
+Megjegyzés: A *-gal jelölt pontokat az alábbi gondolatmenetért is megkaphatja a vizsgázó. 
+Az első egyenletet 1,3-del, a másodikat (–1,04)-dal 
+szorozva: 
+1,69
+1,352
+11323
+1,0816
+1,352
+7976,8
+x
+y
+x
+y
++
+=
+−
+−
+= −
+
+  
+Az egyenletek összeadása után: 0,6084x = 3346,2. 
+Ebből x = 5500. 
+Visszahelyettesítve pl. az eredeti első egyenletbe:  
+1,3 · 5500 + 1,04y = 8710. 
+1,04y = 1560, tehát y = 1500. 
+3 pont  
+ 
+ 
+
+===== PAGE 20 =====
+Matematika — emelt szint 
+Javítási-értékelési útmutató 
+2011 írásbeli vizsga 
+20 / 21 
+2020. május 5. 
+ 
+8. b) első megoldás 
+Az 1000 vendég összesen  
+100 ⋅ 1000 + 200 ⋅ 1900 + 250 ⋅ 2800 + 300 ⋅ 3600 + 
++ 100 ⋅ 4400 + 50 ⋅ 5200 = 2 960 000 Ft-ba kerül. 
+1 pont  
+1000 vendég 3 900 000 Ft-ot fizet be, 
+így az étterem várható haszna 940 000 Ft.  
+2 pont  
+Összesen: 
+3 pont  
+ 
+8. b) második megoldás 
+Ha egy vendég k Ft-ba kerül és 3900 Ft-ot fizet,  
+akkor az étterem haszna (3900 – k) Ft. 
+1 pont 
+Ez a pont akkor is jár, ha 
+ez a gondolat csak a meg-
+oldásból derül ki. 
+A várható haszon 1000 vendég fogyasztása után: 
+100 ⋅ 2900 + 200 ⋅ 2000 + 250 ⋅ 1100 + 300 ⋅ 300 +  
++ 100 ⋅ (−500) + 50 ⋅ (−1300) = 940 000 Ft. 
+2 pont  
+Összesen: 
+3 pont  
+ 
+8. c)  
+Pontosan akkor lesz vesztesége az étteremnek ezen a 
+két vendégen, ha az étterem összköltsége több mint  
+7800 Ft. 
+1 pont 
+Ez a pont akkor is jár, ha 
+ez a gondolat csak a meg-
+oldásból derül ki. 
+Ez a következő esetekben fordul elő (a sorrendre való 
+tekintet nélkül): 
+5200 + 5200; 5200 + 4400; 5200 + 3600; 
+5200 + 2800; 4400 + 4400; 4400 + 3600. 
+2 pont 
+Egy hiba/hiány esetén  
+1 pont, több hiba esetén  
+0 pont jár. 
+A felsorolt esetek valószínűsége (a sorrendet is tekin-
+tetbe véve) rendre 
+0,05 ⋅ 0,05 (= 0,0025); 2 ⋅ 0,05 ⋅ 0,1 (= 0,01); 
+2 ⋅ 0,05 ⋅ 0,3 (= 0,03); 2 ⋅ 0,05 ⋅ 0,25 (= 0,025); 
+0,1 ⋅ 0,1 (= 0,01); 2 ⋅ 0,1 ⋅ 0,3 (= 0,06). 
+2 pont  
+A keresett valószínűség az előző hat valószínűség  
+összege, azaz 0,1375. 
+1 pont  
+Összesen: 
+6 pont  
+ 
+9. a) 
+Az utazások száma 100 000 – 10 ∙ 1000 = 90 000 
+lenne naponta, 
+1 pont  
+a bliccelések száma ennek a 20%-a, vagyis 18 000,  
+az érvényes jeggyel történő utazások száma pedig így 
+(90 000 – 18 000 =) 72 000. 
+2 pont  
+A napi bevétel ekkor  
+72 000 ∙ 350 = 25 200 000 tallér lenne. 
+1 pont  
+Összesen: 
+4 pont  
+ 
+ 
+ 
+
+===== PAGE 21 =====
+Matematika — emelt szint 
+Javítási-értékelési útmutató 
+2011 írásbeli vizsga 
+21 / 21 
+2020. május 5. 
+ 
+9. b) 
+(A bevétel a fizető utasok számának és a vonaljegy 
+árának a szorzata.) 
+Ha az eredeti jegyárhoz képest 5x tallérral változik a 
+vonaljegy ára, akkor a jegyár 300 + 5x tallér. 
+(A tanulmányban alkalmazott modellben  
+–11 < x < 31, ahol x egész szám.) 
+1 pont  
+Az utazások száma 100 000 – 1000x, 
+1 pont  
+a bliccelések száma pedig ennek a (10 + x) %-a:  
+10
+(100000 1000 )
+(1000 10 )(10
+)
+100
+x
+x
+x
+x
++
+−
+⋅
+=
+−
++
+ lesz. 
+1 pont 
+A fizető utasok száma az 
+összes utas számának a 
+(90 – x) %-a: 
+A fizető utasok száma így: 
+100000
+1000
+(1000
+10 )(10
+)
+x
+x
+x
+−
+−
+−
++
+= 
+2
+10
+1900
+90000
+x
+x
+=
+−
++
+ fő. 
+2 pont 
+(1000
+10 )(90
+)
+x
+x
+−
+−
+=
+2
+10
+1900
+90000
+x
+x
+=
+−
++
+. 
+A jegyeladásból származó bevétel: 
+2
+(10
+1900
+90000)(300
+5 )
+x
+x
+x
+−
++
++
+= 
+1 pont  
+3
+2
+50
+6500
+120000
+27000000
+x
+x
+x
+=
+−
+−
++
+ tallér. 
+1 pont  
+A ]–11; 31[ nyílt intervallumon értelmezett 
+3
+2
+( )
+50(
+130
+2400
+540000)
+f x
+x
+x
+x
+=
+−
+−
++
+ függvény 
+deriváltfüggvénye
+2
+( )
+50(3
+260
+2400)
+f
+x
+x
+x
+′
+=
+−
+−
+. 
+1 pont  
+( )
+0
+f
+x
+′
+=
+, ha x ≈ –8,41 vagy x ≈ 95,08, de ez utóbbi 
+(az x < 31 feltétel miatt) nem lehetséges. 
+1 pont  
+A –8,41 helyen f ′ pozitívból negatívba megy át,  
+(és –8,41 < x < 31 esetén negatív) ezért az f-nek  
+–8,41-nél maximuma van (előtte szigorúan monoton 
+növekedő, utána pedig szigorúan monoton csökkenő). 
+1 pont 
+( 8,41) (
+15 523)
+0
+f ′′ −
+= −
+<
+ 
+A feladatban x egész szám lehet csak, ezért még meg 
+kell vizsgálni f (–8) és f (–9) értékét. 
+f (–8) = 27 518 400 > f (–9) = 27 517 050,  
+1 pont  
+tehát a vonaljegy árát (300 + 5 ∙ (–8) =) 260 tallérban 
+kell megállapítani. (Ekkor az utasok száma 108 000, 
+a fizető utasok száma pedig 105 840 fő lenne.) 
+1 pont  
+Összesen: 12 pont  
+Megjegyzés: Ha a vizsgázó a 250 talléros jegyárat tekinti kiindulási alapnak, és ehhez viszo-
+nyítja az 5 talléros emeléseket, akkor a jegyárra 250 + 5x tallér adódik.  
+A bliccelő utazások aránya x%, az összes utazás száma 110 000 – 1000x, a napi bevétel pedig 
+3
+2
+100
+(250
+5 )(110000 1000 )
+50
+8000
+25000
+27500000
+100
+x
+x
+x
+x
+x
+x
+−
++
+−
+⋅
+=
+−
++
++
+ tallér lesz  
+(–1 < x < 41, ahol x egész szám).  
+Deriváltfüggvényként 
+2
+( )
+50(3
+320
+500)
+f
+x
+x
+x
+′
+=
+−
++
+ adódik, ennek két zérushelye (közelítőleg) 
+1,59, illetve 105,08 (amely kívül esik az értelmezési tartományon).  
+Az x = 1, illetve az x = 2 helyen vizsgálva a napibevétel-függvényt adódik, hogy x = 2 a maximumhely, 
+vagyis a vonaljegy árát 250 + 2 ∙ 5 = 260 tallérban kell megállapítani. 

@@ -1,0 +1,99 @@
+30: 2025. május 6. 9:00 
+47: 2025. május 6. 
+75: 2025. május 6. 
+95: 1. A feladatok megoldására 240 perc fordítható, az idő leteltével a munkát be kell fejeznie. 
+97: 2. A feladatok megoldási sorrendje tetszőleges. 
+99: 3. A II. részben kitűzött öt feladat közül csak négyet kell megoldania. A nem választott fel-
+106: 4. A feladatok megoldásához szöveges adatok tárolására és megjelenítésére nem alkalmas 
+110: 5. A megoldások gondolatmenetét minden esetben írja le, mert a feladatra adható pont-
+113: 6. Ügyeljen arra, hogy a lényegesebb részszámítások is nyomon követhetők legyenek! 
+115: 7. A gondolatmenet kifejtése során a zsebszámológép használata – további matematikai 
+134: 8. A feladatok megoldásánál használt tételek közül az iskolában tanult, névvel ellátott tételeket 
+141: 9. A feladatok végeredményét (a feltett kérdésre adandó választ) szöveges megfogalmazásban 
+144: 10. A dolgozatot tollal írja, de az ábrákat ceruzával is rajzolhatja. Az ábrákon kívül a ceruzával 
+148: 11. Minden feladatnak csak egy megoldása értékelhető. Több megoldási próbálkozás esetén 
+151: 12. Kérjük, hogy a szürkített téglalapokba semmit ne írjon! 
+162: 2025. május 6. 
+183: 1. 
+192: a) Határozza meg mindhárom pár cipő novemberi árát! 
+197: b) Határozza meg a másik két számot! 
+199: a) 
+202: b) 
+220: 2025. május 6. 
+249: 2025. május 6. 
+268: 2. 
+285: a) Egy emlősfajra jellemző állandók értéke k  1,5 és c  0,05. Tudjuk, hogy a vizsgálat 
+289: b) Egy rágcsálófaj esetén a sziget eltartóképessége 1500 egyed. 
+293: c) Igazolja, hogy egy populáció P(t) egyedszáma a modell szerint soha nem haladhatja 
+296: a) 
+299: b) 
+302: c) 
+319: 2025. május 6. 
+347: 2025. május 6. 
+366: 3. 
+380: a) Határozza meg a négyszög belső szögeinek nagyságát! 
+385: b) Határozza meg a négyszög BC és CD oldalának hosszát! 
+387: a) 
+390: b) 
+406: 2025. május 6. 
+434: 2025. május 6. 
+453: 4. 
+456: a) Írja fel annak a körnek az egyenletét, amely illeszkedik az A és a B pontokra, és a 
+459: b) Az 
+476: a) 
+479: b) 
+496: 2025. május 6. 
+524: 2025. május 6. 
+548: 5. 
+552: a) Határozza meg a fiúk és a lányok számát ebben az iskolában! 
+557: b) Határozza meg annak a valószínűségét, hogy a kisorsolt tanulók között 1 fiú és 
+564: c) Készítsen a tanulók év végi tanulmányi átlagairól sodrófadiagramot! 
+567: a) 
+570: b) 
+573: c) 
+589: 2025. május 6. 
+617: 2025. május 6. 
+639: 6. 
+646: a) Helyezze el az alábbi hozzárendelésekkel megadott 
+670: b) Jelölje az ábrán satírozással a (K  A) \ M halmazt, és hozzárendelési szabályával 
+673: c) Határozza meg az R  R, 
+686: d) Határozza meg azokat a p  [0; 2] értékeket, amelyekre 
+696: a) 
+699: b) 
+702: c) 
+705: d) 
+722: 2025. május 6. 
+750: 2025. május 6. 
+772: 7. 
+778: a) Legfeljebb mekkora lehet a doboz magassága, ha alapélei 6 dm hosszúak? 
+780: b) Határozza meg a 300 tallérból elkészíthető maximális térfogatú doboz éleinek hosz-
+786: c) Hányféle különböző színezésű doboz készíthető? (Két színezést különbözőnek te-
+790: a) 
+793: b) 
+796: c) 
+812: 2025. május 6. 
+840: 2025. május 6. 
+862: 8. 
+865: a) Lehetséges-e, hogy ekkor G komplementere is fagráf? 
+872: b) Határozza meg annak a valószínűségét, hogy a kiválasztott három pontot összekötő 
+879: c) Határozza meg a szükséges húzások számának várható értékét! 
+881: a) 
+884: b) 
+887: c) 
+904: 2025. május 6. 
+932: 2025. május 6. 
+954: 9. 
+955: a) Melyik az a legnagyobb természetes szám, amelyre az alábbi négy tulajdonságból 
+965: b) Melyik a nagyobb: A vagy A ? 
+970: c) Határozza meg n lehetséges értékeit! 
+972: a) 
+975: b) 
+978: c) 
+994: 2025. május 6. 
+1022: 2025. május 6. 
+1050: 2025. május 6. 
+1105: 2025. május 6. 
+1135: 1. 
+1140: 2. 
+1143: 3. 
+1146: 4. 

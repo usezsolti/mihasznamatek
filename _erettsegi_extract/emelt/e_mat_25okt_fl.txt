@@ -1,0 +1,1191 @@
+
+===== PAGE 1 =====
+ 
+Matematika 
+ 
+Nat2020 
+E2412 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+OKTATÁSI HIVATAL 
+MATEMATIKA 
+ 
+EMELT SZINTŰ 
+ÍRÁSBELI VIZSGA 
+2025. október 14. 8:00 
+ 
+Időtartam: 240 perc 
+Pótlapok száma 
+Tisztázati 
+ 
+Piszkozati 
+ 
+É R E T T S É G I V I Z S G A • 2 0 2 5 . o k t ó b e r 1 4 . 
+
+===== PAGE 2 =====
+ 
+Matematika 
+2 / 24 
+emelt szintű írásbeli vizsga 
+E2412 
+ 
+2025. október 14. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 3 =====
+ 
+Matematika 
+3 / 24 
+emelt szintű írásbeli vizsga 
+E2412 
+ 
+2025. október 14. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Fontos tudnivalók 
+1. A feladatok megoldására 240 perc fordítható, az idő leteltével a munkát be kell fejeznie. 
+ 
+2. A feladatok megoldási sorrendje tetszőleges. 
+ 
+3. A II. részben kitűzött öt feladat közül csak négyet kell megoldania. A nem választott fel-
+adat sorszámát írja be a dolgozat befejezésekor az alábbi négyzetbe! Ha a javító tanár 
+számára nem derül ki egyértelműen, hogy melyik feladat értékelését nem kéri, akkor  
+a kitűzött sorrend szerinti legutolsó feladatra nem kap pontot. 
+ 
+ 
+ 
+4. A feladatok megoldásához szöveges adatok tárolására és megjelenítésére nem alkalmas 
+zsebszámológépet és bármilyen négyjegyű függvénytáblázatot használhat, más elektroni-
+kus vagy írásos segédeszköz használata tilos! 
+ 
+5. A megoldások gondolatmenetét minden esetben írja le, mert a feladatra adható pont-
+szám jelentős része erre jár! 
+ 
+6. Ügyeljen arra, hogy a lényegesebb részszámítások is nyomon követhetők legyenek! 
+ 
+7. A gondolatmenet kifejtése során a zsebszámológép használata – további matematikai 
+indoklás nélkül – a következő műveletek elvégzésére fogadható el: összeadás, kivonás, 
+szorzás, osztás, hatványozás, gyökvonás, n!, 
+
+
+
+
+
+
+k
+n kiszámítása, a függvénytáblázatban fel-
+lelhető táblázatok helyettesítése (sin, cos, tg, log és ezek inverzei), a π és az e szám közelítő 
+értékének megadása, nullára rendezett másodfokú egyenlet gyökeinek meghatározása.  
+További matematikai indoklás nélkül használhatók a számológépek az átlag és a szórás ki-
+számítására abban az esetben, ha a feladat szövege kifejezetten nem követeli meg az ezzel 
+kapcsolatos részletszámítások bemutatását is. Egyéb esetekben a géppel elvégzett számí-
+tások indoklás nélküli lépéseknek számítanak, így azokért nem jár pont. 
+ 
+8. A feladatok megoldásánál használt tételek közül az iskolában tanult, névvel ellátott tételeket 
+(pl. Pitagorasz-tétel, magasságtétel) nem kell pontosan megfogalmazva kimondania, elég 
+csak a tétel megnevezését említenie, de az alkalmazhatóságát röviden indokolnia kell. 
+Egyéb tétel(ek)re való hivatkozás csak akkor fogadható el teljes értékűnek, ha az állítást 
+minden feltételével együtt pontosan mondja ki (bizonyítás nélkül), és az adott problémában 
+az alkalmazhatóságát indokolja. 
+ 
+9. A feladatok végeredményét (a feltett kérdésre adandó választ) szöveges megfogalmazásban 
+is közölje! 
+ 
+10. A dolgozatot tollal írja, de az ábrákat ceruzával is rajzolhatja. Az ábrákon kívül a ceruzával 
+írt részeket a javító tanár nem értékelheti. Ha valamilyen megoldást vagy megoldásrészletet 
+áthúz, akkor az nem értékelhető. 
+ 
+11. Minden feladatnak csak egy megoldása értékelhető. Több megoldási próbálkozás esetén 
+egyértelműen jelölje, hogy melyiket tartja érvényesnek! 
+ 
+12. Kérjük, hogy a szürkített téglalapokba semmit ne írjon! 
+ 
+ 
+
+===== PAGE 4 =====
+ 
+Matematika 
+4 / 24 
+emelt szintű írásbeli vizsga 
+E2412 
+ 
+2025. október 14. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+I. 
+ 
+1. 
+a) Oldja meg az alábbi egyenletet a valós számok halmazán! 
+ 
+1
+1
+9
+78 3
+3
+0
+x
+x
+
+
+
+
+
+
+ 
+ 
+b) A {bn} mértani sorozat második tagja 48, ötödik tagja 162. 
+Határozza meg n értékét úgy, hogy bn > 10 000 000 teljesüljön! 
+ 
+a) 
+6 pont 
+ 
+b) 
+7 pont 
+ 
+Ö.: 
+13 pont 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 5 =====
+ 
+Matematika 
+5 / 24 
+emelt szintű írásbeli vizsga 
+E2412 
+ 
+2025. október 14. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 6 =====
+ 
+Matematika 
+6 / 24 
+emelt szintű írásbeli vizsga 
+E2412 
+ 
+2025. október 14. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+2. 
+Egy iskolai bálra kétféleképpen lehetett jegyet venni. Aki elővételben vette meg a jegyét, 
+az 2500 Ft-ot fizetett érte, aki pedig a helyszínen vásárolta meg, annak 3000 Ft-ba került 
+egy jegy. Összesen 917 jegyet adtak el, amiből 2 380 000 Ft bevételhez jutottak a szerve-
+zők. 
+ 
+a) Hányan vettek jegyet a helyszínen, és hányan elővételben? 
+ 
+A bálon a résztvevők egy nyereményjátékban próbálhatják ki a szerencséjüket. Egy me-
+dencében 40 játékhajó úszkál, amelyek közül 5 nyerő. Petra 2 hajót húz ki a medencéből 
+visszatevés nélkül. (Hogy egy hajó nyerő vagy sem, az csak a kihúzás után derül ki.) 
+ 
+b) Számítsa ki annak a valószínűségét, hogy a 2 hajó közül pontosan az egyik nyerő! 
+ 
+A bálon megrendezett vetélkedő döntőjébe Andrea, Bálint és Csilla jutott. 
+ 
+c) A döntő végén hányféle sorrendben végezhet a három versenyző, ha kettes vagy 
+hármas holtverseny is lehetséges? 
+ 
+a) 
+6 pont 
+ 
+b) 
+3 pont 
+ 
+c) 
+5 pont 
+ 
+Ö.: 
+14 pont 
+ 
+ 
+ 
+ 
+
+===== PAGE 7 =====
+ 
+Matematika 
+7 / 24 
+emelt szintű írásbeli vizsga 
+E2412 
+ 
+2025. október 14. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 8 =====
+ 
+Matematika 
+8 / 24 
+emelt szintű írásbeli vizsga 
+E2412 
+ 
+2025. október 14. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+3. 
+Tekintsük az ábrán látható 6 pontú, 9 élű gráfot! 
+ 
+a) Hányféle úton juthatunk el az A pontból az F pont-
+ba, ha egy-egy út során minden élen és minden csú-
+cson legfeljebb egyszer haladhatunk át? 
+ 
+Az alábbi állításban a, b és c pozitív valós számokat jelölnek: 
+„Ha van olyan háromszög, amelynek oldalai (centiméterben mérve) a, b, c hosszúak, ak-
+kor 
+2
+2
+2
+2
+0
+a
+ab
+b
+c
+
+
+
+
+.” 
+ 
+b) Bizonyítsa be, hogy az állítás igaz! 
+ 
+c) Fogalmazza meg az állítás megfordítását, és adja meg a megfordított állítás logikai 
+értékét (igaz vagy hamis)! Válaszát indokolja! 
+ 
+a) 
+5 pont 
+ 
+b) 
+4 pont 
+ 
+c) 
+3 pont 
+ 
+Ö.: 
+12 pont 
+ 
+ 
+ 
+
+===== PAGE 9 =====
+ 
+Matematika 
+9 / 24 
+emelt szintű írásbeli vizsga 
+E2412 
+ 
+2025. október 14. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 10 =====
+ 
+Matematika 
+10 / 24 
+emelt szintű írásbeli vizsga 
+E2412 
+ 
+2025. október 14. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+4. 
+A derékszögű koordináta-rendszerben adott az A(–12; 21) és a B(6; –3) pont. 
+ 
+a) Adja meg a pontok által meghatározott szakasz f felezőmerőlegesének egyenletét, 
+és számítsa ki, hány fokos szöget zár be az f egyenes az y tengellyel! 
+ 
+Egy 26 egység sugarú kör áthalad a P(24; 6) ponton, a középpontja pedig illeszkedik az 
+y tengelyre. 
+ 
+b) Határozza meg a kör egyenletét! 
+ 
+a) 
+6 pont 
+ 
+b) 
+6 pont 
+ 
+Ö.: 
+12 pont 
+ 
+ 
+ 
+ 
+
+===== PAGE 11 =====
+ 
+Matematika 
+11 / 24 
+emelt szintű írásbeli vizsga 
+E2412 
+ 
+2025. október 14. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 12 =====
+ 
+Matematika 
+12 / 24 
+emelt szintű írásbeli vizsga 
+E2412 
+ 
+2025. október 14. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+II. 
+ 
+Az 5–9. feladatok közül tetszése szerint választott négyet kell megoldania.  
+A kihagyott feladat sorszámát írja be a 3. oldalon található üres négyzetbe! 
+ 
+5. 
+Egy dobókockával hatszor dobtunk, a dobások értéke 4, 5, 4, 3, 1, 4.  
+ 
+a) Határozza meg a hat dobás értékének az átlagát és a szórását! 
+ 
+Egy szabályos dobókockával négyszer dobunk, és a négy dobás eredményét egymás 
+mellé írva négyjegyű számokat képezünk. 
+ 
+b) Az összes így megkapható négyjegyű szám hány százalékában van legalább két egy-
+forma számjegy? 
+ 
+Egy szabályos dobókockával többször dobunk. 
+ 
+c) Határozza meg azt a legkisebb n egész számot, amelyre igaz, hogy n dobás között 
+biztosan lesz legalább 3 egyforma értékű! Válaszát itt nem kell indokolnia. 
+ 
+Egy szabályos dobókockával addig dobunk, amíg a dobások közt lesz 2 egyforma értékű. 
+ 
+d) Határozza meg a szükséges dobások számának várható értékét! 
+ 
+a) 
+3 pont 
+ 
+b) 
+5 pont 
+ 
+c) 
+2 pont 
+ 
+d) 
+6 pont 
+ 
+Ö.: 
+16 pont 
+ 
+ 
+ 
+
+===== PAGE 13 =====
+ 
+Matematika 
+13 / 24 
+emelt szintű írásbeli vizsga 
+E2412 
+ 
+2025. október 14. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 14 =====
+ 
+Matematika 
+14 / 24 
+emelt szintű írásbeli vizsga 
+E2412 
+ 
+2025. október 14. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Az 5–9. feladatok közül tetszése szerint választott négyet kell megoldania.  
+A kihagyott feladat sorszámát írja be a 3. oldalon található üres négyzetbe! 
+ 
+6. 
+Az angol David Smith (egy 64 éves nyugalmazott nyomdagépszerelő) 2023-ban fedezte 
+fel az első olyan, egyetlen elemből álló nemperiodikus csempézést, amellyel az ábrán 
+látható módon fedhető le a sík.1 Az általa megtalált 13 oldalú síkidom 8 darab egybevágó 
+deltoidból állítható össze, és Smith a kalap nevet adta neki. 
+ 
+ 
+ 
+a) Igazolja, hogy egy-egy deltoid szögei rendre 60°, 90°, 120° és 90°. 
+ 
+b) Számítsa ki egy kalap kerületét, ha területe 1728 területegység! Válaszát közelítő 
+értékek használata nélkül adja meg! 
+ 
+Egy kalapot kiszínezünk három adott színnel úgy, hogy egy-egy deltoid színezéséhez egy 
+színt használunk, és két szomszédos deltoid nem lehet ugyanolyan színű. (Két deltoid 
+szomszédos, ha van közös oldaluk.) 
+ 
+c) Hányféleképpen lehet így kiszínezni az egy kalapot alkotó nyolc deltoidot? 
+ 
+a) 
+3 pont 
+ 
+b) 
+7 pont 
+ 
+c) 
+6 pont 
+ 
+Ö.: 
+16 pont 
+ 
+ 
+ 
+                                                 
+1 https://index.hu/techtud/2023/04/01/matematika-nemismetlodo-csempek-problema-penrose-einstein-nyugdijas-
+angol-smith-kalap-teknos/ (letöltés ideje: 2025.09.09.) 
+Csempézésnek nevezzük a sík hézagmentes és átfedések nélküli lefedését. Nemperiodikus a csempézés, ha nincs 
+olyan része a síknak, amelynek ismételt eltolásával a végtelen sík mintázata megkapható lenne. 
+
+===== PAGE 15 =====
+ 
+Matematika 
+15 / 24 
+emelt szintű írásbeli vizsga 
+E2412 
+ 
+2025. október 14. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 16 =====
+ 
+Matematika 
+16 / 24 
+emelt szintű írásbeli vizsga 
+E2412 
+ 
+2025. október 14. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Az 5–9. feladatok közül tetszése szerint választott négyet kell megoldania.  
+A kihagyott feladat sorszámát írja be a 3. oldalon található üres négyzetbe! 
+ 
+7. 
+Egy hajójárat üzemeltetési költsége két részből tevődik össze. Az üzemanyagköltség jó 
+közelítéssel egyenesen arányos a hajó sebességével: v km/h sebesség esetén 1,2v dukát 
+kilométerenként. Az egyéb rezsiköltség egyenesen arányos a menetidővel: 90 dukát 
+üzemóránként. A hajónak egy 10 km-es utat kell megtennie. 
+ 
+a) Hány dukát az erre az útra eső üzemeltetési költség, ha a hajó az utat 12 km/h állandó 
+sebességgel teszi meg? 
+ 
+b) Mekkora állandó sebességgel tegye meg ezt a 10 km-es utat a hajó, hogy az útra eső 
+üzemeltetési költség minimális legyen? Mennyi ez a minimális költség? 
+ 
+Egy Révfülöpről Balatonboglárra tartó hajójáraton 50-en utaztak, ők átlagosan 1650 Ft-ot 
+fizettek egy jegyért. Visszafelé Balatonboglárról Révfülöpre 70-en utaztak ugyanezen a 
+hajón, és ők átlagosan 1500 Ft-ot fizettek egy jegyért. 
+ 
+c) A két utat tekintve átlagosan mennyibe került egy jegy? 
+ 
+a) 
+4 pont 
+ 
+b) 
+9 pont 
+ 
+c) 
+3 pont 
+ 
+Ö.: 
+16 pont 
+ 
+ 
+ 
+ 
+
+===== PAGE 17 =====
+ 
+Matematika 
+17 / 24 
+emelt szintű írásbeli vizsga 
+E2412 
+ 
+2025. október 14. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 18 =====
+ 
+Matematika 
+18 / 24 
+emelt szintű írásbeli vizsga 
+E2412 
+ 
+2025. október 14. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Az 5–9. feladatok közül tetszése szerint választott négyet kell megoldania.  
+A kihagyott feladat sorszámát írja be a 3. oldalon található üres négyzetbe! 
+ 
+8. 
+A valós számok halmazán értelmezett f másodfokú függvény zérushelyei –3 és 4. 
+Az f grafikonja egy olyan parabola, amely az y tengelyt a (0; 6) pontban metszi. 
+ 
+a) Határozza meg a parabola egyenletét! 
+ 
+Adott a valós számok halmazán értelmezett 
+2
+( )
+0,5
+2
+6
+g x
+x
+x
+
+
+
+ függvény. 
+ 
+b) A g grafikonjához érintőt húzunk az x = 4 abszcisszájú pontjában. Határozza meg 
+az érintő egyenletét! 
+ 
+c) Számítsa ki az y  –2x + 2 egyenletű egyenes és az 
+2
+0,5
+2
+6
+y
+x
+x
+
+
+
+ egyenletű 
+parabola által határolt korlátos síkidom területét! 
+ 
+a) 
+5 pont 
+ 
+b) 
+4 pont 
+ 
+c) 
+7 pont 
+ 
+Ö.: 
+16 pont 
+ 
+ 
+ 
+ 
+
+===== PAGE 19 =====
+ 
+Matematika 
+19 / 24 
+emelt szintű írásbeli vizsga 
+E2412 
+ 
+2025. október 14. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 20 =====
+ 
+Matematika 
+20 / 24 
+emelt szintű írásbeli vizsga 
+E2412 
+ 
+2025. október 14. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Az 5–9. feladatok közül tetszése szerint választott négyet kell megoldania.  
+A kihagyott feladat sorszámát írja be a 3. oldalon található üres négyzetbe! 
+ 
+9. 
+A TAJ szám (társadalombiztosítási azonosító jel) egy 9 karakterből álló azonosító kód, 
+amelyben az első 8 karakter egy-egy számjegy, a kilencedik karakter pedig az első 
+8 számjegyből képzett ellenőrző számjegy. Az ellenőrző számjegy képzési szabálya: az 
+első nyolc számjegy közül (elölről nézve) a páratlan sorszámú helyeken álló számjegye-
+ket 3-mal, a páros sorszámú helyeken állókat pedig 7-tel szorozzuk. E szorzatok ösz-
+szegének utolsó számjegye lesz az ellenőrző számjegy. 
+ 
+a) Határozza meg a TAJ szám ellenőrző számjegyét, ha az első nyolc számjegy 
+24165379. 
+ 
+b) Egy TAJ szám első számjegyét letakartuk, így az _14564797 számsor látható. 
+Határozza meg a letakart számjegyet! 
+ 
+c) Határozza meg az ellenőrző számjegy lehetséges értékeit abban a TAJ számban, 
+amely 02563abba alakú! (a és b nem szükségképpen különböző számjegyek.) 
+ 
+Egy iskolai nyilvántartásban (gépi adatrögzítési hiba miatt) a rögzített TAJ számok 1,5%-
+a hibás. (Ezt tekinthetjük úgy, hogy egy tetszőleges TAJ szám 0,015 valószínűséggel lesz 
+hibás.) Lekérünk 20 TAJ számot a nyilvántartásból. 
+ 
+d) Mennyi annak a valószínűsége, hogy egynél több hibás lesz közöttük? 
+ 
+a) 
+ 2 pont 
+ 
+b) 
+ 4 pont 
+ 
+c) 
+ 5 pont 
+ 
+d) 
+ 5 pont 
+ 
+Ö.: 
+16 pont 
+ 
+ 
+ 
+
+===== PAGE 21 =====
+ 
+Matematika 
+21 / 24 
+emelt szintű írásbeli vizsga 
+E2412 
+ 
+2025. október 14. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 22 =====
+ 
+Matematika 
+22 / 24 
+emelt szintű írásbeli vizsga 
+E2412 
+ 
+2025. október 14. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 23 =====
+ 
+Matematika 
+23 / 24 
+emelt szintű írásbeli vizsga 
+E2412 
+ 
+2025. október 14. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 24 =====
+ 
+Matematika 
+24 / 24 
+emelt szintű írásbeli vizsga 
+E2412 
+ 
+2025. október 14. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+a feladat 
+sorszáma 
+pontszám 
+maximális 
+elért 
+maximális 
+elért 
+I. rész 
+1. 
+13 
+ 
+51 
+ 
+2. 
+14 
+ 
+3. 
+12 
+ 
+4. 
+12 
+ 
+II. rész 
+ 
+16 
+ 
+64 
+ 
+ 
+16 
+ 
+ 
+16 
+ 
+ 
+16 
+ 
+ 
+ nem választott feladat 
+Az írásbeli vizsgarész pontszáma 
+115 
+ 
+ 
+dátum 
+ 
+javító tanár 
+ 
+ __________________________________________________________________________  
+ 
+ 
+ 
+pontszáma egész 
+számra kerekítve 
+elért 
+programba  
+beírt 
+I. rész 
+  
+  
+II. rész 
+  
+  
+ 
+dátum 
+ 
+dátum 
+ 
+ 
+ 
+ 
+ 
+ 
+javító tanár 
+ 
+jegyző 
+ 

@@ -1,0 +1,95 @@
+29: 2021. május 4. 9:00 
+44: 2021. május 4. 
+70: 2021. május 4. 
+90: 1. A feladatok megoldására 240 perc fordítható, az idő leteltével a munkát be kell fejeznie. 
+92: 2. A feladatok megoldási sorrendje tetszőleges. 
+94: 3. A II. részben kitűzött öt feladat közül csak négyet kell megoldania. A nem választott fel-
+101: 4. A feladatok megoldásához szöveges adatok tárolására és megjelenítésére nem alkalmas 
+105: 5. A megoldások gondolatmenetét minden esetben írja le, mert a feladatra adható pont-
+108: 6. Ügyeljen arra, hogy a lényegesebb részszámítások is nyomon követhetők legyenek! 
+110: 7. A gondolatmenet kifejtése során a zsebszámológép használata – további matematikai 
+129: 8. A feladatok megoldásánál használt tételek közül az iskolában tanult, névvel ellátott tételeket 
+136: 9. A feladatok végeredményét (a feltett kérdésre adandó választ) szöveges megfogalmazásban 
+139: 10. A dolgozatot tollal írja, de az ábrákat ceruzával is rajzolhatja. Az ábrákon kívül a ceruzával 
+143: 11. Minden feladatnak csak egy megoldása értékelhető. Több megoldási próbálkozás esetén 
+146: 12. Kérjük, hogy a szürkített téglalapokba semmit ne írjon! 
+155: 2021. május 4. 
+176: 1. 
+179: a) 
+190: b) 
+211: a) 
+214: b) 
+230: 2021. május 4. 
+256: 2021. május 4. 
+275: 2. 
+279: a) Számítsa ki a négyszög területét! 
+286: b) Hány olyan különböző színezés lehetséges, amelyhez pontosan 3 színt használunk? 
+288: a) 
+291: b) 
+306: 2021. május 4. 
+332: 2021. május 4. 
+351: 3. 
+357: a) Hány darab részvényünk van az egyes fajtákból? 
+364: b) Hányadik hónap végén lesz először több pénz a második befektetésünkben, ha a 
+367: a) 
+370: b) 
+384: 2021. május 4. 
+410: 2021. május 4. 
+429: 4. 
+445: a) Igazolja, hogy az origó és az (5; 0) pont is rajta 
+454: b) Ha véletlenszerűen kiválasztjuk ennek a korlátos síkidomnak egy pontját, akkor 
+457: a) 
+460: b) 
+475: 2021. május 4. 
+501: 2021. május 4. 
+525: 5. 
+526: a) Határozza meg az m valós szám összes lehetséges értékét úgy, hogy az alábbi kije-
+540: b) Mutassa meg, hogy az alábbi kijelentés igaz! 
+568: c) Tudjuk, hogy az A, B, C kijelentések mindegyike 0,6 valószínűséggel igaz és 0,4 va-
+572: a) 
+575: b) 
+578: c) 
+592: 2021. május 4. 
+618: 2021. május 4. 
+640: 6. 
+651: a) Hányféle lehet a D, E, F csoport ismeretségi hálója? 
+655: b) Az összes eddigi (a korábban és a frissen beszerzett) információt figyelembe véve 
+662: c) Összesen hány ilyen csoportos kihallgatást kell szervezni? 
+664: a) 
+667: b) 
+670: c) 
+684: 2021. május 4. 
+711: 2021. május 4. 
+733: 7. 
+738: a) Határozza meg a sikeres dobások számának átlagát, mediánját és szórását! 
+744: b) Petra dobásának modellezéséhez határozza meg annak a parabolának az egyenletét, 
+751: c) Adja meg az f inverzfüggvényének értelmezési tar-
+762: a) 
+765: b) 
+768: c) 
+783: 2021. május 4. 
+809: 2021. május 4. 
+831: 8. 
+838: a) Határozza meg a sorsjegyek eladásából származó havi bevételt, ha a sorsjegy árát 
+841: b) Határozza meg azt az n értéket, amelyre a sorsjegyek eladásából származó havi be-
+847: c) Töltse ki az alábbi táblázat üres mezőit, majd számítsa ki egy darab sorsjegy nyere-
+861: a) 
+864: b) 
+867: c) 
+882: 2021. május 4. 
+908: 2021. május 4. 
+930: 9. 
+939: a) Mutassa meg, hogy legfeljebb 86 farönköt lehet így a raktérben elhelyezni! 
+941: b) A raktérnek hány százaléka marad üresen, ha 86 farönköt szállítanak? 
+946: c) Mennyi a valószínűsége, hogy legfeljebb egy szúrágta fa kerül a rakományába? 
+948: a) 
+951: b) 
+954: c) 
+968: 2021. május 4. 
+994: 2021. május 4. 
+1020: 2021. május 4. 
+1072: 2021. május 4. 
+1101: 1. 
+1106: 2. 
+1109: 3. 
+1112: 4. 

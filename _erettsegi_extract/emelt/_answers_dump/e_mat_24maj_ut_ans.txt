@@ -1,0 +1,599 @@
+--- line 183 ---
+x  4 
+1 pont
+ 
+Ellenőrzés behelyettesítéssel vagy (az értelmezési 
+tartományon) ekvivalens átalakításokra hivatkozás-
+sal. 
+1 pont
+ 
+Összesen:
+6 pont
+
+--- line 222 ---
+(Az exponenciális függvény kölcsönösen egyértelmű, 
+ezért) a metszéspont első koordinátája x  3, 
+1 pont
+ 
+második koordinátája y  (f (3)  g (3) ) 1. 
+(Tehát a metszéspont az M(3; 1) pont.) 
+1 pont
+ 
+Összesen:
+5 pont
+
+--- line 240 ---
+1 pont
+A függvények grafikonjai az M(3; 1) pontban met-
+szik egymást. (Más közös pont nincs.) 
+1 pont
+ 
+A leolvasott értékek ellenőrzése behelyettesítéssel. 
+1 pont
+ 
+Összesen:
+5 pont
+
+--- line 273 ---
+1 pont
+Ez a pont akkor is jár, ha 
+ez a gondolat csak a meg-
+oldásból derül ki. 
+A h függvény inverzének értelmezési tartománya: 
+{0,5; 1; 4; 16}. 
+1 pont
+ 
+Összesen:
+3 pont
+
+--- line 297 ---
+helyüket 6
+2
+
+
+
+  15-féleképpen választhatjuk ki. 
+1 pont
+ 
+Összesen tehát (1 + 6 + 15 ) 22 megfelelő szám van.
+1 pont
+
+--- line 300 ---
+
+
+  15-féleképpen választhatjuk ki. 
+1 pont
+ 
+Összesen tehát (1 + 6 + 15 ) 22 megfelelő szám van.
+1 pont
+ 
+Összesen:
+4 pont
+
+--- line 343 ---
+2
+
+
+
+ olyan négyelemű részhalmaza van H-nak, 
+amelynek az 1 és a 2 is eleme. 
+1 pont
+ 
+Összesen tehát (35 + 35 + 21 ) 91 megfelelő rész-
+halmaz van. 
+
+--- line 351 ---
+Összesen tehát (35 + 35 + 21 ) 91 megfelelő rész-
+halmaz van. 
+1 pont
+(Logikai szitát alkal-
+mazva kapjuk, hogy) a 
+megfelelő részhalmazok 
+száma 
+(56 + 56 – 21 ) 91. 
+Összesen:
+4 pont
+
+--- line 391 ---
+35
+3
+
+
+
+. 
+2 pont
+ 
+Összesen tehát (56 + 35 ) 91 megfelelő részhalmaz 
+van. 
+
+--- line 395 ---
+
+. 
+2 pont
+ 
+Összesen tehát (56 + 35 ) 91 megfelelő részhalmaz 
+van. 
+1 pont
+ 
+Összesen:
+4 pont
+
+--- line 407 ---
+2. b) harmadik megoldás 
+Komplementer módszerrel határozzuk meg a megfe-
+lelő részhalmazok számát. 
+1 pont
+Ez a pont akkor is jár, ha 
+ez a gondolat csak a meg-
+oldásból derül ki. 
+(A H-nak 9 eleme van.) 
+Összesen 9
+126
+
+--- line 427 ---
+4
+
+
+
+ olyan négyelemű részhalmaza van H-nak, 
+amelynek sem az 1, sem a 2 nem eleme. 
+1 pont
+ 
+Összesen tehát (126 – 35 ) 91 megfelelő részhalmaz 
+van. 
+
+--- line 431 ---
+ olyan négyelemű részhalmaza van H-nak, 
+amelynek sem az 1, sem a 2 nem eleme. 
+1 pont
+ 
+Összesen tehát (126 – 35 ) 91 megfelelő részhalmaz 
+van. 
+1 pont
+ 
+Összesen:
+4 pont
+
+--- line 453 ---
+ 
+Például A  {1} és B  {2} esetén a két halmaz met-
+szete üres, de A
+B
+
+. 
+1 pont
+ 
+Összesen:
+3 pont
+
+--- line 504 ---
+
+
+
+
+
+ ≈ 0,031. 
+1 pont
+ 
+Összesen:
+5 pont
+
+--- line 551 ---
+
+
+
+
+
+ ≈ 0,031. 
+1 pont
+ 
+Összesen:
+5 pont
+
+--- line 597 ---
+1
+1
+36
+36
+6
+
+
+ 
+Összesen:
+3 pont
+
+--- line 612 ---
+kával ugyanazt kell dobnia (3-as esetén Royal, más 
+esetben Full House lesz az eredmény). 
+2 pont
+ 
+A kérdezett valószínűség tehát 1
+6 . 
+1 pont
+ 
+Összesen:
+3 pont
+
+--- line 672 ---
+
+
+ 
+p  0,4 
+1 pont
+Ennek az 1-nél nem na-
+gyobb gyöke p  0,4 
+(a másik 1,6). 
+Összesen:
+4 pont
+
+--- line 713 ---
+16
+
+
+
+ része 
+az ABCD négyzet területének. 
+1 pont
+ 
+Összesen:
+4 pont
+
+--- line 791 ---
+
+
+
+
+
+
+2 pont
+ 
+Összesen:
+4 pont
+
+--- line 849 ---
+T
+
+ 
+Mivel az ABCD négyzet területe 
+2x , ezért az AFQ 
+háromszög területe annak 3
+16 része. 
+1 pont 
+Összesen:
+4 pont
+
+--- line 920 ---
+Tehát 
+360
+6 10
+QF 
+
+ valóban. 
+1 pont
+ 
+Összesen:
+6 pont
+
+--- line 963 ---
+6 10
+QF 
+
+
+
+ valóban. 
+2 pont
+ 
+Összesen:
+6 pont
+
+--- line 998 ---
+.
+2 pont
+ 
+Mivel a két háromszögben egy szög és a szöget köz-
+refogó két oldal aránya megegyezik, ezért a két há-
+romszög valóban hasonló. 
+1 pont
+ 
+Összesen:
+4 pont
+
+--- line 1041 ---
+. 
+2 pont
+ 
+Mivel a két háromszögben a megfelelő oldalak ará-
+nya megegyezik, ezért a két háromszög valóban ha-
+sonló. 
+1 pont
+ 
+Összesen:
+4 pont
+
+--- line 1085 ---
+A PFQ szög ezért 45°-os. 
+1 pont
+ 
+Mivel a két háromszögben két szög megegyezik 
+(Q-nál levő szögük közös, és van egy 45°-os szögük), 
+ezért a két háromszög valóban hasonló. 
+1 pont
+ 
+Összesen:
+4 pont
+
+--- line 1182 ---
+ 
+2 pont
+1 0
+1
+1
+
+
+ 
+Összesen:
+3 pont
+
+--- line 1217 ---
+4
+ε
+n 
+, 
+ami a határérték definíciója szerint azt jelenti, hogy 
+az {an} határértéke 1. 
+2 pont
+ 
+Összesen:
+3 pont
+
+--- line 1273 ---
+
+
+ is szigorúan monoton csökken. 
+1 pont
+ 
+Vagyis az {an} valóban szigorúan monoton csökken. 
+1 pont
+ 
+Összesen:
+3 pont
+
+--- line 1390 ---
+
+, 
+vagyis a sorozat valóban szigorúan monoton csökken.
+1 pont
+(Mivel n > 0, ezért) a tört 
+értéke kisebb 1-nél, tehát 
+a sorozat valóban szigo-
+rúan monoton csökken.
+Összesen:
+3 pont
+
+--- line 1424 ---
+Ennek a pozitív megoldása n  2. 
+(Az egyenlet másik gyöke n  –8.) 
+1 pont
+ 
+Ellenőrzés behelyettesítéssel vagy ekvivalens átalakí-
+tásokra hivatkozással. 
+1 pont
+ 
+Összesen:
+5 pont
+
+--- line 1509 ---
+ 
+ (–8 + 48 – 72) – (–216 + 432 – 216)  –32 – 0  
+1 pont
+ 
+ –32, és mivel a síkidom az x-tengely „alatt” van, 
+ezért a területe 32 területegység. 
+1 pont
+ 
+Összesen:
+5 pont
+
+--- line 1574 ---
+
+
+
+ 
+(Tehát az első napon 39, az utolsón pedig 104 felülést 
+végzett Domi, ami megfelel a feladat feltételeinek.) 
+1 pont
+ 
+Összesen:
+5 pont
+
+--- line 1661 ---
+átlagsebességére negatív érték adódna. 
+1 pont
+ 
+Dalma átlagsebessége az első körben tehát 14 km/h, 
+a másodikban 10,5 km/h volt (amely megfelel a fel-
+adat feltételeinek). 
+1 pont
+ 
+Összesen:
+9 pont
+
+--- line 1859 ---
+0,5 10,5 km/h volt (amely megfelel 
+a feladat feltételeinek). 
+1 pont
+Dalma az első kört 
+0,375 óra  22,5 perc, 
+a második kört pedig 
+0,5 óra  30 perc alatt 
+tette meg. 
+Összesen:
+9 pont
+
+--- line 1880 ---
+ 
+6. c) 
+Két különböző pozitív valós szám mértani közepe 
+mindig nagyobb, mint a harmonikus közepe, de ki-
+sebb, mint a számtani közepe. 
+2 pont
+1 pont jár, ha csak az 
+egyik reláció helyes. 
+Összesen:
+2 pont
+
+--- line 1907 ---
+ ≈ 28 639 618,
+1 pont
+ 
+azaz kerekítve 29 millió homokszem található. 
+1 pont
+Ez a pont nem jár, ha a 
+vizsgázó nem kerekít, 
+vagy rosszul kerekít. 
+Összesen:
+5 pont
+
+--- line 1933 ---
+2
+1,55
+0,915
+3
+
+ ≈ 2,3 m3. 
+1 pont
+ 
+Összesen:
+3 pont
+
+--- line 2075 ---
+
+
+ ≈ 1,47 m, 
+1 pont
+ 
+a maximális térfogat pedig kb. 2,35 m3. 
+1 pont
+ 
+Összesen:
+8 pont
+
+--- line 2185 ---
+1 pont
+ 
+Ekkor r ( 1,8cos ) ≈ 1,47 m, 
+1 pont
+ 
+a maximális térfogat pedig kb. 2,35 m3. 
+1 pont
+ 
+Összesen:
+8 pont
+
+--- line 2226 ---
+1 pont
+ 
+A kör sugara 53, 
+1 pont
+ 
+a kör középpontja (2; 6). 
+1 pont
+ 
+Összesen:
+3 pont
+
+--- line 2319 ---
+ 
+amiből α ≈ 74,05°. 
+1 pont
+ 
+Így a húrtrapéz hegyesszögei 74,05°-osak, 
+tompaszögei pedig 180° – 74,05°  105,95°-osak. 
+1 pont
+ 
+Összesen:
+8 pont
+
+--- line 2384 ---
+ 
+β  β’ + 45° ≈ 74,05°. 
+1 pont
+ 
+Így a húrtrapéz hegyesszögei 74,05°-osak, 
+tompaszögei pedig 180° – 74,05°  105,95°-osak. 
+1 pont
+ 
+Összesen:
+8 pont
+
+--- line 2465 ---
+ 
+amiből β ≈ 74,05°. 
+1 pont
+ 
+Így a húrtrapéz szögei: α  β ≈ 74,05°, 
+γ  δ  180° – β ≈ 105,95°. 
+1 pont
+ 
+Összesen:
+8 pont
+
+--- line 2539 ---
+(–2; 7), (–2; –7),  
+(7; 2), (7; –2), 
+(–7; 2), (–7; –2), 
+Ezek mindegyikéhez két-két y érték tartozik. 
+1 pont
+Tehát összesen 8 ilyen pont van. 
+1 pont
+ 
+Összesen:
+5 pont
+
+--- line 2598 ---
+ 
+k  16,4 nem megoldás. 
+1 pont
+ 
+k  17 megoldás (és ez megfelel a feladat feltételei-
+nek). 
+1 pont
+ 
+Összesen:
+5 pont
+
+--- line 2683 ---
+Tehát a keresett valószínűség 60
+12
+455
+91
+
+ ≈ 0,132. 
+1 pont
+ 
+Összesen:
+5 pont
+
+--- line 2734 ---
+ 
+Tehát a keresett valószínűség 4
+3
+7 13
+
+ ≈ 0,132. 
+1 pont
+ 
+Összesen:
+5 pont
+
+--- line 2814 ---
+
+
+
+
+
+. 
+1 pont
+ 
+Összesen:
+6 pont

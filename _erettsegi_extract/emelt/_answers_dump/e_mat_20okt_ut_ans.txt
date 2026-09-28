@@ -1,0 +1,419 @@
+--- line 157 ---
+=
+ 
+1 pont  
+x = 0 vagy x = 120  
+1 pont  
+A 0 nem eleme az értelmezési tartománynak, ezért az 
+egyetlen zérushely a 120. 
+1 pont  
+Összesen: 
+4 pont  
+
+--- line 177 ---
+−
+=
+ 
+1 pont  
+g (20) = 128  
+1 pont  
+A különbség (500 – 128 =) 372.  
+1 pont  
+Összesen: 
+3 pont  
+
+--- line 252 ---
+h′′
+<
+.  
+Tehát 47,2 a h maximumhelye,  
+1 pont  
+a maximum értéke pedig h(47,2) = 556,96. 
+(A függvénynek minimuma nincs.) 
+1 pont  
+Összesen: 
+6 pont  
+
+--- line 318 ---
+=
+⋅−
+ 
+(47,2 ∈ ]0; 130[, ezért) ez a h maximumhelye is, 
+1 pont  
+a maximum értéke pedig h(47,2) = 556,96. 
+(A függvénynek minimuma nincs.) 
+1 pont  
+Összesen: 
+6 pont  
+
+--- line 368 ---
+(30 : 2,5 = 12, tehát) 12 férfi és 18 nő vett részt a kép-
+zésen. 
+1 pont  
+Ellenőrzés a szöveg alapján: a csoport tagjai életkorá-
+nak összege 30 ∙ 28 = 840.  
+Az öt legidősebb személy nélkül ez az összeg 640,  
+és 640 : 25 = 25,6 valóban.  
+1 pont  
+Összesen: 
+7 pont  
+
+--- line 392 ---
+1 pont  
+A képzésen 12 férfi és 18 nő vett részt. 
+1 pont  
+Ellenőrzés a szöveg alapján: a csoport tagjai életkorá-
+nak összege 30 ∙ 28 = 840.  
+Az öt legidősebb személy nélkül ez az összeg 640,  
+és 640 : 25 = 25,6 valóban.  
+1 pont  
+Összesen: 
+7 pont  
+
+--- line 433 ---
+ha csak édes van, de keserű nincs, akkor a többi négy 
+fűszer közül hármat kell még kiválasztani, ami  
+4-féleképpen lehetséges. Ugyanennyi lehetőség van 
+akkor is, ha keserű van, de édes nincs. 
+1 pont  
+Az összes ízesítési lehetőség száma tehát 
+4 + 6 + 6 + 1 + 4 + 4 = 25. 
+1 pont  
+Összesen: 
+6 pont  
+
+--- line 484 ---
+ lehetőség van. 
+2 pont  
+Ugyanennyi lehetőség van akkor is, ha keserű van, de 
+édes nincs. 
+1 pont  
+Az összes ízesítési lehetőség száma tehát 
+5 + 10 + 10 = 25. 
+1 pont  
+Összesen: 
+6 pont  
+
+--- line 527 ---
+
+
+(= 10) különböző 
+módon választható (kedvezőtlen esetek). 
+2 pont  
+A megfelelő ízesítési lehetőségek száma tehát 
+35 – 10 = 25. 
+1 pont  
+Összesen: 
+6 pont  
+
+--- line 581 ---
+. 
+1 pont  
+Ellenőrzés a szöveg alapján. (Ha m = 2 és 8 érménk 
+van, akkor egyrészt kimarad 8 – 6 = 2 érme, 
+másrészt 6 – 4 = 2 dobozba nem jut érme; 
+ha pedig m = 3 és 9 érménk van, akkor kimarad 
+3 érme, és 6 – 3 = 3 dobozba nem jut érme valóban.) 
+1 pont  
+Összesen: 
+6 pont  
+
+--- line 630 ---
+
+
+
+≈ 0,264 
+1 pont  
+Annak a valószínűsége, hogy legfeljebb 2 hibás van 
+≈ 0,087 + 0,216 + 0,264 = 0,567. 
+1 pont  
+Összesen: 
+5 pont  
+
+--- line 662 ---
+0,84 1
+S
+⋅
+−
+=
+−
+≈ 9,59 méter. 
+2 pont  
+Összesen: 
+4 pont  
+
+--- line 685 ---
+(k, m ∈ N) 
+3(2k – 5m) = –1 
+Ez azonban lehetetlen. 
+(András állítása tehát valóban hamis.) 
+1 pont 
+A bal oldal osztható 
+3-mal, a jobb oldal nem, 
+ami lehetetlen. 
+Összesen: 
+3 pont  
+
+--- line 721 ---
+A doboz térfogata 4349 ∙ 40 = 173 960 mm3. 
+1 pont* 43,5 ∙ 4 = 174 cm3 
+A három labda térfogata 4 ∙ 203
+ ∙ π ≈ 100 531 mm3. 
+1 pont* 4 ∙ 23
+ ∙ π ≈ 101 cm3 
+Ez a doboz térfogatának kb. 58%-a. 
+1 pont*  
+Összesen: 
+7 pont  
+
+--- line 955 ---
+−−
+=
+
+
+
+
+ 
+1 pont 
+Összesen: 
+7 pont  
+
+--- line 968 ---
+g zérushelye –4, 
+1 pont  
+h zérushelyei –2 és 2, 
+1 pont  
+i zérushelyei –4 és 4. 
+1 pont  
+ 
+1 pont  
+Összesen: 
+4 pont  
+
+--- line 1005 ---
+ 
+Az 5 lehet a p zérushelye (ekkor c = –5). 
+1 pont 
+ 
+Tehát a c konstans értéke kétféleképpen választható 
+meg. 
+1 pont p(x) = x + 3  
+vagy p(x) = x – 5 
+Összesen: 
+5 pont  
+
+--- line 1024 ---
+nincs közös zérushelye); az összefüggőség miatt az 
+egyiknek léteznie is kell. 
+2 pont  
+A p zérushelye lehet a –3, és lehet 5 is, tehát kétféle-
+képpen választható meg a konstans értéke  
+(p(x) = x + 3 vagy p(x) = x – 5). 
+2 pont 
+ 
+Összesen: 
+5 pont  
+
+--- line 1080 ---
++
+−
+⋅
+ 
+≈ 4204,98, 
+1 pont  
+azaz kb. 4200 betegre lehet számítani. 
+1 pont  
+Összesen: 
+3 pont  
+
+--- line 1159 ---
+
+=
+ ≈ 
+≈ 17,78. 
+1 pont  
+Azaz kb. 18 nap múlva lesz a város lakosainak  
+10%-a fertőzött (18 < 30). 
+1 pont  
+Összesen: 
+6 pont  
+
+--- line 1244 ---
+=
+=
++
+⋅
++
+⋅
+. 
+1 pont  
+Összesen: 
+7 pont  
+
+--- line 1370 ---
+0,1
+0,126
+V
+T =
+ ≈ 0,79 m, 
+azaz 79 cm magasságig tölti meg az egyes hordókat 
+(és ez valóban kisebb, mint a hordó magassága).  
+1 pont  
+Összesen: 
+5 pont  
+
+--- line 1488 ---
+1 pont  
+Ekkora felület fedésére 32,33 ⋅ 30 ≈ 970 cserépre lesz 
+szükség, 
+1 pont  
+a hulladékot is figyelembe véve pedig  
+970
+0,92 ≈ 1055 darab cserepet kell vásárolni. 
+1 pont  
+Összesen: 11 pont  
+ 
+
+--- line 1506 ---
+1 pont*  
+Azokat a háromjegyű számokat kell az A halmazból 
+elhagynunk, amelyekben a 2-es és a 3-as számjegy is 
+szerepel (vagyis amelyek az 1, 2, 3 számjegyekből 
+állnak). Ilyen háromjegyű számból 6 darab van. 
+1 pont  
+Az A \ (B ∩ C) halmaz elemszáma 252 – 6 = 246. 
+1 pont  
+Összesen: 
+5 pont  
+
+--- line 1579 ---
+
+= 18
+5
+ annak a valószínűsége, hogy a dobott 
+számok összege 4 lesz. 
+1 pont 
+5
+18 ≈ 0,278 
+Összesen: 
+5 pont  
+
+--- line 1608 ---
+
+
+
+
+= 18
+5
+. 
+1 pont  
+Összesen: 
+5 pont  
+
+--- line 1738 ---
+=
+,  
+1 pont  
+innen n = 200 (Ft). 
+1 pont  
+1-es dobás esetén tehát 200 – 80 = 120 forintot fizet 
+Béla Andinak.  
+1 pont  
+Összesen: 
+6 pont  
+
+--- line 1758 ---
+1 pont  
+Az ezen az oldalon kijelölt három pont közül 3-féle-
+képpen választhatunk ki kettőt. 
+1 pont  
+A másik két oldal mindegyikéről 3-féleképpen vá-
+laszthatjuk ki a négyszög harmadik, illetve negyedik 
+csúcsát. 
+1 pont  
+Összesen tehát 3 ⋅ 3 ⋅ 3 ⋅ 3 = 81, a feltételeknek megfe-
+lelő négyszög van. 
+
+--- line 1761 ---
+1 pont  
+A másik két oldal mindegyikéről 3-féleképpen vá-
+laszthatjuk ki a négyszög harmadik, illetve negyedik 
+csúcsát. 
+1 pont  
+Összesen tehát 3 ⋅ 3 ⋅ 3 ⋅ 3 = 81, a feltételeknek megfe-
+lelő négyszög van. 
+1 pont  
+Összesen: 
+5 pont  
+
+--- line 1765 ---
+1 pont  
+Összesen tehát 3 ⋅ 3 ⋅ 3 ⋅ 3 = 81, a feltételeknek megfe-
+lelő négyszög van. 
+1 pont  
+Összesen: 
+5 pont  
+ 
+9. a) második megoldás 
+Összesen 9
+4
+
+--- line 1788 ---
+27
+⋅⋅=
+eset (mert 3-féleképpen választ-
+ható ki a két oldal, egy-egy oldalról pedig 3-3-féle-
+képpen választható ki két pont). 
+3 pont  
+A kedvező esetek száma tehát 126 – 18 – 27 = 81. 
+1 pont  
+Összesen: 
+5 pont  
+
+--- line 1912 ---
+Az XYZ szabályos háromszög területe: 
+2
+3
+4
+ZX
+⋅
+≈ 2,13.  
+1 pont  
+Összesen: 11 pont  
+ 
+
+--- line 2035 ---
+≈ 
+2 –3 1,599
+3 4
+4
+⋅
+⋅
+ ≈ 2,13. 
+1 pont  
+Összesen: 11 pont  
+ 
+
+--- line 2165 ---
+16 3
+4
+13
+ZX
+⋅
+=
+ (≈ 2,13). 
+1 pont  
+Összesen: 11 pont  
+Megjegyzés: AZ : ZX : XP = 4 : 8 : 1.  
+
+--- line 2267 ---
+szabályos, területe tehát 
+2
+3
+4
+XZ
+⋅
+≈ 2,13. 
+1 pont  
+Összesen: 11 pont  
+ 

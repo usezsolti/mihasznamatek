@@ -1,0 +1,455 @@
+--- line 158 ---
+2
+a
+b
+
+
+
+ 
+1 pont  
+Összesen: 
+2 pont  
+
+--- line 169 ---
+1. b) 
+A megfordítás: Ha a és b számtani közepe nagyobb 
+7-nél, akkor a  6 és b  8. 
+1 pont  
+A megfordítás hamis. 
+1 pont  
+Jó ellenpélda (pl. a  5, b  11). 
+1 pont  
+Összesen: 
+3 pont  
+
+--- line 212 ---
+x
+x
+ 
+1 pont  
+14x  10x + 70 
+1 pont  
+Innen x  17,5. 
+1 pont  
+Összesen: 
+4 pont  
+
+--- line 234 ---
+X 
+ 
+C 
+ 
+ 
+X 
+ 
+1-1 pont  
+Összesen: 
+3 pont  
+
+--- line 267 ---
+50 2
+
+
+
+ ≈ 
+1 pont  
+≈ 30,7 °C hőmérsékletű lesz a kávé negyedóra múlva. 
+1 pont  
+Összesen: 
+4 pont  
+
+--- line 315 ---
+lg 2
+t
+
+
+ 
+t ≈ 31,8, tehát kb. 32 perc múlva hűl le a kávé 
+25,5 °C hőmérsékletűre. 
+1 pont  
+Összesen: 
+4 pont  
+
+--- line 348 ---
+
+
+ 
+1 pont  
+40  0,765H + 19,975 
+1 pont  
+Ebből a szoba hőmérséklete H ≈ 26,2 °C. 
+1 pont  
+Összesen: 
+4 pont  
+
+--- line 429 ---
+
+
+
+, k Z. 
+2 pont  
+Ellenőrzés behelyettesítéssel vagy ekvivalens átalakí-
+tásokra hivatkozással. 
+1 pont  
+Összesen: 
+8 pont  
+
+--- line 518 ---
+
+ 
+1 pont  
+ 
+3
+
+ (≈ 1,73).  
+1 pont  
+Összesen: 
+4 pont  
+
+--- line 570 ---
+ 
+2 pont  
+Az egyenlet pozitív gyöke a  6 (a negatív gyök – 4, 
+ami nem lehetséges). 
+1 pont  
+A háromszög oldalai: 6 (cm), 10 (cm) és 14 (cm) 
+(és ekkor teljesül a háromszög-egyenlőtlenség). 
+1 pont    
+Összesen: 
+6 pont  
+
+--- line 619 ---
+≈ 158,7 cm2. 
+1 pont 
+24 13,2
+2
+
+
+T
+ ≈ 158,4 cm2 
+Összesen: 
+5 pont  
+
+--- line 681 ---
+
+
+ 
+2 pont  
+60 7
+
+≈ 158,7 cm2. 
+1 pont  
+Összesen: 
+5 pont  
+
+--- line 751 ---
+1 pont  
+24 13, 2
+2
+
+
+T
+ ≈ 158,4 cm2. 
+1 pont    
+Összesen: 
+5 pont  
+
+--- line 766 ---
+1 pont  
+a + (a + 4)  a + 8, 
+1 pont  
+ahonnan a  4. 
+1 pont  
+Így a háromszög kerülete valóban nagyobb, mint  
+(4 + 8 + 12 ) 24 cm.  
+1 pont    
+Összesen: 
+4 pont  
+
+--- line 845 ---
+
+
+
+
+
+
+ ≈ 0,745. 
+2 pont 
+Összesen: 
+3 pont  
+
+--- line 870 ---
+
+
+-féleképpen választ-
+hatjuk ki a két 2-es dobás helyét. (A maradék három 
+helyen 3-as áll.) 
+1 pont 
+Így összesen 6  10  60 megfelelő dobássorozat van. 
+1 pont  60. 
+Összesen: 
+3 pont  
+
+--- line 890 ---
+2 pont  
+A keresett valószínűség így 12
+1
+36
+3
+
+ (≈ 0,333). 
+1 pont  
+Összesen: 
+5 pont  
+
+--- line 962 ---
+4
+3
+
+
+
+
+ (≈ 0,333). 
+1 pont*  
+Összesen: 
+5 pont  
+
+--- line 1060 ---
+emelt szintű írásbeli vizsga 
+E2413 
+ 
+2024. október 15. 
+ 
+5. d)  
+Helyesen kitöltött halmazábra. 
+5 pont 
+Összesen: 
+5 pont  
+
+--- line 1127 ---
+
+
+ ≈ 10,5 cm 
+CA  DB  12 – 8  4 cm 
+1 pont  
+A szürkére színezett tartomány kerülete 
+(14,6 + 4 + 10,5 + 4 ) 33,1 cm. 
+1 pont  
+Összesen: 
+8 pont  
+
+--- line 1163 ---
+A forgástest térfogata 
+2
+11,6
+12
+3
+
+ ≈ 1691 cm3. 
+1 pont 437 cm3 + 1254 cm3 
+Összesen: 
+4 pont  
+
+--- line 1183 ---
+meg, akkor a D tartomány színezése 2-féle lehet. 
+1 pont  
+Ha pedig a C tartomány színe a harmadik szín, akkor 
+a D tartomány színezése egyértelmű (D és B színe 
+egyforma). 
+1 pont  
+Tehát 6  (2 + 1)  18 megfelelő színezés van. 
+1 pont  
+Összesen: 
+4 pont  
+
+--- line 1213 ---
+Ha három színnel színezünk, akkor 3-féleképpen vá-
+laszthatjuk ki a kétszer felhasznált színt, 2-félekép-
+pen választhatjuk ki az ezzel színezett két (szem-
+közti) tartományt, és 2-féleképpen színezhetjük ki a 
+másik két tartományt. Ez (3  2  2 ) 12 lehetőség. 
+2 pont  
+Tehát (6  + 12 ) 18 megfelelő színezés van. 
+1 pont  
+Összesen: 
+4 pont  
+
+--- line 1336 ---
+
+
+
+
+ ≈ 0,242. 
+1 pont  
+Tehát a B esemény valószínűsége nagyobb. 
+1 pont  
+Összesen: 
+6 pont  
+
+--- line 1380 ---
+szekrény van, így a B esemény valószínűsége 
+24 12
+35 34
+
+ ≈ 0,242. 
+2 pont    
+Tehát a B esemény valószínűsége nagyobb. 
+1 pont  
+Összesen: 
+6 pont  
+
+--- line 1404 ---
+választhatjuk, második és harmadikra 24, illetve 12 
+szekrény marad, így a kedvező esetek száma 
+36  24  12 ( 10 368). 
+2 pont  
+Mivel (azonos számú összes eset mellett) a második 
+esetben nagyobb a kedvező esetek száma, így a 
+B esemény valószínűsége a nagyobb. 
+1 pont  
+Összesen: 
+6 pont  
+
+--- line 1427 ---
+35
+30
+
+
+ ≈ 
+1 pont  
+≈ 50 cm a leghosszabb elhelyezhető pálca hossza. 
+1 pont  
+Összesen: 
+3 pont  
+
+--- line 1482 ---
+kulcs kiosztása ezek után egyértelmű). 
+1 pont 
+A kedvező esetek száma tehát (1 + 6 ) 7. 
+1 pont  
+A keresett valószínűség így 7
+24
+ ≈ 0,292. 
+1 pont  
+Összesen: 
+7 pont  
+
+--- line 1549 ---
+
+
+
+
+
+
+ ≈ 0,292. 
+1 pont  
+Összesen: 
+7 pont  
+
+--- line 1581 ---
+≈ 28,57 millió, 
+1 pont  
+azaz kb. 
+7
+2,857 10
+
+ darab magot tartalmaz. 
+1 pont  
+Összesen: 
+3 pont  
+
+--- line 1617 ---
+
+ ≈
+.
+.
+
+
+ 64 óra alatt végez a zabhegyezéssel. 
+1 pont  
+Összesen: 
+3 pont  
+
+--- line 1753 ---
+
+
+
+
+
+
+ 50 óra. 
+1 pont  
+Összesen: 10 pont  
+ 
+
+--- line 1811 ---
+2
+log 10
+1
+n 
+ ≈ 24,3. 
+1 pont  
+A keresett n érték a 25. 
+1 pont  
+Összesen: 
+6 pont  
+
+--- line 1894 ---
+, 
+1 pont  
+ami a kért alakban 
+512
+341
+
+. 
+1 pont  
+Összesen: 
+4 pont  
+
+--- line 2115 ---
+
+
+
+
+
+ valóban teljesül minden 
+n-re. 
+1 pont  
+Összesen: 
+6 pont  
+
+--- line 2287 ---
+b
+
+
+
+
+
+ valóban teljesül minden n-re. 
+1 pont  
+Összesen: 
+6 pont  
+
+--- line 2411 ---
+
+
+
+
+
+
+ valóban teljesül minden n-re.   
+1 pont  
+Összesen: 
+6 pont  
+
+--- line 2592 ---
+
+
+
+, ami azonosság. 
+1 pont  
+Mivel átalakításaink ekvivalensek voltak, az eredeti 
+állítást ezzel beláttuk. 
+1 pont  
+Összesen: 
+6 pont  

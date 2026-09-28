@@ -1,0 +1,1228 @@
+
+===== PAGE 1 =====
+ 
+Matematika 
+ 
+Nat2020 
+E2411 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+OKTATÁSI HIVATAL 
+MATEMATIKA 
+ 
+EMELT SZINTŰ 
+ÍRÁSBELI VIZSGA 
+2024. május 7. 9:00 
+ 
+Időtartam: 240 perc 
+Pótlapok száma 
+Tisztázati 
+ 
+Piszkozati 
+ 
+É R E T T S É G I V I Z S G A • 2 0 2 4 . m á j u s 7 . 
+
+===== PAGE 2 =====
+ 
+Matematika 
+2 / 24 
+emelt szintű írásbeli vizsga 
+E2411 
+ 
+2024. május 7. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 3 =====
+ 
+Matematika 
+3 / 24 
+emelt szintű írásbeli vizsga 
+E2411 
+ 
+2024. május 7. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Fontos tudnivalók 
+1. A feladatok megoldására 240 perc fordítható, az idő leteltével a munkát be kell fejeznie. 
+ 
+2. A feladatok megoldási sorrendje tetszőleges. 
+ 
+3. A II. részben kitűzött öt feladat közül csak négyet kell megoldania. A nem választott fel-
+adat sorszámát írja be a dolgozat befejezésekor az alábbi négyzetbe! Ha a javító tanár 
+számára nem derül ki egyértelműen, hogy melyik feladat értékelését nem kéri, akkor  
+a kitűzött sorrend szerinti legutolsó feladatra nem kap pontot. 
+ 
+ 
+ 
+4. A feladatok megoldásához szöveges adatok tárolására és megjelenítésére nem alkalmas 
+zsebszámológépet és bármilyen négyjegyű függvénytáblázatot használhat, más elektroni-
+kus vagy írásos segédeszköz használata tilos! 
+ 
+5. A megoldások gondolatmenetét minden esetben írja le, mert a feladatra adható pont-
+szám jelentős része erre jár! 
+ 
+6. Ügyeljen arra, hogy a lényegesebb részszámítások is nyomon követhetők legyenek! 
+ 
+7. A gondolatmenet kifejtése során a zsebszámológép használata – további matematikai 
+indoklás nélkül – a következő műveletek elvégzésére fogadható el: összeadás, kivonás, 
+szorzás, osztás, hatványozás, gyökvonás, n!, 
+
+
+
+
+
+
+k
+n
+ kiszámítása, a függvénytáblázatban fel-
+lelhető táblázatok helyettesítése (sin, cos, tg, log és ezek inverzei), a π és az e szám közelítő 
+értékének megadása, nullára rendezett másodfokú egyenlet gyökeinek meghatározása.  
+További matematikai indoklás nélkül használhatók a számológépek az átlag és a szórás ki-
+számítására abban az esetben, ha a feladat szövege kifejezetten nem követeli meg az ezzel 
+kapcsolatos részletszámítások bemutatását is. Egyéb esetekben a géppel elvégzett számí-
+tások indoklás nélküli lépéseknek számítanak, így azokért nem jár pont. 
+ 
+8. A feladatok megoldásánál használt tételek közül az iskolában tanult, névvel ellátott tételeket 
+(pl. Pitagorasz-tétel, magasságtétel) nem kell pontosan megfogalmazva kimondania, elég 
+csak a tétel megnevezését említenie, de az alkalmazhatóságát röviden indokolnia kell. 
+Egyéb tétel(ek)re való hivatkozás csak akkor fogadható el teljes értékűnek, ha az állítást 
+minden feltételével együtt pontosan mondja ki (bizonyítás nélkül), és az adott problémában 
+az alkalmazhatóságát indokolja. 
+ 
+9. A feladatok végeredményét (a feltett kérdésre adandó választ) szöveges megfogalmazásban 
+is közölje! 
+ 
+10. A dolgozatot tollal írja, de az ábrákat ceruzával is rajzolhatja. Az ábrákon kívül a ceruzával 
+írt részeket a javító tanár nem értékelheti. Ha valamilyen megoldást vagy megoldásrészletet 
+áthúz, akkor az nem értékelhető. 
+ 
+11. Minden feladatnak csak egy megoldása értékelhető. Több megoldási próbálkozás esetén 
+egyértelműen jelölje, hogy melyiket tartja érvényesnek! 
+ 
+12. Kérjük, hogy a szürkített téglalapokba semmit ne írjon! 
+ 
+ 
+
+===== PAGE 4 =====
+ 
+Matematika 
+4 / 24 
+emelt szintű írásbeli vizsga 
+E2411 
+ 
+2024. május 7. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+I. 
+ 
+1. 
+a) Oldja meg az alábbi egyenletet a valós számok halmazán! 
+ 
+2
+2
+3
+log (
+2)
+log (2
+8)
+x
+x
+
+
+
+
+ 
+ 
+Adott az f és a g függvény: 
+f : R  R, 
+3
+( )
+2x
+f x
+
+
+ 
+g : R  R, ( )
+2
+7
+x
+g x 
+
+ 
+ 
+b) A két függvény grafikonját egy számítógépes programmal közös koordináta-rend-
+szerben ábrázoltuk. Határozza meg a két grafikon metszéspontjának koordinátáit! 
+ 
+Legyen a h függvény értelmezési tartománya az egyjegyű pozitív prímszámok halmaza, 
+és legyen 
+3
+( )
+2x
+h x
+
+
+. 
+ 
+c) Határozza meg a h függvény inverzfüggvényének az értelmezési tartományát! 
+ 
+a) 
+6 pont 
+ 
+b) 
+5 pont 
+ 
+c) 
+3 pont 
+ 
+Ö.: 
+14 pont 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 5 =====
+ 
+Matematika 
+5 / 24 
+emelt szintű írásbeli vizsga 
+E2411 
+ 
+2024. május 7. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 6 =====
+ 
+Matematika 
+6 / 24 
+emelt szintű írásbeli vizsga 
+E2411 
+ 
+2024. május 7. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+2. 
+a) Hány olyan hétjegyű szám van a kettes számrendszerben, amelyben legfeljebb két 
+darab 0 számjegy található? 
+ 
+Legyen H az egyjegyű pozitív egész számok halmaza. 
+ 
+b) Hány olyan 4 elemű részhalmaza van H-nak, amelynek az 1 vagy a 2 eleme? 
+ 
+c) A és B legyen a fenti H alaphalmaz két részhalmaza. Adja meg az alábbi (igaz) 
+állítás megfordítását, és adja meg a megfordítás logikai értékét (igaz vagy hamis)! 
+Válaszát indokolja! 
+„Ha A
+B
+
+, akkor A  B  .” 
+ 
+a) 
+4 pont 
+ 
+b) 
+4 pont 
+ 
+c) 
+3 pont 
+ 
+Ö.: 
+11 pont 
+ 
+ 
+ 
+ 
+
+===== PAGE 7 =====
+ 
+Matematika 
+7 / 24 
+emelt szintű írásbeli vizsga 
+E2411 
+ 
+2024. május 7. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 8 =====
+ 
+Matematika 
+8 / 24 
+emelt szintű írásbeli vizsga 
+E2411 
+ 
+2024. május 7. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+3. 
+A kockapóker játékot öt szabályos dobókockával játsszák. A játék célja, hogy a játékosok 
+bizonyos számkombinációkat dobjanak ki a kockákkal. 
+Részletek a játékszabályból: 
+ A dobójátékos először mind az öt kockával dob. 
+ Ha nem elégedett az első dobás eredményével, akkor ezután felvehet tetszőleges 
+számú kockát a lent lévő öt kockából, és azokkal másodszor is dobhat. 
+A Sor számkombináció esetén az öt kockán öt különböző, egymást követő szám szerepel. 
+A Royal számkombináció esetén mind az öt kockán ugyanaz a szám szerepel. 
+A Full House számkombináció esetén az öt kocka közül három kockán ugyanaz a szám 
+szerepel, a maradék két kockán pedig szintén azonos, de az előzőtől eltérő szám szerepel 
+(pl. 1-1-1-4-4). 
+ 
+a) Számítsa ki annak a valószínűségét, hogy egy játékos első dobása Sor lesz! 
+ 
+Egy játékos az első dobásával a 3-3-3-4-5 számokat dobta. A 3-asokat lent hagyja, a má-
+sik két kockával pedig másodszor is dob. 
+ 
+b) Számítsa ki annak a valószínűségét, hogy a játékos második dobása után kapott 
+számkombináció Full House vagy Royal lesz! 
+ 
+Egy „cinkelt” (nem szabályos) dobókockával a 6-os dobás valószínűsége p. Ezzel a koc-
+kával kétszer dobunk egymás után. Tudjuk, hogy 0,64 annak a valószínűsége, hogy a két 
+dobásból legalább az egyik 6-os. 
+ 
+c) Számítsa ki p értékét! 
+ 
+a) 
+5 pont 
+ 
+b) 
+3 pont 
+ 
+c) 
+4 pont 
+ 
+Ö.: 
+12 pont 
+ 
+ 
+ 
+
+===== PAGE 9 =====
+ 
+Matematika 
+9 / 24 
+emelt szintű írásbeli vizsga 
+E2411 
+ 
+2024. május 7. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 10 =====
+ 
+Matematika 
+10 / 24 
+emelt szintű írásbeli vizsga 
+E2411 
+ 
+2024. május 7. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+4. 
+Az ábrán látható ABCD négyzet AC átlóját a P és a Q pont három 
+szakaszra bontja, mégpedig úgy, hogy AP : PQ : QC  4 : 5 : 3 teljesül. 
+Jelölje F a négyzet AB oldalának felezőpontját. 
+ 
+a) Határozza meg, hogy az AFQ háromszög területe hányadrésze 
+az ABCD négyzet területének! 
+ 
+A négyzet oldala 24 egység hosszú. 
+ 
+b) Igazolja, hogy az FPQ háromszögben 
+4 5
+FP 
+ és 
+6 10
+QF 
+. 
+ 
+c) Igazolja, hogy az AFQ háromszög és az FPQ háromszög hasonló! 
+ 
+a) 
+4 pont 
+ 
+b) 
+6 pont 
+ 
+c) 
+4 pont 
+ 
+Ö.: 
+14 pont 
+ 
+ 
+ 
+ 
+
+===== PAGE 11 =====
+ 
+Matematika 
+11 / 24 
+emelt szintű írásbeli vizsga 
+E2411 
+ 
+2024. május 7. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 12 =====
+ 
+Matematika 
+12 / 24 
+emelt szintű írásbeli vizsga 
+E2411 
+ 
+2024. május 7. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+II. 
+ 
+Az 5–9. feladatok közül tetszése szerint választott négyet kell megoldania.  
+A kihagyott feladat sorszámát írja be a 3. oldalon található üres négyzetbe! 
+ 
+5. 
+a) Határozza meg az 
+4
+n
+n
+a
+n
+
+
+ sorozat határértékét! 
+ 
+b) Igazolja, hogy az an sorozat szigorúan monoton csökkenő! 
+ 
+c) Határozza meg azokat az n pozitív egész számokat, amelyekre teljesül, hogy 
+ 
+(
+4)!
+24(
+1)(
+3).
+!
+n
+n
+n
+n
+
+
+
+
+ 
+ 
+d) Határozza meg a valós számok halmazán értelmezett f (x) = 24(x + 1)(x + 3)  
+függvény grafikonja és az x tengely által közbezárt korlátos síkidom területét! 
+ 
+a) 
+3 pont 
+ 
+b) 
+3 pont 
+ 
+c) 
+5 pont 
+ 
+d) 
+5 pont 
+ 
+Ö.: 
+16 pont 
+ 
+ 
+ 
+
+===== PAGE 13 =====
+ 
+Matematika 
+13 / 24 
+emelt szintű írásbeli vizsga 
+E2411 
+ 
+2024. május 7. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 14 =====
+ 
+Matematika 
+14 / 24 
+emelt szintű írásbeli vizsga 
+E2411 
+ 
+2024. május 7. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Az 5–9. feladatok közül tetszése szerint választott négyet kell megoldania.  
+A kihagyott feladat sorszámát írja be a 3. oldalon található üres négyzetbe! 
+ 
+6. 
+Domi két héten keresztül felüléseket végzett reggeli tornaként. A második naptól kezdve 
+minden reggel 5-tel több felülést végzett, mint az előző napon. A két hét alatt összesen 
+1001 felülést végzett.  
+ 
+a) Hány felülést végzett Domi a legelső napon, és hányat a legutolsón? 
+ 
+Dalma az 5250 méter hosszú margitszigeti futókörön edz. Egyik nap két kört futott: a 
+második körben az átlagsebessége 3,5 km/h-val kisebb volt, mint az első körben. A teljes 
+kétkörös futás átlagsebessége 12 km/h volt. (Az átlagsebesség a megtett út hosszának és 
+az út megtételéhez szükséges időnek a hányadosa.) 
+ 
+b) Határozza meg Dalma átlagsebességét az első, illetve a második körben! 
+ 
+c) Írja a következő mondatban a pontozott vonalakra a megadottak közül a megfelelő 
+szavakat úgy, hogy az állítás igaz legyen: számtani, harmonikus, mértani. 
+ „Két különböző pozitív valós szám …….….……….…. közepe mindig nagyobb, 
+mint a …….….……….…. közepe, de kisebb, mint a …….….……….…. közepe.” 
+ 
+a) 
+5 pont 
+ 
+b) 
+9 pont 
+ 
+c) 
+2 pont 
+ 
+Ö.: 
+16 pont 
+ 
+ 
+ 
+
+===== PAGE 15 =====
+ 
+Matematika 
+15 / 24 
+emelt szintű írásbeli vizsga 
+E2411 
+ 
+2024. május 7. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 16 =====
+ 
+Matematika 
+16 / 24 
+emelt szintű írásbeli vizsga 
+E2411 
+ 
+2024. május 7. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Az 5–9. feladatok közül tetszése szerint választott négyet kell megoldania.  
+A kihagyott feladat sorszámát írja be a 3. oldalon található üres négyzetbe! 
+ 
+7. 
+A finom homokban az egyes gömb alakú homokszemek sugarát egységesen 0,1 mm-nek 
+tekinthetjük. Egy 2 dl-es poharat teletöltünk finom homokkal. A homok (mivel a gömb 
+alakú homokszemek nem töltik ki teljesen a teret) a pohár űrtartalmának 60%-át tölti ki. 
+ 
+a) Határozza meg, hány homokszem található a 2 dl-es pohárban! Válaszát millióra 
+kerekítve adja meg! 
+ 
+Egy építkezéshez homokot rendelt Szabó úr. A homok megérkezett, és lerakás után a 
+homokkupac jó közelítéssel egy 1,8 méter alkotójú forgáskúpnak tekinthető. 
+ 
+b) Határozza meg a homokkupac térfogatát, ha alapkörének átmérője 3,1 méter! 
+ 
+c) Határozza meg az 1,8 méter alkotójú forgáskúpok közül annak a sugarát és a ma-
+gasságát, amelynek a térfogata maximális! Mekkora ez a maximális térfogat? 
+ 
+a) 
+5 pont 
+ 
+b) 
+3 pont 
+ 
+c) 
+8 pont 
+ 
+Ö.: 
+16 pont 
+ 
+ 
+ 
+ 
+
+===== PAGE 17 =====
+ 
+Matematika 
+17 / 24 
+emelt szintű írásbeli vizsga 
+E2411 
+ 
+2024. május 7. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 18 =====
+ 
+Matematika 
+18 / 24 
+emelt szintű írásbeli vizsga 
+E2411 
+ 
+2024. május 7. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Az 5–9. feladatok közül tetszése szerint választott négyet kell megoldania.  
+A kihagyott feladat sorszámát írja be a 3. oldalon található üres négyzetbe! 
+ 
+8. 
+A k1 kör egyenlete a derékszögű koordináta-rendszerben 
+2
+2
+4
+12
+13
+x
+x
+y
+y
+
+
+
+
+.  
+ 
+a) Határozza meg a k1 kör sugarát és középpontjának koordinátáit! 
+ 
+A k1 körbe írható ABCD húrtrapéz csúcsai A(4; 13), B(–5; 4), C(4; –1) és D(9; 4). 
+ 
+b) Határozza meg a húrtrapéz magasságát és szögeit! 
+ 
+A k2 kör egyenlete a derékszögű koordináta-rendszerben 
+2
+2
+53
+x
+y
+
+
+. 
+ 
+c) Hány olyan pont található a k2 körvonalon, amelynek mindkét koordinátája egész 
+szám? 
+ 
+a) 
+3 pont 
+ 
+b) 
+8 pont 
+ 
+c) 
+5 pont 
+ 
+Ö.: 
+16 pont 
+ 
+ 
+ 
+ 
+
+===== PAGE 19 =====
+ 
+Matematika 
+19 / 24 
+emelt szintű írásbeli vizsga 
+E2411 
+ 
+2024. május 7. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 20 =====
+ 
+Matematika 
+20 / 24 
+emelt szintű írásbeli vizsga 
+E2411 
+ 
+2024. május 7. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Az 5–9. feladatok közül tetszése szerint választott négyet kell megoldania.  
+A kihagyott feladat sorszámát írja be a 3. oldalon található üres négyzetbe! 
+ 
+9. 
+Egy k és egy 2k pontú teljes gráfnak összesen 697 éle van. 
+ 
+a) Határozza meg k értékét! 
+ 
+Egy kispályás labdarúgó-bajnokságban hat csapat körmérkőzést játszik egymással: mind-
+egyik csapat játszik mindegyik másikkal egy-egy mérkőzést. A bajnokság megkezdése 
+előtt a szervezők a mérkőzések közül kisorsolnak hármat, és ezeken a mérkőzéseken dop-
+pingellenőrzést tartanak. 
+ 
+b) Határozza meg annak a valószínűségét, hogy lesz olyan csapat, amelyik mindhárom 
+kisorsolt mérkőzésen szerepel! 
+ 
+Egy mérkőzés előtt az öltözőben hatan vannak, akik közül néhányan már kezet fogtak 
+egymással. Mind a hat embertől megkérdeztük, hogy eddig hány másik emberrel fogott 
+kezet. A válaszok között van öt különböző érték. 
+ 
+c) Hány kézfogás történhetett eddig összesen? 
+ 
+a) 
+ 5 pont 
+ 
+b) 
+ 5 pont 
+ 
+c) 
+ 6 pont 
+ 
+Ö.: 
+16 pont 
+ 
+ 
+ 
+
+===== PAGE 21 =====
+ 
+Matematika 
+21 / 24 
+emelt szintű írásbeli vizsga 
+E2411 
+ 
+2024. május 7. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 22 =====
+ 
+Matematika 
+22 / 24 
+emelt szintű írásbeli vizsga 
+E2411 
+ 
+2024. május 7. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 23 =====
+ 
+Matematika 
+23 / 24 
+emelt szintű írásbeli vizsga 
+E2411 
+ 
+2024. május 7. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 24 =====
+ 
+Matematika 
+24 / 24 
+emelt szintű írásbeli vizsga 
+E2411 
+ 
+2024. május 7. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+a feladat 
+sorszáma 
+pontszám 
+maximális 
+elért 
+maximális 
+elért 
+I. rész 
+1. 
+14 
+ 
+51 
+ 
+2. 
+11 
+ 
+3. 
+12 
+ 
+4. 
+14 
+ 
+II. rész 
+ 
+16 
+ 
+64 
+ 
+ 
+16 
+ 
+ 
+16 
+ 
+ 
+16 
+ 
+ 
+ nem választott feladat 
+Az írásbeli vizsgarész pontszáma 
+115 
+ 
+ 
+dátum 
+ 
+javító tanár 
+ 
+ __________________________________________________________________________  
+ 
+ 
+ 
+pontszáma egész 
+számra kerekítve 
+elért 
+programba  
+beírt 
+I. rész 
+  
+  
+II. rész 
+  
+  
+ 
+dátum 
+ 
+dátum 
+ 
+ 
+ 
+ 
+ 
+ 
+javító tanár 
+ 
+jegyző 
+ 

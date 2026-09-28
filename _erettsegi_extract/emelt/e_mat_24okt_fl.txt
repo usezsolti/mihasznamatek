@@ -1,0 +1,1271 @@
+
+===== PAGE 1 =====
+ 
+Matematika 
+ 
+Nat2020 
+E2413 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+OKTATÁSI HIVATAL 
+MATEMATIKA 
+ 
+EMELT SZINTŰ 
+ÍRÁSBELI VIZSGA 
+2024. október 15. 8:00 
+ 
+Időtartam: 240 perc 
+Pótlapok száma 
+Tisztázati 
+ 
+Piszkozati 
+ 
+É R E T T S É G I V I Z S G A • 2 0 2 4 . o k t ó b e r 1 5 . 
+
+===== PAGE 2 =====
+ 
+Matematika 
+2 / 24 
+emelt szintű írásbeli vizsga 
+E2413 
+ 
+2024. október 15. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 3 =====
+ 
+Matematika 
+3 / 24 
+emelt szintű írásbeli vizsga 
+E2413 
+ 
+2024. október 15. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Fontos tudnivalók 
+1. A feladatok megoldására 240 perc fordítható, az idő leteltével a munkát be kell fejeznie. 
+ 
+2. A feladatok megoldási sorrendje tetszőleges. 
+ 
+3. A II. részben kitűzött öt feladat közül csak négyet kell megoldania. A nem választott fel-
+adat sorszámát írja be a dolgozat befejezésekor az alábbi négyzetbe! Ha a javító tanár 
+számára nem derül ki egyértelműen, hogy melyik feladat értékelését nem kéri, akkor  
+a kitűzött sorrend szerinti legutolsó feladatra nem kap pontot. 
+ 
+ 
+ 
+4. A feladatok megoldásához szöveges adatok tárolására és megjelenítésére nem alkalmas 
+zsebszámológépet és bármilyen négyjegyű függvénytáblázatot használhat, más elektroni-
+kus vagy írásos segédeszköz használata tilos! 
+ 
+5. A megoldások gondolatmenetét minden esetben írja le, mert a feladatra adható pont-
+szám jelentős része erre jár! 
+ 
+6. Ügyeljen arra, hogy a lényegesebb részszámítások is nyomon követhetők legyenek! 
+ 
+7. A gondolatmenet kifejtése során a zsebszámológép használata – további matematikai 
+indoklás nélkül – a következő műveletek elvégzésére fogadható el: összeadás, kivonás, 
+szorzás, osztás, hatványozás, gyökvonás, n!, 
+
+
+
+
+
+
+k
+n kiszámítása, a függvénytáblázatban fel-
+lelhető táblázatok helyettesítése (sin, cos, tg, log és ezek inverzei), a π és az e szám közelítő 
+értékének megadása, nullára rendezett másodfokú egyenlet gyökeinek meghatározása.  
+További matematikai indoklás nélkül használhatók a számológépek az átlag és a szórás ki-
+számítására abban az esetben, ha a feladat szövege kifejezetten nem követeli meg az ezzel 
+kapcsolatos részletszámítások bemutatását is. Egyéb esetekben a géppel elvégzett számí-
+tások indoklás nélküli lépéseknek számítanak, így azokért nem jár pont. 
+ 
+8. A feladatok megoldásánál használt tételek közül az iskolában tanult, névvel ellátott tételeket 
+(pl. Pitagorasz-tétel, magasságtétel) nem kell pontosan megfogalmazva kimondania, elég 
+csak a tétel megnevezését említenie, de az alkalmazhatóságát röviden indokolnia kell. 
+Egyéb tétel(ek)re való hivatkozás csak akkor fogadható el teljes értékűnek, ha az állítást 
+minden feltételével együtt pontosan mondja ki (bizonyítás nélkül), és az adott problémában 
+az alkalmazhatóságát indokolja. 
+ 
+9. A feladatok végeredményét (a feltett kérdésre adandó választ) szöveges megfogalmazásban 
+is közölje! 
+ 
+10. A dolgozatot tollal írja, de az ábrákat ceruzával is rajzolhatja. Az ábrákon kívül a ceruzával 
+írt részeket a javító tanár nem értékelheti. Ha valamilyen megoldást vagy megoldásrészletet 
+áthúz, akkor az nem értékelhető. 
+ 
+11. Minden feladatnak csak egy megoldása értékelhető. Több megoldási próbálkozás esetén 
+egyértelműen jelölje, hogy melyiket tartja érvényesnek! 
+ 
+12. Kérjük, hogy a szürkített téglalapokba semmit ne írjon! 
+ 
+ 
+
+===== PAGE 4 =====
+ 
+Matematika 
+4 / 24 
+emelt szintű írásbeli vizsga 
+E2413 
+ 
+2024. október 15. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+I. 
+ 
+1. 
+a) Legyen a és b két pozitív valós szám. Határozza meg az alábbi állítás logikai értékét 
+(igaz vagy hamis)! Válaszát indokolja! 
+„Ha a  6 és b  8, akkor a és b számtani közepe nagyobb 7-nél.” 
+ 
+b) Fogalmazza meg az előbbi állítás megfordítását, és határozza meg a megfordított 
+állítás logikai értékét is! Válaszát indokolja! 
+ 
+c) Határozza meg az x pozitív valós szám értékét úgy, hogy a 7-nek és az x-nek a har-
+monikus közepe 10 legyen! 
+ 
+d) Tudjuk, hogy az (A  B)  (A  C) kijelentés logikai értéke igaz. 
+ 
+Mit lehet tudni az A, B és C kijelentések logikai értékéről? Tegyen X-et az alábbi 
+táblázat megfelelő celláiba! (Válaszait itt nem kell indokolnia.) 
+ 
+ 
+ 
+a) 
+2 pont 
+ 
+b) 
+3 pont 
+ 
+c) 
+4 pont 
+ 
+d) 
+3 pont 
+ 
+Ö.: 
+12 pont 
+ 
+ 
+ 
+ 
+ 
+ 
+biztosan igaz 
+biztosan hamis 
+nem lehet eldönteni 
+A 
+ 
+ 
+ 
+B 
+ 
+ 
+ 
+C 
+ 
+ 
+ 
+
+===== PAGE 5 =====
+ 
+Matematika 
+5 / 24 
+emelt szintű írásbeli vizsga 
+E2413 
+ 
+2024. október 15. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 6 =====
+ 
+Matematika 
+6 / 24 
+emelt szintű írásbeli vizsga 
+E2413 
+ 
+2024. október 15. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+2. 
+Amikor egy csésze forró folyadékot beviszünk egy szobába, akkor a folyadék hőmérsék-
+letének változását jó közelítéssel – Newton lehűlési törvénye szerint – a következő képlet 
+írja le: ( )
+( (0)
+) 2 .
+ct
+T t
+H
+T
+H
+
+
+
+
+ 
+A képletben T(t) a folyadék hőmérséklete a vizsgálat kezdetétől számított t perc elteltével, 
+H a szoba (állandónak tekinthető) hőmérséklete, T (0) a folyadék kezdeti hőmérséklete 
+(T (0) > H), c pedig a lehűlő folyadékot jellemző konstans. (A hőmérsékletet °C-ban mér-
+jük.) 
+Egy csésze 75 °C-os kávét beviszünk egy 25 °C hőmérsékletű szobába. A kávéra jellemző 
+c érték – 0,209. 
+ 
+a) Számítsa ki, hogy negyedóra múlva milyen hőmérsékletű lesz a kávé! 
+ 
+b) A vizsgálat kezdetétől számítva mennyi idő múlva hűl le a kávé 25,5 °C hőmérsék-
+letűre? 
+ 
+Egy csésze 85 °C-os hőmérsékletű kávét beviszünk egy ismeretlen hőmérsékletű szobába. 
+10 perc alatt a kávé 40 °C-ra hűl le. 
+ 
+c) Határozza meg a szoba hőmérsékletét! 
+ 
+a) 
+4 pont 
+ 
+b) 
+4 pont 
+ 
+c) 
+4 pont 
+ 
+Ö.: 
+12 pont 
+ 
+ 
+ 
+ 
+
+===== PAGE 7 =====
+ 
+Matematika 
+7 / 24 
+emelt szintű írásbeli vizsga 
+E2413 
+ 
+2024. október 15. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 8 =====
+ 
+Matematika 
+8 / 24 
+emelt szintű írásbeli vizsga 
+E2413 
+ 
+2024. október 15. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+3. 
+a) Oldja meg az alábbi egyenletet a valós számok halmazán! 
+ 
+2
+2sin
+7 sin
+1
+5
+x
+x
+
+
+
+ 
+ 
+b) Határozza meg az f: R  R, 
+sin
+x
+x
+
+ függvény grafikonja, az 
+6
+x
+
+
+ és az 
+5
+6
+x
+
+
+ 
+egyenletű egyenesek, valamint az x tengely által közrezárt korlátos síkidom terüle-
+tét! 
+ 
+a) 
+8 pont 
+ 
+b) 
+4 pont 
+ 
+Ö.: 
+12 pont 
+ 
+ 
+ 
+
+===== PAGE 9 =====
+ 
+Matematika 
+9 / 24 
+emelt szintű írásbeli vizsga 
+E2413 
+ 
+2024. október 15. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 10 =====
+ 
+Matematika 
+10 / 24 
+emelt szintű írásbeli vizsga 
+E2413 
+ 
+2024. október 15. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+4. 
+Tekintsük azokat a háromszögeket, amelyeknek a, b és c oldalaira teljesül, hogy (centi-
+méterben mérve) b  a + 4 és c  a + 8. 
+ 
+a) Adott egy ilyen tulajdonságú háromszög, melynek legnagyobb szöge 120. Hatá-
+rozza meg a háromszög oldalainak hosszát! 
+ 
+b) Adott egy ilyen tulajdonságú háromszög, melynek leghosszabb oldala 24 cm hosszú. 
+Határozza meg a háromszög területét! 
+ 
+c) Igazolja, hogy minden ilyen tulajdonságú háromszög kerülete nagyobb, mint 24 cm! 
+ 
+a) 
+6 pont 
+ 
+b) 
+5 pont 
+ 
+c) 
+4 pont 
+ 
+Ö.: 
+15 pont 
+ 
+ 
+ 
+ 
+
+===== PAGE 11 =====
+ 
+Matematika 
+11 / 24 
+emelt szintű írásbeli vizsga 
+E2413 
+ 
+2024. október 15. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 12 =====
+ 
+Matematika 
+12 / 24 
+emelt szintű írásbeli vizsga 
+E2413 
+ 
+2024. október 15. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+II. 
+ 
+Az 5–9. feladatok közül tetszése szerint választott négyet kell megoldania.  
+A kihagyott feladat sorszámát írja be a 3. oldalon található üres négyzetbe! 
+ 
+5. 
+Egy szabályos dobókockával hatszor dobtunk. A dobott számok monoton növekvő sor-
+rendben: 1, 2, 2, 3, 3, 3.  
+ 
+a) Határozza meg a dobott számok átlagát és szórását! 
+ 
+b) Hány olyan különböző dobássorozat van, amely egy darab 1-esből, két darab 2-esből 
+és három darab 3-asból áll? 
+ 
+Egy szabályos dobókockával kétszer dobunk. 
+ 
+c) Határozza meg annak a valószínűségét, hogy a két dobott szám szorzata 2-vel oszt-
+ható lesz, de 4-gyel nem! 
+ 
+Egy kék és egy zöld dobókockával dobunk, a dobás kimenetele egy számpár. Jelölje (k, z) 
+a dobásnak azt a kimenetelét, amikor a kék kockával dobott szám k, a zöld kockával do-
+bott szám pedig z. 
+Legyen a H alaphalmaz a dobás kimeneteleként 
+megkapható összes lehetséges (k, z) számpár hal-
+maza. Az A, B és C részhalmazokat a következő-
+képpen definiáljuk: 
+A  {(k, z)│a k + z összeg prím} 
+B  {(k, z)│a k ꞏ z szorzat prím} 
+C  {(k, z)│k  z} 
+ 
+d) Satírozással jelölje a Venn-diagramon a H-nak 
+azt a részhalmazát, amelyik üres halmaz! 
+A Venn-diagram minden egyes további tarto-
+mányába írjon egy-egy megfelelő számpárt! 
+Válaszát itt nem kell indokolnia. 
+ 
+a) 
+3 pont 
+ 
+b) 
+3 pont 
+ 
+c) 
+5 pont 
+ 
+d) 
+5 pont 
+ 
+Ö.: 
+16 pont 
+ 
+ 
+ 
+
+===== PAGE 13 =====
+ 
+Matematika 
+13 / 24 
+emelt szintű írásbeli vizsga 
+E2413 
+ 
+2024. október 15. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 14 =====
+ 
+Matematika 
+14 / 24 
+emelt szintű írásbeli vizsga 
+E2413 
+ 
+2024. október 15. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Az 5–9. feladatok közül tetszése szerint választott négyet kell megoldania.  
+A kihagyott feladat sorszámát írja be a 3. oldalon található üres négyzetbe! 
+ 
+6. 
+Az OAB egyenlőszárú háromszög OA és OB szárai 12 cm hosz-
+szúak, AOB szöge 75. Az OA szakasz C pontját és az OB szakasz 
+D pontját (az ábra szerint) egy O középpontú, 8 cm sugarú körív 
+köti össze. 
+ 
+a) Határozza meg a szürkére színezett tartomány területét és ke-
+rületét! 
+ 
+Az OAB háromszöget megforgatjuk az OA oldal egyenese körül. 
+ 
+b) Határozza meg az így keletkező forgástest térfogatát! 
+ 
+Az ábrán látható négy tartományt piros, kék és zöld színnel színez-
+zük ki úgy, hogy egy tartományhoz egy színt használunk. 
+ 
+c) Hányféleképpen színezhetjük ki a négy tartományt, ha szom-
+szédos tartományok nem lehetnek azonos színűek? 
+(Két tartomány szomszédos, ha van közös határvonaluk. 
+A színezéshez nem szükséges mindhárom színt felhasználni.) 
+ 
+a) 
+8 pont 
+ 
+b) 
+4 pont 
+ 
+c) 
+4 pont 
+ 
+Ö.: 
+16 pont 
+ 
+ 
+ 
+ 
+
+===== PAGE 15 =====
+ 
+Matematika 
+15 / 24 
+emelt szintű írásbeli vizsga 
+E2413 
+ 
+2024. október 15. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 16 =====
+ 
+Matematika 
+16 / 24 
+emelt szintű írásbeli vizsga 
+E2413 
+ 
+2024. október 15. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Az 5–9. feladatok közül tetszése szerint választott négyet kell megoldania.  
+A kihagyott feladat sorszámát írja be a 3. oldalon található üres négyzetbe! 
+ 
+7. 
+Alízék osztálytermében az egyik fal mellett három sorban 12-12, összesen 36 szekrény 
+található a diákok számára, 1-től 36-ig megszámozva. Az osztályba 33-an járnak. Tanév 
+elején minden diák – sorsolás útján – egy-egy szekrényt kap. Három szekrény így a sor-
+solás után üresen marad. 
+ 
+a) Legyen az A esemény az, hogy a három üresen maradó szekrény egy sorban talál-
+ható, a B esemény pedig az, hogy a három üresen maradó szekrény három különböző 
+sorban található. Melyik eseménynek nagyobb a valószínűsége? 
+ 
+A szekrények téglatest alakúak. Egy-egy szekrény belseje 20 cm széles, 35 cm magas és 
+30 cm mély. 
+ 
+b) Határozza meg a leghosszabb egyenes pálca hosszát, ami elhelyezhető a szekrényben! 
+(A pálca vastagságától eltekinthetünk.) 
+ 
+Alíz, Boglárka, Csenge és Dorka szekrénykulcsai összekeveredtek, és a négy lány vélet-
+lenszerűen osztja el egymás közt a négy kulcsot. 
+ 
+c) Határozza meg annak a valószínűségét, hogy legalább két lány a saját kulcsát kapja 
+vissza! 
+ 
+a) 
+6 pont 
+ 
+b) 
+3 pont 
+ 
+c) 
+7 pont 
+ 
+Ö.: 
+16 pont 
+ 
+ 
+ 
+
+===== PAGE 17 =====
+ 
+Matematika 
+17 / 24 
+emelt szintű írásbeli vizsga 
+E2413 
+ 
+2024. október 15. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 18 =====
+ 
+Matematika 
+18 / 24 
+emelt szintű írásbeli vizsga 
+E2413 
+ 
+2024. október 15. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Az 5–9. feladatok közül tetszése szerint választott négyet kell megoldania.  
+A kihagyott feladat sorszámát írja be a 3. oldalon található üres négyzetbe! 
+ 
+8. 
+Egy növényfaj ezer darab magjának tömegét grammban megadva kapjuk az úgynevezett 
+ezermagtömeget. Egy bizonyos fajta zab ezermagtömege 35 gramm. 
+ 
+a) Kb. hány darab magot tartalmaz egy tonna zabmag ebből a fajtából? Válaszát nor-
+málalakban adja meg! 
+ 
+Jancsi nyári diákmunkaként zabhegyezést vállalt Kukutyinban. Tudja, hogy ha a zabhe-
+gyező gépbe k kg zabot helyez, akkor a gép 
+2
+90
+40
+k 
+ perc alatt végez a zabhegyezéssel. 
+Jancsinak összesen 1000 kg zabot kell kihegyeznie a gép segítségével. Elhatározza, hogy 
+a zabot egyenlő részekre osztva fogja kihegyezni. 
+ 
+b) Hány óra alatt végez Jancsi a zabhegyezéssel, ha 8 egyenlő részre osztja az 1000 kg 
+zabot? 
+ 
+c) Az 1000 kg zabot n egyenlő részre osztjuk (n  Z+). Határozza meg n értékét úgy, 
+hogy az 1000 kg zab kihegyezésének ideje minimális legyen! Hány óra ez a mini-
+mális idő? 
+ 
+a) 
+3 pont 
+ 
+b) 
+3 pont 
+ 
+c) 
+10 pont 
+ 
+Ö.: 
+16 pont 
+ 
+ 
+ 
+ 
+
+===== PAGE 19 =====
+ 
+Matematika 
+19 / 24 
+emelt szintű írásbeli vizsga 
+E2413 
+ 
+2024. október 15. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 20 =====
+ 
+Matematika 
+20 / 24 
+emelt szintű írásbeli vizsga 
+E2413 
+ 
+2024. október 15. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Az 5–9. feladatok közül tetszése szerint választott négyet kell megoldania.  
+A kihagyott feladat sorszámát írja be a 3. oldalon található üres négyzetbe! 
+ 
+9. 
+Egy mértani sorozat n-edik tagja 
+1
+2
+2
+n
+na
+
+
+
+
+
+
+
+
+ (n  Z+). 
+ 
+a) Határozza meg azt a legkisebb n értéket, amelyre 
+7
+10
+n
+a
+
+
+ teljesül! 
+ 
+b) Határozza meg a mértani sorozat első 10 tagjának összegét! Válaszát 
+k
+m
+
+ alakban 
+adja meg, ahol k és m relatív prímek! 
+ 
+A {bn} sorozat n-edik tagja 
+1
+2
+2
+2
+n
+nb
+
+
+
+
+
+
+
+
+
+ (n  Z+). 
+ 
+c) Igazolja, hogy (minden pozitív egész n-re) 
+2
+1
+2
+0.
+n
+n
+n
+b
+b
+b
+
+
+
+
+
+ 
+ 
+a) 
+ 6 pont 
+ 
+b) 
+ 4 pont 
+ 
+c) 
+ 6 pont 
+ 
+Ö.: 
+16 pont 
+ 
+ 
+ 
+
+===== PAGE 21 =====
+ 
+Matematika 
+21 / 24 
+emelt szintű írásbeli vizsga 
+E2413 
+ 
+2024. október 15. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 22 =====
+ 
+Matematika 
+22 / 24 
+emelt szintű írásbeli vizsga 
+E2413 
+ 
+2024. október 15. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 23 =====
+ 
+Matematika 
+23 / 24 
+emelt szintű írásbeli vizsga 
+E2413 
+ 
+2024. október 15. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 24 =====
+ 
+Matematika 
+24 / 24 
+emelt szintű írásbeli vizsga 
+E2413 
+ 
+2024. október 15. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+a feladat 
+sorszáma 
+pontszám 
+maximális 
+elért 
+maximális 
+elért 
+I. rész 
+1. 
+12 
+ 
+51 
+ 
+2. 
+12 
+ 
+3. 
+12 
+ 
+4. 
+15 
+ 
+II. rész 
+ 
+16 
+ 
+64 
+ 
+ 
+16 
+ 
+ 
+16 
+ 
+ 
+16 
+ 
+ 
+ nem választott feladat 
+Az írásbeli vizsgarész pontszáma 
+115 
+ 
+ 
+dátum 
+ 
+javító tanár 
+ 
+ __________________________________________________________________________  
+ 
+ 
+ 
+pontszáma egész 
+számra kerekítve 
+elért 
+programba  
+beírt 
+I. rész 
+  
+  
+II. rész 
+  
+  
+ 
+dátum 
+ 
+dátum 
+ 
+ 
+ 
+ 
+ 
+ 
+javító tanár 
+ 
+jegyző 
+ 

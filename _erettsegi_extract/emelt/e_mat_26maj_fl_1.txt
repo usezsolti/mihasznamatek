@@ -1,0 +1,1270 @@
+
+===== PAGE 1 =====
+ 
+Matematika 
+ 
+Nat2020 
+E2513 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+OKTATÁSI HIVATAL 
+MATEMATIKA 
+ 
+EMELT SZINTŰ 
+ÍRÁSBELI VIZSGA 
+2026. május 5. 9:00 
+ 
+Időtartam: 240 perc 
+Pótlapok száma 
+Tisztázati 
+ 
+Piszkozati 
+ 
+É R E T T S É G I V I Z S G A • 2 0 2 6 . m á j u s 5 . 
+
+===== PAGE 2 =====
+ 
+Matematika 
+2 / 24 
+emelt szintű írásbeli vizsga 
+E2513 
+ 
+2026. május 5. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 3 =====
+ 
+Matematika 
+3 / 24 
+emelt szintű írásbeli vizsga 
+E2513 
+ 
+2026. május 5. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Fontos tudnivalók 
+1. A feladatok megoldására 240 perc fordítható, az idő leteltével a munkát be kell fejeznie. 
+ 
+2. A feladatok megoldási sorrendje tetszőleges. 
+ 
+3. A II. részben kitűzött öt feladat közül csak négyet kell megoldania. A nem választott fel-
+adat sorszámát írja be a dolgozat befejezésekor az alábbi négyzetbe! Ha a javító tanár 
+számára nem derül ki egyértelműen, hogy melyik feladat értékelését nem kéri, akkor  
+a kitűzött sorrend szerinti legutolsó feladatra nem kap pontot. 
+ 
+ 
+ 
+4. A feladatok megoldásához szöveges adatok tárolására és megjelenítésére nem alkalmas 
+zsebszámológépet és bármilyen négyjegyű függvénytáblázatot használhat, más elektroni-
+kus vagy írásos segédeszköz használata tilos! 
+ 
+5. A megoldások gondolatmenetét minden esetben írja le, mert a feladatra adható pont-
+szám jelentős része erre jár! 
+ 
+6. Ügyeljen arra, hogy a lényegesebb részszámítások is nyomon követhetők legyenek! 
+ 
+7. A gondolatmenet kifejtése során a zsebszámológép használata – további matematikai 
+indoklás nélkül – a következő műveletek elvégzésére fogadható el: összeadás, kivonás, 
+szorzás, osztás, hatványozás, gyökvonás, n!, n
+k
+
+
+
+ kiszámítása, a függvénytáblázatban fel-
+lelhető táblázatok helyettesítése (sin, cos, tg, log és ezek inverzei), a π és az e szám közelítő 
+értékének megadása, nullára rendezett másodfokú egyenlet gyökeinek meghatározása.  
+További matematikai indoklás nélkül használhatók a számológépek az átlag és a szórás ki-
+számítására abban az esetben, ha a feladat szövege kifejezetten nem követeli meg az ezzel 
+kapcsolatos részletszámítások bemutatását is. Egyéb esetekben a géppel elvégzett számí-
+tások indoklás nélküli lépéseknek számítanak, így azokért nem jár pont. 
+ 
+8. A feladatok megoldásánál használt tételek közül az iskolában tanult, névvel ellátott tételeket 
+(pl. Pitagorasz-tétel, magasságtétel) nem kell pontosan megfogalmazva kimondania, elég 
+csak a tétel megnevezését említenie, de az alkalmazhatóságát röviden indokolnia kell. 
+Egyéb tétel(ek)re való hivatkozás csak akkor fogadható el teljes értékűnek, ha az állítást 
+minden feltételével együtt pontosan mondja ki (bizonyítás nélkül), és az adott problémában 
+az alkalmazhatóságát indokolja. 
+ 
+9. A feladatok végeredményét (a feltett kérdésre adandó választ) szöveges megfogalmazásban 
+is közölje! 
+ 
+10. A dolgozatot tollal írja, de az ábrákat ceruzával is rajzolhatja. Az ábrákon kívül a ceruzával 
+írt részeket a javító tanár nem értékelheti. Ha valamilyen megoldást vagy megoldásrészletet 
+áthúz, akkor az nem értékelhető. 
+ 
+11. Minden feladatnak csak egy megoldása értékelhető. Több megoldási próbálkozás esetén 
+egyértelműen jelölje, hogy melyiket tartja érvényesnek! 
+ 
+12. Kérjük, hogy a szürkített téglalapokba semmit ne írjon! 
+ 
+ 
+
+===== PAGE 4 =====
+ 
+Matematika 
+4 / 24 
+emelt szintű írásbeli vizsga 
+E2513 
+ 
+2026. május 5. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+I. 
+ 
+1. 
+a) Oldja meg az alábbi egyenlőtlenségrendszert a valós számok halmazán! 
+2
+2
+2
+2
+15
+(
+2)
+2
+9
+18
+0
+x
+x
+x
+x
+x
+
+
+
+
+
+
+
+
+
+
+ 
+ 
+b) A piacon 1 kg alma és 1 kg mandarin ára összesen 14 peták. Döme 1 kg-mal több 
+almát vásárolt, mint mandarint. Az almáért 21, a mandarinért 20 petákot fizetett. 
+Hány kg almát vásárolt Döme, és hány petákba került 1 kg alma? 
+ 
+a) 
+6 pont 
+ 
+b) 
+8 pont 
+ 
+Ö.: 
+14 pont 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 5 =====
+ 
+Matematika 
+5 / 24 
+emelt szintű írásbeli vizsga 
+E2513 
+ 
+2026. május 5. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 6 =====
+ 
+Matematika 
+6 / 24 
+emelt szintű írásbeli vizsga 
+E2513 
+ 
+2026. május 5. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+2. 
+A stroncium egy ezüstös fém, amelynek a természetben előforduló változata nem radio-
+aktív. A stroncium leggyakoribb, mesterségesen előállított radioaktív változata a 90-es 
+tömegszámú stroncium-90 (90Sr), amelyet például a gyógyászatban és az iparban hasz-
+nálnak.  
+A stroncium-90 felezési ideje körülbelül 29 év, tehát az m gramm tömegű stroncium-90 
+tömege (a radioaktív bomlás következtében) 29 év alatt 2
+m grammra, t év alatt pedig 
+29
+( )
+0,5
+t
+f t
+m
+
+
+ grammra csökken. 
+ 
+a) Egy 1957-es nukleáris kísérlet során a becslések szerint 32 gramm stroncium-90 
+jutott a környezetbe. 2026-ban hány gramm található meg még ebből a környezetben? 
+ 
+b) Hány százalékkal csökken évente a bomlás következtében a stroncium-90 tömege? 
+ 
+c) Melyik évben kerülhetett 50 gramm stroncium-90 a környezetbe, ha 2026-ban 
+33,3 gramm maradt belőle? 
+ 
+a) 
+3 pont 
+ 
+b) 
+3 pont 
+ 
+c) 
+5 pont 
+ 
+Ö.: 
+11 pont 
+ 
+ 
+ 
+ 
+
+===== PAGE 7 =====
+ 
+Matematika 
+7 / 24 
+emelt szintű írásbeli vizsga 
+E2513 
+ 
+2026. május 5. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 8 =====
+ 
+Matematika 
+8 / 24 
+emelt szintű írásbeli vizsga 
+E2513 
+ 
+2026. május 5. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+3. 
+Legyen H a 300-nál nem nagyobb pozitív egész számok halmaza.  
+ 
+ 
+a) Hány olyan eleme van a H halmaznak, amely nem osztható sem 2-vel, sem 3-mal, 
+sem 5-tel? 
+ 
+b) Hány olyan háromelemű részhalmaza van a H halmaznak, amelyben a három elem 
+szorzata 2-vel osztható, de 4-gyel nem?  
+ 
+c) Hány olyan 299 elemű részhalmaza van a H halmaznak, amelyben az elemek ösz-
+szege páros?  
+ 
+a) 
+5 pont 
+ 
+b) 
+4 pont 
+ 
+c) 
+3 pont 
+ 
+Ö.: 
+12 pont 
+ 
+ 
+ 
+
+===== PAGE 9 =====
+ 
+Matematika 
+9 / 24 
+emelt szintű írásbeli vizsga 
+E2513 
+ 
+2026. május 5. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 10 =====
+ 
+Matematika 
+10 / 24 
+emelt szintű írásbeli vizsga 
+E2513 
+ 
+2026. május 5. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+4. 
+Az ábrán látható ABC derékszögű háromszög egy 
+belső D pontjából az AB átfogó 120°-os szög alatt 
+látszik. AD  35 cm, BD  40 cm és AC  39 cm 
+hosszú. 
+ 
+a) Igazolja, hogy az AB átfogó hossza 65 cm! 
+ 
+b) Határozza meg az ADBC konkáv négyszög területét! 
+ 
+A húrnégyszögek területe kiszámítható a 
+(
+)(
+)(
+)(
+)
+T
+s
+a s
+b s
+c s
+d
+=
+−
+−
+−
+−
+ képlettel, ahol 
+a, b, c és d a négyszög oldalainak a hosszát jelöli, s pedig a négyszög kerületének a fele. 
+Vannak olyan négyszögek, amelyek érintőnégyszögek és húrnégyszögek is egyben. Eze-
+ket bicentrikus négyszögnek nevezzük. 
+ 
+c) Igazolja (a húrnégyszögek területképletének felhasználásával), hogy a bicentrikus 
+négyszögek területe kiszámítható a T
+abcd
+=
+ képlettel! 
+ 
+Az EFGH bicentrikus négyszög három ismert oldalának hossza EF  21 cm, FG 56 cm 
+és GH 42 cm. 
+ 
+d) Határozza meg a négyszög területét! 
+ 
+a) 
+2 pont 
+ 
+b) 
+5 pont 
+ 
+c) 
+5 pont 
+ 
+d) 
+2 pont 
+ 
+Ö.: 
+14 pont 
+ 
+ 
+ 
+ 
+
+===== PAGE 11 =====
+ 
+Matematika 
+11 / 24 
+emelt szintű írásbeli vizsga 
+E2513 
+ 
+2026. május 5. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 12 =====
+ 
+Matematika 
+12 / 24 
+emelt szintű írásbeli vizsga 
+E2513 
+ 
+2026. május 5. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+II. 
+ 
+Az 5–9. feladatok közül tetszése szerint választott négyet kell megoldania.  
+A kihagyott feladat sorszámát írja be a 3. oldalon található üres négyzetbe! 
+ 
+5. 
+Egy számtani sorozat differenciája 6.  
+ 
+a) Igazolja, hogy ekkor a sorozat bármely három egymást követő tagjának a szórása 
+2 6. 
+ 
+Egy számtani sorozat első tagja 2, differenciája – 0,2. Az első n tag összegének abszolút-
+értéke éppen n.  
+ 
+b) Határozza meg n lehetséges értékeit! 
+ 
+Két pozitív szám számtani közepe 5, a harmonikus közepük pedig 4,8. 
+ 
+c) Határozza meg a két szám négyzetes közepét! 
+ 
+a) 
+3 pont 
+ 
+b) 
+6 pont 
+ 
+c) 
+7 pont 
+ 
+Ö.: 
+16 pont 
+ 
+ 
+ 
+
+===== PAGE 13 =====
+ 
+Matematika 
+13 / 24 
+emelt szintű írásbeli vizsga 
+E2513 
+ 
+2026. május 5. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 14 =====
+ 
+Matematika 
+14 / 24 
+emelt szintű írásbeli vizsga 
+E2513 
+ 
+2026. május 5. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Az 5–9. feladatok közül tetszése szerint választott négyet kell megoldania.  
+A kihagyott feladat sorszámát írja be a 3. oldalon található üres négyzetbe! 
+ 
+6. 
+A G halmaz a kilencpontú, összefüggő, egyszerű gráfok halmaza. A következő állítás a 
+G elemeire vonatkozik: Ha egy (kilencpontú, összefüggő, egyszerű) gráfban minden pont 
+fokszáma legalább 2, akkor a gráfban van kör. 
+ 
+a) Döntse el, hogy az állítás igaz vagy hamis! Válaszát indokolja! 
+ 
+b) Fogalmazza meg az állítás megfordítását a G elemeire vonatkozóan, és döntse el a 
+megfordított állításról, hogy igaz vagy hamis! Válaszát indokolja! 
+ 
+Egy iskolai tollaslabda-bajnokságban 9 versenyző indult, köztük Balázs és Attila. A baj-
+nokságban – valamikor a tanév során – bármely két versenyző pontosan egyszer játszik 
+egymás ellen. Január végéig 23 mérkőzésre került sor. 
+ 
+c) Lehetséges-e, hogy Balázs és Attila január végéig még csak az egymás elleni mér-
+kőzésüket játszották le? 
+ 
+A 9 versenyző közül hárman balkezesek. A bajnokság összes mérkőzése közül véletlen-
+szerűen kiválasztunk 23-at. 
+ 
+d) Igaz-e, hogy 1
+30 -nál kisebb annak a valószínűsége, hogy a kiválasztott 23 mérkőzés 
+között nincs olyan, amelyen két balkezes játszik egymás ellen? 
+ 
+a) 
+3 pont 
+ 
+b) 
+3 pont 
+ 
+c) 
+4 pont 
+ 
+d) 
+6 pont 
+ 
+Ö.: 
+16 pont 
+ 
+ 
+ 
+ 
+
+===== PAGE 15 =====
+ 
+Matematika 
+15 / 24 
+emelt szintű írásbeli vizsga 
+E2513 
+ 
+2026. május 5. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 16 =====
+ 
+Matematika 
+16 / 24 
+emelt szintű írásbeli vizsga 
+E2513 
+ 
+2026. május 5. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Az 5–9. feladatok közül tetszése szerint választott négyet kell megoldania.  
+A kihagyott feladat sorszámát írja be a 3. oldalon található üres négyzetbe! 
+ 
+7. 
+a) Adja meg az alábbi függvények közül azoknak a betűjelét, amelyek konkávok a 
+]–; 7[ intervallumon! Válaszát itt nem kell indokolnia. 
+A) R  R, 
+2
+7
+x
+x
+
+−
+ 
+B) R  R, 
+3
+7
+x
+x
+
+−
+ 
+C) R  R, 
+1
+7
+x
+x 
+
+
+
+
+
+ 
+D) R  R, 
+3
+(
+7)
+x
+x
+
+−
+ 
+E) R \ {7} R, 
+1
+7
+x
+x
+
+−
+ 
+ 
+Egy síkidomot az 
+2
+y
+x
+=
+ egyenletű parabola, az x tengely, valamint az x  1 és az x  7 
+egyenletű egyenesek határolnak. 
+ 
+b) Határozza meg annak az y tengellyel párhuzamos egyenesnek az egyenletét, amelyik 
+a síkidom területét felezi! 
+ 
+A valós számok halmazán értelmezett 
+3
+2
+( )
+g x
+x
+bx
+cx
+d
+=
++
++
++
+ harmadfokú függvénynek 
+x  1-ben és x  7-ben lokális szélsőértéke van, lokális maximumának értéke pedig 6. 
+ 
+c) Határozza meg a b, c és d paraméterek értékét! 
+ 
+a) 
+3 pont 
+ 
+b) 
+5 pont 
+ 
+c) 
+8 pont 
+ 
+Ö.: 
+16 pont 
+ 
+ 
+ 
+
+===== PAGE 17 =====
+ 
+Matematika 
+17 / 24 
+emelt szintű írásbeli vizsga 
+E2513 
+ 
+2026. május 5. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 18 =====
+ 
+Matematika 
+18 / 24 
+emelt szintű írásbeli vizsga 
+E2513 
+ 
+2026. május 5. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Az 5–9. feladatok közül tetszése szerint választott négyet kell megoldania.  
+A kihagyott feladat sorszámát írja be a 3. oldalon található üres négyzetbe! 
+ 
+8. 
+Az ábrán látható körgyűrű alakú szerencsekerék egyszeri 
+megforgatásával 1000, 2000, 3000 vagy 4000 Ft-ot lehet 
+nyerni. A szerencsekerék külső átmérőjének hossza 1 méter, 
+a körgyűrű 20 cm széles. 
+ 
+a) Mekkora a 2000 Ft-os nyereményt tartalmazó, 36°-os 
+középponti szögű körgyűrűcikk területe? 
+ 
+Az alábbi táblázat mutatja az egyes nyeremények valószínű-
+ségét egy forgatás esetén. 
+ 
+Nyeremény (Ft) 
+1000 2000 3000 4000 
+Valószínűség 
+0,4 
+0,1 
+0,3 
+0,2 
+ 
+b) Határozza meg a nyeremény várható értékét egy forgatás esetén! 
+ 
+c) Mennyi a valószínűsége annak, hogy három forgatással pontosan 6000 Ft-ot nyer a 
+játékos? (Az egyes forgatások kimenetelei függetlenek egymástól.) 
+ 
+Egy forgatáshoz a játékosnak 2500 Ft-ot kell befizetnie. Egy játékot igazságosnak neve-
+zünk, ha a befizetett összeg megegyezik a nyeremény várható értékével. 
+ 
+d) Hogyan kell módosítani az 1000 és a 2000 Ft-os nyereményösszegekhez tartozó va-
+lószínűségeket úgy, hogy ez a játék igazságos legyen? (A másik két nyereményhez 
+tartozó valószínűség ne változzon.) 
+ 
+a) 
+3 pont 
+ 
+b) 
+2 pont 
+ 
+c) 
+6 pont 
+ 
+d) 
+5 pont 
+ 
+Ö.: 
+16 pont 
+ 
+ 
+ 
+ 
+
+===== PAGE 19 =====
+ 
+Matematika 
+19 / 24 
+emelt szintű írásbeli vizsga 
+E2513 
+ 
+2026. május 5. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 20 =====
+ 
+Matematika 
+20 / 24 
+emelt szintű írásbeli vizsga 
+E2513 
+ 
+2026. május 5. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Az 5–9. feladatok közül tetszése szerint választott négyet kell megoldania.  
+A kihagyott feladat sorszámát írja be a 3. oldalon található üres négyzetbe! 
+ 
+9. 
+A bal oldali ábrán látható akvárium alaplapja a jobb oldali vázlatos ábrán látható síkidom. 
+Az alaplap az ABCD téglalapból és a téglalap CD élére illeszkedő körszeletből áll. 
+A téglalap oldalai AB  80 cm és BC  30 cm hosszúak. A körszelet körívének közép-
+pontja az AB szakasz felezőpontja. Az akvárium 35 cm magas. (Az akváriumot alkotó 
+test bármely, az alaplappal párhuzamos síkmetszete egybevágó az alaplappal. Az akvá-
+rium oldalélei merőlegesek az alaplapra.) 
+ 
+       
+ 
+ 
+a) Határozza meg az akvárium térfogatát! Válaszát literben, egészre kerekítve adja 
+meg! 
+ 
+Egy felül nyitott téglatest magassága 35 cm, a térfogata 126 000 cm3. 
+ 
+b) Mekkorának válasszuk a téglatest alaplapjának az éleit, hogy a felszíne (az alaplap 
+és a négy oldallap területének összege) minimális legyen? 
+ 
+a) 
+ 8 pont 
+ 
+b) 
+ 8 pont 
+ 
+Ö.: 
+16 pont 
+ 
+ 
+ 
+
+===== PAGE 21 =====
+ 
+Matematika 
+21 / 24 
+emelt szintű írásbeli vizsga 
+E2513 
+ 
+2026. május 5. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 22 =====
+ 
+Matematika 
+22 / 24 
+emelt szintű írásbeli vizsga 
+E2513 
+ 
+2026. május 5. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 23 =====
+ 
+Matematika 
+23 / 24 
+emelt szintű írásbeli vizsga 
+E2513 
+ 
+2026. május 5. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 24 =====
+ 
+Matematika 
+24 / 24 
+emelt szintű írásbeli vizsga 
+E2513 
+ 
+2026. május 5. 
+Azonosító 
+jel: 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+a feladat 
+sorszáma 
+pontszám 
+maximális 
+elért 
+maximális 
+elért 
+I. rész 
+1. 
+14 
+ 
+51 
+ 
+2. 
+11 
+ 
+3. 
+12 
+ 
+4. 
+14 
+ 
+II. rész 
+ 
+16 
+ 
+64 
+ 
+ 
+16 
+ 
+ 
+16 
+ 
+ 
+16 
+ 
+ 
+ nem választott feladat 
+Az írásbeli vizsgarész pontszáma 
+115 
+ 
+ 
+dátum 
+ 
+javító tanár 
+ 
+ __________________________________________________________________________  
+ 
+ 
+ 
+pontszáma egész 
+számra kerekítve 
+elért 
+programba  
+beírt 
+I. rész 
+  
+  
+II. rész 
+  
+  
+ 
+dátum 
+ 
+dátum 
+ 
+ 
+ 
+ 
+ 
+ 
+javító tanár 
+ 
+jegyző 
+ 

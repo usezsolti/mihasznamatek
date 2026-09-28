@@ -1,0 +1,455 @@
+--- line 187 ---
+lelő ábra esetén is. 
+így a második egyenlőtlenség megoldása x  –1,5 
+vagy x  6. 
+1 pont  
+A két egyenlőtlenség megoldását összevetve az 
+egyenlőtlenségrendszer megoldása: 
+x  –1,5 vagy 6  x  9,5. 
+1 pont x  ]–∞; –1,5]  [6; 9,5] 
+Összesen: 
+6 pont  
+
+--- line 240 ---
+x  3
+7 nem megoldás (mert ekkor x  1). 
+1 pont  
+Ellenőrzés a szöveg alapján: Ha Döme 3,5 kg almát 
+vásárolt, akkor 2,5 kg mandarint vett, kilogrammon-
+ként (14 – 6 ) 8 petákért, és így a 2,5 kg mandarin-
+ért valóban 20 petákot fizetett. 
+1 pont  
+Összesen: 
+8 pont  
+
+--- line 313 ---
+
+
+
+
+
+ 2,5 kg mandarint vett Döme, ami valóban 
+1 kg-mal kevesebb az alma mennyiségénél. 
+1 pont  
+Összesen: 
+8 pont  
+
+--- line 396 ---
+
+
+
+
+
+ 8 petákért, és így 1 kg alma és 1 kg man-
+darin árának összege valóban 14 peták. 
+1 pont  
+Összesen: 
+8 pont  
+
+--- line 415 ---
+f
+
+
+ ≈ 
+1 pont  
+≈ 6,15 (gramm) található meg még a környezetben 
+2026-ban. 
+1 pont  
+Összesen: 
+3 pont  
+
+--- line 450 ---
+-szere-
+sére változik a stroncium-
+90 tömege. 
+≈ 0,976 
+1 pont  
+Tehát (100 – 97,6 ) 2,4 %-kal csökken évente a 
+stroncium-90 tömege. 
+1 pont  
+Összesen: 
+3 pont  
+
+--- line 497 ---
+29
+lg0,5
+t =
+⋅
+ 
+Tehát (2026 – 17 ) 2009-ben kerülhetett az 
+50 gramm stroncium-90 a környezetbe. 
+1 pont  
+Összesen: 
+5 pont  
+
+--- line 533 ---
+1 pont  
+A logikaiszita-formula alapján 2-vel vagy 3-mal vagy 
+5-tel 150 + 100 + 60 – (50 + 30 + 20) + 10  220 db 
+szám osztható. 
+1 pont  
+Így (300 – 220 ) 80 db olyan szám van, amely sem 
+2-vel, sem 3-mal, sem 5-tel nem osztható. 
+1 pont  
+Összesen: 
+5 pont  
+
+--- line 583 ---
+| C \ (A  B) |  60 – 20 – 10 – 10  20 db szám. 
+1 pont 
+ 
+Így (300 – 10 – 40 – 20 – 10 – 80 – 40 – 20 ) 80 db 
+olyan szám van, amely sem 2-vel, sem 3-mal, sem 
+5-tel nem osztható. 
+1 pont 
+ 
+Összesen: 
+5 pont  
+
+--- line 607 ---
+2 pont  
+Ugyanígy 31-től 60-ig 8 db, 61-től 90-ig 8 db, és így 
+tovább, végül 271-től 300-ig szintén 8 db sem 2-vel, 
+sem 3-mal, sem 5-tel nem osztható szám van. 
+1 pont  
+Tehát a 300-nál nem nagyobb pozitív egész számok 
+között 8 10  80 megfelelő szám van. 
+1 pont  
+Összesen: 
+5 pont  
+
+--- line 667 ---
+
+
+
+-féleképpen választhatjuk ki, 
+1 pont  
+így a H halmaznak összesen 75  11 175  838 125 
+megfelelő részhalmaza van. 
+1 pont  
+Összesen: 
+4 pont  
+
+--- line 710 ---
++
+=
+⋅
+=
+ 
+Így a H halmaznak 150 darab olyan 299 elemű rész-
+halmaza van, amelyben az elemek összege páros. 
+1 pont  
+Összesen: 
+3 pont  
+
+--- line 724 ---
+1 pont  
+150 esetben páros, 150 esetben pedig páratlan elemet 
+hagyunk el, ezért a 300 darab részhalmaz felében lesz 
+páros az elemek összege. 
+1 pont  
+Így a H halmaznak 150 darab olyan 299 elemű rész-
+halmaza van, amelyben az elemek összege páros. 
+1 pont  
+Összesen: 
+3 pont  
+
+--- line 757 ---
+
+
+
+
+ 
+1 pont  
+ 4225, amiből AB  65 cm valóban. 
+1 pont  
+Összesen: 
+2 pont  
+
+--- line 797 ---
+
+
+ ≈ 606,2 cm2 
+1 pont  
+ADBC
+T
+1014 – 606,2  407,8 cm2 
+1 pont  
+Összesen: 
+5 pont  
+
+--- line 855 ---
+−
+= 
+cdab
+abcd
+=
+=
+ valóban. 
+1 pont  
+Összesen: 
+5 pont  
+
+--- line 871 ---
+21 56 42 7
+588
+
+
+
+
+ cm2. 
+1 pont  
+Összesen: 
+2 pont  
+
+--- line 935 ---
+24
+2 6
+3
+
+
+
+ valóban. 
+1 pont  
+Összesen: 
+3 pont  
+
+--- line 1022 ---
++
+= − 
+innen 0,2n  6,2, azaz n  31. 
+1 pont 0,1n(n  31)  0 
+(n  0) n  31 
+Ellenőrzés: az 1. esetben S11  11, a 2. esetben pedig 
+S31  31, tehát mindkét érték valóban megfelel. 
+1 pont  
+Összesen: 
+6 pont 
+
+--- line 1150 ---
+4
+6
+26
+2
+
+
+ ≈ 5,1. 
+1 pont  
+Összesen: 
+7 pont  
+
+--- line 1163 ---
+1 pont  
+Ha minden pont fokszáma legalább 2, akkor a gráf 
+fokszámösszege legalább 18, tehát legalább 9 éle 
+van. 
+1 pont  
+Ez több, mint a kilencpontú fagráf éleinek száma (8), 
+így biztosan van benne kör. 
+1 pont  
+Összesen: 
+3 pont  
+
+--- line 1175 ---
+Az állítás igaz. 
+1 pont  
+Ha egy összefüggő gráfban nincs kör, akkor az 
+fagráf. Minden fagráfnak van 1-es fokszámú pontja. 
+1 pont  
+Ennek a gráfnak nincs (így ez nem fagráf), tehát van 
+benne kör. 
+1 pont  
+Összesen: 
+3 pont  
+
+--- line 1203 ---
+legalább 2, ezért minden új pontból tovább lehet 
+lépni egy korábban még be nem járt élen. 
+1 pont  
+Mivel a pontok száma véges, a bejárás során valami-
+kor (legkésőbb a kilencedik lépésben) mindenképpen 
+egy korábban már érintett pontba térünk vissza, tehát 
+a gráfban van kör. 
+1 pont  
+Összesen: 
+3 pont  
+
+--- line 1215 ---
+Az állítás megfordítása: Ha egy (kilencpontú, össze-
+függő, egyszerű) gráfban van kör, akkor minden 
+pontjának fokszáma legalább 2. 
+1 pont  
+Az állítás hamis. 
+1 pont  
+Jó ellenpélda. 
+1 pont  
+Összesen: 
+3 pont  
+
+--- line 1242 ---
+1 pont  
+így (a Balázs–Attila mérkőzéssel együtt) összesen 
+legfeljebb 22 mérkőzésre kerülhetett volna sor. 
+1 pont  
+Mivel tudjuk, hogy már 23 mérkőzésre sor került, 
+ezért nem lehetséges, hogy Balázs és Attila még csak 
+az egymás elleni mérkőzésüket játszották le. 
+1 pont  
+Összesen: 
+4 pont  
+
+--- line 1265 ---
+1 pont  
+(Mivel ezek között nincsenek azonosak, ezért) ez leg-
+alább 14 hátralévő mérkőzést jelent. 
+1 pont  
+De már csak (36 – 23 ) 13 mérkőzés van hátra, ezért 
+nem lehetséges, hogy Balázs és Attila még csak az 
+egymás elleni mérkőzésüket játszották le.  
+1 pont  
+Összesen: 
+4 pont  
+
+--- line 1298 ---
+pontok fokszáma 1, a többi 7 pont fokszáma pedig 
+legfeljebb 6 lehet. 
+1 pont  
+Egy ilyen gráf fokszámösszege tehát legfeljebb 
+(2 ꞏ 1 + 7 ꞏ 6 ) 44 lehet, ezért nem lehetséges, hogy 
+Balázs és Attila még csak az egymás elleni mérkőzé-
+süket játszották le. 
+1 pont  
+Összesen: 
+4 pont  
+
+--- line 1371 ---
+1 pont  
+Tehát nem igaz, hogy ez a valószínűség kisebb, mint 
+.
+1
+0,03.
+30 
+ 
+1 pont  
+Összesen: 
+6 pont  
+
+--- line 1450 ---
+3570
+30
+
+
+ ezért nem igaz, hogy ez a valószínű-
+ség kisebb 1
+30 -nál. 
+1 pont  
+Összesen: 
+6 pont  
+
+--- line 1459 ---
+6 pont  
+ 
+7. a)  
+A, D, E 
+1-1 pont 
+Minden tévesen megadott 
+betűjelért 1 pont levonás 
+jár. 
+Összesen: 
+3 pont  
+
+--- line 1595 ---
+343
+3 57
+172
+p 
+
+
+
+ 
+Összesen: 
+5 pont  
+
+--- line 1746 ---
+x
+x
+=
+−
++
+−
+) 
+1 pont  
+Összesen: 
+8 pont  
+
+--- line 1786 ---
+−
+⋅
+=
+°
+ 
+1 pont  
+ 160π ≈ 503 cm2. 
+1 pont  
+Összesen: 
+3 pont  
+
+--- line 1794 ---
+Összesen: 
+3 pont  
+ 
+8. b) 
+Egy forgatás esetén a nyeremény várható értéke: 
+1000  0,4 + 2000  0,1 + 3000  0,3 + 4000  0,2  
+ 2300 (Ft). 
+2 pont  
+Összesen: 
+2 pont  
+
+--- line 1815 ---
+2 pont  
+C  4000 + 1000 + 1000, és ezeket a nyereményeket 
+3-féle sorrendben forgathatjuk ki. 
+P(C)  3 ꞏ 0,2 ꞏ 0,4 ꞏ 0,4  0,096 
+2 pont  
+A kérdezett valószínűség ezek összege, azaz 
+0,001 + 0,072 + 0,096  0,169. 
+1 pont  
+Összesen: 
+6 pont  
+
+--- line 1837 ---
+1 pont  
+2700 – 1000p  2500 
+1 pont  
+Így az 1000 Ft-os nyeremény valószínűsége p  0,2, 
+1 pont  
+a 2000 Ft-os nyeremény valószínűsége pedig 
+(0,5 – 0,2  0,3 legyen. 
+1 pont  
+Összesen: 
+5 pont  
+
+--- line 1909 ---
+1 pont*  
+Az akvárium térfogata 3519  35  123 165 cm3 ≈ 
+1 pont  
+≈ 123 liter. 
+1 pont 
+Ez a pont nem jár, ha a 
+vizsgázó nem kerekít, 
+vagy rosszul kerekít. 
+Összesen: 
+8 pont  
+
+--- line 2035 ---
+és ekkor 
+3600
+60
+60
+b 
+
+ cm szintén. 
+1 pont  
+Összesen: 
+8 pont  

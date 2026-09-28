@@ -1,0 +1,1087 @@
+
+===== PAGE 1 =====
+Matematika 
+középszint 
+ 
+Javítási-értékelési útmutató 2012 
+ 
+EMBERI ERŐFORRÁSOK MINISZTÉRIUMA 
+MATEMATIKA 
+ 
+KÖZÉPSZINTŰ 
+ÍRÁSBELI VIZSGA 
+JAVÍTÁSI-ÉRTÉKELÉSI 
+ÚTMUTATÓ 
+ 
+É R E T T S É G I V I Z S G A • 2 0 2 0 . o k t ó b e r 2 0 . 
+
+===== PAGE 2 =====
+Matematika — középszint 
+Javítási-értékelési útmutató 
+2012 írásbeli vizsga 
+2 / 12 
+2020. október 20. 
+Fontos tudnivalók 
+ 
+ 
+Formai előírások: 
+ 
+1. Kérjük, hogy a dolgozatot a vizsgázó által használt színűtől eltérő színű tollal, olvas-
+hatóan javítsa ki. 
+2. A feladatok mellett található szürke téglalapok közül az elsőben a feladatra adható ma-
+ximális pontszám van, a javító által adott pontszám a mellette levő téglalapba 
+kerüljön. 
+3. Kifogástalan megoldás esetén kérjük, hogy a maximális pontszám feltüntetése mellett 
+kipipálással jelezze, hogy az adott gondolati egységet látta, és jónak minősítette. 
+4. Hiányos/hibás megoldás esetén kérjük, hogy a hiba jelzése mellett az egyes részpont-
+számokat is írja rá a dolgozatra. Ha a dolgozat javítását jobban követhetővé teszi, akkor 
+a vizsgázó által elvesztett részpontszámok jelzése is elfogadható. Ne maradjon olyan 
+részlet a megoldásban, amelyről a javítás után nem nyilvánvaló, hogy helyes, hibás vagy 
+fölösleges. 
+5. A javítás során alkalmazza az alábbi jelöléseket. 
+• helyes lépés: kipipálás 
+• elvi hiba: kétszeres aláhúzás 
+• számolási hiba vagy más, nem elvi hiba: egyszeres aláhúzás 
+• rossz kiinduló adattal végzett helyes lépés: szaggatott vagy áthúzott kipipálás 
+• hiányos indoklás, hiányos felsorolás vagy más hiány: hiányjel 
+• nem érthető rész: kérdőjel és/vagy hullámvonal 
+6. Az ábrán kívül ceruzával írt részeket ne értékelje. 
+ 
+Tartalmi kérések: 
+ 
+1. Egyes feladatoknál több megoldás pontozását is megadtuk. Amennyiben azoktól eltérő 
+megoldás születik, keresse meg ezen megoldásoknak az útmutató egyes részleteivel 
+egyenértékű részeit, és ennek alapján pontozzon. 
+2. A pontozási útmutató pontjai tovább bonthatók, hacsak az útmutató másképp nem 
+rendelkezik. Az adható pontszámok azonban csak egész pontok lehetnek. 
+3. Ha a megoldásban számolási hiba, pontatlanság van, akkor csak arra a részre nem jár 
+pont, ahol a tanuló a hibát elkövette. Ha a hibás részeredménnyel helyes gondolatmenet 
+alapján tovább dolgozik, és a megoldandó probléma lényegében nem változik meg, ak-
+kor a következő részpontszámokat meg kell adni. 
+4. Elvi hibát követően egy gondolati egységen belül (ezeket az útmutatóban kettős vonal 
+jelzi) a formálisan helyes matematikai lépésekre sem jár pont. Ha azonban a tanuló  
+az elvi hibával kapott rossz eredménnyel – mint kiinduló adattal – helyesen számol to-
+vább a következő gondolati egységekben vagy részkérdésekben, akkor ezekre a részekre 
+kapja meg a maximális pontot, ha a megoldandó probléma lényegében nem változott 
+meg. 
+5. Ha a megoldási útmutatóban zárójelben szerepel egy megjegyzés vagy mértékegység, 
+akkor ennek hiánya esetén is teljes értékű a megoldás. 
+
+===== PAGE 3 =====
+Matematika — középszint 
+Javítási-értékelési útmutató 
+2012 írásbeli vizsga 
+3 / 12 
+2020. október 20. 
+ 
+6. Egy feladatra adott többféle megoldási próbálkozás közül a vizsgázó által megjelölt 
+változat értékelhető. A javítás során egyértelműen jelezze, hogy melyik változatot ér-
+tékelte, és melyiket nem. 
+7. A megoldásokért jutalompont (az adott feladatra vagy feladatrészre előírt maximális 
+pontszámot meghaladó pont) nem adható. 
+8. Egy feladatra vagy részfeladatra adott összpontszám nem lehet negatív. 
+9. Az olyan részszámításokért, részlépésekért nem jár pontlevonás, melyek hibásak, de 
+amelyeket a feladat megoldásához a vizsgázó ténylegesen nem használ fel. 
+10. A gondolatmenet kifejtése során a zsebszámológép használata – további matemati-
+kai indoklás nélkül – a következő műveletek elvégzésére fogadható el: összeadás, 
+kivonás, szorzás, osztás, hatványozás, gyökvonás, n!, 
+
+
+
+
+
+
+k
+n kiszámítása, a függvénytáb-
+lázatban fellelhető táblázatok helyettesítése (sin, cos, tg, log és ezek inverzei), a π és az 
+e szám közelítő értékének megadása, nullára rendezett másodfokú egyenlet gyökeinek 
+meghatározása. További matematikai indoklás nélkül használhatók a számológépek bi-
+zonyos statisztikai mutatók kiszámítására (átlag, szórás) abban az esetben, ha a feladat 
+szövege kifejezetten nem követeli meg az ezzel kapcsolatos részletszámítások bemuta-
+tását is. Egyéb esetekben a géppel elvégzett számítások indoklás nélküli lépéseknek 
+számítanak, azokért nem jár pont. 
+11. Az ábrák bizonyító erejű felhasználása (például adatok leolvasása méréssel) nem elfo-
+gadható. 
+12. Valószínűségek megadásánál (ha a feladat szövege másképp nem rendelkezik) a száza-
+lékban megadott helyes válasz is elfogadható. 
+13. Ha egy feladat szövege nem ír elő kerekítési kötelezettséget, akkor az útmutatóban meg-
+adottól eltérő, észszerű és helyes kerekítésekkel kapott rész- és végeredmény is elfo-
+gadható. 
+14. A vizsgafeladatsor II. B részében kitűzött 3 feladat közül csak 2 feladat megoldása 
+értékelhető. A vizsgázó az erre a célra szolgáló négyzetben – feltehetőleg – megjelölte 
+annak a feladatnak a sorszámát, amelynek értékelése nem fog beszámítani az összpont-
+számába. Ennek megfelelően a megjelölt feladatra esetlegesen adott megoldást nem is 
+kell javítani. Ha a vizsgázó nem jelölte meg, hogy melyik feladat értékelését nem kéri, 
+és a választás ténye a dolgozatból sem derül ki egyértelműen, akkor a nem értékelendő 
+feladat automatikusan a kitűzött sorrend szerinti utolsó feladat lesz. 
+ 
+ 
+ 
+
+===== PAGE 4 =====
+Matematika — középszint 
+Javítási-értékelési útmutató 
+2012 írásbeli vizsga 
+4 / 12 
+2020. október 20. 
+ 
+I. 
+ 
+1.  
+A ∩ B = {1; 10} 
+1 pont  
+A \ B = {3; 6; 15} 
+1 pont  
+Összesen: 
+2 pont  
+ 
+2.  
+Összesen (35 kört, azaz) 7000 métert fut az öt nap 
+alatt. 
+2 pont  
+Összesen: 
+2 pont  
+ 
+3.  
+x = 8 
+2 pont  
+Összesen: 
+2 pont  
+ 
+4.  
+2
+101 
+2 pont Nem bontható. 
+Összesen: 
+2 pont  
+ 
+5.  
+A: hamis 
+B: igaz 
+C: igaz 
+2 pont 
+2 jó válasz esetén 1 pont, 
+1 jó válasz esetén 0 pont 
+jár. 
+Összesen: 
+2 pont  
+ 
+6.  
+a) f (12) = 1000 
+1 pont  
+b) 
+2, azaz
+4
+x
+
+
+=
+
+
+
+
+ x = 8 
+2 pont  
+Összesen: 
+3 pont  
+ 
+7.  
+15 000 · 1,25 = 18 750 Ft-ra emelte a termék árát ok-
+tóber végén a kereskedő. 
+1 pont Ha az eredeti ár x, akkor 
+a megemelt ár 1,25x. 
+15000 100
+80
+18750 ⋅
+=
+% 
+1 pont 
+0,8
+1,25
+x
+x =
+ 
+Tehát 20%-os kedvezménnyel adja a terméket a ke-
+reskedő november végén. 
+1 pont  
+Összesen: 
+3 pont  
+ 
+ 
+ 
+
+===== PAGE 5 =====
+Matematika — középszint 
+Javítási-értékelési útmutató 
+2012 írásbeli vizsga 
+5 / 12 
+2020. október 20. 
+ 
+8. első megoldás 
+A b élhosszúságú kocka felszíne A = 6b2,  
+amiből b = 1,5 (cm). 
+1 pont  
+A kétszer ekkora élű kocka éle 3 (cm), 
+1 pont  
+így a felszíne (6 · 32 =) 54 cm2. 
+1 pont  
+Összesen: 
+3 pont  
+ 
+8. második megoldás 
+A két kocka hasonló, a hasonlóság aránya 2 : 1.  
+1 pont 
+Ez a pont akkor is jár, ha 
+ez a gondolat csak a meg-
+oldásból derül ki. 
+Hasonló testek felszínének aránya a hasonlóság ará-
+nyának négyzetével egyenlő, így a nagyobb kocka 
+felszíne négyszerese a kisebb kocka felszínének,  
+1 pont  
+azaz 54 cm2. 
+1 pont  
+Összesen: 
+3 pont  
+ 
+9.  
+6!
+2! 4!
+
+
+=
+
+
+⋅
+
+
+15 
+2 pont  
+Összesen: 
+2 pont  
+ 
+10.  
+a) [–1; 3] 
+2 pont  
+b) –1 és 1 
+2 pont  
+Összesen: 
+4 pont  
+ 
+11.  
+Az átlag 30 (perc). 
+1 pont  
+A szórás 
+2
+2
+2
+(38
+30)
+(30
+30)
+2 (26
+30)
+4
+−
++
+−
++ ⋅
+−
+ = 
+1 pont 
+Ez a pont akkor is jár, ha 
+a vizsgázó a szórást szá-
+mológéppel helyesen szá-
+molja ki. 
+= 
+24 ≈ 4,9 (perc). 
+1 pont  
+Összesen: 
+3 pont  
+ 
+12.  
+30
+5
+36
+6
+=
+ 
+2 pont  
+Összesen: 
+2 pont  
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 6 =====
+Matematika — középszint 
+Javítási-értékelési útmutató 
+2012 írásbeli vizsga 
+6 / 12 
+2020. október 20. 
+ 
+II. A 
+ 
+13. a)  
+A gondolt számot x-szel jelölve a feladat szövege 
+alapján: 
+5
+4
+8
+2
+x
+x
+
+
+−
+⋅+
+=
+
+
+
+
+. 
+2 pont  
+A zárójelet felbontva: 2x − 20 + 8 = x. 
+1 pont  
+Az egyenletet rendezve: x = 12, azaz a gondolt szám 
+a 12. 
+1 pont  
+Ellenőrzés a szöveg alapján: a 12 fele 6, ebből 5-öt 
+kivonva 1-et kapunk, aminek a négyszereséhez 8-at 
+adva valóban 12-t kapunk eredményül.  
+1 pont  
+Összesen: 
+5 pont  
+Megjegyzés: Ha a vizsgázó indoklás nélkül helyes választ ad, és válaszát ellenőrzi, akkor ezért 
+összesen 2 pontot kapjon. 
+ 
+13. b) első megoldás 
+A sorozat első tagját a-val, differenciáját d-vel je-
+lölve a szöveg alapján felírható egyenletrendszer: 
+9
+18
+29
+48
+a
+d
+a
+d
++
+=
+
+
++
+=
+
+. 
+2 pont  
+Az első egyenletből kifejezve a-t és a második 
+egyenletbe helyettesítve: 18 – 9d + 29d = 48, 
+1 pont 
+A második egyenletből ki-
+vonva az első egyenletet: 
+20d = 30. 
+amiből d = 1,5, 
+1 pont  
+és a = 4,5. 
+1 pont  
+Összesen: 
+5 pont  
+ 
+13. b) második megoldás 
+A számtani sorozat tulajdonságai miatt a sorozat har-
+mincadik tagja a differencia 20-szorosával nagyobb, 
+mint a tizedik tagja: a30 = a10 + 20d. 
+1 pont 
+Ez a pont akkor is jár, ha 
+ez a gondolat csak a meg-
+oldásból derül ki. 
+Tehát a sorozat differenciája: d = (48 – 18) : 20 = 1,5. 
+2 pont  
+A sorozat első tagja: a1 = 18 – 9 · 1,5 = 4,5. 
+2 pont  
+Összesen: 
+5 pont  
+ 
+ 
+ 
+
+===== PAGE 7 =====
+Matematika — középszint 
+Javítási-értékelési útmutató 
+2012 írásbeli vizsga 
+7 / 12 
+2020. október 20. 
+ 
+14. a)  
+A Pitagorasz-tétel alapján: 
+2
+2
+2
+40
+41
+AC +
+=
+, 
+1 pont  
+amiből AC = 9 (cm). 
+1 pont  
+A háromszög területe 
+9 40
+2
+T
+⋅
+=
+= 
+1 pont  
+= 180 cm
+2, 
+1 pont  
+azaz 1,8 dm
+2. 
+1 pont  
+Összesen: 
+5 pont  
+ 
+14. b)  
+A háromszög A csúcsnál lévő szögét α-val jelölve: 
+40
+sinα
+41
+=
+, 
+1 pont 
+9
+cosα
+41
+=
+ 
+amiből α ≈ 77,32°. 
+1 pont  
+A B csúcsnál lévő szög β = 90° – α = 12,68°. 
+1 pont  
+Összesen: 
+3 pont  
+ 
+14. c)  
+(A Thalész-tétel megfordítása miatt) a derékszögű 
+háromszög köré írt kör középpontja az átfogó felező-
+pontja. 
+1 pont* 
+Ez a pont akkor is jár, ha 
+ez a gondolat csak a meg-
+oldásból derül ki. 
+A háromszög köré írt kör átmérője tehát d = 41 (cm). 
+1 pont* A kör sugara 
+r = 20,5 (cm). 
+A kör kerülete K = d · π = 41π ≈ 
+1 pont K = 2r · π 
+≈ 129 cm a kért kerekítéssel. 
+1 pont 
+Ez a pont nem jár, ha a 
+vizsgázó nem kerekít, 
+vagy rosszul kerekít. 
+Összesen: 
+4 pont  
+Megjegyzés: A *-gal jelölt pontok akkor is járnak, ha a vizsgázó a köré írt kör sugarát a 
+4
+abc
+T
+r
+=
+ vagy az 
+2
+sinα
+a
+r
+=
+⋅
+ összefüggés segítségével számítja ki. 
+ 
+ 
+
+===== PAGE 8 =====
+Matematika — középszint 
+Javítási-értékelési útmutató 
+2012 írásbeli vizsga 
+8 / 12 
+2020. október 20. 
+ 
+15. a)  
+Az 1998-as adat kiszámításához x = 98,  
+a 2018-as adathoz x = 118. 
+1 pont 
+Ez a pont akkor is jár, ha 
+ez a gondolat csak a meg-
+oldásból derül ki. 
+f (98) = 0,0001 · 98
+2 – 0,0063 · 98 + 15,2 = 15,543 
+1 pont 
+ 
+f (118) = 0,0001 · 118
+2 – 0,0063 · 118 + 15,2 = 15,849 
+1 pont 
+ 
+2018-ban (15,849 – 15,543 ≈) 0,3 Celsius-fokkal volt 
+magasabb az éves középhőmérséklet, mint 1998-ban. 
+1 pont  
+Összesen: 
+4 pont  
+ 
+15. b)  
+Megoldandó a 0,0001x
+2 – 0,0063x + 15,2 = 15,42 
+egyenlet (0 ≤ x ≤ 119). 
+1 pont  
+Rendezve: 0,0001x
+2 – 0,0063x – 0,22 = 0. 
+1 pont x
+2 – 63x – 2200 = 0 
+Az egyenlet gyökei: x1 = – 25, x2 = 88. 
+1 pont  
+A –25 nem megoldása a feladatnak (a 88 pedig meg-
+oldása, mivel 0 ≤ 88 ≤ 119). 
+1 pont  
+(1900 + 88 =) 1988-ban volt az éves középhőmérsék-
+let 15,42 °C.  
+1 pont  
+Összesen: 
+5 pont  
+ 
+15. c)  
+Megoldandó a 15,92 · 1,002t = 16,7 egyenlet (0 ≤ t). 
+1 pont  
+Rendezve: 1,002t ≈ 1,049. 
+1 pont  
+t = 
+1,002
+log
+1,049
+lg1,049
+lg1,002
+
+
+=
+
+
+
+
+ ≈ 23,94 
+2 pont  
+(2018 + 24 =) 2042-ben lesz a modell alapján az éves 
+középhőmérséklet 16,7 °C.  
+1 pont  
+Összesen: 
+5 pont  
+Megjegyzés: Ha a vizsgázó évről évre észszerű (legalább két tizedesjegyre történő) helyes ke-
+rekítésekkel kiszámolja az éves középhőmérsékleteket, és ez alapján helyes választ ad, akkor a 
+teljes pontszám jár. 
+ 
+II. B 
+ 
+16. a)  
+365,25 nap = 24 ⋅ 365,25 = 8766 óra 
+1 pont  
+A Föld átlagsebessége egy teljes kör megtétele során 
+939 000 000
+8766
+s
+v
+t
+=
+=
+ ≈  
+1 pont  
+≈ 107 118 km/h. 
+1 pont  
+Összesen: 
+3 pont  
+ 
+ 
+ 
+
+===== PAGE 9 =====
+Matematika — középszint 
+Javítási-értékelési útmutató 
+2012 írásbeli vizsga 
+9 / 12 
+2020. október 20. 
+ 
+16. b)  
+4,2 óra = (4,2 ⋅ 60 ⋅ 60 =) 15 120 másodperc 
+1 pont  
+A fény ennyi idő alatt 15 120 ⋅ 300 000 = 
+1 pont  
+(= 1,512 ⋅ 104 ⋅ 3 ⋅ 105 ≈) 4,5 ⋅ 109 km-t tesz meg, 
+tehát kb. ennyi a Neptunusz távolsága a Naptól. 
+1 pont  
+Összesen: 
+3 pont  
+ 
+16. c)  
+A helyes bolygósorrend miatt 1 kedvező eset van. 
+1 pont  
+A Merkúr és a Vénusz bolygókat kétféleképpen, a 
+maradék 4 bolygót 4! = 24-féleképpen írhatja be, 
+1 pont  
+ez összesen 2 ⋅ 24 = 48 lehetőség (összes eset száma). 
+1 pont  
+A kérdezett valószínűség 1
+48 ≈ 0,021. 
+1 pont  
+Összesen: 
+4 pont  
+ 
+16. d) első megoldás 
+Visszatevés nélküli húzás esetén (a húzási sorrend fi-
+gyelembe vétele nélkül) a kedvező esetek száma 7, 
+hiszen a Föld mellett 7 másik bolygó nevét lehet ki-
+húzni.  
+1 pont 
+(A húzási sorrend figye-
+lembevételével) a kedvező 
+esetek száma 2 ∙ 7 = 14, 
+Az összes eset száma 8
+2
+
+
+
+ = 28.  
+1 pont az összes eset száma 
+8 ∙ 7 = 56. 
+Az esemény bekövetkezésének a valószínűsége ekkor 
+7
+1
+28
+4
+=
+ = 0,25. 
+1 pont  
+Visszatevéses húzás esetén az összes eset száma  
+82 = 64. 
+1 pont  
+A kedvező esetek:  
+vagy mindkét húzás „Föld”, ez 1 eset, 
+vagy az egyik húzás Föld, a másik nem,  
+ez 2 ∙ 7 = 14 eset, összesen 15 eset. 
+1 pont A kedvezőtlen esetek 
+száma 7 ∙ 7 = 49. 
+A valószínűség ekkor tehát 15
+64 (≈ 0,234). 
+1 pont 
+49
+15
+1
+64
+64
+−
+=
+ 
+Tehát visszatevés nélküli húzás esetén nagyobb a va-
+lószínűsége annak, hogy legalább az egyik cédulán a 
+Föld neve szerepel. 
+1 pont  
+Összesen: 
+7 pont  
+ 
+ 
+ 
+
+===== PAGE 10 =====
+Matematika — középszint 
+Javítási-értékelési útmutató 
+2012 írásbeli vizsga 
+10 / 12 
+2020. október 20. 
+ 
+16. d) második megoldás 
+A visszatevés nélküli húzás esetén 1
+8 annak a való-
+színűsége, hogy az első húzás „Föld”. 
+1 pont  
+Annak a valószínűsége, hogy az első húzás nem 
+Föld, de a második húzás Föld: 7 1
+1
+8 7
+8
+⋅
+=
+= 0,125. 
+1 pont  
+(Mivel egymást kizáró eseményekről van szó, így) a 
+kérdéses valószínűség ezek összege, azaz 2
+8 . 
+1 pont  
+Visszatevéses húzás esetén 1
+8 annak a valószínűsége, 
+hogy az első húzás Föld. 
+1 pont* Annak a valószínűsége, 
+hogy sem az első, sem a 
+második húzás nem Föld: 
+7 7
+49
+8 8
+64
+⋅
+=
+. 
+Annak a valószínűsége, hogy az első húzás nem 
+Föld, de a második húzás Föld: 7 1
+7
+8 8
+64
+⋅
+=
+. 
+1 pont* 
+Visszatevés esetén tehát a kérdéses esemény valószí-
+nűsége 1
+7
+8
+64
++
+ ≈ 0,234. 
+1 pont* 
+Annak a valószínűsége, 
+hogy legalább az egyik 
+húzás Föld: 
+49
+15
+1
+64
+64
+−
+=
+. 
+Tehát visszatevés nélküli húzás esetén nagyobb a va-
+lószínűsége annak, hogy legalább az egyik cédulán a 
+Föld neve szerepel. 
+1 pont  
+Összesen: 
+7 pont  
+ 
+Megjegyzések: 
+1. A *-gal jelzett pontokat az alábbi gondolatmenetért is megkaphatja a vizsgázó. 
+Visszatevéses húzás esetén annak a valószínűsége, 
+hogy az első vagy a második húzás Föld: 1
+1
+8
+8
++
+,  
+1 pont  
+viszont ekkor kétszer számoljuk azt, amikor mindkét 
+húzás Föld, aminek a valószínűsége 1 1
+1
+8 8
+64
+⋅
+=
+. 
+1 pont  
+Visszatevés esetén tehát a kérdéses esemény valószí-
+nűsége 1
+1
+1
+8
+8
+64
++
+−
+ ≈ 0,234. 
+1 pont  
+ 
+2. Az alábbi gondolatmenet is teljes pontszámot ér.  
+Mindkét esetet tekinthetjük úgy, hogy kétszer húzunk egymás után a cédulák közül. Ha az elsőre 
+kihúzott cédulán a Föld szerepel, akkor mindegy, hogy melyik fajta húzást választjuk.  
+Ha az első nem Föld, akkor nyilván akkor lesz nagyobb esélyünk a másodikra Földet húzni, ha 
+nem tesszük vissza az elsőre kihúzott cédulát, hiszen ebben az esetben kevesebb olyan cédula 
+marad a kalapban, melyet nem kívánunk húzni.  
+Tehát visszatevés nélküli mintavétel esetén nagyobb a valószínűsége annak, hogy legalább az 
+egyik cédulán a Föld neve szerepel. 
+ 
+
+===== PAGE 11 =====
+Matematika — középszint 
+Javítási-értékelési útmutató 
+2012 írásbeli vizsga 
+11 / 12 
+2020. október 20. 
+ 
+17. a)  
+ 
+Egy megfelelő gráf, 
+például: 
+2 pont Nem egyszerű gráf is el-
+fogadható. 
+Összesen: 
+2 pont  
+ 
+17. b)  
+Ha lenne ilyen gráf, akkor abban a csúcsok fokszá-
+mának összege (3 · 5 =) 15 lenne. 
+1 pont  
+Mivel egy gráfban a csúcsok fokszámának összege 
+nem lehet páratlan,  
+1 pont  
+ezért ilyen gráf nincs. 
+1 pont  
+Összesen: 
+3 pont  
+ 
+17. c)  
+AD
+DA
+= −
+
+
+ 
+1 pont* 
+AB
+DB
+DA
+=
+−
+
+
+
+ 
+2
+DB
+DE
+=
+⋅
+
+
+ 
+1 pont*  
+2
+AB
+AD
+DB
+DA
+DE
+=
++
+= −
++
+⋅
+
+
+
+
+
+ 
+1 pont 
+2
+AB
+DE
+DA
+=
+⋅
+−
+
+
+
+ 
+Összesen: 
+3 pont  
+Megjegyzés: A *-gal jelölt 2 pont akkor is jár, ha ezek a gondolatok csak a megoldásból de-
+rülnek ki. 
+ 
+17. d)  
+A B pont első koordinátáját az AB egyenes egyenle-
+tébe helyettesítve 2 · 3 – 5y = – 4, 
+1 pont  
+amiből y = 2, azaz B(3; 2) az egyik csúcs. 
+1 pont  
+(Az A pont az AB és AD egyenesek metszéspontja, 
+ezért koordinátáit a két egyenes egyenletéből álló 
+egyenletrendszer megoldása adja meg.) 
+Az első egyenletből x-et kifejezve és a második 
+egyenletbe helyettesítve: 
+5
+4
+3
+2
+6
+2
+y
+y
+−
+⋅
+−
+= −. 
+2 pont 
+Az első egyenlet 3-szoro-
+sából a második egyenlet 
+2-szeresét kivonva: 
+–11y = 0. 
+Az egyenletet rendezve: y = 0. 
+1 pont  
+Innen x = –2, tehát A(–2; 0) a másik csúcs. 
+1 pont  
+(Az AC szakasz és a BD szakasz E felezőpontja meg-
+egyezik.) Az AC szakasz felezőpontja E(1,5; 2,5). 
+1 pont 
+(2;3)
+BC
+AD
+=
+=
+
+
+ 
+Mivel 
+1
+3
+1,5
+2
+d +
+=
+ és 
+2
+2
+2,5
+2
+d +
+=
+,  
+így a D(d1; d2) pont koordinátái (0; 3). 
+2 pont 
+Így a D pont helyvektora 
+(–2; 0) + (2; 3) = (0; 3), 
+ezek egyben a D pont ko-
+ordinátái. 
+Összesen: 
+9 pont  
+ 
+18. a)  
+Egy szög teljes hossza 1 + 25 + 2,5 = 28,5 mm. 
+2 pont  
+Összesen: 
+2 pont  
+
+===== PAGE 12 =====
+Matematika — középszint 
+Javítási-értékelési útmutató 
+2012 írásbeli vizsga 
+12 / 12 
+2020. október 20. 
+ 
+18. b)  
+(Kiszámoljuk egy szög térfogatát.)  
+A szög fejének térfogata:  
+2
+2
+1
+1 π (2,5
+2,5 1 1 )
+3
+V
+⋅
+=
+⋅
++
+⋅+
+= 3,25π ≈ 10,21 (mm3). 
+1 pont  
+A hengeres rész térfogata:  
+2
+2
+1
+π 25
+V =
+⋅⋅
+ = 25π ≈ 78,54 (mm3). 
+1 pont  
+A szög hegyének térfogata:  
+2
+3
+1
+π 2,5
+5 π
+3
+6
+V
+⋅⋅
+=
+=
+ ≈ 2,62 (mm3). 
+1 pont  
+Egy szög térfogata ezek összege, azaz  
+V ≈ 91,37 mm3.  
+1 pont  
+7,8 g/cm3 = 0,0078 g/mm3 
+1 pont 91,37 mm3 = 0,09137 cm3 
+Egy szög tömege: 91,37 · 0,0078 = 0,713 g. 
+1 pont 0,09137· 7,8 
+10 dkg = 100 g 
+1 pont  
+100 gramm szög 100
+0,713 ≈ 140 darab. 
+1 pont  
+Összesen: 
+8 pont  
+Megjegyzés: Ha a vizsgázó a térfogatok számítása során a testek átmerőjét tekinti sugárnak, 
+és ezzel helyesen számol, akkor ezért összesen legfeljebb 1 pontot veszítsen. 
+ 
+18. c)  
+ 
+3 pont 
+1 pont jár a tengelyek 
+megfelelő jelöléséért,  
+2 pont jár az oszlopok 
+megfelelő magasságának 
+megrajzolásáért. 
+Összesen: 
+3 pont  
+ 
+18. d)  
+Az osztályközepekkel a táblázat: 
+kapott szögek 
+száma (db) 
+gyakorisága 
+kapott szögek 
+száma (db) 
+gyakorisága 
+122 
+1 
+142 
+10 
+127 
+2 
+147 
+7 
+132 
+6 
+152 
+5 
+137 
+17 
+157 
+2 
+ 
+1 pont 
+Ez a pont akkor is jár, ha 
+a vizsgázó az osztályköze-
+peket tartalmazó táblázat 
+nélkül jól számol. 
+A medián (a 25. és 26. adat átlaga) 137 db, 
+1 pont  
+az átlag 1 122
+2 127
+...
+2 157
+50
+⋅
++ ⋅
++
++ ⋅
+=140,4 db. 
+2 pont  
+Összesen: 
+4 pont  
+ 

@@ -1,0 +1,2268 @@
+
+===== PAGE 1 =====
+Matematika 
+emelt szint 
+ 
+Javítási-értékelési útmutató 2013 
+ 
+EMBERI ERŐFORRÁSOK MINISZTÉRIUMA 
+MATEMATIKA 
+ 
+EMELT SZINTŰ 
+ÍRÁSBELI VIZSGA 
+JAVÍTÁSI-ÉRTÉKELÉSI 
+ÚTMUTATÓ 
+ 
+É R E T T S É G I V I Z S G A • 2 0 2 0 . o k t ó b e r 2 0 . 
+
+===== PAGE 2 =====
+Matematika — emelt szint 
+Javítási-értékelési útmutató 
+2013 írásbeli vizsga 
+2 / 20 
+2020. október 20. 
+Fontos tudnivalók 
+ 
+ 
+Formai előírások: 
+ 
+1. Kérjük, hogy a dolgozatot a vizsgázó által használt színűtől eltérő színű tollal, olvas-
+hatóan javítsa ki. 
+2. A feladatok mellett található szürke téglalapok közül az elsőben a feladatra adható ma-
+ximális pontszám van, a javító által adott pontszám a mellette levő téglalapba 
+kerüljön. 
+3. Kifogástalan megoldás esetén kérjük, hogy a maximális pontszám feltüntetése mellett 
+kipipálással jelezze, hogy az adott gondolati egységet látta, és jónak minősítette. 
+4. Hiányos/hibás megoldás esetén kérjük, hogy a hiba jelzése mellett az egyes részpont-
+számokat is írja rá a dolgozatra. Ha a dolgozat javítását jobban követhetővé teszi, akkor 
+a vizsgázó által elvesztett részpontszámok jelzése is elfogadható. Ne maradjon olyan 
+részlet a megoldásban, amelyről a javítás után nem nyilvánvaló, hogy helyes, hibás vagy 
+fölösleges. 
+5. A javítás során alkalmazza az alábbi jelöléseket. 
+• helyes lépés: kipipálás 
+• elvi hiba: kétszeres aláhúzás 
+• számolási hiba vagy más, nem elvi hiba: egyszeres aláhúzás 
+• rossz kiinduló adattal végzett helyes lépés: szaggatott vagy áthúzott kipipálás 
+• hiányos indoklás, hiányos felsorolás vagy más hiány: hiányjel 
+• nem érthető rész: kérdőjel és/vagy hullámvonal 
+6. Az ábrán kívül ceruzával írt részeket ne értékelje. 
+ 
+Tartalmi kérések: 
+ 
+1. Egyes feladatoknál több megoldás pontozását is megadtuk. Amennyiben azoktól eltérő 
+megoldás születik, keresse meg ezen megoldásoknak az útmutató egyes részleteivel 
+egyenértékű részeit, és ennek alapján pontozzon. 
+2. A pontozási útmutató pontjai tovább bonthatók, hacsak az útmutató másképp nem 
+rendelkezik. Az adható pontszámok azonban csak egész pontok lehetnek. 
+3. Ha a megoldásban számolási hiba, pontatlanság van, akkor csak arra a részre nem jár 
+pont, ahol a tanuló a hibát elkövette. Ha a hibás részeredménnyel helyes gondolatmenet 
+alapján tovább dolgozik, és a megoldandó probléma lényegében nem változik meg, ak-
+kor a következő részpontszámokat meg kell adni. 
+4. Elvi hibát követően egy gondolati egységen belül (ezeket az útmutatóban kettős vonal 
+jelzi) a formálisan helyes matematikai lépésekre sem jár pont. Ha azonban a tanuló  
+az elvi hibával kapott rossz eredménnyel – mint kiinduló adattal – helyesen számol to-
+vább a következő gondolati egységekben vagy részkérdésekben, akkor ezekre a részekre 
+kapja meg a maximális pontot, ha a megoldandó probléma lényegében nem változott 
+meg. 
+5. Ha a megoldási útmutatóban zárójelben szerepel egy megjegyzés vagy mértékegység, 
+akkor ennek hiánya esetén is teljes értékű a megoldás. 
+
+===== PAGE 3 =====
+Matematika — emelt szint 
+Javítási-értékelési útmutató 
+2013 írásbeli vizsga 
+3 / 20 
+2020. október 20. 
+ 
+6. Egy feladatra adott többféle megoldási próbálkozás közül a vizsgázó által megjelölt 
+változat értékelhető. A javítás során egyértelműen jelezze, hogy melyik változatot ér-
+tékelte, és melyiket nem. 
+7. A megoldásokért jutalompont (az adott feladatra vagy feladatrészre előírt maximális 
+pontszámot meghaladó pont) nem adható. 
+8. Egy feladatra vagy részfeladatra adott összpontszám nem lehet negatív. 
+9. Az olyan részszámításokért, részlépésekért nem jár pontlevonás, melyek hibásak, de 
+amelyeket a feladat megoldásához a vizsgázó ténylegesen nem használ fel. 
+10. A gondolatmenet kifejtése során a zsebszámológép használata – további matemati-
+kai indoklás nélkül – a következő műveletek elvégzésére fogadható el: összeadás, 
+kivonás, szorzás, osztás, hatványozás, gyökvonás, n!, 
+
+
+
+
+
+
+k
+n kiszámítása, a függvénytáb-
+lázatban fellelhető táblázatok helyettesítése (sin, cos, tg, log és ezek inverzei), a π és az 
+e szám közelítő értékének megadása, nullára rendezett másodfokú egyenlet gyökeinek 
+meghatározása. További matematikai indoklás nélkül használhatók a számológépek az 
+átlag és a szórás kiszámítására abban az esetben, ha a feladat szövege kifejezetten nem 
+követeli meg az ezzel kapcsolatos részletszámítások bemutatását is. Egyéb esetekben 
+a géppel elvégzett számítások indoklás nélküli lépéseknek számítanak, így azokért 
+nem jár pont. 
+11. Az ábrák bizonyító erejű felhasználása (például adatok leolvasása méréssel) nem elfo-
+gadható. 
+12. Valószínűségek megadásánál (ha a feladat szövege másképp nem rendelkezik) a száza-
+lékban megadott helyes válasz is elfogadható. 
+13. Ha egy feladat szövege nem ír elő kerekítési kötelezettséget, akkor az útmutatóban meg-
+adottól eltérő, észszerű és helyes kerekítésekkel kapott rész- és végeredmény is elfo-
+gadható. 
+14. A vizsgafeladatsor II. részében kitűzött 5 feladat közül csak 4 feladat megoldása 
+értékelhető. A vizsgázó az erre a célra szolgáló négyzetben – feltehetőleg – megjelölte 
+annak a feladatnak a sorszámát, amelynek értékelése nem fog beszámítani az összpont-
+számába. Ennek megfelelően a megjelölt feladatra esetlegesen adott megoldást nem is 
+kell javítani. Ha a vizsgázó nem jelölte meg, hogy melyik feladat értékelését nem kéri, 
+és a választás ténye a dolgozatból sem derül ki egyértelműen, akkor a nem értékelendő 
+feladat automatikusan a kitűzött sorrend szerinti utolsó feladat lesz. 
+ 
+ 
+
+===== PAGE 4 =====
+Matematika — emelt szint 
+Javítási-értékelési útmutató 
+2013 írásbeli vizsga 
+4 / 20 
+2020. október 20. 
+ 
+I. 
+ 
+1. a)  
+2
+900
+0,25(
+60)
+0
+x
+−
+−
+=
+ (0 < x < 130) 
+1 pont  
+2
+0,25
+30
+0
+x
+x
+−
++
+=
+ 
+1 pont  
+x = 0 vagy x = 120  
+1 pont  
+A 0 nem eleme az értelmezési tartománynak, ezért az 
+egyetlen zérushely a 120. 
+1 pont  
+Összesen: 
+4 pont  
+ 
+1. b)  
+f (20)
+2
+900
+0,25(20
+60)
+500
+=
+−
+−
+=
+ 
+1 pont  
+g (20) = 128  
+1 pont  
+A különbség (500 – 128 =) 372.  
+1 pont  
+Összesen: 
+3 pont  
+ 
+1. c) első megoldás 
+2
+2
+( )
+900
+0,25(
+60)
+6,4
+0,25
+23,6
+h x
+x
+x
+x
+x
+=
+−
+−
+−
+= −
++
+ 
+1 pont  
+A h deriváltfüggvénye 
+( )
+0,5
+23,6
+h x
+x
+′
+= −
++
+  
+(0 < x < 130). 
+1 pont  
+Ha 
+( )
+0
+h x
+′
+=
+, akkor x = 47,2,   
+1 pont  
+ha 0 < x < 47,2, akkor 
+( )
+h x
+′
+> 0 (h szigorúan mono-
+ton növekedő),  
+ha 47,2 < x < 130, akkor 
+( )
+h x
+′
+< 0 (h szigorúan mo-
+noton csökkenő), ezért maximuma van. 
+1 pont 
+( )
+0,5
+h x
+′′
+= −
+, ezért 
+(47,2)
+0
+h′′
+<
+.  
+Tehát 47,2 a h maximumhelye,  
+1 pont  
+a maximum értéke pedig h(47,2) = 556,96. 
+(A függvénynek minimuma nincs.) 
+1 pont  
+Összesen: 
+6 pont  
+ 
+1. c) második megoldás 
+2
+2
+( )
+900
+0,25(
+60)
+6,4
+0,25
+23,6
+h x
+x
+x
+x
+x
+=
+−
+−
+−
+= −
++
+ 
+1 pont  
+Az 
+2
+0,25
+23,6
+x
+x
+x
+−
++
+
+ = –0,25x(x – 94,4) (x ∈ R)  
+másodfokú függvény zérushelyei 0 és 94,4, 
+1 pont  
+főegyütthatója negatív, ezért maximuma van. 
+1 pont  
+Maximumhelye 0
+94,4
+47,2
+2
++
+=
+. 
+1 pont 
+Maximumhelye: 
+23,6
+47,2
+2
+2 ( 0,25)
+b
+a
+−
+= −
+=
+⋅−
+ 
+(47,2 ∈ ]0; 130[, ezért) ez a h maximumhelye is, 
+1 pont  
+a maximum értéke pedig h(47,2) = 556,96. 
+(A függvénynek minimuma nincs.) 
+1 pont  
+Összesen: 
+6 pont  
+Megjegyzés: Ha a vizsgázó zárt intervallumon vizsgálja a függvényt, és ezért azt állapítja 
+meg, hogy van minimumhelye is, akkor ezért 1 pontot veszítsen. 
+
+===== PAGE 5 =====
+Matematika — emelt szint 
+Javítási-értékelési útmutató 
+2013 írásbeli vizsga 
+5 / 20 
+2020. október 20. 
+ 
+2. a) első megoldás 
+Ha a résztvevők létszáma x, akkor az életkoruk ösz-
+szege 28x. 
+1 pont  
+Az öt legidősebb nélkül a csoport tagjai életkorának 
+összege egyrészt 25,6(x – 5), 
+1 pont  
+másrészt 28x – 5 ∙ 40. 
+1 pont Az öt legidősebb életko-
+rának összege 5 ∙ 40. 
+25,6(x – 5) = 28x – 5 ∙ 40 
+1 pont 
+28
+6,
+25
+)
+5
+(
+40
+5
+=
+⋅
+−
++
+⋅
+x
+x
+ 
+30 
+1 pont  
+(30 : 2,5 = 12, tehát) 12 férfi és 18 nő vett részt a kép-
+zésen. 
+1 pont  
+Ellenőrzés a szöveg alapján: a csoport tagjai életkorá-
+nak összege 30 ∙ 28 = 840.  
+Az öt legidősebb személy nélkül ez az összeg 640,  
+és 640 : 25 = 25,6 valóban.  
+1 pont  
+Összesen: 
+7 pont  
+ 
+2. a) második megoldás 
+A férfiak száma legyen f, ekkor a nők száma 1,5f,  
+a képzésen résztvevők száma pedig 2,5f. 
+1 pont  
+A csoport tagjai életkorának összege 2,5f ∙ 28 = 70f. 
+1 pont  
+Az öt legidősebb résztvevő nélkül az életkorok  
+összege 70f – 5 ∙ 40 = 70f – 200. 
+1 pont  
+A feladat szövege szerint 70f – 200 = 25,6(2,5f – 5). 
+1 pont  
+70f – 200 = 64f – 128 
+f = 12 
+1 pont  
+A képzésen 12 férfi és 18 nő vett részt. 
+1 pont  
+Ellenőrzés a szöveg alapján: a csoport tagjai életkorá-
+nak összege 30 ∙ 28 = 840.  
+Az öt legidősebb személy nélkül ez az összeg 640,  
+és 640 : 25 = 25,6 valóban.  
+1 pont  
+Összesen: 
+7 pont  
+ 
+2. b) első megoldás 
+Háromféle fűszer választása esetén, ha sem édes, sem 
+keserű nincs közöttük, akkor a többi négyből kell 
+hármat kiválasztani: ez 4-féleképpen lehetséges; 
+1 pont  
+ha csak édes van, de keserű nincs, akkor a többi négy 
+fűszer közül kettőt kell még kiválasztani, ami  
+4
+2
+=
+
+
+6-féleképpen lehetséges. Ugyanennyi lehetőség 
+van akkor is, ha keserű van, de édes nincs. 
+2 pont  
+ 
+ 
+ 
+
+===== PAGE 6 =====
+Matematika — emelt szint 
+Javítási-értékelési útmutató 
+2013 írásbeli vizsga 
+6 / 20 
+2020. október 20. 
+ 
+Négyféle fűszer választása esetén, ha sem édes, sem 
+keserű nincs a fűszerek között, akkor csak egyféle 
+választás lehetséges; 
+1 pont  
+ha csak édes van, de keserű nincs, akkor a többi négy 
+fűszer közül hármat kell még kiválasztani, ami  
+4-féleképpen lehetséges. Ugyanennyi lehetőség van 
+akkor is, ha keserű van, de édes nincs. 
+1 pont  
+Az összes ízesítési lehetőség száma tehát 
+4 + 6 + 6 + 1 + 4 + 4 = 25. 
+1 pont  
+Összesen: 
+6 pont  
+ 
+2. b) második megoldás 
+Ha nincs sem édes, sem keserű a választott fűszerek 
+között, akkor (a többi négyből hármat vagy négyet 
+kell választani, ezért) a lehetséges választások száma 
+4
+4
+4 1
+5
+3
+4
+
+
++
+=
++ =
+
+
+
+
+. 
+2 pont  
+Ha van édes, de nincs keserű, akkor (a többi négy kö-
+zül kettőt vagy hármat kell választani, ezért)
+4
+4
+6
+4
+10
+2
+3
+
+
++
+=
++
+=
+
+
+
+
+ lehetőség van. 
+2 pont  
+Ugyanennyi lehetőség van akkor is, ha keserű van, de 
+édes nincs. 
+1 pont  
+Az összes ízesítési lehetőség száma tehát 
+5 + 10 + 10 = 25. 
+1 pont  
+Összesen: 
+6 pont  
+ 
+2. b) harmadik megoldás 
+Az összes, 3 vagy 4 fűszert tartalmazó lehetőségből 
+levonjuk azoknak az ízesítéseknek a számát, ame-
+lyekben édes és keserű is szerepel. 
+1 pont 
+Ez a pont akkor is jár, ha 
+ez a gondolat csak a meg-
+oldásból derül ki. 
+3 vagy 4 fűszert összesen 6
+6
+3
+4
+
+
++
+
+
+
+
+(= 35)  
+különböző módon lehet választani (összes eset). 
+2 pont  
+Olyan (3 vagy 4 fűszert tartalmazó) ízesítés, amely-
+ben édes és keserű is van, 4
+4
+1
+2
+
+
++
+
+
+
+
+(= 10) különböző 
+módon választható (kedvezőtlen esetek). 
+2 pont  
+A megfelelő ízesítési lehetőségek száma tehát 
+35 – 10 = 25. 
+1 pont  
+Összesen: 
+6 pont  
+Megjegyzés: Ha a vizsgázó rendezetten felsorolja az összes lehetőséget, és ez alapján helyes 
+választ ad, akkor teljes pontszámot kapjon. 
+ 
+ 
+
+===== PAGE 7 =====
+Matematika — emelt szint 
+Javítási-értékelési útmutató 
+2013 írásbeli vizsga 
+7 / 20 
+2020. október 20. 
+ 
+3. a) 
+Jelölje az érmék számát e. 
+Ekkor egyrészt e = 6 + m, másrészt e = (6 – m)m. 
+2 pont  
+6 + m = (6 – m)m 
+2
+0
+– 5
+6
+m
+m+
+=
+ 
+1 pont  
+Az egyenlet megoldása 
+1
+2
+m =
+ vagy
+2
+3
+m =
+, 
+1 pont  
+az érmék száma ekkor 
+1
+8
+e =
+ vagy 
+2
+9
+e =
+. 
+1 pont  
+Ellenőrzés a szöveg alapján. (Ha m = 2 és 8 érménk 
+van, akkor egyrészt kimarad 8 – 6 = 2 érme, 
+másrészt 6 – 4 = 2 dobozba nem jut érme; 
+ha pedig m = 3 és 9 érménk van, akkor kimarad 
+3 érme, és 6 – 3 = 3 dobozba nem jut érme valóban.) 
+1 pont  
+Összesen: 
+6 pont  
+ 
+3. b) 
+Egy véletlenszerűen választott érme 0,03 valószínű-
+séggel hibás, 0,97 valószínűséggel hibátlan. 
+1 pont 
+Ez a pont akkor is jár, ha 
+ez a gondolat csak a meg-
+oldásból derül ki. 
+(A valószínűségeket az n = 80, p = 0,03 paraméterű 
+binomiális eloszlás segítségével számítjuk ki.)  
+P(0 hibás) =
+80
+0,97 ≈ 0,087 
+1 pont  
+P(1 hibás) =
+79
+80
+0,03 0,97
+1
+
+⋅
+⋅
+
+
+
+
+≈ 0,216 
+1 pont  
+P(2 hibás) =
+2
+78
+80
+0,03
+0,97
+2
+
+⋅
+⋅
+
+
+
+
+≈ 0,264 
+1 pont  
+Annak a valószínűsége, hogy legfeljebb 2 hibás van 
+≈ 0,087 + 0,216 + 0,264 = 0,567. 
+1 pont  
+Összesen: 
+5 pont  
+ 
+4. a) 
+(Az első asztalra érkezés után 0,84 m magasra pattan 
+vissza a pingponglabda, majd az asztal felé esve 
+ugyanekkora távolságot tesz meg a második leérke-
+zésig.) Az első és a második asztalra érkezés között 
+megtett út 2 ∙ 0,84 = 1,68 méter. 
+1 pont  
+Az egymás után következő két asztalra érkezés kö-
+zött megtett távolságok hossza egy olyan mértani so-
+rozatot alkot, amelynek első tagja 1,68 méter, hánya-
+dosa pedig 0,84. 
+1 pont 
+Ez a pont akkor is jár, ha 
+ez a gondolat csak a meg-
+oldásból derül ki. 
+Az első és a 15. asztalra érkezés között megtett út 
+hossza a mértani sorozat első 14 tagjának összege: 
+14
+14
+1,68 (0,84
+1)
+0,84 1
+S
+⋅
+−
+=
+−
+≈ 9,59 méter. 
+2 pont  
+Összesen: 
+4 pont  
+
+===== PAGE 8 =====
+Matematika — emelt szint 
+Javítási-értékelési útmutató 
+2013 írásbeli vizsga 
+8 / 20 
+2020. október 20. 
+ 
+4. b) 
+Az első esetben a labdák száma 3-mal osztva 2-t,  
+a második esetben pedig 1-et ad maradékul. 
+2 pont 
+6k + 2 = 15m + 1 
+(k, m ∈ N) 
+3(2k – 5m) = –1 
+Ez azonban lehetetlen. 
+(András állítása tehát valóban hamis.) 
+1 pont 
+A bal oldal osztható 
+3-mal, a jobb oldal nem, 
+ami lehetetlen. 
+Összesen: 
+3 pont  
+ 
+4. c) 
+ 
+Az ábra köreinek érintkezése miatt az alapterület fel-
+bontható egy 40 mm oldalú szabályos háromszögre 
+(ennek csúcsai a körök középpontjai), három egybe-
+vágó téglalapra, továbbá három egybevágó 120°-os 
+középponti szögű körcikkre (amelyek együtt egy tel-
+jes kört alkotnak).  
+2 pont 
+Ez a 2 pont akkor is jár, 
+ha ezek a gondolatok 
+csak a megoldásból de-
+rülnek ki. 
+Az alapterület tehát  
+402
+ ⋅ 
+3
+4 + 3 ⋅ 20 ⋅ 40 + 202
+ ⋅ π  ≈ 4349 mm2. 
+2 pont* 42
+ ⋅ 
+3
+4 + 3 ⋅ 2 ⋅ 4 + 22
+ ⋅ π  ≈ 
+≈ 43,5 cm2 
+A doboz térfogata 4349 ∙ 40 = 173 960 mm3. 
+1 pont* 43,5 ∙ 4 = 174 cm3 
+A három labda térfogata 4 ∙ 203
+ ∙ π ≈ 100 531 mm3. 
+1 pont* 4 ∙ 23
+ ∙ π ≈ 101 cm3 
+Ez a doboz térfogatának kb. 58%-a. 
+1 pont*  
+Összesen: 
+7 pont  
+ 
+Megjegyzés: A *-gal jelölt pontok az alábbi gondolatmenetért is járnak. 
+Ha a labdák sugara r, akkor a doboz alapterülete  
+2
+2
+2
+3
+(2 )
+3
+2
+( 3
+6
+)
+4
+r
+r
+r
+r
+r
+⋅
++ ⋅⋅
++
+π =
+⋅
++
++ π . 
+2 pont  
+A doboz térfogata 
+3
+2
+( 3
+6
+)
+r ⋅
++
++ π . 
+1 pont  
+A három labda térfogata 
+3 4
+r ⋅π. 
+1 pont  
+Ez a doboz térfogatának 
+3
+3
+4
+2
+2
+( 3
+6
+)
+3
+6
+r
+r
+⋅π
+π
+=
+⋅
++ + π
++ + π
+ ≈ 0,578 része,  
+azaz kb. 58%-a. 
+1 pont  
+ 
+ 
+ 
+
+===== PAGE 9 =====
+Matematika — emelt szint 
+Javítási-értékelési útmutató 
+2013 írásbeli vizsga 
+9 / 20 
+2020. október 20. 
+ 
+II. 
+ 
+5. a) 
+(Az f (x) = g(x) egyenlet megoldásával megkeressük 
+a két függvénygrafikon metszéspontjait.) 
+(x + 4)(2 – x) = x + 4 
+2
+0
+3
+4
+x
+x
+=
++
+−
+ 
+2 pont 
+ 
+Innen x = –4 és x = 1. 
+1 pont 
+A kérdezett területet (a két metszéspont között) az 
+1
+4
+((
+4)(2
+)
+(
+4))
+x
+x
+x
+dx
+−
++
+−
+−
++
+
+ értéke adja meg. 
+1 pont 
+1
+2
+4
+(
+2
+8)
+x
+x
+dx
+−
+−
+−
++
+−
+
+ 
+1
+4
+(
+4)
+x
+dx
+−
+−
++
+
+ 
+1
+1
+3
+2
+2
+4
+4
+3
+(
+3
+4)
+4
+3
+2
+1
+3
+64
+4
+24 16
+3
+2
+3
+x
+x
+x
+x
+dx
+x
+−
+−
+
+
+−
+−
++
+=
+−
+−
++
+=
+
+
+
+
+−
+
+
+
+=
+−
+−
++
+−−
+−
+−
+=
+
+
+
+
+
+
+
+ 
+2 pont Az integrálok kiszámított 
+értékével: 
+100
+125
+12,5
+3
+6
+−
+=
+. 
+13
+56
+125
+6
+3
+6
+
+
+=
+−−
+=
+
+
+
+
+ 
+1 pont 
+Összesen: 
+7 pont  
+ 
+5. b) 
+f zérushelyei –4 és 2,  
+g zérushelye –4, 
+1 pont  
+h zérushelyei –2 és 2, 
+1 pont  
+i zérushelyei –4 és 4. 
+1 pont  
+ 
+1 pont  
+Összesen: 
+4 pont  
+ 
+ 
+ 
+
+===== PAGE 10 =====
+Matematika — emelt szint 
+Javítási-értékelési útmutató 
+2013 írásbeli vizsga 
+10 / 20 
+2020. október 20. 
+ 
+5. c) első megoldás 
+(A p-nek egyetlen zérushelye lehet.)  
+Fagráfban nincs izolált pont, ezért p zérushelye csak 
+a k, m és n zérushelyeinek valamelyike lehet:  
+3, –3, 5 vagy –5. 
+1 pont 
+Ez a pont akkor is jár, ha 
+ez a gondolat csak a meg-
+oldásból derül ki. 
+Ha a p zérushelye a 3 vagy a –5 lenne, akkor a gráf-
+ban létrejönne a k-p-m vagy a k-p-n kör.  
+Ez tehát nem lehetséges. 
+1 pont 
+ 
+A –3 lehet a p zérushelye (ekkor c = 3).  
+1 pont 
+ 
+Az 5 lehet a p zérushelye (ekkor c = –5). 
+1 pont 
+ 
+Tehát a c konstans értéke kétféleképpen választható 
+meg. 
+1 pont p(x) = x + 3  
+vagy p(x) = x – 5 
+Összesen: 
+5 pont  
+ 
+5. c) második megoldás 
+Ha a p zérushelye a 3 vagy a –5 lenne, akkor a gráf-
+ban létrejönne a k-p-m vagy a k-p-n kör.  
+Ez tehát nem lehetséges. 
+1 pont 
+Ha a p zérushelye nem a 3 és nem a –5, akkor a p-m, 
+illetve a p-n élek közül csak az egyik létezhet (mert 
+p-nek csak egy zérushelye van, de m-nek és n-nek 
+nincs közös zérushelye); az összefüggőség miatt az 
+egyiknek léteznie is kell. 
+2 pont  
+A p zérushelye lehet a –3, és lehet 5 is, tehát kétféle-
+képpen választható meg a konstans értéke  
+(p(x) = x + 3 vagy p(x) = x – 5). 
+2 pont 
+ 
+Összesen: 
+5 pont  
+Megjegyzés: Ha a vizsgázó helyesen adja meg a c konstans lehetséges értékeit és a hozzá tar-
+tozó gráfokat, és ez alapján helyes választ ad, akkor ezért 4 pontot kapjon. A további 1 pontot 
+akkor kaphatja meg, ha azt is megindokolja, hogy több megoldás nem lehetséges. 
+ 
+ 
+
+===== PAGE 11 =====
+Matematika — emelt szint 
+Javítási-értékelési útmutató 
+2013 írásbeli vizsga 
+11 / 20 
+2020. október 20. 
+ 
+6. a)  
+(A t = 5 helyettesítést alkalmazzuk.)
+6
+6
+5
+1,5 10
+(5)
+1,5 10
+1
+1
+0,75
+1000
+B
+⋅
+=
+⋅
+
+
++
+−
+⋅
+
+
+
+
+ ≈  
+1 pont 
+(
+)
+5
+1500000
+1
+1500 1 0,75
++
+−
+⋅
+ 
+≈ 4204,98, 
+1 pont  
+azaz kb. 4200 betegre lehet számítani. 
+1 pont  
+Összesen: 
+3 pont  
+ 
+6. b)  
+A lakosság 10%-a 150 ezer fő. 
+1 pont  
+Jelölje t a kérdezett napok számát. 
+6
+5
+6
+1,5 10
+1,5 10
+1,5 10
+1
+1
+0,75
+1000
+t
+⋅
+=
+⋅
+⋅
+
+
++
+−
+⋅
+
+
+
+
+ 
+1 pont 
+(
+)
+1500000
+1
+1500 1 0,75t =
++
+−
+⋅
+ 
+= 150 000 
+10
+1 1499 0,75t
+= +
+⋅
+ 
+9
+0,75
+1499
+t
+=
+ 
+1 pont  
+0,75
+9
+log
+1499
+t =
+ ≈ 
+1 pont 
+9
+lg 1499
+lg0,75
+t
+
+
+
+
+
+
+=
+ ≈ 
+≈ 17,78. 
+1 pont  
+Azaz kb. 18 nap múlva lesz a város lakosainak  
+10%-a fertőzött (18 < 30). 
+1 pont  
+Összesen: 
+6 pont  
+ 
+ 
+ 
+
+===== PAGE 12 =====
+Matematika — emelt szint 
+Javítási-értékelési útmutató 
+2013 írásbeli vizsga 
+12 / 20 
+2020. október 20. 
+ 
+6. c)  
+(Mindenhol felhasználjuk, hogy a feladat szövege 
+szerint L, K, n pozitív számok.) 
+A {bn} sorozat alulról korlátos, mert minden tagja 
+pozitív (egy alsó korlát például a 0). 
+1 pont  
+A {bn} sorozat felülről is korlátos,  
+mert 1
+0,75n
+L
+L
+K
+<
++
+⋅
+ (minden n ∈ N+ esetén), 
+hiszen a tört nevezője 1-nél nagyobb. 
+(A {bn} sorozat tehát korlátos.) 
+2 pont  
+A {0,75n} (mértani) sorozat szigorúan monoton  
+csökkenő, ezért az {
+}
+1
+0,75n
+K
++
+⋅
+ sorozat is az. 
+1 pont*  
+Ebből következik, hogy az 1
+0,75n
+L
+K
+
+
+
+
++
+⋅
+
+
+ sorozat 
+szigorúan monoton növekvő.  
+(A {bn} tehát konvergens.)  
+1 pont*  
+Mivel lim0,75
+0
+n
+n→∞
+=
+, 
+1 pont  
+így lim1
+0,75
+1
+0
+n
+n
+L
+L
+L
+K
+K
+→∞
+=
+=
++
+⋅
++
+⋅
+. 
+1 pont  
+Összesen: 
+7 pont  
+ 
+Megjegyzések:  
+1. A *-gal jelzett pontok az alábbi gondolatmenetért is járnak. 
+(Minden n ∈ N+ esetén)
+1
+1
+1
+0,75
+1
+0 7
+–
+–
+, 5
+n
+n
+n
+n
+L
+L
+b
+K
+K
+b
++
++
+= +
+⋅
++
+⋅
+ 
+1 pont  
+Ez pozitív, mert az első tört nevezője kisebb (így az 
+első tört nagyobb a másodiknál). 
+Tehát a sorozat szigorúan monoton növekedő. 
+1 pont  
+ 
+2. A *-gal jelzett pontok az alábbi gondolatmenetért is járnak.  
+(Minden n ∈ N+ esetén) 
+1
+1
+1
+1
+0,75
+1
+0,75
+1
+0,75
+1
+0,75
+n
+n
+n
+n
+n
+n
+b
+L
+K
+K
+b
+K
+L
+K
++
++
++
++
+⋅
++
+⋅
+=
+⋅
+=
++
+⋅
++
+⋅
+ 
+ 
+1 pont  
+Ez a tört 1-nél nagyobb (mert a tört nevezője kisebb a 
+számlálójánál), tehát a sorozat szigorúan monoton 
+növekedő. 
+1 pont  
+ 
+ 
+ 
+
+===== PAGE 13 =====
+Matematika — emelt szint 
+Javítási-értékelési útmutató 
+2013 írásbeli vizsga 
+13 / 20 
+2020. október 20. 
+ 
+7. a)  
+A tető alapterülete 7 ⋅ 4 = 28 m2. 
+1 pont  
+A tetőre hullott csapadék térfogata 28 ⋅ 0,015 =  
+= 0,42 m3, 
+1 pont  
+a hordókban összegyűlt víz térfogata 0,42 ⋅ 0,95 = 
+= 0,399 m3, egy-egy hordóba tehát (jó közelítéssel)  
+V = 0,1 m3 esővíz került. 
+1 pont  
+Egy hordó alapterülete 
+2
+2
+0,2
+T
+r
+=
+π =
+⋅π ≈ 0,126 m2. 
+1 pont  
+A V térfogatú esővíz 
+0,1
+0,126
+V
+T =
+ ≈ 0,79 m, 
+azaz 79 cm magasságig tölti meg az egyes hordókat 
+(és ez valóban kisebb, mint a hordó magassága).  
+1 pont  
+Összesen: 
+5 pont  
+ 
+7. b)  
+A tető A csúcsán áthaladó, az alapsíkjára merőleges, 
+és a tető rövidebb oldalával párhuzamos síkmetszet a 
+padlást olyan ABC egyenlő szárú háromszögben met-
+szi, melynek BC alapja 4 méter hosszú, alapon fekvő 
+szögei pedig 30 fokosak.  
+ 
+2 pont  
+A háromszög szárainak hossza  
+°
+=
+=
+30
+cos
+2
+AC
+AB
+ = 
+3
+4 ≈ 2,31 (m),  
+ezek egyúttal a tetőt alkotó két trapéz magasságai. 
+1 pont  
+A trapézok területe így  
+1
+(7
+3)
+4
+20
+2
+3
+3
+T
++
+=
+⋅
+=
+ ≈ 11,55 (m2).  
+1 pont  
+A trapézok szárai a tetőt alkotó két egyenlő szárú há-
+romszögnek is szárai.  
+Az ábra szerinti AD szár az ABD derékszögű három-
+szögből határozható meg. 
+ 
+BD = 
+2
+3
+7 −
+ = 2 (m), így a Pitagorasz-tétellel:
+2
+2
+3
+4
+2
+
+
+
+
+
+
++
+=
+AD
+ = 
+3
+28 ≈ 3,06 (m). 
+2 pont  
+
+===== PAGE 14 =====
+Matematika — emelt szint 
+Javítási-értékelési útmutató 
+2013 írásbeli vizsga 
+14 / 20 
+2020. október 20. 
+ 
+ 
+A háztetőt alkotó egyenlőszárú háromszög AE ma-
+gassága (szintén a Pitagorasz-tétellel): 
+2
+28
+4
+2
+3
+3
+AE =
+−
+=
+≈ 2,31 (m), 
+1 pont  
+így a háromszög területe  
+2
+4
+4
+8
+2
+3
+3
+T =
+⋅
+=
+≈ 4,62 (m2). 
+1 pont  
+A tető teljes felülete 2(T1 + T2) 
+56
+3
+=
+ 
+≈ 32,33 m2. 
+1 pont  
+Ekkora felület fedésére 32,33 ⋅ 30 ≈ 970 cserépre lesz 
+szükség, 
+1 pont  
+a hulladékot is figyelembe véve pedig  
+970
+0,92 ≈ 1055 darab cserepet kell vásárolni. 
+1 pont  
+Összesen: 11 pont  
+ 
+8. a)  
+A háromjegyű számok száma 900,  
+1 pont*  
+ezek között 8 ∙ 9 ∙ 9 = 648 olyan van, amelyben nincs 
+1-es. 
+1 pont*  
+Az A halmaz elemeinek száma tehát 
+9 ∙ 10 ∙ 10 – 8 ∙ 9 ∙ 9 = 252. 
+1 pont*  
+Azokat a háromjegyű számokat kell az A halmazból 
+elhagynunk, amelyekben a 2-es és a 3-as számjegy is 
+szerepel (vagyis amelyek az 1, 2, 3 számjegyekből 
+állnak). Ilyen háromjegyű számból 6 darab van. 
+1 pont  
+Az A \ (B ∩ C) halmaz elemszáma 252 – 6 = 246. 
+1 pont  
+Összesen: 
+5 pont  
+ 
+Megjegyzés: A *-gal jelölt pontokat az alábbi gondolatmenetért is megkaphatja a vizsgázó. 
+Az A halmaz elemei között 1 db olyan van, amelyben 
+három 1-es szerepel, 
+és 26 db olyan, amelyben két 1-es van  
+(százas helyiértéken nem 1-es van: 8 db, százas he-
+lyiértéken 1-es van: 2 ∙ 9 = 18 db). 
+1 pont  
+Az A-nak 225 db olyan eleme van, amelyben egy db 
+1-es van  
+(százas helyiértéken nincs 1-es: 8 ∙ 2 ∙ 9 = 144 db,  
+százas helyiértéken van az 1-es: 9 ∙ 9 = 81 db).  
+1 pont  
+Az A elemeinek száma tehát 1 + 26 + 225 = 252. 
+1 pont  
+
+===== PAGE 15 =====
+Matematika — emelt szint 
+Javítási-értékelési útmutató 
+2013 írásbeli vizsga 
+15 / 20 
+2020. október 20. 
+ 
+8. b) első megoldás 
+Az 1-es és 3-as dobás kétféleképpen is előfordulhat 
+(az első és a második dobókockán is lehet 1-es), en-
+nek valószínűsége így 
+1 3
+2 6 6
+⋅
+⋅
+. 
+2 pont  
+Két 2-es dobásának valószínűsége 
+6
+2
+6
+2 ⋅
+. 
+1 pont  
+Így 
+6
+2
+6
+2
+6
+3
+6
+1
+2
+⋅
++
+⋅
+⋅
+ =  
+1 pont  
+= 
+36
+10
+
+
+
+
+
+= 18
+5
+ annak a valószínűsége, hogy a dobott 
+számok összege 4 lesz. 
+1 pont 
+5
+18 ≈ 0,278 
+Összesen: 
+5 pont  
+ 
+8. b) második megoldás 
+Az összes eset száma 6 ⋅ 6 = 36. 
+1 pont  
+Az első kockán 1-es és a másodikon 3-as 
+1 ⋅ 3 = 3-féleképpen fordulhat elő, 
+ugyanennyi lehetőség van arra, hogy az első kockán 
+3-as és a másodikon 1-es legyen.  
+2 pont  
+Két 2-es dobás 2 ⋅ 2 = 4-féleképpen fordulhat elő. 
+1 pont  
+A keresett valószínűség 2 3
+4
+36
+⋅+
+ = 
+36
+10
+
+
+
+
+
+= 18
+5
+. 
+1 pont  
+Összesen: 
+5 pont  
+Megjegyzés:  
+Ha a vizsgázó az alábbi (vagy ehhez hasonló) táblázattal szemlélteti 
+a kedvező esetek és az összes eset számát, és ez alapján helyes választ 
+ad, akkor teljes pontszámot kapjon. 
+ 
+ 
+ 
+ 
+ 
+8. c)  
+Andi 
+6
+3 valószínűséggel veszít n forintot; 
+1
+6 valószínűséggel nyer (n – 80) forintot; 
+2
+6 valószínűséggel nyer 2n – 160 forintot. 
+1 pont 
+Ez a pont akkor is jár, ha 
+ez a gondolat csak a meg-
+oldásból derül ki. 
+ 
+1 
+2 
+2 
+3 
+3 
+3 
+1 
+ 
+ 
+ 
+ 
+ 
+ 
+2 
+ 
+ 
+ 
+ 
+ 
+ 
+2 
+ 
+ 
+ 
+ 
+ 
+ 
+3 
+ 
+ 
+ 
+ 
+ 
+ 
+3 
+ 
+ 
+ 
+ 
+ 
+ 
+3 
+ 
+ 
+ 
+ 
+ 
+ 
+
+===== PAGE 16 =====
+Matematika — emelt szint 
+Javítási-értékelési útmutató 
+2013 írásbeli vizsga 
+16 / 20 
+2020. október 20. 
+ 
+Andi nyereményének (egyúttal Béla veszteségének) 
+várható értéke: 
+3
+1
+2
+(
+80)
+(2
+160)
+6
+6
+6
+n
+n
+n
+−
++
+−
++
+−
+. 
+2 pont  
+A játék igazságos (mindkét játékos számára), ha  
+3
+1
+2
+(
+80)
+(2
+160)
+0
+6
+6
+6
+n
+n
+n
+−
++
+−
++
+−
+=
+,  
+1 pont  
+innen n = 200 (Ft). 
+1 pont  
+1-es dobás esetén tehát 200 – 80 = 120 forintot fizet 
+Béla Andinak.  
+1 pont  
+Összesen: 
+6 pont  
+ 
+9. a) első megoldás 
+A háromszög egyik oldaláról kettő, a másik két olda-
+láról egy-egy pontot kell kiválasztani. 
+1 pont 
+Ez a pont akkor is jár, ha 
+ez a gondolat csak a meg-
+oldásból derül ki. 
+3-féleképpen választhatjuk ki azt az oldalt, amelyik-
+ről két pontot választunk. 
+1 pont  
+Az ezen az oldalon kijelölt három pont közül 3-féle-
+képpen választhatunk ki kettőt. 
+1 pont  
+A másik két oldal mindegyikéről 3-féleképpen vá-
+laszthatjuk ki a négyszög harmadik, illetve negyedik 
+csúcsát. 
+1 pont  
+Összesen tehát 3 ⋅ 3 ⋅ 3 ⋅ 3 = 81, a feltételeknek megfe-
+lelő négyszög van. 
+1 pont  
+Összesen: 
+5 pont  
+ 
+9. a) második megoldás 
+Összesen 9
+4
+
+
+
+(= 126) lehetőség van a 4 pont kivá-
+lasztására. 
+1 pont  
+Kedvezőtlen eset, ha egy oldalról 3 pontot válasz-
+tunk, egy másik oldalról pedig egyet:  
+ez 3 ∙ 2 ∙ 3 = 18 eset (mert 3 ∙ 2-féleképpen választható 
+ki a két oldal, a második kiválasztott oldalról pedig 
+3-féleképpen választható ki egy pont).  
+Kedvezőtlen az is, ha két oldalról 2-2 pontot válasz-
+tunk: ez 3 3 3
+27
+⋅⋅=
+eset (mert 3-féleképpen választ-
+ható ki a két oldal, egy-egy oldalról pedig 3-3-féle-
+képpen választható ki két pont). 
+3 pont  
+A kedvező esetek száma tehát 126 – 18 – 27 = 81. 
+1 pont  
+Összesen: 
+5 pont  
+ 
+ 
+ 
+
+===== PAGE 17 =====
+Matematika — emelt szint 
+Javítási-értékelési útmutató 
+2013 írásbeli vizsga 
+17 / 20 
+2020. október 20. 
+ 
+9. b) első megoldás 
+ 
+A (harmadrendű) forgásszimmet-
+ria miatt az ARZ, BPX és CQY 
+háromszögek egybevágók, és az 
+XYZ háromszög szabályos. 
+1 pont 
+Ez a pont akkor is jár, ha 
+ez a gondolat csak a meg-
+oldásból derül ki. 
+Az XYZ háromszög területéhez elegendő például a 
+ZX szakasz hosszát kiszámítani:  
+ZX = AP – AZ – XP = AP – AZ – ZR 
+(az ARZ és BPX háromszögek egybevágósága miatt 
+ugyanis XP = ZR). 
+1 pont  
+Használjuk az ábra jelöléseit! 
+ 
+Az ABP háromszögben koszinusztétellel: 
+2
+2
+2
+1
+4
+2 1 4 cos60
+13
+AP =
++
+−⋅⋅⋅
+° =
+, 
+13
+AP =
+(≈ 3,606). 
+2 pont  
+Koszinusztétellel (α = BAP∠): 
+2
+2
+2
+cos
+2
+AP
+AB
+BP
+AP AB
++
+−
+α =
+⋅
+⋅
+, 
+13 16 1
+cos
+2
+13 4
++
+−
+α =
+⋅
+⋅
+(≈ 0,9707), 
+α ≈ 13,9°. 
+2 pont 
+Szinusztétellel:  
+sin
+1
+sin60
+13
+α =
+°
+, 
+3
+sin
+2 13
+α =
+(≈ 0,2402), 
+α ≈ 13,9° (α hegyesszög). 
+Az ARZ háromszögben  
+AR = 1, AZR∠ = 60°, ARZ∠ = 120° – α ≈ 106,1°.  
+1 pont  
+Szinusztétellel: 
+sin(120
+)
+1
+sin60
+AZ
+° −α
+=
+°
+≈ 1,1094,  
+vagyis AZ ≈ 1,109; 
+1 pont  
+sin
+1
+sin60
+ZR
+α
+=
+° ≈ 0,2774,  
+vagyis ZR ≈ 0,277. 
+1 pont  
+ZX = AP – AZ – ZR (≈ 3,606 – 1,109 – 0,277) = 2,220 
+1 pont  
+Az XYZ szabályos háromszög területe: 
+2
+3
+4
+ZX
+⋅
+≈ 2,13.  
+1 pont  
+Összesen: 11 pont  
+ 
+ 
+ 
+
+===== PAGE 18 =====
+Matematika — emelt szint 
+Javítási-értékelési útmutató 
+2013 írásbeli vizsga 
+18 / 20 
+2020. október 20. 
+ 
+9. b) második megoldás 
+ 
+A (harmadrendű) forgásszimmet-
+ria miatt az ABX, BCY és CAZ 
+háromszögek egybevágók, és az 
+XYZ háromszög szabályos. 
+1 pont 
+Ez a pont akkor is jár, ha 
+ez a gondolat csak a meg-
+oldásból derül ki. 
+ 
+(Kiszámítjuk az ABX háromszög 
+területét.) 
+ 
+Az ABP háromszögben AB = 4, 
+PB = 1, PBA∠ = 60°. 
+Koszinusztétellel:
+2
+2
+2
+1
+4
+2 1 4 cos60
+13
+AP =
++
+−⋅⋅⋅
+° =
+, 
+13
+AP =
+(≈ 3,606). 
+2 pont  
+Az ABP háromszögben α = BAP∠. 
+Szinusztétellel: sin
+1
+sin60
+13
+α =
+°
+, 
+1 pont  
+3
+sin
+2 13
+α =
+(≈ 0,2402), 
+α ≈ 13,9° (α hegyesszög). 
+1 pont  
+A forgásszimmetria miatt CBQ∠ = α, 
+így ABX∠ = 60º – α (≈ 46,1º). 
+1 pont  
+Az AXB háromszögben szinusztétellel: 
+4
+sin(60
+)
+sin120
+AX
+=
+°−α
+° , 
+innen AX ≈ 3,328. 
+1 pont  
+Az ABX háromszög területe 
+sin
+2
+AB AX
+t
+⋅
+⋅
+α
+=
+≈ 
+≈4 3,328 sin13,9
+2
+⋅
+⋅
+° ≈ 1,599. 
+2 pont 
+ABP
+AX
+t
+T
+AP
+=
+⋅
+= 
+3
+4
+ABC
+T
+AX
+AX
+AP
+AP
+=
+⋅
+=
+⋅
+≈ 
+≈ 1,599 
+Az XYZ háromszög területe TXYZ = TABC – 3t ≈  
+1 pont  
+≈ 
+2 –3 1,599
+3 4
+4
+⋅
+⋅
+ ≈ 2,13. 
+1 pont  
+Összesen: 11 pont  
+ 
+ 
+ 
+
+===== PAGE 19 =====
+Matematika — emelt szint 
+Javítási-értékelési útmutató 
+2013 írásbeli vizsga 
+19 / 20 
+2020. október 20. 
+ 
+9. b) harmadik megoldás 
+ 
+A (harmadrendű) forgásszim-
+metria miatt az ARZ, BPX és 
+CQY háromszögek egybevágók, 
+és az XYZ háromszög szabályos. 
+ 
+1 pont 
+Ez a pont akkor is jár, ha 
+ez a gondolat csak a meg-
+oldásból derül ki. 
+Az XYZ háromszög területéhez elegendő például a 
+ZX szakasz hosszát kiszámítani:  
+ZX = AP – AZ – XP = AP – XB – XP 
+(az ARZ és BPX háromszögek egybevágósága miatt 
+ugyanis AZ = XB). 
+1 pont  
+Az ABP háromszög P-ből induló PV magassága a 
+PVB derékszögű háromszögből (amely egy 1 egység 
+oldalú szabályos háromszög fele): 
+3
+2
+PV =
+. 
+ 
+1 pont PV = sin 60°
+3
+2
+=
+ 
+Ugyancsak a PVB derékszögű háromszögből  
+1
+2
+VB =
+, így 
+1
+7
+4
+2
+2
+AV =
+−
+=
+. 
+1 pont VB = cos 60°
+1
+2
+=
+ 
+AVP derékszögű háromszögből Pitagorasz-tétellel: 
+2
+2
+52
+13
+4
+AP
+PV
+AV
+=
++
+=
+=
+. 
+1 pont  
+Az ABP és a BXP háromszög hasonló, mert közös a 
+P-nél fekvő szögük, továbbá PBA∠ = PXB∠ = 60°. 
+ 
+1 pont  
+A megfelelő oldalak aránya egyenlő:  
+XP
+PB
+PB
+PA
+=
+, amiből 
+1
+13
+13
+13
+XP =
+=
+,  
+2 pont  
+illetve 
+4
+XB
+XP
+= ⋅
+, azaz 
+4 13
+13
+XB =
+. 
+1 pont  
+ZX (= AP – XB – XP) =
+4 13
+13
+8 13
+13
+13
+13
+13
+−
+−
+=
+ 
+1 pont  
+Az XYZ szabályos háromszög területe: 
+2
+3
+16 3
+4
+13
+ZX
+⋅
+=
+ (≈ 2,13). 
+1 pont  
+Összesen: 11 pont  
+Megjegyzés: AZ : ZX : XP = 4 : 8 : 1.  
+
+===== PAGE 20 =====
+Matematika — emelt szint 
+Javítási-értékelési útmutató 
+2013 írásbeli vizsga 
+20 / 20 
+2020. október 20. 
+ 
+9. b) negyedik megoldás 
+ 
+Legyen α = BAP∠.  
+ABC∠ = 60º miatt  
+BPA∠ = 120º – α. 
+1 pont  
+Az ABP háromszögben szinusztétellel: 
+sin
+1
+sin(120
+)
+4
+α
+=
+°−α
+. 
+1 pont  
+4sin
+sin(120
+)
+α =
+°−α 
+4sin
+sin120
+cos
+cos120 sin
+α =
+°⋅
+α −
+°⋅
+α 
+3
+1
+4sin
+cos
+sin
+2
+2
+α =
+α +
+α 
+1 pont  
+7
+3
+sin
+cos
+2
+2
+α =
+α 
+3
+tg
+7
+α =
+(≈ 0,2474) 
+1 pont  
+α ≈ 13,9º 
+1 pont  
+A forgásszimmetria miatt QBC∠ = α,  
+így ABX∠ = 60º – α ≈ 46,1º. 
+1 pont  
+Az ABX háromszögben (AXB∠ = 120º miatt)  
+szinusztétellel: sin
+sin120
+4
+α
+=
+°
+BX , 
+1 pont  
+valamint sin(60
+)
+sin120
+4
+°−α =
+°
+AX . 
+1 pont  
+Innen BX ≈ 1,109 és AX ≈ 3,328. 
+1 pont  
+A forgásszimmetria miatt AZ = BX, így  
+ZX = AX – AZ = AX – BX ≈ 2,219. 
+1 pont  
+A forgásszimmetria miatt az XYZ háromszög  
+szabályos, területe tehát 
+2
+3
+4
+XZ
+⋅
+≈ 2,13. 
+1 pont  
+Összesen: 11 pont  
+ 
