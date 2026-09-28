@@ -32,6 +32,7 @@ export function getErettsegi2024OktKozepQuestions(): Question[] {
     const tri = imageFigure(`${FIG}/p05-1.jpeg`, '2024/7. derékszögű háromszög');
     const para = imageFigure(`${FIG}/p16-1.png`, '2024/15. ABCD paralelogramma');
     const ball = imageFigure(`${FIG}/p20-1.jpeg`, '2024/17. labdaméretek');
+    const points = imageFigure(`${FIG}/t17-points.png`, '2024/17. pontszámok gyakorisága');
     const storm = imageFigure(`${FIG}/p22-1.jpeg`, '2024/18. Balaton / Badacsony');
 
     const list: Question[] = [
@@ -58,7 +59,7 @@ export function getErettsegi2024OktKozepQuestions(): Question[] {
         ),
         q(
             'er24o-3',
-            '2024/3. 30 vevő: 22 fehér, 17 rozskenyeret vett, mindenki legalább az egyiket. Hányan vettek mindkettőt?',
+            '2024/3. Egy pékségben fehér kenyeret és rozskenyeret is árusítanak. Egyik reggel az első 30 vevő közül 22-en fehér kenyeret, 17-en pedig rozskenyeret vásároltak. Hányan vásároltak mindkét fajta kenyérből, ha mind a 30 vevő vett a két fajta kenyér valamelyikéből?',
             9,
             '22 + 17 − 30 = 9'
         ),
@@ -70,7 +71,7 @@ export function getErettsegi2024OktKozepQuestions(): Question[] {
         ),
         q(
             'er24o-5',
-            '2024/5. Válaszd ki a valósokon értelmezett f függvény grafikonját az A–D ábrák közül.\nA=1, B=2, C=3, D=4.',
+            '2024/5. Válassza ki az alábbi ábrák közül a valós számok halmazán értelmezett f(x) = (1/2)x − 3 függvény grafikonját!\nBetű száma: A=1 … D=4.',
             4,
             'D — javítási útmutató',
             { figures: graphs }
@@ -102,7 +103,7 @@ export function getErettsegi2024OktKozepQuestions(): Question[] {
         ),
         q(
             'er24o-10',
-            '2024/10. Anna jegyei: két 5-ös, négy 4-es, két 3-as. Szórás (három tizedesre, ≈0,707).',
+            '2024/10. Annának két 5-öse, négy 4-ese és két 3-asa van biológiából. Adja meg Anna biológiajegyeinek szórását!',
             0.707,
             'szórás ≈ 0,707'
         ),
@@ -115,7 +116,7 @@ export function getErettsegi2024OktKozepQuestions(): Question[] {
         ),
         q(
             'er24o-12',
-            '2024/12. Két kocka. P(az összeg négyzetszám)? (7/36 ≈ 0,194)',
+            '2024/12. Két szabályos dobókockával egyszer dobunk. Mennyi annak a valószínűsége, hogy a dobott számok összege négyzetszám lesz? Megoldását részletezze!',
             7 / 36,
             '7/36 ≈ 0,194'
         ),
@@ -133,7 +134,7 @@ export function getErettsegi2024OktKozepQuestions(): Question[] {
         ),
         q(
             'er24o-13c',
-            '2024/13.c) A képlet szerint hányadik órában éri el a 600 ezret?',
+            '2024/13.c) A baktériumok számát a b(p) = 6 · 1,015^p képlet közelíti. p a mérés kezdetétől eltelt idő percben, b(p) a baktériumok száma ezer darabban. A képlet szerint hányadik órában éri el a 600 ezret?',
             6,
             'p ≈ 309 perc → 6. óra'
         ),
@@ -200,84 +201,80 @@ export function getErettsegi2024OktKozepQuestions(): Question[] {
         ),
         q(
             'er24o-16b',
-            '2024/16.b) 5 uncia cukor, 1 kg ≈ 35,3 uncia. Hány gramm (tíz grammra kerekítve)?',
+            '2024/16.b) Emese egy angol nyelvű szakácskönyvből nézett ki egy receptet, amelyben a tömegek mérésére az uncia mértékegységet használják. A recept alapján 5 uncia cukrot kell kimérni. Tudjuk, hogy 1 kilogramm körülbelül 35,3 unciának felel meg. Hány gramm cukrot kell Emesének kimérnie? Válaszát tíz grammra kerekítve adja meg!',
             140,
             '5000/35,3 ≈ 142 → 140 g'
         ),
         q(
             'er24o-16c',
-            '2024/16.c) 72 lekváros + 96 csokis linzer, egyforma csomagok. Legfeljebb hány csomag?',
+            '2024/16.c) Emese 72 darab lekváros és 96 darab csokis linzerből egyforma összetételű csomagokat állít össze az iskolai vásárra: mindegyik csomagba azonos számú lekváros linzert tesz, és mindegyik csomagba azonos számú csokis linzert tesz úgy, hogy az összes süteményt felhasználja. Legfeljebb hány csomagot állíthat össze így Emese?',
             24,
             'lnko(72; 96) = 24'
         ),
         q(
             'er24o-16d',
-            '2024/16.d) 10 lekváros + 15 csokis, 5-öt veszünk. P(pontosan 2 lekváros) ≈ ?',
+            '2024/16.d) Egy süteményesdobozban 10 darab lekváros és 15 darab csokis linzer van. A dobozból (visszatevés nélkül) véletlenszerűen kiveszünk 5 darab süteményt. Számítsa ki annak a valószínűségét, hogy a kiválasztott sütemények között pontosan 2 darab lesz lekváros!',
             0.385,
             'C(10,2)·C(15,3)/C(25,5) ≈ 0,385'
         ),
         q(
             'er24o-17a',
-            '2024/17.a) Labdaátmérők 18 cm és 21,5 cm. Hány %-kal nagyobb az 5-ös térfogata a 3-asnál (egészre)?',
+            '2024/17.a) A futballmérkőzéseken használt labdák mérete a játékosok korosztályától függ. A 8 éveseknek ajánlott 3-as méretű labda átmérője 18 cm, a 12 év felettieknek ajánlott 5-ös méretű labda átmérője 21,5 cm. (A labdákat gömb alakúnak tekintjük.) Hány százalékkal nagyobb az 5-ös méretű labda térfogata a 3-as méretű labda térfogatánál?',
             70,
             '(21,5/18)³ − 1 ≈ 70%',
             { figure: ball }
         ),
         q(
             'er24o-17b',
-            '2024/17.b) Csoport: 7, 5, 4, 0 pont (mindenki mindenkivel). Hány döntetlen?',
+            '2024/17.b) A 2022-es katari futballvilágbajnokságon 32 csapat vett részt. A 32 csapatot 8 csoportba osztották, minden csoportba 4 csapat került. A csoportkörös mérkőzések során egy csoporton belül minden csapat minden csapattal egy mérkőzést játszott. A győzelemért 3 pont, a döntetlenért mindkét csapatnak 1-1 pont, a vereségért 0 pont járt. Az egyik csoportban a táblázatban látható pontszámok alakultak ki a csoportkörös mérkőzések végén. A négy csapat pontszáma: 7, 5, 4 és 0. Hány mérkőzés végződött döntetlenre ebben a csoportban a csoportkör során?',
             2,
-            'összpont 16; 6 meccs → 2 döntetlen',
-            { figure: ball }
+            'összpont 16; 6 meccs → 2 döntetlen'
         ),
         q(
             'er24o-17c',
-            '2024/17.c) 32 csapat pontszámának átlaga (négy tizedesre is elfogadható: 4,1875).',
+            '2024/17.c) Az alábbi táblázat a csoportkörös mérkőzések végére kialakult pontszámok gyakoriságát mutatja a 32 csapat esetében. Pontszám: 0, 1, 2, 3, 4, 5, 6, 7, 8, 9. Gyakoriság: 2, 3, 0, 4, 10, 2, 8, 3, 0, 0. Határozza meg a 32 csapat pontszámának átlagát!',
             4.1875,
             '(0·2+1·3+3·4+4·10+5·2+6·8+7·3)/32 = 4,1875',
-            { figure: ball }
+            { figure: points }
         ),
         q(
             'er24o-17d1',
             '2024/17.d) Ugyanazok a pontszámok. Add meg a minimumot és a maximumot.',
             0,
             'min 0, max 7',
-            { alternativeAnswer: 7, figure: ball }
+            { alternativeAnswer: 7, figure: points }
         ),
         q(
             'er24o-17d2',
             '2024/17.d) Ugyanazok a pontszámok. Add meg Q1-et, a mediánt és Q3-at.',
             3,
             'Q1=3, medián=4, Q3=6',
-            { alternativeAnswer: 4, thirdAnswer: 6, figure: ball }
+            { alternativeAnswer: 4, thirdAnswer: 6, figure: points }
         ),
         q(
             'er24o-18a',
-            '2024/18.a) 12 s alatt 9 felvillanás. Fokozat: alap=0, elsőfok=1, másodfok=2.',
+            '2024/18.a) A balatoni viharjelzést 1988 óta távvezérelt fényjelző berendezésekkel oldják meg. A viharjelzésnek három különböző fokozata van: Ha a várható legerősebb széllökések nem haladják meg a 45 km/h sebességet, akkor a rendszer alapon van, fényjelzés nincs. Ha a szél sebessége 45–60 km/h között várható, akkor elsőfokú viharjelzés van, a viharjelző berendezés lámpái percenként 45-ször villannak fel, egyenlő időközönként. 60 km/h-nál erősebb várható széllökések esetén másodfokú viharjelzés van, a viharjelző berendezés lámpái percenként 90-szer villannak fel, egyenlő időközönként. Milyen viharjelzési fokozat van érvényben, ha 12 másodperc alatt 9 felvillanást látunk?\nFokozat száma: alap=0, elsőfok=1, másodfok=2.',
             1,
-            '45 villanás/perc → elsőfok',
-            { figure: storm }
+            '45 villanás/perc → elsőfok'
         ),
         q(
             'er24o-18b',
-            '2024/18.b) 3 medence, 3 fokozat, szomszédosak legfeljebb 1 fokozattal térnek el. Hány kiosztás?',
+            '2024/18.b) A viharjelzésnek három fokozata van: alap, elsőfokú és másodfokú. Viharjelzés szempontjából a Balatont 2012 óta három medencére osztották: nyugati, középső és keleti medencére. Az egyes medencékben ki lehet adni egymástól eltérő fokozatú viharjelzéseket (egy medencén belül minden viharjelző berendezés azonos jelzést ad), de szomszédos medencékben legfeljebb egy fokozattal térhetnek el egymástól a kiadott viharjelzések. Hányféleképpen adható ki viharjelzés a teljes Balatonra vonatkozóan a fenti szabályoknak megfelelően? (Egy ilyen például, ha a nyugati medencében a rendszer alapon van, a középső és keleti medencében pedig elsőfokú a viharjelzés. Két kiadott viharjelzést különbözőnek tekintünk, ha legalább az egyik medencében eltér a viharjelzési fokozat a két esetben.)',
             17,
             '17 megfelelő hármas',
             { figure: storm }
         ),
         q(
             'er24o-18c',
-            '2024/18.c) Csonkakúp: alapkerület 11 km, fedősugár 0,6 km, magasság 330 m. V > 1,5 km³? Igaz=1, hamis=0.',
+            '2024/18.c) A Badacsony hegy térfogatának becsléséhez a hegy közelíthető egy olyan csonkakúppal, melynek alapköre 11 km kerületű, fedőkörének sugara 0,6 km, magassága pedig 330 méter. Igaz-e, hogy (a becslés alapján) a hegy térfogata nagyobb, mint 1,5 km³?\nIgaz=1, hamis=0.',
             1,
-            'Igaz: V ≈ 1,55 km³',
-            { figure: storm }
+            'Igaz: V ≈ 1,55 km³'
         ),
         q(
             'er24o-18d',
-            '2024/18.d) Évi 5% növekedés, S10 = 1000 hl. a1 és a10 (egy tizedesre).',
-            79.5,
-            'a1 ≈ 79,5 hl, a10 ≈ 123,3 hl',
-            { alternativeAnswer: 123.3, figure: storm }
+            '2024/18.d) Egy új badacsonyi borászat vezetője üzleti tervet készít. Úgy számol, hogy a második évtől kezdve minden évben 5%-kal több bort fog előállítani, mint az előző évben. Az első 10 évben szeretne összesen 1000 hektoliter bort előállítani. Hány hektoliter bort fog előállítani a tizedik évben, ha a terv teljesül?',
+            123.3,
+            'a1 ≈ 79,5 hl, a10 ≈ 123,3 hl'
         ),
     ];
 
