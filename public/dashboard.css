@@ -5813,14 +5813,38 @@ select.form-input:disabled {
     line-height: 1.2;
 }
 
-sup:has(.mm-frac) {
-    line-height: 1.05;
-    vertical-align: 0.55em;
+.mm-pow {
+    display: inline-grid;
+    grid-template-columns: auto auto;
+    grid-template-rows: auto auto;
+    vertical-align: text-bottom;
+    margin: 0 0.06em;
+    line-height: 1;
 }
 
-sup .mm-frac {
+.mm-pow-base {
+    grid-column: 1;
+    grid-row: 2;
+    align-self: end;
+    line-height: 1;
+}
+
+.mm-pow-exp {
+    grid-column: 2;
+    grid-row: 1;
+    align-self: end;
+    justify-self: start;
+    font-size: 0.58em;
+    font-weight: 700;
+    line-height: 1.05;
+    margin: 0 0 -0.95em 0.04em;
+}
+
+.mm-pow-exp .mm-frac {
     font-size: 1em;
-    margin: 0 0.06em;
+    margin: 0;
+    min-width: 1.05em;
+    vertical-align: baseline;
 }
 
 @media (max-width: 420px) {

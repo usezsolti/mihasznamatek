@@ -37,6 +37,8 @@ function sharesSetup(later: string, data: string, source: string): boolean {
     const laterNums = numbersIn(later);
     const sourceNums = new Set(numbersIn(source));
     if (laterNums.some((n) => !sourceNums.has(n))) return false;
+    // Nincs közös szám, és a rész önálló, hosszú szöveg: ne másoljuk elé az a) adatát.
+    if (laterNums.length === 0 && body(later).length > 140) return false;
     return true;
 }
 

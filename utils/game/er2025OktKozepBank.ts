@@ -23,12 +23,18 @@ const FIG = '/figures/erettsegi/2025okt-kozep';
 
 /** 2025. október 14. középszint — itemek a javítási útmutató szerint. */
 export function getErettsegi2025OktKozepQuestions(): Question[] {
-    const chord = imageFigure(`${FIG}/t14-circle.png`, '2025/14. OAB húr, 100°');
-    const color = imageFigure(`${FIG}/t14-color.png`, '2025/14.d) három tartomány');
-    const caps = imageFigure(`${FIG}/t16-caps.png`, '2025/16. kávékapszula');
-    const hemi = imageFigure(`${FIG}/t16-hemi.png`, '2025/16.c) félgömb kapszula');
-    const expChart = imageFigure(`${FIG}/t18-exp.png`, '2025/18. exponenciális trend');
-    const linChart = imageFigure(`${FIG}/t18-lin.png`, '2025/18.d–e) lineáris trend');
+    const tri = imageFigure(`${FIG}/t8-triangle.png`, '2025/8. derékszögű háromszög, befogók 5 cm és 12 cm');
+    const chord = imageFigure(`${FIG}/t14-chord.png`, '2025/14. OAB húr, 100°');
+    const regions = imageFigure(
+        `${FIG}/t14-regions.svg`,
+        'A számok a három tartományt jelölik: 1 a háromszög, 2 a húr alatti szelet, 3 a többi rész.'
+    );
+    const expChart = imageFigure(`${FIG}/t18-solar.png`, 'Globális napelem-kapacitás, 2008–2023');
+    const solar =
+        'Anna a globális napelem-kapacitás alakulásával kapcsolatos projektmunkájában a 2008 és 2023 közötti időszakot tanulmányozta. Az erre az időszakra vonatkozó adatokat beírta egy táblázatkezelő programba, amely az adatokra exponenciális függvénygörbét (úgynevezett trendvonalat) is illesztett, melynek egyenlete: y = 7,67·1,27^x. Ebben a képletben x a 2007 óta eltelt évek számát, y pedig a gigawattban (GW) megadott globális napelem-kapacitást jelöli. (A globális napelem-kapacitás a Földön üzemben lévő napelemek összteljesítményét jelenti.) Az Anna által talált éves adatokat és az azokra illesztett exponenciális görbét (trendvonalat) mutatja az alábbi ábra.';
+    const linChart = imageFigure(`${FIG}/t18-linear.png`, 'Globális napelem-kapacitás, 2008–2016');
+    const solarLinear =
+        '2008 és 2016 között a kapacitás növekedése még mérsékeltebb volt. Ebben az időszakban az adatokra a táblázatkezelő program által illesztett közelítő lineáris összefüggés: y = 7,7x − 5, ahol x a 2007 óta eltelt évek számát, y pedig a gigawattban (GW) megadott globális napelem-kapacitást jelöli. Az adatokat és az azokra illesztett lineáris trendvonalat mutatja az alábbi ábra.';
 
     const list: Question[] = [
         q(
@@ -64,7 +70,7 @@ export function getErettsegi2025OktKozepQuestions(): Question[] {
         ),
         q(
             'er25o-4',
-            '2025/4. Hétpontú gráf, minden pont fokszáma 4. Hány éle van?',
+            '2025/4. Hány éle van annak a hétpontú gráfnak, amelyben minden pont fokszáma 4?',
             14,
             '7·4/2 = 14'
         ),
@@ -76,7 +82,7 @@ export function getErettsegi2025OktKozepQuestions(): Question[] {
         ),
         q(
             'er25o-6',
-            '2025/6. Osztályfőnök + 3 diák. Hány sorrend, ha a tanár első vagy utolsó?',
+            '2025/6. Négyen várnak az osztályterem előtt: az osztályfőnök és három diákja. Hányféle sorrendben léphetnek be egymás után a terembe, ha az osztályfőnök elsőként vagy utolsóként lép be?',
             12,
             '2 · 3! = 12'
         ),
@@ -99,17 +105,17 @@ export function getErettsegi2025OktKozepQuestions(): Question[] {
             '2025/8. Derékszögű háromszög befogói 5 cm és 12 cm. A két hegyesszög foka, egy tizedesre. Írd be mindkettőt.',
             22.6,
             'tg α = 5/12 → α ≈ 22,6°, β ≈ 67,4°',
-            { alternativeAnswer: 67.4 }
+            { alternativeAnswer: 67.4, figure: tri }
         ),
         q(
             'er25o-9',
-            '2025/9. A függvény minden számhoz a kétszeresénél 3-mal nagyobbat rendel. Mit rendel a 7-hez?',
+            '2025/9. Egy a valós számok halmazán értelmezett függvény minden számhoz hozzárendeli a szám kétszeresénél hárommal nagyobb számot. Melyik számot rendeli ez a függvény a 7-hez?',
             17,
             '2·7 + 3 = 17'
         ),
         q(
             'er25o-10',
-            '2025/10. Forgáskúp: r = 3 cm, m = 4 cm. Felszín cm²-ben, egy tizedesre (24π ≈ 75,4).',
+            '2025/10. Egy forgáskúp alapkörének sugara 3 cm, magassága 4 cm. Számítsa ki a kúp felszínét! Megoldását részletezze!',
             75.4,
             'alkotó 5 cm, A = 3π·3 + 3π·5 = 24π ≈ 75,4'
         ),
@@ -122,7 +128,7 @@ export function getErettsegi2025OktKozepQuestions(): Question[] {
         ),
         q(
             'er25o-12',
-            '2025/12. Két kocka. P(az összeg osztható 6-tal). (pl. 1/6 vagy 0,167)',
+            '2025/12. Két szabályos dobókockával egyszerre dobunk. Számítsa ki annak a valószínűségét, hogy a két dobott szám összege osztható 6-tal! Megoldását részletezze!',
             6 / 36,
             '6 kedvező / 36 = 1/6 ≈ 0,167'
         ),
@@ -163,10 +169,10 @@ export function getErettsegi2025OktKozepQuestions(): Question[] {
         ),
         q(
             'er25o-14d',
-            '2025/14.d) Három tartomány, piros/sárga/zöld, 2 vagy 3 szín. Hány színezés? (szomszédosak lehetnek azonosak)',
+            '2025/14.d) A jobb oldali ábrán látható körlap három tartományát a piros, a sárga, illetve a zöld színekkel szeretnénk kiszínezni úgy, hogy két vagy három színt használunk fel a színezéshez. (Egy tartományt egy színnel színezünk ki, szomszédos tartományok azonos színűek is lehetnek.)\nHányféleképpen színezhető ki a feltételeknek megfelelően az ábra?',
             24,
             '3^3 − 3 = 24',
-            { figure: color }
+            { figure: regions }
         ),
         q(
             'er25o-15mm',
@@ -184,7 +190,7 @@ export function getErettsegi2025OktKozepQuestions(): Question[] {
         ),
         q(
             'er25o-15b',
-            '2025/15.b) 14 lányból kettőt választunk. P(egyik >170, másik <170). (pl. 45/91 vagy 0,495)',
+            '2025/15.b) 14 lány magassága: 153, 156, 160, 162, 162, 164, 167, 169, 169, 172, 174, 174, 175, 177.\nA 11.b osztályba járó lányok közül véletlenszerűen kiválasztunk kettőt. Határozza meg annak a valószínűségét, hogy az egyik kiválasztott lány magasabb, a másik pedig alacsonyabb 170 cm-nél!',
             45 / 91,
             '5 magasabb, 9 alacsonyabb → 45/91 ≈ 0,495'
         ),
@@ -196,87 +202,84 @@ export function getErettsegi2025OktKozepQuestions(): Question[] {
         ),
         q(
             'er25o-16a',
-            '2025/16.a) 56 milliárd kapszula, egyenként 40 mm. Az Egyenlítő r = 6370 km.\nA lánc hányszorosa az Egyenlítőnek? Egészre kerekítve.',
+            '2025/16.a) Az emberiség évente körülbelül 56 milliárd kávékapszulát használ el. Egy környezetvédelemmel foglalkozó honlapon az az állítás olvasható, hogy 56 milliárd darab kapszulát egymás mellé sorba állítva a kapszulák lánca 57-szer olyan hosszú lenne, mint az Egyenlítő.\nTételezzük fel, hogy egy darab kávékapszula szélessége 40 mm. Számítással igazolja, hogy ekkor a honlapon olvasható állítás jó közelítéssel igaz! (A közelítést akkor tekintjük jónak, ha a kapott érték 55 és 59 közé esik. Az Egyenlítőt tekintsük egy 6370 km sugarú körnek.)',
             56,
-            '2 240 000 / 40 024 ≈ 56',
-            { figure: caps }
+            '2 240 000 / 40 024 ≈ 56'
         ),
         q(
             'er25o-16b',
-            '2025/16.b) Csonkakúp: alapátmérő 28 mm, fedő 24 mm, alkotó 28 mm. Térfogat cm³, egészre.',
+            '2025/16.b) Az egyik népszerű kávékapszula belseje jó közelítéssel tekinthető egy olyan csonkakúpnak, melynek méretei a következők: alapkörének átmérője 28 mm, fedőkörének átmérője 24 mm, alkotója pedig szintén 28 mm hosszú.\nMennyi kávé fér egy ilyen kapszulába? Válaszát köbcentiméterben, egészre kerekítve adja meg!',
             15,
-            '≈ 14 842 mm³ → 15 cm³',
-            { figure: caps }
+            '≈ 14 842 mm³ → 15 cm³'
         ),
         q(
             'er25o-16c',
-            '2025/16.c) Félgömb 10 ml. A sugár cm-ben, egy tizedesre.',
+            '2025/16.c) Egy másik kávékapszula belseje jó közelítéssel félgömb alakú, űrtartalma 10 milliliter. Számítsa ki a félgömb sugarát!',
             1.7,
-            '(2/3)π r^3 = 10 → r ≈ 1,7 cm',
-            { figure: hemi }
+            '(2/3)π r^3 = 10 → r ≈ 1,7 cm'
         ),
         q(
             'er25o-16d',
-            '2025/16.d) P(selejt) = 0,001. 100 kapszula közül egyik sem selejtes. A valószínűség (pl. 0,905).',
+            '2025/16.d) Egy gépsoron az elkészült kapszuláknak körülbelül az ezredrésze selejtes. (Ezt tekintjük úgy, hogy 0,001 annak a valószínűsége, hogy egy véletlenszerűen kiválasztott kapszula selejtes.)\nHatározza meg annak a valószínűségét, hogy 100 véletlenszerűen kiválasztott kapszula között nem lesz selejtes!',
             Math.pow(0.999, 100),
             '0,999^100 ≈ 0,905'
         ),
         q(
             'er25o-17a',
-            '2025/17.a) 30 000 Ft-os keret, 37 éves vásárló, annyi % kedvezmény, ahány éves. Mennyit fizet (Ft)?',
+            '2025/17.a) Egy szemüvegeket árusító bolt egy akció során a szemüvegkeretek árából annyi százalék kedvezményt ad, ahány éves a vásárló.\nMennyit fizet egy 30 000 Ft-os szemüvegkeretért egy 37 éves vásárló az akció során?',
             18900,
             '30 000 · 0,63 = 18 900'
         ),
         q(
             'er25o-17b',
-            '2025/17.b) Ugyanaz az akció, 30 000 Ft-os keretért 16 500 Ft-ot fizet. Hány éves?',
+            '2025/17.b) Egy szemüvegeket árusító bolt egy akció során a szemüvegkeretek árából annyi százalék kedvezményt ad, ahány éves a vásárló.\nHány éves az a vásárló, aki az akció során egy 30 000 Ft-os szemüvegkeretért 16 500 Ft-ot fizet?',
             45,
             '16500/30000 = 55% → 45 éves'
         ),
         q(
             'er25o-17c',
-            '2025/17.c) Nagymama háromszor annyi idős, mint Péter. Mindketten 30 000 Ft-os keretet vennének, Péter háromszor annyit fizetne. Írd be Péter és a nagymama korát.',
+            '2025/17.c) Egy szemüvegeket árusító bolt egy akció során a szemüvegkeretek árából annyi százalék kedvezményt ad, ahány éves a vásárló.\nPéter nagymamája háromszor annyi éves, mint Péter. Ha mindketten egy-egy 30 000 Ft-os szemüvegkeretet vásárolnának meg az akció során, akkor Péter háromszor annyit fizetne a keretért, mint a nagymamája.\nHány éves Péter, és hány éves a nagymamája?',
             25,
             'Péter 25, nagymama 75',
             { alternativeAnswer: 75 }
         ),
         q(
             'er25o-17d',
-            '2025/17.d) 32 fős osztály, fiú:lány = 5:3. 11 szemüveges (7 fiú). 3 kiskorú lány, 1 szemüveges.\nHány lány nem szemüveges és már 18+',
+            '2025/17.d) Egy 32 fős végzős osztályba járó fiúk és lányok számának aránya 5:3. Az osztály tanulói közül 11-en szemüvegesek, köztük 7 fiú. A matematikaérettségi napján az összes tanuló között 3 olyan van, aki nem töltötte be a 18. életévét, mindhárman lányok, egyikük szemüveges.\nHány olyan lány jár az osztályba, aki nem szemüveges és betöltötte a 18. életévét?',
             6,
             '12 lány, 4 szemüveges, 2 kiskorú nem szemüveges → 6'
         ),
         q(
             'er25o-18a',
-            '2025/18.a) y = 7,67 · 1,27^x, x = évek 2007 óta. 2020-as görbeérték mínusz a grafikon 146 GW-ja. Különbség GW-ben, egy tizedesre.',
+            `2025/18.a) ${solar}\nSzámítsa ki, hogy az adatokra illesztett görbe megadott egyenletéből kiszámítható 2020-as érték mennyivel tér el a grafikonon megadott 2020-as adattól!`,
             25.5,
             'x=13 → y≈171,5; 171,5 − 146 = 25,5',
             { figure: expChart }
         ),
         q(
             'er25o-18b',
-            '2025/18.b) A görbe szerint évente hány %-kal nőtt a kapacitás?',
+            `2025/18.b) ${solar}\nA görbe egyenletéből számítva évente hány százalékkal nőtt 2008 és 2023 között a globális napelem-kapacitás?`,
             27,
             '1,27-szeres → 27%',
             { figure: expChart }
         ),
         q(
             'er25o-18c',
-            '2025/18.c) A modell szerint melyik évben éri el a 3000 GW-ot?',
+            `2025/18.c) ${solar}\nA görbe egyenlete alapján melyik évben érné el a globális napelem-kapacitás a 3000 gigawattot?`,
             2032,
             '7,67·1,27^x = 3000 → x≈24,97 → 2032',
             { figure: expChart }
         ),
         q(
             'er25o-18d',
-            '2025/18.d) Lineáris: y = 7,7x − 5. 2016-os modellérték hány %-kal kisebb a grafikon 77 GW-jánál? Egy tizedesre.',
+            `2025/18.d) ${solarLinear}\nHány százalékkal kevesebb a lineáris összefüggés alapján kiszámítható 2016-os érték a grafikonon megadott 2016-os adatnál?`,
             16.5,
             'y=64,3; 64,3/77≈0,835 → 16,5%',
             { figure: linChart }
         ),
         q(
             'er25o-18e',
-            '2025/18.e) Az (1; 7) és (9; 77) pontokra illeszkedő y = mx + b. Írd be m-et és b-t.',
+            `2025/18.e) ${solarLinear}\nAnna szeretné tudni, hogy az első (2008) és a kilencedik (2016) év adataira illeszthető egyenes egyenlete mennyire hasonlít a program által megadott lineáris összefüggésre.\nÍrja fel annak az egyenesnek az egyenletét, amely illeszkedik az (1; 7) és (9; 77) pontokra!`,
             8.75,
             'y = 8,75x − 1,75',
             { alternativeAnswer: -1.75, figure: linChart }

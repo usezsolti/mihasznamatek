@@ -220,6 +220,18 @@ function splitFractions(src: string): Chunk[] {
     return out;
 }
 
+function peelPowBase(nodes: ReactNode[]): string | null {
+    const last = nodes[nodes.length - 1];
+    if (typeof last !== 'string' || last.length === 0) return null;
+    const m = last.match(/(\d+|[A-Za-zπ])$/);
+    if (!m) return null;
+    const base = m[1];
+    const rest = last.slice(0, -base.length);
+    if (rest) nodes[nodes.length - 1] = rest;
+    else nodes.pop();
+    return base;
+}
+
 function formatScripts(text: string): ReactNode {
     const nodes: ReactNode[] = [];
     let last = 0;
@@ -232,7 +244,19 @@ function formatScripts(text: string): ReactNode {
         if (m[1] != null || m[2] != null) {
             nodes.push(<sub key={`s${key++}`}>{formatMathText(m[1] ?? m[2])}</sub>);
         } else {
-            nodes.push(<sup key={`p${key++}`}>{formatMathText(m[3] ?? m[4])}</sup>);
+            const expSrc = m[3] ?? m[4];
+            const exp = formatMathText(expSrc);
+            const base = /[/∕⁄／]/.test(expSrc) ? peelPowBase(nodes) : null;
+            if (base) {
+                nodes.push(
+                    <span key={`p${key++}`} className="mm-pow">
+                        <span className="mm-pow-base">{base}</span>
+                        <span className="mm-pow-exp">{exp}</span>
+                    </span>
+                );
+            } else {
+                nodes.push(<sup key={`p${key++}`}>{exp}</sup>);
+            }
         }
         last = m.index + m[0].length;
     }

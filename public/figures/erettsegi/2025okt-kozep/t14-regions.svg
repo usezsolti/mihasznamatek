@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 440 480" width="440" height="480">
+  <rect width="440" height="480" fill="#ffffff"/>
+  <circle cx="220" cy="210" r="168" fill="#ffffff" stroke="#111111" stroke-width="3"/>
+  <polygon points="220,210 91,318 349,318" fill="none" stroke="#111111" stroke-width="3"/>
+  <text x="220" y="278" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="32" font-weight="700" fill="#111111">1</text>
+  <text x="220" y="358" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="32" font-weight="700" fill="#111111">2</text>
+  <text x="220" y="128" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="32" font-weight="700" fill="#111111">3</text>
+</svg>
