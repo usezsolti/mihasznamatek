@@ -28,7 +28,7 @@ import {
     resolveProgressStorageKey,
     touchDailyJuice,
 } from "../utils/practiceProgress";
-import { emptyJuice, livesFromXp, nextLifeUnlock, writePlayWithLivesLocal, type GameJuiceState } from "../utils/gameJuice";
+import { emptyJuice, livesFromXp, nextLifeUnlock, readPlayWithLivesLocal, writePlayWithLivesLocal, type GameJuiceState } from "../utils/gameJuice";
 import SkillTreePanel from "../components/SkillTreePanel";
 import { countDueSrs } from "../utils/srs";
 import { PATH_LESSON_COUNT } from "../utils/topicPath";
@@ -784,7 +784,12 @@ export default function Dashboard() {
                 const progress = await touchDailyJuice(uid || null);
                 practiceTopics = progress.topics || {};
                 setSrsDueCount(countDueSrs(progress.srs));
-                setJuice(progress.juice || null);
+                const loaded = progress.juice || null;
+                setJuice(
+                    loaded
+                        ? { ...loaded, playWithLives: loaded.playWithLives === true && readPlayWithLivesLocal() }
+                        : null
+                );
                 setPracticeXp(progress.xp || 0);
                 // #region agent log
                 agentDebugLog({
@@ -1059,7 +1064,7 @@ export default function Dashboard() {
                                     {juice.blitzBest > 0 ? ` · ⚡ ${juice.blitzBest}` : ''}
                                 </div>
                                 <p className="dash-lives-line">
-                                    {juice.playWithLives === false
+                                    {juice.playWithLives !== true
                                         ? 'Életmód ki'
                                         : (() => {
                                             const maxLives = livesFromXp(practiceXp);
@@ -1072,7 +1077,7 @@ export default function Dashboard() {
                                 <div className="dash-lives-toggle">
                                     <button
                                         type="button"
-                                        className={`dash-lives-btn ${juice.playWithLives !== false ? 'on' : ''}`}
+                                        className={`dash-lives-btn ${juice.playWithLives === true ? 'on' : ''}`}
                                         onClick={() => {
                                             writePlayWithLivesLocal(true);
                                             setJuice({ ...juice, playWithLives: true });
@@ -1084,7 +1089,7 @@ export default function Dashboard() {
                                     </button>
                                     <button
                                         type="button"
-                                        className={`dash-lives-btn ${juice.playWithLives === false ? 'on' : ''}`}
+                                        className={`dash-lives-btn ${juice.playWithLives !== true ? 'on' : ''}`}
                                         onClick={() => {
                                             writePlayWithLivesLocal(false);
                                             setJuice({ ...juice, playWithLives: false });

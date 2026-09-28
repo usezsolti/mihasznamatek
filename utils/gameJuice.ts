@@ -66,11 +66,9 @@ export function nextLifeUnlock(xp: number): { nextXp: number; nextLives: number 
 export const PLAY_WITH_LIVES_KEY = 'mzPlayWithLives';
 
 export function readPlayWithLivesLocal(): boolean {
-    if (typeof window === 'undefined') return true;
+    if (typeof window === 'undefined') return false;
     const raw = localStorage.getItem(PLAY_WITH_LIVES_KEY);
-    if (raw === '0') return false;
-    if (raw === '1') return true;
-    return true;
+    return raw === '1';
 }
 
 export function writePlayWithLivesLocal(on: boolean) {
@@ -201,7 +199,7 @@ export function emptyJuice(): GameJuiceState {
         completedChallenges: [],
         skillMigrated: true,
         skillShop: 'xp',
-        playWithLives: true,
+        playWithLives: false,
     };
 }
 
@@ -250,7 +248,7 @@ export function normalizeJuice(raw: unknown): GameJuiceState {
         )),
         skillMigrated: Boolean(data.skillMigrated),
         skillShop: data.skillShop === 'xp' ? 'xp' : 'points',
-        playWithLives: data.playWithLives !== false,
+        playWithLives: data.playWithLives === true,
     };
 }
 
@@ -306,7 +304,7 @@ export function mergeJuice(a?: GameJuiceState, b?: GameJuiceState): GameJuiceSta
         ),
         skillMigrated: Boolean(A.skillMigrated || B.skillMigrated),
         skillShop: A.skillShop === 'xp' || B.skillShop === 'xp' ? 'xp' : 'points',
-        playWithLives: later.playWithLives !== false,
+        playWithLives: later.playWithLives === true,
     };
 }
 

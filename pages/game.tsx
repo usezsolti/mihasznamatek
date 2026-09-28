@@ -53,7 +53,7 @@ export default function Game() {
     const [selectedUniversitySubject, setSelectedUniversitySubject] = useState<string | null>(null);
     const [selectedUniversityTopic, setSelectedUniversityTopic] = useState<string | null>(null);
     const [showSzigorlatMenu, setShowSzigorlatMenu] = useState(false);
-    const [playWithLives, setPlayWithLives] = useState(true);
+    const [playWithLives, setPlayWithLives] = useState(false);
 
     const questionsRef = useRef<Question[]>([]);
     const generateUniversityQuestionsRef = useRef<(() => void) | undefined>(undefined);
@@ -288,8 +288,7 @@ export default function Game() {
     useEffect(() => {
         if (!currentUser?.uid) return;
         void loadUserPracticeProgress(currentUser.uid).then((prog) => {
-            if (prog.juice?.playWithLives === false) setPlayWithLives(false);
-            else if (prog.juice?.playWithLives === true) setPlayWithLives(true);
+            setPlayWithLives(prog.juice?.playWithLives === true && readPlayWithLivesLocal());
         }).catch(() => undefined);
     }, [currentUser?.uid]);
 

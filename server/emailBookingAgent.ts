@@ -2,8 +2,10 @@ import { ADMIN_BOOKING_EMAIL, LESSON_PRICE_PER_HOUR } from '../utils/booking/typ
 import { getAvailabilityRange, getBudapestDateKeyOffset } from '../utils/bookingAvailability';
 import { classifyBookingMailIntent } from '../utils/bookingMailIntent';
 import {
+    earliestFreeSlot,
     hasStudentWindow,
     isSlotFree,
+    studentIsFlexible,
     mergeWindows,
     parseRequestedSlots,
     parseStudentWindow,
@@ -367,10 +369,15 @@ async function processOne(mail: InboundMail): Promise<'draft' | 'skip'> {
     let holdTime = base.holdTime;
     let offeredSlots = base.offeredSlots;
 
+    const flexible = studentIsFlexible(blob);
+    const earliest = flexible && !chosen ? earliestFreeSlot(days) : null;
     const confirmable =
+        earliest ||
         (chosen && isSlotFree(days, chosen.dateKey, chosen.time) ? chosen : null) ||
         requested.find((r) => isSlotFree(days, r.dateKey, r.time));
-    const packedInstead =
+    const packedInstead = earliest
+        ? []
+        :
         confirmable && !chosen && hasStudentWindow(window)
             ? shouldOfferPackedInsteadOfRequested(confirmable, days, window)
             : confirmable && !chosen

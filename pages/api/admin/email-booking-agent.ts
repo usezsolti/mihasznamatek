@@ -32,7 +32,8 @@ async function handle(req: NextApiRequest, res: NextApiResponse) {
                 ...settings,
                 imapReady: gmailImapReady(),
                 threads,
-                cronEveryMinute: true,
+                cronEveryMinute: false,
+                cronLabel: 'Naponta 12:00, 16:00 és 22:00',
             });
         } catch (e: any) {
             return sendErr(res, e?.message || 'Betöltés sikertelen', 500);

@@ -4,6 +4,21 @@ import { runEmailBookingAgent } from '../../../server/emailBookingAgent';
 
 export const config = { maxDuration: 60 };
 
+const RUN_HOURS = new Set([12, 16, 22]);
+
+function budapestHour(now = new Date()): number {
+    const hour = new Intl.DateTimeFormat('en-GB', {
+        timeZone: 'Europe/Budapest',
+        hour: 'numeric',
+        hourCycle: 'h23',
+    }).format(now);
+    return Number(hour);
+}
+
+export function isEmailAgentRunHour(now = new Date()): boolean {
+    return RUN_HOURS.has(budapestHour(now));
+}
+
 function cronAuthorized(req: NextApiRequest): boolean {
     const secret = String(process.env.CRON_SECRET || '').trim();
     if (!secret) return false;
@@ -21,6 +36,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     // #endregion
     if (!authorized) {
         return sendErr(res, 'Cron titok hibás vagy hiányzik.', 401);
+    }
+    const force = String(req.query.force || '') === '1';
+    if (!force && !isEmailAgentRunHour()) {
+        return sendOk(res, { skipped: true, reason: 'Csak 12:00, 16:00 és 22:00 (Budapest).' });
     }
     try {
         const result = await runEmailBookingAgent();

@@ -4,7 +4,7 @@
   "crons": [
     {
       "path": "/api/cron/email-booking-agent",
-      "schedule": "* * * * *"
+      "schedule": "0 10,11,14,15,20,21 * * *"
     }
   ]
 }

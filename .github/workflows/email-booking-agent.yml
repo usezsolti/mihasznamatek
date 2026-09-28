@@ -1,10 +1,16 @@
-# Perceként / 5 percenként hívja az éles cron API-t.
+# Naponta háromszor, budapesti idő szerint 12:00, 16:00 és 22:00.
+# A cron UTC, ezért nyári és téli időszámításra is van sor; a script csak a budapesti órában hív.
 # GitHub → Settings → Secrets and variables → Actions → New secret:
 #   CRON_SECRET = ugyanaz, mint a Vercel Environment Variable CRON_SECRET
 name: Email agent poll
 on:
   schedule:
-    - cron: '*/5 * * * *'
+    - cron: '0 10 * * *'
+    - cron: '0 11 * * *'
+    - cron: '0 14 * * *'
+    - cron: '0 15 * * *'
+    - cron: '0 20 * * *'
+    - cron: '0 21 * * *'
   workflow_dispatch:
 jobs:
   poll:
@@ -15,6 +21,13 @@ jobs:
           CRON_SECRET: ${{ secrets.CRON_SECRET }}
         run: |
           SITE_URL="https://mihasznamatek.hu"
+          if [ "${{ github.event_name }}" != "workflow_dispatch" ]; then
+            HOUR=$(TZ=Europe/Budapest date +%H)
+            case "$HOUR" in
+              12|16|22) ;;
+              *) echo "Kihagyva: Budapesten most ${HOUR} óra van, futás 12, 16 és 22 órakor."; exit 0 ;;
+            esac
+          fi
           if [ -z "$CRON_SECRET" ]; then
             echo "::error::Hiányzik a CRON_SECRET GitHub secret."
             echo "GitHub → Settings → Secrets and variables → Actions → New repository secret"
@@ -22,6 +35,10 @@ jobs:
             echo "Érték: ugyanaz, mint Vercel → Settings → Environment Variables → CRON_SECRET"
             exit 1
           fi
+          FORCE=""
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            FORCE="?force=1"
+          fi
           curl -fsS -X GET \
             -H "Authorization: Bearer ${CRON_SECRET}" \
-            "${SITE_URL}/api/cron/email-booking-agent"
+            "${SITE_URL}/api/cron/email-booking-agent${FORCE}"

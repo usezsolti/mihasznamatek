@@ -97,7 +97,7 @@ export default function GameLobby({
     onStartGame,
     onResetGame,
     onStartBlitz,
-    playWithLives = true,
+    playWithLives = false,
     maxLivesFromXp = 3,
     nextLifeUnlockXp = null,
     onTogglePlayWithLives,

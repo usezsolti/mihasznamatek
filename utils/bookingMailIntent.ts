@@ -8,9 +8,13 @@ const ESCALATE =
 const IGNORE =
     /\b(unsubscribe|irattar|hirlevel|newsletter|noreply|no-reply|receipt from google|security alert|teamviewer|linkedin|facebook|instagram|tiktok|promo|akcio)\b/;
 
-/** Matek / tanóra — új szál csak ebből indulhat. */
+/** Webshop, bútor, szállítás — ezek nem óraegyeztetés, még ha van bennük „központi” vagy „óra”. */
+const NOT_LESSON =
+    /\b(butor|szefa|kanape|szekreny|matrac|webshop|aruhaz|katalogus|szallitmany|csomag|rendeles|nyitvatartas)\b/;
+
+/** Matek / korrepetálás — új szál csak ebből indulhat, puszta „időpont” vagy „foglalás” nem elég. */
 const MATH_LESSON =
-    /\b(matek|matematika|korrepet|tanora|magantanar|erettsegi|algebra|geometria|felkeszul|mihaszna|oraanyag|feladatlap)/;
+    /\b(matek|matematika|korrepet|magantanar|tanar ur|erettsegi|felveteli|algebra|geometria|trigonometr|analizis|szigorlat|kalkulus|felkeszul|mihaszna|oraanyag|feladatlap|egyenlet|fuggveny|derival|integral|valoszinuseg|kombinator|szamelmelet|emelt szint|kozepszint|matekora|tanora)/;
 
 const BOOKING_ASK =
     /\b(idopont|foglal|tanorat|orat\s+ker|orara\s+jelent|szeretnek\s+orat|lesson|tutor|appointment)/;
@@ -36,14 +40,15 @@ export function classifyBookingMailIntent(opts: {
     if (ESCALATE.test(blob)) return 'escalate';
     if (IGNORE.test(blob) && !MATH_LESSON.test(blob) && !BOOKING_ASK.test(blob)) return 'ignore';
 
-    const mathOrAsk = MATH_LESSON.test(blob) || BOOKING_ASK.test(blob);
+    const math = MATH_LESSON.test(blob) && !NOT_LESSON.test(blob);
+    const ask = BOOKING_ASK.test(blob);
 
     if (opts.inAgentThread) {
-        if (THANKS_ONLY.test(bodyOnly) && !SLOT_TALK.test(blob) && !mathOrAsk) return 'ignore';
-        if (mathOrAsk || SLOT_TALK.test(blob)) return 'booking';
+        if (THANKS_ONLY.test(bodyOnly) && !SLOT_TALK.test(blob) && !math && !ask) return 'ignore';
+        if (math || ask || SLOT_TALK.test(blob)) return 'booking';
         return 'ignore';
     }
 
-    if (mathOrAsk) return 'booking';
+    if (math) return 'booking';
     return 'ignore';
 }

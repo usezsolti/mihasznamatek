@@ -7,8 +7,6 @@ import {
     xpForNextRank,
 } from '../../utils/practiceProgress';
 import {
-    BOOSTER_LABEL,
-    BOOSTER_XP_COST,
     comboMultiplier,
     gearFromRank,
     getFlavorTitle,
@@ -78,15 +76,11 @@ export default function GamePlayHud({
     badgeToast,
     avatarLevel,
     currentStage,
-    juiceBoosters,
-    secondChanceArmed,
-    onUseBooster,
     comboEarlier,
     extraLives = 0,
     hideTaskIndex,
     hideTimer,
     challengeTitle,
-    hideBoosters,
     maxLives,
     pathStageLabel,
     showLives,
@@ -189,26 +183,6 @@ export default function GamePlayHud({
 
             {nearMiss && (
                 <div className="hud-near" role="status">{nearMiss}</div>
-            )}
-
-            {onUseBooster && juiceBoosters && !hideBoosters && (
-                <div className="hud-boosters">
-                    {(['fiftyFifty', 'secondChance', 'freeze'] as BoosterKind[]).map((kind) => (
-                        <button
-                            key={kind}
-                            type="button"
-                            className={`hud-booster ${kind === 'secondChance' && secondChanceArmed ? 'armed' : ''}`}
-                            onClick={() => onUseBooster(kind)}
-                        >
-                            <span>{BOOSTER_LABEL[kind]}</span>
-                            <small>
-                                {juiceBoosters[kind] > 0
-                                    ? `×${juiceBoosters[kind]}`
-                                    : `${BOOSTER_XP_COST[kind]} XP`}
-                            </small>
-                        </button>
-                    ))}
-                </div>
             )}
 
             <div className={`game-mascot-react mood-${mascotMood}`} aria-hidden="true">

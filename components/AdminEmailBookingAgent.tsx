@@ -118,9 +118,9 @@ export default function AdminEmailBookingAgent() {
                     <p className="mm-agent-kicker">Tanári automata</p>
                     <h2 className="mm-agent-title">E-mail ügynök</h2>
                     <p className="mm-agent-sub">
-                        Bekapcsolva a szerver magától nézi a Gmailt, és matekórás levélre
-                        HTML-piszkozatot készít (nem küldi el). Ehhez a GitHubon kell egy
-                        CRON_SECRET (ugyanaz, mint a Vercelen).
+                        Bekapcsolva naponta háromszor nézi a Gmailt (12:00, 16:00 és 22:00),
+                        és matekórás levélre HTML-piszkozatot készít (nem küldi el). Ehhez a
+                        GitHubon kell egy CRON_SECRET (ugyanaz, mint a Vercelen).
                     </p>
                 </div>
                 <button
@@ -143,7 +143,7 @@ export default function AdminEmailBookingAgent() {
 
             <div className="mm-agent-meta">
                 <span className={`mm-agent-pill ${enabled ? 'ok' : 'bad'}`}>
-                    {enabled ? 'Automata perceként' : 'Kikapcsolva — nincs automata'}
+                    {enabled ? 'Automata 12, 16 és 22 órakor' : 'Kikapcsolva — nincs automata'}
                 </span>
                 <span className={`mm-agent-pill ${data?.imapReady ? 'ok' : 'bad'}`}>
                     IMAP {data?.imapReady ? 'kész' : 'nincs Gmail jelszó'}

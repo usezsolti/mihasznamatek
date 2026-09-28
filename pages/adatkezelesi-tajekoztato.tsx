@@ -61,6 +61,7 @@ export default function AdatkezelesiTajekoztatoPage() {
                     <h2>2. A tájékoztató hatálya</h2>
                     <p>A tájékoztató kiterjed különösen:</p>
                     <ul>
+                        <li>a <strong>Mihaszna Matek</strong> mobilalkalmazás használatára (iOS / Android);</li>
                         <li>a weboldal látogatására és böngészésére;</li>
                         <li>regisztrációra és bejelentkezésre (e-mail/jelszó, Google);</li>
                         <li>óra-időpont foglalására és lemondására;</li>
@@ -107,6 +108,15 @@ export default function AdatkezelesiTajekoztatoPage() {
                                         szerződés teljesítése (6. cikk (1) b)), illetve
                                         hozzájárulás (6. cikk (1) a))
                                     </td>
+                                </tr>
+                                <tr>
+                                    <td>Mobilalkalmazás (tanulás, közösség, profilkép)</td>
+                                    <td>
+                                        fiókadatok, haladás, profilkép, kamera/galéria
+                                        (csak ha te választod), MihaSocial posztok és
+                                        bejelentések
+                                    </td>
+                                    <td>szerződés teljesítése; hozzájárulás a fotóhoz</td>
                                 </tr>
                                 <tr>
                                     <td>Órafoglalás, egyeztetés, emlékeztető</td>

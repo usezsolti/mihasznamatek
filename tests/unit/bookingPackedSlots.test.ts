@@ -1,10 +1,14 @@
 import assert from 'node:assert/strict';
 import { describe, it } from 'node:test';
 import { classifyBookingMailIntent } from '../../utils/bookingMailIntent';
+import { extractMailText } from '../../server/gmailImap';
 import {
     parseChoiceFromOffers,
+    earliestFreeSlot,
+    parseRequestedSlots,
     parseStudentWindow,
     shouldOfferPackedInsteadOfRequested,
+    studentIsFlexible,
     suggestPackedSlots,
     type DaySlots,
 } from '../../utils/bookingPackedSlots';
@@ -82,6 +86,61 @@ describe('booking mail intent', () => {
         );
     });
 
+    it('ignores furniture shop mail even if it says központi or óra', () => {
+        assert.equal(
+            classifyBookingMailIntent({
+                subject: 'Szefa bútor — rendelés',
+                text: 'A központi raktárból 48 órán belül szállítjuk a szekrényt. Nyitvatartás és rendelés a webshopon.',
+                fromEmail: 'info@szefabutor.hu',
+            }),
+            'ignore'
+        );
+    });
+
+    it('does not invent 16:00 when the mail has no hour', () => {
+        assert.deepEqual(parseRequestedSlots('Hétfőn ráérek, a számom 06301234567.', '2026-09-25'), []);
+        const slots = parseRequestedSlots('Csütörtök 15:00 jó nekem.', '2026-09-25');
+        assert.equal(slots[0]?.time, '15:00');
+    });
+
+    it('ignores appointments that are not about math', () => {
+        assert.equal(
+            classifyBookingMailIntent({
+                subject: 'Your appointment',
+                text: 'Your dentist appointment is confirmed. Please book a table too.',
+                fromEmail: 'clinic@example.com',
+            }),
+            'ignore'
+        );
+        assert.equal(
+            classifyBookingMailIntent({
+                subject: 'Asztalfoglalás',
+                text: 'A vacsorára foglaltunk időpontot péntekre.',
+                fromEmail: 'etterem@pelda.hu',
+            }),
+            'ignore'
+        );
+    });
+
+    it('selects accented math tutoring mail', () => {
+        assert.equal(
+            classifyBookingMailIntent({
+                subject: 'Érdeklődés',
+                text: 'Szia! Érettségire készülök, szeretnék korrepetálást matematikából.',
+                fromEmail: 'anna@pelda.hu',
+            }),
+            'booking'
+        );
+        assert.equal(
+            classifyBookingMailIntent({
+                subject: 'Felvételi',
+                text: 'A lányom központi felvételire készül, matekból kell segítség.',
+                fromEmail: 'apa@pelda.hu',
+            }),
+            'booking'
+        );
+    });
+
     it('escalates complaints and invoice fights', () => {
         assert.equal(
             classifyBookingMailIntent({
@@ -94,14 +153,36 @@ describe('booking mail intent', () => {
     });
 });
 
+describe('mail text extraction', () => {
+    it('reads utf-8 quoted-printable math from a multipart message', () => {
+        const plain = Buffer.from('Szia! Érettségire készülök matematikából.', 'utf8');
+        const qp = [...plain].map((b) => (b < 128 && b !== 61 ? String.fromCharCode(b) : `=${b.toString(16).toUpperCase().padStart(2, '0')}`)).join('');
+        const raw = [
+            'Content-Type: multipart/alternative; boundary="b"',
+            '',
+            '--b',
+            'Content-Type: text/plain; charset=utf-8',
+            'Content-Transfer-Encoding: quoted-printable',
+            '',
+            qp,
+            '--b--',
+            '',
+        ].join('\r\n');
+        const text = extractMailText(raw);
+        assert.match(text, /Érettségire/);
+        assert.equal(
+            classifyBookingMailIntent({ subject: 'Érdeklődés', text, fromEmail: 'a@b.hu' }),
+            'booking'
+        );
+    });
+});
+
 describe('packed slots', () => {
-    it('prefers a slot next to an existing lesson over an empty Monday', () => {
+    it('offers the earliest free hour, not a later packed 16:00', () => {
         const packed = suggestPackedSlots([mon, thu], null, 3);
         assert.ok(packed.length >= 1);
-        assert.equal(packed[0].dateKey, '2026-09-17');
-        assert.equal(packed[0].time, '15:00');
-        assert.ok(packed[0].packScore >= 50);
-        assert.ok(!packed.some((s) => s.dateKey === '2026-09-14') || packed[0].dateKey === '2026-09-17');
+        assert.equal(packed[0].dateKey, '2026-09-14');
+        assert.equal(packed[0].time, '12:00');
     });
 
     it('does not suggest a taken hour', () => {
@@ -125,13 +206,21 @@ describe('packed slots', () => {
         assert.equal(w.afterMinutes, 14 * 60);
     });
 
-    it('offers packed Thursday instead of confirming isolated Monday', () => {
+    it('treats anytime as the earliest free slot, Monday 12:00 before a later packed day', () => {
+        assert.equal(studentIsFlexible('Szia, bármikor jó nekem.'), true);
+        assert.equal(studentIsFlexible('Csak csütörtökön érek rá.'), false);
+        const slot = earliestFreeSlot([mon, thu]);
+        assert.equal(slot?.dateKey, '2026-09-14');
+        assert.equal(slot?.time, '12:00');
+        assert.equal(slot?.weekdayHu, 'hétfő');
+    });
+
+    it('keeps an earlier Monday instead of swapping it for a later packed hour', () => {
         const alt = shouldOfferPackedInsteadOfRequested(
             { dateKey: '2026-09-14', time: '12:00' },
             [mon, thu],
             parseStudentWindow('hétköznap 12 után')
         );
-        assert.ok(alt.length >= 1);
-        assert.equal(alt[0].dateKey, '2026-09-17');
+        assert.equal(alt.length, 0);
     });
 });

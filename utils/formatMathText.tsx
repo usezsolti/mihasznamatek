@@ -173,8 +173,11 @@ type Chunk =
     | { kind: 'frac'; num: string; den: string };
 
 function nextSlash(src: string, from: number): number {
+    let brace = 0;
     for (let i = from; i < src.length; i++) {
-        if (isSlash(src[i])) return i;
+        if (src[i] === '{') brace += 1;
+        else if (src[i] === '}') brace = Math.max(0, brace - 1);
+        else if (brace === 0 && isSlash(src[i])) return i;
     }
     return -1;
 }
@@ -221,15 +224,15 @@ function formatScripts(text: string): ReactNode {
     const nodes: ReactNode[] = [];
     let last = 0;
     let key = 0;
-    SCRIPT.lastIndex = 0;
+    const re = new RegExp(SCRIPT.source, 'g');
     let m: RegExpExecArray | null;
     const src = String(text);
-    while ((m = SCRIPT.exec(src))) {
+    while ((m = re.exec(src))) {
         if (m.index > last) nodes.push(src.slice(last, m.index));
         if (m[1] != null || m[2] != null) {
-            nodes.push(<sub key={`s${key++}`}>{m[1] ?? m[2]}</sub>);
+            nodes.push(<sub key={`s${key++}`}>{formatMathText(m[1] ?? m[2])}</sub>);
         } else {
-            nodes.push(<sup key={`p${key++}`}>{m[3] ?? m[4]}</sup>);
+            nodes.push(<sup key={`p${key++}`}>{formatMathText(m[3] ?? m[4])}</sup>);
         }
         last = m.index + m[0].length;
     }
@@ -245,7 +248,7 @@ export function stripOfficialTaskLabel(text: string | undefined | null): string 
     if (!text) return '';
     const before = String(text);
     const after = before
-        .replace(/^\d{4}\/\d+(?:\.[a-z])?(?:–[a-z])?\)?\s*/i, '')
+        .replace(/^\d{4}\/\d+(?:\.[a-z](?:\)|–[a-z]\))?)?\.?\s*/, '')
         .replace(/\s*\(([A-Ea-e])\)\s*(?==)/g, ' ')
         .replace(/[ \t]{2,}/g, ' ')
         .replace(/[ \t]+\n/g, '\n')
@@ -271,11 +274,61 @@ export function stripOfficialTaskLabel(text: string | undefined | null): string 
     return after;
 }
 
-/** a_n → alsó index, ^n → felső, a/b → egymás alatti hányados. */
+type RootPiece = { kind: 'text'; value: string } | { kind: 'root'; sign: string; inner: string };
+
+function splitRoots(src: string): RootPiece[] {
+    const re = /\b(cuberoot|cbrt|sqrt)\(/gi;
+    const out: RootPiece[] = [];
+    let last = 0;
+    let m: RegExpExecArray | null;
+    while ((m = re.exec(src))) {
+        const open = m.index + m[0].length;
+        let depth = 1;
+        let i = open;
+        while (i < src.length && depth > 0) {
+            if (src[i] === '(') depth += 1;
+            else if (src[i] === ')') depth -= 1;
+            if (depth > 0) i += 1;
+            else break;
+        }
+        if (depth !== 0) break;
+        if (m.index > last) out.push({ kind: 'text', value: src.slice(last, m.index) });
+        const name = m[1].toLowerCase();
+        out.push({
+            kind: 'root',
+            sign: name === 'sqrt' ? '√' : '∛',
+            inner: src.slice(open, i),
+        });
+        last = i + 1;
+        re.lastIndex = last;
+    }
+    if (last < src.length) out.push({ kind: 'text', value: src.slice(last) });
+    if (!out.length) out.push({ kind: 'text', value: src });
+    return out;
+}
+
+function formatPlain(src: string, keyBase: string): ReactNode {
+    const chunks = splitFractions(src);
+    return chunks.map((chunk, i) => {
+        if (chunk.kind === 'text') {
+            return <Fragment key={`${keyBase}-t${i}`}>{formatScripts(chunk.value)}</Fragment>;
+        }
+        return (
+            <span key={`${keyBase}-f${i}`} className="mm-frac" aria-label={`${chunk.num} per ${chunk.den}`}>
+                <span className="mm-frac-num">{formatMathText(chunk.num)}</span>
+                <span className="mm-frac-bar" />
+                <span className="mm-frac-den">{formatMathText(chunk.den)}</span>
+            </span>
+        );
+    });
+}
+
+/** a_n → alsó index, ^n → felső, a/b → egymás alatti hányados, sqrt/cuberoot → gyök. */
 export function formatMathText(text: string | undefined | null): ReactNode {
     if (!text) return null;
     const src = String(text);
-    const chunks = splitFractions(src);
+    const pieces = splitRoots(src);
+    const chunks = pieces.flatMap((p) => (p.kind === 'text' ? splitFractions(p.value) : []));
     const fracN = chunks.filter((c) => c.kind === 'frac').length;
 
     if (src.includes('_') || src.includes('/') || fracN > 0) {
@@ -297,16 +350,15 @@ export function formatMathText(text: string | undefined | null): ReactNode {
         // #endregion
     }
 
-    return chunks.map((chunk, i) => {
-        if (chunk.kind === 'text') {
-            return <Fragment key={i}>{formatScripts(chunk.value)}</Fragment>;
+    return pieces.map((piece, i) => {
+        if (piece.kind === 'root') {
+            return (
+                <span key={`r${i}`} className="mm-root" aria-label={`${piece.sign}${piece.inner}`}>
+                    <span className="mm-root-sign">{piece.sign}</span>
+                    <span className="mm-root-body">{formatMathText(piece.inner)}</span>
+                </span>
+            );
         }
-        return (
-            <span key={i} className="mm-frac" aria-label={`${chunk.num} per ${chunk.den}`}>
-                <span className="mm-frac-num">{formatMathText(chunk.num)}</span>
-                <span className="mm-frac-bar" />
-                <span className="mm-frac-den">{formatMathText(chunk.den)}</span>
-            </span>
-        );
+        return <Fragment key={`p${i}`}>{formatPlain(piece.value, `p${i}`)}</Fragment>;
     });
 }

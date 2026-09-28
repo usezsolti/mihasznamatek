@@ -118,6 +118,21 @@ describe('whiteboardInkToShape', () => {
         assert.ok(out.points.length > 10);
     });
 
+    it('keeps a pinched 8 as ink instead of a circle', () => {
+        const pts: WbPoint[] = [];
+        const pushLoop = (cy: number, r: number, from: number, to: number) => {
+            for (let i = 0; i <= 28; i++) {
+                const a = from + ((to - from) * i) / 28;
+                const pinch = Math.sin(a) > 0.2 ? 1 : 0.35;
+                pts.push({ x: 120 + r * pinch * Math.cos(a), y: cy + r * Math.sin(a) });
+            }
+        };
+        pushLoop(90, 34, -Math.PI / 2, Math.PI * 1.5);
+        pushLoop(150, 34, Math.PI / 2, Math.PI * 2.5);
+        const out = correctInkStroke(pen(pts));
+        assert.equal(out.tool, 'pen');
+    });
+
     it('does not turn a scribbled 3-like stroke into a polygon', () => {
         const pts: WbPoint[] = [];
         for (let i = 0; i <= 30; i++) {

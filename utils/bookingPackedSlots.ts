@@ -98,7 +98,6 @@ export function suggestPackedSlots(
         }
     }
     ranked.sort((a, b) => {
-        if (b.packScore !== a.packScore) return b.packScore - a.packScore;
         if (a.dateKey !== b.dateKey) return a.dateKey.localeCompare(b.dateKey);
         return parseTime(a.time) - parseTime(b.time);
     });
@@ -214,6 +213,37 @@ export function hasStudentWindow(window: StudentWindow | null): boolean {
     return Boolean(window);
 }
 
+const FLEXIBLE =
+    /\b(barmikor|akarmikor|mindegy|barmelyik|barmilyen|amikor csak|neked jo|ahogy neked|anytime|whenever)\b/;
+
+/** „Bármikor jó” — nincs nap- vagy óraszűkítés. */
+export function studentIsFlexible(text: string): boolean {
+    return FLEXIBLE.test(foldHu(text));
+}
+
+/** Legkorábbi szabad sáv, dátum majd óra szerint (pl. hétfő 12:00). */
+export function earliestFreeSlot(days: DaySlots[]): PackedSlot | null {
+    let best: PackedSlot | null = null;
+    for (const day of days) {
+        for (const time of day.freeSlots) {
+            if (
+                !best ||
+                day.dateKey < best.dateKey ||
+                (day.dateKey === best.dateKey && parseTime(time) < parseTime(best.time))
+            ) {
+                best = {
+                    dateKey: day.dateKey,
+                    time,
+                    weekdayHu: day.weekdayHu || WEEKDAY_LABEL[weekdayIndexFromDateKey(day.dateKey)] || '',
+                    packScore: 0,
+                    reason: 'earliest-free',
+                };
+            }
+        }
+    }
+    return best;
+}
+
 /** Next occurrence of weekday (0=Sun) on or after fromDateKey. */
 export function nextDateKeyForWeekday(fromDateKey: string, weekday: number): string {
     const d = new Date(fromDateKey + 'T12:00:00');
@@ -241,18 +271,16 @@ export function parseRequestedSlots(text: string, todayKey: string): RequestedSl
         out.push({ dateKey: m[1], time: m[2] ? formatTime(parseTime(m[2].length === 4 ? `0${m[2]}` : m[2])) : '12:00' });
     }
 
-    const clock = f.match(/\b(\d{1,2})(?::(\d{2}))?\b(?:-kor)?/);
-    let time = '16:00';
-    if (clock) {
-        const h = Number(clock[1]);
-        const min = clock[2] ? Number(clock[2]) : 0;
-        if (h <= 23) time = formatTime(h * 60 + min);
-    }
-
     for (const [name, idx] of Object.entries(WEEKDAY_HU)) {
-        if (new RegExp(`\\b${name}`).test(f) && /\b\d{1,2}/.test(f)) {
-            out.push({ dateKey: nextDateKeyForWeekday(todayKey, idx), time });
-        }
+        const re = new RegExp(
+            `\\b${name}\\w{0,12}(?:\\s+\\w+){0,4}\\s+(\\d{1,2})(?::(\\d{2}))?\\s*(?:ora|kor)?\\b|\\b(\\d{1,2})(?::(\\d{2}))?\\s*(?:ora|kor)\\b(?:\\s+\\w+){0,4}\\s+${name}`
+        );
+        const m = f.match(re);
+        if (!m) continue;
+        const h = Number(m[1] || m[3]);
+        const min = Number(m[2] || m[4] || 0);
+        if (h < 8 || h > 21 || min > 59) continue;
+        out.push({ dateKey: nextDateKeyForWeekday(todayKey, idx), time: formatTime(h * 60 + min) });
     }
     const uniq = new Map<string, RequestedSlot>();
     for (const s of out) uniq.set(`${s.dateKey}|${s.time}`, s);

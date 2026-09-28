@@ -5793,6 +5793,36 @@ select.form-input:disabled {
     padding-top: 0.12em;
 }
 
+.mm-root {
+    display: inline-flex;
+    align-items: center;
+    vertical-align: middle;
+    margin: 0 0.12em;
+    line-height: 1;
+}
+
+.mm-root-sign {
+    font-size: 1.45em;
+    line-height: 0.8;
+}
+
+.mm-root-body {
+    border-top: 1.6px solid currentColor;
+    padding: 0.04em 0.16em 0.02em;
+    margin-left: 0.04em;
+    line-height: 1.2;
+}
+
+sup:has(.mm-frac) {
+    line-height: 1.05;
+    vertical-align: 0.55em;
+}
+
+sup .mm-frac {
+    font-size: 1em;
+    margin: 0 0.06em;
+}
+
 @media (max-width: 420px) {
     .mm-path {
         max-width: 100%;

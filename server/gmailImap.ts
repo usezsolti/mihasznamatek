@@ -38,31 +38,91 @@ function extractHeader(raw: string, name: string): string {
 }
 
 function decodeQuotedPrintable(s: string): string {
+    const bytes: number[] = [];
+    const src = s.replace(/=\r?\n/g, '');
+    for (let i = 0; i < src.length; i++) {
+        if (src[i] === '=' && /^[0-9A-Fa-f]{2}/.test(src.slice(i + 1, i + 3))) {
+            bytes.push(parseInt(src.slice(i + 1, i + 3), 16));
+            i += 2;
+        } else {
+            bytes.push(src.charCodeAt(i) & 0xff);
+        }
+    }
+    return Buffer.from(bytes).toString('utf8');
+}
+
+function headerMap(head: string): Record<string, string> {
+    const map: Record<string, string> = {};
+    const unfolded = head.replace(/\r?\n[ \t]+/g, ' ');
+    for (const line of unfolded.split(/\r?\n/)) {
+        const i = line.indexOf(':');
+        if (i <= 0) continue;
+        map[line.slice(0, i).trim().toLowerCase()] = line.slice(i + 1).trim();
+    }
+    return map;
+}
+
+function splitHeadBody(raw: string): { head: string; body: string } {
+    const crlf = raw.indexOf('\r\n\r\n');
+    const lf = raw.indexOf('\n\n');
+    const cut = crlf >= 0 && (lf < 0 || crlf <= lf) ? crlf : lf;
+    if (cut < 0) return { head: '', body: raw };
+    const sep = raw.startsWith('\r\n', cut) || cut === crlf ? 4 : 2;
+    return { head: raw.slice(0, cut), body: raw.slice(cut + sep) };
+}
+
+function decodeTransfer(body: string, cte: string): string {
+    const enc = cte.toLowerCase();
+    if (enc.includes('base64')) {
+        try {
+            return Buffer.from(body.replace(/\s+/g, ''), 'base64').toString('utf8');
+        } catch {
+            return body;
+        }
+    }
+    if (enc.includes('quoted-printable')) return decodeQuotedPrintable(body);
+    return body;
+}
+
+function stripHtml(s: string): string {
     return s
-        .replace(/=\r?\n/g, '')
-        .replace(/=([0-9A-Fa-f]{2})/g, (_, h) => String.fromCharCode(parseInt(h, 16)));
+        .replace(/<style[\s\S]*?<\/style>/gi, ' ')
+        .replace(/<script[\s\S]*?<\/script>/gi, ' ')
+        .replace(/<[^>]+>/g, ' ')
+        .replace(/&nbsp;/gi, ' ')
+        .replace(/&amp;/gi, '&');
+}
+
+function collectTexts(raw: string, depth: number): { plain: string[]; html: string[] } {
+    const plain: string[] = [];
+    const html: string[] = [];
+    if (depth > 6 || !raw) return { plain, html };
+    const { head, body } = splitHeadBody(raw);
+    const headers = headerMap(head);
+    const ct = headers['content-type'] || 'text/plain';
+    const cte = headers['content-transfer-encoding'] || '';
+    const boundary = /boundary="?([^";]+)"?/i.exec(ct)?.[1];
+    if (boundary && /multipart\//i.test(ct)) {
+        const chunks = body.split(new RegExp(`--${boundary.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}`));
+        for (const chunk of chunks) {
+            const part = chunk.replace(/^\r?\n/, '');
+            if (!part.trim() || part.trim() === '--') continue;
+            const nested = collectTexts(part, depth + 1);
+            plain.push(...nested.plain);
+            html.push(...nested.html);
+        }
+        return { plain, html };
+    }
+    const decoded = decodeTransfer(body, cte);
+    if (/text\/html/i.test(ct)) html.push(stripHtml(decoded));
+    else if (/text\/plain/i.test(ct) || !head) plain.push(decoded);
+    return { plain, html };
 }
 
 export function extractMailText(raw: string): string {
-    const cut = raw.indexOf('\r\n\r\n') >= 0 ? raw.indexOf('\r\n\r\n') : raw.indexOf('\n\n');
-    let body = cut >= 0 ? raw.slice(cut).replace(/^\s+/, '') : raw;
-    const head = cut >= 0 ? raw.slice(0, cut) : '';
-    if (/quoted-printable/i.test(head) || /=[0-9A-F]{2}/i.test(body.slice(0, 400))) {
-        body = decodeQuotedPrintable(body);
-    }
-    if (/base64/i.test(head) && !/<html/i.test(body.slice(0, 80))) {
-        try {
-            const b64 = body.replace(/\s+/g, '');
-            if (/^[A-Za-z0-9+/]+=*$/.test(b64.slice(0, 200))) {
-                body = Buffer.from(b64, 'base64').toString('utf8');
-            }
-        } catch {
-            /* keep */
-        }
-    }
-    body = body.replace(/<style[\s\S]*?<\/style>/gi, ' ');
-    body = body.replace(/<[^>]+>/g, ' ');
-    return body.replace(/\s+/g, ' ').trim().slice(0, 6000);
+    const parts = collectTexts(raw, 0);
+    const text = (parts.plain.join('\n') || parts.html.join('\n') || raw).replace(/\s+/g, ' ').trim();
+    return text.slice(0, 6000);
 }
 
 function parseAddress(v: { address?: string; name?: string } | undefined): { email: string; name: string } {
@@ -83,7 +143,7 @@ async function connect(): Promise<ImapFlow> {
     return client;
 }
 
-export async function fetchUnprocessedInbox(limit = 8): Promise<InboundMail[]> {
+export async function fetchUnprocessedInbox(limit = 25): Promise<InboundMail[]> {
     if (!gmailImapReady()) return [];
     const client = await connect();
     const out: InboundMail[] = [];

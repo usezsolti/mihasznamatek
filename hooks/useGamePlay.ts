@@ -111,7 +111,7 @@ export function useGamePlay({
     educationLevel,
     generateUniversityQuestions,
     onResetPicker,
-    playWithLives = true,
+    playWithLives = false,
 }: UseGamePlayParams) {
     const router = useRouter();
     const challengeNode = skillNodeById(String(router.query.challenge || ''));

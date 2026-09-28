@@ -154,6 +154,29 @@ function properIntersect(a: WbPoint, b: WbPoint, c: WbPoint, d: WbPoint): boolea
     return o1 * o2 < 0 && o3 * o4 < 0;
 }
 
+/** Handwritten 8: wide at the top and bottom, narrow at the waist. A circle is widest in the middle. */
+function hasFigureEightWaist(pts: WbPoint[]): boolean {
+    const b = bbox(pts);
+    if (b.h < 24 || b.w < 16) return false;
+    const spanX = (arr: WbPoint[]) => {
+        if (arr.length < 2) return 0;
+        let min = Infinity;
+        let max = -Infinity;
+        for (const p of arr) {
+            if (p.x < min) min = p.x;
+            if (p.x > max) max = p.x;
+        }
+        return max - min;
+    };
+    const top = pts.filter((p) => p.y <= b.minY + b.h * 0.28);
+    const mid = pts.filter((p) => Math.abs(p.y - (b.minY + b.h / 2)) <= b.h * 0.1);
+    const bot = pts.filter((p) => p.y >= b.maxY - b.h * 0.28);
+    const ts = spanX(top);
+    const ms = spanX(mid);
+    const bs = spanX(bot);
+    return ts > b.w * 0.45 && bs > b.w * 0.45 && ms < Math.min(ts, bs) * 0.62;
+}
+
 /** True if the stroke crosses itself (figure-8, 4, 8, scribbles) — not just a closed loop. */
 function hasInteriorSelfIntersection(pts: WbPoint[]): boolean {
     const p = pts.length > 52 ? resample(pts, 52) : pts;
@@ -626,6 +649,7 @@ export function correctInkStroke(stroke: WbStroke): WbStroke {
           : 0;
     const complexity = strokeComplexity(pts);
     const crossed = hasInteriorSelfIntersection(pts);
+    const eightWaist = hasFigureEightWaist(pts);
     const rect = scoreRect(pts, box);
     const circ = scoreCircle(pts);
     const ell = scoreEllipse(pts, box);
@@ -639,6 +663,7 @@ export function correctInkStroke(stroke: WbStroke): WbStroke {
         trapPair,
         complexity: Number(complexity.toFixed(3)),
         crossed,
+        eightWaist,
         rectScore: Number(rect.score.toFixed(3)),
         circScore: Number(circ.score.toFixed(3)),
         circOk: circ.ok,
@@ -674,8 +699,8 @@ export function correctInkStroke(stroke: WbStroke): WbStroke {
     const looksLikeTriangle =
         !!triVerts && (triFit > 0.58 || (triRight && triFit > 0.5));
 
-    // Figure-8 / scribbled digits: keep ink — but closed geometry still snaps.
-    if ((crossed || complexity > 1.75) && !looksRound && !looksLikeRect && !looksLikeTriangle) {
+    // Handwritten 8 / 4 / scribble: a crossing or a waist must stay ink, even if the box looks round or square.
+    if (crossed || eightWaist || (complexity > 1.75 && !looksRound && !looksLikeRect && !looksLikeTriangle)) {
         lastInkCorrectionDebug = { ...lastInkCorrectionDebug, branch: 'handwriting' };
         return stroke;
     }
