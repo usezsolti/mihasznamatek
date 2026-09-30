@@ -68,7 +68,7 @@ export function strokeInkBounds(
         expand(x + tw, y + fontPx * 1.35, 6);
     }
 
-    if (stroke.tool === 'rect' || stroke.tool === 'ellipse') {
+    if (stroke.tool === 'rect' || stroke.tool === 'ellipse' || stroke.tool === 'image') {
         const x0 = stroke.x || 0;
         const y0 = stroke.y || 0;
         const x1 = x0 + (stroke.w || 0);

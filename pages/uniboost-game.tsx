@@ -3,9 +3,13 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { getAvatarColor, getRankEmoji, getRankTitle } from '../utils/practiceProgress';
 import { formatMathText } from '../utils/formatMathText';
+import { useGameAuth } from '../hooks/useGameAuth';
+import GameRegisterGate from '../components/game/GameRegisterGate';
+import GameLoading from '../components/game/GameLoading';
 
 export default function UniBoostGame() {
     const router = useRouter();
+    const { currentUser, loading } = useGameAuth();
     const [score, setScore] = useState(0);
     const [level, setLevel] = useState(1);
     const [lives, setLives] = useState(3);
@@ -221,6 +225,7 @@ export default function UniBoostGame() {
     ];
 
     const startGame = () => {
+        if (!currentUser?.uid) return;
         setGameActive(true);
         setCurrentQuestion(0);
         setScore(0);
@@ -383,8 +388,12 @@ export default function UniBoostGame() {
 
     const getAvatarTitle = (level: number) => getRankTitle(level);
 
-    if (!isClient) {
-        return <div>Loading...</div>;
+    if (!isClient || loading) {
+        return <GameLoading />;
+    }
+
+    if (!currentUser) {
+        return <GameRegisterGate />;
     }
 
     return (

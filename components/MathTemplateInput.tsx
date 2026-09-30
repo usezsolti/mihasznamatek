@@ -18,6 +18,12 @@ type Props = {
     autoFocus?: boolean;
     id?: string;
     onSubmit?: () => void;
+    /** A játék neon felülete. A számológép a saját, tömör lapját használja. */
+    tone?: 'game' | 'sheet';
+    /** Ha meg van adva, csak ezek a kategóriák látszanak. */
+    categories?: MathCategoryId[];
+    /** Ha meg van adva, csak ezek a sablonok és jelek látszanak. */
+    itemIds?: string[];
 };
 
 /** Beágyazott sablonfa: szöveg vagy belső művelet. */
@@ -109,6 +115,9 @@ export default function MathTemplateInput({
     autoFocus = false,
     id,
     onSubmit,
+    tone = 'game',
+    categories,
+    itemIds,
 }: Props) {
     const [panelOpen, setPanelOpen] = useState(true);
     const [category, setCategory] = useState<MathCategoryId>('basic');
@@ -116,7 +125,14 @@ export default function MathTemplateInput({
     const [focusPath, setFocusPath] = useState<FocusPath>([0]);
     const inputRefs = useRef<Record<string, HTMLInputElement | null>>({});
 
-    const activeCategory = MATH_CATEGORIES.find((c) => c.id === category) || MATH_CATEGORIES[0];
+    const sheet = tone === 'sheet';
+    const visibleCategories = categories?.length
+        ? MATH_CATEGORIES.filter((c) => categories.includes(c.id))
+        : MATH_CATEGORIES;
+    const activeCategory = visibleCategories.find((c) => c.id === category) || visibleCategories[0] || MATH_CATEGORIES[0];
+    const visibleItems = itemIds?.length
+        ? activeCategory.items.filter((item) => itemIds.includes(item.id))
+        : activeCategory.items;
     const focusKey = focusPath.join('.');
 
     useEffect(() => {
@@ -320,9 +336,20 @@ export default function MathTemplateInput({
                 onKeyDown={(e) => handleLeafKeyDown(e, path, text)}
                 style={{
                     ...slotBox,
+                    ...(sheet ? sheetSlot : null),
                     maxWidth: role === 'setlist' ? 280 : slotBox.maxWidth,
-                    borderColor: focused ? '#39ff14' : 'rgba(57,255,20,0.55)',
-                    boxShadow: focused ? '0 0 0 2px rgba(57,255,20,0.25)' : 'none',
+                    borderColor: focused
+                        ? sheet
+                            ? '#1d4ed8'
+                            : '#39ff14'
+                        : sheet
+                          ? '#c5cad6'
+                          : 'rgba(57,255,20,0.55)',
+                    boxShadow: focused
+                        ? sheet
+                            ? '0 0 0 2px rgba(29,78,216,0.18)'
+                            : '0 0 0 2px rgba(57,255,20,0.25)'
+                        : 'none',
                     width: size.width,
                     height: size.height,
                     fontSize: size.fontSize,
@@ -361,9 +388,11 @@ export default function MathTemplateInput({
                         padding: '2px 4px',
                         borderRadius: 6,
                         border: nestedFocused
-                            ? '1px solid rgba(57,255,20,0.55)'
+                            ? sheet
+                                ? '1px solid #1d4ed8'
+                                : '1px solid rgba(57,255,20,0.55)'
                             : '1px solid transparent',
-                        background: 'rgba(57,255,20,0.06)',
+                        background: sheet ? 'transparent' : 'rgba(57,255,20,0.06)',
                         cursor: 'pointer',
                     }}
                 >
@@ -376,8 +405,11 @@ export default function MathTemplateInput({
     };
 
     return (
-        <div className="math-template-input wolfram-full" style={{ width: '100%' }}>
-            <div style={mainBar}>
+        <div
+            className={`math-template-input wolfram-full${sheet ? ' is-sheet' : ''}`}
+            style={{ width: '100%', ['--mm-ink' as string]: sheet ? '#1b1b1f' : undefined, ['--mm-paper' as string]: sheet ? '#1b1b1f' : undefined }}
+        >
+            <div style={sheet ? { ...mainBar, ...sheetMainBar } : mainBar}>
                 <div style={mainBarInner}>
                     {!root ? (
                         <input
@@ -391,13 +423,13 @@ export default function MathTemplateInput({
                             onKeyDown={(e) => {
                                 if (e.key === 'Enter' && onSubmit) onSubmit();
                             }}
-                            style={freeInput}
+                            style={sheet ? { ...freeInput, ...sheetFreeInput } : freeInput}
                         />
                     ) : (
-                        <div style={visualArea}>{renderNode(root, [])}</div>
+                        <div style={sheet ? { ...visualArea, ...sheetVisual } : visualArea}>{renderNode(root, [])}</div>
                     )}
                 </div>
-                <button type="button" disabled={disabled} title="Törlés" onClick={clearAll} style={iconBtn}>
+                <button type="button" disabled={disabled} title="Törlés" onClick={clearAll} style={sheet ? { ...iconBtn, ...sheetIconBtn } : iconBtn}>
                     ×
                 </button>
                 <button
@@ -405,64 +437,66 @@ export default function MathTemplateInput({
                     disabled={disabled || !String(value || '').trim()}
                     title="Beküldés"
                     onClick={() => onSubmit?.()}
-                    style={equalsBtn}
+                    style={sheet ? { ...equalsBtn, ...sheetEqualsBtn } : equalsBtn}
                 >
                     =
                 </button>
             </div>
 
             {root ? (
-                <div style={{ color: '#8a8', fontSize: '0.75rem', marginBottom: '0.4rem' }}>
+                <div style={{ color: sheet ? '#5c6570' : '#8a8', fontSize: '0.75rem', marginBottom: '0.4rem' }}>
                     Tip: kattints egy dobozba, majd válassz új sablont — belekerül a műveletbe.
                 </div>
             ) : null}
 
             <div style={modeRow}>
-                <button type="button" disabled={disabled} onClick={goFree} style={modeBtn(!root)}>
+                <button type="button" disabled={disabled} onClick={goFree} style={modeBtn(!root, sheet)}>
                     ABC
                 </button>
                 <button
                     type="button"
                     disabled={disabled}
                     onClick={() => setPanelOpen((o) => !o)}
-                    style={modeBtn(panelOpen)}
+                    style={modeBtn(panelOpen, sheet)}
                 >
                     {panelOpen ? 'Sablonok ▾' : 'Sablonok ▸'}
                 </button>
             </div>
 
             {panelOpen && (
-                <div style={panel}>
-                    <div style={panelHeader}>
+                <div style={sheet ? { ...panel, ...sheetPanel } : panel}>
+                    <div style={sheet ? { ...panelHeader, ...sheetPanelHeader } : panelHeader}>
                         <span style={{ fontWeight: 800, letterSpacing: '0.04em', fontSize: '0.85rem' }}>
-                            ÖSSZES MATEK SABLON
+                            {visibleCategories.length === 1 ? 'Alap matek' : 'ÖSSZES MATEK SABLON'}
                         </span>
                         <button
                             type="button"
                             onClick={() => setPanelOpen(false)}
-                            style={{ ...iconBtn, width: 32, height: 32, fontSize: '1.1rem' }}
+                            style={{ ...(sheet ? { ...iconBtn, ...sheetIconBtn } : iconBtn), width: 32, height: 32, fontSize: '1.1rem' }}
                             title="Bezárás"
                         >
                             ×
                         </button>
                     </div>
 
+                    {visibleCategories.length > 1 && (
                     <div style={tabRow}>
-                        {MATH_CATEGORIES.map((c) => (
+                        {visibleCategories.map((c) => (
                             <button
                                 key={c.id}
                                 type="button"
                                 disabled={disabled}
                                 onClick={() => setCategory(c.id)}
-                                style={tabBtn(category === c.id)}
+                                style={tabBtn(category === c.id, sheet)}
                             >
                                 {c.title}
                             </button>
                         ))}
                     </div>
+                    )}
 
                     <div style={grid}>
-                        {activeCategory.items.map((item) => (
+                        {visibleItems.map((item) => (
                             <button
                                 key={item.id}
                                 type="button"
@@ -472,9 +506,9 @@ export default function MathTemplateInput({
                                     if (item.kind === 'template') selectTemplate(item);
                                     else insertSymbol(item.insert);
                                 }}
-                                style={toolBtn(false)}
+                                style={toolBtn(sheet)}
                             >
-                                <span style={{ fontSize: '0.88rem', lineHeight: 1.1, color: '#39ff14' }}>
+                                <span style={{ fontSize: '0.95rem', lineHeight: 1.1, color: sheet ? '#1b1b1f' : '#39ff14' }}>
                                     <InlineMath math={item.katex} />
                                 </span>
                             </button>
@@ -568,7 +602,19 @@ const modeRow: CSSProperties = {
     marginBottom: '0.5rem',
 };
 
-function modeBtn(active: boolean): CSSProperties {
+function modeBtn(active: boolean, sheet = false): CSSProperties {
+    if (sheet) {
+        return {
+            padding: '0.4rem 0.75rem',
+            borderRadius: 10,
+            border: 'none',
+            background: active ? 'rgba(37, 99, 235, 0.16)' : '#eef1f6',
+            color: active ? '#1d4ed8' : '#1b1b1f',
+            cursor: 'pointer',
+            fontWeight: 700,
+            fontSize: '0.85rem',
+        };
+    }
     return {
         padding: '0.4rem 0.75rem',
         borderRadius: 8,
@@ -606,7 +652,20 @@ const tabRow: CSSProperties = {
     marginBottom: '0.55rem',
 };
 
-function tabBtn(active: boolean): CSSProperties {
+function tabBtn(active: boolean, sheet = false): CSSProperties {
+    if (sheet) {
+        return {
+            padding: '0.35rem 0.6rem',
+            borderRadius: 10,
+            border: 'none',
+            background: active ? 'rgba(37, 99, 235, 0.16)' : '#eef1f6',
+            color: active ? '#1d4ed8' : '#1b1b1f',
+            cursor: 'pointer',
+            fontSize: '0.68rem',
+            fontWeight: 800,
+            letterSpacing: '0.03em',
+        };
+    }
     return {
         padding: '0.3rem 0.55rem',
         borderRadius: 6,
@@ -626,7 +685,21 @@ const grid: CSSProperties = {
     gap: '0.4rem',
 };
 
-function toolBtn(_active: boolean): CSSProperties {
+function toolBtn(sheet = false): CSSProperties {
+    if (sheet) {
+        return {
+            minHeight: 48,
+            padding: '0.3rem 0.25rem',
+            display: 'inline-flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            background: '#eef1f6',
+            border: 'none',
+            borderRadius: 10,
+            color: '#1b1b1f',
+            cursor: 'pointer',
+        };
+    }
     return {
         minHeight: 48,
         padding: '0.3rem 0.25rem',
@@ -640,3 +713,45 @@ function toolBtn(_active: boolean): CSSProperties {
         cursor: 'pointer',
     };
 }
+
+const sheetSlot: CSSProperties = {
+    background: '#fff',
+    border: '1.5px solid #c5cad6',
+    color: '#1b1b1f',
+};
+
+const sheetMainBar: CSSProperties = {
+    background: '#fff',
+    border: '1px solid rgba(0, 0, 0, 0.08)',
+    borderRadius: 10,
+    boxShadow: 'none',
+};
+
+const sheetFreeInput: CSSProperties = {
+    color: '#1b1b1f',
+};
+
+const sheetVisual: CSSProperties = {
+    color: '#1b1b1f',
+};
+
+const sheetIconBtn: CSSProperties = {
+    border: 'none',
+    background: '#eef1f6',
+    color: '#1b1b1f',
+};
+
+const sheetEqualsBtn: CSSProperties = {
+    background: '#1d4ed8',
+    color: '#fff',
+};
+
+const sheetPanel: CSSProperties = {
+    background: '#f3f5f8',
+    border: '1px solid rgba(0, 0, 0, 0.06)',
+    borderRadius: 10,
+};
+
+const sheetPanelHeader: CSSProperties = {
+    color: '#1b1b1f',
+};

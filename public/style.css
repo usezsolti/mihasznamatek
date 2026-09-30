@@ -2121,29 +2121,6 @@ h1 {
   color: #ffffff;
 }
 
-.nav-social-link.game {
-  background: linear-gradient(135deg, var(--neon-green), var(--neon-pink));
-  border: 2px solid var(--neon-green);
-  color: #000;
-  font-size: 16px;
-  font-weight: bold;
-}
-
-.nav-social-link.game:hover {
-  background: linear-gradient(135deg, #4ddb1a, #ff6be8);
-  border-color: #4ddb1a;
-  transform: scale(1.1);
-  box-shadow: 0 0 20px rgba(57, 255, 20, 0.5);
-}
-
-/* Játék ikon mérete */
-.nav-social-link.game {
-  font-size: 12px;
-  line-height: 1;
-  width: 28px;
-  height: 28px;
-}
-
 /* Language toggle (HU | EN) */
 .lang-toggle {
   display: inline-flex;

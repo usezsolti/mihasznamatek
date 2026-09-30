@@ -460,7 +460,7 @@ export default function Navbar() {
                                 <Link
                                     href="/whiteboard"
                                     className={router.pathname === "/whiteboard" ? "nav-link-active" : undefined}
-                                    onClick={toggleMenu}
+                                    onClick={() => setIsMenuOpen(false)}
                                 >
                                     {t('nav.whiteboard')}
                                 </Link>
@@ -536,9 +536,6 @@ export default function Navbar() {
                             title="TikTok"
                         >
                             <FaTiktok size={16} />
-                        </a>
-                        <a href="/game" className="nav-social-link game" title={t('nav.game')}>
-                            🎮
                         </a>
                     </div>
                 </div>

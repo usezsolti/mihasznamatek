@@ -5,6 +5,7 @@ import GamePlayHud from '../components/game/GamePlayHud';
 import GameQuestionCard from '../components/game/GameQuestionCard';
 import GamePathBackButton from '../components/game/GamePathBackButton';
 import GameLoading from '../components/game/GameLoading';
+import GameRegisterGate from '../components/game/GameRegisterGate';
 import GameLobby from '../components/game/GameLobby';
 import GameCelebrate from '../components/game/GameCelebrate';
 import { useGameAuth } from '../hooks/useGameAuth';
@@ -328,6 +329,7 @@ export default function Game() {
 
     // Érettségi feladatok betöltése után automatikusan elindítjuk a játékot
     useEffect(() => {
+        if (!currentUser?.uid) return;
         if (erettsegiQuestions.length > 0 && isErettsegiMode && !gameActive) {
             setGameActive(true);
             setScore(0);
@@ -344,7 +346,7 @@ export default function Game() {
             setIsCorrect(false);
             setShowExpression(false);
         }
-    }, [erettsegiQuestions, isErettsegiMode]);
+    }, [erettsegiQuestions, isErettsegiMode, currentUser?.uid]);
 
     // Feladatok betöltése a kiválasztott szint alapján (keverve) + hibás feladatok
     const questions: Question[] = useMemo(() => {
@@ -382,6 +384,10 @@ export default function Game() {
 
     if (!isClient || loading) {
         return <GameLoading />;
+    }
+
+    if (!currentUser) {
+        return <GameRegisterGate />;
     }
 
     return (

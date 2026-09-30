@@ -207,7 +207,7 @@ export function useGamePlay({
     }, []);
 
     useEffect(() => {
-        if (!gameActive) return;
+        if (!gameActive || !currentUser?.uid) return;
         void touchDailyJuice(currentUid()).then((prog) => {
             setJuiceBoosters(prog.juice?.boosters || { fiftyFifty: 0, secondChance: 0, freeze: 0 });
             completedChallengesRef.current = prog.juice?.completedChallenges || [];
@@ -244,7 +244,7 @@ export function useGamePlay({
             // #endregion
         }).catch(() => undefined);
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [gameActive]);
+    }, [gameActive, currentUser?.uid]);
 
     useEffect(() => {
         if (!gameActive) {
@@ -625,7 +625,7 @@ export function useGamePlay({
 
     // Sprint visszaszámláló
     useEffect(() => {
-        if (!gameActive || !isSprintMode || challengeOffer) return;
+        if (!currentUser?.uid || !gameActive || !isSprintMode || challengeOffer) return;
         if (sprintLeft <= 0) {
             if (!sprintEndedRef.current) {
                 sprintEndedRef.current = true;
@@ -639,10 +639,10 @@ export function useGamePlay({
         const id = window.setTimeout(() => setSprintLeft((s) => s - 1), 1000);
         return () => window.clearTimeout(id);
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [gameActive, isSprintMode, sprintLeft, challengeOffer]);
+    }, [gameActive, isSprintMode, sprintLeft, challengeOffer, currentUser?.uid]);
 
     useEffect(() => {
-        if (!gameActive || !challengeNode || !isPerQuestionTimer(challengeNode.rules)) return;
+        if (!currentUser?.uid || !gameActive || !challengeNode || !isPerQuestionTimer(challengeNode.rules)) return;
         sprintEndedRef.current = false;
         const sec = challengeSecondsForIndex(challengeNode.rules, currentQuestion);
         setSprintLeft(sec);
@@ -661,9 +661,10 @@ export function useGamePlay({
             runId: 'challenge-tree',
         });
         // #endregion
-    }, [gameActive, currentQuestion, challengeNode?.id, challengeNode?.rules.timerMode, challengeNode?.rules.seconds]);
+    }, [gameActive, currentQuestion, challengeNode?.id, challengeNode?.rules.timerMode, challengeNode?.rules.seconds, currentUser?.uid]);
 
     const startGame = async () => {
+        if (!currentUser?.uid) return;
         if (!educationLevel) return;
 
         const questions = getQuestions();

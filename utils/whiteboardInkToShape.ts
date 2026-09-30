@@ -177,16 +177,128 @@ function hasFigureEightWaist(pts: WbPoint[]): boolean {
     return ts > b.w * 0.45 && bs > b.w * 0.45 && ms < Math.min(ts, bs) * 0.62;
 }
 
-/** True if the stroke crosses itself (figure-8, 4, 8, scribbles) — not just a closed loop. */
+/**
+ * True if the stroke crosses itself (figure-8, 4, 8, scribbles) — not just a closed loop.
+ * A crossing at the start counts (an 8 often begins at its waist). Only neighbouring
+ * segments and the loop's own closure are ignored. A closure that runs a little past
+ * its start (an overlapping circle) is still a closure.
+ */
 function hasInteriorSelfIntersection(pts: WbPoint[]): boolean {
-    const p = pts.length > 52 ? resample(pts, 52) : pts;
+    const p = pts.length > 72 ? resample(pts, 72) : pts;
     const n = p.length;
     if (n < 8) return false;
-    const skip = Math.max(2, Math.floor(n * 0.22));
-    for (let i = skip; i < n - 1 - skip; i++) {
-        for (let j = i + 2; j < n - 1 - skip; j++) {
-            if (properIntersect(p[i], p[i + 1], p[j], p[j + 1])) return true;
+    const size = Math.max(bbox(p).w, bbox(p).h) || 1;
+    const neighbor = 3;
+    const closureBand = Math.max(4, Math.floor(n * 0.18));
+    let closeAt = n - 1;
+    const endsClose = dist(p[0], p[n - 1]) < size * 0.35;
+    if (!endsClose) {
+        for (let k = Math.floor(n * 0.5); k < n; k++) {
+            if (dist(p[k], p[0]) < size * 0.16) {
+                closeAt = k;
+                break;
+            }
         }
+    }
+    const closes = endsClose || closeAt < n - 1;
+    for (let i = 0; i < n - 1; i++) {
+        for (let j = i + neighbor; j < n - 1; j++) {
+            if (!properIntersect(p[i], p[i + 1], p[j], p[j + 1])) continue;
+            // The stroke coming back to where it began is a loop closure, even if it
+            // then overlaps itself a little. A crossing away from that closure still counts.
+            if (closes && i < closureBand && j >= closeAt - closureBand) continue;
+            return true;
+        }
+    }
+    return false;
+}
+
+/** Ramanujan approximation of an ellipse perimeter. */
+function ellipsePerimeter(rx: number, ry: number): number {
+    const a = Math.max(rx, ry);
+    const b = Math.min(rx, ry);
+    if (a < 1) return 0;
+    return Math.PI * (3 * (a + b) - Math.sqrt((3 * a + b) * (a + 3 * b)));
+}
+
+/** Path length divided by the perimeter of the stroke's bounding ellipse. A circle is near 1. */
+function loopLengthRatio(pts: WbPoint[]): number {
+    const box = bbox(pts);
+    const peri = ellipsePerimeter(box.w / 2, box.h / 2);
+    if (peri < 1) return 99;
+    return pathLength(pts) / peri;
+}
+
+function circleFit(pts: WbPoint[]): { c: WbPoint; r: number; roundness: number } | null {
+    const n = pts.length;
+    if (n < 8) return null;
+    const triples = [
+        [0, Math.floor(n / 3), Math.floor((2 * n) / 3)],
+        [Math.floor(n / 6), Math.floor(n / 2), Math.floor((5 * n) / 6)],
+        [Math.floor(n / 8), Math.floor((3 * n) / 8), Math.floor((6 * n) / 8)],
+    ];
+    let sx = 0;
+    let sy = 0;
+    let used = 0;
+    for (const [i, j, k] of triples) {
+        const c = circumcenter(pts[i], pts[j], pts[k]);
+        if (!c) continue;
+        sx += c.x;
+        sy += c.y;
+        used += 1;
+    }
+    if (!used) return null;
+    const c = { x: sx / used, y: sy / used };
+    const radii = pts.map((p) => dist(p, c));
+    const r = radii.reduce((a, b) => a + b, 0) / radii.length;
+    if (r < 14) return null;
+    let varSum = 0;
+    for (const ri of radii) varSum += (ri - r) ** 2;
+    const roundness = 1 - Math.sqrt(varSum / radii.length) / r;
+    return { c, r, roundness };
+}
+
+function circumcenter(a: WbPoint, b: WbPoint, c: WbPoint): WbPoint | null {
+    const d = 2 * (a.x * (b.y - c.y) + b.x * (c.y - a.y) + c.x * (a.y - b.y));
+    if (Math.abs(d) < 1e-4) return null;
+    const a2 = a.x * a.x + a.y * a.y;
+    const b2 = b.x * b.x + b.y * b.y;
+    const c2 = c.x * c.x + c.y * c.y;
+    const x = (a2 * (b.y - c.y) + b2 * (c.y - a.y) + c2 * (a.y - b.y)) / d;
+    const y = (a2 * (c.x - b.x) + b2 * (a.x - c.x) + c2 * (b.x - a.x)) / d;
+    if (!Number.isFinite(x) || !Number.isFinite(y)) return null;
+    return { x, y };
+}
+
+/**
+ * Handwritten 6: one end is a straight stem, the rest sits on a round loop.
+ * A plain circle has both ends on the loop, so it does not match.
+ */
+function hasProtrudingStem(pts: WbPoint[]): boolean {
+    const n = pts.length;
+    if (n < 18) return false;
+    const sticks = (loop: WbPoint[], tail: WbPoint[]) => {
+        if (loop.length < 10 || tail.length < 4) return false;
+        const chord = dist(tail[0], tail[tail.length - 1]);
+        if (chord < 16) return false;
+        let dev = 0;
+        for (const p of tail) dev += pointLineDistance(p, tail[0], tail[tail.length - 1]);
+        if (dev / tail.length > chord * 0.14) return false;
+        const box = bbox(loop);
+        if (Math.max(box.w, box.h) < 28) return false;
+        const aspect = Math.min(box.w, box.h) / Math.max(box.w, box.h || 1);
+        if (aspect < 0.55) return false;
+        const fit = circleFit(loop);
+        if (!fit || fit.roundness < 0.82) return false;
+        const mean = tail.reduce((s, p) => s + dist(p, fit.c), 0) / tail.length;
+        const far = tail.filter((p) => dist(p, fit.c) > fit.r * 1.25).length / tail.length;
+        return mean > fit.r * 1.2 && far > 0.55;
+    };
+    for (const frac of [0.12, 0.18, 0.25, 0.32]) {
+        const cut = Math.max(4, Math.floor(n * frac));
+        if (cut > n - 12) continue;
+        if (sticks(pts.slice(cut), pts.slice(0, cut))) return true;
+        if (sticks(pts.slice(0, n - cut), pts.slice(n - cut))) return true;
     }
     return false;
 }
@@ -650,6 +762,11 @@ export function correctInkStroke(stroke: WbStroke): WbStroke {
     const complexity = strokeComplexity(pts);
     const crossed = hasInteriorSelfIntersection(pts);
     const eightWaist = hasFigureEightWaist(pts);
+    const stem = hasProtrudingStem(pts);
+    const loopRatio = loopLengthRatio(pts);
+    // One perimeter, with room for a wobbly circle that overlaps its start.
+    // A second loop (an 8) lands near 1.5 or more.
+    const oneLoop = loopRatio >= 0.75 && loopRatio <= 1.36;
     const rect = scoreRect(pts, box);
     const circ = scoreCircle(pts);
     const ell = scoreEllipse(pts, box);
@@ -664,6 +781,9 @@ export function correctInkStroke(stroke: WbStroke): WbStroke {
         complexity: Number(complexity.toFixed(3)),
         crossed,
         eightWaist,
+        stem,
+        loopRatio: Number(loopRatio.toFixed(3)),
+        oneLoop,
         rectScore: Number(rect.score.toFixed(3)),
         circScore: Number(circ.score.toFixed(3)),
         circOk: circ.ok,
@@ -699,8 +819,14 @@ export function correctInkStroke(stroke: WbStroke): WbStroke {
     const looksLikeTriangle =
         !!triVerts && (triFit > 0.58 || (triRight && triFit > 0.5));
 
-    // Handwritten 8 / 4 / scribble: a crossing or a waist must stay ink, even if the box looks round or square.
-    if (crossed || eightWaist || (complexity > 1.75 && !looksRound && !looksLikeRect && !looksLikeTriangle)) {
+    // Handwritten 8 / 6 / 4 / scribble stays ink. A clear rectangle is not an 8,
+    // even if one corner is rounded and the middle looks pinched.
+    if (
+        crossed ||
+        (eightWaist && !looksLikeRect) ||
+        stem ||
+        (complexity > 1.75 && !looksRound && !looksLikeRect && !looksLikeTriangle)
+    ) {
         lastInkCorrectionDebug = { ...lastInkCorrectionDebug, branch: 'handwriting' };
         return stroke;
     }
@@ -784,12 +910,12 @@ export function correctInkStroke(stroke: WbStroke): WbStroke {
     }
 
     // --- Circle / ellipse (hand-drawn loops, overlapping close) ---
-    if (looksRound && !boxy && !triRight && triFit < 0.72 && (circ.score > 0.66 || ell.score > 0.72)) {
+    if (oneLoop && looksRound && !boxy && !triRight && triFit < 0.72 && (circ.score > 0.66 || ell.score > 0.72)) {
         return emitCircle();
     }
 
     // --- Circle fallback ---
-    if (loopOk && circ.ok && circ.score > 0.8 && !boxy && triFit < 0.7 && corners.length <= 5) {
+    if (oneLoop && loopOk && circ.ok && circ.score > 0.8 && !boxy && triFit < 0.7 && corners.length <= 5) {
         const r = circ.r;
         lastInkCorrectionDebug = { ...lastInkCorrectionDebug, branch: 'circle-fallback' };
         return {
@@ -816,7 +942,7 @@ export function correctInkStroke(stroke: WbStroke): WbStroke {
 
     // --- Triangle / n-gon: few real corners, not wobbly sides or letters ---
     if (closed && corners.length >= 3 && corners.length <= 6) {
-        const circleWins = corners.length >= 5 && circ.ok && circ.score >= polyScore - 0.03;
+        const circleWins = oneLoop && corners.length >= 5 && circ.ok && circ.score >= polyScore - 0.03;
         if (circleWins) {
             const r = circ.r;
             lastInkCorrectionDebug = { ...lastInkCorrectionDebug, branch: 'circle-poly' };
@@ -850,7 +976,7 @@ export function correctInkStroke(stroke: WbStroke): WbStroke {
     }
 
     // --- Ellipse: smooth loops ---
-    if (loopOk && ell.ok && ell.score > 0.78 && !boxy && triFit < 0.7 && corners.length <= 4) {
+    if (oneLoop && loopOk && ell.ok && ell.score > 0.78 && !boxy && triFit < 0.7 && corners.length <= 4) {
         lastInkCorrectionDebug = { ...lastInkCorrectionDebug, branch: 'ellipse-late' };
         return {
             ...stroke,
@@ -1021,7 +1147,9 @@ function scoreCircle(pts: WbPoint[]): {
     const expected = 2 * Math.PI * r;
     const pathLen = pathLength(pts);
     const overshoot = pathLen / (expected || 1);
-    const lengthOk = overshoot > 0.58 && overshoot < 1.65;
+    // A clean circle is near 1. Wobble plus a short overlap can reach about 1.4.
+    // A second loop is longer still.
+    const lengthOk = overshoot >= 0.75 && overshoot <= 1.48;
     const lengthFit = 1 - Math.min(1, Math.abs(pathLen - expected) / (expected || 1));
     const score =
         roundness * 0.52 + aspect * 0.2 + (closedish ? 0.14 : 0.04) + lengthFit * 0.14;

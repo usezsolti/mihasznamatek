@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 import { formatMathText } from '../utils/formatMathText';
+import GameRegisterGate from '../components/game/GameRegisterGate';
 
 interface Question {
     question: string;
@@ -158,7 +159,8 @@ export default function StudentGame() {
                 const auth = (window as any).firebase.auth();
                 const unsub = auth.onAuthStateChanged(async (user: any) => {
                     if (!user) {
-                        // Ha nincs bejelentkezve, engedjük a játékot
+                        setCurrentUser(null);
+                        setIsAdmin(false);
                         setLoading(false);
                         return;
                     }
@@ -199,13 +201,25 @@ export default function StudentGame() {
 
     useEffect(() => {
         let timer: NodeJS.Timeout;
-        if (gameActive && timeLeft > 0) {
+        if (currentUser && gameActive && timeLeft > 0) {
             timer = setTimeout(() => setTimeLeft(timeLeft - 1), 1000);
-        } else if (timeLeft === 0 && gameActive) {
+        } else if (timeLeft === 0 && gameActive && currentUser) {
             endGame();
         }
         return () => clearTimeout(timer);
-    }, [timeLeft, gameActive]);
+    }, [timeLeft, gameActive, currentUser]);
+
+    useEffect(() => {
+        if (!currentUser || gameActive) return;
+        const taskId = typeof router.query.taskId === 'string' ? router.query.taskId : '';
+        if (!taskId) return;
+        const task = assignedTasks.find((item) => item.id === taskId) || assignedTasks[0];
+        if (!task) return;
+        setCurrentTask(task);
+        setGameActive(true);
+        setGameStarted(true);
+        setTimeLeft(task.timeLimit * 60);
+    }, [currentUser, assignedTasks, router.query.taskId, gameActive]);
 
     const loadCustomTask = () => {
         try {
@@ -243,14 +257,6 @@ export default function StudentGame() {
 
                 setAssignedTasks([standardTask]);
                 setLoading(false);
-
-                // Automatikusan elindítjuk a játékot
-                setTimeout(() => {
-                    setCurrentTask(standardTask);
-                    setGameActive(true);
-                    setGameStarted(true);
-                    setTimeLeft(standardTask.timeLimit * 60);
-                }, 1000);
             }
         } catch (error) {
             console.error('Error loading custom task:', error);
@@ -324,6 +330,7 @@ export default function StudentGame() {
     };
 
     const startTask = (task: AssignedTask) => {
+        if (!currentUser) return;
         setCurrentTask(task);
         setCurrentQuestionIndex(0);
         setScore(0);
@@ -450,6 +457,10 @@ export default function StudentGame() {
                 <div className="loading">Betöltés...</div>
             </div>
         );
+    }
+
+    if (!currentUser) {
+        return <GameRegisterGate />;
     }
 
     if (error) {

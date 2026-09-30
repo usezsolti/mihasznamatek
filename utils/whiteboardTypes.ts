@@ -9,13 +9,15 @@ export type WbTool =
     | 'ellipse'
     | 'polygon'
     | 'text'
+    | 'image'
+    | 'select'
     | 'pan';
 
 export type WbPoint = { x: number; y: number };
 
 export type WbStroke = {
     id: string;
-    tool: Exclude<WbTool, 'pan'>;
+    tool: Exclude<WbTool, 'pan' | 'select'>;
     color: string;
     width: number;
     points: WbPoint[];
@@ -25,6 +27,8 @@ export type WbStroke = {
     w?: number;
     h?: number;
     text?: string;
+    /** JPEG data URL for pasted images */
+    src?: string;
     authorId: string;
     authorName: string;
     createdAtMs: number;

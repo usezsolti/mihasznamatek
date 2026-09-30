@@ -27,9 +27,64 @@ function cloneStroke(stroke: WbStroke): WbStroke {
     return JSON.parse(JSON.stringify(stroke)) as WbStroke;
 }
 
-function markBoardMode(boardId: string, mode: 'cloud' | 'local') {
+function isQuotaError(err: unknown): boolean {
+    if (!err || typeof err !== 'object') return false;
+    const name = String((err as { name?: string }).name || '');
+    const code = Number((err as { code?: number }).code);
+    return name === 'QuotaExceededError' || name === 'NS_ERROR_DOM_QUOTA_REACHED' || code === 22;
+}
+
+/** Régi táblák vonal- és képmentései töltik meg a kvótát. A meta pár bájt, a strokes nem. */
+function freeWhiteboardStorage(keepBoardId?: string): void {
     if (typeof localStorage === 'undefined') return;
-    localStorage.setItem(`wb_mode_${boardId}`, mode);
+    const drop: string[] = [];
+    for (let i = 0; i < localStorage.length; i++) {
+        const key = localStorage.key(i);
+        if (!key || !key.startsWith('wb_strokes_')) continue;
+        if (keepBoardId && key === `wb_strokes_${keepBoardId}`) continue;
+        drop.push(key);
+    }
+    for (const key of drop) {
+        try {
+            localStorage.removeItem(key);
+        } catch {
+            /* ignore */
+        }
+    }
+}
+
+function storageSet(key: string, value: string, keepBoardId?: string): void {
+    if (typeof localStorage === 'undefined') return;
+    const write = () => localStorage.setItem(key, value);
+    try {
+        write();
+        return;
+    } catch (err) {
+        if (!isQuotaError(err)) return;
+    }
+    freeWhiteboardStorage(keepBoardId);
+    try {
+        write();
+        return;
+    } catch (err) {
+        if (!isQuotaError(err)) return;
+    }
+    if (keepBoardId) {
+        try {
+            localStorage.removeItem(`wb_strokes_${keepBoardId}`);
+        } catch {
+            /* ignore */
+        }
+    }
+    try {
+        write();
+    } catch {
+        /* A tábla memóriában így is használható. */
+    }
+}
+
+function markBoardMode(boardId: string, mode: 'cloud' | 'local') {
+    storageSet(`wb_mode_${boardId}`, mode, boardId);
 }
 
 export function getBoardMode(boardId: string): 'cloud' | 'local' | 'unknown' {
@@ -41,9 +96,13 @@ export function getBoardMode(boardId: string): 'cloud' | 'local' | 'unknown' {
 
 function saveMetaLocal(meta: WbBoardMeta) {
     if (typeof localStorage === 'undefined') return;
-    localStorage.setItem(`wb_meta_${meta.id}`, JSON.stringify(meta));
-    if (!localStorage.getItem(`wb_strokes_${meta.id}`)) {
-        localStorage.setItem(`wb_strokes_${meta.id}`, '[]');
+    storageSet(`wb_meta_${meta.id}`, JSON.stringify(meta), meta.id);
+    try {
+        if (!localStorage.getItem(`wb_strokes_${meta.id}`)) {
+            storageSet(`wb_strokes_${meta.id}`, '[]', meta.id);
+        }
+    } catch {
+        /* olvasás sem kötelező a megnyitáshoz */
     }
 }
 
@@ -52,6 +111,57 @@ export type CreateWhiteboardResult = {
     mode: 'cloud' | 'local';
     warning?: string;
 };
+
+function personalKey(uid: string): string {
+    return `wb_personal_${uid}`;
+}
+
+/**
+ * A felhasználó saját táblája, azonnal, link nélkül.
+ * A felhős mentés a háttérben indul, a vászon nem vár rá.
+ */
+export function openPersonalBoard(uid: string, title = 'Matek tábla'): string {
+    const key = personalKey(uid);
+    let id = '';
+    try {
+        id = localStorage.getItem(key) || '';
+    } catch {
+        id = '';
+    }
+        if (!id) {
+        id = newBoardId();
+        storageSet(key, id, id);
+    }
+
+    const now = Date.now();
+    let meta: WbBoardMeta = {
+        id,
+        title,
+        createdBy: uid,
+        createdAtMs: now,
+        updatedAtMs: now,
+    };
+    try {
+        const raw = localStorage.getItem(`wb_meta_${id}`);
+        if (raw) meta = { ...meta, ...(JSON.parse(raw) as WbBoardMeta), id };
+    } catch {
+        /* keep fresh meta */
+    }
+    saveMetaLocal(meta);
+    if (getBoardMode(id) === 'unknown') markBoardMode(id, 'local');
+    void publishPersonalBoard(meta);
+    return id;
+}
+
+async function publishPersonalBoard(meta: WbBoardMeta): Promise<void> {
+    const firestore = db();
+    if (!firestore) return;
+    try {
+        await firestore.collection('whiteboards').doc(meta.id).set(meta, { merge: true });
+    } catch {
+        /* A tábla helyben így is használható, link nélkül. */
+    }
+}
 
 export async function createWhiteboard(
     uid: string,
@@ -165,7 +275,10 @@ export async function pushStroke(boardId: string, stroke: WbStroke): Promise<voi
         const idx = list.findIndex((s) => s.id === safe.id);
         if (idx >= 0) list[idx] = safe;
         else list.push(safe);
-        localStorage.setItem(key, JSON.stringify(list));
+        const stored = list.map((stroke) =>
+            stroke.src && stroke.src.length > 80_000 ? { ...stroke, src: undefined } : stroke
+        );
+        storageSet(key, JSON.stringify(stored), boardId);
         window.dispatchEvent(new CustomEvent('wb:local-stroke', { detail: { boardId, stroke: safe } }));
     };
 
@@ -201,7 +314,7 @@ export async function clearWhiteboardStrokes(boardId: string): Promise<void> {
 
     const clearLocal = () => {
         if (typeof localStorage === 'undefined') return;
-        localStorage.setItem(`wb_strokes_${boardId}`, '[]');
+        storageSet(`wb_strokes_${boardId}`, '[]', boardId);
         window.dispatchEvent(new CustomEvent('wb:local-clear', { detail: { boardId } }));
     };
 

@@ -3,6 +3,8 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import MatekWhiteboard from '../components/whiteboard/MatekWhiteboard';
+import { openAuthModal } from '../utils/authModal';
+import { waitForFirebase } from '../utils/firebaseReady';
 
 export default function WhiteboardPage() {
     const router = useRouter();
@@ -24,24 +26,32 @@ export default function WhiteboardPage() {
 
     useEffect(() => {
         let cancelled = false;
-        const firebase = (window as any).firebase;
-        if (!firebase?.auth) {
-            setReady(true);
-            return;
-        }
-        const unsub = firebase.auth().onAuthStateChanged((user: any) => {
+        let unsub: (() => void) | undefined;
+        void (async () => {
+            const firebase = await waitForFirebase();
             if (cancelled) return;
-            if (user) {
-                setUid(user.uid);
-                setName(String(user.displayName || user.email || 'Felhasználó'));
-            } else {
-                setUid(null);
+            if (!firebase?.auth) {
+                setReady(true);
+                return;
             }
-            setReady(true);
-        });
+            unsub = firebase.auth().onAuthStateChanged((user: any) => {
+                if (cancelled) return;
+                if (user) {
+                    setUid(user.uid);
+                    setName(String(user.displayName || user.email || 'Felhasználó'));
+                } else {
+                    setUid(null);
+                }
+                setReady(true);
+            });
+        })();
         return () => {
             cancelled = true;
-            unsub?.();
+            try {
+                unsub?.();
+            } catch {
+                /* ignore */
+            }
         };
     }, []);
 
@@ -79,17 +89,7 @@ export default function WhiteboardPage() {
                         <button
                             type="button"
                             className="wb-primary"
-                            onClick={() => {
-                                try {
-                                    window.dispatchEvent(
-                                        new CustomEvent('mihaszna:open-auth-modal', {
-                                            detail: { mode: 'login', redirectTo: '/whiteboard' },
-                                        })
-                                    );
-                                } catch {
-                                    void router.push('/');
-                                }
-                            }}
+                            onClick={() => openAuthModal({ mode: 'login', redirectTo: '/whiteboard' })}
                         >
                             Bejelentkezés
                         </button>

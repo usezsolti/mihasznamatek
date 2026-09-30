@@ -577,7 +577,7 @@ const structRow: CSSProperties = {
     display: 'inline-flex',
     alignItems: 'center',
     gap: 4,
-    color: '#dfffd8',
+    color: 'var(--mm-paper, #dfffd8)',
     fontSize: '1.1rem',
     fontWeight: 600,
 };
@@ -587,7 +587,7 @@ const powerWrap: CSSProperties = {
     display: 'inline-flex',
     alignItems: 'flex-end',
     gap: 2,
-    color: '#dfffd8',
+    color: 'var(--mm-paper, #dfffd8)',
     paddingTop: 12,
     paddingRight: 2,
 };
@@ -621,7 +621,7 @@ const fracLine: CSSProperties = {
     width: '100%',
     minWidth: 48,
     height: 2,
-    background: '#39ff14',
+    background: 'var(--mm-ink, #39ff14)',
     borderRadius: 1,
     alignSelf: 'stretch',
 };
@@ -629,7 +629,7 @@ const fracLine: CSSProperties = {
 const tallOp: CSSProperties = {
     fontSize: '2rem',
     lineHeight: 1,
-    color: '#39ff14',
+    color: 'var(--mm-ink, #39ff14)',
     fontWeight: 400,
     alignSelf: 'center',
 };
@@ -654,7 +654,7 @@ const limBlock: CSSProperties = {
 const parenBig: CSSProperties = {
     fontSize: '1.7rem',
     lineHeight: 1,
-    color: '#39ff14',
+    color: 'var(--mm-ink, #39ff14)',
     alignSelf: 'stretch',
     display: 'inline-flex',
     alignItems: 'center',
@@ -663,7 +663,7 @@ const parenBig: CSSProperties = {
 const radical: CSSProperties = {
     fontSize: '2.1rem',
     lineHeight: 0.85,
-    color: '#39ff14',
+    color: 'var(--mm-ink, #39ff14)',
     fontWeight: 400,
     alignSelf: 'stretch',
     display: 'inline-flex',
@@ -672,7 +672,7 @@ const radical: CSSProperties = {
 };
 
 const radicalBody: CSSProperties = {
-    borderTop: '2.5px solid #39ff14',
+    borderTop: '2.5px solid var(--mm-ink, #39ff14)',
     padding: '4px 8px 2px',
     minWidth: 44,
     minHeight: 36,
@@ -700,7 +700,7 @@ const radicalIndex: CSSProperties = {
 };
 
 const labelFn: CSSProperties = {
-    color: '#39ff14',
+    color: 'var(--mm-ink, #39ff14)',
     fontWeight: 700,
     marginRight: 2,
 };
@@ -824,7 +824,7 @@ export function renderLayout(
                 <span style={powerWrap}>
                     <span style={powerBase}>{boxes[0]}</span>
                     <span style={powerExp}>
-                        <span style={{ fontSize: '1rem', fontWeight: 800, color: '#39ff14', lineHeight: 1 }}>
+                        <span style={{ fontSize: '1rem', fontWeight: 800, color: 'var(--mm-ink, #39ff14)', lineHeight: 1 }}>
                             2
                         </span>
                     </span>
@@ -843,7 +843,7 @@ export function renderLayout(
             return (
                 <RadicalVisual
                     index={
-                        <span style={{ fontSize: '0.85rem', fontWeight: 800, color: '#39ff14', lineHeight: 1 }}>
+                        <span style={{ fontSize: '0.85rem', fontWeight: 800, color: 'var(--mm-ink, #39ff14)', lineHeight: 1 }}>
                             3
                         </span>
                     }
@@ -871,7 +871,7 @@ export function renderLayout(
         case 'exp':
             return (
                 <span style={powerWrap}>
-                    <span style={{ ...powerBase, fontSize: '1.25rem', color: '#39ff14', fontWeight: 800 }}>e</span>
+                    <span style={{ ...powerBase, fontSize: '1.25rem', color: 'var(--mm-ink, #39ff14)', fontWeight: 800 }}>e</span>
                     <span style={powerExp}>{boxes[0]}</span>
                 </span>
             );
@@ -897,10 +897,10 @@ export function renderLayout(
         case 'deriv':
             return (
                 <DerivBlock
-                    top={<span style={{ color: '#39ff14' }}>d</span>}
+                    top={<span style={{ color: 'var(--mm-ink, #39ff14)' }}>d</span>}
                     bottom={
                         <span style={{ display: 'inline-flex', alignItems: 'center', gap: 2 }}>
-                            <span style={{ color: '#39ff14' }}>d</span>
+                            <span style={{ color: 'var(--mm-ink, #39ff14)' }}>d</span>
                             {boxes[0]}
                         </span>
                     }
@@ -910,12 +910,12 @@ export function renderLayout(
         case 'deriv2':
             return (
                 <DerivBlock
-                    top={<span style={{ color: '#39ff14' }}>d²</span>}
+                    top={<span style={{ color: 'var(--mm-ink, #39ff14)' }}>d²</span>}
                     bottom={
                         <span style={{ display: 'inline-flex', alignItems: 'center', gap: 2 }}>
-                            <span style={{ color: '#39ff14' }}>d</span>
+                            <span style={{ color: 'var(--mm-ink, #39ff14)' }}>d</span>
                             {boxes[0]}
-                            <sup style={{ color: '#39ff14' }}>2</sup>
+                            <sup style={{ color: 'var(--mm-ink, #39ff14)' }}>2</sup>
                         </span>
                     }
                     body={boxes[1]}
@@ -924,10 +924,10 @@ export function renderLayout(
         case 'pderiv':
             return (
                 <DerivBlock
-                    top={<span style={{ color: '#39ff14' }}>∂</span>}
+                    top={<span style={{ color: 'var(--mm-ink, #39ff14)' }}>∂</span>}
                     bottom={
                         <span style={{ display: 'inline-flex', alignItems: 'center', gap: 2 }}>
-                            <span style={{ color: '#39ff14' }}>∂</span>
+                            <span style={{ color: 'var(--mm-ink, #39ff14)' }}>∂</span>
                             {boxes[0]}
                         </span>
                     }
@@ -937,12 +937,12 @@ export function renderLayout(
         case 'pderiv2':
             return (
                 <DerivBlock
-                    top={<span style={{ color: '#39ff14' }}>∂²</span>}
+                    top={<span style={{ color: 'var(--mm-ink, #39ff14)' }}>∂²</span>}
                     bottom={
                         <span style={{ display: 'inline-flex', alignItems: 'center', gap: 2 }}>
-                            <span style={{ color: '#39ff14' }}>∂</span>
+                            <span style={{ color: 'var(--mm-ink, #39ff14)' }}>∂</span>
                             {boxes[0]}
-                            <sup style={{ color: '#39ff14' }}>2</sup>
+                            <sup style={{ color: 'var(--mm-ink, #39ff14)' }}>2</sup>
                         </span>
                     }
                     body={boxes[1]}
@@ -951,12 +951,12 @@ export function renderLayout(
         case 'pderivmix':
             return (
                 <DerivBlock
-                    top={<span style={{ color: '#39ff14' }}>∂²</span>}
+                    top={<span style={{ color: 'var(--mm-ink, #39ff14)' }}>∂²</span>}
                     bottom={
                         <span style={{ display: 'inline-flex', alignItems: 'center', gap: 2 }}>
-                            <span style={{ color: '#39ff14' }}>∂</span>
+                            <span style={{ color: 'var(--mm-ink, #39ff14)' }}>∂</span>
                             {boxes[0]}
-                            <span style={{ color: '#39ff14' }}>∂</span>
+                            <span style={{ color: 'var(--mm-ink, #39ff14)' }}>∂</span>
                             {boxes[1]}
                         </span>
                     }
@@ -968,7 +968,7 @@ export function renderLayout(
                 <span style={{ ...structRow, alignItems: 'center' }}>
                     <span style={tallOp}>∫</span>
                     <span style={{ margin: '0 6px' }}>{boxes[0]}</span>
-                    <span style={{ color: '#39ff14', marginRight: 2 }}>d</span>
+                    <span style={{ color: 'var(--mm-ink, #39ff14)', marginRight: 2 }}>d</span>
                     {boxes[1]}
                 </span>
             );
@@ -981,7 +981,7 @@ export function renderLayout(
                         <span>{boxes[0]}</span>
                     </span>
                     <span style={{ margin: '0 6px' }}>{boxes[2]}</span>
-                    <span style={{ color: '#39ff14', marginRight: 2 }}>d</span>
+                    <span style={{ color: 'var(--mm-ink, #39ff14)', marginRight: 2 }}>d</span>
                     {boxes[3]}
                 </span>
             );
@@ -1014,10 +1014,10 @@ export function renderLayout(
                             }}
                         >
                             {boxes[0]}
-                            <span style={{ color: '#39ff14' }}>→</span>
+                            <span style={{ color: 'var(--mm-ink, #39ff14)' }}>→</span>
                             {boxes[1]}
                             {side ? (
-                                <sup style={{ color: '#39ff14', fontSize: '0.75rem' }}>{side}</sup>
+                                <sup style={{ color: 'var(--mm-ink, #39ff14)', fontSize: '0.75rem' }}>{side}</sup>
                             ) : null}
                         </span>
                     </span>
@@ -1030,7 +1030,7 @@ export function renderLayout(
                     <span style={parenBig}>[</span>
                     {boxes.map((b, i) => (
                         <span key={i} style={{ display: 'inline-flex', alignItems: 'center' }}>
-                            {i > 0 ? <span style={{ margin: '0 4px', color: '#39ff14' }}>,</span> : null}
+                            {i > 0 ? <span style={{ margin: '0 4px', color: 'var(--mm-ink, #39ff14)' }}>,</span> : null}
                             {b}
                         </span>
                     ))}

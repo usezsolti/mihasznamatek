@@ -3,6 +3,7 @@ import {
     clearWhiteboardStrokes,
     createWhiteboard,
     loadWhiteboardMeta,
+    openPersonalBoard,
     pushStroke,
     renameWhiteboard,
     subscribeStrokes,
@@ -15,8 +16,13 @@ import {
     type WbTool,
 } from '../../utils/whiteboardTypes';
 import { correctInkStroke, lastInkCorrectionDebug, polygonLabel } from '../../utils/whiteboardInkToShape';
-import { applyExportView, planWhiteboardExport, unionStrokeBounds } from '../../utils/whiteboardExport';
+import { applyExportView, planWhiteboardExport, strokeInkBounds, unionStrokeBounds } from '../../utils/whiteboardExport';
+import { hitImageHandle, hitTestTop, resizeImageStroke, translateStroke } from '../../utils/whiteboardSelection';
+import { compressWhiteboardImage, drawCachedImage, primeWhiteboardImage } from '../../utils/whiteboardImage';
+import WhiteboardCalculator from './WhiteboardCalculator';
 import { agentDebugLog } from '../../utils/agentDebugLog';
+
+let redrawImages: (() => void) | null = null;
 
 type MatekWhiteboardProps = {
     uid: string;
@@ -26,6 +32,11 @@ type MatekWhiteboardProps = {
 };
 
 function drawStroke(ctx: CanvasRenderingContext2D, s: WbStroke) {
+    if (s.tool === 'image' && s.src) {
+        drawCachedImage(ctx, s.src, s.x || 0, s.y || 0, s.w || 1, s.h || 1, () => redrawImages?.());
+        return;
+    }
+
     if (s.tool === 'text' && s.text) {
         ctx.save();
         ctx.fillStyle = s.color;
@@ -172,6 +183,38 @@ function IconHand() {
                 strokeLinecap="round"
                 strokeLinejoin="round"
             />
+        </Icon>
+    );
+}
+
+function IconSelect() {
+    return (
+        <Icon>
+            <path d="M5 5.5h6.5M5 5.5v6.5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+            <path d="M12.5 5.5H19V12" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeDasharray="2.2 2" />
+            <path d="M5 13v5.5h6.5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeDasharray="2.2 2" />
+            <path d="M13.5 18.5H19V13" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+            <path d="M10 10.5 15.5 12.2 12.8 13.6 14.6 16.8 13.2 17.6 11.4 14.4 9.6 16.2 10 10.5Z" fill="currentColor" />
+        </Icon>
+    );
+}
+
+function IconCalc() {
+    return (
+        <Icon>
+            <rect x="5" y="3.5" width="14" height="17" rx="2" stroke="currentColor" strokeWidth="1.8" />
+            <path d="M8 7.5h8" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+            <path d="M8 12h.01M12 12h.01M16 12h.01M8 15.5h.01M12 15.5h.01M16 15.5h.01" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" />
+        </Icon>
+    );
+}
+
+function IconImage() {
+    return (
+        <Icon>
+            <rect x="4" y="5" width="16" height="14" rx="2" stroke="currentColor" strokeWidth="1.8" />
+            <circle cx="9" cy="10" r="1.4" fill="currentColor" />
+            <path d="M7 16.5 11 12.5 13.2 14.5 15 12.8 18 16" stroke="currentColor" strokeWidth="1.6" strokeLinejoin="round" />
         </Icon>
     );
 }
@@ -323,7 +366,11 @@ export default function MatekWhiteboard({
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const inkLayerRef = useRef<HTMLCanvasElement | null>(null);
     const wrapRef = useRef<HTMLDivElement>(null);
-    const [boardId, setBoardId] = useState<string | null>(initialBoardId || null);
+    const [boardId, setBoardId] = useState<string | null>(() => {
+        if (initialBoardId) return initialBoardId;
+        if (typeof window === 'undefined') return null;
+        return openPersonalBoard(uid);
+    });
     const [title, setTitle] = useState('Matek tábla');
     const [tool, setTool] = useState<WbTool>('pen');
     const [color, setColor] = useState('#ffffff');
@@ -337,6 +384,8 @@ export default function MatekWhiteboard({
     const [zoomPct, setZoomPct] = useState(100);
     const [manualGate, setManualGate] = useState(false);
     const [creating, setCreating] = useState(false);
+    const [calcOpen, setCalcOpen] = useState(false);
+    const [selectedIds, setSelectedIds] = useState<string[]>([]);
     const autoCreateStarted = useRef(false);
     const createGen = useRef(0);
     const savedTitle = useRef('Matek tábla');
@@ -347,6 +396,18 @@ export default function MatekWhiteboard({
     const scale = useRef(1);
     const localUndo = useRef<WbStroke[]>([]);
     const strokesRef = useRef<WbStroke[]>([]);
+    const selectedRef = useRef<string[]>([]);
+    const dragRef = useRef<{
+        active: boolean;
+        moved: boolean;
+        mode: 'move' | 'resize';
+        startX: number;
+        startY: number;
+        ids: string[];
+        snapshots: WbStroke[];
+    } | null>(null);
+    const placeImageRef = useRef<(blob: Blob) => void>(() => {});
+    const imageInputRef = useRef<HTMLInputElement | null>(null);
     const pendingIds = useRef(new Set<string>());
     const explicitClear = useRef(false);
     const onBoardIdRef = useRef(onBoardId);
@@ -388,6 +449,7 @@ export default function MatekWhiteboard({
             pan.current.y * scale.current
         );
         const list = strokesRef.current;
+        redrawImages = redraw;
         for (const s of list) drawStroke(ictx, s);
         if (current.current) drawStroke(ictx, current.current);
 
@@ -412,6 +474,37 @@ export default function MatekWhiteboard({
         }
         ctx.restore();
         ctx.drawImage(ink, 0, 0);
+
+        const selected = selectedRef.current;
+        if (selected.length) {
+            ctx.save();
+            ctx.setTransform(
+                scale.current,
+                0,
+                0,
+                scale.current,
+                pan.current.x * scale.current,
+                pan.current.y * scale.current
+            );
+            ctx.strokeStyle = '#4dabf7';
+            ctx.fillStyle = '#4dabf7';
+            for (const id of selected) {
+                const s = list.find((st) => st.id === id);
+                if (!s || s.tool === 'eraser') continue;
+                const b = strokeInkBounds(s);
+                ctx.setLineDash([6 / scale.current, 4 / scale.current]);
+                ctx.lineWidth = 1.5 / scale.current;
+                ctx.strokeRect(b.minX, b.minY, Math.max(1, b.maxX - b.minX), Math.max(1, b.maxY - b.minY));
+                if (s.tool === 'image' && selected.length === 1) {
+                    const hx = (s.x || 0) + (s.w || 0);
+                    const hy = (s.y || 0) + (s.h || 0);
+                    const r = 5 / scale.current;
+                    ctx.setLineDash([]);
+                    ctx.fillRect(hx - r, hy - r, r * 2, r * 2);
+                }
+            }
+            ctx.restore();
+        }
         // #region agent log
         if (!drawing.current || !current.current || current.current.points.length <= 2) {
             agentDebugLog({
@@ -477,6 +570,7 @@ export default function MatekWhiteboard({
     }, [resize]);
 
     useEffect(() => {
+        if (dragRef.current?.active) return;
         strokesRef.current = strokes;
         redraw();
     }, [redraw, strokes]);
@@ -492,7 +586,7 @@ export default function MatekWhiteboard({
             runId: 'wb-erase',
         });
         // #endregion
-        onBoardIdRef.current(boardId);
+        if (initialBoardId) onBoardIdRef.current(boardId);
         const origin = typeof window !== 'undefined' ? window.location.origin : '';
         setShareUrl(`${origin}/whiteboard?board=${encodeURIComponent(boardId)}`);
         const unsub = subscribeStrokes(boardId, (list) => {
@@ -504,14 +598,9 @@ export default function MatekWhiteboard({
             let keptOptimistic = 0;
             if (!ignoreEmpty) {
                 for (const s of prev) {
-                    if (!merged.has(s.id) && pendingIds.current.has(s.id)) {
+                    if (pendingIds.current.has(s.id)) {
                         merged.set(s.id, s);
                         keptOptimistic += 1;
-                    }
-                }
-                for (const id of [...pendingIds.current]) {
-                    if (merged.has(id) && list.some((s) => s.id === id)) {
-                        pendingIds.current.delete(id);
                     }
                 }
             }
@@ -536,7 +625,12 @@ export default function MatekWhiteboard({
             // #endregion
             if (ignoreEmpty) return;
             explicitClear.current = false;
-            const next = [...merged.values()].sort((a, b) => a.createdAtMs - b.createdAtMs);
+            let next = [...merged.values()].sort((a, b) => a.createdAtMs - b.createdAtMs);
+            const drag = dragRef.current;
+            if (drag?.active) {
+                const local = new Map(strokesRef.current.map((s) => [s.id, s] as const));
+                next = next.map((s) => (drag.ids.includes(s.id) && local.has(s.id) ? local.get(s.id)! : s));
+            }
             strokesRef.current = next;
             setStrokes(next);
         });
@@ -558,12 +652,29 @@ export default function MatekWhiteboard({
             // #endregion
             unsub();
         };
-    }, [boardId]);
+    }, [boardId, initialBoardId]);
 
     useEffect(() => {
         if (boardId) document.body.classList.add('wb-board-open');
         else document.body.classList.remove('wb-board-open');
         return () => document.body.classList.remove('wb-board-open');
+    }, [boardId]);
+
+    useEffect(() => {
+        if (!boardId) return;
+        const onPaste = (e: ClipboardEvent) => {
+            const target = e.target as HTMLElement | null;
+            if (target && (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.isContentEditable)) {
+                return;
+            }
+            const item = Array.from(e.clipboardData?.items || []).find((it) => it.type.startsWith('image/'));
+            const file = item?.getAsFile();
+            if (!file) return;
+            e.preventDefault();
+            placeImageRef.current(file);
+        };
+        window.addEventListener('paste', onPaste);
+        return () => window.removeEventListener('paste', onPaste);
     }, [boardId]);
 
     useEffect(() => {
@@ -592,11 +703,16 @@ export default function MatekWhiteboard({
         return { x, y };
     };
 
-    const commitStroke = async (stroke: WbStroke) => {
+    const commitStroke = async (stroke: WbStroke, mode: 'add' | 'update' = 'add') => {
         if (!boardId) return;
-        localUndo.current.push(stroke);
+        if (mode === 'add') localUndo.current.push(stroke);
         pendingIds.current.add(stroke.id);
-        if (!strokesRef.current.some((s) => s.id === stroke.id)) {
+        const idx = strokesRef.current.findIndex((s) => s.id === stroke.id);
+        if (idx >= 0) {
+            const next = strokesRef.current.slice();
+            next[idx] = stroke;
+            strokesRef.current = next;
+        } else {
             strokesRef.current = [...strokesRef.current, stroke];
         }
         setStrokes(strokesRef.current);
@@ -605,7 +721,98 @@ export default function MatekWhiteboard({
             await pushStroke(boardId, stroke);
         } catch (e: any) {
             setStatus(e?.message || 'Mentés sikertelen (Firestore jogosultság?)');
+        } finally {
+            pendingIds.current.delete(stroke.id);
         }
+    };
+
+    const selectOnly = (ids: string[]) => {
+        selectedRef.current = ids;
+        setSelectedIds(ids);
+        redraw();
+    };
+
+    const viewCenter = (): WbPoint => {
+        const canvas = canvasRef.current;
+        if (!canvas) return { x: 0, y: 0 };
+        return {
+            x: canvas.width / (2 * scale.current) - pan.current.x,
+            y: canvas.height / (2 * scale.current) - pan.current.y,
+        };
+    };
+
+    const placeImageBlob = async (blob: Blob) => {
+        if (!boardId) return;
+        try {
+            const compressed = await compressWhiteboardImage(blob);
+            await primeWhiteboardImage(compressed.src);
+            const fit = Math.min(1, 480 / Math.max(compressed.width, compressed.height));
+            const w = compressed.width * fit;
+            const h = compressed.height * fit;
+            const center = viewCenter();
+            const stroke: WbStroke = {
+                id: newStrokeId(),
+                tool: 'image',
+                color: '#ffffff',
+                width: 2,
+                points: [],
+                src: compressed.src,
+                x: center.x - w / 2,
+                y: center.y - h / 2,
+                w,
+                h,
+                authorId: uid,
+                authorName: displayName,
+                createdAtMs: Date.now(),
+            };
+            await commitStroke(stroke);
+            selectOnly([stroke.id]);
+            setTool('select');
+            setStatus('Kép beillesztve.');
+        } catch (e: any) {
+            setStatus(e?.message || 'A kép beillesztése nem sikerült.');
+        }
+    };
+    placeImageRef.current = (blob) => {
+        void placeImageBlob(blob);
+    };
+
+    const openImageFile = () => {
+        setTray(null);
+        imageInputRef.current?.click();
+    };
+
+    const onImageFile = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        e.target.value = '';
+        if (file && file.type.startsWith('image/')) void placeImageBlob(file);
+    };
+
+    const onDropImage = (e: React.DragEvent) => {
+        e.preventDefault();
+        const file = Array.from(e.dataTransfer.files).find((item) => item.type.startsWith('image/'));
+        if (file) void placeImageBlob(file);
+    };
+
+    const placeCalcResult = (text: string) => {
+        if (!boardId || !text.trim()) return;
+        const center = viewCenter();
+        const stroke: WbStroke = {
+            id: newStrokeId(),
+            tool: 'text',
+            color,
+            width,
+            points: [],
+            x: center.x,
+            y: center.y,
+            text: text.trim().slice(0, 200),
+            authorId: uid,
+            authorName: displayName,
+            createdAtMs: Date.now(),
+        };
+        void commitStroke(stroke);
+        selectOnly([stroke.id]);
+        setTool('select');
     };
 
     const onPointerDown = (e: React.PointerEvent) => {
@@ -646,6 +853,50 @@ export default function MatekWhiteboard({
             return;
         }
 
+        if (tool === 'select') {
+            const onlySelected = strokesRef.current.filter((s) => selectedRef.current.length === 1 && s.id === selectedRef.current[0]);
+            const selectedImage = onlySelected[0];
+            if (selectedImage && hitImageHandle(selectedImage, p, scale.current)) {
+                dragRef.current = {
+                    active: true,
+                    moved: false,
+                    mode: 'resize',
+                    startX: p.x,
+                    startY: p.y,
+                    ids: [selectedImage.id],
+                    snapshots: [selectedImage],
+                };
+                return;
+            }
+
+            const hit = hitTestTop(strokesRef.current, p);
+            if (e.shiftKey) {
+                if (!hit) return;
+                const has = selectedRef.current.includes(hit.id);
+                selectOnly(has ? selectedRef.current.filter((id) => id !== hit.id) : [...selectedRef.current, hit.id]);
+                return;
+            }
+
+            if (!hit) {
+                selectOnly([]);
+                return;
+            }
+
+            const ids = selectedRef.current.includes(hit.id) ? selectedRef.current : [hit.id];
+            selectOnly(ids);
+            const snapshots = strokesRef.current.filter((s) => ids.includes(s.id));
+            dragRef.current = {
+                active: true,
+                moved: false,
+                mode: 'move',
+                startX: p.x,
+                startY: p.y,
+                ids,
+                snapshots,
+            };
+            return;
+        }
+
         if (tool === 'text') {
             const text = window.prompt('Szöveg a táblára:');
             if (!text?.trim()) return;
@@ -668,9 +919,12 @@ export default function MatekWhiteboard({
 
         drawing.current = true;
         const strokeWidth = tool === 'highlighter' ? Math.max(width * 4, 12) : tool === 'eraser' ? Math.max(width * 5, 16) : width;
+        const drawTool = tool === 'pen' || tool === 'highlighter' || tool === 'eraser' || tool === 'line' || tool === 'rect' || tool === 'ellipse' || tool === 'polygon' || tool === 'text'
+            ? tool
+            : 'pen';
         current.current = {
             id: newStrokeId(),
-            tool: tool === 'pan' ? 'pen' : tool,
+            tool: drawTool,
             color: tool === 'eraser' ? '#000000' : color,
             width: strokeWidth,
             points: [p],
@@ -696,6 +950,22 @@ export default function MatekWhiteboard({
             redraw();
             return;
         }
+        const drag = dragRef.current;
+        if (drag?.active) {
+            const p = toWorld(e.clientX, e.clientY);
+            const dx = p.x - drag.startX;
+            const dy = p.y - drag.startY;
+            if (Math.hypot(dx, dy) > 1) drag.moved = true;
+            const byId = new Map(drag.snapshots.map((s) => [s.id, s] as const));
+            strokesRef.current = strokesRef.current.map((s) => {
+                const snap = byId.get(s.id);
+                if (!snap) return s;
+                if (drag.mode === 'resize') return resizeImageStroke(snap, p);
+                return translateStroke(snap, dx, dy);
+            });
+            redraw();
+            return;
+        }
         if (!drawing.current || !current.current) return;
         const p = toWorld(e.clientX, e.clientY);
         const s = current.current;
@@ -712,6 +982,20 @@ export default function MatekWhiteboard({
 
     const onPointerUp = () => {
         pan.current.active = false;
+        const drag = dragRef.current;
+        if (drag?.active) {
+            dragRef.current = null;
+            if (!drag.moved) {
+                const byId = new Map(drag.snapshots.map((s) => [s.id, s] as const));
+                strokesRef.current = strokesRef.current.map((s) => byId.get(s.id) || s);
+                redraw();
+                return;
+            }
+            const changed = strokesRef.current.filter((s) => drag.ids.includes(s.id));
+            setStrokes(strokesRef.current.slice());
+            for (const s of changed) void commitStroke(s, 'update');
+            return;
+        }
         if (!drawing.current || !current.current) return;
         drawing.current = false;
         let s = current.current;
@@ -825,15 +1109,6 @@ export default function MatekWhiteboard({
         }
     };
 
-    // Open /whiteboard → auto-generate a shareable board link (unless joining an existing one).
-    useEffect(() => {
-        if (initialBoardId || boardId || manualGate) return;
-        if (autoCreateStarted.current) return;
-        autoCreateStarted.current = true;
-        void handleCreate();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [initialBoardId, boardId, manualGate, uid]);
-
     const handleJoin = async () => {
         const id = joinCode.trim().replace(/^.*board=/, '').split('&')[0];
         if (!id) {
@@ -865,6 +1140,7 @@ export default function MatekWhiteboard({
             localUndo.current = [];
             current.current = null;
             drawing.current = false;
+            selectOnly([]);
             setStatus('Tábla kiürítve.');
             redraw();
         } catch (e: any) {
@@ -1115,15 +1391,29 @@ export default function MatekWhiteboard({
                 </button>
             </div>
 
-            <div className="wb-canvas-wrap" ref={wrapRef}>
+            <div
+                className="wb-canvas-wrap"
+                ref={wrapRef}
+                onDragOver={(e) => {
+                    if (Array.from(e.dataTransfer.types).includes('Files')) e.preventDefault();
+                }}
+                onDrop={onDropImage}
+            >
                 <canvas
                     ref={canvasRef}
-                    className={`wb-canvas${tool === 'pan' ? ' is-pan' : ''}`}
+                    className={`wb-canvas${tool === 'pan' ? ' is-pan' : ''}${tool === 'select' ? ' is-select' : ''}`}
                     onPointerDown={onPointerDown}
                     onPointerMove={onPointerMove}
                     onPointerUp={onPointerUp}
                     onPointerCancel={onPointerUp}
                     onWheel={onWheel}
+                />
+                <input
+                    ref={imageInputRef}
+                    type="file"
+                    accept="image/*"
+                    hidden
+                    onChange={onImageFile}
                 />
             </div>
 
@@ -1293,6 +1583,9 @@ export default function MatekWhiteboard({
                         <button type="button" className="wb-menuitem" onClick={() => void exportPdf()}>
                             PDF
                         </button>
+                        <button type="button" className="wb-menuitem" onClick={openImageFile}>
+                            Kép beillesztése
+                        </button>
                         <button type="button" className="wb-menuitem" onClick={() => void copyShare()}>
                             Megosztás
                         </button>
@@ -1353,6 +1646,17 @@ export default function MatekWhiteboard({
                         </button>
                         <button
                             type="button"
+                            className={`wb-iconbtn ${tool === 'select' ? 'is-on' : ''}`}
+                            title={selectedIds.length ? `Kijelölés (${selectedIds.length})` : 'Kijelölés'}
+                            onClick={() => {
+                                setTool('select');
+                                setTray(null);
+                            }}
+                        >
+                            <IconSelect />
+                        </button>
+                        <button
+                            type="button"
                             className={`wb-iconbtn ${inkActive ? 'is-on' : ''}`}
                             title="Toll"
                             onClick={() => {
@@ -1386,6 +1690,25 @@ export default function MatekWhiteboard({
                         </button>
                         <button
                             type="button"
+                            className="wb-iconbtn"
+                            title="Kép"
+                            onClick={openImageFile}
+                        >
+                            <IconImage />
+                        </button>
+                        <button
+                            type="button"
+                            className={`wb-iconbtn ${calcOpen ? 'is-on' : ''}`}
+                            title="Számológép"
+                            onClick={() => {
+                                setCalcOpen((open) => !open);
+                                setTray(null);
+                            }}
+                        >
+                            <IconCalc />
+                        </button>
+                        <button
+                            type="button"
                             className={`wb-iconbtn ${tray === 'more' ? 'is-on' : ''}`}
                             title="Több"
                             onClick={() => setTray(tray === 'more' ? null : 'more')}
@@ -1408,6 +1731,10 @@ export default function MatekWhiteboard({
                     <IconFit />
                 </button>
             </div>
+
+            {calcOpen && (
+                <WhiteboardCalculator onClose={() => setCalcOpen(false)} onPlace={placeCalcResult} />
+            )}
 
             {status && <p className="wb-status wb-status--float">{status}</p>}
         </div>

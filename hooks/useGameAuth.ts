@@ -31,7 +31,8 @@ export function useGameAuth() {
                 const auth = (window as any).firebase.auth();
                 unsub = auth.onAuthStateChanged(async (user: any) => {
                     if (!user) {
-                        // Ha nincs bejelentkezve, engedjük a játékot
+                        setCurrentUser(null);
+                        setIsAdmin(false);
                         setLoading(false);
                         return;
                     }

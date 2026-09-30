@@ -133,6 +133,36 @@ describe('whiteboardInkToShape', () => {
         assert.equal(out.tool, 'pen');
     });
 
+    it('keeps a 6 with a stem as ink instead of a circle', () => {
+        const r = 70;
+        const cx = 160;
+        const cy = 160;
+        const stem = line(cx, cy - r - 36, cx, cy - r, 8);
+        const loop: WbPoint[] = [];
+        for (let i = 0; i <= 72; i++) {
+            const a = -Math.PI / 2 + (i / 72) * Math.PI * 2;
+            loop.push({ x: cx + r * Math.cos(a), y: cy + r * Math.sin(a) });
+        }
+        const pts = [...stem.slice(0, -1), ...loop];
+        const out = correctInkStroke(pen(pts));
+        assert.equal(out.tool, 'pen');
+    });
+
+    it('keeps an 8 that starts at the waist as ink', () => {
+        const pts: WbPoint[] = [];
+        const push = (cy: number, from: number, to: number) => {
+            for (let i = 0; i <= 28; i++) {
+                const a = from + ((to - from) * i) / 28;
+                pts.push({ x: 120 + 36 * Math.cos(a), y: cy + 36 * Math.sin(a) });
+            }
+        };
+        // Start where the upper loop crosses the lower one, then draw the lower loop.
+        push(90, Math.PI / 2, Math.PI / 2 + Math.PI * 2);
+        push(150, Math.PI / 2, Math.PI / 2 + Math.PI * 2);
+        const out = correctInkStroke(pen(pts));
+        assert.equal(out.tool, 'pen');
+    });
+
     it('does not turn a scribbled 3-like stroke into a polygon', () => {
         const pts: WbPoint[] = [];
         for (let i = 0; i <= 30; i++) {
