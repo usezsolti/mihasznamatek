@@ -52,6 +52,20 @@ import {
 } from '../utils/gameFeedback';
 import { buildTopicPracticeHref } from '../utils/topicStats';
 import { buildTopicBreakdown } from '../utils/examTopicStats';
+import {
+    beginRetryRound,
+    clearPaperRun,
+    createPaperRun,
+    loadPaperRun,
+    paperQuestionsMatch,
+    questionKey,
+    recordPaperAnswer,
+    savePaperRun,
+    summarizePaperRun,
+    type PaperRunState,
+    type PaperRunSummary,
+} from '../utils/game/paperRun';
+import type { PaperTopicKind } from '../utils/game/paperTopicTags';
 import type { EducationLevelId } from '../utils/mathTopicsCatalog';
 import type { Question } from '../utils/game';
 import { KOZPONTI_PAPERS } from '../utils/game/kozpontiPapers';
@@ -190,8 +204,24 @@ export function useGamePlay({
     const correctQuestionIdsRef = useRef<string[]>([]);
     const wrongFirstIdsRef = useRef<string[]>([]);
     const erettsegiQuestionsRef = useRef<Question[]>([]);
+    const [paperSummary, setPaperSummary] = useState<PaperRunSummary | null>(null);
+    const paperRunRef = useRef<PaperRunState | null>(null);
+    const originalPaperQuestionsRef = useRef<Question[]>([]);
+    const paperJuiceSavedRef = useRef(false);
 
     const getQuestions = () => questionsRef.current;
+    const paperIdQuery = String(router.query.paper || router.query.paperId || '');
+    const paperKind: PaperTopicKind = router.query.kozponti === 'true'
+        ? 'kozponti'
+        : router.query.level === 'emelt'
+            ? 'emelt'
+            : 'kozep';
+    const paperRunEnabled = () => Boolean(paperIdQuery)
+        && !isPathMode
+        && !isBlitzMode
+        && !isDailyMode
+        && !challengeNode
+        && !isSprintMode;
 
     const currentUid = () =>
         currentUser?.uid
@@ -317,6 +347,48 @@ export function useGamePlay({
         setChallengeOffer(next);
     }, [feedbackPending, challengeOffer, challengeNode]);
 
+    useEffect(() => {
+        if (!gameActive || !paperRunEnabled()) return;
+        if (paperRunRef.current?.paperId === paperIdQuery) return;
+        const questions = questionsRef.current;
+        if (!questions.length) return;
+        const uid = currentUid() || 'local';
+        const saved = loadPaperRun(uid, paperIdQuery);
+        const reusable = saved && paperQuestionsMatch(saved, questions)
+            ? saved
+            : null;
+        const resumed = reusable && (reusable.phase === 'summary' || !summarizePaperRun(reusable).complete)
+            ? reusable
+            : null;
+        const run = resumed
+            ? {
+                ...resumed,
+                presentedAt: resumed.phase === 'summary' ? null : Date.now(),
+            }
+            : createPaperRun(paperIdQuery, questions, paperKind);
+        paperRunRef.current = run;
+        paperJuiceSavedRef.current = Boolean(resumed && summarizePaperRun(resumed).complete);
+        originalPaperQuestionsRef.current = questions.slice();
+        savePaperRun(uid, run);
+        if (run.phase === 'summary') {
+            setPaperSummary(summarizePaperRun(run));
+            return;
+        }
+        if (run.phase === 'retry') {
+            const byId = new Map(questions.map((question, index) => [questionKey(question, index), question]));
+            const queue = run.queue
+                .map((id) => byId.get(id))
+                .filter((question): question is Question => Boolean(question));
+            if (queue.length) {
+                questionsRef.current = queue;
+                erettsegiQuestionsRef.current = queue;
+                sessionBridgeRef.current.replaceSessionQuestions?.(queue);
+            }
+        }
+        setPaperSummary(null);
+        setCurrentQuestion(Math.min(run.cursor, Math.max(0, (run.phase === 'retry' ? run.queue.length : questions.length) - 1)));
+    }, [gameActive, paperIdQuery]);
+
     const saveGameResults = async () => {
             try {
                 const ctx = sessionBridgeRef.current;
@@ -327,16 +399,22 @@ export function useGamePlay({
                 const baseList = isWorksheetMode && erettsegiBank.length > 0
                     ? erettsegiBank
                     : questions;
-                const totalQuestions = baseList.length;
+                let totalQuestions = baseList.length;
                 const correctIds = correctQuestionIdsRef.current.length
                     ? correctQuestionIdsRef.current
                     : correctQuestionIds;
                 const wrongIds = wrongFirstIdsRef.current.length
                     ? wrongFirstIdsRef.current
                     : wrongFirstIds;
-                const correctAnswerCount = isWorksheetMode
-                    ? correctIds.length
-                    : Math.round(score / 10);
+                const paperSnapshot = paperRunEnabled() && paperRunRef.current
+                    ? summarizePaperRun(paperRunRef.current)
+                    : null;
+                let correctAnswerCount = paperSnapshot
+                    ? paperSnapshot.solved
+                    : isWorksheetMode
+                        ? correctIds.length
+                        : Math.round(score / 10);
+                if (paperSnapshot) totalQuestions = paperSnapshot.total;
 
             // Készítünk egy eredmény objektumot
             const topicFromQuery = (router.query.topic as string) || ctx.currentTopic || '';
@@ -465,7 +543,9 @@ export function useGamePlay({
                 }
             }
 
-            await applyJuiceSession(uid, {
+            const skipJuice = paperRunEnabled() && (!paperSnapshot?.complete || paperJuiceSavedRef.current);
+            if (paperSnapshot?.complete) paperJuiceSavedRef.current = true;
+            if (!skipJuice) await applyJuiceSession(uid, {
                 correctCount: correctAnswerCount,
                 lessonsCompleted: (isPathMode && pathLessonRef.current
                     && baseList.every((q) => correctIds.includes(q.id || '')))
@@ -573,14 +653,58 @@ export function useGamePlay({
                     topicFromQuery || resultData.topic || resultData.topicId || 'Játék';
             }
 
-            if (paperFromQuery) {
-                const paperKind =
+            if (paperSnapshot && paperRunRef.current) {
+                resultData.correct = paperSnapshot.solved;
+                resultData.total = paperSnapshot.total;
+                resultData.completionPercent = paperSnapshot.percent;
+                resultData.final = paperSnapshot.complete;
+                resultData.runId = paperRunRef.current.runId;
+                resultData.firstTryCorrect = paperSnapshot.firstTryCorrect;
+                resultData.retryRemaining = paperSnapshot.retryLeft;
+                resultData.questionStats = paperSnapshot.history.map((row) => ({
+                    questionId: row.questionId,
+                    label: row.label,
+                    topicId: row.topicId,
+                    topicTitle: row.topicTitle,
+                    questionRef: row.questionRef,
+                    paperId: row.paperId,
+                    firstAttemptCorrect: row.firstAttemptCorrect,
+                    attempts: row.attempts,
+                    wrongAttempts: row.wrongAttempts,
+                    correctAttempts: row.correctAttempts,
+                    solved: row.solved,
+                    firstSeenAt: row.firstSeenAt,
+                    firstAttemptAt: row.firstAttemptAt,
+                    solvedCorrectAt: row.solvedCorrectAt,
+                    retryCount: row.retryCount,
+                    timeSpentMs: row.timeSpentMs,
+                }));
+                resultData.correctQuestionIds = paperSnapshot.history
+                    .filter((row) => row.solved)
+                    .map((row) => row.questionId);
+                resultData.wrongQuestionIds = paperSnapshot.history
+                    .filter((row) => !row.solved)
+                    .map((row) => row.questionId);
+                resultData.topicBreakdown = Object.fromEntries(
+                    paperSnapshot.topics.map((topic) => [
+                        topic.topicId,
+                        {
+                            title: topic.title,
+                            correct: topic.correct,
+                            wrong: topic.missing,
+                        },
+                    ])
+                );
+                resultData.perfect = paperSnapshot.complete
+                    && paperSnapshot.firstTryCorrect === paperSnapshot.total;
+            } else if (paperFromQuery) {
+                const paperKindForBreakdown =
                     resultData.gameMode === 'kozponti' || router.query.kozponti === 'true'
                         ? 'kozponti'
                         : resultData.level === 'emelt' || router.query.level === 'emelt'
                           ? 'emelt'
                           : 'kozep';
-                const breakdown = buildTopicBreakdown(baseList, correctIds, wrongIds, paperKind);
+                const breakdown = buildTopicBreakdown(baseList, correctIds, wrongIds, paperKindForBreakdown);
                 resultData.topicBreakdown = breakdown;
                 resultData.correctQuestionIds = correctIds.slice(0, 120);
                 resultData.wrongQuestionIds = baseList
@@ -622,6 +746,18 @@ export function useGamePlay({
                 console.error('Error saving game results:', error);
         }
     };
+
+    useEffect(() => {
+        const run = paperRunRef.current;
+        if (!paperSummary || !run) return;
+        if (run.resultsSavedAt === run.updatedAt) return;
+        const stamp = run.updatedAt;
+        paperRunRef.current = { ...run, resultsSavedAt: stamp };
+        savePaperRun(currentUid() || 'local', paperRunRef.current);
+        void saveGameResults();
+        // A feladatsor összegzése egyszer mentődik, amikor a kör véget ér.
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [paperSummary]);
 
     // Sprint visszaszámláló
     useEffect(() => {
@@ -751,6 +887,11 @@ export function useGamePlay({
         correctQuestionIdsRef.current = [];
         wrongFirstIdsRef.current = [];
         erettsegiQuestionsRef.current = [];
+        if (paperIdQuery) clearPaperRun(currentUid() || 'local', paperIdQuery);
+        paperRunRef.current = null;
+        paperJuiceSavedRef.current = false;
+        originalPaperQuestionsRef.current = [];
+        setPaperSummary(null);
         worksheetTopicKeyRef.current = null;
         sprintEndedRef.current = false;
         setMascotMood('idle');
@@ -853,6 +994,28 @@ export function useGamePlay({
         setHintText(null);
         setSecondChanceArmed(false);
         setDoubleStakeArmed(false);
+
+        if (paperRunEnabled() && paperRunRef.current) {
+            const run = paperRunRef.current;
+            setUserAnswer('');
+            setUserAnswer2('');
+            setUserAnswer3('');
+            setUserAnswer4('');
+            setIsCorrect(false);
+            setShowExpression(false);
+            if (run.phase === 'summary') {
+                const summary = summarizePaperRun(run);
+                setPaperSummary(summary);
+                setMessage(summary.complete ? '100%-os teljesítés' : '');
+                setMascotMood(summary.complete ? 'happy' : 'idle');
+                return;
+            }
+            setPaperSummary(null);
+            setMessage('');
+            setMascotMood('idle');
+            setCurrentQuestion(run.cursor);
+            return;
+        }
 
         // #region agent log
         agentDebugLog({
@@ -1096,6 +1259,12 @@ export function useGamePlay({
         setIsCorrect(correct);
         setShowExpression(true);
 
+        if (paperRunEnabled() && paperRunRef.current) {
+            const qid = String(currentQ.id || `idx_${currentQuestion}`);
+            paperRunRef.current = recordPaperAnswer(paperRunRef.current, qid, correct, Date.now());
+            savePaperRun(currentUid() || 'local', paperRunRef.current);
+        }
+
         if (correct) {
             const clutchSave = clutchArmed && !!currentQ.isClutch;
             const newStreak = clutchSave ? Math.max(2, correctStreak + 1) : correctStreak + 1;
@@ -1272,7 +1441,7 @@ export function useGamePlay({
             const isFailedQuestion = currentQuestion >= baseQuestionsCount;
             let lostLife = false;
             
-            if (!isFailedQuestion) {
+            if (!isFailedQuestion && !paperRunEnabled()) {
                 // Csak akkor adjuk hozzá, ha még nem hibás feladat
                 const questionIndex = failedQuestions.findIndex(q => 
                     (q.id && currentQ.id && q.id === currentQ.id) || 
@@ -1335,7 +1504,7 @@ export function useGamePlay({
                 }
             }
 
-            if (armClutch) {
+            if (armClutch && !paperRunEnabled()) {
                 const swapped = applyClutchSwap(getQuestions(), currentQuestion);
                 if (swapped.swapped) {
                     clutchUsedRef.current = true;
@@ -1459,6 +1628,40 @@ export function useGamePlay({
         // #endregion
     };
 
+    const startPaperRetry = () => {
+        const run = paperRunRef.current;
+        if (!run) return;
+        const next = beginRetryRound(run, Date.now());
+        paperRunRef.current = next;
+        savePaperRun(currentUid() || 'local', next);
+        if (next.phase !== 'retry') {
+            setPaperSummary(summarizePaperRun(next));
+            return;
+        }
+        const byId = new Map(
+            originalPaperQuestionsRef.current.map((question, index) => [questionKey(question, index), question])
+        );
+        const queue = next.queue
+            .map((id) => byId.get(id))
+            .filter((question): question is Question => Boolean(question));
+        if (!queue.length) return;
+        questionsRef.current = queue;
+        erettsegiQuestionsRef.current = queue;
+        sessionBridgeRef.current.replaceSessionQuestions?.(queue);
+        setCurrentQuestion(0);
+        setPaperSummary(null);
+        setUserAnswer('');
+        setUserAnswer2('');
+        setUserAnswer3('');
+        setUserAnswer4('');
+        setMessage('');
+        setIsCorrect(false);
+        setShowExpression(false);
+        setFeedbackPending(false);
+        feedbackAdvanceRef.current = null;
+        setMascotMood('idle');
+    };
+
     const skipQuestion = (dir: -1 | 1) => {
         const qs = getQuestions();
         const nextIdx = Math.min(qs.length - 1, Math.max(0, currentQuestion + dir));
@@ -1520,6 +1723,8 @@ export function useGamePlay({
         feedbackPending,
         celebrateLevelUp,
         continueAfterFeedback,
+        paperSummary,
+        startPaperRetry,
         failedQuestions,
         setFailedQuestions,
         isCorrect,

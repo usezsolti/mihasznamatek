@@ -130,6 +130,18 @@ export type GameSessionSnapshot = {
     atMs: number;
     paperId?: string;
     topicBreakdown?: Record<string, { title: string; correct: number; wrong: number }>;
+    completionPercent?: number;
+    final?: boolean;
+    firstTryCorrect?: number;
+    retryRemaining?: number;
+    questionStats?: Array<{
+        questionId: string;
+        label: string;
+        topicTitle: string;
+        attempts: number;
+        wrongAttempts: number;
+        solved: boolean;
+    }>;
 };
 
 export type StudentDossier = {
@@ -785,6 +797,15 @@ export async function loadStudentDossier(student: TeacherStudent): Promise<Stude
             atMs: toMs(r.completedAt || r.timestamp || r.createdAt),
             paperId: String(r.paperId || '').trim() || undefined,
             topicBreakdown: parseTopicBreakdown(r.topicBreakdown),
+            completionPercent: Number.isFinite(Number(r.completionPercent))
+                ? Number(r.completionPercent)
+                : undefined,
+            final: r.final === true,
+            firstTryCorrect: Number(r.firstTryCorrect) || 0,
+            retryRemaining: Number(r.retryRemaining) || 0,
+            questionStats: Array.isArray(r.questionStats)
+                ? (r.questionStats as GameSessionSnapshot['questionStats'])
+                : undefined,
         }));
         const sessionXp = sessions.reduce((sum, row) => sum + (row.xpEarned || 0), 0);
         if (sessionXp > (progress.xp || 0)) progress = { ...progress, xp: sessionXp };

@@ -1258,3 +1258,67 @@
     opacity: 0.5;
     cursor: default;
 }
+
+.paper-run-summary {
+    width: min(720px, 100%);
+    margin: 0 auto 24px;
+    padding: 22px 20px 28px;
+    text-align: left;
+    background: rgba(8, 12, 20, 0.88);
+    border: 1px solid rgba(57, 255, 20, 0.35);
+    border-radius: 18px;
+}
+
+.paper-run-kicker {
+    margin: 0 0 6px;
+    color: #39ff14;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+.paper-run-percent {
+    margin: 0 0 14px;
+    color: #fff;
+    font-size: 1.8rem;
+}
+
+.paper-run-stats,
+.paper-run-retry,
+.paper-run-history,
+.paper-run-topics {
+    margin: 0 0 16px;
+    padding: 0;
+    list-style: none;
+    color: #e8e8e8;
+}
+
+.paper-run-stats li,
+.paper-run-retry li,
+.paper-run-history li,
+.paper-run-topics li {
+    padding: 6px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.paper-run-history li,
+.paper-run-topics li {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.paper-run-summary h3 {
+    margin: 8px 0;
+    color: #fff;
+}
+
+.paper-run-done {
+    color: #39ff14;
+    font-weight: 700;
+}
+
+.paper-run-summary .submit-button {
+    margin: 8px 0 18px;
+}

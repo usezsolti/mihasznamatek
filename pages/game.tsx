@@ -8,6 +8,7 @@ import GameLoading from '../components/game/GameLoading';
 import GameRegisterGate from '../components/game/GameRegisterGate';
 import GameLobby from '../components/game/GameLobby';
 import GameCelebrate from '../components/game/GameCelebrate';
+import PaperRunSummaryView from '../components/game/PaperRunSummary';
 import { useGameAuth } from '../hooks/useGameAuth';
 import { useGamePlay, type GameSessionBridge } from '../hooks/useGamePlay';
 import { useGameSessionBuilders } from '../hooks/useGameSessionBuilders';
@@ -100,6 +101,8 @@ export default function Game() {
         feedbackPending,
         celebrateLevelUp,
         continueAfterFeedback,
+        paperSummary,
+        startPaperRetry,
         setFailedQuestions,
         isCorrect,
         setIsCorrect,
@@ -559,6 +562,10 @@ export default function Game() {
                                 }
                             />
 
+                            {paperSummary ? (
+                                <PaperRunSummaryView summary={paperSummary} onRetry={startPaperRetry} />
+                            ) : (
+                            <>
                             <GameQuestionCard
                                 question={questions[currentQuestion]}
                                 currentQuestion={currentQuestion}
@@ -633,6 +640,8 @@ export default function Game() {
                                 gear={gearFromRank(avatarLevel)}
                                 onContinue={continueAfterFeedback}
                             />
+                            </>
+                            )}
 
                             {isPathMode && (
                                 <GamePathBackButton currentTopic={currentTopic} />

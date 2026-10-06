@@ -49,6 +49,35 @@ describe('student progress merge', () => {
         assert.equal(row.topicBreakdown?.trigonometria.wrong, 1);
     });
 
+    it('keeps the detailed paper completion history', () => {
+        const row = mapGameSession('paper-2', {
+            topicTitle: '2026 május középszint',
+            correct: 18,
+            total: 20,
+            completionPercent: 90,
+            final: false,
+            firstTryCorrect: 16,
+            retryRemaining: 2,
+            questionStats: [
+                {
+                    questionId: 'er26m-4',
+                    label: '4. feladat',
+                    topicTitle: 'Kombinatorika',
+                    attempts: 2,
+                    wrongAttempts: 2,
+                    solved: false,
+                    solvedCorrectAt: null,
+                    timeSpentMs: 12000,
+                },
+            ],
+        });
+        assert.equal(row.completionPercent, 90);
+        assert.equal(row.final, false);
+        assert.equal(row.retryRemaining, 2);
+        assert.equal(row.questionStats?.[0]?.label, '4. feladat');
+        assert.equal(row.questionStats?.[0]?.solved, false);
+    });
+
     it('uses score as XP when xpEarned is missing', () => {
         const row = mapGameSession('3', { score: 15, topic: 'Napi' });
         assert.equal(row.xpEarned, 15);

@@ -25,6 +25,22 @@ export type GameSessionRow = {
     atMs: number;
     paperId?: string;
     topicBreakdown?: Record<string, { title: string; correct: number; wrong: number }>;
+    completionPercent?: number;
+    final?: boolean;
+    firstTryCorrect?: number;
+    retryRemaining?: number;
+    questionStats?: SavedQuestionStat[];
+};
+
+export type SavedQuestionStat = {
+    questionId: string;
+    label: string;
+    topicTitle: string;
+    attempts: number;
+    wrongAttempts: number;
+    solved: boolean;
+    solvedCorrectAt: number | null;
+    timeSpentMs: number;
 };
 
 export type StudentProgressPayload = {
@@ -80,7 +96,35 @@ export function mapGameSession(id: string, data: Record<string, unknown>): GameS
         atMs: toMillis(data.completedAt || data.timestamp || data.createdAt),
         paperId: paperId || undefined,
         topicBreakdown: parseTopicBreakdown(data.topicBreakdown),
+        completionPercent: data.completionPercent == null || data.completionPercent === ''
+            ? undefined
+            : Number(data.completionPercent),
+        final: data.final === true,
+        firstTryCorrect: Number(data.firstTryCorrect) || 0,
+        retryRemaining: Number(data.retryRemaining) || 0,
+        questionStats: parseQuestionStats(data.questionStats),
     };
+}
+
+function parseQuestionStats(raw: unknown): SavedQuestionStat[] | undefined {
+    if (!Array.isArray(raw)) return undefined;
+    const rows = raw
+        .map((item) => {
+            const row = item as Record<string, unknown> | null;
+            if (!row) return null;
+            return {
+                questionId: String(row.questionId || ''),
+                label: String(row.label || ''),
+                topicTitle: String(row.topicTitle || ''),
+                attempts: Number(row.attempts) || 0,
+                wrongAttempts: Number(row.wrongAttempts) || 0,
+                solved: row.solved === true,
+                solvedCorrectAt: row.solvedCorrectAt == null ? null : Number(row.solvedCorrectAt) || null,
+                timeSpentMs: Number(row.timeSpentMs) || 0,
+            };
+        })
+        .filter((row): row is SavedQuestionStat => Boolean(row?.questionId));
+    return rows.length ? rows : undefined;
 }
 
 export function mergePracticeXp(summaryXp: number, sessions: GameSessionRow[]): number {

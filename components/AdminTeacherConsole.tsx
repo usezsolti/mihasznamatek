@@ -1607,19 +1607,28 @@ export default function AdminTeacherConsole({
                                 ) : (
                                     <ul className="atc-plain-list">
                                         {dossier.sessions.slice(0, 40).map((s) => {
-                                            const pct =
-                                                s.total > 0
+                                            const pct = s.completionPercent != null
+                                                ? s.completionPercent
+                                                : s.total > 0
                                                     ? Math.round((s.correct / s.total) * 100)
                                                     : 0;
+                                            const openTasks = (s.questionStats || []).filter((row) => !row.solved);
                                             return (
                                                 <li key={s.id}>
                                                     <strong>{s.topic}</strong>
                                                     <span className="atc-muted">
                                                         {formatWhen(s.atMs)} · {s.correct}/{s.total || '—'} helyes
                                                         {s.total ? ` (${pct}%)` : ''}
+                                                        {pct === 100 ? ' · 100%-os teljesítés' : ''}
+                                                        {s.firstTryCorrect ? ` · elsőre ${s.firstTryCorrect}` : ''}
                                                         {s.xpEarned ? ` · +${s.xpEarned} XP` : ''}
                                                         {s.gameMode ? ` · ${s.gameMode}` : ''}
                                                     </span>
+                                                    {openTasks.length > 0 ? (
+                                                        <span className="atc-muted">
+                                                            Újra megoldandó: {openTasks.map((row) => `${row.label} (${row.topicTitle})`).join(', ')}
+                                                        </span>
+                                                    ) : null}
                                                 </li>
                                             );
                                         })}
