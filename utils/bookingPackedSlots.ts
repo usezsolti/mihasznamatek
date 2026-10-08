@@ -186,8 +186,11 @@ export function parseStudentWindow(text: string): StudentWindow | null {
     if (/\bdelelott\b/.test(f) || /\breggel\b/.test(f) || /\bmorning\b/.test(f)) {
         beforeMinutes = 12 * 60;
     }
-    if (/\bdelutan\b/.test(f) || /\beste\b/.test(f) || /\bafternoon\b/.test(f) || /\bevening\b/.test(f)) {
-        afterMinutes = 12 * 60;
+    if (/\bdelutan\b/.test(f) || /\bafternoon\b/.test(f)) {
+        afterMinutes = Math.max(afterMinutes ?? 0, 13 * 60);
+    }
+    if (/\beste\b/.test(f) || /\bevening\b/.test(f)) {
+        afterMinutes = Math.max(afterMinutes ?? 0, 17 * 60);
     }
 
     const afterHit = f.match(/\b(\d{1,2}(?::\d{2})?)\s*(?:utan|tol|from)\b/);
@@ -201,6 +204,9 @@ export function parseStudentWindow(text: string): StudentWindow | null {
         if (v != null) beforeMinutes = v;
     }
 
+    const talkedAvailability =
+        /\b(raer\w*|erek ra|szabad|tudok|tudnek|jo nekem|jo lenne|megfelel|idopont|foglal|delutan|delelott|este|reggel)\b/.test(f);
+    if (!talkedAvailability && afterMinutes == null && beforeMinutes == null) return null;
     if (!weekdays.size && afterMinutes == null && beforeMinutes == null) return null;
     return {
         weekdays: weekdays.size ? [...weekdays].sort((a, b) => a - b) : null,
@@ -263,23 +269,50 @@ export function nextDateKeyForWeekday(fromDateKey: string, weekday: number): str
  * Concrete "szerda 16:00" / "2026-09-17 15:00" requests.
  * `todayKey` is Budapest YYYY-MM-DD.
  */
+/** A diák új mondata, az idézett előzmény nélkül. */
+export function latestStudentText(text: string): string {
+    const lines = text.replace(/\r\n/g, '\n').split('\n');
+    const out: string[] = [];
+    for (const line of lines) {
+        const t = line.trim();
+        if (/^>/.test(t)) break;
+        if (/^-{2,}\s*original message\s*-{2,}/i.test(t)) break;
+        if (/^_{5,}/.test(t)) break;
+        if (/(?:írta|irta|wrote)\s*:$/i.test(foldHu(t)) || /(?:írta|irta|wrote)\s*:$/i.test(t)) break;
+        out.push(line);
+    }
+    return out.join('\n').trim();
+}
+
+function clockHour(rawHour: number, folded: string): number | null {
+    let h = rawHour;
+    const afternoon = /\b(delutan|este)\b/.test(folded) && !/\b(delelott|reggel)\b/.test(folded);
+    if (afternoon && h >= 1 && h <= 7) h += 12;
+    if (h < 8 || h > 21) return null;
+    return h;
+}
+
 export function parseRequestedSlots(text: string, todayKey: string): RequestedSlot[] {
-    const f = foldHu(text);
+    const fresh = latestStudentText(text);
+    const f = foldHu(fresh);
     const out: RequestedSlot[] = [];
-    const iso = [...text.matchAll(/\b(20\d{2}-\d{2}-\d{2})(?:[ tT](\d{1,2}:\d{2}))?/g)];
+    const iso = [...fresh.matchAll(/\b(20\d{2}-\d{2}-\d{2})(?:[ tT](\d{1,2}:\d{2}))?/g)];
     for (const m of iso) {
-        out.push({ dateKey: m[1], time: m[2] ? formatTime(parseTime(m[2].length === 4 ? `0${m[2]}` : m[2])) : '12:00' });
+        if (!m[2]) continue;
+        const clock = m[2].length === 4 ? `0${m[2]}` : m[2];
+        out.push({ dateKey: m[1], time: formatTime(parseTime(clock)) });
     }
 
     for (const [name, idx] of Object.entries(WEEKDAY_HU)) {
         const re = new RegExp(
-            `\\b${name}\\w{0,12}(?:\\s+\\w+){0,4}\\s+(\\d{1,2})(?::(\\d{2}))?\\s*(?:ora|kor)?\\b|\\b(\\d{1,2})(?::(\\d{2}))?\\s*(?:ora|kor)\\b(?:\\s+\\w+){0,4}\\s+${name}`
+            `\\b${name}\\w{0,12}(?:\\s+\\w+){0,4}\\s+(\\d{1,2})(?::(\\d{2}))?\\s*(?:ora\\w*|kor)\\b|\\b${name}\\w{0,12}(?:\\s+\\w+){0,4}\\s+(\\d{1,2}):(\\d{2})\\b|\\b(\\d{1,2})(?::(\\d{2}))?\\s*(?:ora\\w*|kor)\\b(?:\\s+\\w+){0,4}\\s+${name}|\\b(\\d{1,2}):(\\d{2})\\b(?:\\s+\\w+){0,4}\\s+${name}`
         );
         const m = f.match(re);
         if (!m) continue;
-        const h = Number(m[1] || m[3]);
-        const min = Number(m[2] || m[4] || 0);
-        if (h < 8 || h > 21 || min > 59) continue;
+        const hRaw = Number(m[1] || m[3] || m[5] || m[7]);
+        const min = Number(m[2] || m[4] || m[6] || m[8] || 0);
+        const h = clockHour(hRaw, f);
+        if (h == null || min > 59) continue;
         out.push({ dateKey: nextDateKeyForWeekday(todayKey, idx), time: formatTime(h * 60 + min) });
     }
     const uniq = new Map<string, RequestedSlot>();

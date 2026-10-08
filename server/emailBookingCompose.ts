@@ -166,6 +166,8 @@ export function composeBookingDraft(opts: {
     packed?: PackedSlot[];
     confirm?: RequestedSlot | PackedSlot;
     requestedButPacked?: PackedSlot[];
+    /** A diák ezt kérte, de foglalt — a packed a helyette szabad sáv. */
+    requestedTaken?: RequestedSlot;
     window?: StudentWindow | null;
 }): ComposedMail {
     const hi = greeting(opts.studentName);
@@ -203,6 +205,29 @@ export function composeBookingDraft(opts: {
             slots: [opts.confirm],
             nearestLabel: false,
         }));
+    }
+
+    if (opts.requestedTaken) {
+        const when = formatSlotProfessional(opts.requestedTaken);
+        const slots = opts.packed || [];
+        const ask = slots.length
+            ? 'Ezek közül melyik a számodra legközelebbi, amelyik jó? Elég a sorszám.'
+            : 'Melyik másik nap és óra lenne jó? Újra megnézem, melyik sáv szabad.';
+        const before = slots.length
+            ? [`A kért időpont (${when}) foglalt. Ezek a hozzá legközelebbi szabad órák:`]
+            : [`A kért időpont (${when}) foglalt, és azon a napon most nincs másik szabad órám.`];
+        const after = [priceLine()];
+        return mail(
+            [hi, ...before, slots.length ? slotListText(slots) : '', ask, ...after].filter(Boolean),
+            studentHtml({
+                title: 'Szabad időpontok',
+                hi,
+                paragraphs: before,
+                ask,
+                slots,
+                afterSlots: after,
+            })
+        );
     }
 
     if (opts.requestedButPacked?.length) {

@@ -5,11 +5,11 @@ import {
     earliestFreeSlot,
     hasStudentWindow,
     isSlotFree,
+    latestStudentText,
     studentIsFlexible,
     mergeWindows,
     parseRequestedSlots,
     parseStudentWindow,
-    shouldOfferPackedInsteadOfRequested,
     suggestPackedSlots,
     parseChoiceFromOffers,
     type PackedSlot,
@@ -345,15 +345,13 @@ async function processOne(mail: InboundMail): Promise<'draft' | 'skip'> {
         return 'skip';
     }
 
-    const parsedWindow = parseStudentWindow(`${mail.subject}\n${mail.text}`);
+    const fresh = latestStudentText(mail.text);
+    const blob = `${mail.subject}\n${fresh}`;
+    const parsedWindow = parseStudentWindow(blob);
     const window = mergeWindows(base.window, parsedWindow);
     const today = getBudapestDateKeyOffset(0);
-    const blob = `${mail.subject}\n${mail.text}`;
     const chosen = parseChoiceFromOffers(blob, base.offeredSlots || []);
-    const requested = [
-        ...parseRequestedSlots(blob, today),
-        ...(chosen ? [chosen] : []),
-    ];
+    const requested = chosen ? [chosen] : parseRequestedSlots(blob, today);
     const days = (await getAvailabilityRange(14)).map((d) => ({
         dateKey: d.dateKey,
         weekdayHu: d.weekdayHu,
@@ -370,62 +368,64 @@ async function processOne(mail: InboundMail): Promise<'draft' | 'skip'> {
     let offeredSlots = base.offeredSlots;
 
     const flexible = studentIsFlexible(blob);
-    const earliest = flexible && !chosen ? earliestFreeSlot(days) : null;
-    const confirmable =
-        earliest ||
-        (chosen && isSlotFree(days, chosen.dateKey, chosen.time) ? chosen : null) ||
-        requested.find((r) => isSlotFree(days, r.dateKey, r.time));
-    const packedInstead = earliest
-        ? []
-        :
-        confirmable && !chosen && hasStudentWindow(window)
-            ? shouldOfferPackedInsteadOfRequested(confirmable, days, window)
-            : confirmable && !chosen
-              ? shouldOfferPackedInsteadOfRequested(confirmable, days, null)
-              : [];
+    const namedFree = requested.find((slot) => isSlotFree(days, slot.dateKey, slot.time)) || null;
 
-    if (confirmable && packedInstead.length === 0) {
-        composed = composeBookingDraft({ kind: 'confirm', studentName: name, confirm: confirmable });
+    if (namedFree) {
+        composed = composeBookingDraft({ kind: 'confirm', studentName: name, confirm: namedFree });
         try {
             bookingId = await holdSlot({
                 threadId: mail.gmailThreadId,
                 email: mail.fromEmail,
                 name: mail.fromName || name,
-                dateKey: confirmable.dateKey,
-                time: confirmable.time,
+                dateKey: namedFree.dateKey,
+                time: namedFree.time,
             });
-            holdDate = confirmable.dateKey;
-            holdTime = confirmable.time;
+            holdDate = namedFree.dateKey;
+            holdTime = namedFree.time;
             nextStatus = 'held';
             offeredSlots = undefined;
             const teacher = composeTeacherBookedDraft({
                 studentName: mail.fromName || name,
                 studentEmail: mail.fromEmail,
-                slot: confirmable,
+                slot: namedFree,
                 bookingId,
             });
             await appendStandaloneDraft({
                 toEmail: ownAddress() || ADMIN_BOOKING_EMAIL,
-                subject: `Foglalás rögzítve · ${mail.fromName || name} · ${confirmable.time}`,
+                subject: `Foglalás rögzítve · ${mail.fromName || name} · ${namedFree.time}`,
                 body: teacher.text,
                 html: teacher.html,
             });
         } catch {
             nextStatus = 'negotiating';
         }
-    } else if (packedInstead.length) {
+    } else if (requested.length) {
+        const wanted = requested[0];
+        const sameDay = days.filter((day) => day.dateKey === wanted.dateKey);
+        const alternatives = suggestPackedSlots(sameDay.length ? sameDay : days, window, 3);
         composed = composeBookingDraft({
             kind: 'offer',
             studentName: name,
-            requestedButPacked: packedInstead,
+            packed: alternatives,
+            requestedTaken: wanted,
+            window,
         });
-        offeredSlots = packedInstead;
-    } else if (!hasStudentWindow(window) && requested.length === 0 && !chosen) {
-        composed = composeBookingDraft({ kind: 'ask_window', studentName: name });
-    } else {
+        offeredSlots = alternatives;
+    } else if (flexible) {
+        const earliest = earliestFreeSlot(days);
+        if (earliest) {
+            composed = composeBookingDraft({ kind: 'offer', studentName: name, packed: [earliest], window });
+            offeredSlots = [earliest];
+        } else {
+            composed = composeBookingDraft({ kind: 'ask_window', studentName: name });
+        }
+    } else if (hasStudentWindow(window)) {
         const packed: PackedSlot[] = suggestPackedSlots(days, window, 3);
         composed = composeBookingDraft({ kind: 'offer', studentName: name, packed, window });
         offeredSlots = packed;
+    } else {
+        composed = composeBookingDraft({ kind: 'ask_window', studentName: name });
+        offeredSlots = undefined;
     }
 
     await appendDraftReply({

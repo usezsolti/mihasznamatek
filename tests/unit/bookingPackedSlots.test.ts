@@ -5,6 +5,7 @@ import { extractMailText } from '../../server/gmailImap';
 import {
     parseChoiceFromOffers,
     earliestFreeSlot,
+    latestStudentText,
     parseRequestedSlots,
     parseStudentWindow,
     shouldOfferPackedInsteadOfRequested,
@@ -101,6 +102,27 @@ describe('booking mail intent', () => {
         assert.deepEqual(parseRequestedSlots('Hétfőn ráérek, a számom 06301234567.', '2026-09-25'), []);
         const slots = parseRequestedSlots('Csütörtök 15:00 jó nekem.', '2026-09-25');
         assert.equal(slots[0]?.time, '15:00');
+        assert.deepEqual(parseRequestedSlots('A dolgozat napja 2026-10-08, matekból kérek segítséget.', '2026-09-25'), []);
+    });
+
+    it('reads afternoon 4 as 16:00 and ignores quoted earlier offers', () => {
+        const slots = parseRequestedSlots('Csütörtök délután 4 órakor jó.', '2026-09-25');
+        assert.equal(slots[0]?.time, '16:00');
+        const quoted = [
+            'A második jó.',
+            '',
+            'Zsolt ezt írta:',
+            '1. Hétfő, 12:00',
+            '2. Csütörtök 16:00',
+        ].join('\n');
+        assert.equal(latestStudentText(quoted), 'A második jó.');
+        assert.deepEqual(parseRequestedSlots(quoted, '2026-09-25'), []);
+    });
+
+    it('does not treat a weekday mention as a free window', () => {
+        assert.equal(parseStudentWindow('Csütörtökön lesz a dolgozat, matekból készülök.'), null);
+        const afternoon = parseStudentWindow('Délután tudok jönni.');
+        assert.equal(afternoon?.afterMinutes, 13 * 60);
     });
 
     it('ignores appointments that are not about math', () => {
