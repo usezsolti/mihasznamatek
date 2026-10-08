@@ -1,6 +1,6 @@
 import type { ReactNode, CSSProperties } from 'react';
 
-export type MathCategoryId = 'basic' | 'calculus' | 'vectors' | 'trig' | 'symbols';
+export type MathCategoryId = 'basic' | 'calculus' | 'vectors' | 'trig' | 'combinatorics' | 'symbols';
 
 export type LayoutId =
     | 'frac'
@@ -11,6 +11,8 @@ export type LayoutId =
     | 'nthroot'
     | 'abs'
     | 'unary'
+    | 'fact'
+    | 'call2'
     | 'logb'
     | 'exp'
     | 'deriv'
@@ -487,9 +489,14 @@ export const MATH_CATEGORIES: MathCategory[] = [
             u('sec', '\\sec\\square', 'sec'),
             u('csc', '\\csc\\square', 'csc'),
             u('cot', '\\cot\\square', 'cot'),
+            u('tg', '\\mathrm{tg}\\square', 'tan'),
+            u('ctg', '\\mathrm{ctg}\\square', 'cot'),
             u('asin', '\\sin^{-1}\\square', 'asin'),
             u('acos', '\\cos^{-1}\\square', 'acos'),
             u('atan', '\\tan^{-1}\\square', 'atan'),
+            u('asec', '\\sec^{-1}\\square', 'asec'),
+            u('acsc', '\\csc^{-1}\\square', 'acsc'),
+            u('acot', '\\cot^{-1}\\square', 'acot'),
             u('sinh', '\\sinh\\square', 'sinh'),
             u('cosh', '\\cosh\\square', 'cosh'),
             u('tanh', '\\tanh\\square', 'tanh'),
@@ -502,6 +509,41 @@ export const MATH_CATEGORIES: MathCategory[] = [
             u('asech', '\\mathrm{sech}^{-1}\\square', 'asech'),
             u('acsch', '\\mathrm{csch}^{-1}\\square', 'acsch'),
             u('acoth', '\\coth^{-1}\\square', 'acoth'),
+        ],
+    },
+    {
+        id: 'combinatorics',
+        title: 'KOMBINATORIKA',
+        items: [
+            {
+                kind: 'template',
+                id: 'fact',
+                label: 'n!',
+                katex: 'n!',
+                slots: 1,
+                layout: 'fact',
+                build: ([a]) => `(${a || '?'})!`,
+            },
+            {
+                kind: 'template',
+                id: 'ncr',
+                label: 'Kombináció',
+                katex: 'C(n,k)',
+                slots: 2,
+                layout: 'call2',
+                meta: { prefix: 'C' },
+                build: ([n, k]) => `ncr(${n || '?'},${k || '?'})`,
+            },
+            {
+                kind: 'template',
+                id: 'npr',
+                label: 'Variáció',
+                katex: 'P(n,k)',
+                slots: 2,
+                layout: 'call2',
+                meta: { prefix: 'P' },
+                build: ([n, k]) => `npr(${n || '?'},${k || '?'})`,
+            },
         ],
     },
     {
@@ -766,8 +808,11 @@ export function getSlotVisualRole(layout: LayoutId, index: number): SlotVisualRo
         case 'cbrt':
         case 'abs':
         case 'unary':
+        case 'fact':
         case 'piecewise':
             return 'wide';
+        case 'call2':
+            return 'compact';
         case 'set':
             return 'setlist';
         case 'logb':
@@ -891,6 +936,24 @@ export function renderLayout(
                     <span style={labelFn}>{prefix || 'f'}</span>
                     <span>(</span>
                     {boxes[0]}
+                    <span>)</span>
+                </span>
+            );
+        case 'fact':
+            return (
+                <span style={structRow}>
+                    {boxes[0]}
+                    <span style={labelFn}>!</span>
+                </span>
+            );
+        case 'call2':
+            return (
+                <span style={structRow}>
+                    <span style={labelFn}>{prefix || 'f'}</span>
+                    <span>(</span>
+                    {boxes[0]}
+                    <span>,</span>
+                    {boxes[1]}
                     <span>)</span>
                 </span>
             );

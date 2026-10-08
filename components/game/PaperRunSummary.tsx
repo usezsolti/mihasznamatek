@@ -1,11 +1,14 @@
+import type { GameReport } from '../../utils/game/gameReport';
 import type { PaperRunSummary } from '../../utils/game/paperRun';
+import { ReportDownloadButton } from './GameSessionReport';
 
 type Props = {
     summary: PaperRunSummary;
+    report: GameReport | null;
     onRetry: () => void;
 };
 
-export default function PaperRunSummaryView({ summary, onRetry }: Props) {
+export default function PaperRunSummaryView({ summary, report, onRetry }: Props) {
     return (
         <section className="paper-run-summary">
             <p className="paper-run-kicker">
@@ -66,6 +69,7 @@ export default function PaperRunSummaryView({ summary, onRetry }: Props) {
                     </li>
                 ))}
             </ul>
+            {report && <ReportDownloadButton report={report} />}
         </section>
     );
 }

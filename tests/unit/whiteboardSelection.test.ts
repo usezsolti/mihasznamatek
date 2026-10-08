@@ -1,6 +1,13 @@
 import assert from 'node:assert/strict';
 import { describe, it } from 'node:test';
-import { hitTestStroke, hitTestTop, resizeImageStroke, translateStroke } from '../../utils/whiteboardSelection';
+import {
+    duplicateStrokes,
+    hitTestStroke,
+    hitTestTop,
+    resizeImageStroke,
+    strokesInMarquee,
+    translateStroke,
+} from '../../utils/whiteboardSelection';
 import type { WbStroke } from '../../utils/whiteboardTypes';
 
 function stroke(partial: Partial<WbStroke> & Pick<WbStroke, 'tool'>): WbStroke {
@@ -80,6 +87,34 @@ describe('whiteboard selection', () => {
         assert.equal(moved.w, 30);
         assert.equal(moved.points[0].x, 6);
         assert.equal(moved.points[0].y, -1);
+    });
+
+    it('selects every stroke inside a dragged box', () => {
+        const inside = stroke({ id: 'in', tool: 'rect', x: 10, y: 10, w: 20, h: 20 });
+        const outside = stroke({ id: 'out', tool: 'rect', x: 200, y: 200, w: 20, h: 20 });
+        const eraser = stroke({
+            id: 'erase',
+            tool: 'eraser',
+            points: [
+                { x: 12, y: 12 },
+                { x: 28, y: 12 },
+            ],
+        });
+        const ids = strokesInMarquee([inside, outside, eraser], { x: 0, y: 0, w: 80, h: 80 });
+        assert.deepEqual(ids, ['in']);
+    });
+
+    it('copies a stroke with a new id and an offset', () => {
+        const [copy] = duplicateStrokes(
+            [stroke({ id: 'orig', tool: 'rect', x: 4, y: 6, w: 10, h: 8 })],
+            28,
+            28,
+            50
+        );
+        assert.notEqual(copy.id, 'orig');
+        assert.equal(copy.x, 32);
+        assert.equal(copy.y, 34);
+        assert.equal(copy.w, 10);
     });
 
     it('resizes an image from the corner and keeps the aspect', () => {

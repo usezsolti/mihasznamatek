@@ -17,9 +17,19 @@ import {
 } from '../../utils/whiteboardTypes';
 import { correctInkStroke, lastInkCorrectionDebug, polygonLabel } from '../../utils/whiteboardInkToShape';
 import { applyExportView, planWhiteboardExport, strokeInkBounds, unionStrokeBounds } from '../../utils/whiteboardExport';
-import { hitImageHandle, hitTestTop, resizeImageStroke, translateStroke } from '../../utils/whiteboardSelection';
+import {
+    duplicateStrokes,
+    hitImageHandle,
+    hitTestTop,
+    resizeImageStroke,
+    strokesInMarquee,
+    translateStroke,
+    type MarqueeBox,
+} from '../../utils/whiteboardSelection';
 import { compressWhiteboardImage, drawCachedImage, primeWhiteboardImage } from '../../utils/whiteboardImage';
 import WhiteboardCalculator from './WhiteboardCalculator';
+import { buildStamp, WHITEBOARD_STAMPS, type StampId } from '../../utils/whiteboardStamps';
+import { textForBoard } from '../../utils/whiteboardEquals';
 import { agentDebugLog } from '../../utils/agentDebugLog';
 
 let redrawImages: (() => void) | null = null;
@@ -187,6 +197,15 @@ function IconHand() {
     );
 }
 
+function IconCopy() {
+    return (
+        <Icon>
+            <rect x="8" y="8" width="10" height="11" rx="1.5" stroke="currentColor" strokeWidth="1.8" />
+            <path d="M6 14.5V6.5A1.5 1.5 0 0 1 7.5 5H14" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+        </Icon>
+    );
+}
+
 function IconSelect() {
     return (
         <Icon>
@@ -195,6 +214,15 @@ function IconSelect() {
             <path d="M5 13v5.5h6.5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeDasharray="2.2 2" />
             <path d="M13.5 18.5H19V13" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
             <path d="M10 10.5 15.5 12.2 12.8 13.6 14.6 16.8 13.2 17.6 11.4 14.4 9.6 16.2 10 10.5Z" fill="currentColor" />
+        </Icon>
+    );
+}
+
+function IconLibrary() {
+    return (
+        <Icon>
+            <path d="M4 19h16M12 19V5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+            <path d="M12 5l2.2 2.2M12 5 9.8 7.2M20 19l-2.2-2.2M20 19l-2.2 2" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
         </Icon>
     );
 }
@@ -380,7 +408,7 @@ export default function MatekWhiteboard({
     const [joinCode, setJoinCode] = useState('');
     const [shareUrl, setShareUrl] = useState('');
     const [shapeAssist, setShapeAssist] = useState(true);
-    const [tray, setTray] = useState<'ink' | 'shapes' | 'more' | null>('ink');
+    const [tray, setTray] = useState<'ink' | 'shapes' | 'more' | 'library' | null>('ink');
     const [zoomPct, setZoomPct] = useState(100);
     const [manualGate, setManualGate] = useState(false);
     const [creating, setCreating] = useState(false);
@@ -400,12 +428,15 @@ export default function MatekWhiteboard({
     const dragRef = useRef<{
         active: boolean;
         moved: boolean;
-        mode: 'move' | 'resize';
+        mode: 'move' | 'resize' | 'marquee';
         startX: number;
         startY: number;
         ids: string[];
         snapshots: WbStroke[];
+        additive?: boolean;
+        marquee?: MarqueeBox;
     } | null>(null);
+    const clipboardRef = useRef<WbStroke[]>([]);
     const placeImageRef = useRef<(blob: Blob) => void>(() => {});
     const imageInputRef = useRef<HTMLInputElement | null>(null);
     const pendingIds = useRef(new Set<string>());
@@ -503,6 +534,25 @@ export default function MatekWhiteboard({
                     ctx.fillRect(hx - r, hy - r, r * 2, r * 2);
                 }
             }
+            ctx.restore();
+        }
+        const marquee = dragRef.current?.mode === 'marquee' ? dragRef.current.marquee : null;
+        if (marquee && (marquee.w !== 0 || marquee.h !== 0)) {
+            ctx.save();
+            ctx.setTransform(
+                scale.current,
+                0,
+                0,
+                scale.current,
+                pan.current.x * scale.current,
+                pan.current.y * scale.current
+            );
+            ctx.fillStyle = 'rgba(77, 171, 247, 0.14)';
+            ctx.strokeStyle = '#4dabf7';
+            ctx.lineWidth = 1.5 / scale.current;
+            ctx.setLineDash([6 / scale.current, 4 / scale.current]);
+            ctx.fillRect(marquee.x, marquee.y, marquee.w, marquee.h);
+            ctx.strokeRect(marquee.x, marquee.y, marquee.w, marquee.h);
             ctx.restore();
         }
         // #region agent log
@@ -630,6 +680,9 @@ export default function MatekWhiteboard({
             if (drag?.active) {
                 const local = new Map(strokesRef.current.map((s) => [s.id, s] as const));
                 next = next.map((s) => (drag.ids.includes(s.id) && local.has(s.id) ? local.get(s.id)! : s));
+                for (const id of drag.ids) {
+                    if (!next.some((s) => s.id === id) && local.has(id)) next.push(local.get(id)!);
+                }
             }
             strokesRef.current = next;
             setStrokes(next);
@@ -658,6 +711,34 @@ export default function MatekWhiteboard({
         if (boardId) document.body.classList.add('wb-board-open');
         else document.body.classList.remove('wb-board-open');
         return () => document.body.classList.remove('wb-board-open');
+    }, [boardId]);
+
+    useEffect(() => {
+        if (!boardId) return;
+        const onKey = (e: KeyboardEvent) => {
+            const target = e.target as HTMLElement | null;
+            if (target && (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.isContentEditable)) {
+                return;
+            }
+            const key = e.key.toLowerCase();
+            if ((e.ctrlKey || e.metaKey) && key === 'd') {
+                e.preventDefault();
+                duplicateSelected();
+                return;
+            }
+            if ((e.ctrlKey || e.metaKey) && key === 'c' && selectedRef.current.length) {
+                e.preventDefault();
+                clipboardRef.current = strokesRef.current.filter((stroke) => selectedRef.current.includes(stroke.id));
+                setStatus('Kijelölés a vágólapon');
+                return;
+            }
+            if ((e.ctrlKey || e.metaKey) && key === 'v' && clipboardRef.current.length) {
+                e.preventDefault();
+                placeCopies(duplicateStrokes(clipboardRef.current, 28, 28));
+            }
+        };
+        window.addEventListener('keydown', onKey);
+        return () => window.removeEventListener('keydown', onKey);
     }, [boardId]);
 
     useEffect(() => {
@@ -730,6 +811,21 @@ export default function MatekWhiteboard({
         selectedRef.current = ids;
         setSelectedIds(ids);
         redraw();
+    };
+
+    const placeCopies = (copies: WbStroke[]) => {
+        if (!copies.length) return;
+        for (const stroke of copies) void commitStroke(stroke);
+        selectOnly(copies.map((stroke) => stroke.id));
+        setTool('select');
+        setStatus(copies.length === 1 ? '1 elem lemásolva' : `${copies.length} elem lemásolva`);
+    };
+
+    const duplicateSelected = (dx = 28, dy = 28) => {
+        const chosen = strokesRef.current.filter(
+            (stroke) => selectedRef.current.includes(stroke.id) && stroke.tool !== 'eraser'
+        );
+        placeCopies(duplicateStrokes(chosen, dx, dy));
     };
 
     const viewCenter = (): WbPoint => {
@@ -815,6 +911,15 @@ export default function MatekWhiteboard({
         setTool('select');
     };
 
+    const placeStamp = (id: StampId) => {
+        if (!boardId) return;
+        const strokes = buildStamp(id, viewCenter(), { authorId: uid, authorName: displayName });
+        for (const stroke of strokes) void commitStroke(stroke);
+        selectOnly(strokes.map((stroke) => stroke.id));
+        setTool('select');
+        setTray(null);
+    };
+
     const onPointerDown = (e: React.PointerEvent) => {
         if (!boardId) return;
         const canvas = canvasRef.current;
@@ -878,13 +983,39 @@ export default function MatekWhiteboard({
             }
 
             if (!hit) {
-                selectOnly([]);
+                dragRef.current = {
+                    active: true,
+                    moved: false,
+                    mode: 'marquee',
+                    startX: p.x,
+                    startY: p.y,
+                    ids: [],
+                    snapshots: [],
+                    additive: e.shiftKey,
+                    marquee: { x: p.x, y: p.y, w: 0, h: 0 },
+                };
                 return;
             }
 
             const ids = selectedRef.current.includes(hit.id) ? selectedRef.current : [hit.id];
+            const originals = strokesRef.current.filter((s) => ids.includes(s.id) && s.tool !== 'eraser');
+            if (e.ctrlKey || e.metaKey) {
+                const copies = duplicateStrokes(originals, 0, 0);
+                for (const stroke of copies) void commitStroke(stroke);
+                selectOnly(copies.map((stroke) => stroke.id));
+                dragRef.current = {
+                    active: true,
+                    moved: false,
+                    mode: 'move',
+                    startX: p.x,
+                    startY: p.y,
+                    ids: copies.map((stroke) => stroke.id),
+                    snapshots: copies,
+                };
+                return;
+            }
+
             selectOnly(ids);
-            const snapshots = strokesRef.current.filter((s) => ids.includes(s.id));
             dragRef.current = {
                 active: true,
                 moved: false,
@@ -892,7 +1023,7 @@ export default function MatekWhiteboard({
                 startX: p.x,
                 startY: p.y,
                 ids,
-                snapshots,
+                snapshots: originals,
             };
             return;
         }
@@ -900,6 +1031,7 @@ export default function MatekWhiteboard({
         if (tool === 'text') {
             const text = window.prompt('Szöveg a táblára:');
             if (!text?.trim()) return;
+            const shown = textForBoard(text, strokesRef.current, p);
             const stroke: WbStroke = {
                 id: newStrokeId(),
                 tool: 'text',
@@ -908,7 +1040,7 @@ export default function MatekWhiteboard({
                 points: [],
                 x: p.x,
                 y: p.y,
-                text: text.trim().slice(0, 200),
+                text: shown.slice(0, 200),
                 authorId: uid,
                 authorName: displayName,
                 createdAtMs: Date.now(),
@@ -955,7 +1087,17 @@ export default function MatekWhiteboard({
             const p = toWorld(e.clientX, e.clientY);
             const dx = p.x - drag.startX;
             const dy = p.y - drag.startY;
-            if (Math.hypot(dx, dy) > 1) drag.moved = true;
+            if (Math.hypot(dx, dy) > 2) drag.moved = true;
+            if (drag.mode === 'marquee') {
+                drag.marquee = {
+                    x: Math.min(drag.startX, p.x),
+                    y: Math.min(drag.startY, p.y),
+                    w: Math.abs(p.x - drag.startX),
+                    h: Math.abs(p.y - drag.startY),
+                };
+                redraw();
+                return;
+            }
             const byId = new Map(drag.snapshots.map((s) => [s.id, s] as const));
             strokesRef.current = strokesRef.current.map((s) => {
                 const snap = byId.get(s.id);
@@ -985,6 +1127,23 @@ export default function MatekWhiteboard({
         const drag = dragRef.current;
         if (drag?.active) {
             dragRef.current = null;
+            if (drag.mode === 'marquee') {
+                const box = drag.marquee;
+                if (!drag.moved || !box) {
+                    if (!drag.additive) selectOnly([]);
+                    else redraw();
+                    return;
+                }
+                const hits = strokesInMarquee(strokesRef.current, box);
+                const next = drag.additive
+                    ? Array.from(new Set([...selectedRef.current, ...hits]))
+                    : hits;
+                selectOnly(next);
+                if (next.length) {
+                    setStatus(next.length === 1 ? '1 elem kijelölve' : `${next.length} elem kijelölve`);
+                }
+                return;
+            }
             if (!drag.moved) {
                 const byId = new Map(drag.snapshots.map((s) => [s.id, s] as const));
                 strokesRef.current = strokesRef.current.map((s) => byId.get(s.id) || s);
@@ -1569,6 +1728,29 @@ export default function MatekWhiteboard({
                     </div>
                 )}
 
+                {tray === 'library' && (
+                    <div className="wb-tray" role="toolbar" aria-label="Adattár">
+                        {WHITEBOARD_STAMPS.map((stamp) => (
+                            <button
+                                key={stamp.id}
+                                type="button"
+                                className="wb-stamp"
+                                onClick={() => placeStamp(stamp.id)}
+                            >
+                                {stamp.label}
+                            </button>
+                        ))}
+                        <button
+                            type="button"
+                            className="wb-iconbtn wb-iconbtn--ghost"
+                            title="Bezár"
+                            onClick={() => setTray(null)}
+                        >
+                            <IconClose />
+                        </button>
+                    </div>
+                )}
+
                 {tray === 'more' && (
                     <div className="wb-tray wb-tray--menu" role="menu" aria-label="Több">
                         <button type="button" className="wb-menuitem wb-menuitem--danger" onClick={() => void handleClear()}>
@@ -1647,7 +1829,11 @@ export default function MatekWhiteboard({
                         <button
                             type="button"
                             className={`wb-iconbtn ${tool === 'select' ? 'is-on' : ''}`}
-                            title={selectedIds.length ? `Kijelölés (${selectedIds.length})` : 'Kijelölés'}
+                            title={
+                                selectedIds.length
+                                    ? `Kijelölés (${selectedIds.length}). Húzd arrébb, Ctrl+húzás másol.`
+                                    : 'Kijelölés: kattints, vagy húzz keretet több elemhez'
+                            }
                             onClick={() => {
                                 setTool('select');
                                 setTray(null);
@@ -1655,6 +1841,16 @@ export default function MatekWhiteboard({
                         >
                             <IconSelect />
                         </button>
+                        {selectedIds.length > 0 && (
+                            <button
+                                type="button"
+                                className="wb-iconbtn"
+                                title="Kijelölés másolása"
+                                onClick={() => duplicateSelected()}
+                            >
+                                <IconCopy />
+                            </button>
+                        )}
                         <button
                             type="button"
                             className={`wb-iconbtn ${inkActive ? 'is-on' : ''}`}
@@ -1706,6 +1902,17 @@ export default function MatekWhiteboard({
                             }}
                         >
                             <IconCalc />
+                        </button>
+                        <button
+                            type="button"
+                            className={`wb-iconbtn ${tray === 'library' ? 'is-on' : ''}`}
+                            title="Adattár"
+                            onClick={() => {
+                                setTray(tray === 'library' ? null : 'library');
+                                setCalcOpen(false);
+                            }}
+                        >
+                            <IconLibrary />
                         </button>
                         <button
                             type="button"

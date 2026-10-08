@@ -17,11 +17,21 @@ type Tok =
 
 const FN_NAMES = new Set([
     'sin', 'cos', 'tan', 'asin', 'acos', 'atan',
-    'sec', 'csc', 'cot',
+    'sec', 'csc', 'cot', 'asec', 'acsc', 'acot',
     'sinh', 'cosh', 'tanh', 'asinh', 'acosh', 'atanh',
     'sech', 'csch', 'coth',
     'log', 'log10', 'ln', 'sqrt', 'cbrt', 'root', 'abs',
+    'ncr', 'npr',
 ]);
+
+const FN_ALIAS: Record<string, string> = {
+    tg: 'tan',
+    ctg: 'cot',
+};
+
+function canonFn(name: string): string {
+    return FN_ALIAS[name] || name;
+}
 
 function toRad(x: number, mode: AngleMode): number {
     return mode === 'deg' ? (x * Math.PI) / 180 : x;
@@ -78,6 +88,14 @@ function applyFn(name: string, x: number, mode: AngleMode): number {
             return finite(fromRad(Math.acos(x), mode));
         case 'atan':
             return finite(fromRad(Math.atan(x), mode));
+        case 'asec':
+            if (Math.abs(x) < 1) throw new ScientificEvalError();
+            return finite(fromRad(Math.acos(1 / x), mode));
+        case 'acsc':
+            if (Math.abs(x) < 1) throw new ScientificEvalError();
+            return finite(fromRad(Math.asin(1 / x), mode));
+        case 'acot':
+            return finite(fromRad(Math.PI / 2 - Math.atan(x), mode));
         case 'log':
         case 'log10':
             if (x <= 0) throw new ScientificEvalError();
@@ -97,6 +115,30 @@ function applyFn(name: string, x: number, mode: AngleMode): number {
     }
 }
 
+function whole(x: number): number {
+    if (x < 0 || x > 170 || Math.abs(x - Math.round(x)) > 1e-9) throw new ScientificEvalError();
+    return Math.round(x);
+}
+
+function combinations(n: number, k: number): number {
+    const nn = whole(n);
+    const kk = whole(k);
+    if (kk > nn) throw new ScientificEvalError();
+    const take = Math.min(kk, nn - kk);
+    let acc = 1;
+    for (let i = 1; i <= take; i++) acc = (acc * (nn - take + i)) / i;
+    return finite(Math.round(acc));
+}
+
+function permutations(n: number, k: number): number {
+    const nn = whole(n);
+    const kk = whole(k);
+    if (kk > nn) throw new ScientificEvalError();
+    let acc = 1;
+    for (let i = 0; i < kk; i++) acc *= nn - i;
+    return finite(acc);
+}
+
 function nthRoot(degree: number, x: number): number {
     if (degree === 0) throw new ScientificEvalError();
     if (x < 0) {
@@ -111,6 +153,10 @@ function applyCall(name: string, args: number[], mode: AngleMode): number {
     if (name === 'root') {
         if (args.length !== 2) throw new ScientificEvalError();
         return nthRoot(args[0], args[1]);
+    }
+    if (name === 'ncr' || name === 'npr') {
+        if (args.length !== 2) throw new ScientificEvalError();
+        return name === 'ncr' ? combinations(args[0], args[1]) : permutations(args[0], args[1]);
     }
     if (name === 'log' && args.length === 2) {
         const [base, x] = args;
@@ -140,7 +186,7 @@ function commaIsDecimal(s: string, i: number): boolean {
                 let j = k - 1;
                 while (j >= 0 && /[a-zA-Z]/.test(s[j])) j--;
                 const name = s.slice(j + 1, k).toLowerCase();
-                return name !== 'root' && name !== 'log';
+                return name !== 'root' && name !== 'log' && name !== 'ncr' && name !== 'npr';
             }
             depth--;
         }
@@ -314,7 +360,8 @@ class Parser {
             this.eat();
             const next = this.peek();
             if (next?.k === 'lp') {
-                if (!FN_NAMES.has(t.v)) throw new ScientificEvalError();
+                const name = canonFn(t.v);
+                if (!FN_NAMES.has(name)) throw new ScientificEvalError();
                 this.eat();
                 const args = [this.expr()];
                 while (this.peek()?.k === 'comma') {
@@ -323,7 +370,7 @@ class Parser {
                 }
                 const close = this.eat();
                 if (close.k !== 'rp') throw new ScientificEvalError();
-                return applyCall(t.v, args, this.mode);
+                return applyCall(name, args, this.mode);
             }
             if (t.v === 'pi') return Math.PI;
             if (t.v === 'e') return Math.E;

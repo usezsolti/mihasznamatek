@@ -1,4 +1,4 @@
-import { strokeInkBounds } from './whiteboardExport';
+import { strokeInkBounds, type InkBounds } from './whiteboardExport';
 import type { WbPoint, WbStroke } from './whiteboardTypes';
 
 const BOX_TOOLS = new Set<WbStroke['tool']>(['text', 'rect', 'ellipse', 'image']);
@@ -73,6 +73,48 @@ export function hitImageHandle(stroke: WbStroke, point: WbPoint, scale: number):
     if (!handle) return false;
     const radius = 14 / Math.max(0.4, scale);
     return dist(point, handle) <= radius;
+}
+
+export type MarqueeBox = { x: number; y: number; w: number; h: number };
+
+export function normalizeMarquee(box: MarqueeBox): InkBounds {
+    const x0 = box.w < 0 ? box.x + box.w : box.x;
+    const y0 = box.h < 0 ? box.y + box.h : box.y;
+    return {
+        minX: x0,
+        minY: y0,
+        maxX: x0 + Math.abs(box.w),
+        maxY: y0 + Math.abs(box.h),
+    };
+}
+
+function boundsOverlap(a: InkBounds, b: InkBounds): boolean {
+    return a.minX <= b.maxX && a.maxX >= b.minX && a.minY <= b.maxY && a.maxY >= b.minY;
+}
+
+/** Strokes whose ink overlaps the dragged selection rectangle. Erasers stay out. */
+export function strokesInMarquee(strokes: WbStroke[], box: MarqueeBox): string[] {
+    const area = normalizeMarquee(box);
+    if (area.maxX - area.minX < 2 && area.maxY - area.minY < 2) return [];
+    const ids: string[] = [];
+    for (const stroke of strokes) {
+        if (stroke.tool === 'eraser') continue;
+        const bounds = strokeInkBounds(stroke);
+        const empty = bounds.maxX <= bounds.minX && bounds.maxY <= bounds.minY;
+        if (empty && !stroke.text && stroke.tool !== 'image') continue;
+        if (boundsOverlap(bounds, area)) ids.push(stroke.id);
+    }
+    return ids;
+}
+
+export function duplicateStrokes(strokes: WbStroke[], dx: number, dy: number, now = Date.now()): WbStroke[] {
+    return strokes
+        .filter((stroke) => stroke.tool !== 'eraser')
+        .map((stroke, index) => ({
+            ...translateStroke(stroke, dx, dy),
+            id: `s_${now}_${index}_${Math.random().toString(36).slice(2, 7)}`,
+            createdAtMs: now + index,
+        }));
 }
 
 /** Resize from the bottom-right corner, keeping the original aspect ratio. */

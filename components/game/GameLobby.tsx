@@ -57,6 +57,9 @@ export type GameLobbyProps = {
     maxLivesFromXp?: number;
     nextLifeUnlockXp?: number | null;
     onTogglePlayWithLives?: (on: boolean) => void;
+    pausedLabel?: string | null;
+    onResumeGame?: () => void;
+    onDiscardPausedGame?: () => void;
 };
 
 export default function GameLobby({
@@ -101,12 +104,29 @@ export default function GameLobby({
     maxLivesFromXp = 3,
     nextLifeUnlockXp = null,
     onTogglePlayWithLives,
+    pausedLabel,
+    onResumeGame,
+    onDiscardPausedGame,
 }: GameLobbyProps) {
     const [showKozpontiMenu, setShowKozpontiMenu] = useState(false);
     const [kozpontiGrade, setKozpontiGrade] = useState<KozpontiGrade | null>(null);
     const kfPapers = kozpontiGrade ? kozpontiPapersByYear(kozpontiGrade) : [];
     return (
         <div className="start-screen">
+            {pausedLabel && onResumeGame && (
+                <div className="resume-card">
+                    <p className="resume-kicker">Félbehagyott játék</p>
+                    <p className="resume-label">{pausedLabel}</p>
+                    <button type="button" className="start-button" onClick={onResumeGame}>
+                        Folytatás
+                    </button>
+                    {onDiscardPausedGame && (
+                        <button type="button" className="reset-button" onClick={onDiscardPausedGame}>
+                            Elölről
+                        </button>
+                    )}
+                </div>
+            )}
             <h1 className="game-title">
                 {isErettsegiMode
                     ? '📚 Érettségi Felkészülés'

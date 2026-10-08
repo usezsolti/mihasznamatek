@@ -24,6 +24,8 @@ type Props = {
     categories?: MathCategoryId[];
     /** Ha meg van adva, csak ezek a sablonok és jelek látszanak. */
     itemIds?: string[];
+    panelTitle?: string;
+    categoryTitles?: Partial<Record<MathCategoryId, string>>;
 };
 
 /** Beágyazott sablonfa: szöveg vagy belső művelet. */
@@ -118,6 +120,8 @@ export default function MathTemplateInput({
     tone = 'game',
     categories,
     itemIds,
+    panelTitle,
+    categoryTitles,
 }: Props) {
     const [panelOpen, setPanelOpen] = useState(true);
     const [category, setCategory] = useState<MathCategoryId>('basic');
@@ -467,7 +471,7 @@ export default function MathTemplateInput({
                 <div style={sheet ? { ...panel, ...sheetPanel } : panel}>
                     <div style={sheet ? { ...panelHeader, ...sheetPanelHeader } : panelHeader}>
                         <span style={{ fontWeight: 800, letterSpacing: '0.04em', fontSize: '0.85rem' }}>
-                            {visibleCategories.length === 1 ? 'Alap matek' : 'ÖSSZES MATEK SABLON'}
+                            {panelTitle || (visibleCategories.length === 1 ? 'Alap matek' : 'ÖSSZES MATEK SABLON')}
                         </span>
                         <button
                             type="button"
@@ -489,7 +493,7 @@ export default function MathTemplateInput({
                                 onClick={() => setCategory(c.id)}
                                 style={tabBtn(category === c.id, sheet)}
                             >
-                                {c.title}
+                                {categoryTitles?.[c.id] || c.title}
                             </button>
                         ))}
                     </div>

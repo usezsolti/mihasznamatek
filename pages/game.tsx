@@ -9,6 +9,7 @@ import GameRegisterGate from '../components/game/GameRegisterGate';
 import GameLobby from '../components/game/GameLobby';
 import GameCelebrate from '../components/game/GameCelebrate';
 import PaperRunSummaryView from '../components/game/PaperRunSummary';
+import GameSessionReport from '../components/game/GameSessionReport';
 import { useGameAuth } from '../hooks/useGameAuth';
 import { useGamePlay, type GameSessionBridge } from '../hooks/useGamePlay';
 import { useGameSessionBuilders } from '../hooks/useGameSessionBuilders';
@@ -102,6 +103,7 @@ export default function Game() {
         celebrateLevelUp,
         continueAfterFeedback,
         paperSummary,
+        sessionReport,
         startPaperRetry,
         setFailedQuestions,
         isCorrect,
@@ -159,6 +161,10 @@ export default function Game() {
         erettsegiQuestionsRef,
         startGame,
         resetGame,
+        exitGame,
+        resumeGame,
+        discardPausedGame,
+        pausedCheckpoint,
         checkSubQuestionAnswers,
         submitAnswer,
         skipQuestion,
@@ -486,6 +492,9 @@ export default function Game() {
                             assignedTasks={assignedTasks}
                             onStartGame={startGame}
                             onResetGame={resetGame}
+                            pausedLabel={pausedCheckpoint?.label}
+                            onResumeGame={resumeGame}
+                            onDiscardPausedGame={discardPausedGame}
                             onStartBlitz={() => {
                                 const level = educationLevel || 'highschool';
                                 router.push(buildBlitzHref(level));
@@ -563,7 +572,13 @@ export default function Game() {
                             />
 
                             {paperSummary ? (
-                                <PaperRunSummaryView summary={paperSummary} onRetry={startPaperRetry} />
+                                <PaperRunSummaryView
+                                    summary={paperSummary}
+                                    report={sessionReport}
+                                    onRetry={startPaperRetry}
+                                />
+                            ) : sessionReport ? (
+                                <GameSessionReport report={sessionReport} />
                             ) : (
                             <>
                             <GameQuestionCard
@@ -671,10 +686,15 @@ export default function Game() {
                                 </div>
                             )}
 
-                            <button className="reset-button" onClick={resetGame}>
-                                <span className="button-icon">🔄</span>
-                                ÚJ JÁTÉK
-                            </button>
+                            <div className="game-exit-row">
+                                <button type="button" className="exit-button" onClick={exitGame}>
+                                    Kilépés
+                                </button>
+                                <button className="reset-button" onClick={resetGame}>
+                                    <span className="button-icon">🔄</span>
+                                    ÚJ JÁTÉK
+                                </button>
+                            </div>
                         </div>
                     )}
                 </main>
