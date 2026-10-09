@@ -87,6 +87,28 @@ function markBoardMode(boardId: string, mode: 'cloud' | 'local') {
     storageSet(`wb_mode_${boardId}`, mode, boardId);
 }
 
+/** Visszavont vonások. A következő mentés ne írja vissza őket a helyi listába. */
+const tombstones = new Map<string, Set<string>>();
+
+function deadIds(boardId: string): Set<string> | undefined {
+    return tombstones.get(boardId);
+}
+
+function rememberTombstone(boardId: string, strokeId: string) {
+    let dead = tombstones.get(boardId);
+    if (!dead) {
+        dead = new Set();
+        tombstones.set(boardId, dead);
+    }
+    dead.add(strokeId);
+}
+
+function withoutDead(boardId: string, list: WbStroke[]): WbStroke[] {
+    const dead = deadIds(boardId);
+    if (!dead?.size) return list;
+    return list.filter((stroke) => !dead.has(stroke.id));
+}
+
 export function getBoardMode(boardId: string): 'cloud' | 'local' | 'unknown' {
     if (typeof localStorage === 'undefined') return 'unknown';
     const m = localStorage.getItem(`wb_mode_${boardId}`);
@@ -270,8 +292,9 @@ export async function pushStroke(boardId: string, stroke: WbStroke): Promise<voi
 
     const pushLocal = () => {
         if (typeof localStorage === 'undefined') return;
+        if (deadIds(boardId)?.has(safe.id)) return;
         const key = `wb_strokes_${boardId}`;
-        const list: WbStroke[] = JSON.parse(localStorage.getItem(key) || '[]');
+        const list = withoutDead(boardId, JSON.parse(localStorage.getItem(key) || '[]') as WbStroke[]);
         const idx = list.findIndex((s) => s.id === safe.id);
         if (idx >= 0) list[idx] = safe;
         else list.push(safe);
@@ -282,14 +305,26 @@ export async function pushStroke(boardId: string, stroke: WbStroke): Promise<voi
         window.dispatchEvent(new CustomEvent('wb:local-stroke', { detail: { boardId, stroke: safe } }));
     };
 
+    if (deadIds(boardId)?.has(safe.id)) return;
+
     if (!preferLocal && firestore) {
         try {
+            if (deadIds(boardId)?.has(safe.id)) return;
             await firestore
                 .collection('whiteboards')
                 .doc(boardId)
                 .collection('strokes')
                 .doc(safe.id)
                 .set(safe);
+            if (deadIds(boardId)?.has(safe.id)) {
+                await firestore
+                    .collection('whiteboards')
+                    .doc(boardId)
+                    .collection('strokes')
+                    .doc(safe.id)
+                    .delete();
+                return;
+            }
             await firestore.collection('whiteboards').doc(boardId).set(
                 { updatedAtMs: Date.now() },
                 { merge: true }
@@ -306,6 +341,35 @@ export async function pushStroke(boardId: string, stroke: WbStroke): Promise<voi
     }
 
     pushLocal();
+}
+
+export async function removeStroke(boardId: string, strokeId: string): Promise<void> {
+    rememberTombstone(boardId, strokeId);
+    if (typeof localStorage !== 'undefined') {
+        const key = `wb_strokes_${boardId}`;
+        const list = withoutDead(boardId, JSON.parse(localStorage.getItem(key) || '[]') as WbStroke[]);
+        storageSet(key, JSON.stringify(list), boardId);
+        window.dispatchEvent(new CustomEvent('wb:local-stroke', { detail: { boardId, strokeId, removed: true } }));
+    }
+
+    const preferLocal = getBoardMode(boardId) === 'local';
+    const firestore = db();
+    if (!preferLocal && firestore) {
+        try {
+            await firestore.collection('whiteboards').doc(boardId).collection('strokes').doc(strokeId).delete();
+            await firestore.collection('whiteboards').doc(boardId).set(
+                { updatedAtMs: Date.now() },
+                { merge: true }
+            );
+            markBoardMode(boardId, 'cloud');
+        } catch (err: any) {
+            if (isPermissionError(err)) {
+                markBoardMode(boardId, 'local');
+                return;
+            }
+            throw err;
+        }
+    }
 }
 
 export async function clearWhiteboardStrokes(boardId: string): Promise<void> {
@@ -357,7 +421,10 @@ export function subscribeStrokes(
     onChange: (strokes: WbStroke[]) => void
 ): () => void {
     const readLocal = () => {
-        const list: WbStroke[] = JSON.parse(localStorage.getItem(`wb_strokes_${boardId}`) || '[]');
+        const list = withoutDead(
+            boardId,
+            JSON.parse(localStorage.getItem(`wb_strokes_${boardId}`) || '[]') as WbStroke[]
+        );
         onChange(list);
     };
 
@@ -398,7 +465,7 @@ export function subscribeStrokes(
                     markBoardMode(boardId, 'cloud');
                     const list: WbStroke[] = [];
                     snap.forEach((doc: any) => list.push({ id: doc.id, ...doc.data() }));
-                    onChange(list);
+                    onChange(withoutDead(boardId, list));
                 },
                 () => {
                     markBoardMode(boardId, 'local');

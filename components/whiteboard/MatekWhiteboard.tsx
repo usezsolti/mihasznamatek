@@ -5,6 +5,7 @@ import {
     loadWhiteboardMeta,
     openPersonalBoard,
     pushStroke,
+    removeStroke,
     renameWhiteboard,
     subscribeStrokes,
 } from '../../utils/whiteboardSync';
@@ -1310,20 +1311,15 @@ export default function MatekWhiteboard({
     const handleUndoLocal = async () => {
         const mine = [...strokesRef.current].reverse().find((s) => s.authorId === uid);
         if (!mine || !boardId) return;
+        pendingIds.current.delete(mine.id);
+        localUndo.current = localUndo.current.filter((s) => s.id !== mine.id);
         strokesRef.current = strokesRef.current.filter((s) => s.id !== mine.id);
         setStrokes(strokesRef.current);
         redraw();
         try {
-            const firebase = (window as any).firebase;
-            await firebase
-                ?.firestore?.()
-                ?.collection('whiteboards')
-                ?.doc(boardId)
-                ?.collection('strokes')
-                ?.doc(mine.id)
-                ?.delete?.();
-        } catch {
-            /* local-only undo fallback */
+            await removeStroke(boardId, mine.id);
+        } catch (e: any) {
+            setStatus(e?.message || 'Visszavonás sikertelen.');
         }
     };
 
