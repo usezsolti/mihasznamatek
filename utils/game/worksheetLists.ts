@@ -32,6 +32,7 @@ import {
 import { getHsTextbookPracticeQuestions } from './hsTextbookBanks';
 import { hsTextbookRunId } from '../hsTextbook';
 import { getElemNatPracticeQuestions } from './elemNatBanks';
+import { getPhysicsHsPracticeQuestions } from './physicsHsLevels';
 
 export const getWorksheetListForTopic = (topicId: string): { list: Question[]; prefix: string } | null => {
     const topicLower = topicId.toLowerCase();
@@ -61,6 +62,11 @@ export const getWorksheetListForTopic = (topicId: string): { list: Question[]; p
         });
         // #endregion
         return { list, prefix };
+    }
+    if (topicLower.startsWith('ph-')) {
+        const list = getPhysicsHsPracticeQuestions(topicId);
+        if (!list) return null;
+        return { list, prefix: `ph_${topicLower}` };
     }
     if (topicLower.startsWith('a1-')) {
         const list = getAnalizis1PracticeQuestions(topicId);

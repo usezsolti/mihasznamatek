@@ -45,7 +45,7 @@ export default function Game() {
         setAvatarLevel,
     } = useGameAuth();
 
-    const [educationLevel, setEducationLevel] = useState<'elementary' | 'highschool' | 'university' | null>(null);
+    const [educationLevel, setEducationLevel] = useState<'elementary' | 'highschool' | 'university' | 'physics' | 'zh' | null>(null);
     const [currentTopic, setCurrentTopic] = useState<string>('');
     const [showErettsegiMenu, setShowErettsegiMenu] = useState(false);
     const [selectedErettsegiMode, setSelectedErettsegiMode] = useState<'topics' | 'papers' | null>(null);
@@ -201,6 +201,7 @@ export default function Game() {
         generateKozpontiPaper,
         generateErettsegiPaper,
         generateBmeValszamPaper,
+        generateZhPaper,
         generateSzigorlatQuestionsBySubject,
         generateVegyesSzigorlatQuestions,
         generateUniversityQuestionsByTopic,
@@ -327,6 +328,7 @@ export default function Game() {
         generateKozpontiPaper,
         generateErettsegiPaper,
         generateBmeValszamPaper,
+        generateZhPaper,
         generateVegyesSzigorlatQuestions,
         generateSzigorlatQuestionsBySubject,
         loadTaskQuestions,
@@ -364,7 +366,12 @@ export default function Game() {
             baseQuestions = erettsegiQuestions;
         } else if (taskQuestions.length > 0) {
             baseQuestions = taskQuestions;
-        } else {
+        } else if (
+            educationLevel === 'elementary' ||
+            educationLevel === 'highschool' ||
+            educationLevel === 'university' ||
+            !educationLevel
+        ) {
             const levelQuestions = getQuestionsForLevel(educationLevel || 'elementary');
             baseQuestions = [...levelQuestions].sort(() => Math.random() - 0.5);
         }
@@ -482,6 +489,14 @@ export default function Game() {
                                 }
                                 setSelectedUniversityTopic(topicId);
                                 router.push(buildTopicPracticeHref(topicId, 'university'));
+                            }}
+                            onSelectPhysicsTopic={(topicId) => {
+                                router.push(buildTopicPracticeHref(topicId, 'physics'));
+                            }}
+                            onSelectZhPaper={(paperId) => {
+                                router.push(
+                                    `/game?educationLevel=zh&zh=true&paperId=${encodeURIComponent(paperId)}`
+                                );
                             }}
                             onSelectBmePaper={(paperId) => {
                                 router.push(

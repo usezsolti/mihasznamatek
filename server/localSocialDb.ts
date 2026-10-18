@@ -373,6 +373,23 @@ export const localSocial = {
         return post;
     },
 
+    deletePost(postId: string, uid: string): void {
+        const db = readDb();
+        const post = db.posts.find((p) => p.id === postId);
+        if (!post) throw Object.assign(new Error('Poszt nem található.'), { status: 404 });
+        if (post.authorId !== uid) {
+            throw Object.assign(new Error('Csak a saját posztodat törölheted.'), { status: 403 });
+        }
+        db.posts = db.posts.filter((p) => p.id !== postId);
+        delete db.likes[postId];
+        delete db.comments[postId];
+        const profile = db.profiles[uid];
+        if (profile && String(post.moderationStatus || '') === 'approved') {
+            profile.postCount = Math.max(0, profile.postCount - 1);
+        }
+        writeDb(db);
+    },
+
     reviewPost(postId: string, decision: 'approved' | 'rejected'): SocialPost {
         const db = readDb();
         const post = db.posts.find((p) => p.id === postId);

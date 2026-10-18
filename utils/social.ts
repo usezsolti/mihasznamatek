@@ -1138,6 +1138,10 @@ export async function listMathShorts(limit = 20): Promise<MathShort[]> {
 
             createdAtMs: Number(d.createdAtMs || tsMs(d.createdAt)),
 
+            videoUrl: d.videoUrl ? String(d.videoUrl) : null,
+
+            status: (d.status as MathShort['status']) || null,
+
         } as MathShort;
 
     });

@@ -10,12 +10,14 @@ import {
     nevezetes,
 } from './analizis1LevelsC';
 import { komplex } from './analizis1LevelsKomplex';
+import { hatarertekFeladatsor } from './analizis1Hatarertek';
 
 /** Analízis I. egyetemi témakör-azonosítók — `a1-` prefix, hogy ne ütközzenek érettségi includes()-szel. */
 export const ANALIZIS1_TOPIC_IDS = [
     'a1-valos-szamok',
     'a1-komplex',
     'a1-szamsorozatok',
+    'a1-hatarertek',
     'a1-seq-hatarertek',
     'a1-cauchy',
     'a1-numerikus-sorok',
@@ -432,6 +434,7 @@ const BANKS: Record<string, Row[]> = {
     'a1-valos-szamok': valos,
     'a1-komplex': komplex as Row[],
     'a1-szamsorozatok': szamsorozatok,
+    'a1-hatarertek': hatarertekFeladatsor as Row[],
     'a1-seq-hatarertek': seqHatar,
     'a1-cauchy': cauchy as Row[],
     'a1-numerikus-sorok': numerikusSorok as Row[],

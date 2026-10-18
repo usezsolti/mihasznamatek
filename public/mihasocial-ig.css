@@ -42,6 +42,11 @@ body.mm-social-body .mm-ig-nav-item.is-on {
     color: var(--mm-neon-g) !important;
 }
 
+body.mm-social-body {
+    user-select: text;
+    -webkit-user-select: text;
+}
+
 .mm-social-page.mm-ig-shell {
     max-width: none !important;
     margin: 0 !important;
@@ -2562,5 +2567,74 @@ body.mm-social-body .mm-social-avatar-fallback {
 body.mm-social-body .mm-ig-profile-avatar-wrap > .mm-social-avatar {
     border: 3px solid #39ff14;
     box-shadow: 0 0 20px rgba(57, 255, 20, 0.45);
+}
+
+.mm-shorts-stage {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    width: min(100%, 420px);
+    margin: 0 auto;
+    padding: 16px 0 32px;
+}
+
+.mm-shorts-compose {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    width: 100%;
+}
+
+.mm-shorts-compose input {
+    flex: 1 1 180px;
+    min-width: 0;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    border-radius: 10px;
+    background: rgba(0, 0, 0, 0.25);
+    color: inherit;
+    padding: 10px 12px;
+}
+
+.mm-shorts-compose button,
+.mm-shorts-nav button {
+    border: 0;
+    border-radius: 10px;
+    background: #39ff14;
+    color: #062006;
+    font-weight: 700;
+    padding: 10px 14px;
+    cursor: pointer;
+}
+
+.mm-shorts-compose button:disabled,
+.mm-shorts-nav button:disabled {
+    opacity: 0.45;
+    cursor: default;
+}
+
+.mm-shorts-player {
+    width: 100%;
+}
+
+.mm-shorts-player video {
+    width: 100%;
+    aspect-ratio: 9 / 16;
+    object-fit: cover;
+    border-radius: 18px;
+    background: #050805;
+}
+
+.mm-shorts-player h2,
+.mm-shorts-meta,
+.mm-shorts-player p {
+    margin: 8px 0 0;
+}
+
+.mm-shorts-nav {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    margin-top: 12px;
 }
 

@@ -7259,6 +7259,11 @@ body.mm-social-body .mm-social-tabs button.is-on {
     color: #ff5c8a;
 }
 
+.mm-social-post-actions button.is-danger {
+    margin-left: auto;
+    color: #ff8b8b;
+}
+
 .mm-social-comments {
     margin-top: 0.85rem;
     display: flex;

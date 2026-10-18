@@ -12,6 +12,10 @@ import {
 import {
     getUniversitySubjectById,
     findUniversityTopic,
+    getPhysicsSubjectById,
+    findPhysicsTopic,
+    getZhSubjectById,
+    findZhPaper,
     type EducationLevelId,
     type ErettsegiExamLevel,
 } from '../../utils/mathTopicsCatalog';
@@ -33,7 +37,7 @@ import {
 import { BME_VALSZAM_PAPERS } from '../../utils/game/bmeValszamPapers';
 
 function parseEducationLevel(value: unknown): EducationLevelId {
-    if (value === 'elementary' || value === 'highschool' || value === 'university' || value === 'erettsegi' || value === 'kozponti') {
+    if (value === 'elementary' || value === 'highschool' || value === 'university' || value === 'physics' || value === 'zh' || value === 'erettsegi' || value === 'kozponti') {
         return value;
     }
     return 'university';
@@ -69,6 +73,10 @@ export default function TopicStatsPage() {
     );
     const uniSubject = educationLevel === 'university' ? getUniversitySubjectById(topicIdParam) : undefined;
     const uniNested = educationLevel === 'university' ? findUniversityTopic(topicIdParam) : null;
+    const physicsSubject = educationLevel === 'physics' ? getPhysicsSubjectById(topicIdParam) : undefined;
+    const physicsNested = educationLevel === 'physics' ? findPhysicsTopic(topicIdParam) : null;
+    const zhSubject = educationLevel === 'zh' ? getZhSubjectById(topicIdParam) : undefined;
+    const zhPaper = educationLevel === 'zh' ? findZhPaper(topicIdParam) : null;
 
     useEffect(() => {
         if (!uniSubject) return;
@@ -220,11 +228,11 @@ export default function TopicStatsPage() {
         );
     }
 
-    if (showPath && uniSubject) {
+    if (showPath && (uniSubject || physicsSubject)) {
         return (
             <div className="dashboard-container modern-theme has-site-navbar">
                 <main className="main-content topic-stats-page">
-                    <Link href={`/topic/${encodeURIComponent(topicIdParam)}?educationLevel=university`} className="topic-stats-back">
+                    <Link href={`/topic/${encodeURIComponent(topicIdParam)}?educationLevel=${educationLevel}`} className="topic-stats-back">
                         ← Vissza a témakörökhöz
                     </Link>
                     <p className="topic-stats-muted">Előbb válassz egy témakört az útvonalhoz.</p>
@@ -276,6 +284,146 @@ export default function TopicStatsPage() {
                                 </div>
                             </Link>
                         ))}
+                    </div>
+                </main>
+            </div>
+        );
+    }
+
+    if (zhSubject) {
+        return (
+            <div className="dashboard-container modern-theme has-site-navbar">
+                <main
+                    className="main-content topic-stats-page"
+                    style={{ ['--topic-color' as string]: topicColor }}
+                >
+                    <Link href="/dashboard" className="topic-stats-back">
+                        ← Vissza a dashboardra
+                    </Link>
+                    <div className="topic-stats-hero">
+                        <div className="topic-stats-icon" aria-hidden="true">
+                            {topicIcon}
+                        </div>
+                        <div className="topic-stats-hero-text">
+                            <h1 className="topic-stats-title">{topicTitle}</h1>
+                            <p className="topic-stats-subtitle">
+                                Válassz zárthelyit. A megoldókulcs minden válasz után megjelenik.
+                            </p>
+                        </div>
+                    </div>
+                    <div className="topic-stats-grid">
+                        {zhSubject.papers.map((paper) =>
+                            paper.ready ? (
+                                <Link
+                                    key={paper.id}
+                                    href={`/game?educationLevel=zh&zh=true&paperId=${encodeURIComponent(paper.id)}`}
+                                    className="topic-stats-card"
+                                    style={{ textDecoration: 'none', color: 'inherit' }}
+                                >
+                                    <div className="topic-stats-card-label">
+                                        {paper.title}
+                                    </div>
+                                    <div className="topic-stats-card-value is-small">
+                                        {paper.points} pont →
+                                    </div>
+                                    <p className="topic-stats-muted" style={{ marginTop: 8 }}>
+                                        {paper.subtitle}
+                                    </p>
+                                </Link>
+                            ) : (
+                                <div key={paper.id} className="topic-stats-card" style={{ opacity: 0.55 }}>
+                                    <div className="topic-stats-card-label">{paper.title}</div>
+                                    <div className="topic-stats-card-value is-small">Hamarosan</div>
+                                </div>
+                            )
+                        )}
+                    </div>
+                </main>
+            </div>
+        );
+    }
+
+    if (zhPaper) {
+        return (
+            <div className="dashboard-container modern-theme has-site-navbar">
+                <main className="main-content topic-stats-page">
+                    <Link
+                        href={`/topic/${zhPaper.subject.id}?educationLevel=zh`}
+                        className="topic-stats-back"
+                    >
+                        ← {zhPaper.subject.title} dolgozatai
+                    </Link>
+                    <div className="topic-stats-hero">
+                        <div className="topic-stats-hero-text">
+                            <h1 className="topic-stats-title">{zhPaper.paper.title}</h1>
+                            <p className="topic-stats-subtitle">{zhPaper.paper.subtitle}</p>
+                        </div>
+                    </div>
+                    {zhPaper.paper.ready ? (
+                        <Link
+                            href={`/game?educationLevel=zh&zh=true&paperId=${encodeURIComponent(zhPaper.paper.id)}`}
+                            className="topic-stats-card"
+                            style={{ textDecoration: 'none', color: 'inherit' }}
+                        >
+                            <div className="topic-stats-card-label">Dolgozat indítása</div>
+                            <div className="topic-stats-card-value is-small">{zhPaper.paper.points} pont →</div>
+                        </Link>
+                    ) : (
+                        <p className="topic-stats-muted">Hamarosan.</p>
+                    )}
+                </main>
+            </div>
+        );
+    }
+
+    if (physicsSubject) {
+        return (
+            <div className="dashboard-container modern-theme has-site-navbar">
+                <main
+                    className="main-content topic-stats-page"
+                    style={{ ['--topic-color' as string]: topicColor }}
+                >
+                    <Link href="/dashboard" className="topic-stats-back">
+                        ← Vissza a dashboardra
+                    </Link>
+                    <div className="topic-stats-hero">
+                        <div className="topic-stats-icon" aria-hidden="true">
+                            {topicIcon}
+                        </div>
+                        <div className="topic-stats-hero-text">
+                            <h1 className="topic-stats-title">{topicTitle}</h1>
+                            <p className="topic-stats-subtitle">
+                                Válassz témakört — 6 szint × 20 feladat. g = 10 m/s².
+                            </p>
+                        </div>
+                    </div>
+                    <div className="topic-stats-grid">
+                        {physicsSubject.topics.map((t) =>
+                            t.ready ? (
+                                <Link
+                                    key={t.id}
+                                    href={buildTopicPracticeHref(t.id, 'physics')}
+                                    className="topic-stats-card"
+                                    style={{ textDecoration: 'none', color: 'inherit' }}
+                                >
+                                    <div className="topic-stats-card-label">
+                                        {t.icon} {t.title}
+                                    </div>
+                                    <div className="topic-stats-card-value is-small">Út →</div>
+                                </Link>
+                            ) : (
+                                <div
+                                    key={t.id}
+                                    className="topic-stats-card"
+                                    style={{ opacity: 0.55 }}
+                                >
+                                    <div className="topic-stats-card-label">
+                                        {t.icon} {t.title}
+                                    </div>
+                                    <div className="topic-stats-card-value is-small">Hamarosan</div>
+                                </div>
+                            )
+                        )}
                     </div>
                 </main>
             </div>
@@ -387,15 +535,19 @@ export default function TopicStatsPage() {
             >
                 <Link
                     href={
-                        uniNested
-                            ? `/topic/${uniNested.subject.id}?educationLevel=university`
-                            : '/dashboard'
+                        physicsNested
+                            ? `/topic/${physicsNested.subject.id}?educationLevel=physics`
+                            : uniNested
+                              ? `/topic/${uniNested.subject.id}?educationLevel=university`
+                              : '/dashboard'
                     }
                     className="topic-stats-back"
                 >
-                    {uniNested
-                        ? `← ${uniNested.subject.title} témakörei`
-                        : '← Vissza a dashboardra'}
+                    {physicsNested
+                        ? `← ${physicsNested.subject.title} témakörei`
+                        : uniNested
+                          ? `← ${uniNested.subject.title} témakörei`
+                          : '← Vissza a dashboardra'}
                 </Link>
 
                 <div className="topic-stats-hero">

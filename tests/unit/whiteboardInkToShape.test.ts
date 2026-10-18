@@ -253,17 +253,27 @@ describe('whiteboardInkToShape', () => {
         assert.ok(max / min > 1.25, 'legs and hypotenuse should stay different');
     });
 
-    it('recognizes a wobbly circle that overlaps its start', () => {
+    it('keeps a round 0 as ink instead of a circle', () => {
         const out = correctInkStroke(pen(wobblyCircle(140, 140, 52)));
-        assert.equal(out.tool, 'ellipse');
-        const ratio = Math.min(out.w || 0, out.h || 0) / Math.max(out.w || 1, out.h || 1);
-        assert.ok(ratio > 0.8);
+        assert.equal(out.tool, 'pen');
+        assert.ok(out.points.length > 10);
     });
 
-    it('recognizes a circle that is not fully closed', () => {
+    it('keeps a tall 0 and a straight 1 as ink', () => {
+        const oval: WbPoint[] = [];
+        for (let i = 0; i <= 60; i++) {
+            const a = (i / 48) * Math.PI * 2;
+            oval.push({ x: 100 + 28 * Math.cos(a), y: 80 + 46 * Math.sin(a) });
+        }
+        assert.equal(correctInkStroke(pen(oval)).tool, 'pen');
+        const one = line(80, 40, 82, 150, 24, 1.2);
+        assert.equal(correctInkStroke(pen(one)).tool, 'pen');
+    });
+
+    it('keeps an open round loop as ink instead of a circle', () => {
         const pts = circle(140, 140, 50, 48).slice(0, 40);
         const out = correctInkStroke(pen(pts));
-        assert.equal(out.tool, 'ellipse');
+        assert.equal(out.tool, 'pen');
     });
 
     it('recognizes a rectangle that is not a square', () => {

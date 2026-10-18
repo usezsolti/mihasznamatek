@@ -2,7 +2,7 @@
 
 export type SrsGrade = 'again' | 'good' | 'easy';
 
-export type SrsEducationLevel = 'elementary' | 'highschool' | 'university' | 'erettsegi';
+export type SrsEducationLevel = 'elementary' | 'highschool' | 'university' | 'physics' | 'zh' | 'erettsegi';
 
 export type SrsCard = {
     id: string;
@@ -48,7 +48,7 @@ export function normalizeSrsCard(raw: Partial<SrsCard> | null | undefined): SrsC
     if (stage < 1 || stage > 6) return null;
     const level = raw.educationLevel;
     const educationLevel: SrsEducationLevel =
-        level === 'elementary' || level === 'highschool' || level === 'university' || level === 'erettsegi'
+        level === 'elementary' || level === 'highschool' || level === 'university' || level === 'physics' || level === 'zh' || level === 'erettsegi'
             ? level
             : 'erettsegi';
     return {

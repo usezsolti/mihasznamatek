@@ -2,7 +2,7 @@ import { topicsForElemNatGrade, type ElemNatGrade } from './elemNatCatalog';
 
 /** Közös témakörök — ugyanaz, mint a játék kezdőképernyőjén + érettségi. */
 
-export type EducationLevelId = 'elementary' | 'highschool' | 'university' | 'erettsegi' | 'kozponti';
+export type EducationLevelId = 'elementary' | 'highschool' | 'university' | 'physics' | 'zh' | 'erettsegi' | 'kozponti';
 export type ErettsegiExamLevel = 'kozep' | 'emelt';
 
 export type CatalogTopic = {
@@ -25,6 +25,8 @@ export const EDUCATION_LEVELS: Array<{
     { id: 'elementary', name: 'Általános iskola', desc: '1-8. osztály', emoji: '🏫' },
     { id: 'highschool', name: 'Középiskola', desc: '9-12. osztály', emoji: '🎒' },
     { id: 'university', name: 'Egyetem', desc: 'Felsőbb matematika', emoji: '🎓' },
+    { id: 'physics', name: 'Fizika', desc: 'Középiskolai fizika', emoji: '⚛️' },
+    { id: 'zh', name: 'ZH', desc: 'Zárthelyi dolgozatok', emoji: '📝' },
     { id: 'erettsegi', name: 'Érettségire felkészülés', desc: 'Közép és emelt szint', emoji: '📝' },
     { id: 'kozponti', name: 'Központi felvételi', desc: '6. és 8. évfolyam', emoji: '🎯' },
 ];
@@ -135,6 +137,7 @@ export const universitySubjects: UniversitySubject[] = [
             { id: 'a1-valos-szamok', title: 'Valós számok és rendezési tulajdonságok', icon: 'ℝ' },
             { id: 'a1-komplex', title: 'Komplex számok', icon: 'ℂ' },
             { id: 'a1-szamsorozatok', title: 'Számsorozatok', icon: 'aₙ' },
+            { id: 'a1-hatarertek', title: 'Határérték feladatsor', icon: 'lim' },
             { id: 'a1-seq-hatarertek', title: 'Sorozatok határértéke', icon: 'lim' },
             { id: 'a1-cauchy', title: 'Cauchy-sorozatok', icon: 'ε' },
             { id: 'a1-numerikus-sorok', title: 'Numerikus sorok', icon: 'Σ' },
@@ -497,6 +500,12 @@ export function getTopicsForEducationLevel(
         return erettsegiLevel === 'kozep' ? erettsegiKozepTopics : erettsegiEmeltTopics;
     }
     if (level === 'kozponti') return [];
+    if (level === 'physics') {
+        return physicsSubjects.map(({ id, title, icon, color }) => ({ id, title, icon, color }));
+    }
+    if (level === 'zh') {
+        return zhSubjects.map(({ id, title, icon, color }) => ({ id, title, icon, color }));
+    }
     return universitySubjects.map(({ id, title, icon, color }) => ({ id, title, icon, color }));
 }
 
@@ -540,6 +549,17 @@ export function listAllBookingTopics(): BookingCatalogTopic[] {
     for (const t of erettsegiEmeltTopics) {
         out.push({ id: t.id, title: t.title, group: 'Érettségi · emelt', icon: t.icon });
     }
+    for (const s of physicsSubjects) {
+        for (const t of s.topics) {
+            if (!t.ready) continue;
+            out.push({
+                id: t.id,
+                title: t.title,
+                group: `Fizika · ${s.title}`,
+                icon: t.icon,
+            });
+        }
+    }
     for (const s of universitySubjects) {
         for (const t of s.topics) {
             out.push({
@@ -560,7 +580,98 @@ export function preferredBookingTopicGroups(subject: string): string[] {
     }
     if (subject.includes('Érettségi')) return ['Érettségi · középszint', 'Érettségi · emelt'];
     if (subject.includes('Egyetem')) return ['Egyetem ·'];
+    if (subject.includes('Fizika')) return ['Fizika ·'];
     return [];
+}
+
+export type PhysicsTopic = {
+    id: string;
+    title: string;
+    icon: string;
+    ready: boolean;
+};
+
+export type PhysicsSubject = CatalogTopic & {
+    topics: PhysicsTopic[];
+};
+
+/** Középiskolai fizika. A kinematika és a dinamika kidolgozott, a többi még nem játszható. */
+export const physicsSubjects: PhysicsSubject[] = [
+    {
+        id: 'fizika-kozep',
+        title: 'Középiskolai fizika',
+        icon: '⚛️',
+        color: '#78dbff',
+        topics: [
+            { id: 'ph-kinematika', title: 'Kinematika', icon: '➡️', ready: true },
+            { id: 'ph-dinamika', title: 'Dinamika', icon: '⚖️', ready: true },
+            { id: 'ph-energia', title: 'Munka és energia', icon: '⚙️', ready: false },
+            { id: 'ph-hotan', title: 'Hőtan', icon: '🌡️', ready: false },
+            { id: 'ph-elektromossag', title: 'Elektromosság', icon: '⚡', ready: false },
+            { id: 'ph-rezgesek', title: 'Rezgések és hullámok', icon: '〰️', ready: false },
+            { id: 'ph-optika', title: 'Optika', icon: '🔭', ready: false },
+            { id: 'ph-modern', title: 'Modern fizika', icon: '✨', ready: false },
+        ],
+    },
+];
+
+export type ZhPaperLink = {
+    id: string;
+    title: string;
+    subtitle: string;
+    ready: boolean;
+    points: number;
+};
+
+export type ZhSubject = CatalogTopic & {
+    papers: ZhPaperLink[];
+};
+
+/** Zárthelyi dolgozatok tantárgyanként. Az Analízis I. minta-ZH B változata játszható. */
+export const zhSubjects: ZhSubject[] = [
+    {
+        id: 'zh-analizis1',
+        title: 'Analízis I.',
+        icon: 'lim',
+        color: '#E88924',
+        papers: [
+            {
+                id: 'zh-a1-minta-b',
+                title: 'Minta-ZH — B változat',
+                subtitle: 'Halmazok, sorozatok és függvények · 50 pont',
+                ready: true,
+                points: 50,
+            },
+        ],
+    },
+];
+
+export function getZhSubjectById(subjectId: string): ZhSubject | undefined {
+    return zhSubjects.find((subject) => subject.id === subjectId);
+}
+
+export function findZhPaper(paperId: string): { subject: ZhSubject; paper: ZhPaperLink } | null {
+    const id = paperId.toLowerCase();
+    for (const subject of zhSubjects) {
+        const paper = subject.papers.find((item) => item.id === id);
+        if (paper) return { subject, paper };
+    }
+    return null;
+}
+
+export function getPhysicsSubjectById(subjectId: string): PhysicsSubject | undefined {
+    return physicsSubjects.find((s) => s.id === subjectId);
+}
+
+export function findPhysicsTopic(
+    topicId: string
+): { subject: PhysicsSubject; topic: PhysicsTopic } | null {
+    const id = topicId.toLowerCase();
+    for (const subject of physicsSubjects) {
+        const topic = subject.topics.find((t) => t.id === id);
+        if (topic) return { subject, topic };
+    }
+    return null;
 }
 
 export function getUniversitySubjectById(subjectId: string): UniversitySubject | undefined {

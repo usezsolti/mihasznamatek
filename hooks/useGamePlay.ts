@@ -85,11 +85,12 @@ import { KOZPONTI_PAPERS } from '../utils/game/kozpontiPapers';
 import { ERETTSEGI_PAPERS } from '../utils/game/erettsegiPapers';
 import { parseStudentNumber } from '../utils/parseStudentNumber';
 import { studentSetMatches } from '../utils/parseStudentSet';
+import { studentTextMatches } from '../utils/studentTextAnswer';
 import { agentDebugLog } from '../utils/agentDebugLog';
 import { isSrsTopicId, type SrsEducationLevel } from '../utils/srs';
 
 export type GameSessionBridge = {
-    educationLevel: 'elementary' | 'highschool' | 'university' | null;
+    educationLevel: 'elementary' | 'highschool' | 'university' | 'physics' | 'zh' | null;
     selectedTask: any;
     selectedGrade: number | null;
     selectedElementaryTopic: string | null;
@@ -120,7 +121,7 @@ export type UseGamePlayParams = {
      * Page updates \`.current\` each render after generators run.
      */
     sessionBridgeRef: MutableRefObject<GameSessionBridge>;
-    educationLevel: 'elementary' | 'highschool' | 'university' | null;
+    educationLevel: 'elementary' | 'highschool' | 'university' | 'physics' | 'zh' | null;
     generateUniversityQuestions?: () => void;
     /** Clear picker UI (education level, menus) on reset. */
     onResetPicker?: () => void;
@@ -750,7 +751,7 @@ export function useGamePlay({
                 });
                 const eduRaw = String(router.query.educationLevel || ctx.educationLevel || 'erettsegi');
                 const srsEdu: SrsEducationLevel =
-                    eduRaw === 'elementary' || eduRaw === 'highschool' || eduRaw === 'university' || eduRaw === 'erettsegi'
+                    eduRaw === 'elementary' || eduRaw === 'highschool' || eduRaw === 'university' || eduRaw === 'physics' || eduRaw === 'zh' || eduRaw === 'erettsegi'
                         ? eduRaw
                         : 'erettsegi';
                 const groups = new Map<string, { topicId: string; stage: PracticeStage; wrong: boolean }>();
@@ -853,6 +854,17 @@ export function useGamePlay({
                     resultData.subject = ctx.selectedUniversitySubject;
                     resultData.topic = ctx.selectedUniversityTopic;
                     resultData.topicId = ctx.selectedUniversityTopic;
+                }
+                else if (ctx.educationLevel === 'physics') {
+                    resultData.subject = 'fizika-kozep';
+                    resultData.topic = topicFromQuery || ctx.currentTopic;
+                    resultData.topicId = topicFromQuery || ctx.currentTopic;
+                }
+                else if (ctx.educationLevel === 'zh') {
+                    resultData.subject = 'zh-analizis1';
+                    resultData.topic = topicFromQuery || ctx.currentTopic;
+                    resultData.topicId = topicFromQuery || ctx.currentTopic;
+                    resultData.gameMode = 'zh';
                 }
                 // Alapértelmezett
                 else {
@@ -1424,8 +1436,11 @@ export function useGamePlay({
 
         let correct = false;
         const expectedSet = currentQ.expectedSet;
+        const acceptedAnswers = currentQ.acceptedAnswers;
 
-        if (Array.isArray(expectedSet)) {
+        if (Array.isArray(acceptedAnswers) && acceptedAnswers.length > 0) {
+            correct = studentTextMatches(userAnswer, acceptedAnswers);
+        } else if (Array.isArray(expectedSet)) {
             correct = studentSetMatches(userAnswer, expectedSet);
             // #region agent log
             agentDebugLog({

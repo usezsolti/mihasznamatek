@@ -44,6 +44,7 @@ export type SocialStore = {
         opts?: { autoApprove?: boolean; daily?: boolean }
     ): Promise<SocialPost>;
     reviewPost(postId: string, decision: 'approved' | 'rejected'): Promise<SocialPost>;
+    deletePost(postId: string, uid: string): Promise<void>;
     purgeSocialJunk(keepUid?: string): Promise<{ deletedPosts: number; deletedProfiles: number }>;
     toggleLike(postId: string, uid: string): Promise<{ liked: boolean; likeCount: number }>;
     hasLiked(postId: string, uid: string): Promise<boolean>;
@@ -89,6 +90,9 @@ const localStore: SocialStore = {
     listPendingPosts: async (limit) => localSocial.listPendingPosts(limit),
     createPost: async (author, text, media, opts) => localSocial.createPost(author, text, media, opts),
     reviewPost: async (postId, decision) => localSocial.reviewPost(postId, decision),
+    deletePost: async (postId, uid) => {
+        localSocial.deletePost(postId, uid);
+    },
     purgeSocialJunk: async (keepUid) => localSocial.purgeSocialJunk(keepUid),
     toggleLike: async (postId, uid) => localSocial.toggleLike(postId, uid),
     hasLiked: async (postId, uid) => localSocial.hasLiked(postId, uid),
@@ -132,6 +136,7 @@ function firestoreStore(token: string): SocialStore {
         createPost: (author, text, media, opts) =>
             firestoreSocial.createPost(token, author, text, media, opts),
         reviewPost: (postId, decision) => firestoreSocial.reviewPost(token, postId, decision),
+        deletePost: (postId, uid) => firestoreSocial.deleteOwnPost(token, postId, uid),
         purgeSocialJunk: (keepUid) => firestoreSocial.purgeSocialJunk(token, keepUid),
         toggleLike: (postId, uid) => firestoreSocial.toggleLike(token, postId, uid),
         hasLiked: (postId, uid) => firestoreSocial.hasLiked(token, postId, uid),
@@ -235,6 +240,9 @@ export async function runSocialAction(
             }
             return { data: post, status: 201 };
         }
+        case 'deletePost':
+            await store.deletePost(String(body.postId || ''), uid);
+            return { data: { ok: true } };
         case 'reviewPost': {
             if (!isReviewer) {
                 throw Object.assign(new Error('Csak a tanár bírálhatja a posztokat.'), { status: 403 });

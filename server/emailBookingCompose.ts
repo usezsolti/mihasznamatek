@@ -169,6 +169,8 @@ export function composeBookingDraft(opts: {
     /** A diák ezt kérte, de foglalt — a packed a helyette szabad sáv. */
     requestedTaken?: RequestedSlot;
     window?: StudentWindow | null;
+    /** false: a sáv szabad lenne, de a mentés nem sikerült. */
+    saved?: boolean;
 }): ComposedMail {
     const hi = greeting(opts.studentName);
 
@@ -191,6 +193,17 @@ export function composeBookingDraft(opts: {
 
     if (opts.kind === 'confirm' && opts.confirm) {
         const when = formatSlotProfessional(opts.confirm);
+        if (opts.saved === false) {
+            const paras = [
+                `A kért időpont (${when}) szabad lenne, de még nem tudtam rögzíteni.`,
+                'Írj vissza, kérlek, és újra megpróbálom lefoglalni ugyanezt az órát.',
+            ];
+            return mail([hi, ...paras], studentHtml({
+                title: 'Időpont még nincs rögzítve',
+                hi,
+                paragraphs: paras,
+            }));
+        }
         const paras = [
             `Köszönöm a visszajelzésed. Ezt az időpontot lefoglaltam számodra: ${when}.`,
             priceLine(),

@@ -1,1 +1,1 @@
-export type CommunityTab = 'feed' | 'explore' | 'groups' | 'messages' | 'profile' | 'review';
+export type CommunityTab = 'feed' | 'explore' | 'shorts' | 'groups' | 'messages' | 'profile' | 'review';

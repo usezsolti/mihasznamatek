@@ -21,6 +21,7 @@ type CommunityFeedTabProps = {
     onOpenProfile: (uid: string) => void;
     onMessage: (uid: string) => void;
     onPostChanged: (next: SocialPost) => void;
+    onPostDeleted: (postId: string) => void;
 };
 
 export default function CommunityFeedTab({
@@ -39,6 +40,7 @@ export default function CommunityFeedTab({
     onOpenProfile,
     onMessage,
     onPostChanged,
+    onPostDeleted,
 }: CommunityFeedTabProps) {
     const { t } = useLang();
     const [feedMode, setFeedMode] = useState<'foryou' | 'following'>('foryou');
@@ -214,6 +216,7 @@ export default function CommunityFeedTab({
                         onOpenProfile={onOpenProfile}
                         onMessage={onMessage}
                         onChanged={onPostChanged}
+                        onDeleted={onPostDeleted}
                     />
                 ))}
             </div>

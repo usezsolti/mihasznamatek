@@ -53,6 +53,7 @@ export type UseGameRouteBootstrapParams = {
     generateKozpontiPaper: (paperId: string) => void;
     generateErettsegiPaper: (paperId: string) => void;
     generateBmeValszamPaper: (paperId: string) => void;
+    generateZhPaper: (paperId: string) => void;
     generateVegyesSzigorlatQuestions: () => void;
     generateSzigorlatQuestionsBySubject: (subjectId: string) => void;
     loadTaskQuestions: (taskId: string) => void | Promise<void>;
@@ -88,6 +89,7 @@ export function useGameRouteBootstrap({
     generateKozpontiPaper,
     generateErettsegiPaper,
     generateBmeValszamPaper,
+    generateZhPaper,
     generateVegyesSzigorlatQuestions,
     generateSzigorlatQuestionsBySubject,
     loadTaskQuestions,
@@ -105,8 +107,8 @@ export function useGameRouteBootstrap({
             const topicParam = typeof router.query.topic === 'string' ? router.query.topic : '';
             const gradeParam = router.query.grade ? parseInt(String(router.query.grade), 10) : NaN;
 
-            let resolvedLevel: 'elementary' | 'highschool' | 'university' | null = null;
-            if (levelFromQuery === 'elementary' || levelFromQuery === 'highschool' || levelFromQuery === 'university') {
+            let resolvedLevel: 'elementary' | 'highschool' | 'university' | 'physics' | 'zh' | null = null;
+            if (levelFromQuery === 'elementary' || levelFromQuery === 'highschool' || levelFromQuery === 'university' || levelFromQuery === 'physics' || levelFromQuery === 'zh') {
                 resolvedLevel = levelFromQuery;
             } else if (uniboost) {
                 resolvedLevel = 'university';
@@ -332,6 +334,11 @@ export function useGameRouteBootstrap({
             const topicId = router.query.topic as string;
             console.log('Központi felvételi detected, topicId:', topicId);
             generateKozpontiQuestionsByTopic(topicId);
+        }
+
+        if (router.isReady && router.query.zh === 'true' && router.query.paperId && !gameActive) {
+            setEducationLevel('zh');
+            generateZhPaper(String(router.query.paperId));
         }
 
         // BME valószínűségszámítás hivatalos gyakorlat

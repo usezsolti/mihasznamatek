@@ -371,7 +371,6 @@ async function processOne(mail: InboundMail): Promise<'draft' | 'skip'> {
     const namedFree = requested.find((slot) => isSlotFree(days, slot.dateKey, slot.time)) || null;
 
     if (namedFree) {
-        composed = composeBookingDraft({ kind: 'confirm', studentName: name, confirm: namedFree });
         try {
             bookingId = await holdSlot({
                 threadId: mail.gmailThreadId,
@@ -384,25 +383,43 @@ async function processOne(mail: InboundMail): Promise<'draft' | 'skip'> {
             holdTime = namedFree.time;
             nextStatus = 'held';
             offeredSlots = undefined;
-            const teacher = composeTeacherBookedDraft({
-                studentName: mail.fromName || name,
-                studentEmail: mail.fromEmail,
-                slot: namedFree,
-                bookingId,
-            });
-            await appendStandaloneDraft({
-                toEmail: ownAddress() || ADMIN_BOOKING_EMAIL,
-                subject: `Foglalás rögzítve · ${mail.fromName || name} · ${namedFree.time}`,
-                body: teacher.text,
-                html: teacher.html,
+            composed = composeBookingDraft({
+                kind: 'confirm',
+                studentName: name,
+                confirm: namedFree,
+                saved: true,
             });
         } catch {
             nextStatus = 'negotiating';
+            composed = composeBookingDraft({
+                kind: 'confirm',
+                studentName: name,
+                confirm: namedFree,
+                saved: false,
+            });
+        }
+        if (nextStatus === 'held' && bookingId) {
+            try {
+                const teacher = composeTeacherBookedDraft({
+                    studentName: mail.fromName || name,
+                    studentEmail: mail.fromEmail,
+                    slot: namedFree,
+                    bookingId,
+                });
+                await appendStandaloneDraft({
+                    toEmail: ownAddress() || ADMIN_BOOKING_EMAIL,
+                    subject: `Foglalás rögzítve · ${mail.fromName || name} · ${namedFree.time}`,
+                    body: teacher.text,
+                    html: teacher.html,
+                });
+            } catch {
+                /* A diák piszkozata már a mentett órát erősíti meg. */
+            }
         }
     } else if (requested.length) {
         const wanted = requested[0];
         const sameDay = days.filter((day) => day.dateKey === wanted.dateKey);
-        const alternatives = suggestPackedSlots(sameDay.length ? sameDay : days, window, 3);
+        const alternatives = suggestPackedSlots(sameDay, null, 3);
         composed = composeBookingDraft({
             kind: 'offer',
             studentName: name,

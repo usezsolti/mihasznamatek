@@ -10,6 +10,7 @@ import CommunityGroupsTab from '../components/community/CommunityGroupsTab';
 import CommunityMessagesTab from '../components/community/CommunityMessagesTab';
 import CommunityProfileTab from '../components/community/CommunityProfileTab';
 import CommunityReviewTab from '../components/community/CommunityReviewTab';
+import CommunityShortsTab from '../components/community/CommunityShortsTab';
 import { resolveLikedMap } from '../components/community/CommunityPostCard';
 import type { CommunityTab } from '../components/community/types';
 import {
@@ -37,6 +38,7 @@ import {
     apiUpdateProfile,
 } from '../utils/socialApi';
 import { apiSocialDiag } from '../utils/apiClient';
+import { startInboxLive } from '../utils/socialLiveClient';
 import {
     conversationIdFor,
     type ConversationPreview,
@@ -94,7 +96,7 @@ export default function CommunityPage() {
 
     useEffect(() => {
         const q = String(router.query.tab || '');
-        if (['feed', 'explore', 'groups', 'messages', 'profile', 'review'].includes(q)) {
+        if (['feed', 'explore', 'shorts', 'groups', 'messages', 'profile', 'review'].includes(q)) {
             setTab(q as CommunityTab);
         }
     }, [router.query.tab]);
@@ -478,29 +480,29 @@ export default function CommunityPage() {
         setMessages(await apiListMessages(c.id).catch(() => []));
     };
 
-    // Live-ish DMs: poll while Messages tab or floating chat dock is open
+    // Live DMs: WebSocket on Vercel, HTTP poll everywhere (including next dev).
     useEffect(() => {
         if (!uid) return;
         if (tab !== 'messages' && !chatDockOpen) return;
-        let cancelled = false;
-        const tick = async () => {
-            try {
+        const conversationId = activeChat?.id || '';
+        return startInboxLive({
+            conversationId,
+            poll: async (isCurrent) => {
                 const convs = await apiListConversations(uid);
-                if (!cancelled) setConversations(convs);
-                if (activeChat?.id) {
-                    const msgs = await apiListMessages(activeChat.id);
-                    if (!cancelled) setMessages(msgs);
+                if (!isCurrent()) return;
+                setConversations(convs);
+                if (!conversationId) return;
+                const msgs = await apiListMessages(conversationId);
+                if (!isCurrent()) return;
+                setMessages(msgs);
+            },
+            onSnapshot: (snap) => {
+                setConversations(snap.conversations);
+                if (snap.conversationId && snap.conversationId === conversationId) {
+                    setMessages(snap.messages);
                 }
-            } catch {
-                /* ignore transient poll errors */
-            }
-        };
-        void tick();
-        const id = window.setInterval(tick, 3500);
-        return () => {
-            cancelled = true;
-            window.clearInterval(id);
-        };
+            },
+        });
     }, [tab, uid, activeChat?.id, chatDockOpen]);
 
     // Live feed
@@ -670,6 +672,7 @@ export default function CommunityPage() {
     const navItems = [
         ['feed', t('community.tab.feed')],
         ['explore', t('community.tab.explore')],
+        ['shorts', t('community.tab.shorts')],
         ['messages', t('community.tab.messages')],
         ['groups', t('community.tab.groups')],
         ...(isReviewer ? [['review', t('community.tab.review')] as const] : []),
@@ -773,8 +776,16 @@ export default function CommunityPage() {
                             onPostChanged={(next) =>
                                 setPosts((prev) => prev.map((x) => (x.id === next.id ? next : x)))
                             }
+                            onPostDeleted={(id) => {
+                                setPosts((prev) => prev.filter((x) => x.id !== id));
+                                setProfilePosts((prev) => prev.filter((x) => x.id !== id));
+                                setPendingPosts((prev) => prev.filter((x) => x.id !== id));
+                                showToast(t('community.post.deleted'));
+                            }}
                         />
                     )}
+
+                    {tab === 'shorts' && <CommunityShortsTab canGenerate={isReviewer} onToast={showToast} />}
 
                     {tab === 'explore' && (
                         <CommunityExploreTab
@@ -851,6 +862,12 @@ export default function CommunityPage() {
                             onPostChanged={(next) =>
                                 setPendingPosts((prev) => prev.map((x) => (x.id === next.id ? next : x)))
                             }
+                            onPostDeleted={(id) => {
+                                setPosts((prev) => prev.filter((x) => x.id !== id));
+                                setProfilePosts((prev) => prev.filter((x) => x.id !== id));
+                                setPendingPosts((prev) => prev.filter((x) => x.id !== id));
+                                showToast(t('community.post.deleted'));
+                            }}
                         />
                     )}
 
@@ -875,6 +892,12 @@ export default function CommunityPage() {
                             onPostChanged={(next) => {
                                 setPosts((prev) => prev.map((x) => (x.id === next.id ? next : x)));
                                 setProfilePosts((prev) => prev.map((x) => (x.id === next.id ? next : x)));
+                            }}
+                            onPostDeleted={(id) => {
+                                setPosts((prev) => prev.filter((x) => x.id !== id));
+                                setProfilePosts((prev) => prev.filter((x) => x.id !== id));
+                                setPendingPosts((prev) => prev.filter((x) => x.id !== id));
+                                showToast(t('community.post.deleted'));
                             }}
                         />
                     )}

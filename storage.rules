@@ -70,6 +70,11 @@ service firebase.storage {
       allow delete: if isAdmin();
     }
 
+    match /mathShorts/{fileName} {
+      allow read: if true;
+      allow write: if false;
+    }
+
     match /{allPaths=**} {
       allow read, write: if false;
     }

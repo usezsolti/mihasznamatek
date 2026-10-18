@@ -147,6 +147,8 @@ export default function Dashboard() {
             savedLevel === 'elementary' ||
             savedLevel === 'highschool' ||
             savedLevel === 'university' ||
+            savedLevel === 'physics' ||
+            savedLevel === 'zh' ||
             savedLevel === 'erettsegi' ||
             savedLevel === 'kozponti'
         ) {
@@ -1236,6 +1238,8 @@ export default function Dashboard() {
                                 {educationLevel === 'elementary' && t('dashboard.topics.elementary')}
                                 {educationLevel === 'highschool' && t('dashboard.topics.highschool')}
                                 {educationLevel === 'university' && t('dashboard.topics.university')}
+                                {educationLevel === 'physics' && t('dashboard.topics.physics')}
+                                {educationLevel === 'zh' && t('dashboard.topics.zh')}
                                 {educationLevel === 'erettsegi' &&
                                     (erettsegiPrepPath === 'choose'
                                         ? t('dashboard.erettsegi.chooseTitle')
@@ -1248,6 +1252,8 @@ export default function Dashboard() {
                                 {educationLevel === 'elementary' && t('dashboard.topicsSub.elementary')}
                                 {educationLevel === 'highschool' && t('dashboard.topicsSub.highschool')}
                                 {educationLevel === 'university' && t('dashboard.topicsSub.university')}
+                                {educationLevel === 'physics' && t('dashboard.topicsSub.physics')}
+                                {educationLevel === 'zh' && t('dashboard.topicsSub.zh')}
                                 {educationLevel === 'erettsegi' &&
                                     (erettsegiPrepPath === 'choose'
                                         ? t('dashboard.erettsegi.chooseSub')
@@ -1263,7 +1269,7 @@ export default function Dashboard() {
                                 </p>
                             )}
                         </div>
-                        {educationLevel !== 'kozponti' && (
+                        {educationLevel !== 'kozponti' && educationLevel !== 'physics' && educationLevel !== 'zh' && (
                         <div className="dash-learn-actions">
                             <button
                                 type="button"

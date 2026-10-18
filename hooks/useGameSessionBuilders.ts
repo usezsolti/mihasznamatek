@@ -40,6 +40,7 @@ import {
     getKozpontiPaperQuestions,
     getErettsegiPaperQuestions,
     getBmeValszamPaperQuestions,
+    getZhPaperQuestions,
     generateHighschoolQuestionByTopic,
     generateUniversityQuestionByTopic,
     getWorksheetListForTopic,
@@ -49,7 +50,7 @@ import {
     fallbackUniversityQuestions,
 } from '../utils/game';
 
-export type GameEducationLevel = 'elementary' | 'highschool' | 'university' | null;
+export type GameEducationLevel = 'elementary' | 'highschool' | 'university' | 'physics' | 'zh' | null;
 
 export type UseGameSessionBuildersParams = {
     router: NextRouter;
@@ -421,6 +422,18 @@ export function useGameSessionBuilders(p: UseGameSessionBuildersParams) {
         startGeneratedRun(p, true);
     };
 
+    const generateZhPaper = (paperId: string) => {
+        const list = getZhPaperQuestions(paperId);
+        if (!list?.length) {
+            console.error('No ZH paper questions for', paperId);
+            return;
+        }
+        p.setEducationLevel('zh');
+        p.setCurrentTopic(paperId);
+        setTaskQuestions(list);
+        startGeneratedRun(p, true);
+    };
+
     const generateUniversityQuestionsByTopic = (subjectId: string, topicId: string) => {
         const bmeList = getBmeValszamPaperQuestions(topicId) || getBmeValszamPaperQuestions(subjectId);
         if (bmeList?.length) {
@@ -577,7 +590,7 @@ export function useGameSessionBuilders(p: UseGameSessionBuildersParams) {
     };
 
     const startPathLessonForEducationLevel = (
-        eduLevel: 'elementary' | 'highschool' | 'university',
+        eduLevel: 'elementary' | 'highschool' | 'university' | 'physics',
         topicId: string,
         grade: number,
         sprint = false
@@ -598,7 +611,7 @@ export function useGameSessionBuilders(p: UseGameSessionBuildersParams) {
                     level: eduLevel === 'university' ? 'university' : 'highschool',
                 }))
             );
-        } else {
+        } else if (eduLevel !== 'physics') {
             for (let band = 0; band < 6; band++) {
                 const stage = (band + 1) as PracticeStage;
                 const difficulty = Math.min(4, Math.floor(band * 0.8));
@@ -631,7 +644,7 @@ export function useGameSessionBuilders(p: UseGameSessionBuildersParams) {
         } else if (eduLevel === 'highschool') {
             p.setSelectedHighschoolGrade(grade);
             p.setSelectedHighschoolTopic(topicId);
-        } else {
+        } else if (eduLevel !== 'physics') {
             p.setSelectedUniversitySubject(topicId);
             p.setSelectedUniversityTopic(topicId);
         }
@@ -1270,6 +1283,7 @@ export function useGameSessionBuilders(p: UseGameSessionBuildersParams) {
         generateKozpontiPaper,
         generateErettsegiPaper,
         generateBmeValszamPaper,
+        generateZhPaper,
         generateSzigorlatQuestionsBySubject,
         generateVegyesSzigorlatQuestions,
         generateUniversityQuestionsByTopic,

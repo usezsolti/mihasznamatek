@@ -475,6 +475,31 @@ export async function reviewPost(
     return { ...current, moderationStatus: decision };
 }
 
+export async function deleteOwnPost(token: string, postId: string, uid: string): Promise<void> {
+    const raw = await getDocument(`posts/${postId}`, token);
+    if (!raw) throw Object.assign(new Error('Poszt nem található.'), { status: 404 });
+    const current = mapSocialPost({ ...raw, __id: postId, id: postId });
+    if (current.authorId !== uid) {
+        throw Object.assign(new Error('Csak a saját posztodat törölheted.'), { status: 403 });
+    }
+    for (const sub of ['comments', 'likes'] as const) {
+        try {
+            const rows = await listCollection(`posts/${postId}/${sub}`, token, { pageSize: 200 });
+            for (const row of rows) {
+                const id = String(row.__id || row.id || '');
+                if (!id) continue;
+                await deleteDocument(`posts/${postId}/${sub}/${id}`, token).catch(() => undefined);
+            }
+        } catch {
+            /* a poszt törlése akkor is menjen */
+        }
+    }
+    await deleteDocument(`posts/${postId}`, token);
+    if (String(current.moderationStatus || '') === 'approved') {
+        await commitIncrement(token, `socialProfiles/${uid}`, 'postCount', -1).catch(() => undefined);
+    }
+}
+
 export async function purgeSocialJunk(
     token: string,
     keepUid?: string

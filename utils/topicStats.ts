@@ -4,6 +4,10 @@ import {
     getTopicsForEducationLevel,
     getUniversitySubjectById,
     findUniversityTopic,
+    getPhysicsSubjectById,
+    findPhysicsTopic,
+    getZhSubjectById,
+    findZhPaper,
     type CatalogTopic,
     type EducationLevelId,
     type ErettsegiExamLevel,
@@ -281,6 +285,8 @@ export function playedGameHref(summary: PlayedGameSummary): string | null {
         level === 'elementary' ||
         level === 'highschool' ||
         level === 'university' ||
+        level === 'physics' ||
+        level === 'zh' ||
         level === 'erettsegi' ||
         level === 'kozponti'
             ? level
@@ -330,6 +336,42 @@ export function findCatalogTopic(
             color: nested.subject.color,
         };
     }
+    const physicsSubject = getPhysicsSubjectById(topicId);
+    if (physicsSubject && (!educationLevel || educationLevel === 'physics')) {
+        return {
+            id: physicsSubject.id,
+            title: physicsSubject.title,
+            icon: physicsSubject.icon,
+            color: physicsSubject.color,
+        };
+    }
+    const physicsNested = findPhysicsTopic(topicId);
+    if (physicsNested && (!educationLevel || educationLevel === 'physics')) {
+        return {
+            id: physicsNested.topic.id,
+            title: physicsNested.topic.title,
+            icon: physicsNested.topic.icon,
+            color: physicsNested.subject.color,
+        };
+    }
+    const zhSubject = getZhSubjectById(topicId);
+    if (zhSubject && (!educationLevel || educationLevel === 'zh')) {
+        return {
+            id: zhSubject.id,
+            title: zhSubject.title,
+            icon: zhSubject.icon,
+            color: zhSubject.color,
+        };
+    }
+    const zhPaper = findZhPaper(topicId);
+    if (zhPaper && (!educationLevel || educationLevel === 'zh')) {
+        return {
+            id: zhPaper.paper.id,
+            title: zhPaper.paper.title,
+            icon: zhPaper.subject.icon,
+            color: zhPaper.subject.color,
+        };
+    }
 
     if (educationLevel) {
         const list = getTopicsForEducationLevel(educationLevel, erettsegiLevel);
@@ -353,7 +395,7 @@ export function findCatalogTopic(
         }
     }
 
-    const levels: EducationLevelId[] = ['elementary', 'highschool', 'university', 'erettsegi', 'kozponti'];
+    const levels: EducationLevelId[] = ['elementary', 'highschool', 'university', 'physics', 'zh', 'erettsegi', 'kozponti'];
     for (const level of levels) {
         if (level === 'erettsegi') {
             for (const exam of ['kozep', 'emelt'] as ErettsegiExamLevel[]) {

@@ -22,6 +22,7 @@ type CommunityProfileTabProps = {
     onOpenProfile: (uid: string) => void;
     onMessage: (uid: string) => void;
     onPostChanged: (next: SocialPost) => void;
+    onPostDeleted: (postId: string) => void;
     onCreatePost?: (file?: File | null) => void;
 };
 
@@ -44,6 +45,7 @@ export default function CommunityProfileTab({
     onOpenProfile,
     onMessage,
     onPostChanged,
+    onPostDeleted,
     onCreatePost,
 }: CommunityProfileTabProps) {
     const { t } = useLang();
@@ -282,6 +284,10 @@ export default function CommunityProfileTab({
                             onChanged={(next) => {
                                 onPostChanged(next);
                                 setLightbox(next);
+                            }}
+                            onDeleted={(postId) => {
+                                onPostDeleted(postId);
+                                setLightbox(null);
                             }}
                         />
                     </div>

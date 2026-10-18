@@ -71,6 +71,24 @@ describe('socialStore (local)', () => {
         assert.ok((feedAfter.data as any[]).some((p) => p.id === (post.data as any).id));
     });
 
+    it('lets the author delete their own post', async () => {
+        const store = createSocialStore('unit-test');
+        const uid = `unit-del-${Date.now()}`;
+        await runSocialAction(store, 'ensureProfile', uid, { name: 'Deleter' });
+        const post = await runSocialAction(store, 'createPost', uid, {
+            text: 'torlendo feladat 2+2',
+            topic: 'algebra',
+        });
+        const postId = (post.data as any).id as string;
+        await assert.rejects(
+            () => runSocialAction(store, 'deletePost', 'someone-else', { postId }),
+            /saját poszt/
+        );
+        await runSocialAction(store, 'deletePost', uid, { postId });
+        const mine = await runSocialAction(store, 'listUserPosts', uid, { uid, limit: 20 });
+        assert.equal((mine.data as any[]).some((p) => p.id === postId), false);
+    });
+
     it('one profile posts and another sees it only after approval', async () => {
         const store = createSocialStore('unit-test');
         const a = `unit-a-${Date.now()}`;

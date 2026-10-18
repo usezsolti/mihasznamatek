@@ -130,6 +130,8 @@ export type MathShort = {
     tip: string;
     difficulty: string;
     createdAtMs: number;
+    videoUrl?: string | null;
+    status?: 'queued' | 'running' | 'ready' | 'failed' | null;
 };
 
 export function slugifyUsername(raw: string): string {

@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import type { SocialComment, SocialPost, SocialProfile } from '../../utils/socialTypes';
 import { isPublicSocialPost, isTodaysDailyPost, socialPostModerationStatus } from '../../utils/socialDomain';
-import { apiAddComment, apiHasLiked, apiListComments, apiToggleLike } from '../../utils/socialApi';
+import { apiAddComment, apiDeletePost, apiHasLiked, apiListComments, apiToggleLike } from '../../utils/socialApi';
 import { useLang } from '../../utils/i18n';
 import CommunityAvatar from './CommunityAvatar';
 
@@ -12,9 +12,10 @@ type CommunityPostCardProps = {
     onOpenProfile: (uid: string) => void;
     onMessage: (uid: string) => void;
     onChanged: (post: SocialPost) => void;
+    onDeleted?: (postId: string) => void;
 };
 
-export default function CommunityPostCard({ post, me, liked: likedProp, onOpenProfile, onMessage, onChanged }: CommunityPostCardProps) {
+export default function CommunityPostCard({ post, me, liked: likedProp, onOpenProfile, onMessage, onChanged, onDeleted }: CommunityPostCardProps) {
     const { t } = useLang();
     const [liked, setLiked] = useState(likedProp);
     const [likeCount, setLikeCount] = useState(post.likeCount);
@@ -50,6 +51,19 @@ export default function CommunityPostCard({ post, me, liked: likedProp, onOpenPr
         const next = !showComments;
         setShowComments(next);
         if (next) await loadComments();
+    };
+
+    const onDelete = async () => {
+        if (busy || post.authorId !== me.uid) return;
+        if (!window.confirm(t('community.post.deleteConfirm'))) return;
+        setBusy(true);
+        try {
+            await apiDeletePost(post.id);
+            onDeleted?.(post.id);
+        } catch (e: any) {
+            alert(e?.message || t('community.post.deleteError'));
+            setBusy(false);
+        }
     };
 
     const onSubmitComment = async () => {
@@ -134,6 +148,11 @@ export default function CommunityPostCard({ post, me, liked: likedProp, onOpenPr
                 {post.authorId !== me.uid && (
                     <button type="button" onClick={() => onMessage(post.authorId)}>
                         ✉ {t('community.post.message')}
+                    </button>
+                )}
+                {post.authorId === me.uid && (
+                    <button type="button" className="is-danger" onClick={onDelete} disabled={busy}>
+                        {t('community.post.delete')}
                     </button>
                 )}
             </div>

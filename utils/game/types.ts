@@ -22,6 +22,10 @@ export interface Question {
     /** Clutch: egyszer körönként könnyebb megmentő kérdés */
     isClutch?: boolean;
     expectedSet?: string[]; // Halmaz elemei — sorrend nem számít
+    /** Beírható konkrét válaszok: képlet, tartomány, +∞, szöveg. A számmező ettől független marad. */
+    acceptedAnswers?: string[];
+    /** A beírómező helyőrzője, ha a válasz nem egyetlen szám. */
+    answerHint?: string;
     /** Egy ábra (kép / gráf / általános rajz) — bármely témakörnél */
     figure?: QuestionFigure;
     /** Több ábra ugyanazon a kártyán */

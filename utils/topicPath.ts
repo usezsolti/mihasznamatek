@@ -423,6 +423,7 @@ export function isWorksheetTopicId(topicId: string): boolean {
         /^el0[1-8]-/.test(t) ||
         /^hs\d{2}-/.test(t) ||
         t.startsWith('a1-') ||
+        t.startsWith('ph-') ||
         t.startsWith('a2-') ||
         /^la[1-4]-/.test(t) ||
         /^de[1-4]-/.test(t) ||

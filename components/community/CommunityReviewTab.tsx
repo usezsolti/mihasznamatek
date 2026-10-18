@@ -12,6 +12,7 @@ type CommunityReviewTabProps = {
     onOpenProfile: (uid: string) => void;
     onMessage: (uid: string) => void;
     onPostChanged: (next: SocialPost) => void;
+    onPostDeleted: (postId: string) => void;
 };
 
 export default function CommunityReviewTab({
@@ -24,6 +25,7 @@ export default function CommunityReviewTab({
     onOpenProfile,
     onMessage,
     onPostChanged,
+    onPostDeleted,
 }: CommunityReviewTabProps) {
     const { t } = useLang();
     return (
@@ -40,6 +42,7 @@ export default function CommunityReviewTab({
                         onOpenProfile={onOpenProfile}
                         onMessage={onMessage}
                         onChanged={onPostChanged}
+                        onDeleted={onPostDeleted}
                     />
                     <div className="mm-review-actions">
                         <button

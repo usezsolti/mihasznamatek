@@ -34,7 +34,7 @@ interface Props {
     topicIcon: string;
     topicColor: string;
     level?: 'kozep' | 'emelt';
-    educationLevel?: 'elementary' | 'highschool' | 'university' | 'erettsegi';
+    educationLevel?: 'elementary' | 'highschool' | 'university' | 'physics' | 'zh' | 'erettsegi';
     erettsegiLevel?: 'kozep' | 'emelt';
     grade?: number;
     onBack: () => void;

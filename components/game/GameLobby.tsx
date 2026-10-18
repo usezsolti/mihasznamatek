@@ -4,6 +4,8 @@ import {
     getElementaryTopicsForGrade,
     getHighschoolTopicsForGrade,
     universitySubjects,
+    physicsSubjects,
+    zhSubjects,
     type CatalogTopic,
     type UniversitySubject,
 } from '../../utils/mathTopicsCatalog';
@@ -12,7 +14,7 @@ import { BME_VALSZAM_PAPERS } from '../../utils/game/bmeValszamPapers';
 import { agentDebugLog } from '../../utils/agentDebugLog';
 import { hsTextbookRunId } from '../../utils/hsTextbook';
 
-export type GameEducationLevel = 'elementary' | 'highschool' | 'university' | null;
+export type GameEducationLevel = 'elementary' | 'highschool' | 'university' | 'physics' | 'zh' | null;
 
 export type GameLobbyProps = {
     isErettsegiMode: boolean;
@@ -47,6 +49,8 @@ export type GameLobbyProps = {
     onSelectKozpontiPaper?: (paperId: string) => void;
     onGenerateVegyesSzigorlat: () => void;
     onSelectUniversityTopic: (subjectId: string, topicId: string) => void;
+    onSelectPhysicsTopic: (topicId: string) => void;
+    onSelectZhPaper: (paperId: string) => void;
     onSelectBmePaper?: (paperId: string) => void;
     highScore: number;
     assignedTasks: Array<{ title: string }>;
@@ -94,6 +98,8 @@ export default function GameLobby({
     onSelectKozpontiPaper,
     onGenerateVegyesSzigorlat,
     onSelectUniversityTopic,
+    onSelectPhysicsTopic,
+    onSelectZhPaper,
     onSelectBmePaper,
     highScore,
     assignedTasks,
@@ -108,6 +114,8 @@ export default function GameLobby({
     onResumeGame,
     onDiscardPausedGame,
 }: GameLobbyProps) {
+    const [physicsSubjectId, setPhysicsSubjectId] = useState<string | null>(null);
+    const [zhSubjectId, setZhSubjectId] = useState<string | null>(null);
     const [showKozpontiMenu, setShowKozpontiMenu] = useState(false);
     const [kozpontiGrade, setKozpontiGrade] = useState<KozpontiGrade | null>(null);
     const kfPapers = kozpontiGrade ? kozpontiPapersByYear(kozpontiGrade) : [];
@@ -136,7 +144,11 @@ export default function GameLobby({
                             ? '🎒 Gimnáziumi Kvíz'
                             : educationLevel === 'university'
                                 ? '🚀 UniBoost'
-                                : '🧮 Matek Kvíz'}
+                                : educationLevel === 'physics'
+                                    ? '⚛️ Fizika'
+                                    : educationLevel === 'zh'
+                                        ? '📝 ZH'
+                                        : '🧮 Matek Kvíz'}
             </h1>
             <p className="game-subtitle">
                 {isErettsegiMode
@@ -181,6 +193,28 @@ export default function GameLobby({
                             <span className="level-icon">🎓</span>
                             <span className="level-name">Egyetem</span>
                             <span className="level-desc">Felsőbb matematika</span>
+                        </button>
+                        <button
+                            className="level-btn physics"
+                            onClick={() => {
+                                setPhysicsSubjectId(null);
+                                setEducationLevel('physics');
+                            }}
+                        >
+                            <span className="level-icon">⚛️</span>
+                            <span className="level-name">Fizika</span>
+                            <span className="level-desc">Középiskolai fizika</span>
+                        </button>
+                        <button
+                            className="level-btn zh"
+                            onClick={() => {
+                                setZhSubjectId(null);
+                                setEducationLevel('zh');
+                            }}
+                        >
+                            <span className="level-icon">📝</span>
+                            <span className="level-name">ZH</span>
+                            <span className="level-desc">Zárthelyi dolgozatok</span>
                         </button>
                         <button
                             className="level-btn erettsegi"
@@ -589,6 +623,142 @@ export default function GameLobby({
                                 </div>
                                 <h3 className="topic-title">{topic.title}</h3>
                                 <div className="topic-arrow">→</div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            ) : educationLevel === 'zh' && !zhSubjectId ? (
+                <div className="subject-selector-section">
+                    <h2 className="level-title">Válassz tantárgyat:</h2>
+                    <div className="elementary-topics-grid">
+                        {zhSubjects.map((subject) => (
+                            <div
+                                key={subject.id}
+                                className="elementary-topic-card"
+                                onClick={() => setZhSubjectId(subject.id)}
+                            >
+                                <div className="topic-icon" style={{ color: subject.color }}>
+                                    {subject.icon}
+                                </div>
+                                <h3 className="topic-title">{subject.title}</h3>
+                                <div className="topic-arrow">→</div>
+                            </div>
+                        ))}
+                    </div>
+                    <button
+                        className="reset-button"
+                        onClick={() => {
+                            setZhSubjectId(null);
+                            setEducationLevel(null);
+                        }}
+                    >
+                        <span className="button-icon">←</span>
+                        VISSZA
+                    </button>
+                </div>
+            ) : educationLevel === 'zh' && zhSubjectId ? (
+                <div className="topic-selector-section">
+                    <div className="selected-grade-header">
+                        <h2 className="level-title">
+                            {zhSubjects.find((s) => s.id === zhSubjectId)?.title} — válassz dolgozatot:
+                        </h2>
+                        <button
+                            className="change-grade-btn"
+                            onClick={() => setZhSubjectId(null)}
+                        >
+                            🔄 Vissza
+                        </button>
+                    </div>
+                    <p style={{ color: '#ccc', marginBottom: '1.5rem', textAlign: 'center' }}>
+                        A választ be lehet írni: képlet, értelmezési tartomány, +∞ vagy halmaz. A kulcs utána megjelenik.
+                    </p>
+                    <div className="elementary-topics-grid">
+                        {zhSubjects.find((s) => s.id === zhSubjectId)?.papers.map((paper) => (
+                            <div
+                                key={paper.id}
+                                className="elementary-topic-card"
+                                onClick={() => {
+                                    if (!paper.ready) return;
+                                    onSelectZhPaper(paper.id);
+                                }}
+                                style={paper.ready ? undefined : { opacity: 0.55 }}
+                            >
+                                <div className="topic-icon" style={{ color: '#E88924' }}>
+                                    {paper.points}
+                                </div>
+                                <h3 className="topic-title">{paper.title}</h3>
+                                <p style={{ color: '#ccc', fontSize: '0.85rem', marginTop: '0.4rem' }}>
+                                    {paper.ready ? paper.subtitle : 'Hamarosan'}
+                                </p>
+                                <div className="topic-arrow">{paper.ready ? '→' : '…'}</div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            ) : educationLevel === 'physics' && !physicsSubjectId ? (
+                <div className="subject-selector-section">
+                    <h2 className="level-title">Válassz opciót:</h2>
+                    <div className="elementary-topics-grid">
+                        {physicsSubjects.map((subject) => (
+                            <div
+                                key={subject.id}
+                                className="elementary-topic-card"
+                                onClick={() => setPhysicsSubjectId(subject.id)}
+                            >
+                                <div className="topic-icon" style={{ color: subject.color }}>
+                                    {subject.icon}
+                                </div>
+                                <h3 className="topic-title">{subject.title}</h3>
+                                <div className="topic-arrow">→</div>
+                            </div>
+                        ))}
+                    </div>
+                    <button
+                        className="reset-button"
+                        onClick={() => {
+                            setPhysicsSubjectId(null);
+                            setEducationLevel(null);
+                        }}
+                    >
+                        <span className="button-icon">←</span>
+                        VISSZA
+                    </button>
+                </div>
+            ) : educationLevel === 'physics' && physicsSubjectId ? (
+                <div className="topic-selector-section">
+                    <div className="selected-grade-header">
+                        <h2 className="level-title">
+                            {physicsSubjects.find((s) => s.id === physicsSubjectId)?.title} — válassz témakört:
+                        </h2>
+                        <button
+                            className="change-grade-btn"
+                            onClick={() => setPhysicsSubjectId(null)}
+                        >
+                            🔄 Vissza
+                        </button>
+                    </div>
+                    <p style={{ color: '#ccc', marginBottom: '1.5rem', textAlign: 'center' }}>
+                        Kinematika és dinamika: 6 szint × 20 kidolgozott feladat. g = 10 m/s².
+                    </p>
+                    <div className="elementary-topics-grid">
+                        {physicsSubjects.find((s) => s.id === physicsSubjectId)?.topics.map((topic) => (
+                            <div
+                                key={topic.id}
+                                className="elementary-topic-card"
+                                onClick={() => {
+                                    if (!topic.ready) return;
+                                    onSelectPhysicsTopic(topic.id);
+                                }}
+                                style={topic.ready ? undefined : { opacity: 0.55 }}
+                            >
+                                <div className="topic-icon" style={{ color: '#78dbff' }}>
+                                    {topic.icon}
+                                </div>
+                                <h3 className="topic-title">{topic.title}</h3>
+                                <p style={{ color: '#ccc', fontSize: '0.85rem', marginTop: '0.4rem' }}>
+                                    {topic.ready ? '6 szint × 20 feladat' : 'Hamarosan'}
+                                </p>
+                                <div className="topic-arrow">{topic.ready ? '→' : '…'}</div>
                             </div>
                         ))}
                     </div>

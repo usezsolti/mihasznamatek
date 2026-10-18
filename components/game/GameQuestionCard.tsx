@@ -321,9 +321,11 @@ export default function GameQuestionCard({
                                 value={userAnswer}
                                 autoFocus
                                 placeholder={
-                                    question?.expectedSet
-                                        ? 'Halmaz, pl. {1; 2; 3} vagy ∅'
-                                        : 'Írd be a választ…'
+                                    question?.answerHint
+                                        ? question.answerHint
+                                        : question?.expectedSet
+                                          ? 'Halmaz, pl. {1; 2; 3} vagy ∅'
+                                          : 'Írd be a választ…'
                                 }
                                 onChange={setUserAnswer}
                                 onSubmit={submitAnswer}

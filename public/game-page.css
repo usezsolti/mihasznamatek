@@ -124,6 +124,28 @@ body:has(.game-container) {
     opacity: 0.8;
 }
 
+.level-btn.zh {
+    background: rgba(232, 137, 36, 0.14);
+    border-color: rgba(232, 137, 36, 0.75);
+}
+
+.level-btn.zh:hover {
+    background: rgba(232, 137, 36, 0.24);
+    border-color: #E88924;
+    box-shadow: 0 15px 40px rgba(232, 137, 36, 0.35);
+}
+
+.level-btn.physics {
+    background: rgba(120, 219, 255, 0.12);
+    border-color: rgba(120, 219, 255, 0.7);
+}
+
+.level-btn.physics:hover {
+    background: rgba(120, 219, 255, 0.22);
+    border-color: #78dbff;
+    box-shadow: 0 15px 40px rgba(120, 219, 255, 0.35);
+}
+
 .level-btn.erettsegi {
     background: rgba(57, 255, 20, 0.15);
     border-color: rgba(57, 255, 20, 0.6);

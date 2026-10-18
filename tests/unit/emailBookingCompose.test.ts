@@ -61,4 +61,17 @@ describe('email booking compose', () => {
         assert.match(mail.text, /15:00/);
         assert.match(mail.html, /Óra lefoglalva/);
     });
+
+    it('does not claim a slot is booked when the save failed', () => {
+        const mail = composeBookingDraft({
+            kind: 'confirm',
+            studentName: 'Lilla',
+            confirm: { dateKey: '2026-09-17', time: '15:00', weekdayHu: 'csütörtök' },
+            saved: false,
+        });
+        assert.match(mail.text, /még nem tudtam rögzíteni/);
+        assert.match(mail.text, /15:00/);
+        assert.doesNotMatch(mail.text, /lefoglaltam/);
+        assert.match(mail.html, /még nincs rögzítve/);
+    });
 });

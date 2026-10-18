@@ -131,6 +131,12 @@ export async function apiCreatePost(
     );
 }
 
+export async function apiDeletePost(postId: string): Promise<void> {
+    await viaBackend('deletePost', { postId }, async () => {
+        throw new Error('A poszt törlése csak a szerveren történhet.');
+    });
+}
+
 export async function apiToggleLike(postId: string, uid: string) {
     return viaBackend('toggleLike', { postId }, () => clientSocial.toggleLike(postId, uid));
 }

@@ -88,6 +88,13 @@ export {
     logBmeValszamCatalog,
 } from './bmeValszamPapers';
 export type { BmeValszamPaperMeta } from './bmeValszamPapers';
+export {
+    ZH_PAPERS,
+    getZhPaperQuestions,
+    getZhPaperById,
+    isZhPaperId,
+} from './zhPapers';
+export type { ZhPaperMeta } from './zhPapers';
 export { generateHighschoolQuestionByTopic } from './generateHighschool';
 export { generateUniversityQuestionByTopic } from './generateUniversity';
 export { getWorksheetListForTopic } from './worksheetLists';

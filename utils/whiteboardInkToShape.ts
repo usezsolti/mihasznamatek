@@ -795,21 +795,13 @@ export function correctInkStroke(stroke: WbStroke): WbStroke {
 
     // --- Line (strict, fitted) ---
     const lineScore = scoreLine(pts);
-    if (
+    const straightStroke =
         !nearlyClosed &&
         corners.length <= 1 &&
         !crossed &&
         lineScore.ok &&
         lineScore.score > 0.9 &&
-        lineScore.maxDev / Math.max(1, dist(lineScore.a, lineScore.b)) < 0.07
-    ) {
-        const { x: _x, y: _y, w: _w, h: _h, ...lineRest } = stroke;
-        return {
-            ...lineRest,
-            tool: 'line',
-            points: [lineScore.a, lineScore.b],
-        };
-    }
+        lineScore.maxDev / Math.max(1, dist(lineScore.a, lineScore.b)) < 0.07;
 
     const looksRound = (circ.ok && circ.roundness > 0.78) || (ell.ok && ell.score > 0.78);
     const looksLikeRect = (rect.ok && rect.score > 0.52) || nearlyRect;
@@ -828,6 +820,19 @@ export function correctInkStroke(stroke: WbStroke): WbStroke {
         (complexity > 1.75 && !looksRound && !looksLikeRect && !looksLikeTriangle)
     ) {
         lastInkCorrectionDebug = { ...lastInkCorrectionDebug, branch: 'handwriting' };
+        return stroke;
+    }
+
+    // A written digit is a loop (0, 6, 8, 9) or a straight mark (1 and the bars of 4 or 7).
+    // Leave that ink alone. A cornered diagram (triangle, rectangle) still snaps.
+    const writtenNumber =
+        straightStroke ||
+        (!looksLikeRect &&
+            !looksLikeTriangle &&
+            oneLoop &&
+            (looksRound || (ell.ok && ell.score > 0.72) || (circ.ok && circ.roundness > 0.72)));
+    if (writtenNumber) {
+        lastInkCorrectionDebug = { ...lastInkCorrectionDebug, branch: 'numeral' };
         return stroke;
     }
 
