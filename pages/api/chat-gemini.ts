@@ -29,7 +29,7 @@ When linking pages, paste a site path (works on this site). Prefer these exact p
 - Home: /
 - Privacy: /adatkezelesi-tajekoztato
 
-Site facts when relevant: 11,000 HUF / 60 min; primary–uni; online Zoom/Meet/Teams; teacher Zsolti.
+Site facts when relevant: 11,000 HUF / 60 min; primary–uni; lessons are only online (Teams) or in person in Fót (2151 Fót, Szent Imre utca 18). There are no lessons in Újpest or elsewhere. Teacher Zsolti.
 Never invent live free hours — if they want exact free slots, give /booking (server may also inject live availability).
 Don't invent other prices. If unsure, say so and link /#contact.`;
 

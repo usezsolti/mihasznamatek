@@ -2,7 +2,7 @@
   "@context": "https://schema.org",
   "@type": "EducationalOrganization",
   "name": "Mihaszna Matek",
-  "description": "Professzionális magán matektanár. Matek tanár, magán oktatás, egyetemi matematika, középiskolai matek. Online és személyes oktatás Budapesten.",
+  "description": "Professzionális magán matektanár. Matek tanár, magán oktatás, egyetemi matematika, középiskolai matek. Online és személyes oktatás Fóton.",
   "url": "https://mihasznamatek.hu",
   "logo": "https://mihasznamatek.hu/profile.png",
   "image": "https://mihasznamatek.hu/profile.png",
@@ -10,7 +10,9 @@
   "email": "usezsolti@gmail.com",
   "address": {
     "@type": "PostalAddress",
-    "addressLocality": "Budapest",
+    "streetAddress": "Szent Imre utca 18",
+    "postalCode": "2151",
+    "addressLocality": "Fót",
     "addressCountry": "HU"
   },
   "founder": {
@@ -25,7 +27,7 @@
     "category": "Oktatás",
     "serviceType": "Magán Matektanár"
   },
-  "keywords": "matektanár, magán matektanár, matek tanár, magán oktatás, magán matek, mihasznamatek, matematika tanár, egyetemi matek, középiskolai matek, matek oktatás, Budapest matektanár, online matek, személyes matek oktatás",
+  "keywords": "matektanár, magán matektanár, matek tanár, magán oktatás, magán matek, mihasznamatek, matematika tanár, egyetemi matek, középiskolai matek, matek oktatás, Fót matektanár, online matek, személyes matek oktatás",
   "sameAs": [
     "https://www.facebook.com/mihasznamatek",
     "https://www.instagram.com/mihasznamatek/?hl=en",

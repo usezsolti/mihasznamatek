@@ -101,11 +101,11 @@ export default function App({ Component, pageProps }: AppProps) {
                     <title>Mihaszna Matek - Magán Matektanár | Matek Tanár | Magán Oktatás</title>
                     <meta
                         name="description"
-                        content="Mihaszna Matek - Professzionális magán matektanár. Matek tanár, magán oktatás, egyetemi matematika, középiskolai matek. Online és személyes oktatás Budapesten."
+                        content="Mihaszna Matek - Professzionális magán matektanár. Matek tanár, magán oktatás, egyetemi matematika, középiskolai matek. Online és személyes oktatás Fóton."
                     />
                     <meta
                         name="keywords"
-                        content="matektanár, magán matektanár, matek tanár, magán oktatás, magán matek, mihasznamatek, matematika tanár, egyetemi matek, középiskolai matek, matek oktatás, Budapest matektanár, online matek, személyes matek oktatás"
+                        content="matektanár, magán matektanár, matek tanár, magán oktatás, magán matek, mihasznamatek, matematika tanár, egyetemi matek, középiskolai matek, matek oktatás, Fót matektanár, online matek, személyes matek oktatás"
                     />
                     <meta name="author" content="Mihaszna Matek" />
                     <meta name="robots" content="index, follow" />
@@ -116,7 +116,7 @@ export default function App({ Component, pageProps }: AppProps) {
                     <meta property="og:title" content="Mihaszna Matek - Magán Matektanár | Matek Tanár" />
                     <meta
                         property="og:description"
-                        content="Professzionális magán matektanár. Matek tanár, magán oktatás, egyetemi matematika, középiskolai matek. Online és személyes oktatás Budapesten."
+                        content="Professzionális magán matektanár. Matek tanár, magán oktatás, egyetemi matematika, középiskolai matek. Online és személyes oktatás Fóton."
                     />
                     <meta property="og:image" content="https://mihasznamatek.hu/profile.png" />
 
@@ -125,7 +125,7 @@ export default function App({ Component, pageProps }: AppProps) {
                     <meta property="twitter:title" content="Mihaszna Matek - Magán Matektanár | Matek Tanár" />
                     <meta
                         property="twitter:description"
-                        content="Professzionális magán matektanár. Matek tanár, magán oktatás, egyetemi matematika, középiskolai matek. Online és személyes oktatás Budapesten."
+                        content="Professzionális magán matektanár. Matek tanár, magán oktatás, egyetemi matematika, középiskolai matek. Online és személyes oktatás Fóton."
                     />
                     <meta property="twitter:image" content="https://mihasznamatek.hu/profile.png" />
 
