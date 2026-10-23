@@ -8293,10 +8293,56 @@ body.wb-body .wb-page p {
     color: #b42318;
 }
 
-.wb-calc-modes {
+.wb-calc-modes,
+.wb-calc-tabs {
     display: flex;
     gap: 6px;
     margin: 0;
+}
+
+.wb-calc-tabs {
+    margin-bottom: 8px;
+}
+
+.wb-calc-tabs button {
+    flex: 1;
+    border: none;
+    cursor: pointer;
+    border-radius: 10px;
+    background: #eef1f6;
+    color: #1b1b1f;
+    padding: 6px 0;
+    font-weight: 700;
+}
+
+.wb-calc-tabs button.is-on {
+    background: rgba(37, 99, 235, 0.16);
+    color: #1d4ed8;
+}
+
+.wb-calc-hint {
+    margin: 0 0 8px;
+    color: #5c6370;
+    font-size: 0.9rem;
+}
+
+.wb-calc-quad {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+}
+
+.wb-calc-quad label {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    font-weight: 700;
+    font-size: 0.85rem;
+}
+
+.wb-calc-preview.is-steps {
+    text-align: left;
+    white-space: pre-line;
 }
 
 .wb-calc-head .wb-calc-modes button {
