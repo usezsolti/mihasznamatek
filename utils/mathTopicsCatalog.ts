@@ -473,6 +473,8 @@ export const erettsegiEmeltTopics: CatalogTopic[] = [
     { id: 'ertelmezesi-tartomany-emelt', title: 'Értelmezési tartomány, értékkészlet', icon: '📊', color: E },
     { id: 'exponencialis-logaritmus-emelt', title: 'Exponenciális és logaritmusos feladatok', icon: 'log', color: E },
     { id: 'fuggvenyek-analizis-emelt', title: 'Függvények, analízis', icon: '📈', color: E },
+    { id: 'hatarertek-emelt', title: 'Határérték', icon: 'lim', color: E },
+    { id: 'differencialszamitas-emelt', title: 'Differenciálszámítás', icon: "f'", color: E },
     { id: 'halmazok-emelt', title: 'Halmazok', icon: '{}', color: E },
     { id: 'kombinatorika-emelt', title: 'Kombinatorika', icon: '🔢', color: E },
     { id: 'parameter', title: 'Paraméteres egyenletek', icon: 'α', color: E },

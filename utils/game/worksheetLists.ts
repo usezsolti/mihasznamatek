@@ -33,6 +33,8 @@ import { getHsTextbookPracticeQuestions } from './hsTextbookBanks';
 import { hsTextbookRunId } from '../hsTextbook';
 import { getElemNatPracticeQuestions } from './elemNatBanks';
 import { getPhysicsHsPracticeQuestions } from './physicsHsLevels';
+import { getHatarertekEmeltQuestions } from './hatarertekEmeltLevels';
+import { getDifferencialEmeltQuestions } from './differencialEmeltLevels';
 
 export const getWorksheetListForTopic = (topicId: string): { list: Question[]; prefix: string } | null => {
     const topicLower = topicId.toLowerCase();
@@ -266,6 +268,14 @@ export const getWorksheetListForTopic = (topicId: string): { list: Question[]; p
         });
         // #endregion
         return { list, prefix: 'erettsegi_egyenletek' };
+    }
+    if (topicLower.includes('hatarertek')) {
+        const list = getHatarertekEmeltQuestions();
+        return { list, prefix: 'erettsegi_hatarertek' };
+    }
+    if (topicLower.includes('differencial')) {
+        const list = getDifferencialEmeltQuestions();
+        return { list, prefix: 'erettsegi_differencial' };
     }
     if (topicLower.includes('fuggveny') || topicLower.includes('analizis')) {
         const list = getFunctionsPracticeQuestions();
