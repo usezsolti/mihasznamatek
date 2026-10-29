@@ -73,6 +73,12 @@ import {
 } from '../utils/game/gameCheckpoint';
 import type { PaperTopicKind } from '../utils/game/paperTopicTags';
 import {
+    allOriginsSolved,
+    dropLaterCopies,
+    enqueueRetry,
+    questionOriginId,
+} from '../utils/game/retryQueue';
+import {
     displayTopicTitle,
     reportFromPaper,
     reportFromSession,
@@ -724,7 +730,7 @@ export function useGamePlay({
                     || resolveProgressStorageKey(topicFromQuery);
                 const lessonJustCompleted =
                     isPathMode && pathLessonRef.current
-                    && baseList.every((q) => correctIds.includes(q.id || ''))
+                    && allOriginsSolved(baseList, correctIds)
                         ? pathLessonRef.current
                         : undefined;
                 const perfectRun = wrongIds.length === 0 && correctAnswerCount >= totalQuestions;
@@ -733,7 +739,7 @@ export function useGamePlay({
                 const cleared = [...stagesCleared];
                 for (const st of allStages) {
                     const stageQs = baseList.filter((q) => q.stage === st);
-                    if (stageQs.length > 0 && stageQs.every((q) => correctIds.includes(q.id || ''))) {
+                    if (stageQs.length > 0 && allOriginsSolved(stageQs, correctIds)) {
                         if (!cleared.includes(st)) cleared.push(st);
                     }
                 }
@@ -792,7 +798,7 @@ export function useGamePlay({
             if (!skipJuice) await applyJuiceSession(uid, {
                 correctCount: correctAnswerCount,
                 lessonsCompleted: (isPathMode && pathLessonRef.current
-                    && baseList.every((q) => correctIds.includes(q.id || '')))
+                    && allOriginsSolved(baseList, correctIds))
                     ? 1
                     : 0,
                 didMix: router.query.topicMix === '1',
@@ -1340,7 +1346,7 @@ export function useGamePlay({
             return;
         }
 
-        if (livesRef.current <= 0 && (challengeNode || playWithLives)) {
+        if (livesRef.current <= 0 && (challengeNode || (playWithLives && !isWorksheetMode))) {
             setMessage(challengeNode ? 'A kihívás elbukott.' : 'Elfogyott az életed! Próbáld újra a leckét.');
             setMascotMood('sad');
             finishSessionReport();
@@ -1534,6 +1540,20 @@ export function useGamePlay({
         }
 
         if (correct) {
+            if (!paperRunEnabled() && !challengeNode) {
+                const origin = questionOriginId(currentQ.id, currentQuestion);
+                const practiceBank = (
+                    erettsegiQuestionsRef.current.length
+                        ? erettsegiQuestionsRef.current
+                        : questions
+                ).slice();
+                const withoutRepeat = dropLaterCopies(practiceBank, currentQuestion, origin);
+                if (withoutRepeat.length !== practiceBank.length) {
+                    erettsegiQuestionsRef.current = withoutRepeat;
+                    questionsRef.current = withoutRepeat;
+                    sessionBridgeRef.current.replaceSessionQuestions?.(withoutRepeat);
+                }
+            }
             const clutchSave = clutchArmed && !!currentQ.isClutch;
             const newStreak = clutchSave ? Math.max(2, correctStreak + 1) : correctStreak + 1;
             const mult = comboMultiplier(newStreak, skillPerks.comboEarlier);
@@ -1603,11 +1623,12 @@ export function useGamePlay({
 
             // Munkalap / path XP / streak / szakasz
             if (isWorksheetMode) {
-                const qid = currentQ.id || `idx_${currentQuestion}`;
-                const alreadyCorrect = correctQuestionIds.includes(qid);
+                const qid = questionOriginId(currentQ.id, currentQuestion);
+                const alreadyCorrect = correctQuestionIds.includes(qid)
+                    || correctQuestionIdsRef.current.includes(qid);
                 let msgExtra = '';
                 if (!alreadyCorrect) {
-                    const nextCorrect = [...correctQuestionIds, qid];
+                    const nextCorrect = [...correctQuestionIdsRef.current, qid];
                     correctQuestionIdsRef.current = nextCorrect;
                     setCorrectQuestionIds(nextCorrect);
                     setSessionXp((x) => x + baseXp);
@@ -1622,13 +1643,14 @@ export function useGamePlay({
                         msgExtra += `\n\n🔥 Streak ${newStreak}! ×${mult} (+${bonus} XP)`;
                     }
 
+                    const solvedBank = erettsegiQuestionsRef.current.length
+                        ? erettsegiQuestionsRef.current
+                        : questions;
                     if (!isPathMode) {
                         const stage = currentQ.stage;
                         if (stage) {
-                            const bank = sessionBridgeRef.current.erettsegiQuestions || [];
-                            const baseQs = bank.length > 0 ? bank : questions;
-                            const stageBase = baseQs.filter((q) => q.stage === stage);
-                            const allStageDone = stageBase.every((q) => nextCorrect.includes(q.id || ''));
+                            const stageBase = solvedBank.filter((q) => q.stage === stage);
+                            const allStageDone = allOriginsSolved(stageBase, nextCorrect);
                             if (allStageDone && !stagesCleared.includes(stage)) {
                                 setStagesCleared((s) => [...s, stage]);
                                 setSessionXp((x) => x + 50);
@@ -1637,16 +1659,14 @@ export function useGamePlay({
                             }
                         }
                     } else {
-                        const bank = sessionBridgeRef.current.erettsegiQuestions || [];
-                        const baseQs = bank.length > 0 ? bank : questions;
-                        const lessonDone = baseQs.every((q) => nextCorrect.includes(q.id || ''));
+                        const lessonDone = allOriginsSolved(solvedBank, nextCorrect);
                         if (lessonDone && pathLessonRef.current) {
                             const lessonPay = PATH_LESSON_XP + skillPerks.lessonXpBonus;
                             setSessionXp((x) => x + lessonPay);
                             setTotalXp((x) => x + lessonPay);
                             msgExtra += `\n\n🎉 Lecke ${pathLessonRef.current} kész! (+${lessonPay} XP)`;
-                            const bossQs = baseQs.filter((q) => q.isBoss);
-                            if (bossQs.length > 0 && bossQs.every((q) => nextCorrect.includes(q.id || ''))) {
+                            const bossQs = solvedBank.filter((q) => q.isBoss);
+                            if (bossQs.length > 0 && allOriginsSolved(bossQs, nextCorrect)) {
                                 setSessionXp((x) => x + 20);
                                 setTotalXp((x) => x + 20);
                                 msgExtra += `\n\n👹 Főnök leverve! (+20 XP)`;
@@ -1709,55 +1729,44 @@ export function useGamePlay({
             const isFailedQuestion = currentQuestion >= baseQuestionsCount;
             let lostLife = false;
             
-            if (!isFailedQuestion && !paperRunEnabled()) {
-                // Csak akkor adjuk hozzá, ha még nem hibás feladat
-                const questionIndex = failedQuestions.findIndex(q => 
-                    (q.id && currentQ.id && q.id === currentQ.id) || 
-                    q.question === currentQ.question
-                );
-                if (questionIndex === -1) {
-                    setFailedQuestions([...failedQuestions, { ...currentQ }]);
+            if (!paperRunEnabled() && !challengeNode) {
+                if (!isFailedQuestion) {
+                    const questionIndex = failedQuestions.findIndex(q => 
+                        (q.id && currentQ.id && q.id === currentQ.id) || 
+                        q.question === currentQ.question
+                    );
+                    if (questionIndex === -1) {
+                        setFailedQuestions([...failedQuestions, { ...currentQ }]);
+                    }
                 }
-                const origin = String(currentQ.id || currentQ.question || 'q').replace(/_r[a-z0-9]+$/i, '');
+                const origin = questionOriginId(currentQ.id, currentQuestion);
                 const bank = (
                     erettsegiQuestionsRef.current.length
                         ? erettsegiQuestionsRef.current
                         : getQuestions()
                 ).slice();
-                const alreadyQueued = bank.filter((q) => {
-                    const id = String(q.id || q.question || '');
-                    return id === origin || id.startsWith(`${origin}_r`);
-                }).length;
-                if (alreadyQueued < 3 && !challengeNode) {
-                    const retry: Question = {
-                        ...currentQ,
-                        id: `${origin}_r${Math.random().toString(36).slice(2, 8)}`,
-                    };
-                    const remaining = Math.max(0, bank.length - (currentQuestion + 1));
-                    const gap = remaining <= 1
-                        ? remaining
-                        : 2 + Math.floor(Math.random() * Math.min(4, remaining));
-                    const insertAt = Math.min(bank.length, currentQuestion + 1 + gap);
-                    bank.splice(insertAt, 0, retry);
-                    erettsegiQuestionsRef.current = bank;
-                    questionsRef.current = bank;
-                    sessionBridgeRef.current.replaceSessionQuestions?.(bank);
-                    // #region agent log
+                const remaining = Math.max(0, bank.length - (currentQuestion + 1));
+                const gap = remaining <= 1
+                    ? remaining
+                    : 2 + Math.floor(Math.random() * Math.min(4, remaining));
+                const nextBank = enqueueRetry(bank, currentQuestion, currentQ, gap);
+                if (nextBank !== bank) {
+                    erettsegiQuestionsRef.current = nextBank;
+                    questionsRef.current = nextBank;
+                    sessionBridgeRef.current.replaceSessionQuestions?.(nextBank);
                     agentDebugLog({
                         hypothesisId: 'R',
                         location: 'useGamePlay.ts:submitAnswer',
                         message: 'wrong question requeued later',
                         data: {
                             origin: origin.slice(0, 40),
-                            insertAt,
-                            bankLen: bank.length,
+                            bankLen: nextBank.length,
                             currentQuestion,
                         },
                         runId: 'shuffle-retry',
                     });
-                    // #endregion
                 }
-                const qid = currentQ.id || `idx_${currentQuestion}`;
+                const qid = origin;
                 if (!wrongFirstIdsRef.current.includes(qid) && !wrongFirstIds.includes(qid)) {
                     const nextWrong = [...wrongFirstIdsRef.current, qid];
                     wrongFirstIdsRef.current = nextWrong;
