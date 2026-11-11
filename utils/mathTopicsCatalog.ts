@@ -475,6 +475,7 @@ export const erettsegiEmeltTopics: CatalogTopic[] = [
     { id: 'fuggvenyek-analizis-emelt', title: 'Függvények, analízis', icon: '📈', color: E },
     { id: 'hatarertek-emelt', title: 'Határérték', icon: 'lim', color: E },
     { id: 'differencialszamitas-emelt', title: 'Differenciálszámítás', icon: "f'", color: E },
+    { id: 'integralszamitas-emelt', title: 'Integrálás', icon: '∫', color: E },
     { id: 'halmazok-emelt', title: 'Halmazok', icon: '{}', color: E },
     { id: 'kombinatorika-emelt', title: 'Kombinatorika', icon: '🔢', color: E },
     { id: 'parameter', title: 'Paraméteres egyenletek', icon: 'α', color: E },

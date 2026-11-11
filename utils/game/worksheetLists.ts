@@ -35,6 +35,7 @@ import { getElemNatPracticeQuestions } from './elemNatBanks';
 import { getPhysicsHsPracticeQuestions } from './physicsHsLevels';
 import { getHatarertekEmeltQuestions } from './hatarertekEmeltLevels';
 import { getDifferencialEmeltQuestions } from './differencialEmeltLevels';
+import { getIntegralEmeltQuestions } from './integralEmeltLevels';
 
 export const getWorksheetListForTopic = (topicId: string): { list: Question[]; prefix: string } | null => {
     const topicLower = topicId.toLowerCase();
@@ -276,6 +277,10 @@ export const getWorksheetListForTopic = (topicId: string): { list: Question[]; p
     if (topicLower.includes('differencial')) {
         const list = getDifferencialEmeltQuestions();
         return { list, prefix: 'erettsegi_differencial' };
+    }
+    if (topicLower.includes('integralszamitas')) {
+        const list = getIntegralEmeltQuestions();
+        return { list, prefix: 'erettsegi_integral' };
     }
     if (topicLower.includes('fuggveny') || topicLower.includes('analizis')) {
         const list = getFunctionsPracticeQuestions();

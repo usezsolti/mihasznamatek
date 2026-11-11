@@ -92,6 +92,7 @@ import { ERETTSEGI_PAPERS } from '../utils/game/erettsegiPapers';
 import { parseStudentNumber } from '../utils/parseStudentNumber';
 import { studentSetMatches } from '../utils/parseStudentSet';
 import { studentTextMatches } from '../utils/studentTextAnswer';
+import { antiderivativeMatches, evalMathExpr } from '../utils/gradeAntiderivative';
 import { agentDebugLog } from '../utils/agentDebugLog';
 import { isSrsTopicId, type SrsEducationLevel } from '../utils/srs';
 
@@ -1444,7 +1445,13 @@ export function useGamePlay({
         const expectedSet = currentQ.expectedSet;
         const acceptedAnswers = currentQ.acceptedAnswers;
 
-        if (Array.isArray(acceptedAnswers) && acceptedAnswers.length > 0) {
+        if (currentQ.integrand && currentQ.integrandSamples?.length) {
+            correct = antiderivativeMatches(userAnswer, currentQ.integrand, currentQ.integrandSamples);
+        } else if (currentQ.gradeAsExpr) {
+            const typed = evalMathExpr(userAnswer);
+            const tol = Math.max(0.01, 1e-3 * Math.abs(currentQ.answer));
+            correct = Number.isFinite(typed) && Math.abs(typed - currentQ.answer) <= tol;
+        } else if (Array.isArray(acceptedAnswers) && acceptedAnswers.length > 0) {
             correct = studentTextMatches(userAnswer, acceptedAnswers);
         } else if (Array.isArray(expectedSet)) {
             correct = studentSetMatches(userAnswer, expectedSet);
@@ -1823,7 +1830,8 @@ export function useGamePlay({
             } else if (currentQ.alternativeAnswer !== undefined) {
                 setMessage(`Hibás! A helyes válaszok: ${currentQ.answer}, ${currentQ.alternativeAnswer}\n\nEz a feladat később újra megjelenik.${lifeNote}`);
             } else {
-                setMessage(`Hibás! A helyes válasz: ${currentQ.answer}\n\nEz a feladat később újra megjelenik.${lifeNote}`);
+                const shown = currentQ.displayAnswer ?? String(currentQ.answer);
+                setMessage(`Hibás! A helyes válasz: ${shown}\n\nEz a feladat később újra megjelenik.${lifeNote}`);
             }
         }
 

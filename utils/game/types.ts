@@ -26,6 +26,14 @@ export interface Question {
     acceptedAnswers?: string[];
     /** A beírómező helyőrzője, ha a válasz nem egyetlen szám. */
     answerHint?: string;
+    /** Hibás válasznál ez a szöveg jelenik meg a nyers szám helyett. */
+    displayAnswer?: string;
+    /** Határozatlan integrál: a beírt primitív függvény deriváltját ezzel vetjük össze. */
+    integrand?: string;
+    /** Mintapontok az integrandus és a derivált összevetéséhez. */
+    integrandSamples?: number[];
+    /** Határozott integrál: a beírt képletet kiértékeljük, és a számértékkel vetjük össze. */
+    gradeAsExpr?: boolean;
     /** Egy ábra (kép / gráf / általános rajz) — bármely témakörnél */
     figure?: QuestionFigure;
     /** Több ábra ugyanazon a kártyán */

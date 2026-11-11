@@ -444,6 +444,7 @@ export function isWorksheetTopicId(topicId: string): boolean {
         t.includes('fuggvenyek-analizis') ||
         t.includes('hatarertek') ||
         t.includes('differencial') ||
+        t.includes('integralszamitas') ||
         t.includes('halmaz') ||
         t.includes('kombinatorika') ||
         t.includes('koordinatageometria') ||
